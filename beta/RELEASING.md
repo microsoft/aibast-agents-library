@@ -40,6 +40,13 @@ git push upstream "$tag"
 
 Never move or reuse a published tag. Publish a new prerelease version instead.
 
+The in-app updater installs **only** the commit behind this annotated tag. Until
+the tag exists, a bumped `beta/VERSION` on the branch is reported to users as
+"staged, not released"; a lightweight tag or a tag whose `beta/VERSION` disagrees
+with the branch is refused. The updater also stages the installed commit's own
+installer as a rollback before anything moves, so a failed update re-installs
+the previous version instead of leaving a launcher that cannot open.
+
 ## 3. Calculate installer hashes
 
 Calculate hashes from the exact release commit's Git blobs:

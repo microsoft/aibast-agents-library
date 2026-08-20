@@ -355,6 +355,18 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     ".beta-frame-menu #beta-update-status[data-phase=blocked],",
     ".beta-frame-menu #beta-update-status[data-phase=error]",
     "{border-color:#da3633;color:#ff7b72}",
+    ".beta-drive-feed{display:flex;flex-direction:column;align-items:center;gap:6px;",
+    "margin:7px 0;max-width:100%}",
+    ".beta-drive-step-card{max-width:min(760px,92%);overflow:hidden;",
+    "padding:5px 9px;border:1px solid #30363d;border-radius:999px;",
+    "background:#161b22;color:#8b949e;font:600 11px/1.25 ui-monospace,monospace;",
+    "text-overflow:ellipsis;white-space:nowrap}",
+    ".beta-drive-media-card{width:min(560px,92%);overflow:hidden;",
+    "border:1px solid #30363d;border-radius:10px;background:#0d1117}",
+    ".beta-drive-media-card img,.beta-drive-media-card video{display:block;",
+    "width:100%;max-height:320px;object-fit:contain}",
+    ".beta-drive-media-card a{display:block;padding:7px 9px;color:#58a6ff;",
+    "font-size:11px;text-decoration:none}",
   ].join("");
   document.head.appendChild(style);
   let chatTypingEnabled = requestedChatTyping;
@@ -451,6 +463,138 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       );
     });
   }
+  const driveHandlesById = {
+    "agents-btn": "brainstem.agents",
+    "beta-app-btn": "brainstem.menu",
+    "beta-app-panel": "brainstem.menuPanel",
+    "beta-check-updates": "brainstem.checkUpdates",
+    "beta-install-update": "brainstem.installUpdate",
+    "chat": "brainstem.chat",
+    "dev-toggle": "brainstem.devMode",
+    "input": "brainstem.composer",
+    "model-select": "brainstem.model",
+    "registry-btn": "brainstem.registry",
+    "send": "brainstem.send",
+    "session-id": "brainstem.session",
+    "theme-btn": "brainstem.theme",
+    "version-tag": "brainstem.version",
+    "voice-btn": "brainstem.voice",
+    "voice-settings-btn": "brainstem.voiceSettings",
+    "vscode-link": "brainstem.vscode",
+  };
+  function stampChatMessageHandles() {
+    document.querySelectorAll("#chat .response-slot[data-request-id]").forEach((slot) => {
+      const messages = slot.querySelectorAll(
+        ".msg.assistant:not(.typing-indicator),.msg.system",
+      );
+      const message = messages[messages.length - 1];
+      if (!message) return;
+      const requestId = String(slot.dataset.requestId || "");
+      if (!requestId) return;
+      message.dataset.drive = "brainstem.chat.msg[r-" + requestId + "]";
+      message.dataset.driveOutline = "true";
+      message.dataset.driveRole = "article";
+      message.dataset.driveName = message.classList.contains("assistant")
+        ? "assistant"
+        : "system";
+      message.dataset.driveState = (
+        message.classList.contains("stream-arriving")
+        || message.classList.contains("typing-indicator")
+      ) ? "streaming" : "complete";
+    });
+  }
+  function stampDriveHandles() {
+    for (const [id, handle] of Object.entries(driveHandlesById)) {
+      const element = document.getElementById(id);
+      if (element) element.dataset.drive = handle;
+    }
+    const logo = document.querySelector("header .logo");
+    if (logo) logo.dataset.drive = "brainstem.explorer";
+    const footerHandles = new Map([
+      ["Export", "brainstem.export"],
+      ["Import", "brainstem.import"],
+      ["Clear", "brainstem.clear"],
+      ["Tutorial", "brainstem.tutorial"],
+      ["Get Help", "brainstem.help"],
+      ["Dev", "brainstem.devMode"],
+    ]);
+    document.querySelectorAll("footer button,footer a").forEach((control) => {
+      const text = String(control.textContent || "")
+        .replace(/[^\p{L}\p{N}\s?]/gu, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (control.closest("#starter-prompts")) {
+        control.dataset.drive = "brainstem.prompt["
+          + encodeURIComponent(text.toLowerCase()) + "].button";
+        return;
+      }
+      const handle = footerHandles.get(text);
+      if (handle) control.dataset.drive = handle;
+    });
+    document.querySelectorAll("#agent-list-ul li").forEach((row) => {
+      const filename = row.querySelector(".agent-name")?.getAttribute("title");
+      if (!filename) return;
+      row.dataset.drive = "brainstem.agent[" + encodeURIComponent(filename) + "].row";
+    });
+    stampChatMessageHandles();
+  }
+  function driveFeed() {
+    const chat = document.getElementById("chat");
+    if (!chat) return null;
+    let feed = document.getElementById("beta-drive-feed");
+    if (!feed) {
+      feed = document.createElement("div");
+      feed.id = "beta-drive-feed";
+      feed.className = "beta-drive-feed";
+      feed.dataset.brainstemAiDriver = "true";
+      chat.appendChild(feed);
+    }
+    return feed;
+  }
+  window.__rappBetaRenderDriveStep = (summary) => {
+    const feed = driveFeed();
+    const line = String(summary || "").replace(/\s+/g, " ").trim().slice(0, 220);
+    if (!feed || !line) return false;
+    const card = document.createElement("div");
+    card.className = "beta-drive-step-card";
+    card.dataset.driveStepCard = "true";
+    card.setAttribute("role", "status");
+    card.textContent = line;
+    feed.appendChild(card);
+    while (feed.querySelectorAll(".beta-drive-step-card").length > 20) {
+      feed.querySelector(".beta-drive-step-card")?.remove();
+    }
+    feed.parentElement.scrollTop = feed.parentElement.scrollHeight;
+    return true;
+  };
+  window.__rappBetaRenderDriveMedia = (artifact) => {
+    const feed = driveFeed();
+    if (!feed || !artifact?.url) return false;
+    const card = document.createElement("div");
+    card.className = "beta-drive-media-card";
+    const media = artifact.kind === "video"
+      ? document.createElement("video")
+      : document.createElement("img");
+    media.src = String(artifact.url);
+    if (artifact.kind === "video") {
+      media.controls = true;
+      media.preload = "metadata";
+    } else {
+      media.alt = String(artifact.alt || "Frontier capture");
+    }
+    const link = document.createElement("a");
+    link.href = String(artifact.url);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = String(artifact.alt || "Open artifact");
+    card.append(media, link);
+    feed.appendChild(card);
+    while (feed.querySelectorAll(".beta-drive-media-card").length > 8) {
+      feed.querySelector(".beta-drive-media-card")?.remove();
+    }
+    feed.parentElement.scrollTop = feed.parentElement.scrollHeight;
+    return true;
+  };
   decorateAgentRows();
   const agentList = document.getElementById("agent-list-ul");
   if (agentList) {
@@ -616,6 +760,11 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     return true;
   }
   installBetaMenu();
+  stampDriveHandles();
+  new MutationObserver(stampDriveHandles).observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
   window.addEventListener("message", (event) => {
     if (event.source !== window.parent || !event.data) return;
     if (event.data.type === "rapp-beta:open-update") {
@@ -746,7 +895,6 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       error: String(cause?.message || cause || "Response stream interrupted."),
     }) + "\\n\\n";
   }
-
   function normalizeProvisionalMarkdown(text) {
     return String(text || "").replace(
       /^([ \\t]*)[\\u2022\\u2023\\u25AA\\u25CF]\\s+/gm,
@@ -1677,30 +1825,10 @@ async function hatchCopilotStudioTwin({ displayName = "Copilot Studio Draft", en
   );
 }
 
-// Actions that actually DRIVE the one visible Brainstem (move the cursor, type,
-// hold the center chat, record, run the click-through). With several Brain
-// Surgeon chats live at once they share this single window, so these are
-// serialized through one "stage" so two chats never fight over it. Read-only
-// and quick-state actions (inspect, read, screenshot, telemetry, lease, force
-// mode) pass straight through — a background chat keeps doing its own file,
-// shell, build, and test work while another chat holds the stage.
-const UI_STAGE_ACTIONS = new Set([
-  "announce", "chat", "click", "press", "run",
-  "start_recording", "stop_recording", "surgeon_chat", "tour", "type",
-]);
-let uiStageChain = Promise.resolve();
-
-function executeUiCommand(command) {
-  const action = String(command?.action || "").toLowerCase();
-  if (!UI_STAGE_ACTIONS.has(action)) return rawUiCommand(command);
-  const run = () => rawUiCommand(command);
-  const result = uiStageChain.then(run, run);
-  // Keep the queue moving even if one driving command fails.
-  uiStageChain = result.then(() => {}, () => {});
-  return result;
-}
-
-async function rawUiCommand(command) {
+// The loopback driver owns the one queue per visible frame. Sending every
+// caller through that bus prevents Surgeon and hot-loaded Python commands from
+// bypassing each other with competing cursors.
+async function executeUiCommand(command) {
   if (!uiDriver?.metadataPath) {
     throw new Error("The visible Brainstem control bridge is not ready.");
   }

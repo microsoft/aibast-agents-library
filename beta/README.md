@@ -91,9 +91,12 @@ Chat defaults to the familiar **Messages** look in the Brainstem, Brain Surgeon,
 and twin tiles: blue/gray grouped bubbles, tails, and pill composers. Choose
 **Chat Look → Business** from the Frontier three-dot or native View menu to
 restore the original styling; the choice is saved in `settings.json`, with
-`RAPP_CHAT_LOOK=messages|business` as an override. Delivery independently
-defaults to `RAPP_CHAT_STREAM=smooth`; use `raw` for the untouched kernel stream
-or `hold` for buffered delivery (`RAPP_CHAT_TYPING=1` remains a hold alias).
+`RAPP_CHAT_LOOK=messages|business` as an override. The look is theming only and
+does not change reply delivery.
+
+Delivery independently defaults to `RAPP_CHAT_STREAM=smooth`; use `raw` for the
+untouched kernel stream or `hold` for buffered delivery
+(`RAPP_CHAT_TYPING=1` remains a hold alias).
 Smooth mode holds the kernel's SSE wire until the terminal event while Frontier
 renders the same source in a safely sanitized provisional assistant bubble at an
 adaptive, word-granular frame cadence. It then hands off once to the kernel's
@@ -194,12 +197,18 @@ brainstem-frontier
 
 Open the three-dot **RAPP Brainstem Frontier** dropdown in the Brainstem toolbar and
 choose **Check for updates**. The native application menu also exposes
-**Check for Updates...**. The launcher compares its installed commit with the
-latest commit on the configured GitHub branch (`main` by default).
+**Check for Updates...**. The launcher reads the version the configured GitHub
+branch (`main` by default) is on, then resolves that version's **annotated
+release tag** (`brainstem-beta-v<version>`, see [RELEASING.md](RELEASING.md)).
+Only the tag's commit is ever offered: a commit merged after the tag carries
+the same version but was never released, and a build already sitting on the
+released commit is up to date however far the branch has moved. A version that
+is staged on the branch but not yet tagged shows as "staged, not released".
 
-When an update is available, **Update and Restart** runs the existing Frontier
-installer against that exact commit. This refreshes both the desktop launcher
-and the shared Brainstem source, runs the Frontier checks, and reopens the app.
+When an update is available, **Update and Restart** runs the Frontier installer
+pinned to that exact commit. Before anything moves, the updater stages a
+rollback — the installed commit's own installer — and if the update fails after
+it started, it re-installs the previous version and the reopened app says so.
 Tracked local changes in the Frontier checkout block the update instead of being
 discarded.
 

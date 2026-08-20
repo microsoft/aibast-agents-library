@@ -192,6 +192,11 @@ test("chat can hot-load an animated driver for the real frontend", () => {
   assert.match(routeManager, /globalAgentEntries/);
   assert.match(uiDriverServer, /\/v1\/recording-upload/);
   assert.match(uiDriverServer, /createWriteStream/);
+  assert.match(main, /__rappBetaRenderDriveStep/);
+  assert.match(main, /__rappBetaRenderDriveMedia/);
+  assert.match(main, /brainstem\.composer/);
+  assert.match(main, /brainstem\.chat\.msg\[r-/);
+  assert.match(renderer, /event\.summary/);
   assert.match(driveViaChat, /action: "surgeon_chat"/);
   assert.match(driveViaChat, /ephemeral_agent/);
   assert.doesNotMatch(driveViaChat, /\/agents\/import|agent_lease|user_guid/);

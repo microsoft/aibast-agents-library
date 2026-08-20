@@ -667,6 +667,9 @@
       display: flex; align-items: center; gap: 8px; padding: 8px 11px;
       font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
     }
+    .surgeon-tool-head strong {
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
     .surgeon-tool-status { margin-left: auto; color: #8b8f98; }
     .surgeon-artifact {
       align-self: flex-start; width: min(92%, 390px); overflow: hidden;
@@ -721,20 +724,21 @@
 </head>
 <body>
   <main>
-    <div id="splash">
+    <div id="splash" data-drive="shell.splash">
       <div class="card">
         <h1>Starting your global Brainstem</h1>
         <p>This launcher uses the same agents, memories, authentication, and port 7071 as the regular installer.</p>
-        <p id="error"></p>
+        <p id="error" data-drive="shell.error"></p>
       </div>
     </div>
     <iframe
       id="brainstem"
+      data-drive="shell.brainstem"
       title="RAPP Brainstem chat"
       sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-modals allow-popups"
     ></iframe>
   </main>
-  <aside id="explorer" aria-label="Live Brainstem agents Explorer">
+  <aside id="explorer" data-drive="shell.explorer" aria-label="Live Brainstem agents Explorer">
     <header>
       <span aria-hidden="true">🗂️</span>
       <span class="explorer-title">
@@ -742,28 +746,28 @@
         <span>live Brainstem workspace</span>
       </span>
       <span class="explorer-head-actions">
-        <button id="explorer-refresh" type="button" title="Refresh agents">↻</button>
-        <button id="explorer-close" type="button" title="Hide Explorer">×</button>
+        <button id="explorer-refresh" data-drive="shell.explorerRefresh" type="button" title="Refresh agents">↻</button>
+        <button id="explorer-close" data-drive="shell.explorerClose" type="button" title="Hide Explorer">×</button>
       </span>
     </header>
-    <div id="agent-tree" role="tree"></div>
-    <div id="agent-viewer">
-      <div id="agent-viewer-tab">No agent selected</div>
-      <div class="agent-viewer-empty" id="agent-viewer-empty">
+    <div id="agent-tree" data-drive="shell.agentTree" role="tree"></div>
+    <div id="agent-viewer" data-drive="shell.agentViewer">
+      <div id="agent-viewer-tab" data-drive="shell.agentViewerTab">No agent selected</div>
+      <div class="agent-viewer-empty" id="agent-viewer-empty" data-drive="shell.agentViewerEmpty">
         Select an <code>agent.py</code> file to inspect the exact source the
         live Brainstem discovers on every chat request.
       </div>
-      <pre id="agent-source" hidden></pre>
+      <pre id="agent-source" data-drive="shell.agentSource" hidden></pre>
     </div>
-    <div id="explorer-status">Waiting for the live agents folder…</div>
+    <div id="explorer-status" data-drive="shell.explorerStatus">Waiting for the live agents folder…</div>
   </aside>
-  <button id="surgeon-tab" type="button" title="Open GitHub Copilot Agent mode">
+  <button id="surgeon-tab" data-drive="shell.surgeonOpen" type="button" title="Open GitHub Copilot Agent mode">
     <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
       <path d="M12 2c-2.3 0-3.6.9-4.3 2.1-.5-.1-1-.1-1.5-.1C3.4 4 2 5.6 2 8.2v.3C1 9 .5 9.9.5 11.2v2.1c0 2 1 3.4 2.8 4.2C5.1 18.9 8.2 20 12 20s6.9-1.1 8.7-2.5c1.8-.8 2.8-2.2 2.8-4.2v-2.1c0-1.3-.5-2.2-1.5-2.7v-.3C22 5.6 20.6 4 17.8 4c-.5 0-1 0-1.5.1C15.6 2.9 14.3 2 12 2Z"/>
     </svg>
     GitHub Copilot
   </button>
-  <aside id="surgeon" aria-label="GitHub Copilot Brain Surgeon">
+  <aside id="surgeon" data-drive="shell.surgeon" aria-label="GitHub Copilot Brain Surgeon">
     <header>
       <span class="surgeon-badge">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
@@ -774,32 +778,32 @@
         <strong>GitHub Copilot</strong>
         <span>Brain Surgeon · agent mode</span>
       </span>
-      <span id="surgeon-model">Agent</span>
-      <button class="surgeon-head-btn herd-header-btn" id="surgeon-herd-btn" type="button"
+      <span id="surgeon-model" data-drive="shell.surgeonModel">Agent</span>
+      <button class="surgeon-head-btn herd-header-btn" id="surgeon-herd-btn" data-drive="shell.surgeonHerd" type="button"
         title="Herd view — chat with several Copilots at once">⊞</button>
-      <button class="surgeon-head-btn" id="surgeon-new" type="button"
+      <button class="surgeon-head-btn" id="surgeon-new" data-drive="shell.surgeonReset" type="button"
         title="Clear and reset Brain Surgeon chat"
         aria-label="Clear and reset Brain Surgeon chat">↺</button>
-      <button class="surgeon-head-btn" id="surgeon-close" type="button" title="Hide Copilot">×</button>
+      <button class="surgeon-head-btn" id="surgeon-close" data-drive="shell.surgeonClose" type="button" title="Hide Copilot">×</button>
     </header>
-    <div id="surgeon-tabs"></div>
-    <div id="surgeon-log" role="log" aria-live="polite"></div>
+    <div id="surgeon-tabs" data-drive="shell.surgeonTabs"></div>
+    <div id="surgeon-log" data-drive="shell.surgeonLog" role="log" aria-live="polite"></div>
     <div class="surgeon-composer">
       <div class="surgeon-box">
-        <textarea id="surgeon-input" rows="2" placeholder="Describe what to build or do…"></textarea>
+        <textarea id="surgeon-input" data-drive="shell.surgeonComposer" rows="2" placeholder="Describe what to build or do…"></textarea>
         <div class="surgeon-bar">
-          <span id="surgeon-mode">Agent · files, shell, tests, Brainstem</span>
-          <button id="surgeon-send" type="button">Build</button>
+          <span id="surgeon-mode" data-drive="shell.surgeonMode">Agent · files, shell, tests, Brainstem</span>
+          <button id="surgeon-send" data-drive="shell.surgeonSend" type="button">Build</button>
         </div>
       </div>
       <div class="surgeon-hint">runs on your GitHub Copilot account · ⌘↵ to send</div>
     </div>
   </aside>
-  <section id="intro" aria-labelledby="intro-title">
+  <section id="intro" data-drive="shell.intro" aria-labelledby="intro-title">
     <div class="intro-panel">
       <div class="intro-hero">
         <div class="eyebrow">Learn AI · teach AI · keep the skill</div>
-        <h1 id="intro-title">Learn it, teach it back, and take it with you.</h1>
+        <h1 id="intro-title" data-drive="shell.introTitle">Learn it, teach it back, and take it with you.</h1>
         <p>Chat is the control surface. GitHub Copilot teaches by doing: it can build and hotload an agent, drive the visible Brainstem, test the result, and explain the loop while you watch. The new skill becomes a portable RAPP capability that can follow you into the right Microsoft platform downstream.</p>
       </div>
       <div class="intro-body">
@@ -864,16 +868,16 @@
           </article>
           <article class="intro-card wide">
             <h2>Start with this prompt — or show it instead</h2>
-            <div class="prompt" id="show-mode-interview-prompt">I am working on a rapid customer proof. Interview me until you understand the business problem, users, inputs, expected outputs, constraints, and what would prove success. Then propose the smallest single-file RAPP agent set that can test the idea locally with synthetic or approved data. Build it, run it through Brainstem, show me the evidence, identify production gaps, and recommend whether the final experience belongs in Scout, Copilot Studio, Foundry, or custom code. Do not call the prototype production-ready.</div>
+            <div class="prompt" id="show-mode-interview-prompt" data-drive="shell.showModePrompt">I am working on a rapid customer proof. Interview me until you understand the business problem, users, inputs, expected outputs, constraints, and what would prove success. Then propose the smallest single-file RAPP agent set that can test the idea locally with synthetic or approved data. Build it, run it through Brainstem, show me the evidence, identify production gaps, and recommend whether the final experience belongs in Scout, Copilot Studio, Foundry, or custom code. Do not call the prototype production-ready.</div>
             <div class="intro-show-mode">
               <span><strong>Can't describe it? Show it.</strong> Show Mode turns a live recording, a video, screenshots, or a transcript into an agent you test here first, then promote. Preview the click-through — nothing runs live.</span>
-              <button type="button" data-show-mode-tour="true">Show Mode click-through</button>
+              <button type="button" data-drive="shell.showModeTour" data-show-mode-tour="true">Show Mode click-through</button>
             </div>
           </article>
         </div>
         <div class="intro-footer">
           <small>Default posture: builder-operated, local-first, synthetic or approved data, human validation, then governed promotion.</small>
-          <button id="enter" class="primary" type="button">Enter Brainstem</button>
+          <button id="enter" data-drive="shell.enter" class="primary" type="button">Enter Brainstem</button>
         </div>
       </div>
     </div>

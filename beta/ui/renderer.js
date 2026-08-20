@@ -112,6 +112,10 @@ function applyShellChatLook(look, typingEnabled = chatTypingEnabled) {
   };
 }
 
+function driveKey(value) {
+  return encodeURIComponent(String(value ?? ""));
+}
+
 function deliverPendingLineageReply() {
   if (
     !pendingLineageReply
@@ -270,6 +274,9 @@ function agentTreeRow(item, depth = 1) {
       : ""
   }`;
   button.setAttribute("role", "treeitem");
+  button.dataset.drive = `agent[${
+    driveKey(`${item.scope || "global"}:${item.filename}`)
+  }].row`;
   button.title = item.filename;
   button.style.paddingLeft = `${22 + (depth * 16)}px`;
   const icon = document.createElement("span");
@@ -296,6 +303,7 @@ function appendStackNode(node, filesByStack, depth = 0) {
     node.active ? " active" : (node.overlay_order ? " overlay" : "")
   }`;
   row.setAttribute("role", "treeitem");
+  row.dataset.drive = `stack[${driveKey(node.rappid)}].row`;
   row.style.paddingLeft = `${20 + (depth * 16)}px`;
   row.title = node.rappid;
   const state = node.active
@@ -778,6 +786,9 @@ function addSurgeonTool(session, toolName, toolCallId) {
   tool.className = "surgeon-tool";
   tool.dataset.toolName = toolName;
   if (toolCallId) tool.dataset.toolCallId = toolCallId;
+  tool.dataset.drive = `tool[${
+    driveKey(toolCallId || `${session.id}:${session.tools.length}:${toolName}`)
+  }].row`;
   tool.dataset.active = "true";
   const head = document.createElement("div");
   head.className = "surgeon-tool-head";
@@ -792,7 +803,7 @@ function addSurgeonTool(session, toolName, toolCallId) {
   session.tools.push(tool);
 }
 
-function finishSurgeonTool(session, toolName, toolCallId, success) {
+function finishSurgeonTool(session, toolName, toolCallId, success, summary = null) {
   const tool = [...session.tools].reverse().find(
     (candidate) => (
       candidate.dataset.active === "true"
@@ -804,8 +815,10 @@ function finishSurgeonTool(session, toolName, toolCallId, success) {
   );
   if (!tool) return;
   tool.dataset.active = "false";
+  const name = tool.querySelector("strong");
   const status = tool.querySelector(".surgeon-tool-status");
-  status.textContent = success ? "done" : "failed";
+  if (summary) name.textContent = summary;
+  status.textContent = summary && success ? "" : (success ? "done" : "failed");
   status.style.color = success ? "#5cc271" : "#ff7b72";
 }
 
@@ -882,6 +895,7 @@ function newSurgeonSession(activate = true) {
   const id = ++surgeonSeq;
   const log = document.createElement("div");
   log.className = "surgeon-session";
+  log.dataset.drive = `surgeon[${driveKey(id)}].session`;
   surgeonLog.appendChild(log);
   const session = {
     id,
@@ -915,6 +929,7 @@ function newSurgeonSession(activate = true) {
 function restoreSurgeonSession(data) {
   const log = document.createElement("div");
   log.className = "surgeon-session";
+  log.dataset.drive = `surgeon[${driveKey(data.id)}].session`;
   surgeonLog.appendChild(log);
   const session = {
     id: data.id,
@@ -1000,6 +1015,7 @@ function renderSurgeonTabs() {
     const tab = document.createElement("button");
     tab.type = "button";
     tab.className = `surgeon-tab${s.id === surgeonActiveId ? " active" : ""}`;
+    tab.dataset.drive = `surgeon[${driveKey(s.id)}].tab`;
     const title = s.title.length > 22 ? `${s.title.slice(0, 22)}…` : s.title;
     tab.innerHTML = (s.running ? '<span class="sp"></span>' : "")
       + `<span class="tt">${escapeHtml(title)}</span>`
@@ -1017,6 +1033,7 @@ function renderSurgeonTabs() {
   const add = document.createElement("button");
   add.type = "button";
   add.className = "surgeon-new";
+  add.dataset.drive = "shell.surgeonNewTab";
   add.textContent = "+";
   add.title = "New Copilot chat (same Brainstem)";
   add.addEventListener("click", () => newSurgeonSession());
@@ -1051,11 +1068,15 @@ function ensureSurgeonHerdDom() {
     <div class="herd-grid"></div>
   `;
   document.body.appendChild(herd);
+  herd.dataset.drive = "shell.surgeonHerdPanel";
   surgeonHerdEl = herd;
   surgeonGridEl = herd.querySelector(".herd-grid");
   herd.querySelector(".hnew").addEventListener("click", () => newSurgeonSession());
   herd.querySelector(".hclose").addEventListener("click", exitSurgeonHerd);
   const store = herd.querySelector(".hstore");
+  store.dataset.drive = "shell.storeOpen";
+  herd.querySelector(".hnew").dataset.drive = "shell.surgeonHerdNew";
+  herd.querySelector(".hclose").dataset.drive = "shell.surgeonHerdDock";
   store.addEventListener("click", () => toggleStorePicker(herd));
 }
 
@@ -1086,6 +1107,7 @@ async function renderStorePicker(panel, herd) {
     b.type = "button";
     b.className = "store-source-tab" + (active ? " active" : "");
     b.textContent = label;
+    b.dataset.drive = `storeSource[${driveKey(label)}].tab`;
     if (title) b.title = title;
     b.addEventListener("click", onPick);
     head.appendChild(b);
@@ -1103,10 +1125,12 @@ async function renderStorePicker(panel, herd) {
   customRow.style.display = "none";
   const customInput = document.createElement("input");
   customInput.type = "text";
+  customInput.dataset.drive = "shell.storeCustomSource";
   customInput.placeholder = "https://… RAR catalog (rapp-store index.json, or a sha-pinned registry.json)";
   customInput.value = source.key === "custom" ? source.url : "";
   const customGo = document.createElement("button");
   customGo.type = "button";
+  customGo.dataset.drive = "shell.storeCustomUse";
   customGo.textContent = "Use";
   const applyCustom = async () => {
     const url = customInput.value.trim();
@@ -1133,9 +1157,11 @@ async function renderStorePicker(panel, herd) {
       const row = document.createElement("div");
       row.className = "store-row";
       row.dataset.storeId = entry.id;
+      row.dataset.drive = `store[${driveKey(entry.id)}].row`;
       const hatch = document.createElement("button");
       hatch.type = "button";
       hatch.className = "store-hatch";
+      hatch.dataset.drive = `store[${driveKey(entry.id)}].hatch`;
       hatch.textContent = `◈ ${entry.name}${entry.gated ? " (gated)" : ""} — ${entry.category || entry.license || ""}`;
       hatch.title = "Hatch as a twin (its own worker + tile)";
       hatch.disabled = entry.gated;
@@ -1147,6 +1173,7 @@ async function renderStorePicker(panel, herd) {
       const install = document.createElement("button");
       install.type = "button";
       install.className = "store-install";
+      install.dataset.drive = `store[${driveKey(entry.id)}].install`;
       install.textContent = "⇣ Install";
       install.title = "Install this agent.py into the running Brainstem (hot-loaded, usable immediately)";
       install.disabled = entry.gated;
@@ -1184,6 +1211,7 @@ function flashHerdError(herd, message) {
 function surgeonTileFor(session) {
   const tile = document.createElement("div");
   tile.className = "herd-tile";
+  tile.dataset.drive = `surgeon[${driveKey(session.id)}].tile`;
   tile.innerHTML = `
     <div class="hh">
       <span class="tt"></span>
@@ -1206,6 +1234,9 @@ function surgeonTileFor(session) {
   session.logEl.style.display = "";
   const textarea = tile.querySelector(".hcomp textarea");
   const button = tile.querySelector(".hcomp button");
+  textarea.dataset.drive = `surgeon[${driveKey(session.id)}].composer`;
+  button.dataset.drive = `surgeon[${driveKey(session.id)}].send`;
+  tile.querySelector(".cl").dataset.drive = `surgeon[${driveKey(session.id)}].close`;
   const send = () => {
     const text = textarea.value.trim();
     if (!text || session.running) return;
@@ -1287,6 +1318,7 @@ function twinTileFor(twin) {
   const tile = document.createElement("div");
   tile.className = "herd-tile twin";
   tile.dataset.twinId = twin.id;
+  tile.dataset.drive = `twin[${driveKey(twin.id)}].tile`;
   tile.innerHTML = `
     <div class="hh">
       <span class="twin-badge" title="RAPPlication twin — its own port &amp; loop">◈</span>
@@ -1325,6 +1357,12 @@ function twinTileFor(twin) {
     void window.brainstemBeta.twinLoop(twin.id, goal);
   });
   const textarea = tile.querySelector(".twin-comp textarea");
+  tile.querySelector(".twin-signin").dataset.drive = `twin[${driveKey(twin.id)}].signin`;
+  tile.querySelector(".cl").dataset.drive = `twin[${driveKey(twin.id)}].close`;
+  tile.querySelector(".tw-pop").dataset.drive = `twin[${driveKey(twin.id)}].app`;
+  tile.querySelector(".tw-loop").dataset.drive = `twin[${driveKey(twin.id)}].loop`;
+  textarea.dataset.drive = `twin[${driveKey(twin.id)}].composer`;
+  tile.querySelector(".tw-send").dataset.drive = `twin[${driveKey(twin.id)}].send`;
   const send = () => {
     const text = textarea.value.trim();
     if (!text) return;
@@ -1610,7 +1648,13 @@ function handleSurgeonEvent(event) {
     showSurgeonThinking(session);
   } else if (event.type === "tool-complete") {
     session.delivery?.tool(event);
-    finishSurgeonTool(session, event.toolName || "tool", event.toolCallId, event.success !== false);
+    finishSurgeonTool(
+      session,
+      event.toolName || "tool",
+      event.toolCallId,
+      event.success !== false,
+      event.summary || null,
+    );
     void refreshAgentExplorer();
   } else if (event.type === "artifact") {
     session.pacer?.flush();

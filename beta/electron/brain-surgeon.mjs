@@ -164,6 +164,37 @@ async function jsonResponse(response, label) {
   return payload;
 }
 
+function compactDriverSummary(value) {
+  let parsed = value;
+  if (typeof parsed === "string") {
+    try {
+      parsed = JSON.parse(parsed);
+    } catch {
+      return null;
+    }
+  }
+  if (!parsed || typeof parsed !== "object") return null;
+  if (typeof parsed.summary === "string") {
+    return parsed.summary.replace(/\s+/g, " ").trim().slice(0, 220);
+  }
+  if (Array.isArray(parsed.summaries)) {
+    const summary = [...parsed.summaries].reverse().find(
+      (item) => typeof item === "string" && item.trim(),
+    );
+    if (summary) return summary.replace(/\s+/g, " ").trim().slice(0, 220);
+  }
+  if (Array.isArray(parsed.results)) {
+    for (const result of [...parsed.results].reverse()) {
+      const summary = compactDriverSummary(result);
+      if (summary) return summary;
+    }
+  }
+  if (typeof parsed.textResultForLlm === "string") {
+    return compactDriverSummary(parsed.textResultForLlm);
+  }
+  return null;
+}
+
 export class BrainSurgeon {
   constructor({
     runtime,
@@ -247,12 +278,16 @@ export class BrainSurgeon {
         parameters: {
           type: "object",
           properties: {
-            limit: { type: "integer", minimum: 1, maximum: 200 },
+            limit: { type: "integer", minimum: 1, maximum: 80 },
+            since: { type: "string" },
+            target: { type: "string", enum: ["brainstem", "shell"] },
           },
         },
-        handler: ({ limit = 80 } = {}) => this.uiCommand({
+        handler: ({ limit = 60, since = null, target = "brainstem" } = {}) => this.uiCommand({
           action: "inspect",
           limit,
+          ...(since ? { since } : {}),
+          target,
         }),
       },
       {
@@ -504,12 +539,14 @@ export class BrainSurgeon {
                     enum: [
                       "announce",
                       "click",
+                      "expect",
                       "press",
                       "read",
                       "type",
                       "wait",
                     ],
                   },
+                  handle: { type: "string" },
                   selector: { type: "string" },
                   targetText: { type: "string" },
                   text: { type: "string" },
@@ -521,6 +558,17 @@ export class BrainSurgeon {
                   typingDelayMs: { type: "integer" },
                   settleMs: { type: "integer" },
                   durationMs: { type: "integer" },
+                  state: { type: "string" },
+                  until: {
+                    type: "object",
+                    properties: {
+                      handle: { type: "string" },
+                      snapshot_changed: { type: "boolean" },
+                      state: { type: "string" },
+                      text: { type: "string" },
+                      timeoutMs: { type: "integer" },
+                    },
+                  },
                 },
                 required: ["action"],
               },
@@ -529,12 +577,18 @@ export class BrainSurgeon {
               type: "boolean",
               description: "Light the window edges (AI force mode) while these steps run. Only when the user asked for it.",
             },
+            target: { type: "string", enum: ["brainstem", "shell"] },
           },
           required: ["steps"],
         },
-        handler: ({ steps, force_mode: forceMode = false }) => this.uiCommand({
+        handler: ({
+          steps,
+          force_mode: forceMode = false,
+          target = "brainstem",
+        }) => this.uiCommand({
           action: "run",
           steps,
+          target,
           ...(forceMode ? { forceMode: true } : {}),
         }),
       },
@@ -554,7 +608,8 @@ export class BrainSurgeon {
               items: {
                 type: "object",
                 properties: {
-                  action: { type: "string", enum: ["announce", "click", "press", "read", "type", "wait"] },
+                  action: { type: "string", enum: ["announce", "click", "expect", "press", "read", "type", "wait"] },
+                  handle: { type: "string" },
                   selector: { type: "string" },
                   targetText: { type: "string" },
                   text: { type: "string" },
@@ -565,6 +620,17 @@ export class BrainSurgeon {
                   timeoutMs: { type: "integer" },
                   typingDelayMs: { type: "integer" },
                   settleMs: { type: "integer" },
+                  state: { type: "string" },
+                  until: {
+                    type: "object",
+                    properties: {
+                      handle: { type: "string" },
+                      snapshot_changed: { type: "boolean" },
+                      state: { type: "string" },
+                      text: { type: "string" },
+                      timeoutMs: { type: "integer" },
+                    },
+                  },
                 },
                 required: ["action"],
               },
@@ -729,8 +795,13 @@ export class BrainSurgeon {
         description: "Capture the real beta window and inspect the visible result.",
         defer: "never",
         skipPermission: true,
-        parameters: { type: "object", properties: {} },
-        handler: () => this.captureVisibleBrainstem(),
+        parameters: {
+          type: "object",
+          properties: {
+            include_text: { type: "boolean" },
+          },
+        },
+        handler: (args) => this.captureVisibleBrainstem(args),
       },
       {
         name: "check_beta_updates",
@@ -869,6 +940,7 @@ export class BrainSurgeon {
               || data.toolDescription?.name
               || "Brainstem capability",
             success: data.success !== false,
+            summary: compactDriverSummary(data.result),
           });
         }
       });
@@ -1398,8 +1470,11 @@ export class BrainSurgeon {
     }, null, 2);
   }
 
-  async captureVisibleBrainstem() {
-    const capture = await this.uiCommand({ action: "screenshot" });
+  async captureVisibleBrainstem({ include_text: includeText = false } = {}) {
+    const capture = await this.uiCommand({
+      action: "screenshot",
+      ...(includeText ? { includeText: true } : {}),
+    });
     const screenshot = capture.screenshot || capture;
     const dataUrl = screenshot.dataUrl || "";
     this.emit({
@@ -1466,6 +1541,7 @@ export class BrainSurgeon {
 
 export const brainSurgeonInternals = {
   cleanFilename,
+  compactDriverSummary,
   deploymentAgentSourceMatches,
   pythonManifestVersion,
   systemMessage: SURGEON_SYSTEM_MESSAGE,

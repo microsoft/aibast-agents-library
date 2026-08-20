@@ -1,14 +1,26 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import {
+  LineageStore,
+  lineageStoreInternals,
+} from "../electron/lineage-store.mjs";
+import {
   executeLineageCommand,
   lineageControlReplies,
   parseLineageCommand,
 } from "../electron/lineage-control.mjs";
+import { BetaRouteManager } from "../electron/route-manager.mjs";
 
 
 const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -397,6 +409,201 @@ test("restore reports a refused composition instead of claiming success", async 
   assert.equal(result.restored, false);
   assert.notEqual(result.reply, lineageControlReplies.restore);
   assert.match(result.reply, /could not activate.*last-good/i);
+});
+
+test("restore cannot move a newer live ring back through stale PRIOR_HEAD", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-lineage-control-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const brainstemDir = path.join(root, "brainstem");
+  mkdirSync(path.join(brainstemDir, "agents"), { recursive: true });
+  writeFileSync(
+    path.join(brainstemDir, "agents", "alpha_agent.py"),
+    "ALPHA = 'baseline'\n",
+  );
+  const store = new LineageStore({
+    brainstemDir,
+    root: path.join(root, "lineage"),
+  });
+  const alpha = store.baselineAncestors()[0];
+  const first = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'first'\n",
+    verified: true,
+  });
+  store.setHead(alpha.ancestorRappid, first);
+  store.rollbackToBaseline(alpha.ancestorRappid);
+  const newer = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'newer'\n",
+    parentRappid: first,
+    verified: true,
+  });
+  const locusDirectory = path.join(
+    store.root,
+    lineageStoreInternals.filesystemSegment(alpha.ancestorRappid),
+  );
+  const headPath = path.join(locusDirectory, "HEAD");
+  const priorPath = path.join(locusDirectory, "PRIOR_HEAD");
+  rmSync(headPath);
+  mkdirSync(headPath);
+  assert.throws(
+    () => store.setHead(alpha.ancestorRappid, newer),
+    /directory|EISDIR|ENOTDIR/i,
+  );
+  assert.equal(
+    readFileSync(priorPath, "utf8").trim(),
+    first,
+    "a failed forward write must preserve the rollback recovery point",
+  );
+  rmSync(headPath, { recursive: true });
+  writeFileSync(headPath, `${alpha.ancestorRappid}\n`);
+  store.setHead(alpha.ancestorRappid, newer);
+
+  const result = await executeLineageCommand({
+    message: "restore",
+    routeManager: {
+      restoreLineage: () => store.restore(alpha.ancestorRappid),
+      startDefault: async () => ({
+        compositionHash: "newer-composition",
+        url: "http://127.0.0.1:7001",
+      }),
+      lastLineageFallback: null,
+    },
+  });
+
+  assert.equal(result.changed, 0);
+  assert.match(result.reply, /nothing to restore/i);
+  assert.equal(store.getHead(alpha.ancestorRappid), newer);
+});
+
+test("restore reports no change when a missing HEAD already resolves to baseline", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-lineage-control-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const brainstemDir = path.join(root, "brainstem");
+  mkdirSync(path.join(brainstemDir, "agents"), { recursive: true });
+  writeFileSync(
+    path.join(brainstemDir, "agents", "alpha_agent.py"),
+    "ALPHA = 'baseline'\n",
+  );
+  const store = new LineageStore({
+    brainstemDir,
+    root: path.join(root, "lineage"),
+  });
+  const alpha = store.baselineAncestors()[0];
+  const ring = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'gone'\n",
+    verified: true,
+  });
+  store.setHead(alpha.ancestorRappid, ring);
+  rmSync(path.join(
+    store.root,
+    lineageStoreInternals.filesystemSegment(alpha.ancestorRappid),
+    "rings",
+    lineageStoreInternals.filesystemSegment(ring),
+  ), { recursive: true, force: true });
+  assert.equal(store.resolveLive(alpha.ancestorRappid).isBaseline, true);
+
+  const result = await executeLineageCommand({
+    message: "restore",
+    routeManager: {
+      restoreLineage: () => store.restore(alpha.ancestorRappid),
+      startDefault: async () => ({
+        compositionHash: "baseline-composition",
+        url: "http://127.0.0.1:7001",
+      }),
+      lastLineageFallback: null,
+    },
+  });
+
+  assert.equal(result.changed, 0);
+  assert.match(result.reply, /nothing to restore/i);
+  assert.equal(store.resolveLive(alpha.ancestorRappid).isBaseline, true);
+});
+
+test("a safe word returns before the lifecycle lock and restarts after release", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-lineage-control-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const brainstemDir = path.join(root, "brainstem");
+  mkdirSync(path.join(brainstemDir, "agents"), { recursive: true });
+  writeFileSync(
+    path.join(brainstemDir, "agents", "alpha_agent.py"),
+    "ALPHA = 'baseline'\n",
+  );
+  const store = new LineageStore({
+    brainstemDir,
+    root: path.join(root, "lineage"),
+  });
+  const alpha = store.baselineAncestors()[0];
+  const ring = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'live ring'\n",
+    verified: true,
+  });
+  const manager = new BetaRouteManager({
+    betaHome: path.join(root, "beta-home"),
+    brainstemConfig: { brainstemDir, python: "/tmp/python" },
+    lineageStore: store,
+    seedLineageDefaults: false,
+    compositionValidator: () => true,
+  });
+  manager.activeRoute = {
+    compositionHash: "active-composition",
+    url: "http://127.0.0.1:7001",
+  };
+  let releaseTask;
+  let taskEntered;
+  const entered = new Promise((resolve) => {
+    taskEntered = resolve;
+  });
+  const heldTask = manager.withRouteLock("__lifecycle__", async () => {
+    taskEntered();
+    await new Promise((resolve) => {
+      releaseTask = resolve;
+    });
+  });
+  await entered;
+  let starts = 0;
+  let restartCalled;
+  const restarted = new Promise((resolve) => {
+    restartCalled = resolve;
+  });
+  manager.startDefaultUnlocked = async () => {
+    starts += 1;
+    restartCalled();
+    return manager.activeRoute;
+  };
+
+  const startedAt = Date.now();
+  const commandPromise = executeLineageCommand({
+    message: "restore",
+    routeManager: manager,
+  });
+  let timeoutId;
+  const outcome = await Promise.race([
+    commandPromise.then((value) => ({ value })),
+    new Promise((resolve) => {
+      timeoutId = setTimeout(() => resolve({ timedOut: true }), 500);
+    }),
+  ]);
+  if (outcome.timedOut) {
+    releaseTask();
+    await heldTask;
+    await commandPromise;
+    assert.fail("safe word waited behind the lifecycle lock");
+  }
+  clearTimeout(timeoutId);
+  assert.ok(Date.now() - startedAt < 1000);
+  assert.equal(starts, 0);
+  assert.equal(store.getHead(alpha.ancestorRappid), ring);
+  assert.equal(outcome.value.pending, true);
+  assert.equal(outcome.value.restored, undefined);
+  assert.notEqual(outcome.value.reply, lineageControlReplies.restore);
+  assert.match(
+    outcome.value.reply,
+    /takes effect as soon as the current task finishes/,
+  );
+
+  releaseTask();
+  await heldTask;
+  await restarted;
+  assert.equal(starts, 1);
 });
 
 test("renderer intercepts before Grail chat and main exposes the lineage IPC", () => {
