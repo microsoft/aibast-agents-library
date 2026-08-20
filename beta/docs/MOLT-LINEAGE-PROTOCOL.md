@@ -7,6 +7,11 @@ the contract that lets an instance become a **unique snowflake without getting
 cancer, dying, or becoming a zombie**, and lets a fleet of such snowflakes always
 come back together.
 
+> **Standard.** The general, platform-neutral form of this design is
+> `gitprotocol-molt(5)` — see [`RAPP-LINEAGE-STANDARD.md`](RAPP-LINEAGE-STANDARD.md),
+> with a working reference porcelain in [`git-molt/`](../../git-molt/). This
+> document is the Frontier's conformance profile of that standard.
+
 This is a **protocol, not a library**. It is downstream of the Brainstem
 `CONSTITUTION.md` and the `rapp/1` spine; where they conflict, the kernel's law
 wins. Amend by a PR that changes this file in the same commit as the behavior it
