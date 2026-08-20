@@ -723,3 +723,83 @@ test("the chat lease's aria-disabled marker does not make the send button unacti
   assert.match(source, /\(!leaseMarked && element\.getAttribute\?\.\("aria-disabled"\) === "true"\)/);
   assert.match(source, /send\.dataset\.rappChatLease = "locked"/);
 });
+
+test("the chat lease blocks trusted starter-prompt clicks", async () => {
+  const elements = new Map();
+  const eventTarget = (id) => {
+    const listeners = new Map();
+    const element = {
+      addEventListener(type, listener) {
+        listeners.set(type, listener);
+      },
+      dataset: {},
+      id,
+      listeners,
+      setAttribute() {},
+    };
+    elements.set(id, element);
+    return element;
+  };
+  eventTarget("input");
+  eventTarget("send");
+  const starters = eventTarget("starter-prompts");
+  const document = {
+    activeElement: null,
+    body: {
+      appendChild(element) {
+        elements.set(element.id, element);
+      },
+    },
+    createElement: () => ({
+      dataset: {},
+      hidden: false,
+      id: "",
+      style: {},
+      textContent: "",
+    }),
+    getElementById: (id) => elements.get(id) || null,
+    querySelectorAll: () => [],
+  };
+  const helpers = {
+    buildOutline: () => ({ rows: [], snapshot: "steady" }),
+    caps: { inspectDefault: 60 },
+    diffOutlines: () => ({ added: [], changed: [], removed: [] }),
+    selectorFor: () => null,
+  };
+  const context = vm.createContext({
+    document,
+    setTimeout,
+    window: {},
+  });
+  const command = vm.runInContext(
+    `(${uiDriverInternals.browserDriverCommand.toString()})`,
+    context,
+  );
+  await command(
+    { action: "set_chat_lease", locked: true, token: "delegate" },
+    () => helpers,
+  );
+  const trustedClick = {
+    isTrusted: true,
+    preventDefaultCalled: false,
+    stopImmediatePropagationCalled: false,
+    preventDefault() {
+      this.preventDefaultCalled = true;
+    },
+    stopImmediatePropagation() {
+      this.stopImmediatePropagationCalled = true;
+    },
+  };
+
+  starters.listeners.get("click")(trustedClick);
+
+  assert.equal(trustedClick.preventDefaultCalled, true);
+  assert.equal(trustedClick.stopImmediatePropagationCalled, true);
+
+  trustedClick.isTrusted = false;
+  trustedClick.preventDefaultCalled = false;
+  trustedClick.stopImmediatePropagationCalled = false;
+  starters.listeners.get("click")(trustedClick);
+  assert.equal(trustedClick.preventDefaultCalled, false);
+  assert.equal(trustedClick.stopImmediatePropagationCalled, false);
+});

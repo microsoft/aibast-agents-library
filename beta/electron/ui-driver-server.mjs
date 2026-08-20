@@ -833,6 +833,11 @@ async function browserDriverCommand(command, createHelpers, limits = {
           }
         };
         send.addEventListener("click", block, true);
+        document.getElementById("starter-prompts")?.addEventListener(
+          "click",
+          block,
+          true,
+        );
         input.addEventListener("keydown", (event) => {
           if (event.key === "Enter" && !event.shiftKey) block(event);
         }, true);
