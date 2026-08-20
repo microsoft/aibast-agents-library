@@ -15,13 +15,122 @@ export function parseLineageCommand(message, env = process.env) {
     "baseline",
   );
   const restoreWord = configuredWord(env.RAPP_RESTORE_WORD, "restore");
+  const environmentsWord = configuredWord(
+    env.RAPP_ENVIRONMENTS_WORD,
+    "environments",
+  );
+  const promoteWord = configuredWord(env.RAPP_PROMOTE_WORD, "promote");
+  const driftWord = configuredWord(env.RAPP_DRIFT_WORD, "drift");
   if (trimmed === baselineWord) {
     return { action: "baseline", original, word: baselineWord };
   }
   if (trimmed === restoreWord) {
     return { action: "restore", original, word: restoreWord };
   }
+  if (trimmed === environmentsWord) {
+    return { action: "environments", original, word: environmentsWord };
+  }
+  if (
+    trimmed === promoteWord
+    || trimmed.startsWith(`${promoteWord} `)
+  ) {
+    const args = trimmed.slice(promoteWord.length).trim().split(/\s+/)
+      .filter(Boolean);
+    return args.length === 2
+      ? {
+          action: "promote",
+          original,
+          word: promoteWord,
+          fromEnv: args[0],
+          toEnv: args[1],
+        }
+      : {
+          action: "promote",
+          original,
+          word: promoteWord,
+          invalid: true,
+        };
+  }
+  if (trimmed === driftWord || trimmed.startsWith(`${driftWord} `)) {
+    const args = trimmed.slice(driftWord.length).trim().split(/\s+/)
+      .filter(Boolean);
+    return args.length === 1
+      ? {
+          action: "drift",
+          original,
+          word: driftWord,
+          env: args[0],
+        }
+      : {
+          action: "drift",
+          original,
+          word: driftWord,
+          invalid: true,
+        };
+  }
   return null;
+}
+
+function disabledResult(action) {
+  return {
+    intercepted: true,
+    action,
+    disabled: true,
+    fallback: null,
+    reply: DISABLED_REPLY,
+  };
+}
+
+function shortRing(entry) {
+  if (!entry || entry.isBaseline) return "baseline";
+  const match = /:([0-9a-f]{64})$/i.exec(String(entry.head || ""));
+  return match ? match[1].slice(0, 8) : "baseline";
+}
+
+function environmentsReply(report) {
+  if (!report?.loci?.length) {
+    return "No Molt Lineage loci are available.";
+  }
+  const lines = report.loci.map((locus) => {
+    const environments = locus.environments
+      .map((entry) => `${entry.env} → ${shortRing(entry)}`)
+      .join(", ");
+    return `- ${locus.filename}: ${environments}`;
+  });
+  return `Molt Lineage environments:\n${lines.join("\n")}`;
+}
+
+function promotionReply(report, fromEnv, toEnv) {
+  const changed = report?.changed?.length ?? 0;
+  const conflicts = report?.conflicts || [];
+  const failed = report?.failed || [];
+  if (conflicts.length) {
+    const conflict = conflicts[0];
+    const agent = conflict.filename || conflict.ancestorRappid || "unknown agent";
+    if (!changed) {
+      return `CONFLICT on ${agent}: ${toEnv} has a molt ${fromEnv} never built on — nothing moved.`;
+    }
+    return `Promoted ${changed} agents to ${toEnv}; CONFLICT on ${agent}: ${toEnv} has a molt ${fromEnv} never built on, so that agent did not move.`;
+  }
+  if (failed.length) {
+    if (!changed) {
+      return `Promotion failed for ${failed.length} agents — nothing moved.`;
+    }
+    return `Promoted ${changed} agents to ${toEnv}, but ${failed.length} agents were refused.`;
+  }
+  if (!changed) return `${fromEnv} and ${toEnv} are already in sync.`;
+  return `Promoted ${changed} agents to ${toEnv}.`;
+}
+
+function driftReply(report) {
+  const drifted = report?.drifted || [];
+  if (!drifted.length) {
+    return `No drift detected in ${report.env} against ${report.baseEnv}.`;
+  }
+  const agents = drifted
+    .map((locus) => locus.filename || locus.ancestorRappid)
+    .join(", ");
+  return `Drift detected in ${report.env} against ${report.baseEnv}: ${agents}.`;
 }
 
 export async function executeLineageCommand({
@@ -39,19 +148,74 @@ export async function executeLineageCommand({
   if (!routeManager) {
     throw new Error("Molt Lineage control requires the Frontier route manager.");
   }
+  if (command.invalid) {
+    const usage = command.action === "promote"
+      ? `${command.word} <from> <to>`
+      : `${command.word} <environment>`;
+    return {
+      intercepted: true,
+      action: command.action,
+      reply: `Usage: ${usage}`,
+    };
+  }
+
+  if (command.action === "environments") {
+    const report = routeManager.lineageEnvironments();
+    if (report?.disabled) return disabledResult(command.action);
+    return {
+      intercepted: true,
+      action: command.action,
+      disabled: false,
+      reply: environmentsReply(report),
+      environments: report.loci || [],
+    };
+  }
+
+  if (command.action === "drift") {
+    const report = routeManager.lineageDrift(command.env);
+    if (report?.disabled) return disabledResult(command.action);
+    return {
+      intercepted: true,
+      action: command.action,
+      disabled: false,
+      reply: driftReply(report),
+      env: report.env,
+      baseEnv: report.baseEnv,
+      drifted: report.drifted || [],
+      loci: report.loci || [],
+    };
+  }
+
+  if (command.action === "promote") {
+    const report = routeManager.promoteLineage({
+      fromEnv: command.fromEnv,
+      toEnv: command.toEnv,
+    });
+    if (report?.disabled) return disabledResult(command.action);
+    const route = await routeManager.startDefault();
+    return {
+      intercepted: true,
+      action: command.action,
+      disabled: false,
+      reply: promotionReply(report, report.fromEnv, report.toEnv),
+      compositionHash: route.compositionHash,
+      changed: report.changed?.length ?? 0,
+      unchanged: report.unchanged?.length ?? 0,
+      conflicts: report.conflicts || [],
+      failed: report.failed || [],
+      fromEnv: report.fromEnv,
+      toEnv: report.toEnv,
+      url: route.url,
+    };
+  }
+
   const report = command.action === "baseline"
     ? routeManager.rollbackLineage()
     : routeManager.restoreLineage();
   // The kill switch gates writes too, so nothing moved. Say so rather than
   // claiming a change that did not happen.
   if (report?.disabled) {
-    return {
-      intercepted: true,
-      action: command.action,
-      disabled: true,
-      fallback: null,
-      reply: DISABLED_REPLY,
-    };
+    return disabledResult(command.action);
   }
   const route = await routeManager.startDefault();
   const fallback = routeManager.lastLineageFallback || null;

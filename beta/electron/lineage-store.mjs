@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import {
   chmodSync,
   existsSync,
@@ -22,9 +23,15 @@ import {
 const LINEAGE_SCHEMA = "molt-lineage/1.0";
 const HEAD_FILE = "HEAD";
 const PRIOR_FILE = "PRIOR_HEAD";
+const DEFAULT_ENV = "default";
+const ENVIRONMENT_NAME = /^[a-z0-9][a-z0-9._-]{0,31}$/;
 const LOCUS_FILE = "locus.json";
 const RING_SOURCE_FILE = "source.py";
 const RING_META_FILE = "meta.json";
+const JOURNAL_CORRUPT_REASON =
+  "promotion journal is corrupt — refusing to trust or extend it";
+const JOURNAL_WRITE_REASON =
+  "promotion journal could not record the attempt — refusing to move HEAD";
 
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true, mode: 0o700 });
@@ -52,6 +59,40 @@ function readJsonSafe(filePath) {
   } catch {
     return null;
   }
+}
+
+function sha256Hex(value) {
+  return createHash("sha256")
+    .update(String(value), "utf8")
+    .digest("hex");
+}
+
+function normalizeEnvironment(value = DEFAULT_ENV) {
+  const requested = (
+    value
+    && typeof value === "object"
+    && !Array.isArray(value)
+  )
+    ? value.env
+    : value;
+  const raw = String(requested ?? DEFAULT_ENV).trim().toLowerCase();
+  if (!raw || raw === DEFAULT_ENV) return DEFAULT_ENV;
+  const sanitized = raw
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^[^a-z0-9]+/, "")
+    .slice(0, 32);
+  return ENVIRONMENT_NAME.test(sanitized) ? sanitized : DEFAULT_ENV;
+}
+
+function disabledMutation(action, env = DEFAULT_ENV) {
+  return {
+    ok: false,
+    disabled: true,
+    refused: true,
+    action,
+    env: normalizeEnvironment(env),
+    reason: "Molt Lineage is disabled (RAPP_MOLT_LINEAGE=0).",
+  };
 }
 
 function filesystemSegment(value) {
@@ -165,13 +206,27 @@ export class LineageStore {
    *
    *  Runs at most once per process, and only when a legacy locus is present. */
   _migrateLegacyLoci(current) {
-    if (this._migrated) return;
+    if (this._migrated) return this.lastMigrationReport;
+    if (!this.isEnabled()) {
+      this.lastMigrationReport = {
+        disabled: true,
+        migrated: [],
+        failed: [],
+      };
+      return this.lastMigrationReport;
+    }
     this._migrated = true;
+    const report = {
+      disabled: false,
+      migrated: [],
+      failed: [],
+    };
     let entries;
     try {
       entries = readdirSync(this.root, { withFileTypes: true });
     } catch {
-      return;                       // no store yet: nothing to migrate
+      this.lastMigrationReport = report;
+      return report;                       // no store yet: nothing to migrate
     }
     const wanted = new Map(current.map((b) => [b.filename, b]));
     const live = new Set(current.map((b) => filesystemSegment(b.ancestorRappid)));
@@ -183,8 +238,13 @@ export class LineageStore {
       const baseline = locus && wanted.get(locus.filename);
       if (!baseline) continue;                     // not ours; leave it alone
       try {
-        const legacyAncestor = locus.ancestorRappid;
-        const rings = readdirSync(path.join(legacyDir, "rings"), { withFileTypes: true })
+       if (!this.isEnabled()) {
+         report.disabled = true;
+         this._migrated = false;
+         break;
+       }
+       const legacyAncestor = locus.ancestorRappid;
+       const rings = readdirSync(path.join(legacyDir, "rings"), { withFileTypes: true })
           .filter((d) => d.isDirectory() && !d.name.startsWith("."))
           .map((d) => {
             const meta = readJsonSafe(path.join(legacyDir, "rings", d.name, RING_META_FILE));
@@ -217,13 +277,33 @@ export class LineageStore {
         }
         const newHead = legacyHead && remap.get(legacyHead);
         if (newHead && newHead !== baseline.ancestorRappid) {
-          try { this.setHead(baseline.ancestorRappid, newHead); } catch {}
+          const moved = this.setHead(
+            baseline.ancestorRappid,
+            newHead,
+            { env: DEFAULT_ENV },
+          );
+          if (moved !== true) {
+            if (moved?.disabled) {
+              report.disabled = true;
+              this._migrated = false;
+            }
+            throw new Error(
+              moved?.reason || "Legacy lineage HEAD could not be re-pointed.",
+            );
+          }
         }
         renameSync(legacyDir, path.join(this.root, `.migrated-${entry.name}`));
-      } catch {
+        report.migrated.push(baseline.ancestorRappid);
+      } catch (error) {
         // A locus that will not migrate is left exactly as it was.
+        report.failed.push({
+          ancestorRappid: baseline.ancestorRappid,
+          error: String(error?.message || error),
+        });
       }
     }
+    this.lastMigrationReport = report;
+    return report;
   }
 
   baselineAncestors() {
@@ -272,22 +352,37 @@ export class LineageStore {
     );
   }
 
-  _headPath(ancestorRappid) {
-    return path.join(this._locusDirectory(ancestorRappid), HEAD_FILE);
+  _headPath(ancestorRappid, env = DEFAULT_ENV) {
+   const environment = normalizeEnvironment(env);
+   return path.join(
+     this._locusDirectory(ancestorRappid),
+     environment === DEFAULT_ENV
+       ? HEAD_FILE
+       : `${HEAD_FILE}.${environment}`,
+   );
   }
 
-  _priorHeadPath(ancestorRappid) {
-    return path.join(this._locusDirectory(ancestorRappid), PRIOR_FILE);
+  _priorHeadPath(ancestorRappid, env = DEFAULT_ENV) {
+   const environment = normalizeEnvironment(env);
+   return path.join(
+     this._locusDirectory(ancestorRappid),
+     environment === DEFAULT_ENV
+       ? PRIOR_FILE
+       : `${PRIOR_FILE}.${environment}`,
+   );
   }
 
   /** The generation a rollback displaced, so `restore` can be the true inverse
    *  of `baseline` rather than a fast-forward to whatever is newest. */
-  _readPriorHead(ancestorRappid) {
-    try {
-      const value = readFileSync(this._priorHeadPath(ancestorRappid), "utf8").trim();
-      return rappidValid(value) ? value : null;
-    } catch {
-      return null;
+  _readPriorHead(ancestorRappid, env = DEFAULT_ENV) {
+   try {
+     const value = readFileSync(
+       this._priorHeadPath(ancestorRappid, env),
+       "utf8",
+     ).trim();
+     return rappidValid(value) ? value : null;
+   } catch {
+     return null;
     }
   }
 
@@ -386,6 +481,29 @@ export class LineageStore {
     return [baselineRing, ...rings];
   }
 
+  /** Return the verified ancestry from the Grail baseline through `ringRappid`. */
+  walk(ancestorRappid, ringRappid) {
+    if (!this._baseline(ancestorRappid)) return [];
+    if (!ringRappid || ringRappid === ancestorRappid) {
+      return ringRappid === ancestorRappid ? [ancestorRappid] : [];
+    }
+    if (!this._pathIsValid(
+      ancestorRappid,
+      ringRappid,
+      { requireVerified: true },
+    )) {
+      return [];
+    }
+    const chain = [];
+    let current = ringRappid;
+    while (current !== ancestorRappid) {
+      chain.unshift(current);
+      current = this._readRing(ancestorRappid, current).parentRappid;
+    }
+    chain.unshift(ancestorRappid);
+    return chain;
+  }
+
   appendRing(
     ancestorRappid,
     {
@@ -480,10 +598,10 @@ export class LineageStore {
     return ringRappid;
   }
 
-  getHead(ancestorRappid) {
+  getHead(ancestorRappid, env = DEFAULT_ENV) {
     const baseline = this._baseline(ancestorRappid);
     if (!baseline) return null;
-    const headPath = this._headPath(ancestorRappid);
+    const headPath = this._headPath(ancestorRappid, env);
     if (!existsSync(headPath)) return ancestorRappid;
     try {
       const head = readFileSync(headPath, "utf8").trim();
@@ -491,6 +609,43 @@ export class LineageStore {
     } catch {
       return ancestorRappid;
     }
+  }
+
+  head(ancestorRappid, env = DEFAULT_ENV) {
+    return this.getHead(ancestorRappid, env);
+  }
+
+  environments(ancestorRappid) {
+    if (!this._baseline(ancestorRappid)) return [];
+    const names = new Set([DEFAULT_ENV]);
+    const locusDirectory = this._locusDirectory(ancestorRappid);
+    try {
+      for (const entry of readdirSync(locusDirectory, { withFileTypes: true })) {
+        if (!entry.isFile() || !entry.name.startsWith(`${HEAD_FILE}.`)) continue;
+        const requested = entry.name.slice(HEAD_FILE.length + 1);
+        if (
+          requested !== DEFAULT_ENV
+          && ENVIRONMENT_NAME.test(requested)
+          && normalizeEnvironment(requested) === requested
+        ) {
+          names.add(requested);
+        }
+      }
+    } catch {}
+    return [...names]
+      .sort((left, right) => (
+        left === DEFAULT_ENV ? -1
+          : right === DEFAULT_ENV ? 1
+            : left.localeCompare(right)
+      ))
+      .map((env) => {
+        const head = this.getHead(ancestorRappid, { env });
+        return {
+          env,
+          head,
+          isBaseline: head === ancestorRappid,
+        };
+      });
   }
 
   /** Per-locus molt policy. "pinned" means this gene locus never leaves its
@@ -504,9 +659,14 @@ export class LineageStore {
   }
 
   setLocusPolicy(ancestorRappid, policy) {
+    if (!this.isEnabled()) {
+      return disabledMutation("setLocusPolicy", DEFAULT_ENV);
+    }
     const baseline = this._baseline(ancestorRappid);
     if (!baseline) throw new Error(`Unknown Grail ancestor: ${ancestorRappid}`);
     const next = policy === "pinned" ? "pinned" : "mutable";
+    const environments = this.environments(ancestorRappid)
+      .map((entry) => entry.env);
     this._ensureLocus(baseline, next);
     const locusPath = path.join(
       this._locusDirectory(ancestorRappid),
@@ -520,14 +680,26 @@ export class LineageStore {
       sourcePath: baseline.sourcePath,
     };
     atomicWriteJson(locusPath, { ...locus, policy: next });
-    // Pinning is only meaningful if it takes effect now, not at the next molt.
+    // Pinning is only meaningful if it takes effect now in every environment,
+    // not at the next molt or only in the currently active environment.
     if (next === "pinned") {
-      atomicWrite(this._headPath(ancestorRappid), `${ancestorRappid}\n`);
+      for (const env of environments) {
+        const moved = this.setHead(ancestorRappid, ancestorRappid, { env });
+        if (moved !== true) {
+          throw new Error(
+            moved?.reason || `Could not pin ${env} to the Grail baseline.`,
+          );
+        }
+      }
     }
     return next;
   }
 
-  setHead(ancestorRappid, ringRappid) {
+  setHead(ancestorRappid, ringRappid, env = DEFAULT_ENV) {
+    const environment = normalizeEnvironment(env);
+    if (!this.isEnabled()) {
+      return disabledMutation("setHead", environment);
+    }
     const baseline = this._baseline(ancestorRappid);
     if (!baseline) throw new Error(`Unknown Grail ancestor: ${ancestorRappid}`);
     if (
@@ -549,7 +721,8 @@ export class LineageStore {
       throw new Error(`Refusing invalid or unverified molt ring: ${ringRappid}`);
     }
     this._ensureLocus(baseline);
-    atomicWrite(this._headPath(ancestorRappid), `${ringRappid}\n`);
+    atomicWrite(this._headPath(ancestorRappid, environment), `${ringRappid}\n`);
+    return true;
   }
 
   resolveRing(ancestorRappid, ringRappid) {
@@ -591,10 +764,10 @@ export class LineageStore {
     }
   }
 
-  resolveLive(ancestorRappid) {
+  resolveLive(ancestorRappid, env = DEFAULT_ENV) {
     return this.resolveRing(
       ancestorRappid,
-      this.getHead(ancestorRappid),
+      this.getHead(ancestorRappid, env),
     );
   }
 
@@ -619,16 +792,22 @@ export class LineageStore {
   /** Move HEAD across loci, isolating each one. A single failing locus must never
    *  abort the fleet and leave the rest molted — the whole point of the safe word
    *  is that it always lands somewhere safe. Returns a report, never throws. */
-  _moveHeads(targets, pick) {
+  _moveHeads(targets, pick, env = DEFAULT_ENV) {
+    const environment = normalizeEnvironment(env);
     const changed = [];
     const unchanged = [];
     const failed = [];
     for (const target of targets) {
       let before = null;
-      try { before = this.getHead(target); } catch {}
+      try { before = this.getHead(target, { env: environment }); } catch {}
       try {
         const next = pick(target);
-        this.setHead(target, next);
+        const moved = this.setHead(target, next, { env: environment });
+        if (moved !== true) {
+          throw new Error(
+            moved?.reason || `HEAD.${environment} write was refused.`,
+          );
+        }
         // Setting HEAD to where it already was is a no-op, and reporting it as a
         // change lets the caller tell the user their molts were restored when
         // nothing came back. A false "restored" is worse than an error: it ends
@@ -642,29 +821,54 @@ export class LineageStore {
     return { disabled: false, changed, unchanged, failed };
   }
 
-  rollbackToBaseline(ancestorRappid = null) {
+  rollbackToBaseline(ancestorRappid = null, env = DEFAULT_ENV) {
+    if (
+      ancestorRappid
+      && typeof ancestorRappid === "object"
+      && !Array.isArray(ancestorRappid)
+    ) {
+      env = ancestorRappid;
+      ancestorRappid = null;
+    }
+    const environment = normalizeEnvironment(env);
     if (!this.isEnabled()) return { disabled: true, changed: [], unchanged: [], failed: [] };
     return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
       // Remember where we were, so restore returns here instead of fast-
       // forwarding to whatever ring happens to be newest.
       try {
-        const current = this.getHead(target);
-        if (current && current !== target) {
-          atomicWrite(this._priorHeadPath(target), `${current}\n`);
+        const current = this.getHead(target, { env: environment });
+        if (
+          current
+          && current !== target
+          && this._pathIsValid(target, current, { requireVerified: true })
+        ) {
+          atomicWrite(
+            this._priorHeadPath(target, environment),
+            `${current}\n`,
+          );
         }
       } catch {}
       return target;
-    });
+    }, environment);
   }
 
-  restore(ancestorRappid = null) {
+  restore(ancestorRappid = null, env = DEFAULT_ENV) {
+    if (
+      ancestorRappid
+      && typeof ancestorRappid === "object"
+      && !Array.isArray(ancestorRappid)
+    ) {
+      env = ancestorRappid;
+      ancestorRappid = null;
+    }
+    const environment = normalizeEnvironment(env);
     if (!this.isEnabled()) return { disabled: true, changed: [], unchanged: [], failed: [] };
     return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
       // Pinned loci stay at baseline: restore must not fight the pin.
       if (this.locusPolicy(target) === "pinned") return target;
       // Prefer the generation the last rollback displaced — restore is the
       // inverse of baseline, not a fast-forward.
-      const prior = this._readPriorHead(target);
+      const prior = this._readPriorHead(target, environment);
       if (
         prior
         && prior !== target
@@ -684,7 +888,291 @@ export class LineageStore {
         ))
         .sort(newestFirst)[0];
       return latest?.ringRappid || target;
-    });
+    }, environment);
+  }
+
+  _promotionsFile(ancestorRappid) {
+    return path.join(this._locusDirectory(ancestorRappid), "promotions.json");
+  }
+
+  _promotionJournal(ancestorRappid) {
+    const file = this._promotionsFile(ancestorRappid);
+    if (!existsSync(file)) return { file, log: [], corrupt: false };
+    const log = readJsonSafe(file);
+    if (!Array.isArray(log)) return { file, log: null, corrupt: true };
+    return { file, log, corrupt: false };
+  }
+
+  _recordPromotion(ancestorRappid, entry) {
+    try {
+      const verification = this.verifyPromotions(ancestorRappid);
+      if (!verification.ok) return null;
+      const { file, log, corrupt } = this._promotionJournal(ancestorRappid);
+      if (corrupt) return null;
+      const previous = log.length
+        ? log[log.length - 1].entry_sha256
+        : null;
+      const record = {
+        schema: LINEAGE_SCHEMA,
+        ...entry,
+        prev_entry_sha256: previous,
+      };
+      record.entry_sha256 = sha256Hex(JSON.stringify(record));
+      atomicWriteJson(file, [...log, record]);
+      return record;
+    } catch {
+      return null;
+    }
+  }
+
+  listPromotions(ancestorRappid) {
+    try {
+      return this._promotionJournal(ancestorRappid).log || [];
+    } catch {
+      return [];
+    }
+  }
+
+  verifyPromotions(ancestorRappid) {
+    let journal;
+    try {
+      journal = this._promotionJournal(ancestorRappid);
+    } catch {
+      return {
+        ok: false,
+        corrupt: true,
+        reason: JOURNAL_CORRUPT_REASON,
+      };
+    }
+    if (journal.corrupt) {
+      return {
+        ok: false,
+        corrupt: true,
+        reason: JOURNAL_CORRUPT_REASON,
+      };
+    }
+    let previous = null;
+    for (let index = 0; index < journal.log.length; index += 1) {
+      const { entry_sha256: digest, ...entry } = journal.log[index] || {};
+      if (
+        entry.prev_entry_sha256 !== previous
+        || sha256Hex(JSON.stringify(entry)) !== digest
+      ) {
+        return { ok: false, broken_at: index };
+      }
+      previous = digest;
+    }
+    return { ok: true, entries: journal.log.length };
+  }
+
+  promote(
+    ancestorRappid,
+    {
+      fromEnv = DEFAULT_ENV,
+      toEnv = DEFAULT_ENV,
+      actor = null,
+      utc = null,
+    } = {},
+  ) {
+    const sourceEnvironment = normalizeEnvironment(fromEnv);
+    const targetEnvironment = normalizeEnvironment(toEnv);
+    if (!this.isEnabled()) {
+      return disabledMutation("promote", targetEnvironment);
+    }
+    if (!this._baseline(ancestorRappid)) {
+      return {
+        ok: false,
+        refused: true,
+        reason: `Unknown Grail ancestor: ${ancestorRappid}`,
+      };
+    }
+    const journal = this.verifyPromotions(ancestorRappid);
+    if (!journal.ok) {
+      return {
+        ok: false,
+        journal_corrupt: true,
+        refused: true,
+        reason: JOURNAL_CORRUPT_REASON,
+      };
+    }
+    const record = (outcome) => {
+      const written = this._recordPromotion(ancestorRappid, {
+        from_env: sourceEnvironment,
+        to_env: targetEnvironment,
+        actor,
+        utc: utc || this.now(),
+        ...outcome,
+      });
+      if (!written) {
+        return {
+          ok: false,
+          journal_refused: true,
+          refused: true,
+          reason: JOURNAL_WRITE_REASON,
+        };
+      }
+      return outcome;
+    };
+
+    try {
+      const sourceHead = this.getHead(
+        ancestorRappid,
+        { env: sourceEnvironment },
+      );
+      const targetHead = this.getHead(
+        ancestorRappid,
+        { env: targetEnvironment },
+      );
+      const sourceChain = this.walk(ancestorRappid, sourceHead);
+      const targetChain = this.walk(ancestorRappid, targetHead);
+      if (!sourceChain.length) {
+        return record({
+          ok: false,
+          refused: true,
+          reason: "source environment HEAD is not a verified lineage",
+          source_head: sourceHead,
+        });
+      }
+      if (!targetChain.length) {
+        return record({
+          ok: false,
+          refused: true,
+          reason: "target environment HEAD is not a verified lineage",
+          target_head: targetHead,
+          source_head: sourceHead,
+        });
+      }
+      if (sourceHead === targetHead) {
+        return record({
+          ok: true,
+          reason: "already in sync",
+          noop: true,
+          target_head: targetHead,
+          source_head: sourceHead,
+        });
+      }
+      if (!sourceChain.includes(targetHead)) {
+        const commonAncestor = [...sourceChain]
+          .reverse()
+          .find((ringRappid) => targetChain.includes(ringRappid))
+          || null;
+        return record({
+          ok: false,
+          conflict: true,
+          reason: "target environment has diverged (a conflicting molt the promotion did not build on)",
+          target_head: targetHead,
+          source_head: sourceHead,
+          common_ancestor: commonAncestor,
+        });
+      }
+
+      // Journal the successful fast-forward before moving the pointer: a HEAD
+      // must never advance if its audit record cannot be durably written.
+      const outcome = {
+        ok: true,
+        reason: "fast-forward",
+        target_head: sourceHead,
+        source_head: sourceHead,
+      };
+      const recorded = record(outcome);
+      if (!recorded.ok) return recorded;
+      const moved = this.setHead(
+        ancestorRappid,
+        sourceHead,
+        { env: targetEnvironment },
+      );
+      if (moved !== true) {
+        return {
+          ok: false,
+          disabled: Boolean(moved?.disabled),
+          refused: true,
+          reason: moved?.reason || "target HEAD write was refused",
+          source_head: sourceHead,
+          target_head: targetHead,
+        };
+      }
+      return outcome;
+    } catch (error) {
+      return record({
+        ok: false,
+        refused: true,
+        reason: `promotion failed: ${String(error?.message || error)}`,
+      });
+    }
+  }
+
+  promoteAll({
+    fromEnv = DEFAULT_ENV,
+    toEnv = DEFAULT_ENV,
+    actor = null,
+    utc = null,
+  } = {}) {
+    if (!this.isEnabled()) {
+      return {
+        disabled: true,
+        changed: [],
+        unchanged: [],
+        conflicts: [],
+        failed: [],
+      };
+    }
+    const changed = [];
+    const unchanged = [];
+    const conflicts = [];
+    const failed = [];
+    for (const baseline of this.baselineAncestors()) {
+      try {
+        const outcome = this.promote(baseline.ancestorRappid, {
+          fromEnv,
+          toEnv,
+          actor,
+          utc,
+        });
+        if (outcome.ok && outcome.noop) {
+          unchanged.push(baseline.ancestorRappid);
+        } else if (outcome.ok) {
+          changed.push(baseline.ancestorRappid);
+        } else if (outcome.conflict) {
+          conflicts.push({
+            ancestorRappid: baseline.ancestorRappid,
+            filename: baseline.filename,
+            ...outcome,
+          });
+        } else {
+          failed.push({
+            ancestorRappid: baseline.ancestorRappid,
+            filename: baseline.filename,
+            error: outcome.reason || "promotion was refused",
+            ...outcome,
+          });
+        }
+      } catch (error) {
+        failed.push({
+          ancestorRappid: baseline.ancestorRappid,
+          filename: baseline.filename,
+          error: String(error?.message || error),
+        });
+      }
+    }
+    return {
+      disabled: false,
+      changed,
+      unchanged,
+      conflicts,
+      failed,
+    };
+  }
+
+  detectDrift(ancestorRappid, env, expectedBaseRing) {
+    const environment = normalizeEnvironment(env);
+    const actual = this.getHead(ancestorRappid, { env: environment });
+    const expected = expectedBaseRing || null;
+    return {
+      drifted: (actual || null) !== expected,
+      actual: actual || null,
+      expected,
+      env: environment,
+    };
   }
 
   /** Count ring directories on disk whose metadata will not parse. listRings
@@ -757,6 +1245,7 @@ export class LineageStore {
 export const lineageStoreInternals = {
   ancestorRappidFor,
   filesystemSegment,
+  normalizeEnvironment,
   ringRappidFor,
   sourceSha256,
 };
@@ -790,24 +1279,27 @@ export function appendRing(ancestorRappid, frame) {
   return configuredStore().appendRing(ancestorRappid, frame);
 }
 
-export function getHead(ancestorRappid) {
-  return configuredStore().getHead(ancestorRappid);
+export function getHead(ancestorRappid, env = DEFAULT_ENV) {
+  return configuredStore().getHead(ancestorRappid, env);
 }
 
-export function setHead(ancestorRappid, ringRappid) {
-  return configuredStore().setHead(ancestorRappid, ringRappid);
+export function setHead(ancestorRappid, ringRappid, env = DEFAULT_ENV) {
+  return configuredStore().setHead(ancestorRappid, ringRappid, env);
 }
 
-export function resolveLive(ancestorRappid) {
-  return configuredStore().resolveLive(ancestorRappid);
+export function resolveLive(ancestorRappid, env = DEFAULT_ENV) {
+  return configuredStore().resolveLive(ancestorRappid, env);
 }
 
-export function rollbackToBaseline(ancestorRappid = null) {
-  return configuredStore().rollbackToBaseline(ancestorRappid);
+export function rollbackToBaseline(
+  ancestorRappid = null,
+  env = DEFAULT_ENV,
+) {
+  return configuredStore().rollbackToBaseline(ancestorRappid, env);
 }
 
-export function restore(ancestorRappid = null) {
-  return configuredStore().restore(ancestorRappid);
+export function restore(ancestorRappid = null, env = DEFAULT_ENV) {
+  return configuredStore().restore(ancestorRappid, env);
 }
 
 export function verifyChain(ancestorRappid) {
@@ -824,4 +1316,36 @@ export function locusPolicy(ancestorRappid) {
 
 export function setLocusPolicy(ancestorRappid, policy) {
   return configuredStore().setLocusPolicy(ancestorRappid, policy);
+}
+
+export function environments(ancestorRappid) {
+  return configuredStore().environments(ancestorRappid);
+}
+
+export function walk(ancestorRappid, ringRappid) {
+  return configuredStore().walk(ancestorRappid, ringRappid);
+}
+
+export function promote(ancestorRappid, options = {}) {
+  return configuredStore().promote(ancestorRappid, options);
+}
+
+export function promoteAll(options = {}) {
+  return configuredStore().promoteAll(options);
+}
+
+export function detectDrift(ancestorRappid, env, expectedBaseRing) {
+  return configuredStore().detectDrift(
+    ancestorRappid,
+    env,
+    expectedBaseRing,
+  );
+}
+
+export function listPromotions(ancestorRappid) {
+  return configuredStore().listPromotions(ancestorRappid);
+}
+
+export function verifyPromotions(ancestorRappid) {
+  return configuredStore().verifyPromotions(ancestorRappid);
 }

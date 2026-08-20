@@ -1394,6 +1394,18 @@ function registerIpc() {
       env: process.env,
     });
   });
+  ipcMain.handle("beta:lineage-environments", (event) => {
+    assertTrustedIpc(event);
+    return routeManager.lineageEnvironments();
+  });
+  ipcMain.handle("beta:lineage-promote", (event, options) => {
+    assertTrustedIpc(event);
+    return routeManager.promoteLineage(options || {});
+  });
+  ipcMain.handle("beta:lineage-drift", (event, env) => {
+    assertTrustedIpc(event);
+    return routeManager.lineageDrift(env);
+  });
   ipcMain.handle(
     "beta:check-for-updates",
     (event) => {

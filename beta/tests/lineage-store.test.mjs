@@ -17,6 +17,7 @@ import {
   configureLineageStore,
   lineageStoreInternals,
 } from "../electron/lineage-store.mjs";
+import { BetaRouteManager } from "../electron/route-manager.mjs";
 
 
 function fixture(t) {
@@ -714,4 +715,136 @@ test("a restore that recovers nothing is not reported as a restore", (t) => {
   const real = store.restore(alpha.ancestorRappid);
   assert.deepEqual(real.changed, [alpha.ancestorRappid], "a real restore is a change");
   assert.equal(store.getHead(alpha.ancestorRappid), ring);
+});
+
+test("every HEAD-write path re-checks a kill switch flipped after construction", (t) => {
+  const { store, root } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const first = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'one'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+  });
+  const second = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'two'\n",
+    parentRappid: first,
+    verified: true,
+  });
+  store.setHead(alpha.ancestorRappid, first);
+  store.setHead(alpha.ancestorRappid, first, { env: "prod" });
+
+  const manager = new BetaRouteManager({
+    betaHome: path.join(root, "beta-home"),
+    brainstemConfig: {
+      brainstemDir: store.brainstemDir,
+      python: "/tmp/python",
+    },
+    lineageStore: store,
+    seedLineageDefaults: false,
+    compositionValidator: () => true,
+    moltVerifier: () => true,
+  });
+
+  // Prepare a legacy locus before opening the fresh store that would migrate it.
+  const legacyRoot = path.join(root, "legacy-lineage");
+  const legacyAncestor = "rappid:@grail/alpha:" + "c".repeat(64);
+  const legacyRing = "rappid:@frontier/alpha-ring:" + "b".repeat(64);
+  const legacyDir = path.join(
+    legacyRoot,
+    lineageStoreInternals.filesystemSegment(legacyAncestor),
+  );
+  const legacyRingDir = path.join(
+    legacyDir,
+    "rings",
+    lineageStoreInternals.filesystemSegment(legacyRing),
+  );
+  mkdirSync(legacyRingDir, { recursive: true });
+  writeFileSync(path.join(legacyDir, "locus.json"), JSON.stringify({
+    schema: "molt-lineage/1.0",
+    ancestorRappid: legacyAncestor,
+    filename: "alpha_agent.py",
+  }));
+  writeFileSync(path.join(legacyDir, "HEAD"), `${legacyRing}\n`);
+  writeFileSync(
+    path.join(legacyRingDir, "source.py"),
+    "ALPHA = 'legacy'\n",
+  );
+  writeFileSync(path.join(legacyRingDir, "meta.json"), JSON.stringify({
+    ringRappid: legacyRing,
+    parentRappid: legacyAncestor,
+    ancestorRappid: legacyAncestor,
+    verified: true,
+    createdAt: "2026-01-01T00:00:00.000Z",
+  }));
+  const migrationStore = new LineageStore({
+    brainstemDir: store.brainstemDir,
+    root: legacyRoot,
+  });
+
+  const locusDir = path.join(
+    store.root,
+    lineageStoreInternals.filesystemSegment(alpha.ancestorRappid),
+  );
+  const beforeDefault = readFileSync(path.join(locusDir, "HEAD"), "utf8");
+  const beforeProd = readFileSync(path.join(locusDir, "HEAD.prod"), "utf8");
+  const previous = process.env.RAPP_MOLT_LINEAGE;
+  process.env.RAPP_MOLT_LINEAGE = "0";
+  t.after(() => {
+    if (previous === undefined) delete process.env.RAPP_MOLT_LINEAGE;
+    else process.env.RAPP_MOLT_LINEAGE = previous;
+  });
+
+  const direct = store.setHead(alpha.ancestorRappid, second);
+  assert.equal(direct.disabled, true, "setHead refuses at call time");
+  assert.equal(store.rollbackToBaseline(alpha.ancestorRappid).disabled, true);
+  assert.equal(store.restore(alpha.ancestorRappid).disabled, true);
+  const promotion = store.promote(alpha.ancestorRappid, {
+    fromEnv: "default",
+    toEnv: "prod",
+  });
+  assert.equal(promotion.disabled, true, "promotion refuses at call time");
+  for (const policy of ["pinned", "mutable"]) {
+    const policyResult = store.setLocusPolicy(alpha.ancestorRappid, policy);
+    assert.equal(
+      policyResult.disabled,
+      true,
+      `${policy} policy refuses at call time`,
+    );
+  }
+
+  // Seeding must stop before even reading baselines, not merely rely on a
+  // later setHead refusal after it has appended a ring.
+  manager.lineageStore.baselineAncestors = () => {
+    throw new Error("seed crossed the disabled gate");
+  };
+  const seed = manager.seedContextMemoryRing1();
+  assert.equal(seed.disabled, true, "ring-1 seeding refuses at call time");
+
+  migrationStore.baselineAncestors();
+  assert.equal(
+    migrationStore.lastMigrationReport.disabled,
+    true,
+    "legacy migration reports its refused re-point",
+  );
+  assert.equal(existsSync(legacyDir), true, "legacy locus was not renamed");
+  assert.equal(
+    existsSync(path.join(
+      legacyRoot,
+      lineageStoreInternals.filesystemSegment(alpha.ancestorRappid),
+      "HEAD",
+    )),
+    false,
+    "migration did not create a replacement HEAD",
+  );
+
+  assert.equal(readFileSync(path.join(locusDir, "HEAD"), "utf8"), beforeDefault);
+  assert.equal(readFileSync(path.join(locusDir, "HEAD.prod"), "utf8"), beforeProd);
+  assert.equal(store.locusPolicy(alpha.ancestorRappid), "mutable");
+  assert.equal(
+    existsSync(path.join(locusDir, "promotions.json")),
+    false,
+    "disabled promotion did not fabricate an audit entry",
+  );
 });

@@ -13,7 +13,14 @@ import {
 
 const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-function managerFixture({ changed = 1, unchanged = 0, failed = [] } = {}) {
+function managerFixture({
+  changed = 1,
+  unchanged = 0,
+  failed = [],
+  promotion = null,
+  drift = null,
+  environments = null,
+} = {}) {
   const calls = [];
   // The real route manager returns a report saying what actually moved. A double
   // that returns nothing makes every command look like a no-op, which is exactly
@@ -30,6 +37,50 @@ function managerFixture({ changed = 1, unchanged = 0, failed = [] } = {}) {
     manager: {
       rollbackLineage: () => { calls.push("baseline"); return report(); },
       restoreLineage: () => { calls.push("restore"); return report(); },
+      lineageEnvironments: () => {
+        calls.push("environments");
+        return environments || {
+          disabled: false,
+          loci: [{
+            ancestorRappid: "rappid:@grail/echo:" + "a".repeat(64),
+            filename: "echo_agent.py",
+            environments: [
+              {
+                env: "default",
+                head: "rappid:@grail/echo:" + "a".repeat(64),
+                isBaseline: true,
+              },
+              {
+                env: "prod",
+                head: "rappid:@frontier/echo-ring:" + "b".repeat(64),
+                isBaseline: false,
+              },
+            ],
+          }],
+        };
+      },
+      promoteLineage: (options) => {
+        calls.push(`promote:${options.fromEnv}:${options.toEnv}`);
+        return promotion || {
+          disabled: false,
+          changed: ["rappid:@grail/echo:" + "a".repeat(64)],
+          unchanged: [],
+          conflicts: [],
+          failed: [],
+          fromEnv: options.fromEnv,
+          toEnv: options.toEnv,
+        };
+      },
+      lineageDrift: (environment) => {
+        calls.push(`drift:${environment}`);
+        return drift || {
+          disabled: false,
+          env: environment,
+          baseEnv: "default",
+          drifted: [],
+          loci: [],
+        };
+      },
       startDefault: async () => {
         calls.push("materialize");
         return {
@@ -88,6 +139,145 @@ test("safe-word interceptor honors custom baseline and restore words", async () 
   });
   assert.equal(restored.reply, lineageControlReplies.restore);
   assert.deepEqual(calls, ["restore", "materialize"]);
+});
+
+test("ALM chat words parse exactly and honor configured command words", () => {
+  assert.deepEqual(parseLineageCommand("promote default prod"), {
+    action: "promote",
+    original: "promote default prod",
+    word: "promote",
+    fromEnv: "default",
+    toEnv: "prod",
+  });
+  assert.deepEqual(parseLineageCommand("drift prod"), {
+    action: "drift",
+    original: "drift prod",
+    word: "drift",
+    env: "prod",
+  });
+  assert.equal(parseLineageCommand("talk about environments"), null);
+  assert.equal(parseLineageCommand("promoted default prod"), null);
+  assert.equal(parseLineageCommand("environments").action, "environments");
+  assert.equal(parseLineageCommand("promote").invalid, true);
+  assert.equal(parseLineageCommand("drift prod extra").invalid, true);
+
+  const env = {
+    RAPP_ENVIRONMENTS_WORD: "show rings",
+    RAPP_PROMOTE_WORD: "ship",
+    RAPP_DRIFT_WORD: "compare",
+  };
+  assert.equal(parseLineageCommand("environments", env), null);
+  assert.equal(parseLineageCommand("show rings", env).action, "environments");
+  assert.deepEqual(parseLineageCommand("ship dev production", env), {
+    action: "promote",
+    original: "ship dev production",
+    word: "ship",
+    fromEnv: "dev",
+    toEnv: "production",
+  });
+  assert.equal(parseLineageCommand("compare production", env).action, "drift");
+});
+
+test("environment, promotion, and drift commands return honest wire results", async () => {
+  const listedRun = managerFixture();
+  const listed = await executeLineageCommand({
+    message: "environments",
+    routeManager: listedRun.manager,
+  });
+  assert.equal(listed.intercepted, true);
+  assert.equal(listed.action, "environments");
+  assert.match(listed.reply, /echo_agent\.py: default → baseline, prod → b{8}/);
+  assert.equal(listed.environments.length, 1);
+  assert.deepEqual(listedRun.calls, ["environments"]);
+
+  const promotedRun = managerFixture();
+  const promoted = await executeLineageCommand({
+    message: "promote default prod",
+    routeManager: promotedRun.manager,
+  });
+  assert.deepEqual(promotedRun.calls, [
+    "promote:default:prod",
+    "materialize",
+  ]);
+  assert.equal(promoted.changed, 1);
+  assert.equal(promoted.unchanged, 0);
+  assert.equal(promoted.fromEnv, "default");
+  assert.equal(promoted.toEnv, "prod");
+  assert.match(promoted.reply, /Promoted 1 agents to prod\./);
+  assert.equal(promoted.compositionHash, "composed");
+  assert.equal(promoted.url, "http://127.0.0.1:7001");
+
+  const driftRun = managerFixture();
+  const drift = await executeLineageCommand({
+    message: "drift prod",
+    routeManager: driftRun.manager,
+  });
+  assert.equal(drift.action, "drift");
+  assert.match(drift.reply, /No drift detected in prod against default/);
+  assert.deepEqual(driftRun.calls, ["drift:prod"]);
+});
+
+test("promotion conflicts name the agent and never claim a move", async () => {
+  const conflictRun = managerFixture({
+    promotion: {
+      disabled: false,
+      changed: [],
+      unchanged: [],
+      conflicts: [{
+        ancestorRappid: "rappid:@grail/echo:" + "a".repeat(64),
+        filename: "echo_agent.py",
+        conflict: true,
+      }],
+      failed: [],
+      fromEnv: "default",
+      toEnv: "prod",
+    },
+  });
+  const result = await executeLineageCommand({
+    message: "promote default prod",
+    routeManager: conflictRun.manager,
+  });
+  assert.match(
+    result.reply,
+    /CONFLICT on echo_agent\.py: prod has a molt default never built on — nothing moved/,
+  );
+  assert.equal(result.changed, 0);
+  assert.equal(result.conflicts.length, 1);
+});
+
+test("every ALM chat command reports the call-time kill switch", async () => {
+  for (const message of [
+    "environments",
+    "promote default prod",
+    "drift prod",
+  ]) {
+    const run = managerFixture({
+      environments: { disabled: true, loci: [] },
+      promotion: {
+        disabled: true,
+        changed: [],
+        unchanged: [],
+        conflicts: [],
+        failed: [],
+        fromEnv: "default",
+        toEnv: "prod",
+      },
+      drift: {
+        disabled: true,
+        env: "prod",
+        baseEnv: "default",
+        drifted: [],
+        loci: [],
+      },
+    });
+    const result = await executeLineageCommand({
+      message,
+      routeManager: run.manager,
+    });
+    assert.equal(result.disabled, true);
+    assert.equal(result.reply, lineageControlReplies.disabled);
+    assert.doesNotMatch(run.calls.join(","), /materialize/);
+  }
 });
 
 test("lineage commands round-trip the full wire result shape", async () => {
@@ -218,9 +408,15 @@ test("renderer intercepts before Grail chat and main exposes the lineage IPC", (
   assert.match(renderer, /pendingLineageReply\.url !== loadedFrameUrl/);
   assert.match(renderer, /brainstemBeta\.lineageCommand/);
   assert.match(main, /beta:lineage-command/);
+  assert.match(main, /beta:lineage-environments/);
+  assert.match(main, /beta:lineage-promote/);
+  assert.match(main, /beta:lineage-drift/);
   assert.match(main, /rapp-beta:lineage-confirmation-ack/);
   assert.match(main, /target\.pathname === "\/chat\/stream"/);
   assert.match(preload, /lineageCommand:/);
+  assert.match(preload, /lineageEnvironments:/);
+  assert.match(preload, /lineagePromote:/);
+  assert.match(preload, /lineageDrift:/);
   // The synthetic /chat/stream done-frame the bridge fabricates must keep the
   // DOUBLE-escaped separator: the bridge lives inside a template literal, so
   // only \\n\\n in main.mjs source puts the \n\n escape into the injected

@@ -155,6 +155,64 @@ test("HARD 1 — zero molts compose byte-for-byte identically to legacy passthro
   }
 });
 
+test("a named environment pinned to baseline composes byte-for-byte identically", (t) => {
+  const fixture = minimalFixture(t);
+  for (const baseline of fixture.store.baselineAncestors()) {
+    assert.equal(
+      fixture.store.setHead(
+        baseline.ancestorRappid,
+        baseline.ancestorRappid,
+        { env: "prod" },
+      ),
+      true,
+    );
+  }
+  const defaultManager = new BetaRouteManager({
+    ...fixture.managerOptions,
+    lineageEnv: "default",
+  });
+  const prodManager = new BetaRouteManager({
+    ...fixture.managerOptions,
+    lineageEnv: "prod",
+  });
+  const defaultDescriptor = defaultManager.compositionDescriptor();
+  const prodDescriptor = prodManager.compositionDescriptor();
+  assert.equal(prodDescriptor.compositionHash, defaultDescriptor.compositionHash);
+  assert.deepEqual(entryShape(prodDescriptor), entryShape(defaultDescriptor));
+  assert.deepEqual(prodDescriptor.lineageOverlays, []);
+});
+
+test("lineage telemetry names the active environment and default seeding precisely", (t) => {
+  const fixture = minimalFixture(t);
+  const manager = new BetaRouteManager({
+    ...fixture.managerOptions,
+    lineageEnv: "prod",
+    seedLineageDefaults: true,
+  });
+  manager.lineageEnvironments();
+  manager.rollbackLineage();
+  const lineageEvents = manager.telemetry.filter(
+    (event) => event.type.startsWith("lineage-"),
+  );
+  assert.ok(lineageEvents.length >= 3);
+  assert.ok(
+    lineageEvents.every((event) => typeof event.env === "string"),
+    "every lineage telemetry event must carry an environment",
+  );
+  const seed = lineageEvents.find(
+    (event) => event.type === "lineage-default-skipped",
+  );
+  assert.equal(seed.env, "default", "ring-1 seeding always targets default");
+  assert.equal(
+    lineageEvents.find((event) => event.type === "lineage-environments").env,
+    "prod",
+  );
+  assert.equal(
+    lineageEvents.find((event) => event.type === "lineage-rollback").env,
+    "prod",
+  );
+});
+
 test("HARD 2 — Grail remains blind to Molt Lineage", () => {
   const brainstem = readFileSync(
     path.join(grailDirectory, "brainstem.py"),
