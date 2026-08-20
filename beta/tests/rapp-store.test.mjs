@@ -184,7 +184,10 @@ test("the enforced app version defaults to the launcher's own package.json", () 
 });
 
 test("store installs validate and persist before an atomic routed-worker swap", () => {
-  const main = readFileSync(new URL("../electron/main.mjs", import.meta.url), "utf8");
+  const main = readFileSync(
+    new URL("../electron/main.mjs", import.meta.url),
+    "utf8",
+  ).replaceAll("\r\n", "\n");
   const start = main.indexOf("async function installAgentToBrainstem");
   const end = main.indexOf("\nconst twinManager", start);
   const install = main.slice(start, end);

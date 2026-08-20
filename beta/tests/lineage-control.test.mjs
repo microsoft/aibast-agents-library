@@ -607,9 +607,18 @@ test("a safe word returns before the lifecycle lock and restarts after release",
 });
 
 test("renderer intercepts before Grail chat and main exposes the lineage IPC", () => {
-  const renderer = readFileSync(path.join(betaRoot, "ui", "renderer.js"), "utf8");
-  const main = readFileSync(path.join(betaRoot, "electron", "main.mjs"), "utf8");
-  const preload = readFileSync(path.join(betaRoot, "electron", "preload.cjs"), "utf8");
+  const renderer = readFileSync(
+    path.join(betaRoot, "ui", "renderer.js"),
+    "utf8",
+  ).replaceAll("\r\n", "\n");
+  const main = readFileSync(
+    path.join(betaRoot, "electron", "main.mjs"),
+    "utf8",
+  ).replaceAll("\r\n", "\n");
+  const preload = readFileSync(
+    path.join(betaRoot, "electron", "preload.cjs"),
+    "utf8",
+  ).replaceAll("\r\n", "\n");
   assert.match(renderer, /type === "rapp-beta:lineage-chat"/);
   assert.match(renderer, /rapp-beta:lineage-confirmation-ack/);
   assert.match(renderer, /pendingLineageReply\.url !== loadedFrameUrl/);

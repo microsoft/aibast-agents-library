@@ -8,7 +8,9 @@ import test from "node:test";
 import { uiDriverInternals } from "../electron/ui-driver-server.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const read = (r) => readFileSync(path.join(root, r), "utf8");
+const read = (r) => (
+  readFileSync(path.join(root, r), "utf8").replaceAll("\r\n", "\n")
+);
 const renderer = read("ui/renderer.js");
 const ui = read("ui/index.html");
 const preload = read("electron/preload.cjs");

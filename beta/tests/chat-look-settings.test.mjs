@@ -94,11 +94,11 @@ test("trusted IPC and both menus use the persistent chat look change", () => {
   const main = readFileSync(
     new URL("../electron/main.mjs", import.meta.url),
     "utf8",
-  );
+  ).replaceAll("\r\n", "\n");
   const preload = readFileSync(
     new URL("../electron/preload.cjs", import.meta.url),
     "utf8",
-  );
+  ).replaceAll("\r\n", "\n");
 
   assert.match(main, /ipcMain\.handle\("beta:set-chat-look"/);
   assert.match(main, /assertTrustedIpc\(event\)/);

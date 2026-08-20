@@ -7,11 +7,11 @@ await import("../ui/chat-look.js");
 const renderer = readFileSync(
   new URL("../ui/renderer.js", import.meta.url),
   "utf8",
-);
+).replaceAll("\r\n", "\n");
 const shell = readFileSync(
   new URL("../ui/index.html", import.meta.url),
   "utf8",
-);
+).replaceAll("\r\n", "\n");
 const {
   markArrived,
   markGroupLast,

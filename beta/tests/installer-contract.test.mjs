@@ -13,7 +13,10 @@ const frontierWindows = readFileSync(path.join(root, "frontier.ps1"), "utf8");
 const packageJson = JSON.parse(
   readFileSync(path.join(root, "package.json"), "utf8"),
 );
-const main = readFileSync(path.join(root, "electron", "main.mjs"), "utf8");
+const main = readFileSync(
+  path.join(root, "electron", "main.mjs"),
+  "utf8",
+).replaceAll("\r\n", "\n");
 const brainSurgeon = readFileSync(
   path.join(root, "electron", "brain-surgeon.mjs"),
   "utf8",
@@ -26,9 +29,18 @@ const uiDriverServer = readFileSync(
   path.join(root, "electron", "ui-driver-server.mjs"),
   "utf8",
 );
-const preload = readFileSync(path.join(root, "electron", "preload.cjs"), "utf8");
-const ui = readFileSync(path.join(root, "ui", "index.html"), "utf8");
-const renderer = readFileSync(path.join(root, "ui", "renderer.js"), "utf8");
+const preload = readFileSync(
+  path.join(root, "electron", "preload.cjs"),
+  "utf8",
+).replaceAll("\r\n", "\n");
+const ui = readFileSync(
+  path.join(root, "ui", "index.html"),
+  "utf8",
+).replaceAll("\r\n", "\n");
+const renderer = readFileSync(
+  path.join(root, "ui", "renderer.js"),
+  "utf8",
+).replaceAll("\r\n", "\n");
 const uiDriverAgent = readFileSync(
   path.join(root, "scripts", "brainstem_ui_driver_agent.py"),
   "utf8",

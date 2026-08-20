@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const read = (r) => readFileSync(path.join(root, r), "utf8");
+const read = (r) => (
+  readFileSync(path.join(root, r), "utf8").replaceAll("\r\n", "\n")
+);
 const bytes = (r) => statSync(path.join(root, r)).size;
 
 // The canonical Brainstem brain glyph (the "swoosh") — the EXACT vector the

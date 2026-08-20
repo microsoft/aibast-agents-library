@@ -10,7 +10,9 @@ const require = createRequire(import.meta.url);
 import { TwinManager, twinManagerInternals } from "../electron/twin-manager.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const read = (r) => readFileSync(path.join(root, r), "utf8");
+const read = (r) => (
+  readFileSync(path.join(root, r), "utf8").replaceAll("\r\n", "\n")
+);
 
 test("twinSlug makes a safe agent-filename stem", () => {
   assert.equal(twinManagerInternals.twinSlug("JSON Doctor!"), "json-doctor");

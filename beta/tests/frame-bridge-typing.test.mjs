@@ -11,7 +11,7 @@ await import("../ui/chat-look.js");
 const mainSource = readFileSync(
   new URL("../electron/main.mjs", import.meta.url),
   "utf8",
-);
+).replaceAll("\r\n", "\n");
 const { createTailFollower } = globalThis.RappStreamFollow;
 const {
   createStreamPacer,
@@ -31,14 +31,15 @@ const {
   normalizeChatLook,
 } = globalThis.RappChatLook;
 
-function extractExpression(startMarker, endMarker) {
-  const declarationStart = mainSource.indexOf(startMarker);
-  const expressionStart = mainSource.indexOf("=", declarationStart) + 1;
-  const expressionEnd = mainSource.indexOf(endMarker, expressionStart);
+function extractExpression(startMarker, endMarker, source = mainSource) {
+  const normalizedSource = source.replaceAll("\r\n", "\n");
+  const declarationStart = normalizedSource.indexOf(startMarker);
+  const expressionStart = normalizedSource.indexOf("=", declarationStart) + 1;
+  const expressionEnd = normalizedSource.indexOf(endMarker, expressionStart);
   assert.ok(
     declarationStart >= 0 && expressionStart > 0 && expressionEnd > expressionStart,
   );
-  return mainSource.slice(expressionStart, expressionEnd);
+  return normalizedSource.slice(expressionStart, expressionEnd);
 }
 
 const smoothStreamCss = vm.runInNewContext(
@@ -49,8 +50,12 @@ const bridgeExpression = extractExpression(
   ";\n\nfunction frameBridgeInstallationSource",
 );
 
-function materializeBridgeSource(chatStreamMode) {
-  return vm.runInNewContext(bridgeExpression, {
+function materializeBridgeSource(
+  chatStreamMode,
+  expression = bridgeExpression,
+  streamCss = smoothStreamCss,
+) {
+  return vm.runInNewContext(expression, {
     applyLookStyles,
     chatStreamMode,
     createStreamPacer,
@@ -64,11 +69,33 @@ function materializeBridgeSource(chatStreamMode) {
     markArrived,
     markGroupLast,
     normalizeChatLook,
-    smoothStreamCss,
+    smoothStreamCss: streamCss,
     splitRenderPieces,
     splitTextPieces,
   });
 }
+
+test("CRLF main.mjs extracts and materializes the frame bridge", () => {
+  const crlfSource = mainSource.replaceAll("\n", "\r\n");
+  const crlfCssExpression = extractExpression(
+    "const smoothStreamCss =",
+    ";\nconst betaHome =",
+    crlfSource,
+  );
+  const crlfBridgeExpression = extractExpression(
+    "const BETA_FRAME_BRIDGE_SOURCE =",
+    ";\n\nfunction frameBridgeInstallationSource",
+    crlfSource,
+  );
+  const crlfCss = vm.runInNewContext(crlfCssExpression);
+
+  assert.equal(crlfBridgeExpression, bridgeExpression);
+  assert.equal(
+    materializeBridgeSource("smooth", crlfBridgeExpression, crlfCss),
+    materializeBridgeSource("smooth"),
+  );
+  console.log("CRLF main.mjs: bridge extraction and materialization succeeded");
+});
 
 function fakeClock() {
   let currentTime = 0;
