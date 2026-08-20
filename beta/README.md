@@ -94,8 +94,12 @@ restore the original styling; the choice is saved in `settings.json`, with
 `RAPP_CHAT_LOOK=messages|business` as an override. Delivery independently
 defaults to `RAPP_CHAT_STREAM=smooth`; use `raw` for the untouched kernel stream
 or `hold` for buffered delivery (`RAPP_CHAT_TYPING=1` remains a hold alias).
-Smooth mode keeps the reply tail above the exactly measured composer unless the
-user scrolls away.
+Smooth mode holds the kernel's SSE wire until the terminal event while Frontier
+renders the same source in a safely sanitized provisional assistant bubble at an
+adaptive, word-granular frame cadence. It then hands off once to the kernel's
+stable final bubble, avoiding the kernel's unresolved-Markdown render gate while
+keeping the reply tail above the exactly measured composer unless the user
+scrolls away. See [`docs/CHAT-STREAMING.md`](docs/CHAT-STREAMING.md).
 
 If the user gets stuck, another AI can visibly take over the same Brain Surgeon
 or Brainstem chat, perform the next steps in Frontier, show the evidence,
