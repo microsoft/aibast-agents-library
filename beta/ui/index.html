@@ -594,6 +594,10 @@
     html[data-rapp-stream="smooth"] .surgeon-message {
       transition: max-width 240ms ease;
     }
+    html[data-rapp-stream="smooth"] #surgeon-log {
+      padding-bottom: var(--rapp-surgeon-composer-clearance, 0px);
+      scroll-padding-bottom: var(--rapp-surgeon-composer-clearance, 0px);
+    }
     html[data-rapp-stream="smooth"] .surgeon-message.assistant.stream-arriving {
       position: relative;
       animation: surgeon-smooth-arrive 160ms ease-out both;
@@ -874,6 +878,7 @@
       </div>
     </div>
   </section>
+  <script src="stream-follow.js"></script>
   <script src="stream-pacing.js"></script>
   <script src="typing-delivery.js"></script>
   <script src="renderer.js"></script>

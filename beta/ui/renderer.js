@@ -47,6 +47,7 @@ const chatStreamMode = ["smooth", "raw", "hold"].includes(
 const chatTypingEnabled = chatStreamMode === "hold";
 document.documentElement.dataset.rappStream = chatStreamMode;
 const { createDelivery } = window.RappTypingDelivery;
+const { createTailFollower } = window.RappStreamFollow;
 const {
   createStreamPacer,
   setStreamArriving,
@@ -478,6 +479,55 @@ function activeSurgeon() {
 }
 
 // ── per-session transcript rendering (scoped to session.logEl) ──
+function surgeonScroller(session) {
+  return session.logEl.closest(".htrans") || surgeonLog;
+}
+
+function createSurgeonTailFollower(session) {
+  return createTailFollower({
+    distanceFromBottom: () => {
+      const scroller = surgeonScroller(session);
+      return scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop;
+    },
+    pinToBottom: () => {
+      const scroller = surgeonScroller(session);
+      scroller.scrollTop = Math.max(
+        0,
+        scroller.scrollHeight - scroller.clientHeight,
+      );
+    },
+    thresholdPx: 80,
+  });
+}
+
+function markSurgeonUserIntent(session, duration = 320) {
+  session.userIntentUntil = performance.now() + duration;
+}
+
+function handleSurgeonUserScroll(session) {
+  session.streamFollower?.handleScroll({
+    userInitiated: performance.now() <= session.userIntentUntil,
+  });
+}
+
+function prepareSurgeonStreaming(session) {
+  session.userIntentUntil = 0;
+  session.streamFollower = createSurgeonTailFollower(session);
+  session.streamResizeObserver = typeof ResizeObserver === "function"
+    ? new ResizeObserver(() => session.streamFollower.contentChanged())
+    : null;
+  session.logEl.addEventListener(
+    "wheel",
+    () => markSurgeonUserIntent(session),
+    { passive: true },
+  );
+  session.logEl.addEventListener(
+    "touchstart",
+    () => markSurgeonUserIntent(session, 500),
+    { passive: true },
+  );
+}
+
 function surgeonPlace(session, node) {
   if (session.thinkEl && session.thinkEl.parentNode === session.logEl) {
     session.logEl.insertBefore(node, session.thinkEl);
@@ -488,9 +538,16 @@ function surgeonPlace(session, node) {
 }
 
 function scrollSurgeon(session) {
-  const scroller = session.logEl.closest(".htrans") || surgeonLog;
+  const scroller = surgeonScroller(session);
   if (session.id === surgeonActiveId || session.tileEl) {
-    scroller.scrollTop = scroller.scrollHeight;
+    if (
+      chatStreamMode === "smooth"
+      && session.streamFollower?.state().active
+    ) {
+      session.streamFollower.contentChanged();
+    } else {
+      scroller.scrollTop = scroller.scrollHeight;
+    }
   }
 }
 
@@ -582,17 +639,24 @@ function createSurgeonPacer(session) {
       if (!session.streamEl) {
         session.streamEl = addSurgeonBubble(session, "assistant", "", false);
         setStreamArriving(session.streamEl, true);
+        session.streamResizeObserver?.disconnect();
+        session.streamResizeObserver?.observe(session.streamEl);
+        session.streamFollower.start();
       }
       session.streamEl.textContent += text;
+      session.streamFollower.contentChanged();
       scrollSurgeon(session);
     },
   });
 }
 
-function stopSurgeonPacer(session) {
-  session.pacer?.abort();
+function stopSurgeonPacer(session, { flush = false } = {}) {
+  if (flush) session.pacer?.finish();
+  else session.pacer?.abort();
   session.pacer = null;
   setStreamArriving(session.streamEl, false);
+  session.streamResizeObserver?.disconnect();
+  session.streamFollower?.stop();
 }
 
 function finishSurgeonStream(session, finalText) {
@@ -609,10 +673,12 @@ function finishSurgeonStream(session, finalText) {
     session.streamEl.textContent = finalText;
   }
   setStreamArriving(session.streamEl, false);
+  session.streamResizeObserver?.disconnect();
   session.history.push({
     role: "assistant",
     content: session.streamEl.textContent,
   });
+  session.streamFollower?.complete();
   session.streamEl = null;
   saveSurgeonSessions();
 }
@@ -760,6 +826,7 @@ function newSurgeonSession(activate = true) {
     thinkEl: null,
     tools: [],
   };
+  prepareSurgeonStreaming(session);
   surgeonSessions.push(session);
   renderSurgeonEmpty(session);
   if (surgeonHerd) {
@@ -792,6 +859,7 @@ function restoreSurgeonSession(data) {
     thinkEl: null,
     tools: [],
   };
+  prepareSurgeonStreaming(session);
   surgeonSessions.push(session);
   if (surgeonSeq < session.id) surgeonSeq = session.id;
   for (const message of session.history) {
@@ -823,6 +891,8 @@ function closeSurgeonSession(id) {
   const session = surgeonSessions[index];
   session.delivery?.abort();
   session.pacer?.abort();
+  session.streamResizeObserver?.disconnect();
+  session.streamFollower?.stop();
   session.tileEl?.remove();
   session.logEl.remove();
   surgeonSessions.splice(index, 1);
@@ -1053,7 +1123,13 @@ function surgeonTileFor(session) {
       <button type="button" title="Send">➤</button>
     </div>
   `;
-  tile.querySelector(".htrans").appendChild(session.logEl);
+  const transcript = tile.querySelector(".htrans");
+  transcript.appendChild(session.logEl);
+  transcript.addEventListener(
+    "scroll",
+    () => handleSurgeonUserScroll(session),
+    { passive: true },
+  );
   session.logEl.style.display = "";
   const textarea = tile.querySelector(".hcomp textarea");
   const button = tile.querySelector(".hcomp button");
@@ -1347,6 +1423,8 @@ async function runSurgeon(session, prompt) {
   session.streamEl = null;
   session.delivery?.abort();
   session.pacer?.abort();
+  session.streamResizeObserver?.disconnect();
+  session.streamFollower?.stop();
   session.delivery = chatTypingEnabled ? createSurgeonDelivery(session) : null;
   session.pacer = chatStreamMode === "smooth"
     ? createSurgeonPacer(session)
@@ -1364,13 +1442,16 @@ async function runSurgeon(session, prompt) {
     } else if (chatTypingEnabled) {
       session.delivery?.fail(cause);
     } else {
-      stopSurgeonPacer(session);
+      stopSurgeonPacer(session, { flush: true });
       addSurgeonBubble(session, "error", String(cause?.message || cause || "Brain Surgeon failed."), false);
+      session.streamFollower?.complete();
     }
   } finally {
     session.running = false;
     session.delivery?.abort();
     session.pacer?.abort();
+    session.streamResizeObserver?.disconnect();
+    session.streamFollower?.stop();
     session.delivery = null;
     session.pacer = null;
     session.streamEl = null;
@@ -1404,6 +1485,8 @@ function clearSurgeonUi() {
   hideSurgeonThinking(session);
   session.delivery?.abort();
   session.pacer?.abort();
+  session.streamResizeObserver?.disconnect();
+  session.streamFollower?.stop();
   session.delivery = null;
   session.pacer = null;
   session.logEl.replaceChildren();
@@ -1475,8 +1558,9 @@ function handleSurgeonEvent(event) {
       session.delivery?.fail(event.message || "Brain Surgeon failed.");
     } else {
       hideSurgeonThinking(session);
-      stopSurgeonPacer(session);
+      stopSurgeonPacer(session, { flush: true });
       addSurgeonBubble(session, "error", event.message || "Brain Surgeon failed.", false);
+      session.streamFollower?.complete();
     }
   } else if (event.type === "reset") {
     // A main-process reset for this session — already cleared in clearSurgeonUi.
@@ -1543,6 +1627,36 @@ function render(state) {
     : "";
 }
 
+function setupSurgeonTailFollowing() {
+  if (chatStreamMode !== "smooth") return null;
+  const composer = document.querySelector(".surgeon-composer");
+  if (!composer) return null;
+  const root = document.documentElement;
+  function measureComposer() {
+    const height = Math.ceil(composer.getBoundingClientRect().height);
+    root.style.setProperty(
+      "--rapp-surgeon-composer-clearance",
+      Math.max(0, height) + "px",
+    );
+    return height;
+  }
+  const resizeObserver = typeof ResizeObserver === "function"
+    ? new ResizeObserver(() => {
+      measureComposer();
+      activeSurgeon()?.streamFollower?.contentChanged();
+    })
+    : null;
+  resizeObserver?.observe(composer);
+  window.addEventListener("resize", measureComposer);
+  const installed = {
+    measureComposer,
+    measuredComposerHeight: measureComposer(),
+    resizeObserver,
+  };
+  window.__rappSurgeonTailFollow = installed;
+  return installed;
+}
+
 document.getElementById("enter").addEventListener("click", () => {
   localStorage.setItem(introStorageKey, "seen");
   intro.classList.add("hidden");
@@ -1596,12 +1710,42 @@ surgeonInput.addEventListener("keydown", (event) => {
     void submitSurgeon();
   }
 });
+surgeonLog.addEventListener(
+  "scroll",
+  () => {
+    const session = activeSurgeon();
+    if (session) handleSurgeonUserScroll(session);
+  },
+  { passive: true },
+);
+window.addEventListener("keydown", (event) => {
+  const tag = event.target?.tagName?.toLowerCase();
+  if (["input", "textarea", "select"].includes(tag)
+      || event.target?.isContentEditable) return;
+  if ([
+    "ArrowDown",
+    "ArrowUp",
+    "End",
+    "Home",
+    "PageDown",
+    "PageUp",
+    " ",
+  ].includes(event.key)) {
+    const session = activeSurgeon();
+    if (session) markSurgeonUserIntent(session);
+  }
+});
+surgeonLog.addEventListener("scroll", () => {
+  const session = activeSurgeon();
+  if (session && !session.tileEl) handleSurgeonUserScroll(session);
+}, { passive: true });
 
 if (localStorage.getItem(introStorageKey) === "seen") {
   intro.classList.add("hidden");
 }
 
 initSurgeonSessions();
+setupSurgeonTailFollowing();
 setSurgeonOpen(localStorage.getItem(surgeonOpenKey) !== "closed");
 setExplorerOpen(localStorage.getItem(explorerOpenKey) === "open");
 setInterval(() => void refreshAgentExplorer(), 2000);
