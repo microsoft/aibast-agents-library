@@ -1058,8 +1058,10 @@ test("a CRLF ring source (Windows autocrlf checkout) still composes ring 1", (t)
   // scanner match in routedContextMemoryMoltSource silently failed, and the
   // overlay was skipped — the user ran baseline while the seed said ring 1.
   const { managerOptions, store } = minimalFixture(t);
-  const lf = readFileSync(ring1Path, "utf8");
-  assert.doesNotMatch(lf, /\r/, "the repository ring-1 must be LF");
+  // Derive both forms from the file rather than assuming the checkout's line
+  // endings: the ring is pinned -text now, but an older Windows checkout (or a
+  // deliberate stress run) may still hold it as CRLF.
+  const lf = readFileSync(ring1Path, "utf8").replaceAll("\r\n", "\n");
   const crlf = lf.replaceAll("\n", "\r\n");
   const { routedContextMemoryMoltSource } = routeManagerInternals;
   assert.equal(
