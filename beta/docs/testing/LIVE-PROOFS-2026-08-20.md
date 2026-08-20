@@ -22,6 +22,7 @@ Installed `install.sh` from `main` under a throwaway `HOME`; kernel 0.6.16 on
 | A — as checked out (`.gitattributes` pin in effect) | ring-1 LF, Grail CRLF; seed + verify + overlay OK; `node --test tests/molt-lineage-integration.test.mjs` **21/21** |
 | B — forced CRLF ring-1 and CRLF Grail (an older checkout's shape) | `ring1 has CR: true`; seed + verify + overlay OK; HARD 3 green |
 | C — full beta suite | **221/221** on Windows |
+| final merged tree (`94436b6c`, lab `82a0daf6`) — A as checked out, B forced-CRLF ring + Grail, C full suite | **all three green on windows-latest** (after making the bridge-source tests CRLF-tolerant and the HEAD-is-a-directory fault expectation platform-neutral: Windows reports `EPERM`, POSIX `EISDIR`) |
 
 ## Safe words typed into the real chat window (handoff §6.1 gap)
 
