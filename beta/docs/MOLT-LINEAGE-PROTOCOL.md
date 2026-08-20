@@ -117,8 +117,9 @@ through its entire growth history at will:
 - **Restore is the inverse of baseline, not a fast-forward.** A rollback records
   the generation it displaced, so restoring returns the locus to exactly where it
   was — a deliberately-parked older generation is never silently replaced by
-  whatever is newest. With nothing displaced, restore adopts the newest verified
-  ring.
+  whatever is newest. A forward HEAD move clears that rollback record, and restore
+  consults it only while HEAD remains at baseline. With nothing displaced, restore
+  adopts the newest verified ring.
 
 Newborn → super-advanced → newborn, within a single chat, every frame valid. It is
 reversible aging, and it is always available.

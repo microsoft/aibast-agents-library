@@ -721,6 +721,9 @@ export class LineageStore {
       throw new Error(`Refusing invalid or unverified molt ring: ${ringRappid}`);
     }
     this._ensureLocus(baseline);
+    if (ringRappid !== ancestorRappid) {
+      rmSync(this._priorHeadPath(ancestorRappid, environment), { force: true });
+    }
     atomicWrite(this._headPath(ancestorRappid, environment), `${ringRappid}\n`);
     return true;
   }
@@ -868,7 +871,10 @@ export class LineageStore {
       if (this.locusPolicy(target) === "pinned") return target;
       // Prefer the generation the last rollback displaced — restore is the
       // inverse of baseline, not a fast-forward.
-      const prior = this._readPriorHead(target, environment);
+      const current = this.getHead(target, { env: environment });
+      const prior = current === target
+        ? this._readPriorHead(target, environment)
+        : null;
       if (
         prior
         && prior !== target

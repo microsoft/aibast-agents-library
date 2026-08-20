@@ -1,9 +1,17 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
+import { LineageStore } from "../electron/lineage-store.mjs";
 import {
   executeLineageCommand,
   lineageControlReplies,
@@ -397,6 +405,50 @@ test("restore reports a refused composition instead of claiming success", async 
   assert.equal(result.restored, false);
   assert.notEqual(result.reply, lineageControlReplies.restore);
   assert.match(result.reply, /could not activate.*last-good/i);
+});
+
+test("restore cannot move a newer live ring back through stale PRIOR_HEAD", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-lineage-control-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const brainstemDir = path.join(root, "brainstem");
+  mkdirSync(path.join(brainstemDir, "agents"), { recursive: true });
+  writeFileSync(
+    path.join(brainstemDir, "agents", "alpha_agent.py"),
+    "ALPHA = 'baseline'\n",
+  );
+  const store = new LineageStore({
+    brainstemDir,
+    root: path.join(root, "lineage"),
+  });
+  const alpha = store.baselineAncestors()[0];
+  const first = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'first'\n",
+    verified: true,
+  });
+  store.setHead(alpha.ancestorRappid, first);
+  store.rollbackToBaseline(alpha.ancestorRappid);
+  const newer = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'newer'\n",
+    parentRappid: first,
+    verified: true,
+  });
+  store.setHead(alpha.ancestorRappid, newer);
+
+  const result = await executeLineageCommand({
+    message: "restore",
+    routeManager: {
+      restoreLineage: () => store.restore(alpha.ancestorRappid),
+      startDefault: async () => ({
+        compositionHash: "newer-composition",
+        url: "http://127.0.0.1:7001",
+      }),
+      lastLineageFallback: null,
+    },
+  });
+
+  assert.equal(result.changed, 0);
+  assert.match(result.reply, /nothing to restore/i);
+  assert.equal(store.getHead(alpha.ancestorRappid), newer);
 });
 
 test("renderer intercepts before Grail chat and main exposes the lineage IPC", () => {
