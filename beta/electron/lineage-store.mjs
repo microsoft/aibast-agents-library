@@ -197,6 +197,7 @@ export class LineageStore {
     root = path.join(os.homedir(), ".rapp", "lineage"),
     enabled = true,
     now = () => new Date().toISOString(),
+    onTelemetry = () => {},
   } = {}) {
     if (!brainstemDir) {
       throw new Error("LineageStore requires the pristine Brainstem directory.");
@@ -205,6 +206,13 @@ export class LineageStore {
     this.root = path.resolve(root);
     this.enabled = enabled !== false;
     this.now = now;
+    this.onTelemetry = typeof onTelemetry === "function" ? onTelemetry : () => {};
+  }
+
+  _recordTelemetry(type, details) {
+    try {
+      this.onTelemetry(type, details);
+    } catch {}
   }
 
   /** Re-key loci that were stored under the old content-derived ancestor id.
@@ -223,6 +231,7 @@ export class LineageStore {
       this.lastMigrationReport = {
         disabled: true,
         migrated: [],
+        skipped: [],
         failed: [],
       };
       return this.lastMigrationReport;
@@ -231,6 +240,7 @@ export class LineageStore {
     const report = {
       disabled: false,
       migrated: [],
+      skipped: [],
       failed: [],
     };
     let entries;
@@ -277,32 +287,62 @@ export class LineageStore {
 
         // Re-append in order; appendRing mints correct ids under the new ancestor.
         const remap = new Map([[legacyAncestor, baseline.ancestorRappid]]);
-        for (const ring of rings) {
-          const parent = remap.get(ring.parentRappid) || baseline.ancestorRappid;
-          const minted = this.appendRing(baseline.ancestorRappid, {
-            source: ring.source,
-            parentRappid: parent,
-            verified: ring.verified === true,
-            meta: { ...(ring.meta || {}), migrated_from: ring.ringRappid },
-          });
-          remap.set(ring.ringRappid, minted);
-        }
-        const newHead = legacyHead && remap.get(legacyHead);
-        if (newHead && newHead !== baseline.ancestorRappid) {
-          const moved = this.setHead(
-            baseline.ancestorRappid,
-            newHead,
-            { env: DEFAULT_ENV },
-          );
-          if (moved !== true) {
-            if (moved?.disabled) {
-              report.disabled = true;
-              this._migrated = false;
-            }
-            throw new Error(
-              moved?.reason || "Legacy lineage HEAD could not be re-pointed.",
-            );
+        const byLegacyRappid = new Map(
+          rings.map((ring) => [ring.ringRappid, ring]),
+        );
+        const nearestSurvivingRing = (start) => {
+          const seen = new Set();
+          let currentRing = start;
+          while (currentRing && !seen.has(currentRing)) {
+            if (remap.has(currentRing)) return remap.get(currentRing);
+            seen.add(currentRing);
+            currentRing = byLegacyRappid.get(currentRing)?.parentRappid || null;
           }
+          return baseline.ancestorRappid;
+        };
+        for (const ring of rings) {
+          try {
+            const actualSha = sourceSha256(ring.source);
+            if (ring.sha256 !== actualSha) {
+              throw new Error("legacy source sha256 does not match its metadata");
+            }
+            const parent = nearestSurvivingRing(ring.parentRappid);
+            const minted = this.appendRing(baseline.ancestorRappid, {
+              source: ring.source,
+              parentRappid: parent,
+              verified: ring.verified === true,
+              meta: { ...(ring.meta || {}), migrated_from: ring.ringRappid },
+            });
+            remap.set(ring.ringRappid, minted);
+          } catch (error) {
+            const skipped = {
+              ancestor_rappid: baseline.ancestorRappid,
+              legacy_ancestor_rappid: legacyAncestor,
+              ring_rappid: ring.ringRappid,
+              recorded_sha: ring.sha256 || null,
+              current_sha: sourceSha256(ring.source),
+              reason: String(error?.message || error),
+            };
+            report.skipped.push(skipped);
+            this._recordTelemetry("lineage-migration-skipped-ring", skipped);
+          }
+        }
+        const newHead = nearestSurvivingRing(
+          legacyHead || legacyAncestor,
+        );
+        const moved = this.setHead(
+          baseline.ancestorRappid,
+          newHead,
+          { env: DEFAULT_ENV },
+        );
+        if (moved !== true) {
+          if (moved?.disabled) {
+            report.disabled = true;
+            this._migrated = false;
+          }
+          throw new Error(
+            moved?.reason || "Legacy lineage HEAD could not be re-pointed.",
+          );
         }
         renameSync(legacyDir, path.join(this.root, `.migrated-${entry.name}`));
         report.migrated.push(baseline.ancestorRappid);

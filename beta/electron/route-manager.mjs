@@ -449,6 +449,7 @@ export class BetaRouteManager {
       brainstemDir: this.brainstemConfig.brainstemDir,
       root: lineageRoot,
       enabled: this.lineageEnabled,
+      onTelemetry: (type, details) => this.recordTelemetry(type, details),
     });
     this.compositionValidator = compositionValidator || ((agentDirectory) => (
       dryLoadAgentDirectory({

@@ -257,6 +257,12 @@ environment labels are normalized to
 `[a-z0-9][a-z0-9._-]{0,31}`. `RAPP_LINEAGE_ENV` selects the environment used by
 composition and defaults to `default`.
 
+Legacy content-derived loci migrate ring by ring. A ring is re-minted only when
+its recorded source digest matches its actual bytes; corrupt rings are skipped
+with `lineage-migration-skipped-ring` telemetry, HEAD moves to the nearest
+surviving verified ancestor, and the legacy directory is archived even after a
+partial migration so the same bad input is not retried on every boot.
+
 1. **Environments are HEADs, not copies.** dev, staging, and production each pin
    their own `HEAD` per gene locus into the *same* content-addressed ring store.
    Rings are environment-independent; "the same molt" is one object everywhere.
