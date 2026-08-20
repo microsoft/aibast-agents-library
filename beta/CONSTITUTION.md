@@ -85,6 +85,25 @@ Brainstem and it works on its own; or pack it as an `.egg` and re-hatch it
 anywhere via drop-to-hatch — fail-closed verified, same twin, same behavior. What
 you grow here travels.
 
+### Grail compatibility — every agent must survive going home
+
+Anything this system produces — a molt, a generated agent, a toasted skill, a
+composed ring — must remain a plain `agent.py` that can be dragged back into an
+unmodified Grail Brainstem without killing it. The estate is a superset of Grail,
+never a fork of it.
+
+Grail's loader wraps each agent import in an `except Exception` clause, so a
+syntax error, a bad import, or a file that defines no agent is *survivable*: the
+kernel logs it and keeps serving. Two things are not survivable, because
+`SystemExit` is a `BaseException` and `os._exit` bypasses handlers entirely:
+
+1. a module-level `sys.exit()` / `os._exit()` / `raise SystemExit`, and
+2. a module-level hang.
+
+The verify gate therefore refuses any candidate whose module body can terminate
+the interpreter on import. A capability that cannot go home is not a capability;
+it is a trap.
+
 ### Molting is isolated — the sacred Brainstem is never mutated
 
 A capability is grown by molting, but molting happens **only inside an isolated

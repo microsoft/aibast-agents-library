@@ -199,6 +199,48 @@ def _ast_extract_tool_name(class_node):
     return None
 
 
+# Grail's loader wraps each agent import in `except Exception`, which does NOT
+# catch SystemExit (a BaseException), and nothing catches os._exit. So an agent
+# that exits at import time takes the whole Brainstem down with it. Every molt
+# must stay safe to drag back into a plain Grail brainstem, so a candidate that
+# could exit during import is refused here — statically, before it ever runs.
+_EXIT_CALLS = {("sys", "exit"), ("os", "_exit"), ("os", "abort"), ("os", "kill")}
+
+
+def _module_level_exit(tree):
+    """Return a reason if the module body can terminate the interpreter on
+    import, else None. Only module-level statements are inspected: code inside a
+    function or class body does not run at import time."""
+    def offending(node):
+        for sub in ast.walk(node):
+            if isinstance(sub, ast.Call):
+                fn = sub.func
+                if isinstance(fn, ast.Attribute) and isinstance(fn.value, ast.Name):
+                    if (fn.value.id, fn.attr) in _EXIT_CALLS:
+                        return f"{fn.value.id}.{fn.attr}()"
+                if isinstance(fn, ast.Name) and fn.id in ("exit", "quit"):
+                    return f"{fn.id}()"
+            if isinstance(sub, ast.Raise):
+                exc = sub.exc
+                name = None
+                if isinstance(exc, ast.Call) and isinstance(exc.func, ast.Name):
+                    name = exc.func.id
+                elif isinstance(exc, ast.Name):
+                    name = exc.id
+                if name in ("SystemExit", "KeyboardInterrupt"):
+                    return f"raise {name}"
+        return None
+
+    for node in tree.body:
+        # A class or function definition only *defines* code; it does not run it.
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            continue
+        found = offending(node)
+        if found:
+            return found
+    return None
+
+
 def _ast_agent_verdict(source):
     """The trusted, parent-side verdict — it PARSES the candidate, never executes
     it, so it cannot be forged by anything the candidate does at import time
@@ -242,6 +284,10 @@ def _ast_agent_verdict(source):
     if not any(isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name == "perform"
                for n in agent_cls.body):
         return False, f"{agent_cls.name} does not define perform() — a molt must be able to act", None
+    exiting = _module_level_exit(tree)
+    if exiting:
+        return False, (f"module-level {exiting} would terminate the Brainstem on import; "
+                       "a molt must stay safe to load in a plain Grail brainstem"), None
 
     tool_name = _ast_extract_tool_name(agent_cls)  # None when not a static literal
     return True, None, {"agent_class": agent_cls.name, "tool_name": tool_name}

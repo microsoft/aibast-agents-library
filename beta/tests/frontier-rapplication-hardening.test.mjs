@@ -619,3 +619,116 @@ with tempfile.TemporaryDirectory() as directory:
     assert len(entry["gens"]) == 2
 `);
 });
+
+test("the gate refuses a molt that would kill a plain Grail brainstem on import", () => {
+  runPython(importStub + String.raw`
+module = load(
+    "frontier/rapplications/molter/agents/molter_agent.py",
+    "molter_agent_import_exit",
+)
+# Grail wraps each agent import in an except-Exception clause, which does NOT catch
+# SystemExit, and nothing catches os._exit. An agent that exits during import
+# therefore takes the whole Brainstem down — verified empirically against the
+# real kernel loader. Such a molt must never be marked verified, because every
+# molt has to stay safe to drag back into a plain Grail brainstem.
+lethal = [
+    ("sys.exit", "import sys\nsys.exit(0)\n"),
+    ("os._exit", "import os\nos._exit(0)\n"),
+    ("raise SystemExit", "raise SystemExit(0)\n"),
+    ("bare exit()", "exit()\n"),
+]
+agent_tail = """
+from agents.basic_agent import BasicAgent
+
+class LethalAgent(BasicAgent):
+    def __init__(self):
+        self.name = "Lethal"
+        self.metadata = {"name": self.name, "parameters": {"type": "object", "properties": {}}}
+    def perform(self, **kwargs):
+        return "ok"
+"""
+for label, prologue in lethal:
+    ok, detail = module._verify(prologue + agent_tail)
+    assert not ok, f"{label} was accepted: {detail}"
+    assert "terminate the Brainstem" in detail["lesson"], (label, detail)
+
+# The same call inside a function body is fine: it does not run at import.
+safe = """
+import sys
+from agents.basic_agent import BasicAgent
+
+class SafeAgent(BasicAgent):
+    def __init__(self):
+        self.name = "Safe"
+        self.metadata = {"name": self.name, "parameters": {"type": "object", "properties": {}}}
+    def perform(self, **kwargs):
+        if False:
+            sys.exit(1)
+        return "ok"
+"""
+ok, detail = module._verify(safe)
+assert ok, detail
+`);
+});
+
+test("every Frontier agent stays safe to drag into a plain Grail brainstem", () => {
+  // The compatibility contract: any agent.py this system ships or emits can be
+  // dropped into an unmodified Grail agents/ folder without killing it. Grail
+  // survives a syntax error or a raising import (its except-Exception clause
+  // catches those) but NOT a module-level interpreter exit, so this asserts the
+  // real loader outcome rather than trusting inspection.
+  runPython(String.raw`
+import glob
+import importlib.util
+import os
+import sys
+import types
+
+class BasicAgent:
+    def __init__(self, name=None, metadata=None):
+        if name is not None: self.name = name
+        if metadata is not None: self.metadata = metadata
+
+agents_pkg = types.ModuleType("agents")
+basic = types.ModuleType("agents.basic_agent")
+basic.BasicAgent = BasicAgent
+agents_pkg.basic_agent = basic
+sys.modules["agents"] = agents_pkg
+sys.modules["agents.basic_agent"] = basic
+
+# Grail's local-storage shim, which any memory-shaped agent expects.
+class _Storage:
+    current_guid = None
+    def set_memory_context(self, *a, **k): pass
+    def read_json(self, *a, **k): return {}
+    def write_json(self, *a, **k): pass
+utils = types.ModuleType("utils")
+azure = types.ModuleType("utils.azure_file_storage")
+azure.AzureFileStorageManager = _Storage
+utils.azure_file_storage = azure
+sys.modules["utils"] = utils
+sys.modules["utils.azure_file_storage"] = azure
+
+shipped = sorted(glob.glob("frontier/rapplications/*/agents/*_agent.py"))
+assert shipped, "no Frontier agents found to check"
+
+survived = []
+for path in shipped:
+    name = os.path.basename(path)[:-3]
+    try:
+        spec = importlib.util.spec_from_file_location("grail_probe_" + name, path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+    except Exception:
+        # Survivable: Grail catches this, logs it, and keeps serving.
+        pass
+    except BaseException as exc:
+        raise AssertionError(
+            f"{name} would kill a plain Grail brainstem on import: "
+            f"{type(exc).__name__}"
+        )
+    survived.append(name)
+
+assert len(survived) == len(shipped), (survived, shipped)
+`);
+});
