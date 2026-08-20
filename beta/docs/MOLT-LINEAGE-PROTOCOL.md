@@ -105,6 +105,12 @@ The kernel then loads the composed directory and neither knows nor cares which
 agents are molted. **Grail on disk is never touched.** Rollback is composition
 choosing an earlier ring; there is nothing to un-edit.
 
+Before the last-good tier reuses a cached descriptor, it reconciles every cached
+lineage entry with the selected environment's current HEAD, verified chain, and
+pin policy. A cached parent may remain as the fallback for a broken descendant,
+but rollback, pinning, branch movement, or corruption drops that cached ring and
+recomposes the fallback from the live store before any bytes are served.
+
 ## Benjamin Button — non-destructive time travel
 
 Because the log is append-only and `HEAD` is a pointer, an instance can move
@@ -117,8 +123,9 @@ through its entire growth history at will:
 - **Restore is the inverse of baseline, not a fast-forward.** A rollback records
   the generation it displaced, so restoring returns the locus to exactly where it
   was — a deliberately-parked older generation is never silently replaced by
-  whatever is newest. With nothing displaced, restore adopts the newest verified
-  ring.
+  whatever is newest. A forward HEAD move clears that rollback record, and restore
+  consults it only while HEAD remains at baseline. With nothing displaced, restore
+  adopts the newest verified ring.
 
 Newborn → super-advanced → newborn, within a single chat, every frame valid. It is
 reversible aging, and it is always available.
@@ -154,7 +161,10 @@ A ring is promoted to *live* only after passing an **isolated verifier**:
    set (baseline + every live overlay) is dry-loaded together: no duplicate tool
    names, no import collisions, every agent instantiates. Interactions are checked,
    not just individual files.
-4. **Atomic blue-green swap.** The new set is built in a staging directory,
+4. **Bounded ingest.** Every ring entry path enforces the same 512 KiB source
+   ceiling before persistence or kernel materialization, including independent
+   twin compositions.
+5. **Atomic blue-green swap.** The new set is built in a staging directory,
    validated, and only then swapped in **between** requests — never mutated in
    place while serving. A half-composed state never reaches a user; if validation
    fails, the current good set keeps serving.
@@ -247,6 +257,12 @@ environment labels are normalized to
 `[a-z0-9][a-z0-9._-]{0,31}`. `RAPP_LINEAGE_ENV` selects the environment used by
 composition and defaults to `default`.
 
+Legacy content-derived loci migrate ring by ring. A ring is re-minted only when
+its recorded source digest matches its actual bytes; corrupt rings are skipped
+with `lineage-migration-skipped-ring` telemetry, HEAD moves to the nearest
+surviving verified ancestor, and the legacy directory is archived even after a
+partial migration so the same bad input is not retried on every boot.
+
 1. **Environments are HEADs, not copies.** dev, staging, and production each pin
    their own `HEAD` per gene locus into the *same* content-addressed ring store.
    Rings are environment-independent; "the same molt" is one object everywhere.
@@ -261,11 +277,16 @@ composition and defaults to `default`.
 3. **Drift is detected before promotion.** The target's live ring rappids are
    compared against the base the promotion expects; any unexpected ring is drift and
    the promotion refuses with a precise diff — not a runtime surprise.
-4. **Fail at promote, not at runtime.** The whole-set dry-load validation runs
+4. **Baseline drift is explicit.** Every ring records the Grail baseline digest
+   it grew from. A later Grail upgrade emits one `lineage-baseline-drift` event
+   per affected ring per boot and marks the locus drifted in environment reports.
+   User-authored rings keep serving; a stale `author: "frontier"` seed yields to
+   the new baseline until Frontier seeds a ring against that baseline.
+5. **Fail at promote, not at runtime.** The whole-set dry-load validation runs
    against the *resulting* target composition at promotion time (in a staging
    materialization). A break surfaces before the production swap; "the worst time"
    becomes "the promotion refused, and here is why."
-5. **Hash-chained audit trail.** Hash-chained rings plus append-only promotion
+6. **Hash-chained audit trail.** Hash-chained rings plus append-only promotion
    records (from/to `ring_rappid`, environment, actor, UTC) give ALM an
    internally verifiable history of every change in the present journal. A
    corrupt promotion record refuses every promotion outright (no HEAD moves),
@@ -283,6 +304,14 @@ messages to Grail:
 - `environments` lists each locus and its default/named HEADs;
 - `promote <from> <to>` runs isolated, fleet-wide fast-forward promotion;
 - `drift <env>` compares that environment with `default`.
+
+Safe-word change counts compare the effective resolved artifacts, not raw HEAD
+file strings. Repairing a pointer that already fell back to the same baseline
+bytes is reported as unchanged rather than as a successful restore.
+HEAD-moving chat commands never wait behind an in-flight route lifecycle lock:
+the pointer moves immediately, the restart is scheduled for lifecycle idle, and
+the pending reply says the change takes effect as soon as the current task
+finishes. No-op and refused commands do not restart the active worker.
 
 The words are configurable with `RAPP_BASELINE_SAFEWORD`,
 `RAPP_RESTORE_WORD`, `RAPP_ENVIRONMENTS_WORD`, `RAPP_PROMOTE_WORD`, and

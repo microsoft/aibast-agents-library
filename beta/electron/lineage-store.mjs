@@ -33,6 +33,8 @@ const JOURNAL_CORRUPT_REASON =
 const JOURNAL_WRITE_REASON =
   "promotion journal could not record the attempt — refusing to move HEAD";
 
+export const MAX_AGENT_BYTES = 512 * 1024;
+
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true, mode: 0o700 });
   try {
@@ -179,12 +181,23 @@ function newestFirst(left, right) {
     || right.ringRappid.localeCompare(left.ringRappid);
 }
 
+function sameResolution(left, right) {
+  return Boolean(
+    left
+    && right
+    && left.ringRappid === right.ringRappid
+    && left.isBaseline === right.isBaseline
+    && left.source === right.source
+  );
+}
+
 export class LineageStore {
   constructor({
     brainstemDir,
     root = path.join(os.homedir(), ".rapp", "lineage"),
     enabled = true,
     now = () => new Date().toISOString(),
+    onTelemetry = () => {},
   } = {}) {
     if (!brainstemDir) {
       throw new Error("LineageStore requires the pristine Brainstem directory.");
@@ -193,6 +206,14 @@ export class LineageStore {
     this.root = path.resolve(root);
     this.enabled = enabled !== false;
     this.now = now;
+    this.onTelemetry = typeof onTelemetry === "function" ? onTelemetry : () => {};
+    this.reportedBaselineDrift = new Set();
+  }
+
+  _recordTelemetry(type, details) {
+    try {
+      this.onTelemetry(type, details);
+    } catch {}
   }
 
   /** Re-key loci that were stored under the old content-derived ancestor id.
@@ -211,6 +232,7 @@ export class LineageStore {
       this.lastMigrationReport = {
         disabled: true,
         migrated: [],
+        skipped: [],
         failed: [],
       };
       return this.lastMigrationReport;
@@ -219,6 +241,7 @@ export class LineageStore {
     const report = {
       disabled: false,
       migrated: [],
+      skipped: [],
       failed: [],
     };
     let entries;
@@ -249,11 +272,14 @@ export class LineageStore {
           .map((d) => {
             const meta = readJsonSafe(path.join(legacyDir, "rings", d.name, RING_META_FILE));
             let source = null;
+            let sourceError = null;
             try {
               source = readFileSync(
                 path.join(legacyDir, "rings", d.name, RING_SOURCE_FILE), "utf8");
-            } catch {}
-            return meta && typeof source === "string" ? { ...meta, source } : null;
+            } catch (error) {
+              sourceError = String(error?.message || error);
+            }
+            return meta ? { ...meta, source, sourceError } : null;
           })
           .filter(Boolean)
           .sort((l, r) => String(l.createdAt || "").localeCompare(String(r.createdAt || "")));
@@ -263,34 +289,107 @@ export class LineageStore {
           legacyHead = readFileSync(path.join(legacyDir, HEAD_FILE), "utf8").trim();
         } catch {}
 
-        // Re-append in order; appendRing mints correct ids under the new ancestor.
-        const remap = new Map([[legacyAncestor, baseline.ancestorRappid]]);
-        for (const ring of rings) {
-          const parent = remap.get(ring.parentRappid) || baseline.ancestorRappid;
-          const minted = this.appendRing(baseline.ancestorRappid, {
-            source: ring.source,
-            parentRappid: parent,
-            verified: ring.verified === true,
-            meta: { ...(ring.meta || {}), migrated_from: ring.ringRappid },
-          });
-          remap.set(ring.ringRappid, minted);
-        }
-        const newHead = legacyHead && remap.get(legacyHead);
-        if (newHead && newHead !== baseline.ancestorRappid) {
-          const moved = this.setHead(
-            baseline.ancestorRappid,
-            newHead,
-            { env: DEFAULT_ENV },
-          );
-          if (moved !== true) {
-            if (moved?.disabled) {
-              report.disabled = true;
-              this._migrated = false;
-            }
-            throw new Error(
-              moved?.reason || "Legacy lineage HEAD could not be re-pointed.",
-            );
+        // Re-append dependency-first; timestamps are evidence, not ordering law.
+        const resolved = new Map([[legacyAncestor, baseline.ancestorRappid]]);
+        const byLegacyRappid = new Map(
+          rings.map((ring) => [ring.ringRappid, ring]),
+        );
+        const visiting = [];
+        const visitingIndexes = new Map();
+        const skippedRings = new Set();
+        const skipRing = (ring, error, fallback) => {
+          if (skippedRings.has(ring.ringRappid)) return;
+          skippedRings.add(ring.ringRappid);
+          resolved.set(ring.ringRappid, fallback);
+          const skipped = {
+            ancestor_rappid: baseline.ancestorRappid,
+            legacy_ancestor_rappid: legacyAncestor,
+            ring_rappid: ring.ringRappid,
+            recorded_sha: ring.sha256 || null,
+            current_sha: typeof ring.source === "string"
+             ? sourceSha256(ring.source)
+             : null,
+            reason: String(error?.message || error),
+          };
+          report.skipped.push(skipped);
+          this._recordTelemetry("lineage-migration-skipped-ring", skipped);
+        };
+        const migrateRing = (legacyRingRappid) => {
+          if (resolved.has(legacyRingRappid)) {
+            return resolved.get(legacyRingRappid);
           }
+          const ring = byLegacyRappid.get(legacyRingRappid);
+          if (!ring) return baseline.ancestorRappid;
+          if (visitingIndexes.has(legacyRingRappid)) {
+            const cycleStart = visitingIndexes.get(legacyRingRappid);
+            for (const cycleRappid of visiting.slice(cycleStart)) {
+             const cycleRing = byLegacyRappid.get(cycleRappid);
+             if (cycleRing) {
+               skipRing(
+                 cycleRing,
+                 new Error("legacy ring parent cycle"),
+                 baseline.ancestorRappid,
+               );
+             }
+            }
+            return baseline.ancestorRappid;
+          }
+          visitingIndexes.set(legacyRingRappid, visiting.length);
+          visiting.push(legacyRingRappid);
+          const parent = migrateRing(ring.parentRappid);
+          if (skippedRings.has(legacyRingRappid)) {
+            visiting.pop();
+            visitingIndexes.delete(legacyRingRappid);
+            return resolved.get(legacyRingRappid);
+          }
+          try {
+            if (typeof ring.source !== "string") {
+              throw new Error(
+                ring.sourceError || "legacy ring source.py is unreadable",
+              );
+            }
+            const actualSha = sourceSha256(ring.source);
+            if (ring.sha256 !== actualSha) {
+              throw new Error("legacy source sha256 does not match its metadata");
+            }
+            const minted = this.appendRing(baseline.ancestorRappid, {
+              source: ring.source,
+              parentRappid: parent,
+              verified: ring.verified === true,
+              meta: {
+                ...(ring.meta || {}),
+                baseline_sha256: ring.baselineSha256
+                  || ring.meta?.baseline_sha256
+                  || locus.sha256
+                  || baseline.sha256,
+                migrated_from: ring.ringRappid,
+              },
+            });
+            resolved.set(ring.ringRappid, minted);
+          } catch (error) {
+            skipRing(ring, error, parent);
+          }
+          visiting.pop();
+          visitingIndexes.delete(legacyRingRappid);
+          return resolved.get(legacyRingRappid);
+        };
+        for (const ring of rings) {
+          migrateRing(ring.ringRappid);
+        }
+        const newHead = migrateRing(legacyHead || legacyAncestor);
+        const moved = this.setHead(
+          baseline.ancestorRappid,
+          newHead,
+          { env: DEFAULT_ENV },
+        );
+        if (moved !== true) {
+          if (moved?.disabled) {
+            report.disabled = true;
+            this._migrated = false;
+          }
+          throw new Error(
+            moved?.reason || "Legacy lineage HEAD could not be re-pointed.",
+          );
         }
         renameSync(legacyDir, path.join(this.root, `.migrated-${entry.name}`));
         report.migrated.push(baseline.ancestorRappid);
@@ -518,6 +617,9 @@ export class LineageStore {
     if (typeof source !== "string" || !source.length) {
       throw new Error("A molt ring requires non-empty Python source.");
     }
+    if (Buffer.byteLength(source, "utf8") > MAX_AGENT_BYTES) {
+      throw new Error("A molt ring exceeds the agent size limit.");
+    }
     const parent = parentRappid || this.getHead(ancestorRappid);
     if (
       parent !== ancestorRappid
@@ -569,6 +671,7 @@ export class LineageStore {
       parentRappid: parent,
       ancestorRappid,
       sha256: sourceSha256(source),
+      baselineSha256: baseline.sha256,
       verified: verified === true,
       meta: meta && typeof meta === "object" ? { ...meta } : {},
       createdAt: this.now(),
@@ -721,7 +824,20 @@ export class LineageStore {
       throw new Error(`Refusing invalid or unverified molt ring: ${ringRappid}`);
     }
     this._ensureLocus(baseline);
-    atomicWrite(this._headPath(ancestorRappid, environment), `${ringRappid}\n`);
+    const headPath = this._headPath(ancestorRappid, environment);
+    const priorPath = this._priorHeadPath(ancestorRappid, environment);
+    atomicWrite(headPath, `${ringRappid}\n`);
+    if (ringRappid !== ancestorRappid) {
+      try {
+        rmSync(priorPath, { recursive: true, force: true });
+      } catch (error) {
+        this._recordTelemetry("lineage-prior-cleanup-failed", {
+          ancestor: ancestorRappid,
+          env: environment,
+          error: String(error?.message || error),
+        });
+      }
+    }
     return true;
   }
 
@@ -754,6 +870,10 @@ export class LineageStore {
       ) {
         return baselineResult();
       }
+      const drift = this.baselineDrift(ancestorRappid, { ringRappid });
+      if (drift.drifted && ring.meta?.author === "frontier") {
+        return baselineResult();
+      }
       return {
         ringRappid,
         source: ring.source,
@@ -769,6 +889,57 @@ export class LineageStore {
       ancestorRappid,
       this.getHead(ancestorRappid, env),
     );
+  }
+
+  baselineDrift(
+    ancestorRappid,
+    { env = DEFAULT_ENV, ringRappid = null } = {},
+  ) {
+    const baseline = this._baseline(ancestorRappid);
+    const selectedRing = ringRappid || this.getHead(ancestorRappid, { env });
+    const result = {
+      ancestorRappid,
+      ringRappid: selectedRing,
+      recordedSha: null,
+      currentSha: baseline?.sha256 || null,
+      drifted: false,
+    };
+    if (
+      !baseline
+      || !selectedRing
+      || selectedRing === ancestorRappid
+    ) {
+      return result;
+    }
+    const ring = this._readRing(ancestorRappid, selectedRing);
+    if (!this._ringIsValid(ancestorRappid, selectedRing, ring)) return result;
+    const locus = readJsonSafe(
+      path.join(this._locusDirectory(ancestorRappid), LOCUS_FILE),
+    );
+    const recordedSha = ring.meta?.baseline_sha256
+      || ring.baselineSha256
+      || locus?.sha256
+      || null;
+    result.recordedSha = recordedSha;
+    result.drifted = Boolean(recordedSha && recordedSha !== baseline.sha256);
+    if (result.drifted) {
+      const key = [
+        ancestorRappid,
+        selectedRing,
+        recordedSha,
+        baseline.sha256,
+      ].join("\0");
+      if (!this.reportedBaselineDrift.has(key)) {
+        this.reportedBaselineDrift.add(key);
+        this._recordTelemetry("lineage-baseline-drift", {
+          ancestor: ancestorRappid,
+          ring: selectedRing,
+          recorded_sha: recordedSha,
+          current_sha: baseline.sha256,
+        });
+      }
+    }
+    return result;
   }
 
   /** True when the overlay may serve or move rings at all. The kill switch must
@@ -799,7 +970,7 @@ export class LineageStore {
     const failed = [];
     for (const target of targets) {
       let before = null;
-      try { before = this.getHead(target, { env: environment }); } catch {}
+      try { before = this.resolveLive(target, { env: environment }); } catch {}
       try {
         const next = pick(target);
         const moved = this.setHead(target, next, { env: environment });
@@ -808,11 +979,10 @@ export class LineageStore {
             moved?.reason || `HEAD.${environment} write was refused.`,
           );
         }
-        // Setting HEAD to where it already was is a no-op, and reporting it as a
-        // change lets the caller tell the user their molts were restored when
-        // nothing came back. A false "restored" is worse than an error: it ends
-        // the user's investigation at the moment recovery was still possible.
-        if (before !== null && next === before) unchanged.push(target);
+        const after = this.resolveLive(target, { env: environment });
+        // A pointer rewrite is not a user-visible change when both HEADs resolve
+        // to the same served artifact (for example, a missing ring and baseline).
+        if (sameResolution(before, after)) unchanged.push(target);
         else changed.push(target);
       } catch (error) {
         failed.push({ ancestorRappid: target, error: String(error?.message || error) });
@@ -868,7 +1038,10 @@ export class LineageStore {
       if (this.locusPolicy(target) === "pinned") return target;
       // Prefer the generation the last rollback displaced — restore is the
       // inverse of baseline, not a fast-forward.
-      const prior = this._readPriorHead(target, environment);
+      const current = this.getHead(target, { env: environment });
+      const prior = current === target
+        ? this._readPriorHead(target, environment)
+        : null;
       if (
         prior
         && prior !== target

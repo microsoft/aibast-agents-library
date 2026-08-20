@@ -13,6 +13,7 @@ import test from "node:test";
 
 import {
   LineageStore,
+  MAX_AGENT_BYTES,
   baselineAncestors,
   configureLineageStore,
   lineageStoreInternals,
@@ -51,6 +52,21 @@ function ringDirectory(store, ancestorRappid, ringRappid) {
     lineageStoreInternals.filesystemSegment(ringRappid),
   );
 }
+
+test("appendRing refuses sources over the shared agent size limit", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  assert.throws(
+    () => store.appendRing(alpha.ancestorRappid, {
+      source: "X".repeat(MAX_AGENT_BYTES + 1),
+      verified: true,
+    }),
+    /agent size limit/,
+  );
+  assert.equal(store.listRings(alpha.ancestorRappid).length, 1);
+});
 
 test("lineage-store hash-chains deterministic rings and detects tampering", (t) => {
   const { store, sources } = fixture(t);
@@ -664,6 +680,9 @@ test("a store written under the legacy content-derived id migrates, not orphans"
     ringRappid: legacyRing,
     parentRappid: legacyAncestor,
     ancestorRappid: legacyAncestor,
+    sha256: lineageStoreInternals.sourceSha256(
+      "ALPHA = 'grown before the fix'\n",
+    ),
     verified: true,
     createdAt: "2026-01-01T00:00:00.000Z",
     meta: { author: "user" },
@@ -690,6 +709,207 @@ test("a store written under the legacy content-derived id migrates, not orphans"
   assert.ok(existsSync(path.join(
     store.root,
     ".migrated-" + lineageStoreInternals.filesystemSegment(legacyAncestor))));
+});
+
+test("legacy migration skips a forged verified digest and archives the locus", (t) => {
+  const { store, root, sources } = fixture(t);
+  store.baselineAncestors();
+  const legacyAncestor = "rappid:@grail/alpha:" + "a".repeat(64);
+  const legacyRing = "rappid:@frontier/alpha-ring:" + "b".repeat(64);
+  const legacyDir = path.join(
+    store.root,
+    lineageStoreInternals.filesystemSegment(legacyAncestor),
+  );
+  const legacyRingDir = path.join(
+    legacyDir,
+    "rings",
+    lineageStoreInternals.filesystemSegment(legacyRing),
+  );
+  mkdirSync(legacyRingDir, { recursive: true });
+  writeFileSync(path.join(legacyDir, "locus.json"), JSON.stringify({
+    schema: "molt-lineage/1.0",
+    ancestorRappid: legacyAncestor,
+    filename: "alpha_agent.py",
+  }));
+  writeFileSync(path.join(legacyDir, "HEAD"), `${legacyRing}\n`);
+  writeFileSync(
+    path.join(legacyRingDir, "source.py"),
+    "ALPHA = 'forged verified source'\n",
+  );
+  writeFileSync(path.join(legacyRingDir, "meta.json"), JSON.stringify({
+    ringRappid: legacyRing,
+    parentRappid: legacyAncestor,
+    ancestorRappid: legacyAncestor,
+    sha256: "0".repeat(64),
+    verified: true,
+    createdAt: "2026-01-01T00:00:00.000Z",
+  }));
+  const telemetry = [];
+  const reopened = new LineageStore({
+    brainstemDir: path.join(root, "brainstem"),
+    root: store.root,
+    onTelemetry: (type, details) => telemetry.push({ type, ...details }),
+  });
+
+  const alpha = reopened.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  assert.deepEqual(reopened.resolveLive(alpha.ancestorRappid), {
+    ringRappid: alpha.ancestorRappid,
+    source: sources["alpha_agent.py"],
+    isBaseline: true,
+  });
+  assert.equal(reopened.listRings(alpha.ancestorRappid).length, 1);
+  assert.equal(reopened.lastMigrationReport.skipped.length, 1);
+  assert.equal(
+    telemetry.filter(
+      (event) => event.type === "lineage-migration-skipped-ring",
+    ).length,
+    1,
+  );
+  assert.match(telemetry[0].reason, /sha256 does not match/);
+  assert.equal(existsSync(legacyDir), false);
+  assert.equal(
+    existsSync(path.join(
+      store.root,
+      `.migrated-${lineageStoreInternals.filesystemSegment(legacyAncestor)}`,
+    )),
+    true,
+  );
+});
+
+test("legacy migration isolates a corrupt ring and points HEAD at its survivor", (t) => {
+  const { store, root } = fixture(t);
+  store.baselineAncestors();
+  const legacyAncestor = "rappid:@grail/alpha:" + "c".repeat(64);
+  const firstRing = "rappid:@frontier/alpha-ring:" + "d".repeat(64);
+  const childRing = "rappid:@frontier/alpha-ring:" + "1".repeat(64);
+  const corruptRing = "rappid:@frontier/alpha-ring:" + "e".repeat(64);
+  const missingRing = "rappid:@frontier/alpha-ring:" + "f".repeat(64);
+  const cycleA = "rappid:@frontier/alpha-ring:" + "2".repeat(64);
+  const cycleB = "rappid:@frontier/alpha-ring:" + "3".repeat(64);
+  const cycleChild = "rappid:@frontier/alpha-ring:" + "4".repeat(64);
+  const firstSource = "ALPHA = 'surviving legacy ring'\n";
+  const childSource = "ALPHA = 'surviving legacy child'\n";
+  const cycleChildSource = "ALPHA = 'valid child of rejected cycle'\n";
+  const legacyDir = path.join(
+    store.root,
+    lineageStoreInternals.filesystemSegment(legacyAncestor),
+  );
+  mkdirSync(path.join(legacyDir, "rings"), { recursive: true });
+  writeFileSync(path.join(legacyDir, "locus.json"), JSON.stringify({
+    schema: "molt-lineage/1.0",
+    ancestorRappid: legacyAncestor,
+    filename: "alpha_agent.py",
+  }));
+  writeFileSync(path.join(legacyDir, "HEAD"), `${cycleChild}\n`);
+  for (const ring of [
+    {
+      ringRappid: cycleChild,
+      parentRappid: cycleA,
+      source: cycleChildSource,
+      createdAt: "2025-12-31T23:59:59.000Z",
+    },
+    {
+      ringRappid: childRing,
+      parentRappid: firstRing,
+      source: childSource,
+      createdAt: "2026-01-01T00:00:00.000Z",
+    },
+    {
+      ringRappid: firstRing,
+      parentRappid: legacyAncestor,
+      source: firstSource,
+      createdAt: "2026-01-01T00:00:02.000Z",
+    },
+    {
+      ringRappid: corruptRing,
+      parentRappid: childRing,
+      source: "",
+      createdAt: "2026-01-01T00:00:03.000Z",
+    },
+    {
+      ringRappid: missingRing,
+      parentRappid: corruptRing,
+      source: null,
+      sha256: "f".repeat(64),
+      createdAt: "2026-01-01T00:00:04.000Z",
+    },
+    {
+      ringRappid: cycleA,
+      parentRappid: cycleB,
+      source: "ALPHA = 'cycle a'\n",
+      createdAt: "2026-01-01T00:00:05.000Z",
+    },
+    {
+      ringRappid: cycleB,
+      parentRappid: cycleA,
+      source: "ALPHA = 'cycle b'\n",
+      createdAt: "2026-01-01T00:00:06.000Z",
+    },
+  ]) {
+    const directory = path.join(
+      legacyDir,
+      "rings",
+      lineageStoreInternals.filesystemSegment(ring.ringRappid),
+    );
+    mkdirSync(directory, { recursive: true });
+    if (typeof ring.source === "string") {
+      writeFileSync(path.join(directory, "source.py"), ring.source);
+    }
+    writeFileSync(path.join(directory, "meta.json"), JSON.stringify({
+      ringRappid: ring.ringRappid,
+      parentRappid: ring.parentRappid,
+      ancestorRappid: legacyAncestor,
+      sha256: ring.sha256
+        || lineageStoreInternals.sourceSha256(ring.source),
+      verified: true,
+      createdAt: ring.createdAt,
+    }));
+  }
+  const telemetry = [];
+  const reopened = new LineageStore({
+    brainstemDir: path.join(root, "brainstem"),
+    root: store.root,
+    onTelemetry: (type, details) => telemetry.push({ type, ...details }),
+  });
+
+  const alpha = reopened.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const live = reopened.resolveLive(alpha.ancestorRappid);
+  assert.equal(live.source, cycleChildSource);
+  assert.equal(live.isBaseline, false);
+  const migratedRings = reopened.listRings(alpha.ancestorRappid);
+  assert.equal(migratedRings.length, 4);
+  assert.equal(
+    reopened.walk(alpha.ancestorRappid, live.ringRappid).length,
+    2,
+    "a valid descendant of a rejected cycle is reparented to baseline",
+  );
+  const migratedChild = migratedRings.find(
+    (ring) => ring.meta?.migrated_from === childRing,
+  );
+  assert.equal(
+    reopened.walk(alpha.ancestorRappid, migratedChild.ringRappid).length,
+    3,
+    "a child with an earlier timestamp still retains its valid migrated parent",
+  );
+  assert.equal(reopened.lastMigrationReport.skipped.length, 4);
+  const skippedReasons = telemetry
+    .filter((event) => event.type === "lineage-migration-skipped-ring")
+    .map((event) => event.reason);
+  assert.ok(
+    skippedReasons.some((reason) => /non-empty Python source/.test(reason)),
+  );
+  assert.ok(
+    skippedReasons.some((reason) => /ENOENT|unreadable/.test(reason)),
+  );
+  assert.equal(
+    skippedReasons.filter((reason) => /parent cycle/.test(reason)).length,
+    2,
+  );
+  assert.equal(existsSync(legacyDir), false);
 });
 
 test("a restore that recovers nothing is not reported as a restore", (t) => {

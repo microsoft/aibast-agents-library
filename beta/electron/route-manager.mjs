@@ -21,6 +21,7 @@ import { BrainstemProcess } from "./brainstem-process.mjs";
 import { redactSensitiveValue } from "./log-redaction.mjs";
 import {
   LineageStore,
+  MAX_AGENT_BYTES,
   lineageStoreInternals,
 } from "./lineage-store.mjs";
 import {
@@ -33,7 +34,6 @@ import {
 
 const ROUTING_SCHEMA = "rapp-beta-routing/1";
 const STACK_SCHEMA = "rapp-beta-stack/1";
-const MAX_AGENT_BYTES = 512 * 1024;
 const AGENT_FILE = /^[A-Za-z0-9_.-]+_agent\.py$/;
 const MEMORY_FILES = new Set([
   "context_memory_agent.py",
@@ -75,6 +75,14 @@ function atomicWriteJson(filePath, value) {
 
 function sha256(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+function validatedMoltBytes(source, filename) {
+  const bytes = Buffer.from(source, "utf8");
+  if (!bytes.length || bytes.length > MAX_AGENT_BYTES) {
+    throw new Error(`Molt ring for ${filename} exceeds the agent size limit.`);
+  }
+  return bytes;
 }
 
 function safeAgentFilename(value) {
@@ -441,6 +449,7 @@ export class BetaRouteManager {
       brainstemDir: this.brainstemConfig.brainstemDir,
       root: lineageRoot,
       enabled: this.lineageEnabled,
+      onTelemetry: (type, details) => this.recordTelemetry(type, details),
     });
     this.compositionValidator = compositionValidator || ((agentDirectory) => (
       dryLoadAgentDirectory({
@@ -607,10 +616,7 @@ export class BetaRouteManager {
     const source = generatedContextMemory
       ? routedContextMemoryMoltSource(live.source, memoryGuid)
       : live.source;
-    const bytes = Buffer.from(source, "utf8");
-    if (!bytes.length || bytes.length > MAX_AGENT_BYTES) {
-      throw new Error(`Molt ring for ${entry.filename} exceeds the agent size limit.`);
-    }
+    const bytes = validatedMoltBytes(source, entry.filename);
     return {
       ...entry,
       address: Hb("rapp/1:egg", bytes),
@@ -641,6 +647,7 @@ export class BetaRouteManager {
     if (!live || live.isBaseline) {
       return { filename, source, lineage: null };
     }
+    validatedMoltBytes(live.source, filename);
     return {
       filename,
       source: live.source,
@@ -687,13 +694,22 @@ export class BetaRouteManager {
     if (!this.lineageIsEnabled()) {
       return { disabled: true, loci: [] };
     }
-    const loci = this.lineageStore.baselineAncestors().map((baseline) => ({
-      ancestorRappid: baseline.ancestorRappid,
-      filename: baseline.filename,
-      environments: this.lineageStore.environments(
+    const loci = this.lineageStore.baselineAncestors().map((baseline) => {
+      const environments = this.lineageStore.environments(
         baseline.ancestorRappid,
-      ),
-    }));
+      );
+      return {
+        ancestorRappid: baseline.ancestorRappid,
+        filename: baseline.filename,
+        drifted: environments.some((entry) => (
+          this.lineageStore.baselineDrift(
+            baseline.ancestorRappid,
+            { env: entry.env },
+          ).drifted
+        )),
+        environments,
+      };
+    });
     const report = { disabled: false, loci };
     this.recordTelemetry("lineage-environments", {
       loci: loci.length,
@@ -749,14 +765,21 @@ export class BetaRouteManager {
         baseline.ancestorRappid,
         { env: "default" },
       );
+      const environmentDrift = this.lineageStore.detectDrift(
+        baseline.ancestorRappid,
+        environment,
+        expected,
+      );
+      const baselineDrift = this.lineageStore.baselineDrift(
+        baseline.ancestorRappid,
+        { env: environment },
+      );
       return {
         ancestorRappid: baseline.ancestorRappid,
         filename: baseline.filename,
-        ...this.lineageStore.detectDrift(
-          baseline.ancestorRappid,
-          environment,
-          expected,
-        ),
+        ...environmentDrift,
+        baselineDrifted: baselineDrift.drifted,
+        drifted: environmentDrift.drifted || baselineDrift.drifted,
       };
     });
     const drifted = loci.filter((locus) => locus.drifted);
@@ -1402,6 +1425,47 @@ export class BetaRouteManager {
     return entries;
   }
 
+  finalizeCompositionDescriptor({
+    entries,
+    identity,
+    stack,
+    selectedStacks,
+    ephemeralAgent = null,
+    ephemeralNonce = null,
+  }) {
+    const ordered = [...entries].sort(
+      (left, right) => left.filename.localeCompare(right.filename),
+    );
+    const compositionDocument = {
+      caller_rappid: identity.caller_rappid,
+      memory_guid: identity.memory_guid,
+      stack_rappid: stack.rappid,
+      overlay_stack_rappids: identity.overlay_stack_rappids,
+      stack_lineage: selectedStacks.map((selected) => selected.rappid),
+      agents: ordered.map((entry) => ({
+        filename: entry.filename,
+        address: entry.address,
+        scope: entry.scope,
+      })),
+    };
+    if (ephemeralNonce) {
+      compositionDocument.ephemeral_nonce = ephemeralNonce;
+    }
+    return {
+      compositionHash: sha256(Buffer.from(canonical(compositionDocument))),
+      entries: ordered,
+      identity,
+      stack,
+      selectedStacks,
+      ephemeral: Boolean(ephemeralAgent),
+      ephemeralNonce,
+      ephemeralAgent,
+      lineageOverlays: ordered
+        .filter((entry) => entry.lineage)
+        .map((entry) => ({ ...entry.lineage, filename: entry.filename })),
+    };
+  }
+
   compositionDescriptor({
     ephemeralAgent = null,
     applyLineage = true,
@@ -1465,40 +1529,14 @@ export class BetaRouteManager {
       }
       byFilename.set(entry.filename, entry);
     }
-    const ordered = [...byFilename.values()].sort(
-      (left, right) => left.filename.localeCompare(right.filename),
-    );
-    const compositionDocument = {
-      caller_rappid: identity.caller_rappid,
-      memory_guid: identity.memory_guid,
-      stack_rappid: stack.rappid,
-      overlay_stack_rappids: identity.overlay_stack_rappids,
-      stack_lineage: selectedStacks.map((selected) => selected.rappid),
-      agents: ordered.map((entry) => ({
-        filename: entry.filename,
-        address: entry.address,
-        scope: entry.scope,
-      })),
-    };
-    if (ephemeralNonce) {
-      compositionDocument.ephemeral_nonce = ephemeralNonce;
-    }
-    const compositionHash = sha256(
-      Buffer.from(canonical(compositionDocument)),
-    );
-    return {
-      compositionHash,
-      entries: ordered,
+    return this.finalizeCompositionDescriptor({
+      entries: [...byFilename.values()],
       identity,
       stack,
       selectedStacks,
-      ephemeral: Boolean(ephemeralAgent),
-      ephemeralNonce,
       ephemeralAgent,
-      lineageOverlays: ordered
-        .filter((entry) => entry.lineage)
-        .map((entry) => ({ ...entry.lineage, filename: entry.filename })),
-    };
+      ephemeralNonce,
+    });
   }
 
   compositionIsComplete(descriptor, agentDirectory, manifest) {
@@ -1672,16 +1710,45 @@ export class BetaRouteManager {
         && this.sameRouteIdentity(lastGoodDescriptor, descriptor)
       ) {
         try {
-          const lastGood = this.materializeCompositionOnce(lastGoodDescriptor);
+          const reconciliation = this.reconcileLastGoodLineage(
+            lastGoodDescriptor,
+            descriptor,
+          );
+          const fallbackDescriptor = reconciliation
+            ? reconciliation.descriptor
+            : lastGoodDescriptor;
+          if (
+            reconciliation
+            && fallbackDescriptor.compositionHash === descriptor.compositionHash
+          ) {
+            throw new Error(
+              "Reconciled last-good lineage still resolves to the failed composition.",
+            );
+          }
+          const lastGood = this.materializeCompositionOnce(
+            fallbackDescriptor,
+            { fresh: Boolean(reconciliation) },
+          );
+          if (reconciliation) {
+            this.recordTelemetry("lineage-last-good-resynced", {
+              dropped: reconciliation.dropped,
+              fallback_composition_hash: fallbackDescriptor.compositionHash,
+              requested_composition_hash: descriptor.compositionHash,
+            });
+          }
           const fallback = this.isolateLineageFallback(
             descriptor,
-            lastGoodDescriptor,
+            fallbackDescriptor,
             lastGood,
             "last-good",
           );
           this.recordLineageFallback(descriptor, error, fallback);
           return fallback;
-        } catch {
+        } catch (lastGoodError) {
+          this.recordTelemetry("lineage-last-good-skipped", {
+            error: String(lastGoodError?.message || lastGoodError),
+            requested_composition_hash: descriptor.compositionHash,
+          });
           // The prior artifact is no longer loadable; try pristine baseline next.
         }
       }
@@ -1721,6 +1788,128 @@ export class BetaRouteManager {
       && canonical(left.identity.overlay_stack_rappids)
         === canonical(right.identity.overlay_stack_rappids)
     );
+  }
+
+  reconcileLastGoodLineage(lastGoodDescriptor, failedDescriptor) {
+    // A cached parent remains a valid fallback while the current verified HEAD
+    // descends from it. Rollback, pinning, branch changes, and corrupt chains
+    // revoke that endorsement and must be re-resolved from the live store.
+    const cachedHeads = new Map(
+      (lastGoodDescriptor.lineageOverlays || []).map(
+        (overlay) => [overlay.ancestorRappid, overlay.ringRappid],
+      ),
+    );
+    const ancestors = new Set([
+      ...cachedHeads.keys(),
+      ...(failedDescriptor.lineageOverlays || []).map(
+        (overlay) => overlay.ancestorRappid,
+      ),
+    ]);
+    const heads = new Map();
+    const dropped = [];
+    for (const ancestorRappid of ancestors) {
+      const cachedRing = cachedHeads.get(ancestorRappid) || ancestorRappid;
+      let effectiveRing = null;
+      let reason = null;
+      try {
+        effectiveRing = this.lineageStore.resolveLive(
+          ancestorRappid,
+          { env: this.lineageEnv },
+        )?.ringRappid || null;
+        if (
+          cachedRing !== ancestorRappid
+          && this.lineageStore.locusPolicy(ancestorRappid) === "pinned"
+        ) {
+          reason = "pinned";
+        } else if (
+          cachedRing !== ancestorRappid
+          && this.lineageStore.resolveRing(ancestorRappid, cachedRing)
+            ?.ringRappid !== cachedRing
+        ) {
+          reason = "effective-ring-changed";
+        } else {
+          const currentHead = this.lineageStore.getHead(
+            ancestorRappid,
+            { env: this.lineageEnv },
+          );
+          if (
+            !this.lineageStore.walk(ancestorRappid, currentHead)
+              .includes(cachedRing)
+          ) {
+            reason = "head-moved";
+          }
+        }
+      } catch {
+        reason = "unresolvable";
+      }
+      if (reason) {
+        dropped.push({
+          ancestor_rappid: ancestorRappid,
+          cached_ring: cachedRing,
+          effective_ring: effectiveRing,
+          reason,
+        });
+      } else {
+        heads.set(ancestorRappid, cachedRing);
+      }
+    }
+    const current = this.compositionDescriptor({
+      ephemeralAgent: failedDescriptor.ephemeralAgent,
+      lineageHeads: heads,
+    });
+    const currentEntries = new Map(
+      current.entries.map((entry) => [entry.filename, entry]),
+    );
+    const mergedEntries = [];
+    const included = new Set();
+    for (const cachedEntry of lastGoodDescriptor.entries) {
+      const currentEntry = currentEntries.get(cachedEntry.filename);
+      const lineageManaged = Boolean(
+        cachedEntry.lineage
+        || currentEntry?.lineage
+        || cachedEntry.scope === "global"
+        || cachedEntry.scope === "memory"
+      );
+      if (lineageManaged) {
+        if (currentEntry) mergedEntries.push(currentEntry);
+      } else {
+        mergedEntries.push(cachedEntry);
+      }
+      included.add(cachedEntry.filename);
+    }
+    for (const currentEntry of current.entries) {
+      if (
+        !included.has(currentEntry.filename)
+        && (
+          currentEntry.lineage
+          || currentEntry.scope === "global"
+          || currentEntry.scope === "memory"
+          || currentEntry.scope === "ephemeral"
+        )
+      ) {
+        mergedEntries.push(currentEntry);
+      }
+    }
+    const reconciledDescriptor = this.finalizeCompositionDescriptor({
+      entries: mergedEntries,
+      identity: current.identity,
+      stack: current.stack,
+      selectedStacks: current.selectedStacks,
+      ephemeralAgent: current.ephemeralAgent,
+      ephemeralNonce: current.ephemeralNonce,
+    });
+    if (
+      !dropped.length
+      && reconciledDescriptor.compositionHash
+        === lastGoodDescriptor.compositionHash
+    ) {
+      return null;
+    }
+    return {
+      descriptor: reconciledDescriptor,
+      dropped,
+      heads,
+    };
   }
 
   quarantineCompositionFallback(descriptor, error, pristineError) {
@@ -2108,6 +2297,25 @@ export class BetaRouteManager {
       "__lifecycle__",
       () => this.startDefaultUnlocked(),
     );
+  }
+
+  whenLifecycleIdle(callback) {
+    if (typeof callback !== "function") {
+      throw new Error("A lifecycle-idle callback is required.");
+    }
+    const pending = this.routeLocks.get("__lifecycle__");
+    const completion = (pending || Promise.resolve()).then(callback);
+    if (pending) {
+      completion.catch((error) => {
+        this.recordTelemetry("lifecycle-idle-callback-error", {
+          error: String(error?.message || error),
+        });
+      });
+    }
+    return {
+      deferred: Boolean(pending),
+      completion,
+    };
   }
 
   async withRouteLock(key, callback) {
