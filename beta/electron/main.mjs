@@ -6,6 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   app,
   BrowserWindow,
+  dialog,
   ipcMain,
   Menu,
   nativeImage,
@@ -35,6 +36,7 @@ import {
   readAprilFoolsSettings,
   registerChatCardIpc,
 } from "./chat-cards.mjs";
+import { readCustomTable } from "./card-tables.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
@@ -183,6 +185,9 @@ let chatLookOverridden = initialChatLook.chatLookOverridden;
 let chatTypingEnabled = chatStreamMode === "hold";
 let aprilFools = initialAprilFools.aprilFools;
 let aprilFoolsOverridden = initialAprilFools.aprilFoolsOverridden;
+let customCardTable = aprilFools.table === "custom" && aprilFools.customTablePath
+  ? readCustomTable(aprilFools.customTablePath).table
+  : null;
 const chatCardStore = new ChatCardStore({ betaHome });
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
@@ -1435,6 +1440,7 @@ const MAX_BRAIN_SURGEONS = 12;
 const state = {
   aprilFools,
   aprilFoolsOverridden,
+  cardTable: customCardTable,
   chatLook,
   chatLookOverridden,
   chatTypingEnabled,
@@ -1527,12 +1533,39 @@ function requestChatLookChange(nextLook) {
 }
 
 function applyEffectiveAprilFools(value) {
+  customCardTable = value.aprilFools.table === "custom"
+    && value.aprilFools.customTablePath
+    ? readCustomTable(value.aprilFools.customTablePath).table
+    : null;
   aprilFools = value.aprilFools;
   aprilFoolsOverridden = value.aprilFoolsOverridden;
   state.aprilFools = aprilFools;
   state.aprilFoolsOverridden = aprilFoolsOverridden;
+  state.cardTable = customCardTable;
   syncAprilFoolsMenu();
   emitState();
+}
+
+async function handleCustomCardTableLoad() {
+  const selection = await dialog.showOpenDialog(mainWindow, {
+    title: "Load a custom card table",
+    buttonLabel: "Load table",
+    filters: [{ name: "JSON card table", extensions: ["json"] }],
+    properties: ["openFile"],
+  });
+  if (selection.canceled || !selection.filePaths[0]) {
+    return { canceled: true };
+  }
+  const loaded = readCustomTable(selection.filePaths[0]);
+  const settings = await handleAprilFoolsChange({
+    table: "custom",
+    customTablePath: loaded.file,
+  });
+  return {
+    canceled: false,
+    ...settings,
+    cardTable: loaded.table,
+  };
 }
 
 async function handleAprilFoolsChange(next) {
@@ -2383,6 +2416,11 @@ function registerIpc() {
     ipcMain,
     isEnabled: () => aprilFools.on,
     store: chatCardStore,
+  });
+  ipcMain.handle("beta:cards-load-custom-table", async (event) => {
+    assertTrustedIpc(event);
+    if (!aprilFools.on) throw new Error("April Fools card table is off.");
+    return handleCustomCardTableLoad();
   });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);

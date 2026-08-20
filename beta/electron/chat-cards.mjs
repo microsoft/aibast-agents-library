@@ -907,12 +907,21 @@ function installAprilFoolsFrameBridge(settings) {
       return;
     }
     if (event.data.type === "rapp-beta:card-capture") {
-      event.source.postMessage({
-        type: "rapp-beta:card-capture-result",
-        requestId: event.data.requestId,
-        ok: true,
-        card: captureCard(),
-      }, "*");
+      try {
+        event.source.postMessage({
+          type: "rapp-beta:card-capture-result",
+          requestId: event.data.requestId,
+          ok: true,
+          card: captureCard(),
+        }, "*");
+      } catch (error) {
+        event.source.postMessage({
+          type: "rapp-beta:card-capture-result",
+          requestId: event.data.requestId,
+          ok: false,
+          error: String(error?.message || error),
+        }, "*");
+      }
       return;
     }
     if (event.data.type === "rapp-beta:card-parked") {
@@ -922,6 +931,12 @@ function installAprilFoolsFrameBridge(settings) {
     }
     if (event.data.type === "rapp-beta:card-wake") {
       renderTranscript(event.data.card || {});
+      return;
+    }
+    if (event.data.type === "rapp-beta:card-clear") {
+      clearKernel();
+      activeHistory = null;
+      lastRequest = null;
       return;
     }
     if (event.data.type === "rapp-beta:card-race") {

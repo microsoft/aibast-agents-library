@@ -60,6 +60,45 @@ const {
   surgeonCss,
 } = window.RappChatLook;
 let currentChatLook = normalizeChatLook(window.brainstemBeta.chatLook);
+let chatCardsLoader = null;
+
+function loadChatCards() {
+  if (window.RappChatCards) return Promise.resolve(window.RappChatCards);
+  if (chatCardsLoader) return chatCardsLoader;
+  chatCardsLoader = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "chat-cards.js";
+    script.addEventListener("load", () => resolve(window.RappChatCards), {
+      once: true,
+    });
+    script.addEventListener("error", () => {
+      chatCardsLoader = null;
+      reject(new Error("Could not load the April Fools card table."));
+    }, { once: true });
+    document.body.appendChild(script);
+  });
+  return chatCardsLoader;
+}
+
+async function syncChatCards(state) {
+  const cards = await loadChatCards();
+  return cards.sync({
+    api: window.brainstemBeta,
+    aprilFools: state.aprilFools,
+    ensureHerd: () => {
+      ensureSurgeonHerdDom();
+      return { grid: surgeonGridEl, herd: surgeonHerdEl };
+    },
+    enterHerd: () => {
+      if (!surgeonHerd) enterSurgeonHerd();
+    },
+    exitHerd: () => {
+      if (surgeonHerd) exitSurgeonHerd();
+    },
+    frame,
+    state,
+  });
+}
 
 function syncSurgeonMessageGroups(session) {
   const messages = session?.logEl?.querySelectorAll(
@@ -1742,10 +1781,19 @@ function syncBetaUpdate(update, openPanel = false) {
 function render(state) {
   latestState = state;
   applyShellChatLook(state.chatLook, state.chatTypingEnabled);
-  frame.contentWindow?.postMessage({
-    type: "rapp-beta:april-fools-state",
-    aprilFools: state.aprilFools,
-  }, "*");
+  if (state.aprilFools?.on) {
+    void syncChatCards(state).catch((cause) => {
+      window.alert(
+        `Could not show the card table: ${String(cause?.message || cause)}`,
+      );
+    });
+  } else if (window.RappChatCards) {
+    frame.contentWindow?.postMessage({
+      type: "rapp-beta:april-fools-state",
+      aprilFools: state.aprilFools,
+    }, "*");
+    window.RappChatCards.disable();
+  }
   const surgeonState = state.surgeon || state.copilot;
   document.getElementById("surgeon-model").textContent =
     surgeonState?.phase === "ready" ? "Agent" : (surgeonState?.phase || "starting");

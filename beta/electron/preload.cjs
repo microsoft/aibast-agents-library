@@ -38,6 +38,9 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   ),
   cardsFold: (id) => ipcRenderer.invoke("beta:cards-fold", id),
   cardsList: () => ipcRenderer.invoke("beta:cards-list"),
+  cardsLoadCustomTable: () => (
+    ipcRenderer.invoke("beta:cards-load-custom-table")
+  ),
   cardsPark: (card) => ipcRenderer.invoke("beta:cards-park", card),
   cardsRace: (id) => ipcRenderer.invoke("beta:cards-race", id),
   cardsUndo: (id) => ipcRenderer.invoke("beta:cards-undo", id),
