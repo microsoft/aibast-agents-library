@@ -457,7 +457,13 @@ export async function launch({
       ...process.env,
       APPDATA: path.join(root, "appdata"),
       BRAINSTEM_BETA_E2E: "1",
-      BRAINSTEM_BETA_HEADLESS: "1",
+      // A never-shown window is fine on macOS and Windows, but on Linux the
+      // cross-origin Brainstem frame inside a hidden window never receives a
+      // viewport (every rect is 0x0, the composer is "not visible"). Under
+      // xvfb there IS a display — use it.
+      ...(process.platform === "linux" && process.env.DISPLAY
+        ? {}
+        : { BRAINSTEM_BETA_HEADLESS: "1" }),
       BRAINSTEM_BETA_HOME: paths.betaHome,
       BRAINSTEM_BETA_OWN_PORT: "1",
       BRAINSTEM_BETA_PORT: String(configuredPort),
@@ -580,6 +586,28 @@ export async function launch({
       timeoutMs,
     });
     await driver.expect({ selector: "#input", timeoutMs, trace: false });
+    // Present is not enough: the composer must be laid out and visible before
+    // a scenario types into it (slow runners lay the frame out late).
+    const visibleDeadline = Date.now() + timeoutMs;
+    for (;;) {
+      let visible = false;
+      try {
+        const [result] = await driver.run(
+          // A condition only matches a visible element; an empty text is the
+          // "is it visible" question (state names are enabled/empty/...).
+          [{ action: "expect", selector: "#input", text: "" }],
+          { retryMs: 0 },
+        );
+        visible = result?.ok === true;
+      } catch {
+        visible = false;
+      }
+      if (visible) break;
+      if (Date.now() >= visibleDeadline) {
+        throw new Error("The Brainstem composer never became visible after launch.");
+      }
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
 
     const logs = {
       electron: electronLog,

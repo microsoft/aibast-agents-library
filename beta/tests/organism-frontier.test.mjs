@@ -14,6 +14,12 @@ const betaRoot = path.resolve(
 const repositoryRoot = path.resolve(betaRoot, "..");
 
 test("the Frontier organism proof passes against real Grail workers", (t) => {
+  // The proof copies the pristine Grail from the repository root. An installed
+  // Frontier is a sparse checkout (beta/ + tools/rapp1) with no Grail beside it.
+  if (!existsSync(path.join(repositoryRoot, "rapp_brainstem", "brainstem.py"))) {
+    t.skip("no pristine Grail beside beta/ (installed sparse checkout, not a repository)");
+    return;
+  }
   const python = process.env.BRAINSTEM_BETA_PYTHON
     || path.join(homedir(), ".brainstem", "venv", "bin", "python");
   if (!existsSync(python)) {

@@ -34,6 +34,18 @@ test("git-molt keeps two live Brainstem organisms healthy", {
     t.skip("the proof targets Bash 3.2-compatible macOS and Linux hosts");
     return;
   }
+  // The proof copies the pristine Grail and runs the vendored git-molt from the
+  // repository root; an installed Frontier is a sparse checkout without either.
+  const repositoryRoot = path.resolve(betaRoot, "..");
+  for (const [label, required] of [
+    ["pristine Grail", path.join(repositoryRoot, "rapp_brainstem", "brainstem.py")],
+    ["vendored git-molt", process.env.GIT_MOLT || path.join(repositoryRoot, "tools", "git-molt", "bin", "git-molt")],
+  ]) {
+    if (!existsSync(required)) {
+      t.skip(`${label} is not beside beta/ (installed sparse checkout, not a repository): ${required}`);
+      return;
+    }
+  }
 
   const python = process.env.BRAINSTEM_PYTHON
     || path.join(homedir(), ".brainstem", "venv", "bin", "python");

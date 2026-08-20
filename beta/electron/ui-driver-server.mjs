@@ -347,8 +347,20 @@ async function browserDriverCommand(command, createHelpers) {
   function requireActionable(element) {
     const reason = actionabilityReason(element);
     if (!reason) return;
+    // "not visible" on a CI runner is only diagnosable with the numbers: the
+    // element's box, its computed visibility, and the frame's own viewport.
+    let detail = "";
+    if (reason === "not visible") {
+      try {
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        detail = ` [rect ${Math.round(rect.width)}x${Math.round(rect.height)} @${Math.round(rect.left)},${Math.round(rect.top)}; display=${style.display} visibility=${style.visibility} opacity=${style.opacity}; viewport ${innerWidth}x${innerHeight}; document ${document.visibilityState}; readyState ${document.readyState}]`;
+      } catch {
+        detail = "";
+      }
+    }
     const error = new Error(
-      `UI target ${selectorFor(element) || "(unknown)"} is not actionable: ${reason}.`,
+      `UI target ${selectorFor(element) || "(unknown)"} is not actionable: ${reason}.${detail}`,
     );
     error.name = "UiDriverActionabilityError";
     error.reason = reason;

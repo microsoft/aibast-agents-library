@@ -73,6 +73,10 @@ export class DriveTrace {
  * }} DriveStep
  */
 
+// Frame states a retry can outwait: the frame is being replaced, or it exists
+// but has not been laid out yet (zero-size composer on a slow runner).
+const TRANSIENT_FRAME_STATE = /not loaded yet|navigated before the command|was destroyed before|was detached before|not actionable: not visible/;
+
 export class FrontierDriver {
   constructor({
     host,
@@ -138,12 +142,34 @@ export class FrontierDriver {
    * @param {{target?: "shell", twin?: string}} options
    */
   async run(steps, options = {}) {
-    const result = await this.command({
-      action: "run",
-      steps,
-      ...options,
-    });
-    return result.results;
+    // A person waits for the page; so does the harness. The Brainstem frame
+    // is swapped on route changes (safe words, recomposition) and is laid out
+    // late on slow runners, so transient frame states are retried until the
+    // command budget is spent — anything else fails immediately.
+    const { retryMs = 30_000, ...commandOptions } = options;
+    const deadline = Date.now() + Math.max(0, Number(retryMs) || 0);
+    let attempt = 0;
+    for (;;) {
+      attempt += 1;
+      try {
+        const result = await this.command({
+          action: "run",
+          steps,
+          ...commandOptions,
+        });
+        return result.results;
+      } catch (error) {
+        const message = String(error?.message || error);
+        const transient = TRANSIENT_FRAME_STATE.test(message);
+        if (!transient || Date.now() >= deadline) {
+          if (transient && attempt > 1) {
+            error.message = `${message} (after ${attempt} attempts over ${retryMs} ms)`;
+          }
+          throw error;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 150));
+      }
+    }
   }
 
   inspect(options = {}) {
