@@ -34,6 +34,7 @@ const JOURNAL_WRITE_REASON =
   "promotion journal could not record the attempt — refusing to move HEAD";
 
 export const MAX_AGENT_BYTES = 512 * 1024;
+export const MAX_PROMOTION_JOURNAL_BYTES = 512 * 1024;
 
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true, mode: 0o700 });
@@ -1091,7 +1092,12 @@ export class LineageStore {
         prev_entry_sha256: previous,
       };
       record.entry_sha256 = sha256Hex(JSON.stringify(record));
-      atomicWriteJson(file, [...log, record]);
+      const serialized = `${JSON.stringify([...log, record], null, 2)}\n`;
+      if (
+        Buffer.byteLength(serialized, "utf8")
+        > MAX_PROMOTION_JOURNAL_BYTES
+      ) return null;
+      atomicWrite(file, serialized);
       return record;
     } catch {
       return null;

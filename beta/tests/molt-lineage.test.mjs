@@ -16,6 +16,7 @@ import test from "node:test";
 
 import {
   LineageStore,
+  MAX_PROMOTION_JOURNAL_BYTES,
   lineageStoreInternals,
 } from "../electron/lineage-store.mjs";
 
@@ -268,6 +269,43 @@ test("every promotion attempt lands in an internally verified hash chain", () =>
     tampered[0].actor = "mallory";
     writeFileSync(file, JSON.stringify(tampered));
     assert.deepEqual(store.verifyPromotions(ancestor), { ok: false, broken_at: 0 });
+  } finally {
+    cleanup();
+  }
+});
+
+test("the append-only promotion journal refuses growth past its byte bound", () => {
+  const { store, cleanup } = freshStore();
+  try {
+    const ancestor = store.baselineAncestors()[0].ancestorRappid;
+    const actor = "x".repeat(
+      Math.floor(MAX_PROMOTION_JOURNAL_BYTES * 0.55),
+    );
+    const first = store.promote(ancestor, {
+      actor,
+      fromEnv: "default",
+      toEnv: "default",
+    });
+    assert.equal(first.ok, true);
+    assert.equal(first.noop, true);
+    const file = path.join(
+      store.root,
+      filesystemSegment(ancestor),
+      "promotions.json",
+    );
+    const before = readFileSync(file);
+    assert.ok(before.byteLength <= MAX_PROMOTION_JOURNAL_BYTES);
+
+    const refused = store.promote(ancestor, {
+      actor,
+      fromEnv: "default",
+      toEnv: "default",
+    });
+
+    assert.equal(refused.ok, false);
+    assert.equal(refused.journal_refused, true);
+    assert.deepEqual(readFileSync(file), before);
+    assert.deepEqual(store.verifyPromotions(ancestor), { ok: true, entries: 1 });
   } finally {
     cleanup();
   }
