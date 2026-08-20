@@ -134,6 +134,45 @@ function driftReply(report) {
   return `Drift detected in ${report.env} against ${report.baseEnv}: ${agents}.`;
 }
 
+function activeRoute(routeManager) {
+  return routeManager.activeRoute || {
+    compositionHash: null,
+    url: null,
+  };
+}
+
+async function restartAfterLineageChange(routeManager, changed) {
+  if (!changed) {
+    return {
+      deferred: false,
+      restarted: false,
+      route: activeRoute(routeManager),
+    };
+  }
+  if (typeof routeManager.whenLifecycleIdle !== "function") {
+    return {
+      deferred: false,
+      restarted: true,
+      route: await routeManager.startDefault(),
+    };
+  }
+  const scheduled = routeManager.whenLifecycleIdle(
+    () => routeManager.startDefault(),
+  );
+  if (scheduled.deferred) {
+    return {
+      deferred: true,
+      restarted: true,
+      route: activeRoute(routeManager),
+    };
+  }
+  return {
+    deferred: false,
+    restarted: true,
+    route: await scheduled.completion,
+  };
+}
+
 export async function executeLineageCommand({
   message,
   routeManager,
@@ -193,12 +232,20 @@ export async function executeLineageCommand({
       toEnv: command.toEnv,
     });
     if (report?.disabled) return disabledResult(command.action);
-    const route = await routeManager.startDefault();
+    const restart = await restartAfterLineageChange(
+      routeManager,
+      Boolean(report.changed?.length),
+    );
+    const route = restart.route;
+    let reply = promotionReply(report, report.fromEnv, report.toEnv);
+    if (restart.deferred) {
+      reply += " It takes effect as soon as the current task finishes.";
+    }
     return {
       intercepted: true,
       action: command.action,
       disabled: false,
-      reply: promotionReply(report, report.fromEnv, report.toEnv),
+      reply,
       compositionHash: route.compositionHash,
       changed: report.changed?.length ?? 0,
       unchanged: report.unchanged?.length ?? 0,
@@ -207,6 +254,7 @@ export async function executeLineageCommand({
       fromEnv: report.fromEnv,
       toEnv: report.toEnv,
       url: route.url,
+      ...(restart.deferred ? { pending: true } : {}),
     };
   }
 
@@ -218,8 +266,14 @@ export async function executeLineageCommand({
   if (report?.disabled) {
     return disabledResult(command.action);
   }
-  const route = await routeManager.startDefault();
-  const fallback = routeManager.lastLineageFallback || null;
+  const restart = await restartAfterLineageChange(
+    routeManager,
+    Boolean(report?.changed?.length),
+  );
+  const route = restart.route;
+  const fallback = restart.deferred || !restart.restarted
+    ? null
+    : routeManager.lastLineageFallback || null;
   let reply = command.action === "baseline" ? BASELINE_REPLY : RESTORE_REPLY;
   if (report?.failed?.length) {
     reply = command.action === "baseline"
@@ -240,6 +294,15 @@ export async function executeLineageCommand({
         + "version it has, or is pinned to its baseline. Your memories are intact."
       : "There was nothing to restore. Your memories are intact.";
   }
+  if (restart.deferred) {
+    reply = (
+      command.action === "restore"
+      && report?.changed?.length
+      && !report?.failed?.length
+    )
+      ? "Verified molt HEADs moved into place; the running Brainstem takes effect as soon as the current task finishes."
+      : `${reply} It takes effect as soon as the current task finishes.`;
+  }
   return {
     intercepted: true,
     action: command.action,
@@ -247,11 +310,14 @@ export async function executeLineageCommand({
     reply,
     compositionHash: route.compositionHash,
     restored: command.action === "restore"
-      ? Boolean(report?.changed?.length) && !fallback?.rejected?.length
+      ? restart.deferred
+        ? undefined
+        : Boolean(report?.changed?.length) && !fallback?.rejected?.length
       : undefined,
     changed: report?.changed?.length ?? 0,
     unchanged: report?.unchanged?.length ?? 0,
     url: route.url,
+    ...(restart.deferred ? { pending: true } : {}),
   };
 }
 

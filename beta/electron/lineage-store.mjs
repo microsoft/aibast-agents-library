@@ -272,11 +272,14 @@ export class LineageStore {
           .map((d) => {
             const meta = readJsonSafe(path.join(legacyDir, "rings", d.name, RING_META_FILE));
             let source = null;
+            let sourceError = null;
             try {
               source = readFileSync(
                 path.join(legacyDir, "rings", d.name, RING_SOURCE_FILE), "utf8");
-            } catch {}
-            return meta && typeof source === "string" ? { ...meta, source } : null;
+            } catch (error) {
+              sourceError = String(error?.message || error);
+            }
+            return meta ? { ...meta, source, sourceError } : null;
           })
           .filter(Boolean)
           .sort((l, r) => String(l.createdAt || "").localeCompare(String(r.createdAt || "")));
@@ -286,28 +289,69 @@ export class LineageStore {
           legacyHead = readFileSync(path.join(legacyDir, HEAD_FILE), "utf8").trim();
         } catch {}
 
-        // Re-append in order; appendRing mints correct ids under the new ancestor.
-        const remap = new Map([[legacyAncestor, baseline.ancestorRappid]]);
+        // Re-append dependency-first; timestamps are evidence, not ordering law.
+        const resolved = new Map([[legacyAncestor, baseline.ancestorRappid]]);
         const byLegacyRappid = new Map(
           rings.map((ring) => [ring.ringRappid, ring]),
         );
-        const nearestSurvivingRing = (start) => {
-          const seen = new Set();
-          let currentRing = start;
-          while (currentRing && !seen.has(currentRing)) {
-            if (remap.has(currentRing)) return remap.get(currentRing);
-            seen.add(currentRing);
-            currentRing = byLegacyRappid.get(currentRing)?.parentRappid || null;
-          }
-          return baseline.ancestorRappid;
+        const visiting = [];
+        const visitingIndexes = new Map();
+        const skippedRings = new Set();
+        const skipRing = (ring, error, fallback) => {
+          if (skippedRings.has(ring.ringRappid)) return;
+          skippedRings.add(ring.ringRappid);
+          resolved.set(ring.ringRappid, fallback);
+          const skipped = {
+            ancestor_rappid: baseline.ancestorRappid,
+            legacy_ancestor_rappid: legacyAncestor,
+            ring_rappid: ring.ringRappid,
+            recorded_sha: ring.sha256 || null,
+            current_sha: typeof ring.source === "string"
+             ? sourceSha256(ring.source)
+             : null,
+            reason: String(error?.message || error),
+          };
+          report.skipped.push(skipped);
+          this._recordTelemetry("lineage-migration-skipped-ring", skipped);
         };
-        for (const ring of rings) {
+        const migrateRing = (legacyRingRappid) => {
+          if (resolved.has(legacyRingRappid)) {
+            return resolved.get(legacyRingRappid);
+          }
+          const ring = byLegacyRappid.get(legacyRingRappid);
+          if (!ring) return baseline.ancestorRappid;
+          if (visitingIndexes.has(legacyRingRappid)) {
+            const cycleStart = visitingIndexes.get(legacyRingRappid);
+            for (const cycleRappid of visiting.slice(cycleStart)) {
+             const cycleRing = byLegacyRappid.get(cycleRappid);
+             if (cycleRing) {
+               skipRing(
+                 cycleRing,
+                 new Error("legacy ring parent cycle"),
+                 baseline.ancestorRappid,
+               );
+             }
+            }
+            return baseline.ancestorRappid;
+          }
+          visitingIndexes.set(legacyRingRappid, visiting.length);
+          visiting.push(legacyRingRappid);
+          const parent = migrateRing(ring.parentRappid);
+          if (skippedRings.has(legacyRingRappid)) {
+            visiting.pop();
+            visitingIndexes.delete(legacyRingRappid);
+            return resolved.get(legacyRingRappid);
+          }
           try {
+            if (typeof ring.source !== "string") {
+              throw new Error(
+                ring.sourceError || "legacy ring source.py is unreadable",
+              );
+            }
             const actualSha = sourceSha256(ring.source);
             if (ring.sha256 !== actualSha) {
               throw new Error("legacy source sha256 does not match its metadata");
             }
-            const parent = nearestSurvivingRing(ring.parentRappid);
             const minted = this.appendRing(baseline.ancestorRappid, {
               source: ring.source,
               parentRappid: parent,
@@ -321,23 +365,18 @@ export class LineageStore {
                 migrated_from: ring.ringRappid,
               },
             });
-            remap.set(ring.ringRappid, minted);
+            resolved.set(ring.ringRappid, minted);
           } catch (error) {
-            const skipped = {
-              ancestor_rappid: baseline.ancestorRappid,
-              legacy_ancestor_rappid: legacyAncestor,
-              ring_rappid: ring.ringRappid,
-              recorded_sha: ring.sha256 || null,
-              current_sha: sourceSha256(ring.source),
-              reason: String(error?.message || error),
-            };
-            report.skipped.push(skipped);
-            this._recordTelemetry("lineage-migration-skipped-ring", skipped);
+            skipRing(ring, error, parent);
           }
+          visiting.pop();
+          visitingIndexes.delete(legacyRingRappid);
+          return resolved.get(legacyRingRappid);
+        };
+        for (const ring of rings) {
+          migrateRing(ring.ringRappid);
         }
-        const newHead = nearestSurvivingRing(
-          legacyHead || legacyAncestor,
-        );
+        const newHead = migrateRing(legacyHead || legacyAncestor);
         const moved = this.setHead(
           baseline.ancestorRappid,
           newHead,
@@ -785,10 +824,20 @@ export class LineageStore {
       throw new Error(`Refusing invalid or unverified molt ring: ${ringRappid}`);
     }
     this._ensureLocus(baseline);
+    const headPath = this._headPath(ancestorRappid, environment);
+    const priorPath = this._priorHeadPath(ancestorRappid, environment);
+    atomicWrite(headPath, `${ringRappid}\n`);
     if (ringRappid !== ancestorRappid) {
-      rmSync(this._priorHeadPath(ancestorRappid, environment), { force: true });
+      try {
+        rmSync(priorPath, { recursive: true, force: true });
+      } catch (error) {
+        this._recordTelemetry("lineage-prior-cleanup-failed", {
+          ancestor: ancestorRappid,
+          env: environment,
+          error: String(error?.message || error),
+        });
+      }
     }
-    atomicWrite(this._headPath(ancestorRappid, environment), `${ringRappid}\n`);
     return true;
   }
 

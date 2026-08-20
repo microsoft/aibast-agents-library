@@ -335,7 +335,7 @@ try {
         result.intercepted === true
         && typeof result.reply === "string"
         && result.reply.length > 0
-      )) && starts === 3,
+      )) && starts === 2,
       detail: `${messages.join(", ")}; startDefault=${starts}`,
     };
   });

@@ -308,6 +308,10 @@ messages to Grail:
 Safe-word change counts compare the effective resolved artifacts, not raw HEAD
 file strings. Repairing a pointer that already fell back to the same baseline
 bytes is reported as unchanged rather than as a successful restore.
+HEAD-moving chat commands never wait behind an in-flight route lifecycle lock:
+the pointer moves immediately, the restart is scheduled for lifecycle idle, and
+the pending reply says the change takes effect as soon as the current task
+finishes. No-op and refused commands do not restart the active worker.
 
 The words are configurable with `RAPP_BASELINE_SAFEWORD`,
 `RAPP_RESTORE_WORD`, `RAPP_ENVIRONMENTS_WORD`, `RAPP_PROMOTE_WORD`, and

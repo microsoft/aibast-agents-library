@@ -1425,6 +1425,47 @@ export class BetaRouteManager {
     return entries;
   }
 
+  finalizeCompositionDescriptor({
+    entries,
+    identity,
+    stack,
+    selectedStacks,
+    ephemeralAgent = null,
+    ephemeralNonce = null,
+  }) {
+    const ordered = [...entries].sort(
+      (left, right) => left.filename.localeCompare(right.filename),
+    );
+    const compositionDocument = {
+      caller_rappid: identity.caller_rappid,
+      memory_guid: identity.memory_guid,
+      stack_rappid: stack.rappid,
+      overlay_stack_rappids: identity.overlay_stack_rappids,
+      stack_lineage: selectedStacks.map((selected) => selected.rappid),
+      agents: ordered.map((entry) => ({
+        filename: entry.filename,
+        address: entry.address,
+        scope: entry.scope,
+      })),
+    };
+    if (ephemeralNonce) {
+      compositionDocument.ephemeral_nonce = ephemeralNonce;
+    }
+    return {
+      compositionHash: sha256(Buffer.from(canonical(compositionDocument))),
+      entries: ordered,
+      identity,
+      stack,
+      selectedStacks,
+      ephemeral: Boolean(ephemeralAgent),
+      ephemeralNonce,
+      ephemeralAgent,
+      lineageOverlays: ordered
+        .filter((entry) => entry.lineage)
+        .map((entry) => ({ ...entry.lineage, filename: entry.filename })),
+    };
+  }
+
   compositionDescriptor({
     ephemeralAgent = null,
     applyLineage = true,
@@ -1488,40 +1529,14 @@ export class BetaRouteManager {
       }
       byFilename.set(entry.filename, entry);
     }
-    const ordered = [...byFilename.values()].sort(
-      (left, right) => left.filename.localeCompare(right.filename),
-    );
-    const compositionDocument = {
-      caller_rappid: identity.caller_rappid,
-      memory_guid: identity.memory_guid,
-      stack_rappid: stack.rappid,
-      overlay_stack_rappids: identity.overlay_stack_rappids,
-      stack_lineage: selectedStacks.map((selected) => selected.rappid),
-      agents: ordered.map((entry) => ({
-        filename: entry.filename,
-        address: entry.address,
-        scope: entry.scope,
-      })),
-    };
-    if (ephemeralNonce) {
-      compositionDocument.ephemeral_nonce = ephemeralNonce;
-    }
-    const compositionHash = sha256(
-      Buffer.from(canonical(compositionDocument)),
-    );
-    return {
-      compositionHash,
-      entries: ordered,
+    return this.finalizeCompositionDescriptor({
+      entries: [...byFilename.values()],
       identity,
       stack,
       selectedStacks,
-      ephemeral: Boolean(ephemeralAgent),
-      ephemeralNonce,
       ephemeralAgent,
-      lineageOverlays: ordered
-        .filter((entry) => entry.lineage)
-        .map((entry) => ({ ...entry.lineage, filename: entry.filename })),
-    };
+      ephemeralNonce,
+    });
   }
 
   compositionIsComplete(descriptor, agentDirectory, manifest) {
@@ -1700,10 +1715,7 @@ export class BetaRouteManager {
             descriptor,
           );
           const fallbackDescriptor = reconciliation
-            ? this.compositionDescriptor({
-                ephemeralAgent: descriptor.ephemeralAgent,
-                lineageHeads: reconciliation.heads,
-              })
+            ? reconciliation.descriptor
             : lastGoodDescriptor;
           if (
             reconciliation
@@ -1841,7 +1853,63 @@ export class BetaRouteManager {
         heads.set(ancestorRappid, cachedRing);
       }
     }
-    return dropped.length ? { dropped, heads } : null;
+    const current = this.compositionDescriptor({
+      ephemeralAgent: failedDescriptor.ephemeralAgent,
+      lineageHeads: heads,
+    });
+    const currentEntries = new Map(
+      current.entries.map((entry) => [entry.filename, entry]),
+    );
+    const mergedEntries = [];
+    const included = new Set();
+    for (const cachedEntry of lastGoodDescriptor.entries) {
+      const currentEntry = currentEntries.get(cachedEntry.filename);
+      const lineageManaged = Boolean(
+        cachedEntry.lineage
+        || currentEntry?.lineage
+        || cachedEntry.scope === "global"
+        || cachedEntry.scope === "memory"
+      );
+      if (lineageManaged) {
+        if (currentEntry) mergedEntries.push(currentEntry);
+      } else {
+        mergedEntries.push(cachedEntry);
+      }
+      included.add(cachedEntry.filename);
+    }
+    for (const currentEntry of current.entries) {
+      if (
+        !included.has(currentEntry.filename)
+        && (
+          currentEntry.lineage
+          || currentEntry.scope === "global"
+          || currentEntry.scope === "memory"
+          || currentEntry.scope === "ephemeral"
+        )
+      ) {
+        mergedEntries.push(currentEntry);
+      }
+    }
+    const reconciledDescriptor = this.finalizeCompositionDescriptor({
+      entries: mergedEntries,
+      identity: current.identity,
+      stack: current.stack,
+      selectedStacks: current.selectedStacks,
+      ephemeralAgent: current.ephemeralAgent,
+      ephemeralNonce: current.ephemeralNonce,
+    });
+    if (
+      !dropped.length
+      && reconciledDescriptor.compositionHash
+        === lastGoodDescriptor.compositionHash
+    ) {
+      return null;
+    }
+    return {
+      descriptor: reconciledDescriptor,
+      dropped,
+      heads,
+    };
   }
 
   quarantineCompositionFallback(descriptor, error, pristineError) {
@@ -2229,6 +2297,25 @@ export class BetaRouteManager {
       "__lifecycle__",
       () => this.startDefaultUnlocked(),
     );
+  }
+
+  whenLifecycleIdle(callback) {
+    if (typeof callback !== "function") {
+      throw new Error("A lifecycle-idle callback is required.");
+    }
+    const pending = this.routeLocks.get("__lifecycle__");
+    const completion = (pending || Promise.resolve()).then(callback);
+    if (pending) {
+      completion.catch((error) => {
+        this.recordTelemetry("lifecycle-idle-callback-error", {
+          error: String(error?.message || error),
+        });
+      });
+    }
+    return {
+      deferred: Boolean(pending),
+      completion,
+    };
   }
 
   async withRouteLock(key, callback) {

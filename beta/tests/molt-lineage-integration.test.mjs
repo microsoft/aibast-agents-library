@@ -641,6 +641,66 @@ test("last-good fallback respects a locus pinned to baseline", (t) => {
   assert.equal(run.store.locusPolicy(run.other.ancestorRappid), "pinned");
 });
 
+test("last-good fallback refreshes baseline-only Grail bytes", (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "utf8",
+      );
+      return source.includes("broken ring two")
+        ? { ok: false, error: "global ring two is incompatible" }
+        : { ok: true };
+    },
+  });
+  const baselines = new Map(
+    fixture.store.baselineAncestors().map(
+      (item) => [item.filename, item],
+    ),
+  );
+  const global = baselines.get("global_agent.py");
+  const other = baselines.get("other_agent.py");
+  const global1Source = "GLOBAL = 'ring one'\n";
+  const global1 = fixture.store.appendRing(global.ancestorRappid, {
+    source: global1Source,
+    verified: true,
+    meta: { author: "user" },
+  });
+  fixture.store.setHead(global.ancestorRappid, global1);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.materializeComposition(manager.compositionDescriptor());
+
+  const upgradedBaseline = "OTHER = 'grail upgrade'\n";
+  writeFileSync(other.sourcePath, upgradedBaseline);
+  const global2 = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'broken ring two'\n",
+    parentRappid: global1,
+    verified: true,
+    meta: { author: "user" },
+  });
+  fixture.store.setHead(global.ancestorRappid, global2);
+
+  const fallback = manager.materializeComposition(
+    manager.compositionDescriptor(),
+  );
+  assert.equal(fallback.fallbackStrategy, "last-good");
+  assert.equal(fixture.store.getHead(global.ancestorRappid), global1);
+  assert.equal(
+    readFileSync(
+      path.join(fallback.agentDirectory, global.filename),
+      "utf8",
+    ),
+    global1Source,
+  );
+  assert.equal(
+    readFileSync(
+      path.join(fallback.agentDirectory, other.filename),
+      "utf8",
+    ),
+    upgradedBaseline,
+  );
+});
+
 test("fail-safe isolates a broken locus without rewinding a healthy sibling", (t) => {
   const fixture = minimalFixture(t, {
     validator: (agentDirectory) => {
