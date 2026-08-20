@@ -1,0 +1,454 @@
+#brainstem-chat-grab {
+  position: absolute;
+  z-index: 8;
+  top: 9px;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px;
+  background: rgba(15, 23, 18, .9);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .36);
+  color: #e8f5eb;
+  cursor: grab;
+  font: 650 12px/1 system-ui, sans-serif;
+  transform: translateX(-50%);
+}
+
+#brainstem-chat-grab:active { cursor: grabbing; }
+#brainstem-chat-grab:focus-visible {
+  outline: 2px solid #f6d365;
+  outline-offset: 2px;
+}
+
+#surgeon-herd.chat-card-table {
+  --table-felt: #124b34;
+  --card-width: 190px;
+  --card-height: 260px;
+  background:
+    radial-gradient(ellipse at 50% 18%, rgba(255,255,255,.08), transparent 46%),
+    #092d20;
+}
+
+#surgeon-herd.chat-card-table .hbar {
+  border-bottom-color: rgba(255,255,255,.12);
+  background: linear-gradient(180deg, #173a2b, #10271e);
+}
+
+.chat-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  background: rgba(4, 16, 11, .45);
+}
+
+.chat-card-controls strong {
+  margin-right: auto;
+  color: #f5ead1;
+  font: 700 12px/1.2 system-ui, sans-serif;
+}
+
+.chat-card-controls select,
+.chat-card-controls button {
+  min-height: 31px;
+  padding: 5px 9px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 8px;
+  background: rgba(5,12,9,.72);
+  color: #edf4ef;
+  font: 600 11px/1.2 system-ui, sans-serif;
+}
+
+.chat-card-controls [hidden] { display: none; }
+
+.chat-card-surface {
+  position: relative;
+  flex: 0 1 52vh;
+  min-height: 360px;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+  align-content: start;
+  justify-items: center;
+  gap: 16px;
+  padding: 34px 34px 48px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  background:
+    radial-gradient(ellipse at center, rgba(255,255,255,.06), transparent 62%),
+    var(--table-felt);
+  box-shadow: inset 0 0 70px rgba(0,0,0,.36);
+}
+
+.chat-card-surface::before {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(238, 220, 172, .28);
+  border-radius: 42%;
+  content: "";
+  pointer-events: none;
+}
+
+.chat-card {
+  --swipe-x: 0px;
+  --swipe-tilt: 0deg;
+  position: relative;
+  z-index: 1;
+  width: min(100%, var(--card-width));
+  height: var(--card-height);
+  overflow: hidden;
+  border: 1px solid rgba(30, 23, 14, .68);
+  border-radius: 14px;
+  background: #f4eddd;
+  box-shadow: 0 10px 25px rgba(0,0,0,.34);
+  color: #1b1915;
+  cursor: grab;
+  font: 12px/1.35 system-ui, sans-serif;
+  transform: translateX(var(--swipe-x)) rotate(var(--swipe-tilt));
+  transition: transform .18s ease, box-shadow .18s ease;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.chat-card.swiping { transition: none; cursor: grabbing; }
+.chat-card.dragging { opacity: .48; }
+.chat-card:focus-visible {
+  outline: 3px solid #f6d365;
+  outline-offset: 3px;
+}
+
+.chat-card-corner {
+  position: absolute;
+  z-index: 2;
+  top: 7px;
+  left: 8px;
+  min-width: 20px;
+  color: #29251c;
+  font: 900 16px/1 ui-serif, Georgia, serif;
+  text-align: center;
+}
+
+.chat-card-drag {
+  position: absolute;
+  z-index: 3;
+  top: 5px;
+  right: 7px;
+  padding: 2px 4px;
+  color: #625a4b;
+  cursor: grab;
+  font-size: 17px;
+  line-height: 1;
+}
+.chat-card-drag:active { cursor: grabbing; }
+
+.chat-card-face {
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px 12px 11px;
+}
+
+.chat-card-banner {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 8px;
+  border: 1px solid rgba(0,0,0,.14);
+  border-radius: 6px;
+  background: rgba(255,255,255,.5);
+}
+
+.chat-card-banner strong {
+  flex: 1;
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-card-banner span {
+  color: #746a57;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.chat-card-art {
+  position: relative;
+  display: flex;
+  min-height: 70px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.22);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.42), transparent 46%),
+    repeating-linear-gradient(45deg, #547d6a 0 9px, #416655 9px 18px);
+}
+
+.chat-card-art i {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,.65);
+  border-radius: 50%;
+  background: rgba(8,30,19,.35);
+}
+
+.chat-card p {
+  min-height: 48px;
+  margin: 0;
+  display: -webkit-box;
+  overflow: hidden;
+  color: #3a352c;
+  font-size: 10px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.chat-card-meta {
+  color: #6d6455;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.chat-card-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.chat-card-actions button {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 4px;
+  border: 1px solid rgba(0,0,0,.22);
+  border-radius: 6px;
+  background: rgba(255,255,255,.56);
+  color: #29251d;
+  font: 750 9px/1 system-ui, sans-serif;
+}
+
+.chat-card-actions button:hover { background: #fff; }
+.chat-card-actions button:disabled { opacity: .42; }
+
+.card-theme-yugioh .chat-card {
+  border: 7px solid #806044;
+  border-radius: 4px;
+  background: #d7bd83;
+}
+.card-theme-yugioh .chat-card-art {
+  background:
+    radial-gradient(circle at center, #7e5060, #343040 68%),
+    #343040;
+}
+.card-theme-yugioh .chat-card-meta::before { content: "TURNS / TOOLS · "; }
+
+.card-theme-pokemon .chat-card {
+  border: 7px solid #e5bd42;
+  border-radius: 18px;
+  background: #f7eab2;
+}
+.card-theme-pokemon .chat-card-art {
+  border-radius: 10px;
+  background: linear-gradient(145deg, #55a99b, #305b7a);
+}
+
+.card-theme-mtg .chat-card {
+  border: 8px solid #352e29;
+  border-radius: 10px;
+  background: #b9aa8b;
+}
+.card-theme-mtg .chat-card-art {
+  background:
+    linear-gradient(25deg, rgba(19,23,35,.25), transparent),
+    repeating-linear-gradient(120deg, #5d7269 0 15px, #3e514b 15px 30px);
+}
+.card-theme-mtg .chat-card[data-status="folded"] { transform: rotate(90deg); }
+
+.card-theme-uno .chat-card {
+  border: 7px solid #fff;
+  border-radius: 20px;
+  background: #bd3434;
+  color: #fff;
+}
+.card-theme-uno .chat-card:nth-of-type(4n+2) { background: #2d6fbd; }
+.card-theme-uno .chat-card:nth-of-type(4n+3) { background: #d2a62c; }
+.card-theme-uno .chat-card:nth-of-type(4n+4) { background: #328653; }
+.card-theme-uno .chat-card-art {
+  border: 6px solid rgba(255,255,255,.84);
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+}
+.card-theme-uno .chat-card-corner,
+.card-theme-uno .chat-card p,
+.card-theme-uno .chat-card-meta { color: #fff; }
+
+.card-theme-custom .chat-card-surface {
+  display: block;
+  min-height: 520px;
+}
+.card-theme-custom .chat-card {
+  position: absolute;
+  top: var(--custom-y);
+  left: var(--custom-x);
+  transform:
+    translate(-50%, -50%)
+    translateX(var(--swipe-x))
+    rotate(calc(var(--custom-rotation) + var(--swipe-tilt)));
+}
+.card-theme-custom .chat-card.face-down {
+  background:
+    repeating-linear-gradient(45deg, #202a31 0 10px, #34424c 10px 20px);
+}
+.card-theme-custom .chat-card.face-down
+  .chat-card-face > :not(.chat-card-actions),
+.card-theme-custom .chat-card.face-down .chat-card-corner {
+  visibility: hidden;
+}
+.card-theme-custom .chat-card.face-down .chat-card-actions {
+  margin-top: auto;
+}
+
+.chat-card-discard {
+  position: absolute;
+  z-index: 4;
+  right: 20px;
+  bottom: 14px;
+}
+.chat-card-discard > button {
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 8px;
+  background: rgba(4,10,7,.78);
+  color: #e5ddc9;
+  font: 700 10px/1 system-ui, sans-serif;
+}
+.chat-card-discard .chat-card {
+  position: absolute;
+  right: 0;
+  bottom: 38px;
+  display: none;
+  width: 120px;
+  height: 168px;
+  transform-origin: 90% 100%;
+}
+.chat-card-discard.open .chat-card { display: block; }
+.chat-card-discard.open .chat-card {
+  transform:
+    translateX(var(--pile-offset))
+    rotate(var(--pile-angle));
+}
+.chat-card-discard .chat-card p,
+.chat-card-discard .chat-card-art,
+.chat-card-discard .chat-card-meta { display: none; }
+
+.chat-card-overflow {
+  position: absolute;
+  z-index: 2;
+  bottom: 14px;
+  left: 20px;
+}
+.chat-card-overflow > button {
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 8px;
+  background: rgba(3,10,7,.7);
+  color: #e7dfcc;
+  font: 700 10px/1 system-ui, sans-serif;
+}
+.chat-card-overflow .chat-card {
+  position: absolute;
+  bottom: 38px;
+  left: 0;
+  display: none;
+  width: 120px;
+  height: 168px;
+  transform-origin: 10% 100%;
+}
+.chat-card-overflow.open .chat-card {
+  display: block;
+  transform:
+    translateX(var(--pile-offset))
+    rotate(var(--pile-angle));
+}
+.chat-card-overflow .chat-card p,
+.chat-card-overflow .chat-card-art,
+.chat-card-overflow .chat-card-meta { display: none; }
+
+.chat-card-toast {
+  position: fixed;
+  z-index: 10002;
+  bottom: 24px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 10px 13px;
+  border: 1px solid #5d765f;
+  border-radius: 10px;
+  background: #152219;
+  box-shadow: 0 12px 42px rgba(0,0,0,.5);
+  color: #edf5ee;
+  font: 600 12px/1.35 system-ui, sans-serif;
+  transform: translateX(-50%);
+}
+.chat-card-toast button {
+  border-color: #799d7d;
+  background: #28422d;
+  color: #fff;
+}
+
+.chat-card-surface.deal-riffle .chat-card {
+  animation: chat-card-riffle .62s ease both;
+}
+.chat-card-surface.deal-fan .chat-card {
+  margin-right: calc(var(--card-width) * -.55);
+  transform: rotate(var(--fan-angle));
+}
+.chat-card-surface.deal-seats .chat-card {
+  animation: chat-card-seat .52s cubic-bezier(.2,.8,.2,1) both;
+}
+.chat-card-surface.deal-draw .chat-card {
+  animation: chat-card-draw .34s ease both;
+}
+
+@keyframes chat-card-riffle {
+  0% { transform: translateX(calc((var(--seat, 1) % 2) * 160px - 80px)); }
+  62% { transform: translateX(0) scale(.96); }
+  100% { transform: translateX(0) scale(1); }
+}
+@keyframes chat-card-seat {
+  from { opacity: .4; transform: translateY(-70px) rotate(-5deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+@keyframes chat-card-draw {
+  50% { transform: translateY(-20px) scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-card,
+  .chat-card-surface .chat-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .chat-card-controls { flex-wrap: wrap; }
+  .chat-card-controls strong { width: 100%; }
+  .chat-card-surface {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 28px 18px 44px;
+    --card-width: 160px;
+    --card-height: 228px;
+  }
+}

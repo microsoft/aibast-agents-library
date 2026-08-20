@@ -100,6 +100,8 @@ ref_base() { printf 'refs/molt/base/%s' "$1"; }
 ref_loci() { printf 'refs/molt/loci/%s' "$1"; }
 ref_live() { printf 'refs/molt/live/%s' "$1"; }
 ref_policy() { printf 'refs/molt/policy/%s' "$1"; }
+ref_meta() { printf 'refs/molt/meta/%s' "$1"; }
+ref_verified() { printf 'refs/molt/verified/%s' "$1"; }
 
 resolve_ref() { git_molt rev-parse --verify --quiet "$1" 2>/dev/null || true; }
 
@@ -116,8 +118,25 @@ all_loci() {
 agent_path() {
   local locus="$1" p
   p="$(git_molt config --get "molt.locus.${locus}.path" 2>/dev/null || true)"
-  [ -n "$p" ] && { printf '%s' "$p"; return; }
+  [ -n "$p" ] && {
+    valid_agent_path "$p" || die "unsafe agent path for $locus: $p"
+    printf '%s' "$p"
+    return
+  }
   printf 'agent.py'
+}
+
+valid_agent_path() {
+  local p="${1:-}"
+  [ -n "$p" ] || return 1
+  [[ "$p" != *$'\n'* && "$p" != *$'\r'* ]] || return 1
+  case "$p" in
+    /*|*\\*) return 1 ;;
+  esac
+  case "/$p/" in
+    */../*|*/./*|*//*) return 1 ;;
+  esac
+  return 0
 }
 
 # ------------------------------------------------------------------ plumbing
@@ -127,6 +146,19 @@ write_tree() {
   local file="$1" path="$2" blob
   blob="$(LC_ALL=C tr -d '\r' < "$file" | git_molt hash-object -w --stdin)"
   printf '100644 blob %s\t%s\n' "$blob" "$path" | git_molt mktree
+}
+
+record_path_metadata() {
+  local locus="$1" path="$2" blob tree commit
+  valid_agent_path "$path" || die "unsafe agent path for $locus: $path"
+  blob="$(printf '%s\n' "$path" | git_molt hash-object -w --stdin)"
+  tree="$(printf '100644 blob %s\tpath\n' "$blob" | git_molt mktree)"
+  commit="$(
+    GIT_AUTHOR_NAME="$BASE_NAME" GIT_AUTHOR_EMAIL="$BASE_EMAIL" GIT_AUTHOR_DATE="$BASE_DATE" \
+    GIT_COMMITTER_NAME="$BASE_NAME" GIT_COMMITTER_EMAIL="$BASE_EMAIL" GIT_COMMITTER_DATE="$BASE_DATE" \
+    git_molt commit-tree "$tree" -m "molt: path metadata for $locus"
+  )"
+  git_molt update-ref "$(ref_meta "$locus")" "$commit"
 }
 
 trailers() {
@@ -158,7 +190,19 @@ trailer_of() {
   git_molt show -s --format=%B "$1" | sed -n "s/^$2: //p" | tail -1
 }
 
-is_verified() { [ "$(trailer_of "$1" 'Molt-Verified')" = "yes" ]; }
+has_verified_trailer() { [ "$(trailer_of "$1" 'Molt-Verified')" = "yes" ]; }
+
+record_local_verdict() {
+  local ring="$1"
+  git_molt update-ref "$(ref_verified "$ring")" "$ring"
+}
+
+is_verified() {
+  local ring
+  ring="$(git_molt rev-parse --verify --quiet "$1^{commit}" 2>/dev/null)" || return 1
+  has_verified_trailer "$ring" \
+    && [ "$(resolve_ref "$(ref_verified "$ring")")" = "$ring" ]
+}
 
 # ------------------------------------------------------------------ baseline
 
@@ -180,9 +224,11 @@ cmd_baseline() {
     base_ref="$(ref_base "$locus")"
     cur_base="$(resolve_ref "$base_ref")"
     path="$(agent_path "$locus")"
+    record_path_metadata "$locus" "$path"
     new_tree="$(write_tree "$file" "$path")"
     cur_tree="$(git_molt rev-parse "${cur_base}^{tree}")"
     if [ "$new_tree" = "$cur_tree" ]; then
+      record_local_verdict "$cur_base"
       printf '%s\n' "$locus"; return 0
     fi
     ensure_identity
@@ -197,6 +243,7 @@ cmd_baseline() {
       && git_molt update-ref "$(ref_loci "$locus")" "$advanced"
     [ "$(resolve_ref "$(ref_live "$locus")")" = "$cur_base" ] \
       && git_molt update-ref "$(ref_live "$locus")" "$advanced"
+    record_local_verdict "$advanced"
     printf '%s\n' "$locus"; return 0
   fi
   tree="$(write_tree "$file" "$path")"
@@ -211,8 +258,10 @@ cmd_baseline() {
   git_molt update-ref "$(ref_base "$locus")" "$commit"
   git_molt update-ref "$(ref_loci "$locus")" "$commit"
   git_molt update-ref "$(ref_live "$locus")" "$commit"
+  record_local_verdict "$commit"
   git_molt config "molt.locus.${locus}.path" "$path"
   git_molt config "molt.locus.${locus}.name" "$name"
+  record_path_metadata "$locus" "$path"
   printf '%s\n' "$locus"
 }
 
@@ -265,7 +314,11 @@ cmd_verify() {
   resolved="$(git_molt rev-parse --verify --quiet "$ring^{commit}")" \
     || die "unknown generation: $ring"
   base="$(resolve_ref "$(ref_base "$locus")")"
-  [ "$resolved" = "$base" ] && { printf 'baseline is verified by definition\n'; return 0; }
+  if [ "$resolved" = "$base" ]; then
+    record_local_verdict "$resolved"
+    printf 'baseline is verified by definition\n'
+    return 0
+  fi
   git_molt merge-base --is-ancestor "$base" "$resolved" \
     || die "generation is not descended from the baseline of $locus"
 
@@ -282,9 +335,16 @@ cmd_verify() {
   [ -n "${GIT_MOLT_FERTILITY:-}" ] && { "$GIT_MOLT_FERTILITY" < "$tmp" >/dev/null 2>&1 || fertile="no"; }
   [ "$fertile" = "yes" ] || { printf 'not verified: sterile generation (V3)\n' >&2; return 1; }
 
-  # Re-commit the same tree with the verdict in the message. Because trailers
-  # live inside the commit object, a verdict cannot be edited without changing
-  # the ring id -- the integrity is Git's, not ours.
+  # A portable pass trailer is provenance. Once this host's gate independently
+  # agrees, the local ref gives that same ring authority here.
+  if has_verified_trailer "$resolved"; then
+    record_local_verdict "$resolved"
+    printf '%s\n' "$resolved"
+    return 0
+  fi
+
+  # Re-commit the same tree with portable verdict provenance in the message.
+  # Editing that provenance changes the ring id; local authority lives in a ref.
   tree="$(git_molt rev-parse "${resolved}^{tree}")"
   parent="$(git_molt rev-parse "${resolved}^" 2>/dev/null || true)"
   local -a parents=(); [ -n "$parent" ] && parents=(-p "$parent")
@@ -293,6 +353,7 @@ cmd_verify() {
     trailers "$locus" "$base" "yes" "git-molt/${MOLT_VERSION}" "$fertile" \
       "$(trailer_of "$resolved" 'Molt-Author-Kind')"
   )")"
+  record_local_verdict "$commit"
   # Advance the lineage tip only if we verified the tip itself.
   [ "$(resolve_ref "$(ref_loci "$locus")")" = "$resolved" ] \
     && git_molt update-ref "$(ref_loci "$locus")" "$commit"
@@ -396,7 +457,13 @@ cmd_log() {
   git_molt log --format='%H%x09%s' "$(ref_loci "$locus")" | while IFS=$'\t' read -r c s; do
     local mark=" " v="  "
     [ "$c" = "$live" ] && mark="*"
-    is_verified "$c" && v="ok" || v="--"
+    if is_verified "$c"; then
+      v="ok"
+    elif has_verified_trailer "$c"; then
+      v="foreign"
+    else
+      v="--"
+    fi
     printf '%s %s [%s] %s\n' "$mark" "${c:0:12}" "$v" "$s"
   done
 }
@@ -445,6 +512,8 @@ cmd_compose() {
     [ "$(policy_of "$locus")" = "pinned" ] && pick="$base"
     if [ "$pick" != "$base" ] && ! is_verified "$pick"; then pick="$base"; fi
     path="$(agent_path "$locus")"
+    valid_agent_path "$path" || die "unsafe agent path for $locus: $path"
+    mkdir -p "$(dirname "${staging}/${path}")"
     if ! git_molt show "${pick}:${path}" > "${staging}/${path}" 2>/dev/null; then
       git_molt show "${base}:${path}" > "${staging}/${path}" 2>/dev/null || {
         warn "could not compose $locus"; continue; }
@@ -468,21 +537,53 @@ cmd_frame() {
       local locus="${1:-}" out="${2:-}"
       [ -n "$locus" ] && [ -n "$out" ] || die "usage: git molt frame export <locus> <file>"
       require_locus "$locus"
-      git_molt bundle create "$out" "$(ref_loci "$locus")" "$(ref_base "$locus")" >/dev/null 2>&1
+      [ -n "$(resolve_ref "$(ref_meta "$locus")")" ] \
+        || record_path_metadata "$locus" "$(agent_path "$locus")"
+      git_molt bundle create "$out" "$(ref_loci "$locus")" \
+        "$(ref_base "$locus")" "$(ref_meta "$locus")" >/dev/null 2>&1
       printf 'wrote frame %s\n' "$out"
       ;;
     import)
       local in="${1:-}"; [ -n "$in" ] || die "usage: git molt frame import <file>"
       [ -f "$in" ] || die "no such frame: $in"
       git_molt bundle verify "$in" >/dev/null 2>&1 || die "frame failed git bundle verification"
-      git_molt fetch "$in" 'refs/molt/*:refs/molt/*' >/dev/null 2>&1 \
+      local verified_before
+      verified_before="$(git_molt for-each-ref --format='%(refname) %(objectname)' \
+        'refs/molt/verified/*' 2>/dev/null || true)"
+      git_molt fetch "$in" \
+        'refs/molt/base/*:refs/molt/base/*' \
+        'refs/molt/loci/*:refs/molt/loci/*' \
+        'refs/molt/live/*:refs/molt/live/*' \
+        'refs/molt/policy/*:refs/molt/policy/*' \
+        'refs/molt/meta/*:refs/molt/meta/*' >/dev/null 2>&1 \
         || die "could not ingest frame"
+      # The allowlist above excludes verdict refs. Also remove any such ref that
+      # appeared during this import while preserving verdicts already issued here.
+      local verdict_ref verdict_object
+      while read -r verdict_ref verdict_object; do
+        [ -n "$verdict_ref" ] || continue
+        if ! printf '%s\n' "$verified_before" \
+          | grep -Fqx -- "$verdict_ref $verdict_object"; then
+          git_molt update-ref -d "$verdict_ref" "$verdict_object"
+        fi
+      done < <(git_molt for-each-ref --format='%(refname) %(objectname)' \
+        'refs/molt/verified/*' 2>/dev/null)
       # Trust does not transfer with the object (I1): imported verdicts are
       # provenance only. Nothing is activated by an import — every imported
       # locus is explicitly parked at its baseline.
       local l
       while read -r l; do
         [ -n "$l" ] || continue
+        if [ -z "$(git_molt config --get "molt.locus.${l}.path" 2>/dev/null || true)" ]; then
+          local meta path
+          meta="$(resolve_ref "$(ref_meta "$l")")"
+          path="$([ -n "$meta" ] && git_molt show "${meta}:path" 2>/dev/null || true)"
+          if [ -n "$path" ]; then
+            valid_agent_path "$path" \
+              || die "frame carries unsafe agent path for $l: $path"
+            git_molt config "molt.locus.${l}.path" "$path"
+          fi
+        fi
         if [ -z "$(resolve_ref "$(ref_live "$l")")" ]; then
           git_molt update-ref "$(ref_live "$l")" "$(resolve_ref "$(ref_base "$l")")"
         fi

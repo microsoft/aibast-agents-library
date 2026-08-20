@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import {
+  mkdirSync,
   mkdtempSync,
   readFileSync,
   rmSync,
+  writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -127,6 +129,11 @@ test("visible UI driver accepts bounded v2 actions", () => {
           until: { snapshot_changed: true },
         },
         { action: "expect", handle: "@brainstem.send", state: "enabled" },
+        {
+          action: "swipe",
+          direction: "right",
+          handle: "@herd.card[card-fixture]",
+        },
       ],
     }).action,
     "run",
@@ -135,12 +142,24 @@ test("visible UI driver accepts bounded v2 actions", () => {
     "recording_status",
     "route_telemetry",
     "set_chat_lease",
+    "swipe",
   ]) {
     assert.equal(
       uiDriverInternals.validateCommand({ action }).action,
       action,
     );
   }
+  assert.equal(
+    uiDriverInternals.frameKeyForCommand({ action: "swipe" }),
+    "brainstem",
+  );
+  assert.equal(
+    uiDriverInternals.frameKeyForCommand({
+      action: "swipe",
+      target: "shell",
+    }),
+    "shell",
+  );
 });
 
 test("visible UI driver rejects unknown and unbounded commands", () => {
@@ -464,4 +483,169 @@ test("a control inside its own overlay is actionable: an ancestor hit is not an 
   const source = uiDriverInternals.browserDriverCommand.toString();
   assert.match(source, /!element\.contains\(top\)\s*&&\s*!top\.contains\(element\)/);
   assert.match(source, /occluded by \$\{selectorFor\(top\)/);
+});
+
+test("a frame script is abandoned when its frame navigates, and the queue moves on", async () => {
+  const { executeInFrame, FrameGoneError } = uiDriverInternals;
+  const navigating = {
+    executeJavaScript: () => new Promise(() => {}),
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = { executeJavaScript: () => null, frames: [navigating], url: "file:///frontier/index.html" };
+  const window = { webContents: { mainFrame } };
+  setTimeout(() => { navigating.url = "http://127.0.0.1:7072/"; }, 120);
+  const started = Date.now();
+  await assert.rejects(
+    executeInFrame(navigating, "1", { window, timeoutMs: 10_000 }),
+    (error) => error instanceof FrameGoneError && /navigated/.test(error.message) && error.retryable === true,
+  );
+  assert.ok(Date.now() - started < 2_000, "the abandoned script must not wait for the deadline");
+
+  const destroyed = {
+    executeJavaScript: () => new Promise(() => {}),
+    frames: [],
+    isDestroyed: () => false,
+    url: "http://127.0.0.1:7071/",
+  };
+  setTimeout(() => { destroyed.isDestroyed = () => true; }, 120);
+  await assert.rejects(
+    executeInFrame(destroyed, "1", { window: null, timeoutMs: 10_000 }),
+    (error) => error instanceof FrameGoneError && /destroyed/.test(error.message),
+  );
+
+  const slow = { executeJavaScript: () => new Promise(() => {}), frames: [], url: "http://127.0.0.1:7071/" };
+  await assert.rejects(
+    executeInFrame(slow, "1", { window: null, timeoutMs: 300 }),
+    /did not finish within/,
+  );
+});
+
+test("a wedged frame command does not block the next command on the same frame", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "ui-driver-wedge-"));
+  const betaHome = path.join(root, "beta-launcher");
+  let calls = 0;
+  const brainstem = {
+    executeJavaScript: () => {
+      calls += 1;
+      if (calls === 1) {
+        // The route swaps underneath the first command: Electron never settles it.
+        setTimeout(() => { brainstem.url = "http://127.0.0.1:7072/"; }, 150);
+        return new Promise(() => {});
+      }
+      return Promise.resolve({ h: "@brainstem.composer", ok: true, text: "ready" });
+    },
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = { executeJavaScript: () => 0, frames: [brainstem], url: "file:///frontier/index.html" };
+  const driver = await startUiDriverServer({
+    brainstemHome: root,
+    env: { BRAINSTEM_BETA_HOME: betaHome, BRAINSTEM_BETA_UI_DRIVER_HEARTBEAT_MS: "10" },
+    loopbackUrl: (url) => url.startsWith("http://127.0.0.1:707"),
+    window: { webContents: { mainFrame } },
+  });
+  try {
+    const metadata = JSON.parse(readFileSync(path.join(betaHome, "ui-driver.json"), "utf8"));
+    const started = Date.now();
+    const [first, second] = await Promise.all([
+      postCommand(metadata, { action: "read", selector: "#input" }),
+      postCommand(metadata, { action: "read", selector: "#input" }),
+    ]);
+    // HTTP arrival order is not guaranteed, and the bus always answers 200 once
+    // its headers are flushed; the verdict lives in the payload. Exactly one
+    // command rode the navigating frame and was abandoned; the other ran on
+    // the new frame.
+    const payloads = [first.payload, second.payload];
+    const detail = JSON.stringify(payloads);
+    const abandoned = payloads.filter((payload) => payload.ok === false);
+    const served = payloads.filter((payload) => payload.ok === true);
+    assert.equal(abandoned.length, 1, detail);
+    assert.match(abandoned[0].error, /navigated/, detail);
+    assert.equal(served.length, 1, detail);
+    assert.equal(served[0].result?.text, "ready", detail);
+    assert.ok(Date.now() - started < 5_000, "the second command must not wait behind the wedged one");
+    assert.equal(calls, 2);
+  } finally {
+    await driver.stop();
+    rmSync(root, { force: true, recursive: true });
+  }
+});
+
+test("the chat lease's aria-disabled marker does not make the send button unactionable for the driver", () => {
+  const source = uiDriverInternals.browserDriverCommand.toString();
+  assert.match(source, /rappChatLease === "locked"/);
+  assert.match(source, /\(!leaseMarked && element\.getAttribute\?\.\("aria-disabled"\) === "true"\)/);
+  assert.match(source, /send\.dataset\.rappChatLease = "locked"/);
+});
+
+test("the frame watchdog budget follows the command's own budget, never truncating a healthy chat", () => {
+  const { frameBudgetMs, stepBudgetMs } = uiDriverInternals;
+  // a delegated chat with a 60 s budget gets that plus grace
+  assert.ok(frameBudgetMs({ action: "chat", timeoutMs: 60_000 }) >= 75_000);
+  // the in-frame default for chat is 180 s, so the watchdog must not fire at 20 s
+  assert.ok(frameBudgetMs({ action: "chat" }) >= 180_000);
+  // a one-hour chat is honoured (capped at one hour plus grace)
+  assert.ok(frameBudgetMs({ action: "chat", timeoutMs: 3_600_000 }) >= 3_600_000);
+  assert.ok(frameBudgetMs({ action: "chat", timeoutMs: 99_999_999 }) <= 3_600_000 + 30_000);
+  // The visible Surgeon itself defaults to a one-hour wait.
+  assert.ok(frameBudgetMs({ action: "surgeon_chat" }) >= 3_600_000);
+  // a run adds up its steps: typing 2000 chars at 18 ms is 36 s of legitimate work
+  const typing = frameBudgetMs({ action: "run", steps: [{ action: "type", value: "x".repeat(2000) }, { action: "click", settleMs: 500 }] });
+  assert.ok(typing >= 36_000 + 500);
+  // a quick read keeps the 20 s floor
+  assert.equal(frameBudgetMs({ action: "read", selector: "#input" }), 20_000);
+  // an explicit frameTimeoutMs still wins
+  assert.equal(frameBudgetMs({ action: "chat", frameTimeoutMs: 1234 }), 1234);
+  assert.equal(stepBudgetMs({ action: "wait", timeoutMs: 999_999 }), 120_000);
+});
+
+test("a frame script abandoned by the watchdog stops at its next tick when a later command takes the frame", () => {
+  const source = uiDriverInternals.browserDriverCommand.toString();
+  assert.match(source, /state\.activeCommandId = myCommandId/);
+  assert.match(source, /if \(state\.activeCommandId !== myCommandId\)/);
+  assert.match(source, /UiDriverSupersededError/);
+  // the id rides beside the command, not inside it (traces stay identical pass to pass)
+  const server = readFileSync(new URL("../electron/ui-driver-server.mjs", import.meta.url), "utf8");
+  assert.match(server, /createUiDriverHelpers\.toString\(\)\}, \$\{JSON\.stringify\(commandId\)\}\)/);
+  assert.match(server, /timeoutMs: frameBudgetMs\(command\)/);
+});
+
+test("every script sent to the Brainstem or a twin frame goes through the watchdog", () => {
+  const server = readFileSync(new URL("../electron/ui-driver-server.mjs", import.meta.url), "utf8");
+  // the only bare frame.executeJavaScript( is the one inside executeInFrame itself
+  const bare = server.match(/[^.\w]frame\.executeJavaScript\(/g) || [];
+  assert.equal(bare.length, 1, `bare frame.executeJavaScript calls: ${bare.length}`);
+  assert.doesNotMatch(server, /activeFrame\.executeJavaScript\(/);
+  assert.doesNotMatch(server, /target\.executeJavaScript\(/);
+});
+
+test("a trace that cannot be written does not turn a finished command into a failure", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "ui-driver-trace-"));
+  const betaHome = path.join(root, "beta-launcher");
+  mkdirSync(betaHome, { recursive: true });
+  // `logs` is a FILE, so every trace append fails with ENOTDIR/EEXIST
+  writeFileSync(path.join(betaHome, "logs"), "not a directory\n");
+  const brainstem = {
+    executeJavaScript: () => Promise.resolve({ h: "@brainstem.composer", ok: true, text: "ready" }),
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = { executeJavaScript: () => 0, frames: [brainstem], url: "file:///frontier/index.html" };
+  const driver = await startUiDriverServer({
+    brainstemHome: root,
+    env: { BRAINSTEM_BETA_HOME: betaHome, BRAINSTEM_BETA_UI_DRIVER_HEARTBEAT_MS: "10" },
+    loopbackUrl: (url) => url.startsWith("http://127.0.0.1:7071"),
+    window: { webContents: { mainFrame } },
+  });
+  try {
+    const metadata = JSON.parse(readFileSync(path.join(betaHome, "ui-driver.json"), "utf8"));
+    const { payload } = await postCommand(metadata, { action: "read", selector: "#input" });
+    assert.equal(payload.ok, true, JSON.stringify(payload));
+    assert.equal(payload.result?.text, "ready");
+    assert.match(String(payload.trace_error || ""), /ENOTDIR|EEXIST|ENOENT|not a directory/i);
+  } finally {
+    await driver.stop();
+    rmSync(root, { force: true, recursive: true });
+  }
 });

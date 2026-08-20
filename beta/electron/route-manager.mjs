@@ -1226,16 +1226,29 @@ export class BetaRouteManager {
     const lineageContext = String(type).startsWith("lineage-")
       ? { env: this.lineageEnv }
       : {};
-    const event = {
+    const ledgerEvent = {
       sequence: ++this.telemetrySequence,
       timestamp: new Date().toISOString(),
       type,
       ...lineageContext,
       ...redactSensitiveValue(details),
     };
+    this.ledger?.recordRouteEvent?.(ledgerEvent);
+    const {
+      agent_rows: agentRows,
+      ...event
+    } = ledgerEvent;
+    if (Array.isArray(agentRows)) {
+      event.agent_row_count = agentRows.length;
+    }
+    if (Array.isArray(event.excluded_files)) {
+      event.excluded_files = event.excluded_files.map(({ filename, reason }) => ({
+        filename,
+        reason,
+      }));
+    }
     this.telemetry.push(event);
     if (this.telemetry.length > 500) this.telemetry.shift();
-    this.ledger?.recordRouteEvent?.(event);
     return event;
   }
 
@@ -2612,6 +2625,7 @@ export class BetaRouteManager {
     const config = {
       ...this.brainstemConfig,
       port,
+      portPreallocated: true,
       url: `http://127.0.0.1:${port}`,
       logFile: path.join(
         this.workerLogRoot,
@@ -2621,6 +2635,10 @@ export class BetaRouteManager {
         AGENTS_PATH: materialized.agentDirectory,
         BRAINSTEM_BETA_ROUTED_WORKER: "1",
         RAPP_AMBIENT_DIR: path.join(this.betaHome, "ambient"),
+        BRAINSTEM_SOURCE_AGENTS_PATH: path.join(
+          this.brainstemConfig.brainstemDir,
+          "agents",
+        ),
       },
     };
     const process = this.createWorkerProcess(config);

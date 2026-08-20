@@ -28,7 +28,7 @@ macOS, Windows, and Linux.
 ```
  node --test beta/tests/e2e/**            ← one file per matrix area, node:test, no new runner
    │
-   ├─ harness/launch.mjs                  ← boots the Frontier headless in a throwaway root:
+   ├─ harness/launch.mjs                  ← boots the Frontier (window shown) in a throwaway root:
    │     BRAINSTEM_HOME, BRAINSTEM_BETA_HOME, RAPP_LINEAGE_HOME under mkdtemp;
    │     a COPY of rapp_brainstem/ as the Grail (never the user's);
    │     BRAINSTEM_BETA_OWN_PORT=1 → the app must own its kernel (never adopt :7071);
@@ -110,7 +110,7 @@ ids the matrix lists (`#surgeon-send`, `#input`, `#send`, `#agent-tree`, …) an
 | Tier | What | Model | Where it runs |
 |---|---|---|---|
 | T0 | the existing unit/integration suites (`npm test`) | none | every push (today) |
-| T1 | headless app + replay/scripted model, every matrix row that does not need the network | fake | every push, 3 OSes (`frontier-e2e` job; Linux under `xvfb-run`) |
+| T1 | shown app window + replay/scripted model, every matrix row that does not need the network | fake | every push, 3 OSes (`frontier-e2e` job; Linux under `xvfb-run`) |
 | T2 | network rows: store download from the real catalog, update check against the real tag, installer on a clean home | none (git/curl) | every push, already partly covered by preflight |
 | T3 | live-model smoke: 5 scenarios re-recorded weekly (cassette refresh) — catches prompt drift | real | nightly / manual, never gating |
 
@@ -129,7 +129,7 @@ ids the matrix lists (`#surgeon-send`, `#input`, `#send`, `#agent-tree`, …) an
 | lineage | type `baseline` then `restore` in the real composer; replies; route URL changes; HEAD files | HEAD/PRIOR_HEAD, bridge reply, outline |
 | lineage | `environments`, `promote default prod`, `drift prod`; CONFLICT path; corrupt journal refusal | `HEAD.prod`, `promotions.json`, replies |
 | lineage | `RAPP_MOLT_LINEAGE=0`: words reply "turned off", nothing moves | HEAD files unchanged |
-| ambient | drop a broken agent into the (copied) Grail → next turn volunteers it (scripted model asserts the self-state block is present in the system context) | replay fingerprint includes the block |
+| ambient | drop a broken agent into the copied Grail, trigger a route restart, and prove the Frontier quarantines it before Ring-1 can scan it | `composition-quarantine`, healthy `/health`, no self-state block or UI warning |
 | bridge | `/chat/stream` interception, fail-open after timeout, export redaction blob, three-dot menu phases | outline `data-phase`, downloaded blob |
 | twins | 8-twin cap; close during loop; pop-out window lifecycle | twin dirs, events |
 | updates | fake git: "staged not released", "available", "up to date", "re-align"; Install → runner → `update-result.json` → next launch shows success / restored / failed | `#beta-update-status[data-phase]`, result file |
@@ -155,3 +155,59 @@ ids the matrix lists (`#surgeon-send`, `#input`, `#send`, `#agent-tree`, …) an
 
 A matrix row is "covered" only when its scenario is linked in the `Existing tests` column and
 runs in CI; the matrix is regenerated from the suite's manifest, not edited by hand.
+
+## How to run and record
+
+The harness shows its window on every platform. In a never-shown window the
+cross-origin Brainstem frame gets no viewport on CI machines (macOS, Windows
+and xvfb alike — every rect 0x0, the composer "not visible"), even though the
+same hidden window lays out on a developer Mac; one mode everywhere is the
+deterministic choice, and it is the mode a person uses. Set
+`BRAINSTEM_BETA_E2E_HEADLESS=1` to opt back into a hidden window locally.
+When a live Frontier owns `~/.brainstem` on the machine running the suite, the
+boot scenario excludes that app's volatile `logs/` and `routing/` from its
+"user homes unchanged" comparison and says so.
+
+The unit suite includes the harness contracts and skips Electron scenarios unless they are
+explicitly enabled:
+
+```bash
+cd beta
+npm test
+BRAINSTEM_BETA_E2E=1 node --test tests/e2e
+```
+
+In PowerShell, set `$env:BRAINSTEM_BETA_E2E = "1"` before the second command. Local Electron
+startup failures caused by a missing binary or display are reported as clean skips. CI installs
+the locked Electron binary explicitly, runs Linux under `xvfb-run`, and sets
+`BRAINSTEM_BETA_E2E_REQUIRED=1` so an unavailable Electron runtime fails the job instead.
+
+Cassette recording is a human-only operation against the developer's existing Copilot cache.
+Point the recorder at that cache, opt in explicitly, and drive only the scenario being captured:
+
+```bash
+cd beta
+RAPP_MODEL_ALLOW_RECORD=1 \
+RAPP_MODEL_REAL_CACHE="$HOME/.brainstem/src/rapp_brainstem/.copilot_session" \
+node --input-type=module <<'NODE'
+import path from "node:path";
+import { launch } from "./tests/e2e/harness/launch.mjs";
+
+const app = await launch({
+  modelMode: "record",
+  replayCassette: path.resolve("tests/e2e/fixtures/my-scenario.json"),
+  scenario: "record-my-scenario",
+});
+try {
+  await app.driver.command({ action: "chat", value: "the scenario prompt" });
+} finally {
+  await app.stop();
+}
+NODE
+```
+
+Record mode proxies `/models` and `/chat/completions` with the cached real token. It stores
+normalized requests plus the raw response body required for byte-faithful replay; authorization
+headers and cache credentials are never written. Treat recorded model text as reviewable data and
+inspect the cassette diff before committing it. Replay fails on an unknown fingerprint and reports
+the nearest entry plus a structural diff.

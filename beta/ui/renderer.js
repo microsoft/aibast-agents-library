@@ -67,6 +67,59 @@ const {
   surgeonCss,
 } = window.RappChatLook;
 let currentChatLook = normalizeChatLook(window.brainstemBeta.chatLook);
+let chatCardsLoader = null;
+let chatCardsGeneration = 0;
+let chatCardsRequested = false;
+
+function loadChatCards() {
+  if (window.RappChatCards) return Promise.resolve(window.RappChatCards);
+  if (chatCardsLoader) return chatCardsLoader;
+  chatCardsLoader = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.id = "__rappChatCardsScript";
+    script.src = "chat-cards.js";
+    script.addEventListener("load", () => resolve(window.RappChatCards), {
+      once: true,
+    });
+    script.addEventListener("error", () => {
+      chatCardsLoader = null;
+      reject(new Error("Could not load the April Fools card table."));
+    }, { once: true });
+    document.body.appendChild(script);
+  });
+  return chatCardsLoader;
+}
+
+async function syncChatCards(state, generation) {
+  const cards = await loadChatCards();
+  if (
+    generation !== chatCardsGeneration
+    || !chatCardsRequested
+    || !latestState?.aprilFools?.on
+  ) {
+    cards.disable();
+    return;
+  }
+  return cards.sync({
+    api: window.brainstemBeta,
+    aprilFools: state.aprilFools,
+    destroyHerd: destroySurgeonHerdDom,
+    ensureHerd: () => {
+      ensureSurgeonHerdDom();
+      return { grid: surgeonGridEl, herd: surgeonHerdEl };
+    },
+    enterHerd: () => {
+      if (!surgeonHerd) enterSurgeonHerd();
+    },
+    exitHerd: () => {
+      if (surgeonHerd) exitSurgeonHerd();
+    },
+    frame,
+    frameGeneration: brainstemNavigationCount,
+    hadHerdDom: Boolean(surgeonHerdEl),
+    state,
+  });
+}
 
 function describeAmbientState(value) {
   if (!value?.deviceEnabled) {
@@ -293,6 +346,10 @@ frame.addEventListener("load", () => {
   }
   brainstemNavigationCount += 1;
   window.__brainstemBetaNavigationCount = brainstemNavigationCount;
+  window.RappChatCards?.frameChanged({
+    generation: brainstemNavigationCount,
+    url: loadedFrameUrl,
+  });
   void window.brainstemBeta.installFrameBridge().then(() => {
     syncBetaUpdate(latestState?.update, openBetaMenuOnNextSync);
     syncExplorerState();
@@ -342,11 +399,48 @@ window.addEventListener("message", async (event) => {
     return;
   }
   if (event.source !== frame.contentWindow) return;
+  if (type === "rapp-beta:card-pending-complete") {
+    try {
+      const card = await window.brainstemBeta.cardsComplete(
+        event.data.id,
+        {
+          ...event.data.completion,
+          requestId: event.data.requestId,
+        },
+      );
+      event.source.postMessage({
+        type: "rapp-beta:card-completion-ack",
+        requestId: event.data.requestId,
+      }, "*");
+      window.RappChatCards?.completionSaved({
+        ...event.data,
+        card,
+      });
+    } catch (cause) {
+      console.error("Could not persist a completed chat card reply:", cause);
+      window.RappChatCards?.completionFailed(cause);
+    }
+    return;
+  }
+  if (type === "rapp-beta:card-detached") {
+    window.RappChatCards?.cardDetached(event.data.id);
+    return;
+  }
   if (type === "rapp-beta:set-chat-look") {
     try {
       await window.brainstemBeta.setChatLook(event.data.look);
     } catch (cause) {
       window.alert(`Could not change chat look: ${String(cause?.message || cause)}`);
+    }
+    return;
+  }
+  if (type === "rapp-beta:set-april-fools") {
+    try {
+      await window.brainstemBeta.setAprilFools(event.data.aprilFools || {});
+    } catch (cause) {
+      window.alert(
+        `Could not change the card table: ${String(cause?.message || cause)}`,
+      );
     }
     return;
   }
@@ -1452,6 +1546,7 @@ function surgeonTileFor(session) {
   const tile = document.createElement("div");
   tile.className = "herd-tile";
   tile.dataset.drive = `surgeon[${driveKey(session.id)}].tile`;
+  tile.dataset.sessionId = String(session.id);
   tile.innerHTML = `
     <div class="hh">
       <span class="tt"></span>
@@ -1541,6 +1636,17 @@ function exitSurgeonHerd() {
     surgeonLog.appendChild(s.logEl);
   }
   setActiveSurgeon(surgeonActiveId);
+}
+
+function destroySurgeonHerdDom() {
+  if (!surgeonHerdEl) return;
+  if (surgeonHerd) exitSurgeonHerd();
+  storePickerEl?.remove();
+  storePickerEl = null;
+  surgeonHerdEl.remove();
+  surgeonHerdEl = null;
+  surgeonGridEl = null;
+  for (const twin of twins.values()) twin.tileEl = null;
 }
 
 function toggleSurgeonHerd() {
@@ -1971,6 +2077,26 @@ function syncBetaUpdate(update, openPanel = false) {
 function render(state) {
   latestState = state;
   applyShellChatLook(state.chatLook, state.chatTypingEnabled);
+  const cardsWereRequested = chatCardsRequested;
+  chatCardsRequested = Boolean(state.aprilFools?.on);
+  const cardsGeneration = ++chatCardsGeneration;
+  if (state.aprilFools?.on) {
+    void syncChatCards(state, cardsGeneration).catch((cause) => {
+      if (
+        cardsGeneration !== chatCardsGeneration
+        || !chatCardsRequested
+      ) return;
+      window.alert(
+        `Could not show the card table: ${String(cause?.message || cause)}`,
+      );
+    });
+  } else if (cardsWereRequested || chatCardsLoader || window.RappChatCards) {
+    frame.contentWindow?.postMessage({
+      type: "rapp-beta:april-fools-state",
+      aprilFools: state.aprilFools,
+    }, "*");
+    window.RappChatCards?.disable();
+  }
   const surgeonState = state.surgeon || state.copilot;
   document.getElementById("surgeon-model").textContent =
     surgeonState?.phase === "ready" ? "Agent" : (surgeonState?.phase || "starting");

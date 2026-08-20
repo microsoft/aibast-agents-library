@@ -80,6 +80,7 @@ function saysDone(text) {
 const planIsDone = (plan) => /(^|\n)\s*DONE\b/i.test(String(plan || ""));
 
 const OWNER_FILE = "owner.json";
+const CLAIM_SUFFIX = ".claim.json";
 
 function sha256(source) {
   return createHash("sha256").update(source).digest("hex");
@@ -147,6 +148,19 @@ function readOwner(dir) {
   }
 }
 
+function claimFilePath(twinsRoot, id) {
+  return path.join(twinsRoot, `.${id}${CLAIM_SUFFIX}`);
+}
+
+function readClaim(filePath) {
+  try {
+    const claim = JSON.parse(readFileSync(filePath, "utf8"));
+    return Number.isInteger(claim?.pid) && claim.pid > 0 ? claim : null;
+  } catch {
+    return null;
+  }
+}
+
 function processAlive(pid) {
   try {
     process.kill(pid, 0);
@@ -209,13 +223,32 @@ export class TwinManager {
     const removed = [];
     const kept = [];
     for (const entry of entries) {
+      if (
+        !entry.isFile()
+        || !entry.name.startsWith(".")
+        || !entry.name.endsWith(CLAIM_SUFFIX)
+      ) continue;
+      const filePath = path.join(this.twinsRoot, entry.name);
+      const claim = readClaim(filePath);
+      if (!claim || !processAlive(claim.pid)) {
+        try { rmSync(filePath, { force: true }); } catch { /* best effort */ }
+      }
+    }
+    for (const entry of entries) {
       if (!entry.isDirectory()) continue;
       const dir = path.join(this.twinsRoot, entry.name);
       const owner = readOwner(dir);
+      const claimPath = claimFilePath(this.twinsRoot, entry.name);
+      const claim = readClaim(claimPath);
+      if (claim && processAlive(claim.pid)) {
+        kept.push({ id: entry.name, pid: claim.pid });
+        continue;
+      }
       if (owner && owner.pid !== process.pid && processAlive(owner.pid)) {
         kept.push({ id: entry.name, pid: owner.pid });
         continue;
       }
+      try { rmSync(claimPath, { force: true }); } catch { /* best effort */ }
       try { rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ }
       removed.push(entry.name);
     }
@@ -403,22 +436,65 @@ export class TwinManager {
       seenAgentFilenames.add(filename);
       agentSources.push({ ...agent, filename });
     }
-    const id = `${twinSlug(spec.idBase)}-${++this.seq}`;
-    const dir = path.join(this.twinsRoot, id);
+    // Two launchers (or a launcher and a parallel session) may share one
+    // betaHome, and each starts its sequence at 0: the id is claimed by
+    // creating its directory atomically, and a taken name is skipped — never
+    // adopted — so owner.json can only ever describe the twin that lives there.
+    mkdirSync(this.twinsRoot, { recursive: true });
+    let id = null;
+    let dir = null;
+    let claimPath = null;
+    for (let candidate = this.seq + 1; candidate < this.seq + 10000; candidate += 1) {
+      const candidateId = `${twinSlug(spec.idBase)}-${candidate}`;
+      const candidateDir = path.join(this.twinsRoot, candidateId);
+      const candidateClaim = claimFilePath(this.twinsRoot, candidateId);
+      try {
+        writeFileSync(
+          candidateClaim,
+          JSON.stringify({
+            pid: process.pid,
+            startedAt: new Date().toISOString(),
+          }),
+          { flag: "wx", mode: 0o600 },
+        );
+      } catch (error) {
+        if (error?.code === "EEXIST") continue;
+        throw error;
+      }
+      try {
+        mkdirSync(candidateDir);
+      } catch (error) {
+        try { rmSync(candidateClaim, { force: true }); } catch { /* best effort */ }
+        if (error?.code === "EEXIST") continue;
+        throw error;
+      }
+      this.seq = candidate;
+      id = candidateId;
+      dir = candidateDir;
+      claimPath = candidateClaim;
+      break;
+    }
+    if (!id) throw new Error(`Refusing to hatch "${spec.name}": no free twin id.`);
     const agentsDir = path.join(dir, "agents");
+    try {
+      writeFileSync(
+        path.join(dir, OWNER_FILE),
+        JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }),
+        { mode: 0o600 },
+      );
+    } catch (error) {
+      try { rmSync(claimPath, { force: true }); } catch { /* best effort */ }
+      try { rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ }
+      throw error;
+    }
+    try { rmSync(claimPath, { force: true }); } catch { /* best effort */ }
     const molterHome = path.join(
       this.betaHome,
       "molts",
       `${id}-${randomUUID()}`,
     );
-    mkdirSync(dir, { recursive: true });
     mkdirSync(molterHome, { recursive: true, mode: 0o700 });
     if (process.platform !== "win32") chmodSync(molterHome, 0o700);
-    writeFileSync(
-      path.join(dir, OWNER_FILE),
-      JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }),
-      { mode: 0o600 },
-    );
     let materializedAgentSources = agentSources;
     try {
       if (this.routeManager?.materializeExternalAgentSet) {
@@ -466,6 +542,7 @@ export class TwinManager {
     const worker = new BrainstemProcess({
       ...this.brainstemConfig,
       port,
+      portPreallocated: true,
       url,
       logFile: path.join(this.betaHome, "logs", "twins", `${id}.log`),
       env: {

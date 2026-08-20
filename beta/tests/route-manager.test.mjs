@@ -429,6 +429,35 @@ test("route telemetry writes complete install and removal rows to the ledger", a
   }
 });
 
+test("ledger-only agent rows do not inflate route telemetry responses", () => {
+  const { root, manager } = fixture();
+  let ledgerEvent = null;
+  manager.ledger = {
+    recordRouteEvent: (event) => {
+      ledgerEvent = event;
+    },
+  };
+  try {
+    const event = manager.recordTelemetry("lineage-promote", {
+      agent_rows: [{
+        filename: "context_memory_agent.py",
+        origin: "lineage",
+        rappid: "rappid:@frontier/context-memory-ring:test",
+        sha256: "a".repeat(64),
+        source_path: "/private/lineage/source.py",
+        tool_name: "ContextMemory",
+      }],
+      changed: 1,
+    });
+    assert.equal(ledgerEvent.agent_rows.length, 1);
+    assert.equal(event.agent_rows, undefined);
+    assert.equal(event.agent_row_count, 1);
+    assert.equal(manager.telemetry.at(-1).agent_rows, undefined);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("inherited and overlay filename collisions fail closed", async () => {
   const { root, manager } = fixture();
   try {

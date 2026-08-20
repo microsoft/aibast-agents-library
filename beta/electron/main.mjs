@@ -7,6 +7,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   app,
   BrowserWindow,
+  dialog,
   ipcMain,
   Menu,
   nativeImage,
@@ -34,6 +35,18 @@ import {
   readChatLookSettings,
   writeAmbientSettings,
 } from "./chat-look-settings.mjs";
+import {
+  ChatCardStore,
+  changeAprilFoolsSettings,
+  composeChatCardsFrameBridgeSource,
+  parseAprilFoolsCommand,
+  readAprilFoolsSettings,
+  registerChatCardIpc,
+} from "./chat-cards.mjs";
+import {
+  readCustomTable,
+  resolveCustomTable,
+} from "./card-tables.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
@@ -185,9 +198,17 @@ const initialChatLook = readChatLookSettings({
   betaHome,
   env: process.env,
 });
+const initialAprilFools = readAprilFoolsSettings({
+  betaHome,
+  env: process.env,
+});
 let chatLook = initialChatLook.chatLook;
 let chatLookOverridden = initialChatLook.chatLookOverridden;
 let chatTypingEnabled = chatStreamMode === "hold";
+let aprilFools = initialAprilFools.aprilFools;
+let aprilFoolsOverridden = initialAprilFools.aprilFoolsOverridden;
+let customCardTableState = resolveCustomTable(aprilFools);
+const chatCardStore = new ChatCardStore({ betaHome });
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -1102,7 +1123,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     return fragment;
   }
 
-  function createProvisionalScreenRenderer() {
+  function createProvisionalScreenRenderer({ typingIndicator: claimedIndicator = null } = {}) {
     const stats = {
       finalHeight: null,
       handoffCount: 0,
@@ -1118,7 +1139,13 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     let provisional = null;
     let removed = false;
     let responseSlot = null;
-    let typingIndicator = null;
+    // The indicator is claimed when the REQUEST is made (the kernel creates a
+    // slot + indicator synchronously before it calls fetch), not when the
+    // first delta lands — with two requests in flight, "newest unclaimed at
+    // first delta" is the OTHER request's slot.
+    let typingIndicator = claimedIndicator && claimedIndicator.isConnected !== false
+      ? claimedIndicator
+      : null;
 
     window.__rappSmoothMarkdownCapabilities = {
       marked: typeof window.marked?.parse === "function",
@@ -1178,7 +1205,9 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
 
     function ensureProvisional() {
       if (provisional || removed) return provisional;
-      typingIndicator = availableTypingIndicator();
+      if (!typingIndicator || typingIndicator.isConnected === false) {
+        typingIndicator = availableTypingIndicator();
+      }
       if (!typingIndicator) return null;
       responseSlot = typingIndicator.closest(".response-slot")
         || typingIndicator.parentElement;
@@ -1248,13 +1277,27 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     });
   }
 
-  function smoothChatStreamResponse(response, signal) {
-    if (!response.body) return response;
+  function claimTypingIndicatorForRequest() {
+    const candidates = [
+      ...document.querySelectorAll("#chat .typing-indicator"),
+    ].reverse();
+    const indicator = candidates.find(
+      (candidate) => candidate.dataset?.rappProvisionalClaimed !== "1",
+    ) || null;
+    if (indicator?.dataset) indicator.dataset.rappProvisionalClaimed = "1";
+    return indicator;
+  }
+
+  function smoothChatStreamResponse(response, signal, { typingIndicator = null } = {}) {
+    if (!response.body) {
+      if (typingIndicator) delete typingIndicator.dataset.rappProvisionalClaimed;
+      return response;
+    }
     const reader = response.body.getReader();
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
     const rawChunks = [];
-    const screen = createProvisionalScreenRenderer();
+    const screen = createProvisionalScreenRenderer({ typingIndicator });
     let stopped = false;
     let released = false;
     let abortHandler = null;
@@ -1430,9 +1473,18 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       && target.pathname === "/chat/stream";
     const requestSignal = options.signal
       || (resource instanceof Request ? resource.signal : null);
+    const claimed = shouldWrapChatStream && chatStreamMode !== "hold"
+      ? claimTypingIndicatorForRequest()
+      : null;
     let completion = null;
     const fetchNative = async () => {
-      const nativeResponse = await nativeFetch(resource, options);
+      let nativeResponse;
+      try {
+        nativeResponse = await nativeFetch(resource, options);
+      } catch (error) {
+        if (claimed) delete claimed.dataset.rappProvisionalClaimed;
+        throw error;
+      }
       let response = nativeResponse;
       if (completion) {
         try {
@@ -1444,7 +1496,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       if (!shouldWrapChatStream) return response;
       return chatStreamMode === "hold"
         ? holdChatStreamResponse(response, requestSignal)
-        : smoothChatStreamResponse(response, requestSignal);
+        : smoothChatStreamResponse(response, requestSignal, { typingIndicator: claimed });
     };
     if (!isChat || typeof options.body !== "string") {
       return fetchNative();
@@ -1484,6 +1536,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     if (!result?.intercepted) {
       return fetchNative();
     }
+    if (claimed) delete claimed.dataset.rappProvisionalClaimed;
     if (target.pathname === "/chat/stream") {
       const frame = "data: " + JSON.stringify({
         type: "done",
@@ -1567,10 +1620,11 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
 })()`;
 
 function frameBridgeInstallationSource() {
-  return `window.__rappBetaChatLookConfig = ${JSON.stringify({
+  const checkpointSource = `window.__rappBetaChatLookConfig = ${JSON.stringify({
     chatLook,
     chatTypingEnabled,
   })};\n${BETA_FRAME_BRIDGE_SOURCE}`;
+  return composeChatCardsFrameBridgeSource(checkpointSource, aprilFools);
 }
 const copilot = new CopilotRuntime({
   tokenFile: path.join(config.brainstemDir, ".copilot_token"),
@@ -1585,6 +1639,7 @@ let updateCheckInFlight = false;
 let updateMenuItem = null;
 let availableUpdate = null;
 let uiDriver = null;
+let e2eStopTimer = null;
 // One GitHub Copilot Brain Surgeon SDK session per chat tab, keyed by the id the
 // renderer assigns. All share one runtime, one route manager, and one visible
 // Brainstem — "several agents, one brainstem" — and every event they emit is
@@ -1592,9 +1647,14 @@ let uiDriver = null;
 const brainSurgeons = new Map();
 const completedBrainstemRequests = new Set();
 const completedBrainstemRequestOrder = [];
+const chatLeaseRegistry = new Set();
 const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
+  aprilFools,
+  aprilFoolsOverridden,
+  cardTable: customCardTableState.table,
+  cardTableError: customCardTableState.error,
   chatLook,
   chatLookOverridden,
   chatTypingEnabled,
@@ -1779,6 +1839,13 @@ function syncChatLookMenu() {
   }
 }
 
+function syncAprilFoolsMenu() {
+  const item = Menu.getApplicationMenu()?.getMenuItemById(
+    "april-fools-card-table",
+  );
+  if (item) item.checked = aprilFools.on;
+}
+
 function applyEffectiveChatLook(value) {
   chatLook = value.chatLook;
   chatLookOverridden = value.chatLookOverridden;
@@ -1813,6 +1880,76 @@ async function handleChatLookChange(nextLook) {
 function requestChatLookChange(nextLook) {
   void handleChatLookChange(nextLook).catch((error) => {
     console.error(`Could not change chat look to ${nextLook}:`, error);
+  });
+}
+
+function applyEffectiveAprilFools(value) {
+  customCardTableState = resolveCustomTable(value.aprilFools);
+  aprilFools = value.aprilFools;
+  aprilFoolsOverridden = value.aprilFoolsOverridden;
+  state.aprilFools = aprilFools;
+  state.aprilFoolsOverridden = aprilFoolsOverridden;
+  state.cardTable = customCardTableState.table;
+  state.cardTableError = customCardTableState.error;
+  syncAprilFoolsMenu();
+  emitState();
+}
+
+async function handleCustomCardTableLoad() {
+  const selection = await dialog.showOpenDialog(mainWindow, {
+    title: "Load a custom card table",
+    buttonLabel: "Load table",
+    filters: [{ name: "JSON card table", extensions: ["json"] }],
+    properties: ["openFile"],
+  });
+  if (selection.canceled || !selection.filePaths[0]) {
+    return { canceled: true };
+  }
+  const loaded = readCustomTable(selection.filePaths[0]);
+  const settings = await handleAprilFoolsChange({
+    table: "custom",
+    customTablePath: loaded.file,
+  });
+  return {
+    canceled: false,
+    ...settings,
+    cardTable: loaded.table,
+  };
+}
+
+async function handleAprilFoolsChange(next) {
+  const value = changeAprilFoolsSettings({
+    apply: applyEffectiveAprilFools,
+    aprilFools: next,
+    betaHome,
+    env: process.env,
+  });
+  await applyChatLookToFrame();
+  return structuredClone(value);
+}
+
+function requestAprilFoolsChange(next) {
+  void handleAprilFoolsChange(next).catch((error) => {
+    console.error("Could not change the April Fools card table:", error);
+  });
+}
+
+async function executeComposerControl(message) {
+  if (parseAprilFoolsCommand(message)) {
+    const value = await handleAprilFoolsChange({ on: !aprilFools.on });
+    return {
+      action: "toggle-april-fools",
+      intercepted: true,
+      reply: `April Fools card table is ${
+        value.aprilFools.on ? "on" : "off"
+      }.`,
+      url: state.url,
+    };
+  }
+  return executeLineageCommand({
+    message,
+    routeManager,
+    env: process.env,
   });
 }
 
@@ -2284,6 +2421,7 @@ function ensureBrainSurgeon(sessionId = 1) {
     surgeon = new BrainSurgeon({
       runtime: copilot,
       brainstemUrl: config.url,
+      chatLeaseRegistry,
       checkForUpdates: () => handleCheckForUpdates({ openPanel: true }),
       copilotStudioAuth,
       routeManager,
@@ -2396,6 +2534,9 @@ function createWindow() {
       additionalArguments: [
         `--rapp-chat-stream=${chatStreamMode}`,
         `--rapp-chat-look=${chatLook}`,
+        `--rapp-april-fools=${
+          Buffer.from(JSON.stringify(aprilFools)).toString("base64url")
+        }`,
       ],
       contextIsolation: true,
       nodeIntegration: false,
@@ -2593,6 +2734,14 @@ function installApplicationMenu() {
         checked: chatLook === "business",
         click: () => requestChatLookChange("business"),
       },
+      { type: "separator" },
+      {
+        id: "april-fools-card-table",
+        label: "April Fools: Card Table",
+        type: "checkbox",
+        checked: aprilFools.on,
+        click: () => requestAprilFoolsChange({ on: !aprilFools.on }),
+      },
     ],
   };
   const viewMenu = {
@@ -2646,6 +2795,7 @@ function installApplicationMenu() {
     "check-for-updates",
   );
   syncChatLookMenu();
+  syncAprilFoolsMenu();
 }
 
 function loadPendingUpdateResult() {
@@ -2725,6 +2875,21 @@ function registerIpc() {
   ipcMain.handle("beta:update-geolocation", async (event, payload) => {
     assertTrustedIpc(event);
     return handleGeolocationUpdate(payload);
+  });
+  ipcMain.handle("beta:set-april-fools", async (event, next) => {
+    assertTrustedIpc(event);
+    return handleAprilFoolsChange(next || {});
+  });
+  registerChatCardIpc({
+    assertTrustedIpc,
+    ipcMain,
+    isEnabled: () => aprilFools.on,
+    store: chatCardStore,
+  });
+  ipcMain.handle("beta:cards-load-custom-table", async (event) => {
+    assertTrustedIpc(event);
+    if (!aprilFools.on) throw new Error("April Fools card table is off.");
+    return handleCustomCardTableLoad();
   });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);
@@ -2816,11 +2981,7 @@ function registerIpc() {
   });
   ipcMain.handle("beta:lineage-command", async (event, message) => {
     assertTrustedIpc(event);
-    return executeLineageCommand({
-      message,
-      routeManager,
-      env: process.env,
-    });
+    return executeComposerControl(message);
   });
   ipcMain.handle("beta:lineage-environments", (event) => {
     assertTrustedIpc(event);
@@ -3066,6 +3227,16 @@ if (!hasLock) {
       emitState();
     });
     void startServices();
+    const e2eStopFile = process.env.BRAINSTEM_BETA_E2E_STOP_FILE;
+    if (e2eStopFile) {
+      e2eStopTimer = setInterval(() => {
+        if (!existsSync(e2eStopFile)) return;
+        clearInterval(e2eStopTimer);
+        e2eStopTimer = null;
+        app.quit();
+      }, 100);
+      e2eStopTimer.unref?.();
+    }
     const smokeExitMs = Number.parseInt(
       process.env.BRAINSTEM_BETA_SMOKE_EXIT_MS || "0",
       10,
@@ -3091,6 +3262,10 @@ if (!hasLock) {
     shutdownStarted = true;
     clearInterval(ambientManifestTimer);
     clearInterval(ambientDeviceTimer);
+    if (e2eStopTimer) {
+      clearInterval(e2eStopTimer);
+      e2eStopTimer = null;
+    }
     Promise.allSettled([
       ...Array.from(brainSurgeons.values(), (surgeon) => surgeon.stop()),
       twinManager.stopAll(),

@@ -68,7 +68,7 @@ count — not a silent first-match.
 
 ## 3. Verified effects, fewer rounds
 
-`click`, `type`, `press` return what **changed**, computed server-side as the outline diff
+`click`, `type`, `press`, and `swipe` return what **changed**, computed server-side as the outline diff
 before/after (≤ 5 rows) plus focus and route/URL changes:
 
 ```json
@@ -82,6 +82,8 @@ before/after (≤ 5 rows) plus focus and route/URL changes:
 - `press Enter` performs the control's real submit path (form submit / associated button),
   and says so in `effect`; today's `keydown`+`keyup` with no default action is why "Enter
   did nothing" happens.
+- `swipe` drives a bounded left/right primary pointer gesture against a stable handle, so
+  touch-style controls can be proven without replacing their real pointer path with a click.
 - Visibility now means **actionable**: `disabled`, `pointer-events: none`, and occlusion by
   `#splash` / the login overlay / `#intro` / the driver's own overlays are refusals with a
   named reason, not a silent click on the wrong thing.

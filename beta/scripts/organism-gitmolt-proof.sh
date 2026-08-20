@@ -717,34 +717,34 @@ IMPORTED_PATH=$(
     git --git-dir="$SECONDARY_MOLT" config --get \
         "molt.locus.$CREATURE_LOCUS.path" 2>/dev/null || true
 )
-git --git-dir="$SECONDARY_MOLT" config \
-    "molt.locus.$CREATURE_LOCUS.path" "hello_rapp_agent.py" 2>/dev/null
-PATH_REBIND_RC=$?
 observe "frame-import-primary-alive" "$PRIMARY_PORT" "$PRIMARY_PID"
+# Spec invariant I1: imported is not trusted. A ring that carries a foreign
+# `Molt-Verified: yes` trailer must NOT activate on the receiver until the
+# receiver's own gate has run (the verdict ref is local and never travels).
 foreign_trust_ok=0
-if [ "$FOREIGN_VERIFIED_ACTIVATE_RC" -ne 0 ] \
-    || [ "$FOREIGN_REVERT_RC" -ne 0 ] \
+if [ "$FOREIGN_VERIFIED_ACTIVATE_RC" -eq 0 ] \
     || ! runtime_is_alive; then
     foreign_trust_ok=1
 fi
-record_claim "foreign verified trailer currently transfers authority" \
+record_claim "a foreign verified trailer does not transfer authority" \
     "$foreign_trust_ok" \
-    "SURPRISE: receiver activate rc=$FOREIGN_VERIFIED_ACTIVATE_RC before local verification; reverted immediately; $LAST_OBSERVATION"
+    "receiver activate rc=$FOREIGN_VERIFIED_ACTIVATE_RC before local verification (want non-zero); $LAST_OBSERVATION"
 
+# The frame carries the locus's agent path (refs/molt/meta/<locus>), so the
+# receiver needs no hand rebinding; the unverified tip stays parked at base.
 import_trust_ok=0
 if [ "$FRAME_IMPORT_RC" -ne 0 ] \
     || [ "$IMPORTED_LIVE" != "$IMPORTED_BASE" ] \
     || [ "$IMPORTED_ACTIVATE_RC" -eq 0 ] \
-    || [ -n "$IMPORTED_PATH" ] \
-    || [ "$PATH_REBIND_RC" -ne 0 ] \
+    || [ "$IMPORTED_PATH" != "hello_rapp_agent.py" ] \
     || ! printf '%s' "$IMPORTED_ACTIVATE" | grep -F \
         "unverified generation" >/dev/null 2>&1 \
     || ! runtime_is_alive; then
     import_trust_ok=1
 fi
-record_claim "unverified transfer tip is parked and locally rebound" \
+record_claim "unverified transfer tip is parked and the frame carried its path" \
     "$import_trust_ok" \
-    "activate rc=$IMPORTED_ACTIVATE_RC ($IMPORTED_ACTIVATE); SURPRISE: frame path metadata was missing and rebound to hello_rapp_agent.py; $LAST_OBSERVATION"
+    "activate rc=$IMPORTED_ACTIVATE_RC ($IMPORTED_ACTIVATE); imported path=${IMPORTED_PATH:-<missing>}; $LAST_OBSERVATION"
 
 SECOND_GATE=$(direct_gate "$SECONDARY_BODY" "$TRANSFER_V4" 2>&1)
 SECOND_GATE_RC=$?

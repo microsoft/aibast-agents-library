@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import test from "node:test";
+
+import { composeChatCardsFrameBridgeSource } from "../electron/chat-cards.mjs";
 
 await import("../ui/stream-follow.js");
 await import("../ui/stream-pacing.js");
@@ -74,6 +77,29 @@ function materializeBridgeSource(
     splitTextPieces,
   });
 }
+
+test("mode-off bridge source is byte-identical to the bridge without the feature", (t) => {
+  // "Off is off" is a property of the composition, not of one recorded hash:
+  // the bridge legitimately changes for unrelated reasons (streaming fixes,
+  // look tweaks), and every such change must keep this test green. With the
+  // mode off the composed source must be the input source, byte for byte.
+  const checkpointSource = `window.__rappBetaChatLookConfig = ${JSON.stringify({
+    chatLook: "messages",
+    chatTypingEnabled: false,
+  })};\n${materializeBridgeSource("smooth")}`;
+  const hash = createHash("sha256").update(checkpointSource).digest("hex");
+  t.diagnostic(`mode-off bridge source sha256: ${hash}`);
+  assert.doesNotMatch(checkpointSource, /installAprilFoolsFrameBridge|rappChatCards|april/i,
+    "the bridge without the feature carries no card code");
+  const disabled = composeChatCardsFrameBridgeSource(checkpointSource, {
+    on: false,
+    table: "poker",
+    customTablePath: null,
+  });
+  assert.equal(disabled, checkpointSource);
+  assert.equal(createHash("sha256").update(disabled).digest("hex"), hash);
+  t.diagnostic(`mode-off bridge source sha256: ${hash}`);
+});
 
 test("CRLF main.mjs extracts and materializes the frame bridge", () => {
   const crlfSource = mainSource.replaceAll("\n", "\r\n");
@@ -1138,4 +1164,70 @@ test("aborting a smooth response cancels upstream", async () => {
     installed.window.__rappSmoothScreenStats.removeCount,
     1,
   );
+});
+
+test("smooth mode keeps two in-flight requests in their own response slots", async () => {
+  // The kernel creates a response slot + typing indicator per send and never
+  // gates on in-flight requests. A is sent, then B; A's first delta arrives
+  // first. The provisional bubble for A must land under A, not under the
+  // newest (B's) indicator.
+  const upstreamA = controlledResponse();
+  const upstreamB = controlledResponse();
+  let calls = 0;
+  const installed = installBridge({
+    chatStreamMode: "smooth",
+    nativeFetch: async () => (++calls === 1 ? upstreamA.response : upstreamB.response),
+  });
+  const { document } = installed.dom;
+  const slotA = installed.dom.responseSlot;
+  const chat = installed.dom.chat
+    || slotA.parentElement
+    || slotA.parentNode;
+  assert.ok(chat, "the fake DOM exposes the chat container");
+
+  const pendingA = installed.window.fetch("http://127.0.0.1:7071/chat/stream", {
+    method: "POST",
+    body: JSON.stringify({ user_input: "A" }),
+  });
+  // A's fetch pauses for ambient/lineage IPC before native fetch. The indicator
+  // must already be claimed when the kernel synchronously creates B's slot.
+  const slotB = document.createElement("div");
+  slotB.className = "response-slot";
+  const indicatorB = document.createElement("div");
+  indicatorB.className = "msg assistant typing-indicator";
+  slotB.appendChild(indicatorB);
+  chat.appendChild(slotB);
+  const pendingB = installed.window.fetch("http://127.0.0.1:7071/chat/stream", {
+    method: "POST",
+    body: JSON.stringify({ user_input: "B" }),
+  });
+  const [wrappedA, wrappedB] = await Promise.all([pendingA, pendingB]);
+  const readerA = wrappedA.body.getReader();
+  const readerB = wrappedB.body.getReader();
+  void readerA.read().catch(() => {});
+  void readerB.read().catch(() => {});
+
+  upstreamA.enqueue(sse({ type: "delta", text: "reply for A" }));
+  await nextTask();
+  installed.clock.runAll();
+  await nextTask();
+
+  const provisionalIn = (slot) => slot.children.find((child) => child.dataset?.rappProvisional === "1") || null;
+  assert.ok(provisionalIn(slotA), "A's provisional bubble renders under A's own indicator");
+  assert.equal(provisionalIn(slotB), null, "B's slot is untouched by A's stream");
+
+  upstreamB.enqueue(sse({ type: "delta", text: "reply for B" }));
+  await nextTask();
+  installed.clock.runAll();
+  await nextTask();
+  assert.ok(provisionalIn(slotB), "B's provisional bubble renders under B's own indicator");
+  assert.ok(provisionalIn(slotA), "A's bubble is still in A's slot");
+
+  upstreamA.enqueue(sse({ type: "done", response: "reply for A" }));
+  upstreamB.enqueue(sse({ type: "done", response: "reply for B" }));
+  upstreamA.close();
+  upstreamB.close();
+  await nextTask();
+  installed.clock.runAll();
+  await nextTask();
 });

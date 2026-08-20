@@ -77,9 +77,132 @@ function twinFrame(window, twinUrls) {
   });
 }
 
-async function browserDriverCommand(command, createHelpers) {
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// A frame script must never wedge the per-frame queue. Electron leaves the
+// executeJavaScript promise dangling when the frame navigates or is destroyed
+// mid-command (a route swap after a safe word, a reload, a twin closing), and
+// before v2 serialized commands per frame that only lost the one in-flight
+// command — with the queue it would block every later command on that frame.
+// So every frame script is raced against the frame going away and a deadline.
+const FRAME_SCRIPT_TIMEOUT_MS = 20000;
+const FRAME_SCRIPT_POLL_MS = 100;
+
+class FrameGoneError extends Error {
+  constructor(reason) {
+    super(`The target frame ${reason} before the command finished; retry against the new frame.`);
+    this.name = "FrameGoneError";
+    this.retryable = true;
+  }
+}
+
+function frameIsGone(frame, { window, startUrl }) {
+  try {
+    if (typeof frame.isDestroyed === "function" && frame.isDestroyed()) return "was destroyed";
+  } catch {
+    return "was destroyed";
+  }
+  let url;
+  try {
+    url = String(frame.url || "");
+  } catch {
+    return "was destroyed";
+  }
+  if (url !== startUrl) return "navigated";
+  if (window?.webContents?.mainFrame && !frameTree(window.webContents.mainFrame).includes(frame)) {
+    return "was detached";
+  }
+  return null;
+}
+
+// The watchdog must never fire on a HEALTHY frame that is simply doing what
+// it was told: a delegated chat legitimately waits minutes for a reply. The
+// deadline is derived from the command's own budget (mirroring the in-frame
+// clamps) plus grace; 20 s is only the floor.
+const FRAME_SCRIPT_GRACE_MS = 15000;
+const FRAME_SCRIPT_MAX_MS = 60 * 60 * 1000 + 30000;
+
+function stepBudgetMs(step) {
+  const action = String(step?.action || "").toLowerCase();
+  const settle = Math.max(0, Number(step?.settleMs) || 0);
+  if (action === "chat" || action === "surgeon_chat") {
+    const defaultTimeout = action === "surgeon_chat" ? 3600000 : 180000;
+    return Math.max(
+      1000,
+      Math.min(3600000, Number(step?.timeoutMs) || defaultTimeout),
+    ) + settle;
+  }
+  if (action === "wait") return Math.max(100, Math.min(120000, Number(step?.timeoutMs) || 10000));
+  if (action === "announce") return Math.max(120, Number(step?.durationMs) || 900);
+  if (action === "type") {
+    const length = String(step?.value ?? step?.text ?? "").length;
+    const delay = Math.max(0, Math.min(100, Number(step?.typingDelayMs) || 18));
+    return length * delay + Math.max(160, settle || 300);
+  }
+  if (action === "tour") return Math.max(1000, Number(step?.durationMs) || 60000);
+  return settle + 1000;
+}
+
+function frameBudgetMs(command) {
+  const explicit = Number(command?.frameTimeoutMs);
+  if (Number.isFinite(explicit) && explicit > 0) {
+    return Math.min(FRAME_SCRIPT_MAX_MS, Math.max(250, explicit));
+  }
+  const steps = Array.isArray(command?.steps) ? command.steps : [command];
+  const budget = steps.reduce((sum, step) => sum + stepBudgetMs(step), 0);
+  return Math.min(
+    FRAME_SCRIPT_MAX_MS,
+    Math.max(FRAME_SCRIPT_TIMEOUT_MS, budget + FRAME_SCRIPT_GRACE_MS),
+  );
+}
+
+async function executeInFrame(frame, source, { window = null, timeoutMs = FRAME_SCRIPT_TIMEOUT_MS } = {}) {
+  if (!frame) throw new Error("The live Brainstem frontend is not loaded yet.");
+  const startUrl = String(frame.url || "");
+  const deadline = Date.now() + Math.max(250, Number(timeoutMs) || FRAME_SCRIPT_TIMEOUT_MS);
+  let timer = null;
+  let settled = false;
+  const watchdog = new Promise((resolve, reject) => {
+    const check = () => {
+      if (settled) return;
+      const gone = frameIsGone(frame, { window, startUrl });
+      if (gone) {
+        reject(new FrameGoneError(gone));
+        return;
+      }
+      if (Date.now() >= deadline) {
+        reject(new Error(`The frame command did not finish within ${Math.round(Number(timeoutMs) / 1000)}s; the frame may be unresponsive.`));
+        return;
+      }
+      timer = setTimeout(check, FRAME_SCRIPT_POLL_MS);
+    };
+    timer = setTimeout(check, FRAME_SCRIPT_POLL_MS);
+  });
+  try {
+    return await Promise.race([
+      Promise.resolve().then(() => frame.executeJavaScript(source, true)),
+      watchdog,
+    ]);
+  } finally {
+    settled = true;
+    if (timer) clearTimeout(timer);
+  }
+}
+
+async function browserDriverCommand(command, createHelpers, commandId = null) {
   const state = window.__brainstemAiDriver ||= {};
+  // One command per frame: if the bus abandoned this script (watchdog) and a
+  // later command took the frame, every loop here stops at its next tick
+  // instead of driving the frame alongside the newcomer.
+  const myCommandId = commandId || String(Date.now()) + Math.random().toString(16).slice(2);
+  state.activeCommandId = myCommandId;
+  const sleep = (ms) => new Promise((resolve, reject) => setTimeout(() => {
+    if (state.activeCommandId !== myCommandId) {
+      const error = new Error("This command was superseded by a later command on the same frame.");
+      error.name = "UiDriverSupersededError";
+      reject(error);
+      return;
+    }
+    resolve();
+  }, ms));
   const helpers = createHelpers({
     cssEscape: (value) => CSS.escape(value),
     document,
@@ -243,9 +366,14 @@ async function browserDriverCommand(command, createHelpers) {
 
   function actionabilityReason(element) {
     if (!visible(element)) return "not visible";
+    // The chat lease marks the composer aria-disabled so a PERSON sees and
+    // feels the lock (its guard only blocks trusted events). The AI holding
+    // the lease drives through this very element, so the lease marker is not
+    // "disabled" for the driver — only a real disabled control is.
+    const leaseMarked = element.dataset?.rappChatLease === "locked";
     if (
       Boolean(element.disabled)
-      || element.getAttribute?.("aria-disabled") === "true"
+      || (!leaseMarked && element.getAttribute?.("aria-disabled") === "true")
     ) return "disabled";
     if (getComputedStyle(element).pointerEvents === "none") {
       return "pointer-events is none";
@@ -273,8 +401,20 @@ async function browserDriverCommand(command, createHelpers) {
   function requireActionable(element) {
     const reason = actionabilityReason(element);
     if (!reason) return;
+    // "not visible" on a CI runner is only diagnosable with the numbers: the
+    // element's box, its computed visibility, and the frame's own viewport.
+    let detail = "";
+    if (reason === "not visible") {
+      try {
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        detail = ` [rect ${Math.round(rect.width)}x${Math.round(rect.height)} @${Math.round(rect.left)},${Math.round(rect.top)}; display=${style.display} visibility=${style.visibility} opacity=${style.opacity}; viewport ${innerWidth}x${innerHeight}; document ${document.visibilityState}; readyState ${document.readyState}]`;
+      } catch {
+        detail = "";
+      }
+    }
     const error = new Error(
-      `UI target ${selectorFor(element) || "(unknown)"} is not actionable: ${reason}.`,
+      `UI target ${selectorFor(element) || "(unknown)"} is not actionable: ${reason}.${detail}`,
     );
     error.name = "UiDriverActionabilityError";
     error.reason = reason;
@@ -468,6 +608,55 @@ async function browserDriverCommand(command, createHelpers) {
       h,
       clicked: h,
       text: normalizedText(element),
+      effect: effectBetween(before, after, routeBefore, routeAfter),
+    };
+  }
+
+  async function swipeElement(element, step) {
+    requireActionable(element);
+    const h = selectorFor(element);
+    const before = currentOutline();
+    const routeBefore = location.href;
+    const direction = String(step.direction || "right").toLowerCase();
+    if (!["left", "right"].includes(direction)) {
+      throw new Error("Swipe direction must be left or right.");
+    }
+    const distance = Math.max(80, Math.min(400, Number(step.distance) || 110));
+    const description = labelText(step, `Swiping ${direction} on ${h}`);
+    const { x, y } = await pointAt(element, description);
+    const pointerId = 71;
+    const endX = x + (direction === "right" ? distance : -distance);
+    const dispatch = (type, clientX, buttons) => element.dispatchEvent(
+      new PointerEvent(type, {
+        bubbles: true,
+        buttons,
+        cancelable: true,
+        clientX,
+        clientY: y,
+        isPrimary: true,
+        pointerId,
+        pointerType: "touch",
+      }),
+    );
+    element.focus?.({ preventScroll: true });
+    dispatch("pointerdown", x, 1);
+    for (let stepIndex = 1; stepIndex <= 4; stepIndex += 1) {
+      dispatch("pointermove", x + ((endX - x) * stepIndex / 4), 1);
+      await sleep(24);
+    }
+    dispatch("pointerup", endX, 0);
+    await sleep(Math.max(260, Number(step.settleMs) || 520));
+    await waitUntil(step.until, before.snapshot);
+    const after = currentOutline();
+    const routeAfter = location.href;
+    element.classList?.remove("brainstem-ai-driver-target");
+    hideLabel();
+    return {
+      ok: true,
+      h,
+      direction,
+      distance,
+      swiped: h,
       effect: effectBetween(before, after, routeBefore, routeAfter),
     };
   }
@@ -684,9 +873,6 @@ async function browserDriverCommand(command, createHelpers) {
       if (!banner) {
         banner = document.createElement("div");
         banner.id = "brainstem-beta-chat-lease";
-        banner.textContent = `Brain Surgeon is using this chat (${
-          state.chatLeaseTokens.size
-        })`;
         Object.assign(banner.style, {
           position: "fixed",
           zIndex: "2147483645",
@@ -702,11 +888,16 @@ async function browserDriverCommand(command, createHelpers) {
         });
         document.body.appendChild(banner);
       }
+      banner.textContent = `Brain Surgeon is using this chat (${
+        state.chatLeaseTokens.size
+      })`;
       banner.hidden = !state.chatLeaseLocked;
       send.setAttribute(
         "aria-disabled",
         state.chatLeaseLocked ? "true" : "false",
       );
+      if (state.chatLeaseLocked) send.dataset.rappChatLease = "locked";
+      else delete send.dataset.rappChatLease;
       return {
         leaseCount: state.chatLeaseTokens.size,
         locked: state.chatLeaseLocked,
@@ -961,6 +1152,7 @@ async function browserDriverCommand(command, createHelpers) {
       );
     }
     if (action === "click") return clickElement(element, step);
+    if (action === "swipe") return swipeElement(element, step);
     if (action === "type") return typeInto(element, step);
     throw new Error(`Unsupported UI driver action: ${action || "(empty)"}`);
   }
@@ -1677,6 +1869,7 @@ function validateCommand(command) {
     "set_chat_lease",
     "stop_recording",
     "surgeon_chat",
+    "swipe",
     "tour",
     "type",
     "wait",
@@ -2011,6 +2204,13 @@ export async function startUiDriverServer({
       snapshot_after: traces[traces.length - 1]?.snapshot_after
         || result?.snapshot
         || null,
+      // Lease transitions are the one fact about concurrency that polling a
+      // banner cannot observe reliably (a "(2)" can last milliseconds); the
+      // trace records the count the lock or unlock saw, so a test can assert
+      // the overlap after the fact instead of racing it.
+      ...(Number.isInteger(result?.leaseCount)
+        ? { lease_count: result.leaseCount, locked: result.locked === true }
+        : {}),
     };
     mkdirSync(logDir, { recursive: true });
     appendFileSync(tracePath, `${JSON.stringify(entry)}\n`, {
@@ -2031,11 +2231,21 @@ export async function startUiDriverServer({
   }
 
   function commandResponse(response, command, result, { budget = false } = {}) {
-    appendCommandTrace(command, result);
+    // The command already happened; a trace that cannot be written is a
+    // diagnostic on the answer, never a reason to report the click as failed
+    // (callers retry failures, which would double-send the chat).
+    let traceError = null;
+    try {
+      appendCommandTrace(command, result);
+    } catch (error) {
+      traceError = errorMessage(error);
+      console.warn("UI driver trace write failed:", traceError);
+    }
     const clean = stripTraceMetadata(result);
     jsonResponse(response, 200, {
       ok: true,
       result: budget ? boundedResult(clean, command) : clean,
+      ...(traceError ? { trace_error: traceError } : {}),
     });
   }
 
@@ -2074,7 +2284,8 @@ export async function startUiDriverServer({
       : image;
     const frame = brainstemFrame(window, loopbackUrl);
     const text = frame
-      ? await frame.executeJavaScript(
+      ? await executeInFrame(
+          frame,
           `(${function screenshotText(options) {
             const normalize = (value) => String(value || "").replace(/\s+/g, " ").trim();
             const active = document.activeElement;
@@ -2102,8 +2313,8 @@ export async function startUiDriverServer({
           }.toString()})(${JSON.stringify({
             includeText: command.includeText === true || command.include_text === true,
           })})`,
-          true,
-        )
+          { timeoutMs: 5000, window },
+        ).catch(() => ({ caption: "", fullText: "" }))
       : { caption: "", fullText: "" };
     const caption = String(text?.caption || "RAPP Brainstem Frontier capture").slice(0, 300);
     const includeText = command.includeText === true || command.include_text === true;
@@ -2123,20 +2334,22 @@ export async function startUiDriverServer({
   async function renderGrailMedia(artifact) {
     const frame = brainstemFrame(window, loopbackUrl);
     if (!frame || !artifact?.url) return false;
-    return frame.executeJavaScript(
+    return executeInFrame(
+      frame,
       `Boolean(window.__rappBetaRenderDriveMedia?.(${JSON.stringify(artifact)}))`,
-      true,
-    );
+      { timeoutMs: 5000, window },
+    ).catch(() => false);
   }
 
   async function renderGrailStep(summary) {
     const frame = brainstemFrame(window, loopbackUrl);
     const line = String(summary || "").replace(/\s+/g, " ").trim().slice(0, 220);
     if (!frame || !line) return false;
-    return frame.executeJavaScript(
+    return executeInFrame(
+      frame,
       `Boolean(window.__rappBetaRenderDriveStep?.(${JSON.stringify(line)}))`,
-      true,
-    );
+      { timeoutMs: 5000, window },
+    ).catch(() => false);
   }
 
   const server = createServer(async (request, response) => {
@@ -2319,10 +2532,11 @@ export async function startUiDriverServer({
           );
         const activeFrame = brainstemFrame(window, loopbackUrl);
         const chatLeaseCount = activeFrame
-          ? await activeFrame.executeJavaScript(
+          ? await executeInFrame(
+              activeFrame,
               "Number(window.__brainstemAiDriver?.chatLeaseTokens?.size || 0)",
-              true,
-            )
+              { timeoutMs: 5000, window },
+            ).catch(() => null)
           : null;
         const telemetry = routeTelemetry() || {};
         const allEvents = Array.isArray(telemetry.events) ? telemetry.events : [];
@@ -2351,9 +2565,10 @@ export async function startUiDriverServer({
         if (!frame) {
           throw new Error("The live Brainstem frontend is not loaded yet.");
         }
-        await frame.executeJavaScript(
+        await executeInFrame(
+          frame,
           "setTimeout(() => location.reload(), 25); true",
-          true,
+          { timeoutMs: 5000, window },
         );
         commandResponse(response, command, { refreshing: true });
         return;
@@ -2425,10 +2640,17 @@ export async function startUiDriverServer({
           ? `Twin ${wantedTwin} UI is not visible in the herd yet — open the herd and its tile first.`
           : "The live Brainstem frontend is not loaded yet.");
       }
+      // The command id is passed BESIDE the command (not inside it) so traces
+      // stay identical from pass to pass; the frame uses it to notice when a
+      // later command has taken over and to stop its own loops.
+      const commandId = randomBytes(6).toString("hex");
       const source = `(${browserDriverCommand.toString()})(${
         JSON.stringify(command)
-      }, ${createUiDriverHelpers.toString()})`;
-      const result = await target.executeJavaScript(source, true);
+      }, ${createUiDriverHelpers.toString()}, ${JSON.stringify(commandId)})`;
+      const result = await executeInFrame(target, source, {
+        timeoutMs: frameBudgetMs(command),
+        window,
+      });
       if (wantedTwin || command.target === "shell") {
         const summaries = Array.isArray(result?.summaries)
           ? result.summaries.filter(Boolean)
@@ -2500,6 +2722,10 @@ export const uiDriverInternals = {
   createFrameQueue,
   createUiDriverHelpers,
   frameKeyForCommand,
+  executeInFrame,
+  FrameGoneError,
+  frameBudgetMs,
+  stepBudgetMs,
   forceModeStatus,
   runTourCommand,
   setForceMode,
