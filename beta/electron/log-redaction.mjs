@@ -1,9 +1,9 @@
 import {
   chmodSync,
   constants,
+  linkSync,
   mkdirSync,
   openSync,
-  renameSync,
   rmSync,
   statSync,
 } from "node:fs";
@@ -248,11 +248,16 @@ export function createExportRedactionScript({ roots = [] } = {}) {
 
 // Persistent logs were never rotated: a worker log grew for the life of the
 // install (6.9 MB across 35 files on one developer machine, unbounded on a
-// chatty one). Rotate a log that has outgrown maxBytes before reopening it,
-// keeping `keep` predecessors (file.1, file.2, …). Returns true when rotated.
+// chatty one). Link the current inode into the first free predecessor slot
+// before unlinking its live path. Existing predecessors may still have writers,
+// so they are never replaced; a full archive set refuses rotation.
 export function rotateLogIfLarge(
   filePath,
-  { maxBytes = 5 * 1024 * 1024, keep = 1 } = {},
+  {
+    maxBytes = 5 * 1024 * 1024,
+    keep = 1,
+    link = linkSync,
+  } = {},
 ) {
   let size;
   try {
@@ -261,18 +266,24 @@ export function rotateLogIfLarge(
     return false;
   }
   if (size <= maxBytes) return false;
-  for (let index = keep; index >= 1; index -= 1) {
-    const from = index === 1 ? filePath : `${filePath}.${index - 1}`;
+  const archiveCount = Math.max(0, Math.floor(Number(keep) || 0));
+  for (let index = 1; index <= archiveCount; index += 1) {
     const to = `${filePath}.${index}`;
     try {
-      rmSync(to, { force: true });
-      renameSync(from, to);
+      link(filePath, to);
+    } catch (error) {
+      if (error?.code === "EEXIST") continue;
+      return false;
+    }
+    try {
+      rmSync(filePath);
+      return true;
     } catch {
-      // A rotation that cannot complete must never stop the worker from
-      // starting; the next start tries again.
+      try { rmSync(to, { force: true }); } catch {}
+      return false;
     }
   }
-  return true;
+  return false;
 }
 
 export function openPrivateAppendFile(
