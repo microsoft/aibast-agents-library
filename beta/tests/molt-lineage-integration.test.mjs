@@ -216,6 +216,116 @@ test("lineage telemetry names the active environment and default seeding precise
   );
 });
 
+test("baseline drift suppresses Frontier rings but preserves user growth", (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(
+        path.join(agentDirectory, "other_agent.py"),
+        "utf8",
+      );
+      return source.includes("broken user ring")
+        ? { ok: false, error: "new user ring is incompatible" }
+        : { ok: true };
+    },
+  });
+  const baselines = new Map(
+    fixture.store.baselineAncestors().map(
+      (item) => [item.filename, item],
+    ),
+  );
+  const global = baselines.get("global_agent.py");
+  const other = baselines.get("other_agent.py");
+  const frontierRing = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'frontier ring'\n",
+    verified: true,
+    meta: { author: "frontier" },
+  });
+  const userSource = "OTHER = 'user ring'\n";
+  const userRing = fixture.store.appendRing(other.ancestorRappid, {
+    source: userSource,
+    verified: true,
+    meta: { author: "user" },
+  });
+  fixture.store.setHead(global.ancestorRappid, frontierRing);
+  fixture.store.setHead(other.ancestorRappid, userRing);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  fixture.store.onTelemetry = (type, details) => (
+    manager.recordTelemetry(type, details)
+  );
+  manager.materializeComposition(manager.compositionDescriptor());
+
+  const newGlobalBaseline = "GLOBAL = 'grail upgrade'\n";
+  writeFileSync(global.sourcePath, newGlobalBaseline);
+  writeFileSync(other.sourcePath, "OTHER = 'grail upgrade'\n");
+  const brokenUserRing = fixture.store.appendRing(other.ancestorRappid, {
+    source: "OTHER = 'broken user ring'\n",
+    parentRappid: userRing,
+    verified: true,
+    meta: { author: "user" },
+  });
+  fixture.store.setHead(other.ancestorRappid, brokenUserRing);
+  const descriptor = manager.compositionDescriptor();
+  const materialized = manager.materializeComposition(descriptor);
+  assert.equal(materialized.fallbackStrategy, "last-good");
+  assert.equal(
+    readFileSync(
+      path.join(materialized.agentDirectory, global.filename),
+      "utf8",
+    ),
+    newGlobalBaseline,
+    "a stale Frontier seed must not shadow a newer Grail baseline",
+  );
+  assert.equal(
+    readFileSync(
+      path.join(materialized.agentDirectory, other.filename),
+      "utf8",
+    ),
+    userSource,
+    "a user-authored ring remains the user's chosen growth",
+  );
+
+  const environments = manager.lineageEnvironments();
+  assert.equal(
+    environments.loci.find(
+      (locus) => locus.ancestorRappid === global.ancestorRappid,
+    ).drifted,
+    true,
+  );
+  const drift = manager.lineageDrift("default");
+  assert.equal(
+    drift.drifted.find(
+      (locus) => locus.ancestorRappid === other.ancestorRappid,
+    ).baselineDrifted,
+    true,
+    "baseline drift is visible even when environment HEADs match",
+  );
+  manager.compositionDescriptor();
+  const events = manager.telemetry.filter(
+    (event) => event.type === "lineage-baseline-drift",
+  );
+  assert.equal(events.length, 2);
+  assert.equal(
+    events.filter((event) => event.ancestor === global.ancestorRappid).length,
+    1,
+    "each drifted ring emits once per process",
+  );
+  assert.equal(
+    events.filter((event) => event.ancestor === other.ancestorRappid).length,
+    1,
+  );
+  assert.deepEqual(
+    Object.keys(events[0])
+      .filter((key) => [
+        "ancestor",
+        "ring",
+        "recorded_sha",
+        "current_sha",
+      ].includes(key))
+      .sort(),
+    ["ancestor", "current_sha", "recorded_sha", "ring"],
+  );
+});
+
 test("HARD 2 — Grail remains blind to Molt Lineage", () => {
   const brainstem = readFileSync(
     path.join(grailDirectory, "brainstem.py"),

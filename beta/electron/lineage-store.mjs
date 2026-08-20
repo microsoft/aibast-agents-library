@@ -207,6 +207,7 @@ export class LineageStore {
     this.enabled = enabled !== false;
     this.now = now;
     this.onTelemetry = typeof onTelemetry === "function" ? onTelemetry : () => {};
+    this.reportedBaselineDrift = new Set();
   }
 
   _recordTelemetry(type, details) {
@@ -311,7 +312,14 @@ export class LineageStore {
               source: ring.source,
               parentRappid: parent,
               verified: ring.verified === true,
-              meta: { ...(ring.meta || {}), migrated_from: ring.ringRappid },
+              meta: {
+                ...(ring.meta || {}),
+                baseline_sha256: ring.baselineSha256
+                  || ring.meta?.baseline_sha256
+                  || locus.sha256
+                  || baseline.sha256,
+                migrated_from: ring.ringRappid,
+              },
             });
             remap.set(ring.ringRappid, minted);
           } catch (error) {
@@ -624,6 +632,7 @@ export class LineageStore {
       parentRappid: parent,
       ancestorRappid,
       sha256: sourceSha256(source),
+      baselineSha256: baseline.sha256,
       verified: verified === true,
       meta: meta && typeof meta === "object" ? { ...meta } : {},
       createdAt: this.now(),
@@ -812,6 +821,10 @@ export class LineageStore {
       ) {
         return baselineResult();
       }
+      const drift = this.baselineDrift(ancestorRappid, { ringRappid });
+      if (drift.drifted && ring.meta?.author === "frontier") {
+        return baselineResult();
+      }
       return {
         ringRappid,
         source: ring.source,
@@ -827,6 +840,57 @@ export class LineageStore {
       ancestorRappid,
       this.getHead(ancestorRappid, env),
     );
+  }
+
+  baselineDrift(
+    ancestorRappid,
+    { env = DEFAULT_ENV, ringRappid = null } = {},
+  ) {
+    const baseline = this._baseline(ancestorRappid);
+    const selectedRing = ringRappid || this.getHead(ancestorRappid, { env });
+    const result = {
+      ancestorRappid,
+      ringRappid: selectedRing,
+      recordedSha: null,
+      currentSha: baseline?.sha256 || null,
+      drifted: false,
+    };
+    if (
+      !baseline
+      || !selectedRing
+      || selectedRing === ancestorRappid
+    ) {
+      return result;
+    }
+    const ring = this._readRing(ancestorRappid, selectedRing);
+    if (!this._ringIsValid(ancestorRappid, selectedRing, ring)) return result;
+    const locus = readJsonSafe(
+      path.join(this._locusDirectory(ancestorRappid), LOCUS_FILE),
+    );
+    const recordedSha = ring.meta?.baseline_sha256
+      || ring.baselineSha256
+      || locus?.sha256
+      || null;
+    result.recordedSha = recordedSha;
+    result.drifted = Boolean(recordedSha && recordedSha !== baseline.sha256);
+    if (result.drifted) {
+      const key = [
+        ancestorRappid,
+        selectedRing,
+        recordedSha,
+        baseline.sha256,
+      ].join("\0");
+      if (!this.reportedBaselineDrift.has(key)) {
+        this.reportedBaselineDrift.add(key);
+        this._recordTelemetry("lineage-baseline-drift", {
+          ancestor: ancestorRappid,
+          ring: selectedRing,
+          recorded_sha: recordedSha,
+          current_sha: baseline.sha256,
+        });
+      }
+    }
+    return result;
   }
 
   /** True when the overlay may serve or move rings at all. The kill switch must

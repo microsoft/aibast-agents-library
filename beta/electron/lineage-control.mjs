@@ -95,7 +95,8 @@ function environmentsReply(report) {
     const environments = locus.environments
       .map((entry) => `${entry.env} → ${shortRing(entry)}`)
       .join(", ");
-    return `- ${locus.filename}: ${environments}`;
+    const drift = locus.drifted ? " (baseline drift)" : "";
+    return `- ${locus.filename}: ${environments}${drift}`;
   });
   return `Molt Lineage environments:\n${lines.join("\n")}`;
 }

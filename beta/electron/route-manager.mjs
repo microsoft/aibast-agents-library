@@ -694,13 +694,22 @@ export class BetaRouteManager {
     if (!this.lineageIsEnabled()) {
       return { disabled: true, loci: [] };
     }
-    const loci = this.lineageStore.baselineAncestors().map((baseline) => ({
-      ancestorRappid: baseline.ancestorRappid,
-      filename: baseline.filename,
-      environments: this.lineageStore.environments(
+    const loci = this.lineageStore.baselineAncestors().map((baseline) => {
+      const environments = this.lineageStore.environments(
         baseline.ancestorRappid,
-      ),
-    }));
+      );
+      return {
+        ancestorRappid: baseline.ancestorRappid,
+        filename: baseline.filename,
+        drifted: environments.some((entry) => (
+          this.lineageStore.baselineDrift(
+            baseline.ancestorRappid,
+            { env: entry.env },
+          ).drifted
+        )),
+        environments,
+      };
+    });
     const report = { disabled: false, loci };
     this.recordTelemetry("lineage-environments", {
       loci: loci.length,
@@ -756,14 +765,21 @@ export class BetaRouteManager {
         baseline.ancestorRappid,
         { env: "default" },
       );
+      const environmentDrift = this.lineageStore.detectDrift(
+        baseline.ancestorRappid,
+        environment,
+        expected,
+      );
+      const baselineDrift = this.lineageStore.baselineDrift(
+        baseline.ancestorRappid,
+        { env: environment },
+      );
       return {
         ancestorRappid: baseline.ancestorRappid,
         filename: baseline.filename,
-        ...this.lineageStore.detectDrift(
-          baseline.ancestorRappid,
-          environment,
-          expected,
-        ),
+        ...environmentDrift,
+        baselineDrifted: baselineDrift.drifted,
+        drifted: environmentDrift.drifted || baselineDrift.drifted,
       };
     });
     const drifted = loci.filter((locus) => locus.drifted);
@@ -1793,6 +1809,12 @@ export class BetaRouteManager {
           && this.lineageStore.locusPolicy(ancestorRappid) === "pinned"
         ) {
           reason = "pinned";
+        } else if (
+          cachedRing !== ancestorRappid
+          && this.lineageStore.resolveRing(ancestorRappid, cachedRing)
+            ?.ringRappid !== cachedRing
+        ) {
+          reason = "effective-ring-changed";
         } else {
           const currentHead = this.lineageStore.getHead(
             ancestorRappid,

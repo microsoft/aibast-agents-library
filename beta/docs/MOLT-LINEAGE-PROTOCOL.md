@@ -277,11 +277,16 @@ partial migration so the same bad input is not retried on every boot.
 3. **Drift is detected before promotion.** The target's live ring rappids are
    compared against the base the promotion expects; any unexpected ring is drift and
    the promotion refuses with a precise diff — not a runtime surprise.
-4. **Fail at promote, not at runtime.** The whole-set dry-load validation runs
+4. **Baseline drift is explicit.** Every ring records the Grail baseline digest
+   it grew from. A later Grail upgrade emits one `lineage-baseline-drift` event
+   per affected ring per boot and marks the locus drifted in environment reports.
+   User-authored rings keep serving; a stale `author: "frontier"` seed yields to
+   the new baseline until Frontier seeds a ring against that baseline.
+5. **Fail at promote, not at runtime.** The whole-set dry-load validation runs
    against the *resulting* target composition at promotion time (in a staging
    materialization). A break surfaces before the production swap; "the worst time"
    becomes "the promotion refused, and here is why."
-5. **Hash-chained audit trail.** Hash-chained rings plus append-only promotion
+6. **Hash-chained audit trail.** Hash-chained rings plus append-only promotion
    records (from/to `ring_rappid`, environment, actor, UTC) give ALM an
    internally verifiable history of every change in the present journal. A
    corrupt promotion record refuses every promotion outright (no HEAD moves),
