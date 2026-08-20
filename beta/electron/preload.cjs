@@ -13,9 +13,22 @@ const chatLookArgument = process.argv.find((value) => (
 const chatLook = chatLookArgument?.split("=", 2)[1] === "business"
   ? "business"
   : "messages";
+const aprilFoolsArgument = process.argv.find((value) => (
+  value.startsWith("--rapp-april-fools=")
+));
+let aprilFools = { on: false, table: "poker", customTablePath: null };
+try {
+  aprilFools = JSON.parse(Buffer.from(
+    aprilFoolsArgument?.split("=", 2)[1] || "",
+    "base64url",
+  ).toString("utf8"));
+} catch {
+  // Invalid startup arguments retain the safe disabled default.
+}
 const chatTypingEnabled = chatStreamMode === "hold";
 
 contextBridge.exposeInMainWorld("brainstemBeta", {
+  aprilFools,
   chatLook,
   chatStreamMode,
   chatTypingEnabled,
@@ -44,6 +57,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)
   ),
   setChatLook: (look) => ipcRenderer.invoke("beta:set-chat-look", look),
+  setAprilFools: (next) => ipcRenderer.invoke("beta:set-april-fools", next || {}),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
   surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),

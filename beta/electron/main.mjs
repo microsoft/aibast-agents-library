@@ -27,6 +27,12 @@ import {
   changeChatLook,
   readChatLookSettings,
 } from "./chat-look-settings.mjs";
+import {
+  changeAprilFoolsSettings,
+  composeChatCardsFrameBridgeSource,
+  parseAprilFoolsCommand,
+  readAprilFoolsSettings,
+} from "./chat-cards.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
@@ -166,9 +172,15 @@ const initialChatLook = readChatLookSettings({
   betaHome,
   env: process.env,
 });
+const initialAprilFools = readAprilFoolsSettings({
+  betaHome,
+  env: process.env,
+});
 let chatLook = initialChatLook.chatLook;
 let chatLookOverridden = initialChatLook.chatLookOverridden;
 let chatTypingEnabled = chatStreamMode === "hold";
+let aprilFools = initialAprilFools.aprilFools;
+let aprilFoolsOverridden = initialAprilFools.aprilFoolsOverridden;
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -1389,10 +1401,11 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
 })()`;
 
 function frameBridgeInstallationSource() {
-  return `window.__rappBetaChatLookConfig = ${JSON.stringify({
+  const checkpointSource = `window.__rappBetaChatLookConfig = ${JSON.stringify({
     chatLook,
     chatTypingEnabled,
   })};\n${BETA_FRAME_BRIDGE_SOURCE}`;
+  return composeChatCardsFrameBridgeSource(checkpointSource, aprilFools);
 }
 const copilot = new CopilotRuntime({
   tokenFile: path.join(config.brainstemDir, ".copilot_token"),
@@ -1417,6 +1430,8 @@ const chatLeaseRegistry = new Set();
 const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
+  aprilFools,
+  aprilFoolsOverridden,
   chatLook,
   chatLookOverridden,
   chatTypingEnabled,
@@ -1464,6 +1479,13 @@ function syncChatLookMenu() {
   }
 }
 
+function syncAprilFoolsMenu() {
+  const item = Menu.getApplicationMenu()?.getMenuItemById(
+    "april-fools-card-table",
+  );
+  if (item) item.checked = aprilFools.on;
+}
+
 function applyEffectiveChatLook(value) {
   chatLook = value.chatLook;
   chatLookOverridden = value.chatLookOverridden;
@@ -1498,6 +1520,51 @@ async function handleChatLookChange(nextLook) {
 function requestChatLookChange(nextLook) {
   void handleChatLookChange(nextLook).catch((error) => {
     console.error(`Could not change chat look to ${nextLook}:`, error);
+  });
+}
+
+function applyEffectiveAprilFools(value) {
+  aprilFools = value.aprilFools;
+  aprilFoolsOverridden = value.aprilFoolsOverridden;
+  state.aprilFools = aprilFools;
+  state.aprilFoolsOverridden = aprilFoolsOverridden;
+  syncAprilFoolsMenu();
+  emitState();
+}
+
+async function handleAprilFoolsChange(next) {
+  const value = changeAprilFoolsSettings({
+    apply: applyEffectiveAprilFools,
+    aprilFools: next,
+    betaHome,
+    env: process.env,
+  });
+  await applyChatLookToFrame();
+  return structuredClone(value);
+}
+
+function requestAprilFoolsChange(next) {
+  void handleAprilFoolsChange(next).catch((error) => {
+    console.error("Could not change the April Fools card table:", error);
+  });
+}
+
+async function executeComposerControl(message) {
+  if (parseAprilFoolsCommand(message)) {
+    const value = await handleAprilFoolsChange({ on: !aprilFools.on });
+    return {
+      action: "toggle-april-fools",
+      intercepted: true,
+      reply: `April Fools card table is ${
+        value.aprilFools.on ? "on" : "off"
+      }.`,
+      url: state.url,
+    };
+  }
+  return executeLineageCommand({
+    message,
+    routeManager,
+    env: process.env,
   });
 }
 
@@ -1983,6 +2050,9 @@ function createWindow() {
       additionalArguments: [
         `--rapp-chat-stream=${chatStreamMode}`,
         `--rapp-chat-look=${chatLook}`,
+        `--rapp-april-fools=${
+          Buffer.from(JSON.stringify(aprilFools)).toString("base64url")
+        }`,
       ],
       contextIsolation: true,
       nodeIntegration: false,
@@ -2180,6 +2250,14 @@ function installApplicationMenu() {
         checked: chatLook === "business",
         click: () => requestChatLookChange("business"),
       },
+      { type: "separator" },
+      {
+        id: "april-fools-card-table",
+        label: "April Fools: Card Table",
+        type: "checkbox",
+        checked: aprilFools.on,
+        click: () => requestAprilFoolsChange({ on: !aprilFools.on }),
+      },
     ],
   };
   const viewMenu = {
@@ -2233,6 +2311,7 @@ function installApplicationMenu() {
     "check-for-updates",
   );
   syncChatLookMenu();
+  syncAprilFoolsMenu();
 }
 
 function loadPendingUpdateResult() {
@@ -2291,6 +2370,10 @@ function registerIpc() {
   ipcMain.handle("beta:set-chat-look", async (event, nextLook) => {
     assertTrustedIpc(event);
     return handleChatLookChange(nextLook);
+  });
+  ipcMain.handle("beta:set-april-fools", async (event, next) => {
+    assertTrustedIpc(event);
+    return handleAprilFoolsChange(next || {});
   });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);
@@ -2367,11 +2450,7 @@ function registerIpc() {
   });
   ipcMain.handle("beta:lineage-command", async (event, message) => {
     assertTrustedIpc(event);
-    return executeLineageCommand({
-      message,
-      routeManager,
-      env: process.env,
-    });
+    return executeComposerControl(message);
   });
   ipcMain.handle("beta:lineage-environments", (event) => {
     assertTrustedIpc(event);

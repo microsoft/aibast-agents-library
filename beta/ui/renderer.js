@@ -155,6 +155,16 @@ window.addEventListener("message", async (event) => {
     }
     return;
   }
+  if (type === "rapp-beta:set-april-fools") {
+    try {
+      await window.brainstemBeta.setAprilFools(event.data.aprilFools || {});
+    } catch (cause) {
+      window.alert(
+        `Could not change the card table: ${String(cause?.message || cause)}`,
+      );
+    }
+    return;
+  }
   if (type === "rapp-beta:check-updates") {
     await window.brainstemBeta.checkForUpdates();
     return;
@@ -1732,6 +1742,10 @@ function syncBetaUpdate(update, openPanel = false) {
 function render(state) {
   latestState = state;
   applyShellChatLook(state.chatLook, state.chatTypingEnabled);
+  frame.contentWindow?.postMessage({
+    type: "rapp-beta:april-fools-state",
+    aprilFools: state.aprilFools,
+  }, "*");
   const surgeonState = state.surgeon || state.copilot;
   document.getElementById("surgeon-model").textContent =
     surgeonState?.phase === "ready" ? "Agent" : (surgeonState?.phase || "starting");
