@@ -5,7 +5,7 @@ set -u
 
 SCRIPT_DIR=$(CDPATH= cd "$(dirname "$0")" && pwd)
 REPO_ROOT=$(CDPATH= cd "$SCRIPT_DIR/../.." && pwd)
-GIT_MOLT=${GIT_MOLT:-"$REPO_ROOT/git-molt-standard/bin/git-molt"}
+GIT_MOLT=${GIT_MOLT:-"$REPO_ROOT/tools/git-molt/bin/git-molt"}
 MOLTER_GATE="$SCRIPT_DIR/molter-gate.py"
 BRAINSTEM_PYTHON=${BRAINSTEM_PYTHON:-"$HOME/.brainstem/venv/bin/python"}
 RAPP_SKILLS_REF=${RAPP_SKILLS_REF:-312617f8479e28c654897d713141573a191d6552}
