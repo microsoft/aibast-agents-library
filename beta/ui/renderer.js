@@ -44,7 +44,7 @@ const chatStreamMode = ["smooth", "raw", "hold"].includes(
 )
   ? window.brainstemBeta.chatStreamMode
   : "smooth";
-const chatTypingEnabled = chatStreamMode === "hold";
+let chatTypingEnabled = chatStreamMode === "hold";
 document.documentElement.dataset.rappStream = chatStreamMode;
 const { createDelivery } = window.RappTypingDelivery;
 const { createTailFollower } = window.RappStreamFollow;
@@ -52,6 +52,65 @@ const {
   createStreamPacer,
   setStreamArriving,
 } = window.RappStreamPacing;
+const {
+  applyLookStyles,
+  markArrived,
+  markGroupLast,
+  normalizeChatLook,
+  surgeonCss,
+} = window.RappChatLook;
+let currentChatLook = normalizeChatLook(window.brainstemBeta.chatLook);
+
+function syncSurgeonMessageGroups(session) {
+  const messages = session?.logEl?.querySelectorAll(
+    ".surgeon-message.user, .surgeon-message.assistant",
+  ) || [];
+  markGroupLast(
+    messages,
+    currentChatLook === "messages" ? undefined : () => null,
+  );
+}
+
+function syncTwinMessageGroups(tile) {
+  const turns = tile?.querySelectorAll(".twin-chat .tw-turn") || [];
+  markGroupLast(
+    turns,
+    currentChatLook === "messages"
+      ? (turn) => turn.classList.contains("self") ? "user" : "assistant"
+      : () => null,
+  );
+}
+
+function clearShellMessageMarkers() {
+  document.querySelectorAll(
+    ".surgeon-message, .twin-chat .tw-turn",
+  ).forEach((message) => {
+    message.removeAttribute("data-group-last");
+    message.removeAttribute("data-rapp-arrived");
+    message.classList.remove("rapp-group-last", "rapp-message-arrived");
+  });
+}
+
+function applyShellChatLook(look, typingEnabled = chatTypingEnabled) {
+  currentChatLook = normalizeChatLook(look);
+  chatTypingEnabled = Boolean(typingEnabled);
+  applyLookStyles(
+    document,
+    currentChatLook,
+    surgeonCss,
+    "__rappSurgeonChatLook",
+  );
+  if (currentChatLook === "messages") {
+    for (const session of surgeonSessions) syncSurgeonMessageGroups(session);
+    for (const twin of twins.values()) syncTwinMessageGroups(twin.tileEl);
+  } else {
+    clearShellMessageMarkers();
+  }
+  return {
+    chatLook: currentChatLook,
+    chatTypingEnabled,
+  };
+}
 
 function deliverPendingLineageReply() {
   if (
@@ -534,6 +593,7 @@ function surgeonPlace(session, node) {
   } else {
     session.logEl.appendChild(node);
   }
+  syncSurgeonMessageGroups(session);
   scrollSurgeon(session);
 }
 
@@ -572,8 +632,12 @@ function addSurgeonBubble(session, role, text, persist = true) {
 function replaceSurgeonBubble(session, current, role, text) {
   removeSurgeonEmpty(session);
   const bubble = createSurgeonBubble(role, text);
+  if (currentChatLook === "messages" && role === "assistant") {
+    markArrived(bubble);
+  }
   if (current?.parentNode === session.logEl) {
     current.replaceWith(bubble);
+    syncSurgeonMessageGroups(session);
     scrollSurgeon(session);
   } else {
     surgeonPlace(session, bubble);
@@ -870,6 +934,7 @@ function restoreSurgeonSession(data) {
       log.appendChild(bubble);
     }
   }
+  syncSurgeonMessageGroups(session);
   if (!session.history.length) renderSurgeonEmpty(session);
   return session;
 }
@@ -1321,8 +1386,13 @@ function renderTwinChat(tile, twin) {
     bubble.className = `tw-msg ${kind}`;
     bubble.textContent = message.content;
     wrap.appendChild(bubble);
+    if (currentChatLook === "messages" && message.arrived) {
+      markArrived(wrap);
+      message.arrived = false;
+    }
     chatEl.appendChild(wrap);
   }
+  syncTwinMessageGroups(tile);
   if (nearBottom) chatEl.scrollTop = chatEl.scrollHeight;
 }
 
@@ -1392,7 +1462,12 @@ function handleTwinEvent(event) {
     const entry = twins.get(event.id);
     if (entry) {
       entry.chat = entry.chat || [];
-      entry.chat.push({ author: event.author, role: event.role, content: event.text });
+      entry.chat.push({
+        author: event.author,
+        role: event.role,
+        content: event.text,
+        arrived: currentChatLook === "messages" && event.role === "assistant",
+      });
       if (entry.chat.length > 200) entry.chat.splice(0, entry.chat.length - 200);   // bound long-lived memory
       if (entry.tileEl) renderTwinChat(entry.tileEl, entry.descriptor);
     }
@@ -1746,6 +1821,7 @@ if (localStorage.getItem(introStorageKey) === "seen") {
 
 initSurgeonSessions();
 setupSurgeonTailFollowing();
+applyShellChatLook(currentChatLook, chatTypingEnabled);
 setSurgeonOpen(localStorage.getItem(surgeonOpenKey) !== "closed");
 setExplorerOpen(localStorage.getItem(explorerOpenKey) === "open");
 setInterval(() => void refreshAgentExplorer(), 2000);

@@ -345,12 +345,14 @@ html[data-rapp-look="messages"] .herd-tile.twin .twin-comp .tw-send::before {
     const messages = Array.from(elements || []);
     for (const message of messages) {
       message.removeAttribute("data-group-last");
+      message.classList?.remove("rapp-group-last");
     }
     for (let index = 0; index < messages.length; index += 1) {
       const side = sideOf(messages[index]);
       const nextSide = sideOf(messages[index + 1]);
       if (side && side !== nextSide) {
         messages[index].setAttribute("data-group-last", "");
+        messages[index].classList?.add("rapp-group-last");
       }
     }
     return messages;
@@ -358,8 +360,13 @@ html[data-rapp-look="messages"] .herd-tile.twin .twin-comp .tw-send::before {
 
   function markArrived(element, arrived = true) {
     if (!element) return element;
-    if (arrived) element.setAttribute("data-rapp-arrived", "");
-    else element.removeAttribute("data-rapp-arrived");
+    if (arrived) {
+      element.setAttribute("data-rapp-arrived", "");
+      element.classList?.add("rapp-message-arrived");
+    } else {
+      element.removeAttribute("data-rapp-arrived");
+      element.classList?.remove("rapp-message-arrived");
+    }
     return element;
   }
 

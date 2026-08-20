@@ -344,6 +344,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     for (const message of frameMessages()) {
       message.removeAttribute("data-group-last");
       message.removeAttribute("data-rapp-arrived");
+      message.classList.remove("rapp-group-last", "rapp-message-arrived");
     }
   }
   function applyFrameChatLook(look, typingEnabled) {
