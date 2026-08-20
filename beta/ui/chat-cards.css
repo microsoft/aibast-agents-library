@@ -304,6 +304,18 @@
     translateX(var(--swipe-x))
     rotate(calc(var(--custom-rotation) + var(--swipe-tilt)));
 }
+.card-theme-custom .chat-card.face-down {
+  background:
+    repeating-linear-gradient(45deg, #202a31 0 10px, #34424c 10px 20px);
+}
+.card-theme-custom .chat-card.face-down
+  .chat-card-face > :not(.chat-card-actions),
+.card-theme-custom .chat-card.face-down .chat-card-corner {
+  visibility: hidden;
+}
+.card-theme-custom .chat-card.face-down .chat-card-actions {
+  margin-top: auto;
+}
 
 .chat-card-discard {
   position: absolute;

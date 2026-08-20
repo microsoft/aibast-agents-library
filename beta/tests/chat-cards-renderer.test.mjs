@@ -48,6 +48,8 @@ test("every card move and the Brainstem grab control has a drive handle", () => 
   }
   assert.match(cardsSource, /cardTable\.deal/);
   assert.match(cardsSource, /cardTable\.theme/);
+  assert.match(cardsSource, /cardTable\.raceTarget/);
+  assert.match(cardsSource, /\.api\.twinChat/);
 });
 
 test("cards support drag, threshold swipes, buttons, and keyboard paths", () => {

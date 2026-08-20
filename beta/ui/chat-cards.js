@@ -251,6 +251,35 @@
     const current = await requestCapture();
     if (hasConversation(current)) await persistCapture(current);
     const race = await SCRIPT_STATE.context.api.cardsRace(id);
+    const raceTarget = document.querySelector(".chat-card-race-target")?.value
+      || "brainstem";
+    if (raceTarget.startsWith("twin:")) {
+      const twinId = raceTarget.slice(5);
+      const result = await SCRIPT_STATE.context.api.twinChat(
+        twinId,
+        race.question,
+      );
+      const reply = String(
+        result.response || result.assistant_response || result.result || "",
+      );
+      if (!reply) throw new Error(`Twin ${twinId} returned an empty race reply.`);
+      await SCRIPT_STATE.context.api.cardsComplete(race.contender.id, {
+        reply,
+        html: "",
+        history: [
+          { role: "user", content: race.question },
+          { role: "assistant", content: reply },
+        ],
+        model: `twin:${twinId}`,
+        requestId: `twin-${crypto.randomUUID()}`,
+      });
+      SCRIPT_STATE.primaryId = null;
+      SCRIPT_STATE.primaryFrameGeneration = null;
+      SCRIPT_STATE.primaryRouteKey = null;
+      await refreshCards();
+      showToast(`Twin ${twinId} answered the race.`);
+      return race;
+    }
     SCRIPT_STATE.primaryId = race.contender.id;
     SCRIPT_STATE.primaryFrameGeneration = SCRIPT_STATE.context.frameGeneration;
     SCRIPT_STATE.primaryRouteKey = routeKey();
@@ -265,6 +294,35 @@
       { duration: 10000 },
     );
     return race;
+  }
+
+  async function populateRaceTargets() {
+    const select = document.querySelector(".chat-card-race-target");
+    if (!select) return;
+    const selected = select.value || "brainstem";
+    select.replaceChildren();
+    const brainstem = document.createElement("option");
+    brainstem.value = "brainstem";
+    brainstem.textContent = "Race target: Brainstem model";
+    select.appendChild(brainstem);
+    let twins;
+    try {
+      twins = await SCRIPT_STATE.context.api.twinList();
+    } catch (error) {
+      showError(new Error(
+        `Twin race targets are unavailable: ${String(error?.message || error)}`,
+      ));
+      return;
+    }
+    for (const twin of twins || []) {
+      const option = document.createElement("option");
+      option.value = `twin:${twin.id}`;
+      option.textContent = `Race target: ${twin.name || twin.id}`;
+      select.appendChild(option);
+    }
+    if ([...select.options].some((option) => option.value === selected)) {
+      select.value = selected;
+    }
   }
 
   function cardCanRace(card) {
@@ -444,6 +502,14 @@
         void raceCard(card.id).catch(showError);
       }
     });
+    const custom = SCRIPT_STATE.context?.state?.cardTable;
+    if (SCRIPT_STATE.context?.aprilFools?.table === "custom" && custom) {
+      const seat = Number(card.table?.seat) || 1;
+      const faceDown = custom.faceDownRule === "all"
+        || (custom.faceDownRule === "folded" && card.status === "folded")
+        || (custom.faceDownRule === "alternate" && seat % 2 === 0);
+      tile.classList.toggle("face-down", faceDown);
+    }
     return tile;
   }
 
@@ -653,6 +719,10 @@
     load.addEventListener("click", () => {
       void SCRIPT_STATE.context.api.cardsLoadCustomTable().catch(showError);
     });
+    const raceTarget = document.createElement("select");
+    raceTarget.className = "chat-card-race-target";
+    raceTarget.dataset.drive = "cardTable.raceTarget";
+    raceTarget.setAttribute("aria-label", "Race target");
     const deal = document.createElement("select");
     deal.dataset.drive = "cardTable.deal";
     deal.setAttribute("aria-label", "Deal cards");
@@ -673,7 +743,7 @@
       deal.value = "";
       void runDeal(action).catch(showError);
     });
-    controls.append(label, theme, load, deal);
+    controls.append(label, theme, load, raceTarget, deal);
     herd.insertBefore(controls, surface);
     return controls;
   }
@@ -818,6 +888,7 @@
     SCRIPT_STATE.context = context;
     if (SCRIPT_STATE.enabled) {
       applyTheme();
+      await populateRaceTargets();
       await refreshCards();
       return;
     }
@@ -840,6 +911,7 @@
       });
       applyTheme();
       if (context.state.cardTableError) showError(context.state.cardTableError);
+      await populateRaceTargets();
       await refreshCards();
       postToFrame({ type: "rapp-beta:card-ready" });
       addTimer(() => postToFrame({ type: "rapp-beta:card-ready" }), 150);
