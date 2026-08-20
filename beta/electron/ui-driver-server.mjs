@@ -14,6 +14,7 @@ import { createServer } from "node:http";
 import { once } from "node:events";
 import path from "node:path";
 
+import { createUiDriverHelpers } from "./ui-driver-helpers.mjs";
 import { resolveFfmpegExecutable } from "./video-tools.mjs";
 
 const MAX_BODY_BYTES = 256 * 1024;
@@ -75,9 +76,13 @@ function twinFrame(window, twinUrls) {
   });
 }
 
-async function browserDriverCommand(command) {
+async function browserDriverCommand(command, createHelpers) {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const state = window.__brainstemAiDriver ||= {};
+  const helpers = createHelpers({
+    cssEscape: (value) => CSS.escape(value),
+    document,
+  });
 
   function ensureUi() {
     let style = document.getElementById("brainstem-ai-driver-style");
@@ -184,31 +189,12 @@ async function browserDriverCommand(command) {
       || "",
     ).replace(/\s+/g, " ").trim();
   }
-
-  function selectorFor(element) {
-    if (element.id) return `#${CSS.escape(element.id)}`;
-    const parts = [];
-    let node = element;
-    while (node && node !== document.body && parts.length < 5) {
-      let part = node.localName;
-      if (!part) break;
-      const siblings = node.parentElement
-        ? [...node.parentElement.children].filter((child) => child.localName === part)
-        : [];
-      if (siblings.length > 1) part += `:nth-of-type(${siblings.indexOf(node) + 1})`;
-      parts.unshift(part);
-      node = node.parentElement;
-    }
-    return parts.join(" > ");
-  }
+  const { selectorFor } = helpers;
 
   function findElement(step) {
+    if (step.handle) return helpers.resolveHandle(step.handle);
     if (step.selector) {
-      try {
-        return document.querySelector(step.selector);
-      } catch (error) {
-        throw new Error(`Invalid selector ${step.selector}: ${error.message}`);
-      }
+      return helpers.resolveSelector(step.selector);
     }
     const wanted = String(step.targetText || step.text || "")
       .replace(/\s+/g, " ")
@@ -617,6 +603,7 @@ async function browserDriverCommand(command) {
         .filter((element) => visible(element) && !element.dataset.brainstemAiDriver)
         .slice(0, Math.max(1, Math.min(200, Number(step.limit) || 80)))
         .map((element) => ({
+          h: selectorFor(element),
           selector: selectorFor(element),
           tag: element.localName,
           text: normalizedText(element).slice(0, 180),
@@ -630,10 +617,10 @@ async function browserDriverCommand(command) {
       };
     }
     if (action === "read") {
-      const element = step.selector ? findElement(step) : document.body;
+      const element = step.handle || step.selector ? findElement(step) : document.body;
       if (!element) {
         if (step.optional) return { skipped: true, reason: "target not found" };
-        throw new Error(`UI target not found: ${step.selector || step.targetText}`);
+        throw new Error(`UI target not found: ${step.handle || step.selector || step.targetText}`);
       }
       return {
         selector: selectorFor(element),
@@ -650,11 +637,13 @@ async function browserDriverCommand(command) {
     }
     if (action === "press") {
       const element = findElement(step) || document.activeElement || document.body;
-      if (step.selector && !element) {
+      if ((step.handle || step.selector) && !element) {
         if (step.optional) return { skipped: true, reason: "target not found" };
-        throw new Error(`UI target not found: ${step.selector}`);
+        throw new Error(`UI target not found: ${step.handle || step.selector}`);
       }
-      if (step.selector) await pointAt(element, labelText(step, `Pressing ${step.key}`));
+      if (step.handle || step.selector) {
+        await pointAt(element, labelText(step, `Pressing ${step.key}`));
+      }
       element.focus?.({ preventScroll: true });
       const init = {
         bubbles: true,
@@ -678,7 +667,7 @@ async function browserDriverCommand(command) {
     if (!element || !visible(element)) {
       if (step.optional) return { skipped: true, reason: "target not visible" };
       throw new Error(
-        `Visible UI target not found: ${step.selector || step.targetText || step.text || "(unspecified)"}`,
+        `Visible UI target not found: ${step.handle || step.selector || step.targetText || step.text || "(unspecified)"}`,
       );
     }
     if (action === "click") return clickElement(element, step);
@@ -1877,7 +1866,9 @@ export async function startUiDriverServer({
           ? `Twin ${wantedTwin} UI is not visible in the herd yet — open the herd and its tile first.`
           : "The live Brainstem frontend is not loaded yet.");
       }
-      const source = `(${browserDriverCommand.toString()})(${JSON.stringify(command)})`;
+      const source = `(${browserDriverCommand.toString()})(${
+        JSON.stringify(command)
+      }, ${createUiDriverHelpers.toString()})`;
       const result = await target.executeJavaScript(source, true);
       armForceModeIdle(window, command.idleMs);
       jsonResponse(response, 200, { ok: true, result });
@@ -1929,6 +1920,7 @@ export async function startUiDriverServer({
 
 export const uiDriverInternals = {
   browserDriverCommand,
+  createUiDriverHelpers,
   forceModeStatus,
   runTourCommand,
   setForceMode,

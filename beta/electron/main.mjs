@@ -141,6 +141,81 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       );
     });
   }
+  const driveHandlesById = {
+    "agents-btn": "brainstem.agents",
+    "beta-app-btn": "brainstem.menu",
+    "beta-app-panel": "brainstem.menuPanel",
+    "beta-check-updates": "brainstem.checkUpdates",
+    "beta-install-update": "brainstem.installUpdate",
+    "chat": "brainstem.chat",
+    "dev-toggle": "brainstem.devMode",
+    "input": "brainstem.composer",
+    "model-select": "brainstem.model",
+    "registry-btn": "brainstem.registry",
+    "send": "brainstem.send",
+    "session-id": "brainstem.session",
+    "theme-btn": "brainstem.theme",
+    "version-tag": "brainstem.version",
+    "voice-btn": "brainstem.voice",
+    "voice-settings-btn": "brainstem.voiceSettings",
+    "vscode-link": "brainstem.vscode",
+  };
+  function stampChatMessageHandles() {
+    document.querySelectorAll("#chat .response-slot[data-request-id]").forEach((slot) => {
+      const messages = slot.querySelectorAll(
+        ".msg.assistant:not(.typing-indicator),.msg.system",
+      );
+      const message = messages[messages.length - 1];
+      if (!message) return;
+      const requestId = String(slot.dataset.requestId || "");
+      if (!requestId) return;
+      message.dataset.drive = "brainstem.chat.msg[r-" + requestId + "]";
+      message.dataset.driveOutline = "true";
+      message.dataset.driveRole = "article";
+      message.dataset.driveName = message.classList.contains("assistant")
+        ? "assistant"
+        : "system";
+      message.dataset.driveState = (
+        message.classList.contains("stream-arriving")
+        || message.classList.contains("typing-indicator")
+      ) ? "streaming" : "complete";
+    });
+  }
+  function stampDriveHandles() {
+    for (const [id, handle] of Object.entries(driveHandlesById)) {
+      const element = document.getElementById(id);
+      if (element) element.dataset.drive = handle;
+    }
+    const logo = document.querySelector("header .logo");
+    if (logo) logo.dataset.drive = "brainstem.explorer";
+    const footerHandles = new Map([
+      ["Export", "brainstem.export"],
+      ["Import", "brainstem.import"],
+      ["Clear", "brainstem.clear"],
+      ["Tutorial", "brainstem.tutorial"],
+      ["Get Help", "brainstem.help"],
+      ["Dev", "brainstem.devMode"],
+    ]);
+    document.querySelectorAll("footer button,footer a").forEach((control) => {
+      const text = String(control.textContent || "")
+        .replace(/[^\p{L}\p{N}\s?]/gu, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (control.closest("#starter-prompts")) {
+        control.dataset.drive = "brainstem.prompt["
+          + encodeURIComponent(text.toLowerCase()) + "].button";
+        return;
+      }
+      const handle = footerHandles.get(text);
+      if (handle) control.dataset.drive = handle;
+    });
+    document.querySelectorAll("#agent-list-ul li").forEach((row) => {
+      const filename = row.querySelector(".agent-name")?.getAttribute("title");
+      if (!filename) return;
+      row.dataset.drive = "brainstem.agent[" + encodeURIComponent(filename) + "].row";
+    });
+    stampChatMessageHandles();
+  }
   decorateAgentRows();
   const agentList = document.getElementById("agent-list-ul");
   if (agentList) {
@@ -288,6 +363,11 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     return true;
   }
   installBetaMenu();
+  stampDriveHandles();
+  new MutationObserver(stampDriveHandles).observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
   window.addEventListener("message", (event) => {
     if (event.source !== window.parent || !event.data) return;
     if (event.data.type === "rapp-beta:open-update") {
