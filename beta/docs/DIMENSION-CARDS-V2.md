@@ -14,6 +14,36 @@ still very user-friendly like `agent.py` and `.egg` files… like a grail you ca
 A card is **one UTF-8 JSON file, one object, newline-terminated, extension `.card`**, schema
 `rar-card/2.0`. Not a new container format.
 
+## The hero law: the medium is the message
+
+The card is the **Grail vehicle** for an `agent.py` or RAPP/1 `.egg`: the friendly
+face, deterministic identity, integrity proof, portable payload, and optional
+local dimension are one object. The visual card is not a screenshot or a link
+to the real artifact. The `.card` file **is the artifact a person keeps**.
+
+The acceptance story is **Charizard in the Woods**:
+
+1. Two devices have no network.
+2. One device has a saved `.card`; the other needs its capability.
+3. The card crosses by any local file transport.
+4. The receiver recomputes the seed/face and verifies every payload hash without
+   fetching a repository.
+5. The receiver unsleeves the exact `agent.py` or verifies and hatches the exact
+   RAPP/1 `.egg`.
+6. Any new conversation or experience enters only the receiver's local
+   `dimension`.
+7. Publishing later is an explicit export that strips the local dimension.
+
+**Therefore, a woods-ready card MUST carry every required payload inline.** A
+revision-pinned URL is a valid compact public/RAR representation, but it does
+not pass the offline hero path unless those pinned bytes are already present in
+the local content-addressed cache. A reader MUST never call a pinned-only card
+"offline ready."
+
+This is a north-star acceptance contract, not a claim that the historical
+phone-to-phone QR/WebRTC flow currently ships. The currently deliverable unit
+is the self-contained, locally verifiable file.
+
 Why this and not a zip, a Markdown page, or a single-file HTML:
 
 - **RAR's cards are already JSON.** Every entry of `cards/holo_cards.json` is a card face. v2 is a
@@ -57,10 +87,10 @@ Rules that make it simple:
 | Rule | Meaning |
 |---|---|
 | **The seed is the identity.** | `seed` = `forge_seed(manifest)`; `face` = `resolve_card_from_seed(seed)`; `incantation` = `seed_to_words(seed)`. A reader may recompute all three and must refuse a card whose `face` disagrees with its `seed`. |
-| **Payload items are inline OR pinned, always hashed.** | `inline` carries the bytes (UTF-8 text for `agent.py`; base64 for `egg`); `url` is a revision-pinned raw GitHub URL. Either way `sha256_lf_v1` (text) or `sha256` (binary) is mandatory and verified before anything runs. Inline when the card travels; pinned when it lives in RAR — the file IS the package, no duplication. |
+| **Payload items are inline OR pinned, always hashed.** | `inline` carries the bytes (UTF-8 text for `agent.py`; base64 for `egg`); `url` is a revision-pinned raw GitHub URL. Either way `sha256_lf_v1` (text) or `sha256` (binary) is mandatory and verified before anything runs. Inline when the card travels or must work offline; pinned when it lives in RAR and compact online resolution is acceptable. |
 | **The sleeve holds agents and eggs only.** | `kind` ∈ `agent.py` · `egg`. A card with an empty payload is a face-only card (v1 in v2 clothing). |
 | **State is a word.** | `dormant` (in a registry or on disk, no process) · `active` (in a herd: a live twin or a parked conversation). The same card moves between the two without changing identity. |
-| **The dimension stays home.** | `dimension` (a conversation: turns, history) is `null` in anything published; it exists only in the local copy unless the user exports it explicitly, and then it is its own choice on the export panel. |
+| **The dimension stays home.** | `dimension` (a conversation: turns, history) is `null` in anything published; it exists only in the local binder copy unless the user exports it explicitly, and then it is its own choice on the export panel. The global RAPPID protocol tracks identity and lineage; it does not require uploading the private dimension. |
 | **Scannable means a URL.** | `scan.url` is the card's public raw URL; the QR on the face encodes it (or `rar://@publisher/slug@<seed>` for offline resolution). Summon = fetch → verify hashes → recompute the seed → hatch the payload as a twin, or wake the dimension. |
 | **Small.** | ≤ 1 MiB with inline payload; larger payloads must be pinned. |
 
