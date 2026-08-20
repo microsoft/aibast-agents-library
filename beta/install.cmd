@@ -149,6 +149,12 @@ set "NODE_DIR=%BETA_HOME%\node-v%NODE_VERSION%-%NODE_PLATFORM%"
 set "CACHE=%BETA_HOME%\cache"
 if not exist "%CACHE%" mkdir "%CACHE%"
 
+REM A half-extracted runtime (node.exe present, npm.cmd missing) used to pass
+REM the node.exe check forever and no re-run could repair it. Treat it as absent.
+if exist "%NODE_DIR%\node.exe" if not exist "%NODE_DIR%\npm.cmd" (
+  echo [..] Portable Node.js at %NODE_DIR% is incomplete; replacing it...
+  rmdir /s /q "%NODE_DIR%"
+)
 if not exist "%NODE_DIR%\node.exe" (
   echo.
   echo [..] Downloading portable Node.js v%NODE_VERSION%...
@@ -170,11 +176,28 @@ if not exist "%NODE_DIR%\node.exe" (
     echo [X] Node.js archive checksum mismatch.
     goto :fail
   )
-  tar.exe -xf "%CACHE%\%NODE_ARCHIVE%" -C "%BETA_HOME%"
+  REM Extract into a scratch directory and move the finished tree into place,
+  REM so an interrupted extraction never leaves a partial %NODE_DIR% behind.
+  set "NODE_EXTRACT=%CACHE%\node-extract-%RANDOM%%RANDOM%"
+  if exist "!NODE_EXTRACT!" rmdir /s /q "!NODE_EXTRACT!"
+  mkdir "!NODE_EXTRACT!"
+  tar.exe -xf "%CACHE%\%NODE_ARCHIVE%" -C "!NODE_EXTRACT!"
   if errorlevel 1 goto :fail
+  if not exist "!NODE_EXTRACT!\node-v%NODE_VERSION%-%NODE_PLATFORM%\npm.cmd" (
+    echo [X] Portable Node.js archive is incomplete.
+    goto :fail
+  )
+  if exist "%NODE_DIR%" rmdir /s /q "%NODE_DIR%"
+  move "!NODE_EXTRACT!\node-v%NODE_VERSION%-%NODE_PLATFORM%" "%NODE_DIR%" >nul
+  if errorlevel 1 goto :fail
+  rmdir /s /q "!NODE_EXTRACT!"
 )
 if not exist "%NODE_DIR%\node.exe" (
   echo [X] Portable Node.js extraction failed.
+  goto :fail
+)
+if not exist "%NODE_DIR%\npm.cmd" (
+  echo [X] Portable Node.js is missing npm.
   goto :fail
 )
 echo [OK] Portable Node.js verified.
@@ -186,7 +209,10 @@ echo.
 echo [..] Installing Electron and the bundled GitHub Copilot CLI...
 set "npm_config_cache=%BETA_HOME%\npm-cache"
 pushd "%BETA_SOURCE%\beta"
-call "%NODE_DIR%\npm.cmd" ci --no-audit --no-fund
+REM --ignore-scripts: a package postinstall must not fetch and execute a native
+REM binary during install (ffmpeg-static did). Electron's own download runs
+REM explicitly below, exactly as beta/install.sh does.
+call "%NODE_DIR%\npm.cmd" ci --ignore-scripts --no-audit --no-fund
 if errorlevel 1 goto :fail
 echo [..] Installing Electron runtime...
 "%NODE_DIR%\node.exe" node_modules\electron\install.js
