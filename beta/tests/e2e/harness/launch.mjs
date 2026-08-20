@@ -141,13 +141,14 @@ function processPairs() {
         "-NoProfile",
         "-Command",
         "Get-CimInstance Win32_Process | "
-          + "Select-Object ProcessId,ParentProcessId | ConvertTo-Json -Compress",
+          + "Select-Object ProcessId,ParentProcessId,CreationDate | ConvertTo-Json -Compress",
       ],
       { encoding: "utf8", windowsHide: true },
     );
     if (result.status !== 0) return [];
     const parsed = JSON.parse(result.stdout || "[]");
     return (Array.isArray(parsed) ? parsed : [parsed]).map((entry) => ({
+      created: entry.CreationDate ? String(entry.CreationDate) : null,
       pid: Number(entry.ProcessId),
       ppid: Number(entry.ParentProcessId),
     }));
@@ -163,6 +164,13 @@ function processPairs() {
     .filter(([pid, ppid]) => Number.isInteger(pid) && Number.isInteger(ppid))
     .map(([pid, ppid]) => ({ pid, ppid }));
 }
+
+// Windows reuses pids within seconds. A pid observed while the tree was
+// alive may name a DIFFERENT process by teardown (another scenario's fresh
+// Electron, for instance), so each observed pid carries the creation stamp
+// of the process it meant, and a pid is only "still ours" if the stamp still
+// matches. Killing by bare pid cascaded into sibling scenarios on CI.
+const processStamps = new Map();
 
 function descendantPids(rootPid) {
   let pairs = [];
@@ -182,7 +190,25 @@ function descendantPids(rootPid) {
       }
     }
   }
+  for (const pair of pairs) {
+    if (found.has(pair.pid) && pair.created && !processStamps.has(pair.pid)) {
+      processStamps.set(pair.pid, pair.created);
+    }
+  }
   return [...found].filter((pid) => pid !== process.pid);
+}
+
+function stillOurs(pid) {
+  if (!processAlive(pid)) return false;
+  const stamp = processStamps.get(pid);
+  if (!stamp) return true;
+  let current = null;
+  try {
+    current = processPairs().find((pair) => pair.pid === pid)?.created || null;
+  } catch {
+    return true;
+  }
+  return !current || current === stamp;
 }
 
 function forceTerminateProcesses(pids, processGroupPid = null) {
@@ -683,9 +709,9 @@ export async function launch({
             }
           }
           await waitFor(() => (
-            pids.every((pid) => !processAlive(pid)) ? true : null
+            pids.every((pid) => !stillOurs(pid)) ? true : null
           ), {
-            intervalMs: 100,
+            intervalMs: 250,
             label: `Electron descendants to exit (${pids.join(", ")})`,
             timeoutMs: 10_000,
           });
@@ -697,7 +723,7 @@ export async function launch({
           }
         }
 
-        const survivors = pids.filter(processAlive);
+        const survivors = pids.filter(stillOurs);
         if (survivors.length) {
           // On Windows, Electron's crashpad handler and GPU/utility processes
           // routinely outlive app.quit() by seconds, and Windows reuses pids
@@ -711,7 +737,7 @@ export async function launch({
           forceTerminateProcesses(survivors, child?.pid);
           try {
             await waitFor(() => (
-              survivors.every((pid) => !processAlive(pid)) ? true : null
+              survivors.every((pid) => !stillOurs(pid)) ? true : null
             ), {
               intervalMs: 100,
               label: `forced Electron descendants to exit (${survivors.join(", ")})`,

@@ -171,7 +171,7 @@ jobs:
           - os: macos-latest
             command: node --test tests/e2e
           - os: windows-latest
-            command: node --test tests/e2e
+            command: node --test --test-concurrency=1 tests/e2e
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
