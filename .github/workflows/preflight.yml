@@ -132,7 +132,8 @@ jobs:
           # setup-python interpreter that installed requirements-dev.txt above,
           # not the bare system python3.
           export BRAINSTEM_BETA_PYTHON="$(command -v python)"
-          npm ci --no-audit --no-fund
+          npm ci --ignore-scripts --no-audit --no-fund
+          node node_modules/electron/install.js
           npm run check
           npm test
 

@@ -448,10 +448,13 @@ test("a failing locus never aborts a fleet-wide rollback", (t) => {
   assert.doesNotThrow(() => { report = store.rollbackToBaseline(null); });
   assert.equal(report.failed.length, 1, "the failing locus is reported, not hidden");
   assert.equal(report.failed[0].ancestorRappid, failing);
+  // A locus already sitting at baseline is reported as unchanged rather than
+  // changed — that split is what lets `restore` tell a real recovery from a
+  // no-op. Either way every healthy locus ended up at baseline.
   assert.equal(
-    report.changed.length,
+    report.changed.length + report.unchanged.length,
     ancestors.length - 1,
-    "every healthy locus still reverted",
+    "every healthy locus still ended at baseline",
   );
 });
 
@@ -686,4 +689,29 @@ test("a store written under the legacy content-derived id migrates, not orphans"
   assert.ok(existsSync(path.join(
     store.root,
     ".migrated-" + lineageStoreInternals.filesystemSegment(legacyAncestor))));
+});
+
+test("a restore that recovers nothing is not reported as a restore", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  // No rings were ever grown: there is genuinely nothing to come back to.
+  const report = store.restore(alpha.ancestorRappid);
+  assert.deepEqual(report.changed, [], "a no-op must not be reported as a change");
+  assert.equal(report.unchanged.length, 1, "it is reported as unchanged, not silently");
+  assert.deepEqual(report.failed, []);
+
+  // A real recovery still reports as one.
+  const ring = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'grown'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+    meta: { author: "user" },
+  });
+  store.setHead(alpha.ancestorRappid, ring);
+  store.rollbackToBaseline(alpha.ancestorRappid);
+  const real = store.restore(alpha.ancestorRappid);
+  assert.deepEqual(real.changed, [alpha.ancestorRappid], "a real restore is a change");
+  assert.equal(store.getHead(alpha.ancestorRappid), ring);
 });

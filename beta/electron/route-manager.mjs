@@ -610,6 +610,7 @@ export class BetaRouteManager {
       scope: ancestorRappid ? "locus" : "all",
       disabled: Boolean(report?.disabled),
       changed: report?.changed?.length ?? null,
+      unchanged: report?.unchanged?.length ?? null,
       failed: report?.failed?.length ?? null,
     });
     return report;
@@ -622,6 +623,7 @@ export class BetaRouteManager {
       scope: ancestorRappid ? "locus" : "all",
       disabled: Boolean(report?.disabled),
       changed: report?.changed?.length ?? null,
+      unchanged: report?.unchanged?.length ?? null,
       failed: report?.failed?.length ?? null,
     });
     return report;

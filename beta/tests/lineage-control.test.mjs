@@ -13,13 +13,23 @@ import {
 
 const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-function managerFixture() {
+function managerFixture({ changed = 1, unchanged = 0, failed = [] } = {}) {
   const calls = [];
+  // The real route manager returns a report saying what actually moved. A double
+  // that returns nothing makes every command look like a no-op, which is exactly
+  // the state the honest-reporting rules are meant to detect — so it has to
+  // model a real move by default.
+  const report = () => ({
+    disabled: false,
+    changed: Array.from({ length: changed }, (_, i) => `rappid:@grail/a${i}:x`),
+    unchanged: Array.from({ length: unchanged }, (_, i) => `rappid:@grail/u${i}:x`),
+    failed,
+  });
   return {
     calls,
     manager: {
-      rollbackLineage: () => calls.push("baseline"),
-      restoreLineage: () => calls.push("restore"),
+      rollbackLineage: () => { calls.push("baseline"); return report(); },
+      restoreLineage: () => { calls.push("restore"); return report(); },
       startDefault: async () => {
         calls.push("materialize");
         return {
@@ -96,6 +106,10 @@ test("lineage commands round-trip the full wire result shape", async () => {
     reply: lineageControlReplies.baseline,
     compositionHash: "composed",
     restored: undefined,
+    // changed/unchanged are part of the wire shape: they are what lets a caller
+    // tell a real restore from one that moved nothing.
+    changed: 1,
+    unchanged: 0,
     url: "http://127.0.0.1:7001",
   });
   assert.deepEqual(baselineRun.calls, ["baseline", "materialize"]);

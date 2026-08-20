@@ -621,20 +621,29 @@ export class LineageStore {
    *  is that it always lands somewhere safe. Returns a report, never throws. */
   _moveHeads(targets, pick) {
     const changed = [];
+    const unchanged = [];
     const failed = [];
     for (const target of targets) {
+      let before = null;
+      try { before = this.getHead(target); } catch {}
       try {
-        this.setHead(target, pick(target));
-        changed.push(target);
+        const next = pick(target);
+        this.setHead(target, next);
+        // Setting HEAD to where it already was is a no-op, and reporting it as a
+        // change lets the caller tell the user their molts were restored when
+        // nothing came back. A false "restored" is worse than an error: it ends
+        // the user's investigation at the moment recovery was still possible.
+        if (before !== null && next === before) unchanged.push(target);
+        else changed.push(target);
       } catch (error) {
         failed.push({ ancestorRappid: target, error: String(error?.message || error) });
       }
     }
-    return { disabled: false, changed, failed };
+    return { disabled: false, changed, unchanged, failed };
   }
 
   rollbackToBaseline(ancestorRappid = null) {
-    if (!this.isEnabled()) return { disabled: true, changed: [], failed: [] };
+    if (!this.isEnabled()) return { disabled: true, changed: [], unchanged: [], failed: [] };
     return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
       // Remember where we were, so restore returns here instead of fast-
       // forwarding to whatever ring happens to be newest.
@@ -649,7 +658,7 @@ export class LineageStore {
   }
 
   restore(ancestorRappid = null) {
-    if (!this.isEnabled()) return { disabled: true, changed: [], failed: [] };
+    if (!this.isEnabled()) return { disabled: true, changed: [], unchanged: [], failed: [] };
     return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
       // Pinned loci stay at baseline: restore must not fight the pin.
       if (this.locusPolicy(target) === "pinned") return target;

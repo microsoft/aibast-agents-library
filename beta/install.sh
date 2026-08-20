@@ -248,8 +248,16 @@ install_desktop_dependencies() {
     export npm_config_cache="$BETA_HOME/npm-cache"
     (
         cd "$BETA_SOURCE/beta"
+        # --ignore-scripts: a package postinstall must not fetch and execute a
+        # native binary during the factory install. ffmpeg-static's script
+        # downloads an executable from a third-party release with NO checksum or
+        # signature and chmods it 0755 — arbitrary native code, in the same
+        # product that refuses a sha-mismatched agent.py. Electron's installer is
+        # the one script we do want, so it is run explicitly on the next line.
+        # This also honours CONSTITUTION.md Article II: capture/media tooling is
+        # an opt-in organ, never part of the factory image.
         run_with_heartbeat "Installing Electron and bundled Copilot CLI" \
-            "$node_dir/bin/npm" ci --no-audit --no-fund
+            "$node_dir/bin/npm" ci --ignore-scripts --no-audit --no-fund
         run_with_heartbeat "Installing Electron runtime" \
             "$node_dir/bin/node" node_modules/electron/install.js
         "$node_dir/bin/npm" run check

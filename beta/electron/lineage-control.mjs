@@ -66,6 +66,14 @@ export async function executeLineageCommand({
     reply = fallback.accepted?.length
       ? "Restored compatible verified molts, but kept last-good code for incompatible rings — your memories are intact."
       : "Restore could not activate the latest verified molts; kept the last-good composition — your memories are intact.";
+  } else if (command.action === "restore" && !report?.changed?.length) {
+    // Nothing actually moved. Saying "restored" here would confirm a recovery
+    // that did not happen — and if the user's molts are gone or pinned, that
+    // false confirmation is the moment they stop looking for them.
+    reply = report?.unchanged?.length
+      ? "There was nothing to restore — every agent is already at the newest "
+        + "version it has, or is pinned to its baseline. Your memories are intact."
+      : "There was nothing to restore. Your memories are intact.";
   }
   return {
     intercepted: true,
@@ -74,8 +82,10 @@ export async function executeLineageCommand({
     reply,
     compositionHash: route.compositionHash,
     restored: command.action === "restore"
-      ? !fallback?.rejected?.length
+      ? Boolean(report?.changed?.length) && !fallback?.rejected?.length
       : undefined,
+    changed: report?.changed?.length ?? 0,
+    unchanged: report?.unchanged?.length ?? 0,
     url: route.url,
   };
 }

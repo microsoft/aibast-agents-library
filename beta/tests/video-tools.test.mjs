@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 
@@ -46,4 +46,38 @@ test("packaged video-tool paths resolve outside app.asar on every platform", () 
   ]) {
     assert.equal(videoToolInternals.unpackedPath(input), expected);
   }
+});
+
+test("the factory install never runs package lifecycle scripts", () => {
+  // ffmpeg-static's postinstall downloads a native binary from a third-party
+  // release with no checksum and no signature, then chmods it 0755 — arbitrary
+  // native code executed during the sacred one-liner, in a product that refuses
+  // a sha-mismatched agent.py. Electron's installer is the one script we want,
+  // and it is invoked explicitly.
+  const installer = readFileSync(
+    new URL("../install.sh", import.meta.url), "utf8");
+  const npmCi = installer.match(/npm" ci[^\n]*/g) || [];
+  assert.ok(npmCi.length, "expected an npm ci invocation in the installer");
+  for (const line of npmCi) {
+    assert.match(line, /--ignore-scripts/, `npm ci must not run lifecycle scripts: ${line}`);
+  }
+  assert.match(
+    installer,
+    /node_modules\/electron\/install\.js/,
+    "Electron's runtime installer must still be invoked explicitly",
+  );
+
+  const npmrc = readFileSync(new URL("../.npmrc", import.meta.url), "utf8");
+  assert.match(npmrc, /^ignore-scripts=true$/m, "a dev install must match the shipped posture");
+});
+
+test("media tooling degrades to the system binary instead of demanding a download", () => {
+  // With lifecycle scripts off there is no bundled binary, so resolution must
+  // fall through to whatever the user already has on PATH rather than break.
+  const resolved = resolveFfmpegExecutable({
+    BRAINSTEM_BETA_FFMPEG: "/nonexistent/explicit/ffmpeg",
+  });
+  assert.equal(resolved, "/nonexistent/explicit/ffmpeg", "an explicit override wins");
+  const fallback = resolveFfmpegExecutable({});
+  assert.ok(fallback, "resolution always yields something spawnable");
 });
