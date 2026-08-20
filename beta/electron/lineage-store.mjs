@@ -179,6 +179,16 @@ function newestFirst(left, right) {
     || right.ringRappid.localeCompare(left.ringRappid);
 }
 
+function sameResolution(left, right) {
+  return Boolean(
+    left
+    && right
+    && left.ringRappid === right.ringRappid
+    && left.isBaseline === right.isBaseline
+    && left.source === right.source
+  );
+}
+
 export class LineageStore {
   constructor({
     brainstemDir,
@@ -802,7 +812,7 @@ export class LineageStore {
     const failed = [];
     for (const target of targets) {
       let before = null;
-      try { before = this.getHead(target, { env: environment }); } catch {}
+      try { before = this.resolveLive(target, { env: environment }); } catch {}
       try {
         const next = pick(target);
         const moved = this.setHead(target, next, { env: environment });
@@ -811,11 +821,10 @@ export class LineageStore {
             moved?.reason || `HEAD.${environment} write was refused.`,
           );
         }
-        // Setting HEAD to where it already was is a no-op, and reporting it as a
-        // change lets the caller tell the user their molts were restored when
-        // nothing came back. A false "restored" is worse than an error: it ends
-        // the user's investigation at the moment recovery was still possible.
-        if (before !== null && next === before) unchanged.push(target);
+        const after = this.resolveLive(target, { env: environment });
+        // A pointer rewrite is not a user-visible change when both HEADs resolve
+        // to the same served artifact (for example, a missing ring and baseline).
+        if (sameResolution(before, after)) unchanged.push(target);
         else changed.push(target);
       } catch (error) {
         failed.push({ ancestorRappid: target, error: String(error?.message || error) });

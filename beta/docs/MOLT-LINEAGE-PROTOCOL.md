@@ -285,6 +285,10 @@ messages to Grail:
 - `promote <from> <to>` runs isolated, fleet-wide fast-forward promotion;
 - `drift <env>` compares that environment with `default`.
 
+Safe-word change counts compare the effective resolved artifacts, not raw HEAD
+file strings. Repairing a pointer that already fell back to the same baseline
+bytes is reported as unchanged rather than as a successful restore.
+
 The words are configurable with `RAPP_BASELINE_SAFEWORD`,
 `RAPP_RESTORE_WORD`, `RAPP_ENVIRONMENTS_WORD`, `RAPP_PROMOTE_WORD`, and
 `RAPP_DRIFT_WORD`. `RAPP_MOLT_LINEAGE=0` is checked at every invocation and

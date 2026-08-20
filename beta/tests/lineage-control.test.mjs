@@ -11,7 +11,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { LineageStore } from "../electron/lineage-store.mjs";
+import {
+  LineageStore,
+  lineageStoreInternals,
+} from "../electron/lineage-store.mjs";
 import {
   executeLineageCommand,
   lineageControlReplies,
@@ -449,6 +452,50 @@ test("restore cannot move a newer live ring back through stale PRIOR_HEAD", asyn
   assert.equal(result.changed, 0);
   assert.match(result.reply, /nothing to restore/i);
   assert.equal(store.getHead(alpha.ancestorRappid), newer);
+});
+
+test("restore reports no change when a missing HEAD already resolves to baseline", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-lineage-control-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const brainstemDir = path.join(root, "brainstem");
+  mkdirSync(path.join(brainstemDir, "agents"), { recursive: true });
+  writeFileSync(
+    path.join(brainstemDir, "agents", "alpha_agent.py"),
+    "ALPHA = 'baseline'\n",
+  );
+  const store = new LineageStore({
+    brainstemDir,
+    root: path.join(root, "lineage"),
+  });
+  const alpha = store.baselineAncestors()[0];
+  const ring = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'gone'\n",
+    verified: true,
+  });
+  store.setHead(alpha.ancestorRappid, ring);
+  rmSync(path.join(
+    store.root,
+    lineageStoreInternals.filesystemSegment(alpha.ancestorRappid),
+    "rings",
+    lineageStoreInternals.filesystemSegment(ring),
+  ), { recursive: true, force: true });
+  assert.equal(store.resolveLive(alpha.ancestorRappid).isBaseline, true);
+
+  const result = await executeLineageCommand({
+    message: "restore",
+    routeManager: {
+      restoreLineage: () => store.restore(alpha.ancestorRappid),
+      startDefault: async () => ({
+        compositionHash: "baseline-composition",
+        url: "http://127.0.0.1:7001",
+      }),
+      lastLineageFallback: null,
+    },
+  });
+
+  assert.equal(result.changed, 0);
+  assert.match(result.reply, /nothing to restore/i);
+  assert.equal(store.resolveLive(alpha.ancestorRappid).isBaseline, true);
 });
 
 test("renderer intercepts before Grail chat and main exposes the lineage IPC", () => {
