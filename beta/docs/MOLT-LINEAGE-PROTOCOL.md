@@ -8,9 +8,10 @@ cancer, dying, or becoming a zombie**, and lets a fleet of such snowflakes alway
 come back together.
 
 > **Standard.** The general, platform-neutral form of this design is
-> `gitprotocol-molt(5)` — see [`RAPP-LINEAGE-STANDARD.md`](RAPP-LINEAGE-STANDARD.md),
-> with a working reference porcelain in [`git-molt/`](../../git-molt/). This
-> document is the Frontier's conformance profile of that standard.
+> `gitprotocol-molt(5)`, published independently as
+> **[git-molt](https://github.com/kody-w/git-molt)** — "git for agents". This
+> document is the Frontier's implementation; its registered conformance profile
+> is [`rapp-lineage`](https://github.com/kody-w/git-molt/blob/main/spec/profiles/rapp-lineage.md).
 
 This is a **protocol, not a library**. It is downstream of the Brainstem
 `CONSTITUTION.md` and the `rapp/1` spine; where they conflict, the kernel's law
