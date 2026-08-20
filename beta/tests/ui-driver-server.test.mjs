@@ -724,6 +724,20 @@ test("the chat lease's aria-disabled marker does not make the send button unacti
   assert.match(source, /send\.dataset\.rappChatLease = "locked"/);
 });
 
+test("outline state treats the driver-owned leased send button as enabled", () => {
+  const helpers = uiDriverInternals.createUiDriverHelpers();
+  const send = {
+    dataset: { rappChatLease: "locked" },
+    disabled: false,
+    getAttribute: (name) => (name === "aria-disabled" ? "true" : null),
+    localName: "button",
+  };
+
+  assert.equal(helpers.stateFor(send), "enabled");
+  delete send.dataset.rappChatLease;
+  assert.equal(helpers.stateFor(send), "disabled");
+});
+
 test("the chat lease blocks trusted starter-prompt clicks", async () => {
   const elements = new Map();
   const eventTarget = (id) => {
