@@ -327,7 +327,80 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       }
     }
   });
+  const chatTypingEnabled = ${JSON.stringify(chatTypingEnabled)};
   const nativeFetch = window.fetch.bind(window);
+  function bufferChatStreamResponse(response, signal) {
+    if (!response.body) return response;
+    const reader = response.body.getReader();
+    let stopped = false;
+    let abortHandler = null;
+
+    const body = new ReadableStream({
+      start(controller) {
+        abortHandler = () => {
+          if (stopped) return;
+          stopped = true;
+          const reason = signal?.reason instanceof Error
+            ? signal.reason
+            : Object.assign(new Error("The operation was aborted."), {
+              name: "AbortError",
+            });
+          void reader.cancel(reason).catch((cause) => {
+            console.warn("Frontier could not cancel the upstream chat stream.", cause);
+          });
+          controller.error(reason);
+        };
+        if (signal?.aborted) {
+          abortHandler();
+          return;
+        }
+        signal?.addEventListener("abort", abortHandler, { once: true });
+
+        void (async () => {
+          const chunks = [];
+          try {
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              if (value) chunks.push(value);
+            }
+            if (stopped) return;
+            stopped = true;
+            for (const chunk of chunks) controller.enqueue(chunk);
+            controller.close();
+          } catch (cause) {
+            if (stopped || signal?.aborted) return;
+            stopped = true;
+            for (const chunk of chunks) controller.enqueue(chunk);
+            const message = String(
+              cause?.message || cause || "Response stream interrupted.",
+            );
+            controller.enqueue(new TextEncoder().encode(
+              "\\n\\ndata: " + JSON.stringify({
+                type: "error",
+                error: message,
+              }) + "\\n\\n",
+            ));
+            controller.close();
+          } finally {
+            signal?.removeEventListener("abort", abortHandler);
+            reader.releaseLock();
+          }
+        })();
+      },
+      cancel(reason) {
+        if (stopped) return undefined;
+        stopped = true;
+        signal?.removeEventListener("abort", abortHandler);
+        return reader.cancel(reason);
+      },
+    });
+    return new Response(body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  }
   async function requestLineageCommand(message) {
     const requestId = window.crypto.randomUUID();
     return new Promise((resolve, reject) => {
@@ -362,19 +435,33 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     } catch {
       return nativeFetch(resource, options);
     }
-    const isChat = options.method === "POST"
+    const method = String(
+      options.method || (resource instanceof Request ? resource.method : "GET"),
+    ).toUpperCase();
+    const isChat = method === "POST"
       && (target.pathname === "/chat" || target.pathname === "/chat/stream");
+    const shouldBufferChatStream = chatTypingEnabled
+      && method === "POST"
+      && target.pathname === "/chat/stream";
+    const requestSignal = options.signal
+      || (resource instanceof Request ? resource.signal : null);
+    const fetchNative = async () => {
+      const response = await nativeFetch(resource, options);
+      return shouldBufferChatStream
+        ? bufferChatStreamResponse(response, requestSignal)
+        : response;
+    };
     if (!isChat || typeof options.body !== "string") {
-      return nativeFetch(resource, options);
+      return fetchNative();
     }
     let body;
     try {
       body = JSON.parse(options.body);
     } catch {
-      return nativeFetch(resource, options);
+      return fetchNative();
     }
     if (typeof body.user_input !== "string") {
-      return nativeFetch(resource, options);
+      return fetchNative();
     }
     // Fail OPEN, always. This interceptor sits in front of every chat message,
     // so a lineage-control failure (main busy, handler throw, window teardown,
@@ -384,10 +471,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     try {
       result = await requestLineageCommand(body.user_input);
     } catch {
-      return nativeFetch(resource, options);
+      return fetchNative();
     }
     if (!result?.intercepted) {
-      return nativeFetch(resource, options);
+      return fetchNative();
     }
     if (target.pathname === "/chat/stream") {
       const frame = "data: " + JSON.stringify({
