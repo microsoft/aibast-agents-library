@@ -13,6 +13,7 @@ import test from "node:test";
 
 import {
   LineageStore,
+  MAX_AGENT_BYTES,
   baselineAncestors,
   configureLineageStore,
   lineageStoreInternals,
@@ -51,6 +52,21 @@ function ringDirectory(store, ancestorRappid, ringRappid) {
     lineageStoreInternals.filesystemSegment(ringRappid),
   );
 }
+
+test("appendRing refuses sources over the shared agent size limit", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  assert.throws(
+    () => store.appendRing(alpha.ancestorRappid, {
+      source: "X".repeat(MAX_AGENT_BYTES + 1),
+      verified: true,
+    }),
+    /agent size limit/,
+  );
+  assert.equal(store.listRings(alpha.ancestorRappid).length, 1);
+});
 
 test("lineage-store hash-chains deterministic rings and detects tampering", (t) => {
   const { store, sources } = fixture(t);

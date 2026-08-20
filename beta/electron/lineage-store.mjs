@@ -33,6 +33,8 @@ const JOURNAL_CORRUPT_REASON =
 const JOURNAL_WRITE_REASON =
   "promotion journal could not record the attempt — refusing to move HEAD";
 
+export const MAX_AGENT_BYTES = 512 * 1024;
+
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true, mode: 0o700 });
   try {
@@ -527,6 +529,9 @@ export class LineageStore {
     if (!baseline) throw new Error(`Unknown Grail ancestor: ${ancestorRappid}`);
     if (typeof source !== "string" || !source.length) {
       throw new Error("A molt ring requires non-empty Python source.");
+    }
+    if (Buffer.byteLength(source, "utf8") > MAX_AGENT_BYTES) {
+      throw new Error("A molt ring exceeds the agent size limit.");
     }
     const parent = parentRappid || this.getHead(ancestorRappid);
     if (

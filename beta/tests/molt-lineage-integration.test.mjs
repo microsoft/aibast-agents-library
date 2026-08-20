@@ -14,7 +14,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { LineageStore } from "../electron/lineage-store.mjs";
+import {
+  LineageStore,
+  MAX_AGENT_BYTES,
+} from "../electron/lineage-store.mjs";
 import {
   BetaRouteManager,
   routeManagerInternals,
@@ -657,6 +660,27 @@ test("independent twin AGENTS_PATH composition receives the same verified overla
   assert.equal(
     readFileSync(path.join(agentDirectory, "global_agent.py"), "utf8"),
     source,
+  );
+});
+
+test("twin lineage resolution enforces the shared agent size limit", (t) => {
+  const fixture = minimalFixture(t);
+  const global = fixture.store.baselineAncestors().find(
+    (item) => item.filename === "global_agent.py",
+  );
+  fixture.store.resolveLive = () => ({
+    ringRappid: "rappid:@frontier/global-ring:" + "a".repeat(64),
+    source: "X".repeat(MAX_AGENT_BYTES + 1),
+    isBaseline: false,
+  });
+  const manager = new BetaRouteManager(fixture.managerOptions);
+
+  assert.throws(
+    () => manager.resolveTwinLineageSource(
+      global.filename,
+      fixture.sources[global.filename],
+    ),
+    /agent size limit/,
   );
 });
 

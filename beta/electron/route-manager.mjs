@@ -21,6 +21,7 @@ import { BrainstemProcess } from "./brainstem-process.mjs";
 import { redactSensitiveValue } from "./log-redaction.mjs";
 import {
   LineageStore,
+  MAX_AGENT_BYTES,
   lineageStoreInternals,
 } from "./lineage-store.mjs";
 import {
@@ -33,7 +34,6 @@ import {
 
 const ROUTING_SCHEMA = "rapp-beta-routing/1";
 const STACK_SCHEMA = "rapp-beta-stack/1";
-const MAX_AGENT_BYTES = 512 * 1024;
 const AGENT_FILE = /^[A-Za-z0-9_.-]+_agent\.py$/;
 const MEMORY_FILES = new Set([
   "context_memory_agent.py",
@@ -75,6 +75,14 @@ function atomicWriteJson(filePath, value) {
 
 function sha256(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+function validatedMoltBytes(source, filename) {
+  const bytes = Buffer.from(source, "utf8");
+  if (!bytes.length || bytes.length > MAX_AGENT_BYTES) {
+    throw new Error(`Molt ring for ${filename} exceeds the agent size limit.`);
+  }
+  return bytes;
 }
 
 function safeAgentFilename(value) {
@@ -607,10 +615,7 @@ export class BetaRouteManager {
     const source = generatedContextMemory
       ? routedContextMemoryMoltSource(live.source, memoryGuid)
       : live.source;
-    const bytes = Buffer.from(source, "utf8");
-    if (!bytes.length || bytes.length > MAX_AGENT_BYTES) {
-      throw new Error(`Molt ring for ${entry.filename} exceeds the agent size limit.`);
-    }
+    const bytes = validatedMoltBytes(source, entry.filename);
     return {
       ...entry,
       address: Hb("rapp/1:egg", bytes),
@@ -641,6 +646,7 @@ export class BetaRouteManager {
     if (!live || live.isBaseline) {
       return { filename, source, lineage: null };
     }
+    validatedMoltBytes(live.source, filename);
     return {
       filename,
       source: live.source,

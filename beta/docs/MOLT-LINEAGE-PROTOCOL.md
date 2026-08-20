@@ -155,7 +155,10 @@ A ring is promoted to *live* only after passing an **isolated verifier**:
    set (baseline + every live overlay) is dry-loaded together: no duplicate tool
    names, no import collisions, every agent instantiates. Interactions are checked,
    not just individual files.
-4. **Atomic blue-green swap.** The new set is built in a staging directory,
+4. **Bounded ingest.** Every ring entry path enforces the same 512 KiB source
+   ceiling before persistence or kernel materialization, including independent
+   twin compositions.
+5. **Atomic blue-green swap.** The new set is built in a staging directory,
    validated, and only then swapped in **between** requests — never mutated in
    place while serving. A half-composed state never reaches a user; if validation
    fails, the current good set keeps serving.
