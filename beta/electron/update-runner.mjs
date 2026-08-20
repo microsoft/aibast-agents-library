@@ -78,6 +78,16 @@ function loadRequest(requestPath) {
   if (!Number.isInteger(request.parentPid) || request.parentPid < 1) {
     throw new Error("Update request has an invalid parent process.");
   }
+  if (
+    request.parentExitTimeoutMs !== undefined
+    && (
+      !Number.isInteger(request.parentExitTimeoutMs)
+      || request.parentExitTimeoutMs < 1
+      || request.parentExitTimeoutMs > 120_000
+    )
+  ) {
+    throw new Error("Update request has an invalid parent exit timeout.");
+  }
   if (!COMMIT_PATTERN.test(request.commit || "")) {
     throw new Error("Update request has an invalid commit.");
   }
@@ -268,13 +278,18 @@ async function main() {
   const logFd = openPrivateAppendFile(request.logPath);
   let result;
   let installStarted = false;
+  let parentExited = false;
 
   try {
     writeLog(
       logFd,
       `\n[${new Date().toISOString()}] Updating RAPP Brainstem Frontier to ${request.commit}\n`,
     );
-    await waitForParent(request.parentPid);
+    await waitForParent(
+      request.parentPid,
+      request.parentExitTimeoutMs ?? 120_000,
+    );
+    parentExited = true;
     assertCheckoutUnchanged(
       request,
       request.betaRepoRoot,
@@ -331,6 +346,7 @@ async function main() {
     }
   }
 
+  if (!parentExited) return;
   try {
     relaunch(request);
   } catch (error) {
