@@ -129,7 +129,7 @@ ids the matrix lists (`#surgeon-send`, `#input`, `#send`, `#agent-tree`, …) an
 | lineage | type `baseline` then `restore` in the real composer; replies; route URL changes; HEAD files | HEAD/PRIOR_HEAD, bridge reply, outline |
 | lineage | `environments`, `promote default prod`, `drift prod`; CONFLICT path; corrupt journal refusal | `HEAD.prod`, `promotions.json`, replies |
 | lineage | `RAPP_MOLT_LINEAGE=0`: words reply "turned off", nothing moves | HEAD files unchanged |
-| ambient | drop a broken agent into the (copied) Grail → next turn volunteers it (scripted model asserts the self-state block is present in the system context) | replay fingerprint includes the block |
+| ambient | drop a broken agent into the copied Grail, trigger a route restart, and prove the Frontier quarantines it before Ring-1 can scan it | `composition-quarantine`, healthy `/health`, no self-state block or UI warning |
 | bridge | `/chat/stream` interception, fail-open after timeout, export redaction blob, three-dot menu phases | outline `data-phase`, downloaded blob |
 | twins | 8-twin cap; close during loop; pop-out window lifecycle | twin dirs, events |
 | updates | fake git: "staged not released", "available", "up to date", "re-align"; Install → runner → `update-result.json` → next launch shows success / restored / failed | `#beta-update-status[data-phase]`, result file |

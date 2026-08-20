@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import {
   existsSync,
+  mkdirSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
@@ -8,39 +10,114 @@ import path from "node:path";
 import { launch } from "./harness/launch.mjs";
 import { frontierTest } from "./harness/test-support.mjs";
 
-frontierTest("ambient self-state names a broken source agent in the next model request", async () => {
+async function sendComposerWord(app, value, reply) {
+  await app.driver.run([{
+    action: "type",
+    selector: "#input",
+    typingDelayMs: 1,
+    value,
+  }]);
+  await app.driver.run([{
+    action: "click",
+    selector: "#send",
+    settleMs: 50,
+  }]);
+  return app.driver.expect({
+    text: reply,
+    timeoutMs: 30_000,
+  });
+}
+
+frontierTest("Frontier silently quarantines a broken agent; Ring-1 self-report is bypassed", async () => {
   const app = await launch({
     modelScript: {
       steps: [{
         when: {
-          lastUser: "inspect your current self state",
+          lastUser: "verify the Frontier stays available",
           stream: true,
         },
-        response: { text: "AMBIENT_REQUEST_CAPTURED" },
+        response: { text: "FRONTIER_REMAINS_AVAILABLE" },
       }],
     },
-    scenario: "ambient-self-report",
+    scenario: "ambient-quarantine",
   });
   try {
     const brokenFilename = "ambient_broken_agent.py";
+    const fixtureDirectory = path.join(app.paths.root, "fixtures");
+    mkdirSync(fixtureDirectory, { recursive: true });
+    const brokenTarget = path.join(fixtureDirectory, brokenFilename);
     const brokenPath = path.join(
       app.paths.grail,
       "agents",
       brokenFilename,
     );
     writeFileSync(
-      brokenPath,
+      brokenTarget,
       "from agents.basic_agent import BasicAgent\n"
         + "class AmbientBrokenAgent(BasicAgent)\n"
         + "    pass\n",
       { mode: 0o600 },
     );
+    // Frontier reads global agent symlinks, while LineageStore's pristine
+    // baseline inventory intentionally protects only regular factory files.
+    symlinkSync(brokenTarget, brokenPath, "file");
     assert.equal(existsSync(brokenPath), true);
+
+    // The baseline word uses the production startDefault route-restart path.
+    // With no lineage overlay to fall back from, the dry-load quarantine tier
+    // removes the invalid source before starting the replacement worker.
+    await sendComposerWord(
+      app,
+      "baseline",
+      "Reverted to Grail baseline",
+    );
+
+    const telemetry = await app.driver.routeTelemetry({ trace: false });
+    const quarantine = telemetry.events
+      .filter((event) => event.type === "composition-quarantine")
+      .at(-1);
+    assert(quarantine, "the recomposition must record a quarantine event");
+    const excluded = quarantine.excluded_files.find(
+      (entry) => entry.filename === brokenFilename,
+    );
+    assert(excluded, `quarantine telemetry must name ${brokenFilename}`);
+    assert.match(
+      excluded.reason,
+      /loaded no agents|SyntaxError|invalid syntax|expected ':'/i,
+    );
+    assert.equal(
+      existsSync(path.join(
+        telemetry.active_composition_fingerprint.agent_directory,
+        brokenFilename,
+      )),
+      false,
+      "the broken source must remain outside the executable composition",
+    );
+
+    const healthResponse = await fetch(
+      `${telemetry.active_route.url}/health`,
+      { signal: AbortSignal.timeout(5_000) },
+    );
+    assert.equal(healthResponse.status, 200);
+    const health = await healthResponse.json();
+    assert.equal(health.status, "ok");
+    for (const expected of [
+      "ContextMemory",
+      "HackerNews",
+      "ManageMemory",
+      "LearnNew",
+    ]) {
+      assert(
+        health.agents.includes(expected),
+        `healthy worker must retain ${expected}`,
+      );
+    }
+    assert.equal(health.agents.includes("AmbientBroken"), false);
 
     await app.driver.command({
       action: "chat",
       timeoutMs: 30_000,
-      value: "inspect your current self state",
+      value: "verify the Frontier stays available",
     });
 
     assert.equal(app.model.requests.length, 1);
@@ -49,19 +126,24 @@ frontierTest("ambient self-state names a broken source agent in the next model r
       .filter((message) => message.role === "system")
       .map((message) => String(message.content || ""))
       .join("\n");
-    assert.match(systemContext, /<system_status>/);
-    assert.match(systemContext, new RegExp(brokenFilename));
-    assert.match(systemContext, /SyntaxError/);
-    assert.match(systemContext, /failed to load/);
+    assert.doesNotMatch(systemContext, /<system_status>/);
+    assert.doesNotMatch(systemContext, new RegExp(brokenFilename));
 
-    const telemetry = await app.driver.routeTelemetry({ trace: false });
-    assert.equal(
-      existsSync(path.join(
-        telemetry.active_composition_fingerprint.agent_directory,
-        brokenFilename,
-      )),
-      false,
-      "the broken source must remain outside the executable composition",
+    const shellState = await app.driver.inspect({ target: "shell" });
+    assert.doesNotMatch(
+      shellState.text,
+      /ambient_broken_agent|quarantin|failed to load/i,
+    );
+    const shellError = await app.driver.command({
+      action: "read",
+      selector: "#error",
+      target: "shell",
+    });
+    assert.equal(shellError.text, "");
+    const brainstemState = await app.driver.inspect();
+    assert.doesNotMatch(
+      brainstemState.text,
+      /ambient_broken_agent|quarantin|failed to load/i,
     );
   } finally {
     await app.stop();

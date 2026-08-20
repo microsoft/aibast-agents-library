@@ -125,6 +125,38 @@ function scanBrokenAgents(python, agentDirectory) {
   );
 }
 
+function ring1SelfStatus(python, agentDirectory) {
+  const source = [
+    "import importlib.util",
+    "import os",
+    "import sys",
+    "brainstem_dir, agents_dir = sys.argv[1:3]",
+    "sys.path.insert(0, brainstem_dir)",
+    "spec = importlib.util.spec_from_file_location('_status_brainstem', os.path.join(brainstem_dir, 'brainstem.py'))",
+    "brainstem = importlib.util.module_from_spec(spec)",
+    "spec.loader.exec_module(brainstem)",
+    "brainstem._register_shims()",
+    "spec = importlib.util.spec_from_file_location('_bare_context', os.path.join(agents_dir, 'context_memory_agent.py'))",
+    "context = importlib.util.module_from_spec(spec)",
+    "spec.loader.exec_module(context)",
+    "status = context.RoutedContextMemoryAgent._self_status_block(object())",
+    "sys.stdout.write(status or '')",
+  ].join("\n");
+  return spawnSync(
+    python,
+    ["-c", source, grailDirectory, agentDirectory],
+    {
+      cwd: grailDirectory,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PYTHONDONTWRITEBYTECODE: "1",
+        PYTHONUTF8: "1",
+      },
+    },
+  );
+}
+
 test("HARD 1 — zero molts compose byte-for-byte identically to legacy passthrough", (t) => {
   const { managerOptions } = minimalFixture(t);
   const legacy = new BetaRouteManager({
@@ -282,6 +314,30 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
     0,
     scan.stderr || scan.stdout || "ring-1 self-state scan reported a healthy routed agent as broken",
   );
+  const bareAgentDirectory = path.join(root, "bare-kernel-agents");
+  mkdirSync(bareAgentDirectory, { recursive: true });
+  writeFileSync(
+    path.join(bareAgentDirectory, "context_memory_agent.py"),
+    routedRing1,
+  );
+  writeFileSync(
+    path.join(bareAgentDirectory, "bare_broken_agent.py"),
+    "from agents.basic_agent import BasicAgent\n"
+      + "class BareBrokenAgent(BasicAgent)\n"
+      + "    pass\n",
+  );
+  const selfStatus = ring1SelfStatus(
+    manager.brainstemConfig.python,
+    bareAgentDirectory,
+  );
+  assert.equal(
+    selfStatus.status,
+    0,
+    selfStatus.stderr || "bare Ring-1 self-status invocation failed",
+  );
+  assert.match(selfStatus.stdout, /<system_status>/);
+  assert.match(selfStatus.stdout, /bare_broken_agent\.py/);
+  assert.match(selfStatus.stdout, /SyntaxError/);
 
   // Compare in canonical LF: the Grail checkout may be CRLF on Windows while
   // the ring is pinned -text. The marker must exist exactly once on each side
