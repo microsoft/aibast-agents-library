@@ -113,6 +113,43 @@ function frameIsGone(frame, { window, startUrl }) {
   return null;
 }
 
+// The watchdog must never fire on a HEALTHY frame that is simply doing what
+// it was told: a delegated chat legitimately waits minutes for a reply. The
+// deadline is derived from the command's own budget (mirroring the in-frame
+// clamps) plus grace; 20 s is only the floor.
+const FRAME_SCRIPT_GRACE_MS = 15000;
+const FRAME_SCRIPT_MAX_MS = 60 * 60 * 1000 + 30000;
+
+function stepBudgetMs(step) {
+  const action = String(step?.action || "").toLowerCase();
+  const settle = Math.max(0, Number(step?.settleMs) || 0);
+  if (action === "chat" || action === "surgeon_chat") {
+    return Math.max(1000, Math.min(3600000, Number(step?.timeoutMs) || 180000)) + settle;
+  }
+  if (action === "wait") return Math.max(100, Math.min(120000, Number(step?.timeoutMs) || 10000));
+  if (action === "announce") return Math.max(120, Number(step?.durationMs) || 900);
+  if (action === "type") {
+    const length = String(step?.value ?? step?.text ?? "").length;
+    const delay = Math.max(0, Math.min(100, Number(step?.typingDelayMs) || 18));
+    return length * delay + Math.max(160, settle || 300);
+  }
+  if (action === "tour") return Math.max(1000, Number(step?.durationMs) || 60000);
+  return settle + 1000;
+}
+
+function frameBudgetMs(command) {
+  const explicit = Number(command?.frameTimeoutMs);
+  if (Number.isFinite(explicit) && explicit > 0) {
+    return Math.min(FRAME_SCRIPT_MAX_MS, Math.max(250, explicit));
+  }
+  const steps = Array.isArray(command?.steps) ? command.steps : [command];
+  const budget = steps.reduce((sum, step) => sum + stepBudgetMs(step), 0);
+  return Math.min(
+    FRAME_SCRIPT_MAX_MS,
+    Math.max(FRAME_SCRIPT_TIMEOUT_MS, budget + FRAME_SCRIPT_GRACE_MS),
+  );
+}
+
 async function executeInFrame(frame, source, { window = null, timeoutMs = FRAME_SCRIPT_TIMEOUT_MS } = {}) {
   if (!frame) throw new Error("The live Brainstem frontend is not loaded yet.");
   const startUrl = String(frame.url || "");
@@ -146,9 +183,22 @@ async function executeInFrame(frame, source, { window = null, timeoutMs = FRAME_
   }
 }
 
-async function browserDriverCommand(command, createHelpers) {
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+async function browserDriverCommand(command, createHelpers, commandId = null) {
   const state = window.__brainstemAiDriver ||= {};
+  // One command per frame: if the bus abandoned this script (watchdog) and a
+  // later command took the frame, every loop here stops at its next tick
+  // instead of driving the frame alongside the newcomer.
+  const myCommandId = commandId || String(Date.now()) + Math.random().toString(16).slice(2);
+  state.activeCommandId = myCommandId;
+  const sleep = (ms) => new Promise((resolve, reject) => setTimeout(() => {
+    if (state.activeCommandId !== myCommandId) {
+      const error = new Error("This command was superseded by a later command on the same frame.");
+      error.name = "UiDriverSupersededError";
+      reject(error);
+      return;
+    }
+    resolve();
+  }, ms));
   const helpers = createHelpers({
     cssEscape: (value) => CSS.escape(value),
     document,
@@ -2126,11 +2176,21 @@ export async function startUiDriverServer({
   }
 
   function commandResponse(response, command, result, { budget = false } = {}) {
-    appendCommandTrace(command, result);
+    // The command already happened; a trace that cannot be written is a
+    // diagnostic on the answer, never a reason to report the click as failed
+    // (callers retry failures, which would double-send the chat).
+    let traceError = null;
+    try {
+      appendCommandTrace(command, result);
+    } catch (error) {
+      traceError = errorMessage(error);
+      console.warn("UI driver trace write failed:", traceError);
+    }
     const clean = stripTraceMetadata(result);
     jsonResponse(response, 200, {
       ok: true,
       result: budget ? boundedResult(clean, command) : clean,
+      ...(traceError ? { trace_error: traceError } : {}),
     });
   }
 
@@ -2169,7 +2229,8 @@ export async function startUiDriverServer({
       : image;
     const frame = brainstemFrame(window, loopbackUrl);
     const text = frame
-      ? await frame.executeJavaScript(
+      ? await executeInFrame(
+          frame,
           `(${function screenshotText(options) {
             const normalize = (value) => String(value || "").replace(/\s+/g, " ").trim();
             const active = document.activeElement;
@@ -2197,8 +2258,8 @@ export async function startUiDriverServer({
           }.toString()})(${JSON.stringify({
             includeText: command.includeText === true || command.include_text === true,
           })})`,
-          true,
-        )
+          { timeoutMs: 5000, window },
+        ).catch(() => ({ caption: "", fullText: "" }))
       : { caption: "", fullText: "" };
     const caption = String(text?.caption || "RAPP Brainstem Frontier capture").slice(0, 300);
     const includeText = command.includeText === true || command.include_text === true;
@@ -2524,11 +2585,15 @@ export async function startUiDriverServer({
           ? `Twin ${wantedTwin} UI is not visible in the herd yet — open the herd and its tile first.`
           : "The live Brainstem frontend is not loaded yet.");
       }
+      // The command id is passed BESIDE the command (not inside it) so traces
+      // stay identical from pass to pass; the frame uses it to notice when a
+      // later command has taken over and to stop its own loops.
+      const commandId = randomBytes(6).toString("hex");
       const source = `(${browserDriverCommand.toString()})(${
         JSON.stringify(command)
-      }, ${createUiDriverHelpers.toString()})`;
+      }, ${createUiDriverHelpers.toString()}, ${JSON.stringify(commandId)})`;
       const result = await executeInFrame(target, source, {
-        timeoutMs: command.frameTimeoutMs,
+        timeoutMs: frameBudgetMs(command),
         window,
       });
       if (wantedTwin || command.target === "shell") {
@@ -2604,6 +2669,8 @@ export const uiDriverInternals = {
   frameKeyForCommand,
   executeInFrame,
   FrameGoneError,
+  frameBudgetMs,
+  stepBudgetMs,
   forceModeStatus,
   runTourCommand,
   setForceMode,
