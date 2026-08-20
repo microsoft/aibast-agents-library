@@ -5,6 +5,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
+import { uiDriverInternals } from "../electron/ui-driver-server.mjs";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (r) => readFileSync(path.join(root, r), "utf8");
 const renderer = read("ui/renderer.js");
@@ -59,20 +61,33 @@ test("preload and main key Brain Surgeon by session id", () => {
   assert.match(main, /beta:surgeon-close/);
 });
 
-test("the one visible Brainstem is a shared stage: driving is serialized, reads pass through", () => {
-  assert.match(main, /const UI_STAGE_ACTIONS = new Set\(/);
-  assert.match(main, /let uiStageChain = Promise\.resolve\(\)/);
-  assert.match(main, /async function rawUiCommand/);
-  // read-only / quick-state actions must NOT be in the serialized set
-  for (const action of ["inspect", "read", "screenshot", "route_telemetry", "set_chat_lease", "force_mode"]) {
-    assert.doesNotMatch(
-      main,
-      new RegExp(`UI_STAGE_ACTIONS[\\s\\S]*?"${action}"[\\s\\S]*?\\]\\)`),
-      `${action} should pass through, not hold the stage`,
-    );
-  }
-  // driving actions must be serialized
-  for (const action of ["chat", "click", "type", "run", "drive", "tour"].filter((a) => a !== "drive")) {
-    assert.match(main, new RegExp(`UI_STAGE_ACTIONS[\\s\\S]*?"${action}"`), `${action} should hold the stage`);
-  }
+test("the shared driver bus serializes every caller once per visible frame", async () => {
+  assert.doesNotMatch(main, /UI_STAGE_ACTIONS|uiStageChain|rawUiCommand/);
+  assert.match(main, /async function executeUiCommand/);
+  assert.equal(uiDriverInternals.frameKeyForCommand({ action: "click" }), "brainstem");
+  assert.equal(
+    uiDriverInternals.frameKeyForCommand({ action: "inspect", target: "shell" }),
+    "shell",
+  );
+  assert.equal(
+    uiDriverInternals.frameKeyForCommand({ action: "click", twin: "alpha" }),
+    "twin:alpha",
+  );
+
+  const queue = uiDriverInternals.createFrameQueue();
+  const releaseFirst = await queue.enter("brainstem");
+  let secondEntered = false;
+  const second = queue.enter("brainstem").then((release) => {
+    secondEntered = true;
+    return release;
+  });
+  const releaseShell = await queue.enter("shell");
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(secondEntered, false);
+  releaseShell();
+  releaseFirst();
+  const releaseSecond = await second;
+  assert.equal(secondEntered, true);
+  releaseSecond();
+  assert.equal(queue.size, 0);
 });

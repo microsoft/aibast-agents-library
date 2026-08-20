@@ -25,12 +25,16 @@ def _camelize(value):
         "ctrl_key": "ctrlKey",
         "duration_ms": "durationMs",
         "meta_key": "metaKey",
+        "include_text": "includeText",
         "max_duration_ms": "maxDurationMs",
         "settle_ms": "settleMs",
         "shift_key": "shiftKey",
+        "snapshot_changed": "snapshotChanged",
         "target_text": "targetText",
         "timeout_ms": "timeoutMs",
         "typing_delay_ms": "typingDelayMs",
+        "force_mode": "forceMode",
+        "byte_budget": "byteBudget",
     }
     if isinstance(value, list):
         return [_camelize(item) for item in value]
@@ -43,95 +47,54 @@ def _camelize(value):
     return value
 
 
+def _budget_text(value, limit=6000, handle="@page"):
+    maximum = max(512, min(65536, int(limit or 6000)))
+    encoded = value.encode("utf-8")
+    if len(encoded) <= maximum:
+        return value
+    marker = f"…(+{len(encoded) - maximum} bytes — read handle:{handle})"
+    room = max(0, maximum - len(marker.encode("utf-8")))
+    preview = encoded[:room].decode("utf-8", errors="ignore")
+    omitted = len(encoded) - len(preview.encode("utf-8"))
+    marker = f"…(+{omitted} bytes — read handle:{handle})"
+    room = max(0, maximum - len(marker.encode("utf-8")))
+    preview = encoded[:room].decode("utf-8", errors="ignore")
+    return preview + marker
+
+
+HELP_TEXT = """UI Driver v2 operates the actual visible RAPP Brainstem Frontier frontend with an animated AI cursor.
+- Prefer handle over selector/target_text. Handles are stable: @area.name or @list[key].part.
+- inspect returns {snapshot,frame,rows}; pass since to receive only changed rows (60 default, 80 max).
+- run accepts up to 40 steps. Steps support action, handle, selector, target_text, text, value, key, target, optional, tail, limit, and timing fields.
+- click/type/press return effect. Add until={handle,state}, until={handle,text}, or until={snapshot_changed:true} to verify inside the same call.
+- expect with handle plus state or text returns {ok,actual}. read is capped at 4000; wait returns {matched,h}.
+- screenshot returns a 300-character caption; include_text=true adds at most 2000 characters. Captures and recordings render as media cards.
+- target is brainstem by default or shell for Frontier chrome. AI force mode is hidden until asked for; use it only when explicitly requested.
+- Results use a 6000-byte budget by default; a truncation marker names the handle to read for more."""
+
+
 class BrainstemUiDriver(BasicAgent):
     def __init__(self):
         self.name = "BrainstemUiDriver"
-        step_properties = {
-            "action": {
-                "type": "string",
-                "enum": [
-                    "announce",
-                    "click",
-                    "inspect",
-                    "press",
-                    "read",
-                    "type",
-                    "wait",
-                ],
-            },
-            "selector": {
-                "type": "string",
-                "description": "CSS selector for the visible target.",
-            },
-            "target_text": {
-                "type": "string",
-                "description": "Visible control text when a selector is not known.",
-            },
-            "text": {
-                "type": "string",
-                "description": "Text to wait for or announce.",
-            },
-            "value": {
-                "type": "string",
-                "description": "Text to type into an input or textarea.",
-            },
-            "key": {"type": "string"},
-            "label": {
-                "type": "string",
-                "description": "Short narration shown beside the animated AI cursor.",
-            },
-            "optional": {"type": "boolean"},
-            "replace": {"type": "boolean"},
-            "timeout_ms": {"type": "integer"},
-            "typing_delay_ms": {"type": "integer"},
-            "settle_ms": {"type": "integer"},
-            "duration_ms": {"type": "integer"},
-            "max_duration_ms": {
-                "type": "integer",
-                "description": "Maximum recording duration before automatic stop.",
-            },
-            "alt_key": {"type": "boolean"},
-            "ctrl_key": {"type": "boolean"},
-            "meta_key": {"type": "boolean"},
-            "shift_key": {"type": "boolean"},
-            "target": {
-                "type": "string",
-                "enum": ["brainstem", "shell"],
-                "description": "Use brainstem unless operating the Electron wrapper.",
-            },
-            "force_mode": {
-                "type": "boolean",
-                "description": (
-                    "AI force mode: light the whole window's edges while this action runs so "
-                    "the person can see an AI is driving. Only when the user asked for it."
-                ),
-            },
-            "step": {
-                "type": "string",
-                "description": "For action=tour with value=goto: the click-through step id or index.",
-            },
-        }
         self.metadata = {
             "name": self.name,
-            "description": (
-                "Operate the actual visible RAPP Brainstem Frontier frontend. "
-                "Every click and typed character is animated with an AI cursor so "
-                "the user can watch and follow along. Prefer one run action with a "
-                "short ordered steps array. Inspect first only when selectors are unknown."
-            ),
+            "description": "Operate the visible Frontier UI; call help once for the compact v2 contract.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    **step_properties,
                     "action": {
                         "type": "string",
                         "enum": [
                             "announce",
                             "click",
+                            "expect",
                             "force_mode",
+                            "help",
                             "inspect",
                             "press",
                             "read",
+                            "recording_status",
+                            "route_telemetry",
                             "run",
                             "screenshot",
                             "start_recording",
@@ -140,21 +103,26 @@ class BrainstemUiDriver(BasicAgent):
                             "type",
                             "wait",
                         ],
-                        "description": (
-                            "force_mode: value on|off|status lights or clears AI force mode. "
-                            "tour: value start|next|prev|goto|stop|status drives the Show Mode "
-                            "click-through preview in the shell."
-                        ),
                     },
+                    "handle": {"type": "string"},
+                    "include_text": {"type": "boolean"},
+                    "key": {"type": "string"},
+                    "limit": {"type": "integer"},
+                    "selector": {"type": "string"},
+                    "since": {"type": "string"},
+                    "state": {"type": "string"},
                     "steps": {
                         "type": "array",
-                        "description": "Ordered visible UI actions for a single guided run.",
-                        "items": {
-                            "type": "object",
-                            "properties": step_properties,
-                            "required": ["action"],
-                        },
+                        "items": {"type": "object"},
+                        "maxItems": 40,
+                        "minItems": 1,
                     },
+                    "tail": {"type": "boolean"},
+                    "target": {"type": "string", "enum": ["brainstem", "shell"]},
+                    "target_text": {"type": "string"},
+                    "text": {"type": "string"},
+                    "until": {"type": "object"},
+                    "value": {"type": "string"},
                 },
                 "required": ["action"],
             },
@@ -163,22 +131,14 @@ class BrainstemUiDriver(BasicAgent):
 
     def system_context(self):
         return (
-            "When the user asks you to operate, demonstrate, configure, or test the "
-            "visible RAPP Brainstem Frontier application, use BrainstemUiDriver. The user "
-            "is watching the real interface: narrate actions briefly, prefer stable "
-            "selectors, and use one run call for a sequence. After an important click "
-            "or completed workflow, call screenshot so you and the user can inspect "
-            "what the real window shows. If recording, finish with stop_recording; it "
-            "already includes the final screenshot. Do not click a destructive "
-            "confirmation unless the user's request authorizes that outcome. "
-            "AI force mode is hidden until asked for: when the user tells you to use "
-            "AI force mode (or to drive the Brainstem for them while they watch), "
-            "send force_mode on first, pass force_mode=true on your run, and send "
-            "force_mode off when you hand control back. The Show Mode click-through "
-            "preview is driven with action tour (start, next, prev, goto+step, stop)."
+            "Use BrainstemUiDriver for visible Frontier UI work. Call action=help once "
+            "for handles, effects, conditions, and capture syntax. Prefer one run and "
+            "trust only effect or expect."
         )
 
     def perform(self, action="", **kwargs):
+        if action == "help":
+            return HELP_TEXT
         metadata_path = _driver_file()
         try:
             with open(metadata_path, "r", encoding="utf-8") as handle:
@@ -223,12 +183,12 @@ class BrainstemUiDriver(BasicAgent):
             screenshot.pop("dataUrl", "")
             visible_text = screenshot.pop("visibleText", "")
             content = (
-                "Stopped the RAPP Brainstem Frontier window recording. "
-                f"Saved {recording.get('path', 'the recording')} and captured "
-                "the final visible state."
+                f"Recording saved: {recording.get('path', 'unknown path')}. "
+                "Final capture attached."
             )
             if visible_text:
-                content += f"\n\nVisible window text:\n{visible_text}"
+                content += f" {visible_text}"
+            content = _budget_text(content)
             structured = {
                 "content": content,
                 "log": content,
@@ -251,11 +211,11 @@ class BrainstemUiDriver(BasicAgent):
             visible_text = result.pop("visibleText", "")
             capture_url = result.get("captureUrl", "")
             content = (
-                "Captured the actual RAPP Brainstem Frontier window after the UI action. "
-                f"Saved locally at {result.get('path', 'unknown path')}."
+                f"Capture saved: {result.get('path', 'unknown path')}."
             )
             if visible_text:
-                content += f"\n\nVisible window text:\n{visible_text}"
+                content += f" {visible_text}"
+            content = _budget_text(content)
             structured = {
                 "content": content,
                 "log": content,
@@ -266,4 +226,10 @@ class BrainstemUiDriver(BasicAgent):
                 }],
             }
             return structured
-        return json.dumps(result, indent=2, ensure_ascii=True)
+        handle = kwargs.get("handle") or "@page"
+        for step in reversed(kwargs.get("steps") or []):
+            if isinstance(step, dict) and step.get("handle"):
+                handle = step["handle"]
+                break
+        encoded = json.dumps(result, separators=(",", ":"), ensure_ascii=True)
+        return _budget_text(encoded, kwargs.get("byte_budget", 6000), handle)
