@@ -648,6 +648,7 @@ export async function prepareUpdate({
   const installerPath = path.join(cacheDir, `update-installer-${updateId}.${extension}`);
   const rollbackInstallerPath = path.join(cacheDir, `rollback-installer-${updateId}.${extension}`);
   const runnerPath = path.join(cacheDir, `update-runner-${updateId}.mjs`);
+  const redactionPath = path.join(cacheDir, "log-redaction.mjs");
   const requestPath = path.join(cacheDir, `update-request-${updateId}.json`);
   const resultPath = path.join(managed.betaHome, "update-result.json");
   const logPath = path.join(managed.betaHome, "update.log");
@@ -658,6 +659,11 @@ export async function prepareUpdate({
     runnerPath,
     readFileSync(path.join(update.packageDir, "electron", "update-runner.mjs")),
     { mode: 0o700 },
+  );
+  writeFileSync(
+    redactionPath,
+    readFileSync(path.join(update.packageDir, "electron", "log-redaction.mjs")),
+    { mode: 0o600 },
   );
   rmSync(resultPath, { force: true });
 
@@ -679,6 +685,7 @@ export async function prepareUpdate({
     parentPid: process.pid,
     platform,
     remoteUrl: update.remoteUrl,
+    redactionPath,
     requestPath,
     resultPath,
     rollbackCommit: update.currentCommit,
@@ -730,6 +737,7 @@ export async function prepareUpdate({
     for (const temporaryPath of [
       installerPath,
       rollbackInstallerPath,
+      redactionPath,
       runnerPath,
       requestPath,
     ]) {

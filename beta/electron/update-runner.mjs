@@ -2,7 +2,6 @@ import { spawn, spawnSync } from "node:child_process";
 import {
   closeSync,
   existsSync,
-  openSync,
   readFileSync,
   renameSync,
   rmSync,
@@ -10,10 +9,21 @@ import {
   writeSync,
 } from "node:fs";
 
+import {
+  openPrivateAppendFile,
+  redactCredentialText,
+} from "./log-redaction.mjs";
+
 const COMMIT_PATTERN = /^[0-9a-f]{40}$/i;
+const INSTALLER_OUTPUT_MAX_BYTES = 64 * 1024 * 1024;
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function writeLog(logFd, value) {
+  const text = String(value || "");
+  if (text) writeSync(logFd, redactCredentialText(text));
 }
 
 function processExists(pid) {
@@ -56,6 +66,7 @@ function loadRequest(requestPath) {
     "installerPath",
     "logPath",
     "packageDir",
+    "redactionPath",
     "remoteUrl",
     "requestPath",
     "resultPath",
@@ -100,7 +111,7 @@ function rollbackUpdate(request, logFd, failure) {
     return outcome;
   }
   outcome.attempted = true;
-  writeSync(
+  writeLog(
     logFd,
     `[..] Rolling back to ${outcome.commit} because: ${failure}\n`,
   );
@@ -130,10 +141,10 @@ function rollbackUpdate(request, logFd, failure) {
       );
     }
     outcome.success = true;
-    writeSync(logFd, `[OK] Rolled back to ${outcome.commit}\n`);
+    writeLog(logFd, `[OK] Rolled back to ${outcome.commit}\n`);
   } catch (error) {
-    outcome.error = String(error?.message || error);
-    writeSync(logFd, `[X] Rollback failed: ${outcome.error}\n`);
+    outcome.error = redactCredentialText(String(error?.message || error));
+    writeLog(logFd, `[X] Rollback failed: ${outcome.error}\n`);
   }
   return outcome;
 }
@@ -197,9 +208,10 @@ function installUpdate(request, logFd) {
     env.BRAINSTEM_BETA_BOOTSTRAP_URL = request.bootstrapUrl;
   }
 
+  let result;
   if (request.platform === "win32") {
     env.BRAINSTEM_BETA_INSTALLER_PATH = request.installerPath;
-    return spawnSync(
+    result = spawnSync(
       "powershell.exe",
       [
         "-NoProfile",
@@ -210,17 +222,24 @@ function installUpdate(request, logFd) {
         "& $env:BRAINSTEM_BETA_INSTALLER_PATH",
       ],
       {
+        encoding: "utf8",
         env,
-        stdio: ["ignore", logFd, logFd],
+        maxBuffer: INSTALLER_OUTPUT_MAX_BYTES,
+        stdio: ["ignore", "pipe", "pipe"],
         windowsHide: true,
       },
     );
+  } else {
+    result = spawnSync("/bin/bash", [request.installerPath], {
+      encoding: "utf8",
+      env,
+      maxBuffer: INSTALLER_OUTPUT_MAX_BYTES,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
   }
-
-  return spawnSync("/bin/bash", [request.installerPath], {
-    env,
-    stdio: ["ignore", logFd, logFd],
-  });
+  writeLog(logFd, result.stdout);
+  writeLog(logFd, result.stderr);
+  return result;
 }
 
 function relaunch(request) {
@@ -246,12 +265,12 @@ async function main() {
   const requestPath = process.argv[2];
   if (!requestPath) throw new Error("Update request path is required.");
   const request = loadRequest(requestPath);
-  const logFd = openSync(request.logPath, "a");
+  const logFd = openPrivateAppendFile(request.logPath);
   let result;
   let installStarted = false;
 
   try {
-    writeSync(
+    writeLog(
       logFd,
       `\n[${new Date().toISOString()}] Updating RAPP Brainstem Frontier to ${request.commit}\n`,
     );
@@ -278,8 +297,11 @@ async function main() {
     }
     result = { success: true };
   } catch (error) {
-    result = { success: false, error: String(error?.message || error) };
-    writeSync(logFd, `[X] ${result.error}\n`);
+    result = {
+      success: false,
+      error: redactCredentialText(String(error?.message || error)),
+    };
+    writeLog(logFd, `[X] ${result.error}\n`);
     // Only an installer that actually ran can have left the install half
     // moved; a pre-flight refusal changed nothing and needs no rollback.
     result.rollback = installStarted
@@ -297,6 +319,7 @@ async function main() {
       request.installerPath,
       request.rollbackInstallerPath,
       request.requestPath,
+      request.redactionPath,
       request.runnerPath,
     ].filter(Boolean)) {
       try {

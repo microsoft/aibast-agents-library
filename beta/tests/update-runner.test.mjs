@@ -25,6 +25,12 @@ const runnerSource = path.resolve(
   "electron",
   "update-runner.mjs",
 );
+const redactionSource = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "electron",
+  "log-redaction.mjs",
+);
 const posix = process.platform !== "win32";
 
 function git(cwd, args) {
@@ -67,6 +73,7 @@ async function runUpdater({ forward, rollback = null, expectedHead = null }) {
   const markers = path.join(root, "markers.log");
   const installerPath = path.join(root, "forward.sh");
   const rollbackInstallerPath = path.join(root, "rollback.sh");
+  const redactionPath = path.join(root, "log-redaction.mjs");
   const electronPath = path.join(root, "electron.sh");
   script(installerPath, forward({ beta, markers }));
   if (rollback) script(rollbackInstallerPath, rollback({ beta, markers }));
@@ -93,6 +100,7 @@ async function runUpdater({ forward, rollback = null, expectedHead = null }) {
     parentPid: parent.pid,
     platform: process.platform,
     remoteUrl: "https://github.com/microsoft/aibast-agents-library.git",
+    redactionPath,
     requestPath: path.join(root, "request.json"),
     resultPath: path.join(root, "update-result.json"),
     runnerPath: path.join(root, "runner-copy.mjs"),
@@ -101,6 +109,7 @@ async function runUpdater({ forward, rollback = null, expectedHead = null }) {
   };
   writeFileSync(request.requestPath, JSON.stringify(request));
   writeFileSync(request.runnerPath, readFileSync(runnerSource));
+  writeFileSync(redactionPath, readFileSync(redactionSource));
   const run = spawnSync(
     process.execPath,
     [request.runnerPath, request.requestPath],
@@ -117,7 +126,13 @@ async function runUpdater({ forward, rollback = null, expectedHead = null }) {
   }
   const markerText = readMarkers();
   const head = git(beta.dir, ["rev-parse", "HEAD"]);
-  const leftovers = [installerPath, rollbackInstallerPath, request.requestPath, request.runnerPath]
+  const leftovers = [
+    installerPath,
+    rollbackInstallerPath,
+    redactionPath,
+    request.requestPath,
+    request.runnerPath,
+  ]
     .filter((file) => existsSync(file));
   rmSync(root, { recursive: true, force: true });
   return { run, result, log, markers: markerText, head, beta, leftovers };
@@ -182,6 +197,21 @@ test("a successful update never runs the rollback installer", { skip: !posix }, 
   assert.equal(result.rollback, undefined);
   assert.equal(markers, "forward\nelectron\n");
   assert.equal(head, beta.second);
+});
+
+test("installer output is redacted before update.log persists it", { skip: !posix }, async () => {
+  const secret = "ghp_updateRunnerSecret123456789";
+  const { result, log } = await runUpdater({
+    forward: ({ beta }) => (
+      `echo "Authorization: Bearer ${secret}"\n`
+      + `git -C "${beta.dir}" checkout -q ${beta.second}\n`
+      + "exit 0"
+    ),
+  });
+
+  assert.equal(result.success, true);
+  assert.doesNotMatch(log, new RegExp(secret));
+  assert.match(log, /\[redacted:authorization\]/);
 });
 
 test("a pre-flight refusal changes nothing and does not roll back", { skip: !posix }, async () => {

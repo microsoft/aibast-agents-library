@@ -27,6 +27,7 @@ import vm from "node:vm";
 import { BrainstemProcess } from "../electron/brainstem-process.mjs";
 import {
   createExportRedactionScript,
+  installProcessOutputRedaction,
   openPrivateAppendFile,
   redactCredentialText,
   RedactingLineTransform,
@@ -236,6 +237,36 @@ test("line transform preserves ordinary bytes and joins partial sensitive lines"
     ),
   ]);
   assert.deepEqual(output, expected);
+});
+
+test("launcher process output is redacted across split writes", () => {
+  const stdout = new PassThrough();
+  const stderr = new PassThrough();
+  const output = [];
+  stdout.on("data", (chunk) => output.push(Buffer.from(chunk)));
+  stderr.on("data", (chunk) => output.push(Buffer.from(chunk)));
+  const installed = installProcessOutputRedaction({ stdout, stderr });
+
+  stdout.write("partial api_");
+  stdout.write("key=launcherSecretValue tail\n");
+  stderr.write("final enter LAST-CODE");
+  installed.flush();
+  installed.restore();
+
+  const text = Buffer.concat(output).toString("utf8");
+  assert.doesNotMatch(text, /launcherSecretValue|LAST-CODE/);
+  assert.match(text, /\[redacted:api-key\]/);
+  assert.match(text, /\[redacted:device-code\]/);
+  const manifest = JSON.parse(
+    readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+  );
+  const bootstrap = readFileSync(
+    new URL("../electron/bootstrap.mjs", import.meta.url),
+    "utf8",
+  );
+  assert.equal(manifest.main, "electron/bootstrap.mjs");
+  assert.match(bootstrap, /installProcessOutputRedaction\(\)/);
+  assert.match(bootstrap, /await import\("\.\/main\.mjs"\)/);
 });
 
 test("diagnostic scrub mirrors report privacy protections recursively", () => {

@@ -348,3 +348,32 @@ export class RedactingLineTransform extends Transform {
     }
   }
 }
+
+export function installProcessOutputRedaction({
+  stdout = process.stdout,
+  stderr = process.stderr,
+} = {}) {
+  const installed = [];
+  for (const stream of new Set([stdout, stderr])) {
+    if (!stream || typeof stream.write !== "function") continue;
+    const originalWrite = stream.write;
+    const writeOriginal = originalWrite.bind(stream);
+    const redactor = new RedactingLineTransform();
+    redactor.on("data", (chunk) => writeOriginal(chunk));
+    stream.write = (...args) => redactor.write(...args);
+    installed.push({ originalWrite, redactor, stream });
+  }
+  let flushed = false;
+  return Object.freeze({
+    flush() {
+      if (flushed) return;
+      flushed = true;
+      for (const { redactor } of installed) redactor.end();
+    },
+    restore() {
+      for (const { originalWrite, stream } of installed) {
+        stream.write = originalWrite;
+      }
+    },
+  });
+}
