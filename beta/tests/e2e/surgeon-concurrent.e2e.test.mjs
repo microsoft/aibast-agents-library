@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { readdirSync, readFileSync } from "node:fs";
+import path from "node:path";
 
 import { launch } from "./harness/launch.mjs";
 import { frontierTest } from "./harness/test-support.mjs";
@@ -157,12 +159,7 @@ async function runConcurrentPass(run) {
         settleMs: 100,
       },
     ], { target: "shell" });
-    const bothLeases = app.driver.expect({
-      selector: "#brainstem-beta-chat-lease",
-      text: "(2)",
-      timeoutMs: 30_000,
-    });
-    await Promise.all([firstSend, secondSend, bothLeases]);
+    await Promise.all([firstSend, secondSend]);
     // Both leases being held at once is proven by the banner reaching "(2)";
     // by the time telemetry is read a fast first delegate may already have
     // released its lease, so only the bound is asserted here.
@@ -205,6 +202,20 @@ async function runConcurrentPass(run) {
     ));
     assert(prompts.includes("FIRST_DELEGATED_PROMPT"));
     assert(prompts.includes("SECOND_DELEGATED_PROMPT"));
+
+    // Both leases were held at once: the bus serializes commands per frame,
+    // so the banner's "(2)" can last milliseconds and polling it is a race.
+    // The driver trace records the count every lock/unlock saw.
+    const leaseLog = readdirSync(path.join(app.paths.betaHome, "logs"))
+      .filter((name) => name.startsWith("ui-driver-") && name.endsWith(".jsonl"))
+      .flatMap((name) => readFileSync(path.join(app.paths.betaHome, "logs", name), "utf8")
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => JSON.parse(line)))
+      .filter((entry) => entry.action === "set_chat_lease");
+    const counts = leaseLog.map((entry) => entry.lease_count);
+    assert.ok(counts.includes(2), `both leases must overlap; lease counts seen: ${JSON.stringify(counts)}`);
+    assert.equal(counts.at(-1), 0, `every lease must be released; lease counts seen: ${JSON.stringify(counts)}`);
     trace = app.trace.text();
   } finally {
     await app.stop();

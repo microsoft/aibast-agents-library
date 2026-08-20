@@ -2099,6 +2099,13 @@ export async function startUiDriverServer({
       snapshot_after: traces[traces.length - 1]?.snapshot_after
         || result?.snapshot
         || null,
+      // Lease transitions are the one fact about concurrency that polling a
+      // banner cannot observe reliably (a "(2)" can last milliseconds); the
+      // trace records the count the lock or unlock saw, so a test can assert
+      // the overlap after the fact instead of racing it.
+      ...(Number.isInteger(result?.leaseCount)
+        ? { lease_count: result.leaseCount, locked: result.locked === true }
+        : {}),
     };
     mkdirSync(logDir, { recursive: true });
     appendFileSync(tracePath, `${JSON.stringify(entry)}\n`, {

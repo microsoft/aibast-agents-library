@@ -146,7 +146,7 @@ export class FrontierDriver {
     // is swapped on route changes (safe words, recomposition) and is laid out
     // late on slow runners, so transient frame states are retried until the
     // command budget is spent — anything else fails immediately.
-    const { retryMs = 30_000, ...commandOptions } = options;
+    const { retryMs = 30_000, trace = true, ...commandOptions } = options;
     const deadline = Date.now() + Math.max(0, Number(retryMs) || 0);
     let attempt = 0;
     for (;;) {
@@ -156,7 +156,7 @@ export class FrontierDriver {
           action: "run",
           steps,
           ...commandOptions,
-        });
+        }, { trace });
         return result.results;
       } catch (error) {
         const message = String(error?.message || error);

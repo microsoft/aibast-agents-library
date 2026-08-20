@@ -361,13 +361,15 @@ export function formatProtectedHomes(snapshot) {
   const proof = Object.fromEntries(
     Object.entries(snapshot).map(([name, entries]) => [
       name,
-      {
-        entries: entries.length,
-        listingSha256: createHash("sha256")
-          .update(JSON.stringify(entries))
-          .digest("hex"),
-        root: entries[0] || null,
-      },
+      Array.isArray(entries)
+        ? {
+            entries: entries.length,
+            listingSha256: createHash("sha256")
+              .update(JSON.stringify(entries))
+              .digest("hex"),
+            root: entries[0] || null,
+          }
+        : entries,
     ]),
   );
   return JSON.stringify(proof);
@@ -624,7 +626,9 @@ export async function launch({
           // A condition only matches a visible element; an empty text is the
           // "is it visible" question (state names are enabled/empty/...).
           [{ action: "expect", selector: "#input", text: "" }],
-          { retryMs: 0 },
+          // Readiness probes are the harness's own business: they must not
+          // land in the scenario trace (traces are compared across passes).
+          { retryMs: 0, trace: false },
         );
         visible = result?.ok === true;
       } catch {
