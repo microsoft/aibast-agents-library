@@ -315,8 +315,10 @@ tile) shifts `nth-of-type` and silently retargets the path.
   results are **never rendered** (they are never sent over IPC — `brain-surgeon.mjs:858-873`).
 - In default `smooth`, the first paced piece creates one
   `.surgeon-message.assistant.stream-arriving` bubble and quiet caret; subsequent word-sized
-  pieces append at the shared cadence. `done` flushes the scheduler, applies the authoritative
-  final text, removes `stream-arriving`, and persists the same history content as before.
+  pieces append at the shared cadence. The panel follows the tail above its measured composer
+  clearance unless the user scrolls more than 80 px away, then resumes at the bottom or on the
+  next reply. `done` flushes the scheduler, applies the authoritative final text, removes
+  `stream-arriving`, pins once, and persists the same history content as before.
   `raw` appends each SDK delta directly; `hold` keeps the accessible three-dot typing bubble
   and atomic delivery. Reduced motion disables the caret/fade and leaves the pre-response dots
   static.

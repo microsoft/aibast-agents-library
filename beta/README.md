@@ -89,7 +89,8 @@ builder.
 
 Reply delivery defaults to `RAPP_CHAT_STREAM=smooth`: both visible chats keep
 streaming, but Frontier paces text at a steady word-sized cadence, removes the
-Grail mask/wipe and bouncing dots, and shows a quiet caret while text arrives.
+Grail mask/wipe and bouncing dots, shows a quiet caret, and keeps the reply tail
+above the measured composer unless the user scrolls away.
 Use `raw` for the untouched kernel stream or `hold` for buffered delivery;
 `RAPP_CHAT_TYPING=1` remains an alias for `hold`.
 
