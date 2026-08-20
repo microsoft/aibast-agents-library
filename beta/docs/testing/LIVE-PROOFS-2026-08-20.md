@@ -46,6 +46,7 @@ after each.
 | hold-and-pop (built, then declined: "I want it to stream in") | yes | **1 step: the whole 1,604-char reply** | 11.8 s | 11.8 s |
 | smooth v1 — paced kernel wire | pulse | **six visible growth steps** for a 1,683-character reply, including `+22`, `+431`, `+216`, `+68`, and `+600` after the initial paint, separated by 1–2 s gaps; kernel unresolved-Markdown structural gating caused the lumps | ≈ kernel | — |
 | smooth v2 — Frontier provisional renderer | pulse | **27 visible growth steps for 1,658 characters** | 3.6 s | 11.7 s |
+| smooth v2 on the final merged tree (`94436b6c`) | pulse | **27 growth steps for 1,638 chars** (median +59 chars per ~300 ms sample), provisional bubble rendered by the bridge, kernel bubble swapped in at the end; Messages look default | 2.6 s |
 
 The deterministic v2 VM proof separately covers zero kernel bytes before
 terminal, at least 40 monotonic provisional renders for 1,600 characters,
