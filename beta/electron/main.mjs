@@ -28,10 +28,12 @@ import {
   readChatLookSettings,
 } from "./chat-look-settings.mjs";
 import {
+  ChatCardStore,
   changeAprilFoolsSettings,
   composeChatCardsFrameBridgeSource,
   parseAprilFoolsCommand,
   readAprilFoolsSettings,
+  registerChatCardIpc,
 } from "./chat-cards.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
@@ -181,6 +183,7 @@ let chatLookOverridden = initialChatLook.chatLookOverridden;
 let chatTypingEnabled = chatStreamMode === "hold";
 let aprilFools = initialAprilFools.aprilFools;
 let aprilFoolsOverridden = initialAprilFools.aprilFoolsOverridden;
+const chatCardStore = new ChatCardStore({ betaHome });
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -2374,6 +2377,12 @@ function registerIpc() {
   ipcMain.handle("beta:set-april-fools", async (event, next) => {
     assertTrustedIpc(event);
     return handleAprilFoolsChange(next || {});
+  });
+  registerChatCardIpc({
+    assertTrustedIpc,
+    ipcMain,
+    isEnabled: () => aprilFools.on,
+    store: chatCardStore,
   });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);

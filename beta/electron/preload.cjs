@@ -33,6 +33,15 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   chatStreamMode,
   chatTypingEnabled,
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
+  cardsComplete: (id, completion) => (
+    ipcRenderer.invoke("beta:cards-complete", id, completion || {})
+  ),
+  cardsFold: (id) => ipcRenderer.invoke("beta:cards-fold", id),
+  cardsList: () => ipcRenderer.invoke("beta:cards-list"),
+  cardsPark: (card) => ipcRenderer.invoke("beta:cards-park", card),
+  cardsRace: (id) => ipcRenderer.invoke("beta:cards-race", id),
+  cardsUndo: (id) => ipcRenderer.invoke("beta:cards-undo", id),
+  cardsWake: (id) => ipcRenderer.invoke("beta:cards-wake", id),
   getState: () => ipcRenderer.invoke("beta:get-state"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),
   deleteAgent: (filename) => ipcRenderer.invoke("beta:delete-agent", filename),
