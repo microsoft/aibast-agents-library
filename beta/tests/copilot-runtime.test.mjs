@@ -5,6 +5,7 @@ import path from "node:path";
 import test from "node:test";
 
 import {
+  CopilotRuntime,
   copilotPackageName,
   readGitHubTokenFile,
   withTimeout,
@@ -50,4 +51,119 @@ test("Copilot runtime reads the protected Brainstem device token", () => {
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
+});
+
+test("Copilot runtime loads the scripted fake Surgeon client", async (t) => {
+  const runtime = new CopilotRuntime({
+    env: {
+      BRAINSTEM_BETA_SURGEON_RUNTIME: "fake",
+      BRAINSTEM_BETA_SURGEON_SCRIPT_JSON: JSON.stringify({
+        sessions: [{
+          match: { prompt: "delegate" },
+          turns: [
+            {
+              tool: {
+                name: "delegate_to_brainstem",
+                arguments: { prompt: "hello from fake" },
+              },
+            },
+            { final: "delegation complete" },
+          ],
+        }],
+      }),
+    },
+  });
+  t.after(() => runtime.stop());
+
+  const status = await runtime.start();
+  assert.deepEqual(status, {
+    available: true,
+    authenticated: true,
+    login: "frontier-e2e",
+    cliPath: null,
+  });
+
+  const events = [];
+  const calls = [];
+  const session = await runtime.createSession({
+    tools: [{
+      name: "delegate_to_brainstem",
+      handler: async (args) => {
+        calls.push(args);
+        return "ok";
+      },
+    }],
+  });
+  session.on((event) => events.push(event.type));
+  const response = await session.sendAndWait({ prompt: "delegate" });
+  assert.equal(response.data.content, "delegation complete");
+  assert.deepEqual(calls, [{ prompt: "hello from fake" }]);
+  assert.deepEqual(events, [
+    "tool.execution_start",
+    "tool.execution_complete",
+  ]);
+});
+
+test("fake Surgeon concurrent mode starts both tool calls before completing", async (t) => {
+  const runtime = new CopilotRuntime({
+    env: {
+      BRAINSTEM_BETA_SURGEON_RUNTIME: "fake",
+      BRAINSTEM_BETA_SURGEON_SCRIPT_JSON: JSON.stringify({
+        mode: "concurrent",
+        concurrency: 2,
+        sessions: [
+          {
+            match: { prompt: "first" },
+            turns: [
+              { tool: { name: "delegate", arguments: { marker: "first" } } },
+              { final: "first reply" },
+            ],
+          },
+          {
+            match: { prompt: "second" },
+            turns: [
+              { tool: { name: "delegate", arguments: { marker: "second" } } },
+              { final: "second reply" },
+            ],
+          },
+        ],
+      }),
+    },
+  });
+  t.after(() => runtime.stop());
+  await runtime.start();
+
+  const order = [];
+  let release;
+  const released = new Promise((resolve) => {
+    release = resolve;
+  });
+  const config = {
+    tools: [{
+      name: "delegate",
+      handler: async ({ marker }) => {
+        order.push(`start:${marker}`);
+        if (order.length === 2) release();
+        await released;
+        order.push(`end:${marker}`);
+      },
+    }],
+  };
+  const first = await runtime.createSession(config);
+  const second = await runtime.createSession(config);
+  const replies = await Promise.all([
+    first.sendAndWait({ prompt: "first" }),
+    second.sendAndWait({ prompt: "second" }),
+  ]);
+
+  assert.deepEqual(order, [
+    "start:first",
+    "start:second",
+    "end:first",
+    "end:second",
+  ]);
+  assert.deepEqual(
+    replies.map((reply) => reply.data.content),
+    ["first reply", "second reply"],
+  );
 });

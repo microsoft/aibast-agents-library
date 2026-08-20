@@ -383,6 +383,7 @@ export class TwinManager {
     const worker = new BrainstemProcess({
       ...this.brainstemConfig,
       port,
+      portPreallocated: true,
       url,
       logFile: path.join(this.betaHome, "logs", "twins", `${id}.log`),
       env: {

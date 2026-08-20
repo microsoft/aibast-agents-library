@@ -78,10 +78,12 @@ export function withTimeout(
 
 export class CopilotRuntime {
   constructor({
+    env = process.env,
     timeoutMs = DEFAULT_START_TIMEOUT_MS,
     tokenFile = null,
     workingDirectory = process.cwd(),
   } = {}) {
+    this.env = env;
     this.timeoutMs = timeoutMs;
     this.tokenFile = tokenFile;
     this.workingDirectory = workingDirectory;
@@ -94,6 +96,26 @@ export class CopilotRuntime {
     if (this.startPromise) return this.startPromise;
 
     this.startPromise = (async () => {
+      if (this.env.BRAINSTEM_BETA_SURGEON_RUNTIME === "fake") {
+        const { createSurgeonFakeClient } = await import(
+          "../tests/e2e/harness/surgeon-fake.mjs"
+        );
+        const client = createSurgeonFakeClient({
+          env: this.env,
+          workingDirectory: this.workingDirectory,
+        });
+        await client.start();
+        const auth = await client.getAuthStatus();
+        this.client = client;
+        this.activeToken = null;
+        return {
+          available: true,
+          authenticated: Boolean(auth?.isAuthenticated),
+          login: auth?.login || null,
+          cliPath: null,
+        };
+      }
+
       const cliPath = resolveCopilotCliPath();
       const gitHubToken = readGitHubTokenFile(this.tokenFile);
       const options = cliPath

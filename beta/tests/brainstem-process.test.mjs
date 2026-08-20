@@ -1,12 +1,23 @@
 import assert from "node:assert/strict";
+import { createServer } from "node:net";
+import { createServer as createHttpServer } from "node:http";
+import {
+  mkdirSync,
+  mkdtempSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
 import {
+  BrainstemProcess,
   isBrainstemHealth,
   resolveBrainstemConfig,
   waitForHealth,
 } from "../electron/brainstem-process.mjs";
+import { testPython } from "./_python.mjs";
 
 test("beta launcher resolves the shared global Brainstem", () => {
   const config = resolveBrainstemConfig({
@@ -88,4 +99,132 @@ test("health wait returns the first valid response", async () => {
     },
   });
   assert.deepEqual(result, health);
+});
+
+test("owned-port launch ignores a listener on the configured port", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "frontier-own-port-"));
+  const sourceDir = path.join(root, "rapp_brainstem");
+  mkdirSync(sourceDir, { recursive: true });
+  writeFileSync(path.join(sourceDir, "brainstem.py"), String.raw`
+import json
+import os
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path != "/health":
+            self.send_response(404)
+            self.end_headers()
+            return
+        body = json.dumps({
+            "status": "ok",
+            "version": "e2e-fake",
+            "agents": [],
+            "brainstem_dir": os.path.dirname(os.path.abspath(__file__)),
+        }).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def log_message(self, *_args):
+        pass
+
+ThreadingHTTPServer(
+    ("127.0.0.1", int(os.environ["PORT"])),
+    Handler,
+).serve_forever()
+`);
+
+  const occupied = createServer();
+  await new Promise((resolve, reject) => {
+    occupied.once("error", reject);
+    occupied.listen(0, "127.0.0.1", resolve);
+  });
+  const address = occupied.address();
+  assert(address && typeof address !== "string");
+
+  const config = resolveBrainstemConfig({
+    env: {
+      BRAINSTEM_BETA_OWN_PORT: "1",
+      BRAINSTEM_BETA_PORT: String(address.port),
+      BRAINSTEM_BETA_PYTHON: testPython(),
+      BRAINSTEM_BETA_SOURCE_DIR: sourceDir,
+      BRAINSTEM_HOME: path.join(root, "home"),
+    },
+    home: root,
+  });
+  const brainstem = new BrainstemProcess(config);
+  t.after(async () => {
+    await brainstem.stop();
+    await new Promise((resolve) => occupied.close(resolve));
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  const result = await brainstem.start();
+  assert.equal(result.reused, false);
+  assert.equal(brainstem.owned, true);
+  assert.notEqual(result.port, address.port);
+  assert.equal(result.health.version, "e2e-fake");
+});
+
+test("owned-port launch rejects health from a foreign listener", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "frontier-foreign-port-"));
+  const sourceDir = path.join(root, "rapp_brainstem");
+  mkdirSync(sourceDir, { recursive: true });
+  writeFileSync(path.join(sourceDir, "brainstem.py"), "raise SystemExit(3)\n");
+
+  const foreign = createHttpServer((request, response) => {
+    if (request.url !== "/health") {
+      response.writeHead(404);
+      response.end();
+      return;
+    }
+    const body = JSON.stringify({
+      agents: [],
+      brainstem_dir: path.join(root, "foreign"),
+      status: "ok",
+      version: "foreign",
+    });
+    response.writeHead(200, {
+      "content-length": Buffer.byteLength(body),
+      "content-type": "application/json",
+    });
+    response.end(body);
+  });
+  await new Promise((resolve, reject) => {
+    foreign.once("error", reject);
+    foreign.listen(0, "127.0.0.1", resolve);
+  });
+  const address = foreign.address();
+  assert(address && typeof address !== "string");
+
+  const brainstem = new BrainstemProcess({
+    ...resolveBrainstemConfig({
+      env: {
+        BRAINSTEM_BETA_OWN_PORT: "1",
+        BRAINSTEM_BETA_PORT: String(address.port),
+        BRAINSTEM_BETA_PYTHON: testPython(),
+        BRAINSTEM_BETA_SOURCE_DIR: sourceDir,
+        BRAINSTEM_HOME: path.join(root, "home"),
+      },
+      home: root,
+    }),
+    portPreallocated: true,
+  });
+  t.after(async () => {
+    await brainstem.stop();
+    await new Promise((resolve) => {
+      foreign.close(resolve);
+      foreign.closeAllConnections?.();
+    });
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  await assert.rejects(
+    brainstem.start(),
+    /did not identify the owned source/,
+  );
+  assert.equal(brainstem.owned, false);
 });

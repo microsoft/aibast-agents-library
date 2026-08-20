@@ -1212,6 +1212,7 @@ function surgeonTileFor(session) {
   const tile = document.createElement("div");
   tile.className = "herd-tile";
   tile.dataset.drive = `surgeon[${driveKey(session.id)}].tile`;
+  tile.dataset.sessionId = String(session.id);
   tile.innerHTML = `
     <div class="hh">
       <span class="tt"></span>
