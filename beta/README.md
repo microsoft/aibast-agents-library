@@ -87,10 +87,11 @@ Brainstem execute it. VS Code and GitHub CLI remain available for experts, but
 they are no longer prerequisites for using GitHub Copilot as the Brainstem's
 builder.
 
-Reply delivery defaults to an iMessage-style typing-then-pop experience in both
-visible chats: Frontier keeps streamed reply text in memory until it is complete,
-while Brain Surgeon tool rows remain live. Set `RAPP_CHAT_TYPING=0` before
-launching Frontier to restore token-by-token rendering.
+Reply delivery defaults to `RAPP_CHAT_STREAM=smooth`: both visible chats keep
+streaming, but Frontier paces text at a steady word-sized cadence, removes the
+Grail mask/wipe and bouncing dots, and shows a quiet caret while text arrives.
+Use `raw` for the untouched kernel stream or `hold` for buffered delivery;
+`RAPP_CHAT_TYPING=1` remains an alias for `hold`.
 
 If the user gets stuck, another AI can visibly take over the same Brain Surgeon
 or Brainstem chat, perform the next steps in Frontier, show the evidence,
