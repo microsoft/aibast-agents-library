@@ -464,6 +464,20 @@ test("a stale catalog that cannot be revalidated fails closed for downloads but 
   assert.equal((await store.client.list()).length, 1, "browsing the cached list still works");
 });
 
+test("a backward clock step forces catalog revalidation", async () => {
+  const store = recallStore();
+  await store.client.list();
+  store.yank();
+  store.advance(-60 * 60 * 1000);
+
+  await assert.rejects(
+    store.client.download("demo"),
+    (error) => error.code === "yanked",
+  );
+
+  assert.equal(store.fetches(), 2);
+});
+
 test("the store timeout covers a body that stalls after the headers arrived", async () => {
   const catalog = {
     schema: "rapp-store/1.0",

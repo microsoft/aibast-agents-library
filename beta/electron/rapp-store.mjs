@@ -152,7 +152,9 @@ export class RappStoreClient {
   }
 
   catalogAgeMs() {
-    return this.catalogLoadedAt === null ? Infinity : this.now() - this.catalogLoadedAt;
+    if (this.catalogLoadedAt === null) return Infinity;
+    const age = this.now() - this.catalogLoadedAt;
+    return age < 0 ? Infinity : age;
   }
 
   // Re-read the catalog when the cached one is older than recallMaxAgeMs.
