@@ -19,7 +19,7 @@ Kody, 2026-08-20 (four messages, one feature):
 > just like they were playing the game, but they are playing with the AI that is represented as
 > contained in that chat card (they can drag it back into the main Brainstem to wake it back up
 > fully as the primary companion — the user's Pikachu, but just for the chat transcript representing
-> that dimension of the RAPPID creature)."*
+> that dimension of the rappid creature)."*
 >
 > *"Save a checkpoint before you start this because this is an easter egg that we don't want to
 > break anything or change anything with the default AI until April Fools mode is turned on and then
