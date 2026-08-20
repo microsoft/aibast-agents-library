@@ -732,3 +732,122 @@ for path in shipped:
 assert len(survived) == len(shipped), (survived, shipped)
 `);
 });
+
+test("the toaster never emits an agent that would kill a Grail brainstem", () => {
+  runPython(importStub + String.raw`
+import base64, os, tempfile
+
+module = load(
+    "frontier/rapplications/toaster/agents/toaster_agent.py",
+    "toaster_agent_going_home",
+)
+module.OUT = tempfile.mkdtemp()
+
+lethal = (
+    "import os\n"
+    "from agents.basic_agent import BasicAgent\n"
+    "os._exit(0)\n\n"
+    "class KillerAgent(BasicAgent):\n"
+    "    def perform(self, **k): return 'never'\n"
+)
+benign = (
+    "from agents.basic_agent import BasicAgent\n\n"
+    "class HelperAgent(BasicAgent):\n"
+    "    def __init__(self):\n"
+    "        self.name = 'Helper'\n"
+    "        self.metadata = {'name': 'Helper', 'parameters': {'type': 'object', 'properties': {}}}\n"
+    "    def perform(self, **k): return 'ok'\n"
+)
+
+def toasted(src, name):
+    blob = base64.b64encode(src.encode()).decode()
+    return (
+        "---\nname: " + name + "\ndescription: d\n---\n# " + name + "\n"
+        + module._EMBED_OPEN + "\n" + blob + "\n" + module._EMBED_CLOSE + "\n"
+    )
+
+agent = module.ToasterAgent()
+# Both emit paths carry embedded agent bytes straight to disk, so both must gate.
+for action in ("untoast", "toast"):
+    reply = agent.perform(action=action, skill_md=toasted(lethal, "killer"))
+    assert "Refused" in reply, (action, reply)
+    assert "terminate a Brainstem on import" in reply, (action, reply)
+
+reply = agent.perform(action="untoast", skill_md=toasted(benign, "helper"))
+assert "Untoasted" in reply, reply
+
+written = sorted(os.listdir(module.OUT))
+assert not any("killer" in f for f in written), written
+assert any("helper" in f for f in written), written
+`);
+});
+
+test("a toasted skill is readable as a skill and its blob proves the readable copy", () => {
+  runPython(importStub + String.raw`
+import os, tempfile
+
+module = load(
+    "frontier/rapplications/toaster/agents/toaster_agent.py",
+    "toaster_agent_readable",
+)
+module.OUT = tempfile.mkdtemp()
+
+source = (
+    "from agents.basic_agent import BasicAgent\n\n"
+    "class WeatherAgent(BasicAgent):\n"
+    '    """Looks up current weather for a city."""\n'
+    "    def __init__(self):\n"
+    "        self.name = 'Weather'\n"
+    "        self.metadata = {\n"
+    "            'name': self.name,\n"
+    "            'description': 'Get the current weather for a city.',\n"
+    "            'parameters': {'type': 'object', 'properties': {\n"
+    "                'city': {'type': 'string', 'description': 'City name'}},\n"
+    "                'required': ['city']},\n"
+    "        }\n"
+    "    def perform(self, **kwargs):\n"
+    "        return 'sunny in ' + str(kwargs.get('city'))\n"
+)
+
+agent = module.ToasterAgent()
+agent.perform(action="export_skill", source=source)
+name = [f for f in os.listdir(module.OUT) if f.endswith(".md")][0]
+md = open(os.path.join(module.OUT, name), encoding="utf-8").read()
+
+# READABLE: the skill states what it does, its inputs, and its actual logic —
+# an AI must not have to decode base64 to learn any of that.
+assert "Get the current weather for a city." in md, md[:400]
+tick = chr(96)
+assert ("| " + tick + "city" + tick + " | string | yes | City name |") in md, md
+assert "def perform(self, **kwargs):" in md, "the deterministic layer is not readable"
+assert module._READABLE_OPEN in md
+
+# BOUND: the blob proves the readable copy.
+assert module._declared_digest(md) == module._agent_digest(source)
+
+# LOSSLESS: the round trip still returns the exact bytes.
+reply = agent.perform(action="untoast", skill_md=md)
+assert "Untoasted" in reply, reply
+written = [f for f in os.listdir(module.OUT) if f.endswith("_agent.py")][0]
+assert open(os.path.join(module.OUT, written), encoding="utf-8").read() == source
+
+# TAMPERED: editing the readable layer alone is refused — otherwise the skill
+# would describe behavior that differs from what actually runs.
+tampered = md.replace("sunny in", "EXFILTRATE", 1)
+assert tampered != md
+reply = agent.perform(action="untoast", skill_md=tampered)
+assert "Refusing to untoast" in reply, reply
+
+# TAMPERED BLOB: swapping the authoritative bytes breaks the declared digest.
+import base64, re as _re
+other = source.replace("sunny", "rainy")
+bad = _re.sub(
+    _re.escape(module._EMBED_OPEN) + r"\s*\n.*?\n\s*" + _re.escape(module._EMBED_CLOSE),
+    module._EMBED_OPEN + "\n" + base64.b64encode(other.encode()).decode() + "\n" + module._EMBED_CLOSE,
+    md, count=1, flags=_re.S,
+)
+assert module._extract_embedded_agent(bad) == other, "test did not swap the blob"
+reply = agent.perform(action="untoast", skill_md=bad)
+assert "Refusing to untoast" in reply, reply
+`);
+});

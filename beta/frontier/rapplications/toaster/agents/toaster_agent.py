@@ -24,6 +24,7 @@ skill.md on the Frontier window (the drop toasts + hot-loads it like an agent.py
 
 import ast
 import base64
+from hashlib import sha256
 import json
 import os
 import re
@@ -104,6 +105,49 @@ def _extract_embedded_agent(md):
         return base64.b64decode(b64, validate=True).decode("utf-8")
     except Exception:
         return None
+
+
+# The readable source and the base64 blob must never be able to disagree. The
+# blob is authoritative (byte-exact); the digest binds both, so a skill whose
+# human-readable layer was edited without the blob is caught rather than
+# silently followed. What you read is provably what runs.
+_READABLE_OPEN = "<!-- readable-agent/1.0 -->"
+_READABLE_CLOSE = "<!-- /readable-agent -->"
+
+
+def _agent_digest(source):
+    return sha256(source.encode("utf-8")).hexdigest()
+
+
+def _extract_readable_agent(md):
+    """The readable (fenced) copy of the agent, if the skill carries one."""
+    m = list(re.finditer(
+        re.escape(_READABLE_OPEN) + r"\s*\n(.*?)\n\s*" + re.escape(_READABLE_CLOSE),
+        md, re.S))
+    if not m:
+        return None
+    block = m[-1].group(1)
+    fence = re.match(r"\s*(`{3,})[A-Za-z0-9_-]*\n(.*)\n\s*\1\s*$", block, re.S)
+    return fence.group(2) if fence else None
+
+
+def _declared_digest(md):
+    m = re.search(r"^agent_sha256:\s*([0-9a-f]{64})\s*$", md, re.M)
+    return m.group(1) if m else None
+
+
+def _verify_fidelity(md, embedded):
+    """Return an error string if the skill's layers disagree, else None."""
+    declared = _declared_digest(md)
+    actual = _agent_digest(embedded)
+    if declared and declared != actual:
+        return (f"the embedded agent does not match the skill's declared digest "
+                f"(declared {declared[:12]}…, actual {actual[:12]}…)")
+    readable = _extract_readable_agent(md)
+    if readable is not None and readable.strip() != _escape_embed_sentinels(embedded).strip():
+        return ("the readable agent in this skill does not match the embedded one; "
+                "the human-readable layer has been edited without the authoritative bytes")
+    return None
 
 
 def _agent_manifest(source):
@@ -190,6 +234,70 @@ class {tool}Agent(BasicAgent):
 '''
 
 
+# ── The going-home law (shared across the estate; see beta/CONSTITUTION.md) ──
+# Grail's loader wraps each agent import in an except-Exception clause, so a
+# syntax error or a raising import is survivable — the kernel logs it and keeps
+# serving. A module-level interpreter exit is NOT: SystemExit is a BaseException
+# and os._exit bypasses handlers entirely, so such an agent kills any Brainstem
+# it is dropped into. Anything this rapplication emits must stay safe to drag
+# home into a plain Grail, so the check runs at the single write chokepoint.
+#
+# Deliberately duplicated rather than imported: every rapplication must stay
+# independently portable, so it carries the law rather than depending on a
+# sibling for it.
+_EXIT_CALLS = {("sys", "exit"), ("os", "_exit"), ("os", "abort"), ("os", "kill")}
+
+
+def _module_level_exit(tree):
+    """Return a reason if the module body can terminate the interpreter on
+    import, else None. Only top-level statements run at import time."""
+    def offending(node):
+        for sub in ast.walk(node):
+            if isinstance(sub, ast.Call):
+                fn = sub.func
+                if isinstance(fn, ast.Attribute) and isinstance(fn.value, ast.Name):
+                    if (fn.value.id, fn.attr) in _EXIT_CALLS:
+                        return f"{fn.value.id}.{fn.attr}()"
+                if isinstance(fn, ast.Name) and fn.id in ("exit", "quit"):
+                    return f"{fn.id}()"
+            if isinstance(sub, ast.Raise):
+                exc = sub.exc
+                name = None
+                if isinstance(exc, ast.Call) and isinstance(exc.func, ast.Name):
+                    name = exc.func.id
+                elif isinstance(exc, ast.Name):
+                    name = exc.id
+                if name in ("SystemExit", "KeyboardInterrupt"):
+                    return f"raise {name}"
+        return None
+
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            continue
+        found = offending(node)
+        if found:
+            return found
+    return None
+
+
+class LethalAgentRefused(Exception):
+    """Raised when an emission would kill a plain Grail brainstem on import."""
+
+
+def _assert_safe_to_go_home(filename, text):
+    if not filename.endswith(".py"):
+        return
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return  # survivable: Grail logs it and keeps serving
+    reason = _module_level_exit(tree)
+    if reason:
+        raise LethalAgentRefused(
+            f"module-level {reason} would terminate a Brainstem on import"
+        )
+
+
 def _extract_skill_layer(source):
     """Pull the toasted-skill constants out of a wrapper agent by AST (no exec)."""
     layer = {}
@@ -208,6 +316,86 @@ def _extract_skill_layer(source):
         ):
             layer[node.targets[0].id] = node.value.value
     return layer
+
+
+def _literal_or_none(node):
+    try:
+        return ast.literal_eval(node)
+    except Exception:
+        return None
+
+
+def _agent_contract(source):
+    """Read the agent's real tool contract out of `self.metadata = {...}` by AST.
+
+    Most hand-written agents carry no __manifest__ — their identity lives in
+    metadata. Without this the toasted skill would describe itself generically
+    and an AI reading it would learn nothing about what the agent actually does.
+    """
+    out = {"description": None, "parameters": None, "tool_name": None, "doc": None}
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return out
+    cls = None
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef) and any(
+            (getattr(b, "id", None) or getattr(b, "attr", None)) == "BasicAgent"
+            for b in node.bases
+        ):
+            cls = node
+            break
+    if cls is None:
+        return out
+    out["doc"] = ast.get_docstring(cls)
+    for node in ast.walk(cls):
+        if not isinstance(node, ast.Assign) or not isinstance(node.value, ast.Dict):
+            continue
+        targets = [
+            (t.attr if isinstance(t, ast.Attribute) else getattr(t, "id", None))
+            for t in node.targets
+        ]
+        if "metadata" not in targets:
+            continue
+        for key, value in zip(node.value.keys, node.value.values):
+            if not isinstance(key, ast.Constant):
+                continue
+            if key.value == "description" and isinstance(value, ast.Constant):
+                out["description"] = value.value
+            elif key.value == "parameters":
+                out["parameters"] = _literal_or_none(value)
+            elif key.value == "name" and isinstance(value, ast.Constant):
+                out["tool_name"] = value.value
+    return out
+
+
+def _render_contract(contract):
+    """A readable parameter table so the skill states its own interface."""
+    params = contract.get("parameters") or {}
+    props = params.get("properties") if isinstance(params, dict) else None
+    if not isinstance(props, dict) or not props:
+        return ""
+    required = set(params.get("required") or [])
+    rows = ["| parameter | type | required | description |",
+            "|---|---|---|---|"]
+    for key, spec in props.items():
+        spec = spec if isinstance(spec, dict) else {}
+        kind = spec.get("type", "any")
+        if spec.get("enum"):
+            kind = " \\| ".join(str(v) for v in spec["enum"])
+        desc = str(spec.get("description", "")).replace("|", "\\|")
+        rows.append(f"| `{key}` | {kind} | {'yes' if key in required else 'no'} | {desc} |")
+    return "## Inputs\n\n" + "\n".join(rows) + "\n\n"
+
+
+def _fence(source):
+    """A code fence long enough that the source cannot break out of it."""
+    longest = 0
+    run = 0
+    for ch in source:
+        run = run + 1 if ch == "`" else 0
+        longest = max(longest, run)
+    return "`" * max(3, longest + 1)
 
 
 def _escape_embed_sentinels(value):
@@ -241,6 +429,10 @@ class ToasterAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def _write(self, filename, text):
+        # Nothing leaves the Toaster that could kill a Brainstem it is dropped
+        # into. This is the single emission chokepoint, so toast, untoast, and
+        # anything added later are all covered.
+        _assert_safe_to_go_home(filename, text)
         os.makedirs(OUT, exist_ok=True)
         p = os.path.join(OUT, filename)
         tmp = p + ".tmp"
@@ -256,6 +448,11 @@ class ToasterAgent(BasicAgent):
             return {"toast": self._toast, "export_skill": self._export,
                     "untoast": self._untoast, "roundtrip_check": self._roundtrip}.get(
                 action, lambda a: f"Unknown action '{action}'.")(kw)
+        except LethalAgentRefused as e:
+            return (f"Refused: {e}. Grail's loader survives a broken agent, but not one "
+                    "that exits during import — that would kill the Brainstem it is "
+                    "dropped into. Move the exit inside a function so it only runs when "
+                    "called, then toast again.")
         except Exception as e:
             return f"Toaster error: {type(e).__name__}: {e}"
 
@@ -270,6 +467,11 @@ class ToasterAgent(BasicAgent):
                 ast.parse(embedded)
             except SyntaxError as e:
                 return f"The embedded agent is malformed ({e}); refusing to hot-load."
+            drift = _verify_fidelity(md, embedded)
+            if drift:
+                return (f"Refusing to untoast: {drift}. The authoritative bytes and the "
+                        "readable copy must agree, or the skill no longer describes what "
+                        "it runs.")
             fm, _ = _parse_frontmatter(md)
             fn = _snake(fm.get("name") or "toasted") + "_agent.py"
             p = self._write(fn, embedded)
@@ -299,8 +501,14 @@ class ToasterAgent(BasicAgent):
             return f"That is not valid Python ({e}); nothing to export."
         info = _agent_manifest(source)
         skill = _extract_skill_layer(source)
-        name = a.get("name") or skill.get("SKILL_NAME") or info.get("display_name") or (info.get("name") or "").split("/")[-1] or info.get("tool_name") or "agent"
-        desc = skill.get("SKILL_DESCRIPTION") or info.get("description") or f"Toasted skill for {name}."
+        contract = _agent_contract(source)
+        name = a.get("name") or skill.get("SKILL_NAME") or info.get("display_name") or (info.get("name") or "").split("/")[-1] or contract.get("tool_name") or info.get("tool_name") or "agent"
+        # A hand-written agent has no __manifest__; its real identity lives in
+        # metadata. Prefer that over a generated placeholder so the skill
+        # actually says what it does.
+        desc = (skill.get("SKILL_DESCRIPTION") or info.get("description")
+                or contract.get("description") or contract.get("doc")
+                or f"Toasted skill for {name}.")
         display_name = _escape_embed_sentinels(name)
         safe_desc = _escape_embed_sentinels(desc)
         # Frontmatter must stay single-line, but keep the FULL description —
@@ -313,17 +521,34 @@ class ToasterAgent(BasicAgent):
         # masquerade as the authoritative embedded block.
         steps = _escape_embed_sentinels(skill["SKILL_MARKDOWN"]).strip() if skill.get("SKILL_MARKDOWN") else ""
         steps_md = f"## Skill\n\n{steps}\n\n" if steps else ""
+        # A genuine agent has no prose steps — its deterministic layer IS the
+        # code, so render it readably. An AI reading this skill can then see
+        # exactly what runs instead of decoding base64 to find out.
+        contract_md = _render_contract(contract)
+        fence = _fence(source)
+        readable_md = (
+            "## Deterministic layer — the agent.py itself\n\n"
+            "This is the exact code the embedded agent runs. It is reproduced here so "
+            "any reader can follow the logic directly; the base64 block below is the "
+            "authoritative copy and the digest binds the two.\n\n"
+            f"{_READABLE_OPEN}\n{fence}python\n"
+            f"{_escape_embed_sentinels(source.strip())}\n{fence}\n{_READABLE_CLOSE}\n\n"
+        ) if not steps else ""
+        digest = _agent_digest(source)
         b64 = base64.b64encode(source.encode("utf-8")).decode("ascii")
         # wrap base64 at 100 cols for readable diffs; whitespace is stripped on decode
         wrapped = "\n".join(b64[i:i + 100] for i in range(0, len(b64), 100))
         md = (
-            f"---\nname: {_slug(name)}\ndescription: {fm_desc}\n---\n\n"
+            f"---\nname: {_slug(name)}\ndescription: {fm_desc}\n"
+            f"agent_sha256: {digest}\n---\n\n"
             f"<!-- toasted-skill/1.0 -->\n> {_AI_NOTE}\n\n"
             f"# {display_name}\n\n{safe_desc}\n\n"
             f"## How to use\nRun this skill against your task. Its runnable RAPP agent is embedded below; "
             f"a RAPP Brainstem can convert it back to `agent.py` byte-for-byte.\n\n"
+            f"{contract_md}"
             f"{steps_md}"
-            f"## Embedded agent — RAPP deterministic layer (lossless)\n"
+            f"{readable_md}"
+            f"## Embedded agent — authoritative bytes (lossless)\n"
             f"{_EMBED_OPEN}\n{wrapped}\n{_EMBED_CLOSE}\n"
         )
         fn = _snake(name) + "_skill.md"
@@ -339,6 +564,11 @@ class ToasterAgent(BasicAgent):
         if embedded is None:
             return ("This markdown carries no embedded agent (not a toasted _skill.md). "
                     "Use action=toast to WRAP a raw skill into a new agent.py instead.")
+        drift = _verify_fidelity(md, embedded)
+        if drift:
+            return (f"Refusing to untoast: {drift}. The authoritative bytes and the "
+                    "readable copy must agree, or the skill no longer describes what "
+                    "it runs.")
         fm, _ = _parse_frontmatter(md)
         fn = _snake(fm.get("name") or "toasted") + "_agent.py"
         p = self._write(fn, embedded)
