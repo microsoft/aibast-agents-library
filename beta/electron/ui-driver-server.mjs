@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { spawn } from "node:child_process";
 import {
+  appendFileSync,
   createWriteStream,
   existsSync,
   mkdirSync,
@@ -954,6 +955,19 @@ async function browserDriverCommand(command, createHelpers) {
     throw new Error(`Unsupported UI driver action: ${action || "(empty)"}`);
   }
 
+  async function performWithTrace(step) {
+    const before = currentOutline();
+    const result = await perform(step);
+    const after = currentOutline();
+    if (result && typeof result === "object" && !Array.isArray(result)) {
+      result.__trace = {
+        snapshot_after: after.snapshot,
+        snapshot_before: before.snapshot,
+      };
+    }
+    return result;
+  }
+
   if (String(command.action || "").toLowerCase() === "run") {
     if (!Array.isArray(command.steps) || command.steps.length === 0) {
       throw new Error("A UI driver run requires at least one step.");
@@ -961,14 +975,14 @@ async function browserDriverCommand(command, createHelpers) {
     const results = [];
     const summaries = [];
     for (const step of command.steps) {
-      const result = await perform(step);
+      const result = await performWithTrace(step);
       summaries.push(publishStep(step, result));
       results.push(result);
     }
     state.lastRun = Date.now();
     return { results, summaries };
   }
-  const result = await perform(command);
+  const result = await performWithTrace(command);
   publishStep(command, result);
   state.lastRun = Date.now();
   return result;
@@ -1697,6 +1711,52 @@ function twinTarget(command) {
   return id || null;
 }
 
+function frameKeyForCommand(command) {
+  const twin = twinTarget(command);
+  if (twin) return `twin:${twin}`;
+  const action = String(command?.action || "").toLowerCase();
+  if (
+    command?.target === "shell"
+    || [
+      "force_mode",
+      "recording_status",
+      "route_telemetry",
+      "screenshot",
+      "start_recording",
+      "stop_recording",
+      "surgeon_chat",
+      "tour",
+    ].includes(action)
+  ) return "shell";
+  return "brainstem";
+}
+
+function createFrameQueue() {
+  const tails = new Map();
+  return {
+    async enter(key) {
+      const previous = tails.get(key) || Promise.resolve();
+      let releaseGate;
+      const gate = new Promise((resolve) => {
+        releaseGate = resolve;
+      });
+      const tail = previous.catch(() => {}).then(() => gate);
+      tails.set(key, tail);
+      await previous.catch(() => {});
+      let released = false;
+      return () => {
+        if (released) return;
+        released = true;
+        releaseGate();
+        if (tails.get(key) === tail) tails.delete(key);
+      };
+    },
+    get size() {
+      return tails.size;
+    },
+  };
+}
+
 // ── AI force mode ─────────────────────────────────────────────────────────
 // A hidden, opt-in visual state: while an AI is driving the visible window on
 // the user's behalf, the whole window's edges glow and a small tag says so.
@@ -1873,8 +1933,15 @@ export async function startUiDriverServer({
   const metadataPath = env.BRAINSTEM_BETA_UI_DRIVER_FILE
     || path.join(betaHome, "ui-driver.json");
   const captureDir = path.join(betaHome, "captures");
+  const logDir = path.join(betaHome, "logs");
   const recordingDir = path.join(betaHome, "recordings");
   const nodeHelpers = createUiDriverHelpers();
+  const startedAt = new Date().toISOString();
+  const traceRunId = `${startedAt.replace(/[:.]/g, "-")}-${
+    randomBytes(5).toString("hex")
+  }`;
+  const tracePath = path.join(logDir, `ui-driver-${traceRunId}.jsonl`);
+  const frameQueue = createFrameQueue();
   const token = randomBytes(32).toString("hex");
   const artifactToken = randomBytes(32).toString("hex");
   const artifacts = new Map();
@@ -1901,6 +1968,66 @@ export async function startUiDriverServer({
         limit,
       });
       return fitted.truncated ? fitted.value : result;
+    }
+
+    function traceItems(result) {
+      return Array.isArray(result?.results) ? result.results : [result];
+    }
+
+    function mergedEffect(items) {
+      const effects = items.map((item) => item?.effect).filter(Boolean);
+      if (!effects.length) return null;
+      const merged = {
+        added: effects.flatMap((effect) => effect.added || []).slice(0, 5),
+        changed: effects.flatMap((effect) => effect.changed || []).slice(0, 5),
+        removed: effects.flatMap((effect) => effect.removed || []).slice(0, 5),
+        route: [...effects].reverse().find((effect) => effect.route)?.route || null,
+      };
+      const focus = [...effects].reverse().find((effect) => effect.focus)?.focus;
+      if (focus) merged.focus = focus;
+      const submit = [...effects].reverse().find((effect) => effect.submit)?.submit;
+      if (submit) merged.submit = submit;
+      return merged;
+    }
+
+    function appendCommandTrace(command, result, error = null) {
+      const items = traceItems(result);
+      const traces = items.map((item) => item?.__trace).filter(Boolean);
+      const handles = items.map((item) => item?.h).filter(Boolean);
+      const entry = {
+        action: String(command?.action || ""),
+        handle: command?.handle || handles[handles.length - 1] || null,
+        effect: error ? { error: errorMessage(error) } : mergedEffect(items),
+        snapshot_before: traces[0]?.snapshot_before || command?.since || null,
+        snapshot_after: traces[traces.length - 1]?.snapshot_after
+          || result?.snapshot
+          || null,
+      };
+      mkdirSync(logDir, { recursive: true });
+      appendFileSync(tracePath, `${JSON.stringify(entry)}\n`, {
+        encoding: "utf8",
+        mode: 0o600,
+      });
+    }
+
+    function stripTraceMetadata(value) {
+      if (Array.isArray(value)) {
+        value.forEach((item) => stripTraceMetadata(item));
+        return value;
+      }
+      if (!value || typeof value !== "object") return value;
+      delete value.__trace;
+      for (const item of Object.values(value)) stripTraceMetadata(item);
+      return value;
+    }
+
+    function commandResponse(response, command, result, { budget = false } = {}) {
+      appendCommandTrace(command, result);
+      const clean = stripTraceMetadata(result);
+      jsonResponse(response, 200, {
+        ok: true,
+        result: budget ? boundedResult(clean, command) : clean,
+      });
     }
     const artifactId = randomBytes(18).toString("base64url");
     artifacts.set(artifactId, {
@@ -2125,9 +2252,11 @@ export async function startUiDriverServer({
       return;
     }
 
+    let command = null;
     let heartbeat = null;
+    let releaseFrame = null;
     try {
-      const command = validateCommand(await readJsonBody(request));
+      command = validateCommand(await readJsonBody(request));
       response.writeHead(200, {
         "Cache-Control": "no-store",
         "Content-Type": "application/json; charset=utf-8",
@@ -2136,6 +2265,7 @@ export async function startUiDriverServer({
       heartbeat = setInterval(() => {
         if (!response.writableEnded) response.write(" ");
       }, 15000);
+      releaseFrame = await frameQueue.enter(frameKeyForCommand(command));
       if (command.forceMode === true) {
         await setForceMode(window, true, { label: command.forceLabel });
       }
@@ -2147,23 +2277,24 @@ export async function startUiDriverServer({
           throw new Error(`Unsupported force_mode value: ${wanted}`);
         }
         if (wanted === "on") armForceModeIdle(window, command.idleMs);
-        jsonResponse(response, 200, { ok: true, result: forceModeStatus(window) });
+        commandResponse(response, command, forceModeStatus(window));
         return;
       }
       if (command.action === "tour") {
         const result = await runTourCommand(window, command);
         armForceModeIdle(window, command.idleMs);
-        jsonResponse(response, 200, { ok: true, result });
+        commandResponse(response, command, result);
         return;
       }
       if (
         command.action === "recording_status"
         && capturedRecordings.has(window)
       ) {
-        jsonResponse(response, 200, {
-          ok: true,
-          result: capturedWindowRecordingStatus(window),
-        });
+        commandResponse(
+          response,
+          command,
+          capturedWindowRecordingStatus(window),
+        );
         return;
       }
       if (command.action === "route_telemetry") {
@@ -2192,16 +2323,13 @@ export async function startUiDriverServer({
           ?? telemetry.sequence
           ?? requestedCursor,
         ) || requestedCursor;
-        jsonResponse(response, 200, {
-          ok: true,
-          result: boundedResult({
-            ...telemetry,
-            chat_lease_count: chatLeaseCount,
-            cursor,
-            events,
-            navigation_count: navigationCount,
-          }, command),
-        });
+        commandResponse(response, command, {
+          ...telemetry,
+          chat_lease_count: chatLeaseCount,
+          cursor,
+          events,
+          navigation_count: navigationCount,
+        }, { budget: true });
         return;
       }
       if (command.action === "refresh") {
@@ -2213,10 +2341,7 @@ export async function startUiDriverServer({
           "setTimeout(() => location.reload(), 25); true",
           true,
         );
-        jsonResponse(response, 200, {
-          ok: true,
-          result: { refreshing: true },
-        });
+        commandResponse(response, command, { refreshing: true });
         return;
       }
       if (command.action === "start_recording") {
@@ -2237,7 +2362,7 @@ export async function startUiDriverServer({
           result = await startWindowRecording(window, command, uploadUrl);
           result.fallback = errorMessage(captureError);
         }
-        jsonResponse(response, 200, { ok: true, result });
+        commandResponse(response, command, result);
         return;
       }
       if (command.action === "stop_recording") {
@@ -2258,12 +2383,9 @@ export async function startUiDriverServer({
           kind: "image",
           url: screenshot.captureUrl,
         });
-        jsonResponse(response, 200, {
-          ok: true,
-          result: {
-            recording,
-            screenshot,
-          },
+        commandResponse(response, command, {
+          recording,
+          screenshot,
         });
         return;
       }
@@ -2274,10 +2396,7 @@ export async function startUiDriverServer({
           kind: "image",
           url: result.captureUrl,
         });
-        jsonResponse(response, 200, {
-          ok: true,
-          result,
-        });
+        commandResponse(response, command, result);
         return;
       }
 
@@ -2303,13 +2422,21 @@ export async function startUiDriverServer({
         for (const summary of summaries) await renderGrailStep(summary);
       }
       armForceModeIdle(window, command.idleMs);
-      jsonResponse(response, 200, {
-        ok: true,
-        result: boundedResult(result, command),
-      });
+      commandResponse(response, command, result, { budget: true });
     } catch (error) {
-      jsonResponse(response, 400, { ok: false, error: errorMessage(error) });
+      let failure = error;
+      if (command) {
+        try {
+          appendCommandTrace(command, null, error);
+        } catch (traceError) {
+          failure = new Error(
+            `${errorMessage(error)} Trace write also failed: ${errorMessage(traceError)}`,
+          );
+        }
+      }
+      jsonResponse(response, 400, { ok: false, error: errorMessage(failure) });
     } finally {
+      releaseFrame?.();
       if (heartbeat) clearInterval(heartbeat);
     }
   });
@@ -2325,14 +2452,15 @@ export async function startUiDriverServer({
   }
 
   writeMetadata(metadataPath, {
-    version: 1,
+    version: 2,
     host: "127.0.0.1",
     port: address.port,
     token,
     pid: process.pid,
     brainstemRuntimeFingerprint,
     runtimeFingerprint,
-    startedAt: new Date().toISOString(),
+    startedAt,
+    tracePath,
   });
 
   return {
@@ -2355,7 +2483,9 @@ export async function startUiDriverServer({
 
 export const uiDriverInternals = {
   browserDriverCommand,
+  createFrameQueue,
   createUiDriverHelpers,
+  frameKeyForCommand,
   forceModeStatus,
   runTourCommand,
   setForceMode,

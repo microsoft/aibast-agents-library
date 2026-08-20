@@ -1003,30 +1003,10 @@ async function hatchCopilotStudioTwin({ displayName = "Copilot Studio Draft", en
   );
 }
 
-// Actions that actually DRIVE the one visible Brainstem (move the cursor, type,
-// hold the center chat, record, run the click-through). With several Brain
-// Surgeon chats live at once they share this single window, so these are
-// serialized through one "stage" so two chats never fight over it. Read-only
-// and quick-state actions (inspect, read, screenshot, telemetry, lease, force
-// mode) pass straight through — a background chat keeps doing its own file,
-// shell, build, and test work while another chat holds the stage.
-const UI_STAGE_ACTIONS = new Set([
-  "announce", "chat", "click", "press", "run",
-  "start_recording", "stop_recording", "surgeon_chat", "tour", "type",
-]);
-let uiStageChain = Promise.resolve();
-
-function executeUiCommand(command) {
-  const action = String(command?.action || "").toLowerCase();
-  if (!UI_STAGE_ACTIONS.has(action)) return rawUiCommand(command);
-  const run = () => rawUiCommand(command);
-  const result = uiStageChain.then(run, run);
-  // Keep the queue moving even if one driving command fails.
-  uiStageChain = result.then(() => {}, () => {});
-  return result;
-}
-
-async function rawUiCommand(command) {
+// The loopback driver owns the one queue per visible frame. Sending every
+// caller through that bus prevents Surgeon and hot-loaded Python commands from
+// bypassing each other with competing cursors.
+async function executeUiCommand(command) {
   if (!uiDriver?.metadataPath) {
     throw new Error("The visible Brainstem control bridge is not ready.");
   }
