@@ -214,7 +214,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       : null;
 
     function measureFooter() {
-      const height = Math.ceil(footer.getBoundingClientRect().height);
+      const height = footer.getBoundingClientRect().height;
       root.style.setProperty(
         "--rapp-stream-footer-clearance",
         Math.max(0, height) + "px",

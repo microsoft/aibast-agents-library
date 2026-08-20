@@ -1717,7 +1717,7 @@ function setupSurgeonTailFollowing() {
   if (!composer) return null;
   const root = document.documentElement;
   function measureComposer() {
-    const height = Math.ceil(composer.getBoundingClientRect().height);
+    const height = composer.getBoundingClientRect().height;
     root.style.setProperty(
       "--rapp-surgeon-composer-clearance",
       Math.max(0, height) + "px",

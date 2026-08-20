@@ -94,6 +94,8 @@ restore the original styling; the choice is saved in `settings.json`, with
 `RAPP_CHAT_LOOK=messages|business` as an override. Delivery independently
 defaults to `RAPP_CHAT_STREAM=smooth`; use `raw` for the untouched kernel stream
 or `hold` for buffered delivery (`RAPP_CHAT_TYPING=1` remains a hold alias).
+Smooth mode keeps the reply tail above the exactly measured composer unless the
+user scrolls away.
 
 If the user gets stuck, another AI can visibly take over the same Brain Surgeon
 or Brainstem chat, perform the next steps in Frontier, show the evidence,
