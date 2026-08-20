@@ -87,11 +87,13 @@ Brainstem execute it. VS Code and GitHub CLI remain available for experts, but
 they are no longer prerequisites for using GitHub Copilot as the Brainstem's
 builder.
 
-Reply delivery defaults to `RAPP_CHAT_STREAM=smooth`: both visible chats keep
-streaming, but Frontier paces text at a steady word-sized cadence, removes the
-Grail mask/wipe and bouncing dots, and shows a quiet caret while text arrives.
-Use `raw` for the untouched kernel stream or `hold` for buffered delivery;
-`RAPP_CHAT_TYPING=1` remains an alias for `hold`.
+Chat defaults to the familiar **Messages** look in the Brainstem, Brain Surgeon,
+and twin tiles: blue/gray grouped bubbles, tails, and pill composers. Choose
+**Chat Look → Business** from the Frontier three-dot or native View menu to
+restore the original styling; the choice is saved in `settings.json`, with
+`RAPP_CHAT_LOOK=messages|business` as an override. Delivery independently
+defaults to `RAPP_CHAT_STREAM=smooth`; use `raw` for the untouched kernel stream
+or `hold` for buffered delivery (`RAPP_CHAT_TYPING=1` remains a hold alias).
 
 If the user gets stuck, another AI can visibly take over the same Brain Surgeon
 or Brainstem chat, perform the next steps in Frontier, show the evidence,
