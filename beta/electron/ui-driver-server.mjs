@@ -254,7 +254,17 @@ async function browserDriverCommand(command, createHelpers) {
     const x = Math.max(0, Math.min(innerWidth - 1, rect.left + rect.width / 2));
     const y = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
     const top = document.elementFromPoint?.(x, y);
-    if (top && top !== element && !element.contains(top)) {
+    // Occluded means something ELSE is on top. A hit on the element, on one
+    // of its descendants, or on one of its own ancestors (a button inside the
+    // first-run intro card, a link inside a panel) is the element itself being
+    // reachable — the ancestor rule is what lets the driver dismiss an overlay
+    // through the overlay's own button.
+    if (
+      top
+      && top !== element
+      && !element.contains(top)
+      && !top.contains(element)
+    ) {
       return `occluded by ${selectorFor(top) || top.localName || "another element"}`;
     }
     return null;

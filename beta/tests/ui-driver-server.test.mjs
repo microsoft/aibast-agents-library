@@ -454,3 +454,14 @@ test("long recordings stream to disk without base64 IPC", () => {
   assert.match(serverSource, /500 \* 1024 \* 1024/);
   assert.doesNotMatch(recorderSource, /FileReader|saveRecording|base64/);
 });
+
+test("a control inside its own overlay is actionable: an ancestor hit is not an occluder", () => {
+  // Live regression: `click #enter` on the first-run intro returned ok:false
+  // ("occluded by @shell.intro") because elementFromPoint reported the intro
+  // card — the button's own ancestor — and the walkthrough could no longer
+  // dismiss the intro. Only something OUTSIDE the element's subtree and
+  // ancestry occludes it.
+  const source = uiDriverInternals.browserDriverCommand.toString();
+  assert.match(source, /!element\.contains\(top\)\s*&&\s*!top\.contains\(element\)/);
+  assert.match(source, /occluded by \$\{selectorFor\(top\)/);
+});
