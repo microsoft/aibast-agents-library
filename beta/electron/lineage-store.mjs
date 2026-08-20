@@ -394,9 +394,51 @@ export class LineageStore {
     }
   }
 
+  /** Per-locus molt policy. "pinned" means this gene locus never leaves its
+   *  Grail baseline however many rings exist — the user's memory agent can be
+   *  frozen at ring 0 while a news agent molts daily. Defaults to "mutable". */
+  locusPolicy(ancestorRappid) {
+    const locus = readJsonSafe(
+      path.join(this._locusDirectory(ancestorRappid), LOCUS_FILE),
+    );
+    return locus?.policy === "pinned" ? "pinned" : "mutable";
+  }
+
+  setLocusPolicy(ancestorRappid, policy) {
+    const baseline = this._baseline(ancestorRappid);
+    if (!baseline) throw new Error(`Unknown Grail ancestor: ${ancestorRappid}`);
+    const next = policy === "pinned" ? "pinned" : "mutable";
+    this._ensureLocus(baseline, next);
+    const locusPath = path.join(
+      this._locusDirectory(ancestorRappid),
+      LOCUS_FILE,
+    );
+    const locus = readJsonSafe(locusPath) || {
+      schema: LINEAGE_SCHEMA,
+      ancestorRappid,
+      filename: baseline.filename,
+      sha256: baseline.sha256,
+      sourcePath: baseline.sourcePath,
+    };
+    atomicWriteJson(locusPath, { ...locus, policy: next });
+    // Pinning is only meaningful if it takes effect now, not at the next molt.
+    if (next === "pinned") {
+      atomicWrite(this._headPath(ancestorRappid), `${ancestorRappid}\n`);
+    }
+    return next;
+  }
+
   setHead(ancestorRappid, ringRappid) {
     const baseline = this._baseline(ancestorRappid);
     if (!baseline) throw new Error(`Unknown Grail ancestor: ${ancestorRappid}`);
+    if (
+      ringRappid !== ancestorRappid
+      && this.locusPolicy(ancestorRappid) === "pinned"
+    ) {
+      throw new Error(
+        `Refusing to molt a pinned locus: ${baseline.filename} is pinned to its Grail baseline.`,
+      );
+    }
     if (
       ringRappid !== ancestorRappid
       && !this._pathIsValid(
@@ -422,6 +464,10 @@ export class LineageStore {
     if (!this.enabled || process.env.RAPP_MOLT_LINEAGE === "0") {
       return baselineResult();
     }
+    // A pinned locus never leaves its baseline, whatever HEAD says.
+    try {
+      if (this.locusPolicy(ancestorRappid) === "pinned") return baselineResult();
+    } catch {}
     try {
       if (!ringRappid || ringRappid === ancestorRappid) return baselineResult();
       const ring = this._readRing(ancestorRappid, ringRappid);
@@ -496,6 +542,8 @@ export class LineageStore {
   restore(ancestorRappid = null) {
     if (!this.isEnabled()) return { disabled: true, changed: [], failed: [] };
     return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
+      // Pinned loci stay at baseline: restore must not fight the pin.
+      if (this.locusPolicy(target) === "pinned") return target;
       const latest = this.listRings(target)
         .filter((ring) => (
           ring.ringRappid !== target
@@ -640,4 +688,12 @@ export function verifyChain(ancestorRappid) {
 
 export function inspectLineage(ancestorRappid) {
   return configuredStore().inspectLineage(ancestorRappid);
+}
+
+export function locusPolicy(ancestorRappid) {
+  return configuredStore().locusPolicy(ancestorRappid);
+}
+
+export function setLocusPolicy(ancestorRappid, policy) {
+  return configuredStore().setLocusPolicy(ancestorRappid, policy);
 }

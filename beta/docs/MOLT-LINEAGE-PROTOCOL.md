@@ -69,6 +69,21 @@ ring; growth appends a new ring and advances `HEAD`; nothing is ever overwritten
 Loci are **independent**: a bad molt in one agent can never touch another, and each
 agent time-travels on its own axis.
 
+### Per-locus policy
+
+Each locus carries a policy in its `locus.json`:
+
+- **`mutable`** (default) — the locus molts normally.
+- **`pinned`** — the locus never leaves its Grail baseline, however many rings
+  exist. `setHead` refuses to move it, `resolveLive` serves the baseline
+  regardless of HEAD, and a fleet-wide `restore` honors the pin rather than
+  fighting it. History is still append-only — a ring may be *recorded* for a
+  pinned locus, it simply can never be made live until the locus is unpinned.
+
+This is what lets one Brainstem freeze its memory agent at ring 0 for life while
+a news agent molts every day — or exactly the reverse. Policy is per agent, set
+with `setLocusPolicy(ancestorRappid, "pinned" | "mutable")`.
+
 ## Composition — the "monkey-patch," done safely
 
 The Frontier already materializes each worker's `AGENTS_PATH` by hardlinking-or-

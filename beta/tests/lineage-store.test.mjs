@@ -486,3 +486,56 @@ test("inspectLineage surfaces on-disk corruption that verifyChain does not answe
   assert.equal(report.chainOk, true);
   assert.equal(store.resolveLive(alpha.ancestorRappid).ringRappid, first);
 });
+
+test("a pinned locus never molts while its siblings molt freely", (t) => {
+  const { store, sources } = fixture(t);
+  const ancestors = store.baselineAncestors();
+  const memory = ancestors.find(
+    (item) => item.filename === "context_memory_agent.py",
+  );
+  const news = ancestors.find((item) => item.filename === "alpha_agent.py");
+
+  // Pin memory at its Grail baseline; leave the other locus mutable.
+  assert.equal(store.setLocusPolicy(memory.ancestorRappid, "pinned"), "pinned");
+  assert.equal(store.locusPolicy(memory.ancestorRappid), "pinned");
+  assert.equal(store.locusPolicy(news.ancestorRappid), "mutable");
+
+  // A ring may still be recorded for the pinned locus (history is append-only),
+  // but it can never be made live.
+  const memoryRing = store.appendRing(memory.ancestorRappid, {
+    source: "CONTEXT = 'molted'\n",
+    parentRappid: memory.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  assert.throws(
+    () => store.setHead(memory.ancestorRappid, memoryRing),
+    /pinned/,
+    "a pinned locus refuses to move HEAD off baseline",
+  );
+  assert.deepEqual(store.resolveLive(memory.ancestorRappid), {
+    ringRappid: memory.ancestorRappid,
+    source: sources["context_memory_agent.py"],
+    isBaseline: true,
+  });
+
+  // The sibling locus molts normally on its own timeline.
+  const newsRing = store.appendRing(news.ancestorRappid, {
+    source: "ALPHA = 'today'\n",
+    parentRappid: news.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  store.setHead(news.ancestorRappid, newsRing);
+  assert.equal(store.resolveLive(news.ancestorRappid).isBaseline, false);
+
+  // A fleet-wide restore must not fight the pin, and must not report it failed.
+  const report = store.restore(null);
+  assert.deepEqual(report.failed, [], "pinning is honored, not an error");
+  assert.equal(
+    store.resolveLive(memory.ancestorRappid).isBaseline,
+    true,
+    "memory stayed at baseline through a fleet restore",
+  );
+  assert.equal(store.resolveLive(news.ancestorRappid).ringRappid, newsRing);
+});
