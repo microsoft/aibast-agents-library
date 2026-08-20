@@ -89,6 +89,52 @@ Swipes are pointer gestures on a card (touchpad/touch/mouse drag past a threshol
 move also has a button and a keyboard path, and every move is a UI Driver v2 handle
 (`@herd.card[<id>]`, `@herd.card[<id>].wake`, `@brainstem.grab`) so it can be driven and tested.
 
+## One card, two states — compatible with the public RAR
+
+Kody: *"look up the public RAR repo's card to make it compatible … make the cards exportable as
+RAR-compliant so we can submit them to RAR, and the card stays (dormant) versus in the herd view
+(active card)."*
+
+The public registry (`kody-w/RAR`, MIT) already defines what a card **is**, and it is deterministic:
+
+```
+__manifest__ → forge_seed(name, category, quality_tier, tags, dependencies) → 64-bit seed
+seed → resolve_card_from_seed() → type colors · HP · ATK/DEF/SPD/INT · abilities · rarity ·
+       evolution stage · weakness/resistance · retreat cost · avatar SVG
+seed → seed_to_words() → a 7-word incantation that reconstructs the exact card, offline
+```
+
+(`rapp_sdk.py`; minted cards at `cards/holo_cards.json`, keyed `@publisher/slug`; `api.json` marks
+card resolution *LOCAL — computed, zero bandwidth*.) So compatibility is not a new format — it is
+using theirs:
+
+- **Same seed, same card.** `beta/electron/rar-card.mjs` ports `seed_hash` → `mulberry32` →
+  `forge_seed` / `resolve_card_from_seed` / `seed_to_words` to JavaScript, with a conformance test
+  that re-mints every entry of `cards/holo_cards.json` at the pinned RAR revision `e47755faaa04`
+  and asserts byte-equal stats, types, rarity, stage, and incantation. The tile wears the RAR card:
+  the type colors ring the ◈ badge, the stage and HP/ATK/DEF sit in the meta line, the incantation
+  is the card's caption, the avatar is the art. Nothing is invented twice — the April Fools themes
+  are *layouts* around RAR's card vocabulary (RAR already carries both the creature-card stats and
+  the mana-cost/type-line reading).
+- **Active vs dormant.** In the herd a card is **active**: it has a port, a READY/PARKED pill, a
+  transcript. In RAR the same card is **dormant**: a catalog entry with a seed and an incantation and
+  no process. The Store picker's *Public RAR* rows are dormant cards; dragging one into the herd is
+  the existing *◈ Hatch* — that is activation. The new move is the reverse.
+- **Export to RAR** (a move on an active card that carries an agent): the Frontier builds the
+  single `.py` RAR accepts — the agent's source with a complete `__manifest__`
+  (`schema`, `name` = `@<github-login>/<slug>`, `version`, `display_name`, `description`, `author`,
+  `tags`, `category`, `quality_tier: community`), canonical `sha256-lf-v1` — shows the user **exactly
+  the bytes that will leave the machine**, then files the `rar-change-request/1.0` Issue through the
+  user's own GitHub identity (`gh auth` / `GITHUB_TOKEN`, never stored by the Frontier). The card's
+  pill reads *submitted · issue #N* until the forge mints it; the seed is already known locally, so
+  the dormant and active cards match before RAR ever answers.
+- **What exports, what stays.** Only the agent file goes. A chat card's transcript never leaves the
+  machine (RAR Issues are public by design); a chat card exports when it *carries* an agent — a
+  twin's agent, a Surgeon-built or Molter-grown agent the conversation produced — and says plainly
+  when it carries none.
+- **Card JSON grows one block:** `"rar": { "seed", "name_seed", "incantation", "manifest",
+  "sha256_lf_v1", "submitted": { "issue", "at", "operation" } }`.
+
 ## The table (themes)
 
 Themes change only how cards are laid on the table and how a card looks; the moves are the same.
