@@ -118,6 +118,16 @@ off within a day; one that fires rarely is personality. So it is fenced:
   its own exit: one action, no confirmation, no "not now" — off, immediately, and **never again**,
   across this session and every session after it. Not a snooze, and not something a later update
   turns back on.
+
+  "Never" is scoped honestly: it is as strong as a local preference can be — this device, this
+  install, for as long as it stands, surviving restarts and updates. It does not follow the person
+  to another machine, because nothing here syncs; a Sense is on-device by Article II, and claiming
+  otherwise would be a promise the product cannot keep. A fresh install starts fresh, and that is
+  the only case where it returns.
+
+  If the choice cannot be written down — no preference store, a read-only profile — it is still
+  honoured for the rest of the session and the failure is surfaced. What must never happen is
+  silently discarding an off choice and playing the thing again as though the person had not asked.
 - **It can also be turned off ahead of time.** A named, user-visible setting — not a developer flag, not an
   environment variable, not something you have to know about to find. Off takes effect immediately
   and for the rest of the session, not at the next restart; it persists; and off means *never*,
