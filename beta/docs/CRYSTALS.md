@@ -198,6 +198,10 @@ composite key of frame tick and UTC timestamp; nothing is ever overwritten, only
 reason is exactly ours — without it, scaling the fleet scales the collision rate; with it, scaling
 scales throughput.
 
+**And a tile is a frame** ([RAPPID-TILE-PROTOCOL](RAPPID-TILE-PROTOCOL.md)) — so the tiles a
+dimension produces *are* its delta stream, already keyed and already mergeable. There is no separate
+event log to build.
+
 Applied here: **a dimension's real substance is its delta stream, not its adapter.** What the Mac
 mini learned is an ordered, append-only record of what happened; the trained weights are a
 *derivation* of that record. So:
