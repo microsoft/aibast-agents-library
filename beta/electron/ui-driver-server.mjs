@@ -21,7 +21,7 @@ import {
   rotateLogIfLarge,
 } from "./log-redaction.mjs";
 import { createUiDriverHelpers } from "./ui-driver-helpers.mjs";
-import { resolveFfmpegExecutable } from "./video-tools.mjs";
+import { probeMediaOrgan, resolveFfmpegExecutable } from "./video-tools.mjs";
 
 const MAX_BODY_BYTES = 256 * 1024;
 let recordingPermissionWebContents = null;
@@ -1839,7 +1839,18 @@ async function startCapturedWindowRecording(
     `brainstem-${new Date().toISOString().replace(/[:.]/g, "-")}.webm`,
   );
   const temporaryPath = `${outputPath}.${process.pid}.tmp.webm`;
-  const executable = resolveFfmpegExecutable(env);
+  // Do not start a recording by discovering mid-spawn that the organ is absent.
+  const organ = probeMediaOrgan(env);
+  if (!organ.ok) {
+    const error = new Error(
+      `${organ.name} are not installed, so this run cannot be recorded `
+      + `(${organ.detail}; ${organ.reason}). Enable Showtime to install them.`,
+    );
+    error.name = "MediaOrganUnavailableError";
+    error.organ = organ;
+    throw error;
+  }
+  const executable = organ.executable || resolveFfmpegExecutable(env);
   const child = spawn(
     executable,
     [
