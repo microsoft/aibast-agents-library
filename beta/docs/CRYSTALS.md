@@ -23,8 +23,19 @@ tile, not a score on a profile.
 ## What actually wears it
 
 The crystal is tied to the locally running model. It measures **assistance drawn down** — the help
-this tile actually needed from the local LLM to get work done — not time elapsed, not sessions
-opened, not turns taken. A tile left alone for a year is exactly as tall as you left it. A tile that
+this tile still needs to get work done — not time elapsed, not sessions opened, not turns taken.
+
+**And training is training, wherever it happened.** A [drill](QQDRILL-PROTOCOL.md) that ran a
+hundred candidate dimensions and fed real gradient updates back into the adapter has genuinely made
+the tile need less. That wear is not a trophy for winning; it is the work that was done. So a
+crystal can be worn deliberately — you can drill a fresh tile into an expert one instead of grinding
+through the same hours by hand, which is most of the point of being able to drill at all.
+
+**But the lineage records the mix.** Wear earned by a person using the tile and wear earned by
+drilling against a synthetic flag are both real and are not the same thing, so a tile carries how it
+was worn — used versus drilled — and can say so. A tile worn entirely by drilling and never touched
+by a person is a legitimate object; it is not a battle-tested one, and nothing should let it present
+as though it were. A tile left alone for a year is exactly as tall as you left it. A tile that
 carried you through a hundred real pieces of work is a nub, because you stopped needing to be
 carried.
 
@@ -90,8 +101,8 @@ A crystal trains into a tile, and the tile is what the next person summons.
 
 Dimensions can also be minted deliberately and raced against a checkable goal rather than
 grown one at a time — see [`DIMENSION-MINING.md`](DIMENSION-MINING.md). A mined winner still
-arrives at full crystal height: it captured a flag, but nobody has used it, and wear comes only
-from use.
+arrives worn by exactly the training that happened inside the drill and no more — winning adds
+nothing — with its lineage recording that the wear was drilled rather than used.
 
 ### The consequence that must not be discovered later
 

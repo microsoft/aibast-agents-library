@@ -50,10 +50,12 @@ So the pipeline is:
    the run produced.
 4. **Lineage is carried.** Every mined dimension records the tile it descended from, the task,
    and the flag it was racing, so a winner can be explained rather than merely trusted.
-5. **A mined winner is not battle-tested, and must not look it.** It captured a flag; nobody
-   has used it. Its [crystal](CRYSTALS.md) is at full height like any newly summoned tile,
-   because wear comes from real use and never from winning a race. A product that let a race
-   result wear a master's nub would be lying about experience.
+5. **Winning wears nothing; training wears everything.** A drill that fed real updates back into
+   the adapter has genuinely made the tile need less, and its [crystal](CRYSTALS.md) wears by
+   exactly that much — for losing drills too, if they trained. What a *win* confers is promotion,
+   never experience. And the lineage records that the wear was **drilled**, not used: a tile worn
+   entirely in virtual dimensions and never touched by a person is a real object but not a
+   battle-tested one, and must never present as though it were.
 6. **Nothing is published by a race.** The winner is promoted locally. Publishing stays the
    deliberate act it is everywhere else.
 
