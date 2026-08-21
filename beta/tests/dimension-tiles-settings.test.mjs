@@ -22,10 +22,20 @@ test("view mode defaults to herd and persists beside Chat Look", (t) => {
   t.after(() => rmSync(betaHome, { recursive: true, force: true }));
 
   assert.deepEqual(readViewModeSettings({ betaHome, env: {} }), {
-    viewMode: { mode: "herd", layout: "ring", customLayoutPath: null },
+    viewMode: {
+      mode: "herd",
+      surface: "herd",
+      layout: "ring",
+      customLayoutPath: null,
+    },
     viewModeOverridden: false,
     file: path.join(betaHome, "settings.json"),
-    storedViewMode: { mode: "herd", layout: "ring", customLayoutPath: null },
+    storedViewMode: {
+      mode: "herd",
+      surface: "herd",
+      layout: "ring",
+      customLayoutPath: null,
+    },
   });
 
   writeViewModeSettings({
@@ -39,6 +49,7 @@ test("view mode defaults to herd and persists beside Chat Look", (t) => {
   });
   assert.deepEqual(changed.viewMode, {
     mode: "arena",
+    surface: "herd",
     layout: "grid",
     customLayoutPath: null,
   });
@@ -46,6 +57,7 @@ test("view mode defaults to herd and persists beside Chat Look", (t) => {
   assert.deepEqual(JSON.parse(readFileSync(file, "utf8")), {
     viewMode: {
       mode: "arena",
+      surface: "herd",
       layout: "grid",
       customLayoutPath: null,
     },
@@ -94,10 +106,32 @@ test("view mode composer words are exact and trimmed", () => {
   assert.equal(parseViewModeCommand("please enable agent arena"), null);
 });
 
+test("the active tile view persists herd, arena, and binder surfaces", (t) => {
+  const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-tile-surfaces-"));
+  t.after(() => rmSync(betaHome, { recursive: true, force: true }));
+  writeViewModeSettings({
+    betaHome,
+    viewMode: { mode: "arena", surface: "binder" },
+  });
+  assert.equal(
+    readViewModeSettings({ betaHome, env: {} }).viewMode.surface,
+    "binder",
+  );
+  writeViewModeSettings({
+    betaHome,
+    viewMode: { mode: "arena", surface: "unknown" },
+  });
+  assert.equal(
+    readViewModeSettings({ betaHome, env: {} }).viewMode.surface,
+    "herd",
+  );
+});
+
 test("herd-mode bridge composition is byte-identical", (t) => {
   const checkpointSource = "checkpoint-frame-bridge\n\u0000bytes";
   const herd = composeDimensionTilesFrameBridgeSource(checkpointSource, {
     mode: "herd",
+    surface: "herd",
     layout: "ring",
     customLayoutPath: null,
   });

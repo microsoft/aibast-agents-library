@@ -8,6 +8,7 @@ import {
 
 const arena = {
   mode: "arena",
+  surface: "herd",
   layout: "ring",
   customLayoutPath: null,
 };
@@ -29,6 +30,14 @@ test("tile frame bridge exists only in Agent Arena bridge source", () => {
   assert.match(source, /rapp-beta:tile-parked/);
   assert.match(source, /pendingRequestIds/);
   assert.match(source, /__rappBetaDeferredTileCompletions/);
+  assert.match(source, /header\.draggable = true/);
+  assert.match(source, /application\/x-rapp-brainstem-chat/);
+  assert.match(source, /rapp-beta:chat-drag-start/);
+  assert.match(source, /rapp-beta:chat-drag-end/);
+  assert.match(source, /rapp-beta:tile-drop-primary/);
+  assert.match(source, /rapp-beta:tile-frame-ready/);
+  assert.match(source, /header\.dataset\.drive = "brainstem\.primary"/);
+  assert.match(source, /rapp-beta:tile-keyboard-park/);
 });
 
 test("tile capture and restore use the page sanitizer", () => {
@@ -60,6 +69,15 @@ test("parking preserves an accepted delayed wire while kernel Clear runs", () =>
   assert.match(source, /rapp-beta:tile-completion-ack/);
   assert.match(source, /canonicalHistory/);
   assert.match(source, /rapp-beta:tile-detached/);
+});
+
+test("tile drops reuse the kernel overlay and retain the postMessage fallback", () => {
+  const source = composeDimensionTilesFrameBridgeSource("", arena);
+  assert.match(source, /document\.getElementById\("drop-overlay"\)/);
+  assert.match(source, /function showDropOverlay/);
+  assert.match(source, /event\.relatedTarget === null/);
+  assert.match(source, /armedTileId/);
+  assert.match(source, /application\/x-rapp-dimension-tile/);
 });
 
 test("abandoning a staged race disarms it, so the next conversation is not filed into the contender", () => {

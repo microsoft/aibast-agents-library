@@ -10,6 +10,10 @@ const tilesSource = readFileSync(
   new URL("../ui/dimension-tiles.js", import.meta.url),
   "utf8",
 );
+const frameSource = readFileSync(
+  new URL("../electron/dimension-tiles.mjs", import.meta.url),
+  "utf8",
+);
 const tilesCss = readFileSync(
   new URL("../ui/dimension-tiles.css", import.meta.url),
   "utf8",
@@ -44,12 +48,17 @@ test("herd mode loads no tile script, stylesheet, DOM, or listeners", async (t) 
   t.diagnostic("herd-mode renderer: 0 tile DOM, 0 tile listeners, 0 tile CSS");
 });
 
-test("every tile move and the Brainstem grab control has a drive handle", () => {
-  assert.match(tilesSource, /dataset\.drive = "brainstem\.grab"/);
+test("every tile move and the Brainstem primary title bar has a drive handle", () => {
+  assert.match(frameSource, /header\.dataset\.drive = "brainstem\.primary"/);
   assert.match(tilesSource, /herd\.tile\[\$\{id\}\]/);
-  for (const move of ["wake", "fold", "race"]) {
+  for (const move of ["fold", "race"]) {
     assert.match(tilesSource, new RegExp(`driveTile\\(tile\\.id, "${move}"\\)`));
   }
+  for (const surface of ["herd", "arena", "binder"]) {
+    assert.match(tilesSource, new RegExp(`tiles\\.surface\\.\\$\\{name\\}`));
+    assert.match(tilesSource, new RegExp(`"${surface}"`));
+  }
+  assert.match(tilesSource, /tiles\.bunch\[/);
   assert.match(tilesSource, /arena\.arrange/);
   assert.match(tilesSource, /arena\.layout/);
   assert.match(tilesSource, /arena\.raceTarget/);
@@ -66,6 +75,20 @@ test("tiles support drag, threshold swipes, buttons, and keyboard paths", () => 
   assert.match(tilesSource, /event\.key === "ArrowRight"/);
   assert.match(tilesSource, /event\.key === "ArrowLeft"/);
   assert.match(tilesSource, /event\.key\.toLowerCase\(\) === "r"/);
+  assert.match(tilesSource, /\["h", "a", "b"\]/);
+  assert.match(tilesSource, /event\.key === " "/);
+  assert.doesNotMatch(tilesSource, />Wake</);
+});
+
+test("binder pages, bunches, and drop feedback reuse the tile surface", () => {
+  assert.match(tilesSource, /dimension-tile-binder-page/);
+  assert.match(tilesSource, /dimension-tile-bunch/);
+  assert.match(tilesSource, /Keep in the binder/);
+  assert.match(tilesSource, /Park as a tile/);
+  assert.match(tilesSource, /Bunch these tiles/);
+  assert.match(tilesCss, /\.dimension-tile-drop-overlay/);
+  assert.match(tilesCss, /border:\s*6px dashed/);
+  assert.match(tilesCss, /pointer-events:\s*none/);
 });
 
 test("Agent Arena includes all layouts and four arrange moves", () => {

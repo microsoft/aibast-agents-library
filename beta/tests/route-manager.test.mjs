@@ -97,6 +97,52 @@ test("route compositions combine global and scoped agents without byte copies", 
   }
 });
 
+test("tile compositions carry routed agents while a blank primary keeps only the baseline", async () => {
+  const { root, manager } = fixture();
+  try {
+    await manager.installScopedAgent({
+      filename: "tile_proof_agent.py",
+      source: "class TileProofAgent:\n    def perform(self, **kwargs): return 'tile'\n",
+    });
+    const descriptor = manager.compositionDescriptor();
+    const materialized = manager.materializeComposition(descriptor);
+    manager.activeRoute = {
+      compositionHash: descriptor.compositionHash,
+      stackRappid: descriptor.stack.rappid,
+      url: "http://127.0.0.1:7000",
+    };
+    manager.workers.set(descriptor.compositionHash, {
+      agentDirectory: materialized.agentDirectory,
+      compositionDirectory: materialized.compositionDirectory,
+      process: { stop: async () => {} },
+      route: manager.activeRoute,
+    });
+
+    const payload = manager.activeTileAgentPayload();
+    assert.deepEqual(payload.map((agent) => agent.filename), [
+      "tile_proof_agent.py",
+    ]);
+    const tile = manager.tileCompositionDescriptor(payload);
+    assert.deepEqual(
+      tile.entries.map((entry) => [entry.filename, entry.scope]),
+      [
+        ["context_memory_agent.py", "memory"],
+        ["global_agent.py", "global"],
+        ["manage_memory_agent.py", "memory"],
+        ["tile_proof_agent.py", "tile"],
+      ],
+    );
+    const blank = manager.tileCompositionDescriptor();
+    assert.equal(
+      blank.entries.some((entry) => entry.filename === "tile_proof_agent.py"),
+      false,
+    );
+    assert.notEqual(blank.compositionHash, tile.compositionHash);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("ephemeral agents participate in one composition and collisions fail closed", () => {
   const { root, manager } = fixture();
   try {

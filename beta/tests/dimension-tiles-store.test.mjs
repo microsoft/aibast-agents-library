@@ -108,6 +108,39 @@ test("fold keeps the tile, undo lasts ten seconds, and wake picks a primary", (t
   assert.equal(store.read(first.id).status, "folded");
 });
 
+test("surfaces, agent payloads, and bunch membership persist in one tile document", (t) => {
+  const { store } = fixtureStore(t, {
+    bunchIdFactory: () => "bunch-fixture-001",
+  });
+  const first = store.park({
+    ...tileFixture(),
+    agents: [{
+      filename: "proof_agent.py",
+      scope: "stack:proof",
+      source: "class ProofAgent:\n    pass\n",
+    }],
+    surface: "binder",
+  });
+  const second = store.park({
+    ...tileFixture("Keep these together?"),
+    surface: "binder",
+  });
+
+  assert.equal(first.surface, "binder");
+  assert.equal(first.agents[0].filename, "proof_agent.py");
+  const grouped = store.bunch(first.id, second.id);
+  assert.equal(grouped.bunch, "bunch-fixture-001");
+  assert.equal(store.read(first.id).bunch, grouped.bunch);
+  assert.equal(store.read(second.id).bunch, grouped.bunch);
+
+  const moved = store.move(first.id, "herd");
+  assert.equal(moved.surface, "herd");
+  assert.equal(moved.bunch, null);
+  assert.equal(store.read(second.id).bunch, null);
+  assert.equal(moved.agents[0].source, "class ProofAgent:\n    pass\n");
+  assert.throws(() => store.move(first.id, "shelf"), /herd, arena, or binder/);
+});
+
 test("race creates a pending contender and waking a winner folds its rival", (t) => {
   const { store } = fixtureStore(t);
   const original = store.park(tileFixture("Which answer wins?"));
@@ -361,9 +394,12 @@ test("tile IPC is inert off except identified durable completions", async (t) =>
   });
 
   assert.deepEqual([...handlers.keys()].sort(), [
+    "beta:tiles-bunch",
     "beta:tiles-complete",
+    "beta:tiles-deactivate",
     "beta:tiles-fold",
     "beta:tiles-list",
+    "beta:tiles-move",
     "beta:tiles-park",
     "beta:tiles-park-existing",
     "beta:tiles-race",
@@ -414,4 +450,45 @@ test("tile IPC is inert off except identified durable completions", async (t) =>
   );
   assert.equal(handlers.get("beta:tiles-list")({})[0].id, pending.id);
   assert.equal(trusted, 5);
+});
+
+test("tile IPC captures, activates, and deactivates agent payloads around durable state", async (t) => {
+  const { store } = fixtureStore(t);
+  const handlers = new Map();
+  const events = [];
+  registerDimensionTileIpc({
+    activateTile: async (tile) => {
+      events.push(`activate:${tile.agents[0].filename}`);
+    },
+    assertTrustedIpc: () => {},
+    captureActivePayload: async () => ({
+      agents: [{
+        filename: "tile_proof_agent.py",
+        scope: "stack:fixture",
+        source: "class TileProofAgent:\n    pass\n",
+      }],
+      route: {
+        compositionHash: "tile-composition",
+        rappid: tileFixture().route.rappid,
+      },
+    }),
+    deactivatePrimary: async () => {
+      events.push("deactivate");
+    },
+    ipcMain: {
+      handle(name, handler) {
+        handlers.set(name, handler);
+      },
+    },
+    isEnabled: () => true,
+    store,
+  });
+
+  const parked = await handlers.get("beta:tiles-park")({}, tileFixture());
+  assert.equal(parked.agents[0].filename, "tile_proof_agent.py");
+  assert.equal(parked.route.compositionHash, "tile-composition");
+  const primary = await handlers.get("beta:tiles-wake")({}, parked.id);
+  assert.equal(primary.status, "primary");
+  await handlers.get("beta:tiles-deactivate")({});
+  assert.deepEqual(events, ["activate:tile_proof_agent.py", "deactivate"]);
 });
