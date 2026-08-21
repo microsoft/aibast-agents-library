@@ -4,70 +4,70 @@ import {
 } from "node:fs";
 import path from "node:path";
 
-export const CARD_TABLE_NAMES = Object.freeze([
-  "poker",
-  "yugioh",
-  "pokemon",
-  "mtg",
-  "uno",
+export const TABLE_LAYOUT_NAMES = Object.freeze([
+  "table",
+  "duel",
+  "bench",
+  "battlefield",
+  "hand",
   "custom",
 ]);
 
-export const MAX_CUSTOM_TABLE_BYTES = 64 * 1024;
-export const CARD_TABLE_THEMES = Object.freeze({
-  poker: Object.freeze({
-    label: "Poker",
+export const MAX_CUSTOM_LAYOUT_BYTES = 64 * 1024;
+export const TABLE_LAYOUTS = Object.freeze({
+  table: Object.freeze({
+    label: "Table",
     layout: "oval seats",
-    cardLook: "plain frame",
+    tileLook: "plain frame",
   }),
-  yugioh: Object.freeze({
+  duel: Object.freeze({
     label: "Duel zones",
     layout: "five zones and a discard row",
-    cardLook: "tall bronze frame",
+    tileLook: "tall bronze frame",
   }),
-  pokemon: Object.freeze({
-    label: "Active bench",
+  bench: Object.freeze({
+    label: "Bench",
     layout: "one active seat over a bench of five",
-    cardLook: "rounded pip frame",
+    tileLook: "rounded pip frame",
   }),
-  mtg: Object.freeze({
+  battlefield: Object.freeze({
     label: "Battlefield",
     layout: "two battlefield rows",
-    cardLook: "title banner and art window",
+    tileLook: "title banner and art window",
   }),
-  uno: Object.freeze({
-    label: "Color hand",
+  hand: Object.freeze({
+    label: "Hand",
     layout: "draw pile, discard pile, and fan",
-    cardLook: "bold model color and turn number",
+    tileLook: "bold model color and turn number",
   }),
   custom: Object.freeze({
-    label: "Custom local table",
+    label: "Custom…",
     layout: "validated local JSON",
-    cardLook: "validated local JSON",
+    tileLook: "validated local JSON",
   }),
 });
 
-export const DEFAULT_APRIL_FOOLS = Object.freeze({
+export const DEFAULT_TABLE_VIEW = Object.freeze({
   on: false,
-  table: "poker",
-  customTablePath: null,
+  layout: "table",
+  customLayoutPath: null,
 });
 
-export function validCardTable(value) {
+export function validTableLayout(value) {
   const normalized = String(value || "").toLowerCase();
-  return CARD_TABLE_NAMES.includes(normalized) ? normalized : null;
+  return TABLE_LAYOUT_NAMES.includes(normalized) ? normalized : null;
 }
 
-export function normalizeAprilFoolsSettings(value = {}) {
+export function normalizeTableViewSettings(value = {}) {
   const input = value && typeof value === "object" && !Array.isArray(value)
     ? value
     : {};
   return {
     on: input.on === true,
-    table: validCardTable(input.table) || DEFAULT_APRIL_FOOLS.table,
-    customTablePath: typeof input.customTablePath === "string"
-      && input.customTablePath.trim()
-      ? input.customTablePath
+    layout: validTableLayout(input.layout) || DEFAULT_TABLE_VIEW.layout,
+    customLayoutPath: typeof input.customLayoutPath === "string"
+      && input.customLayoutPath.trim()
+      ? input.customLayoutPath
       : null,
   };
 }
@@ -82,26 +82,26 @@ function finiteNumber(value, label, minimum, maximum) {
   return number;
 }
 
-export function validateCustomTable(value) {
+export function validateCustomLayout(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error("A custom card table must be a JSON object.");
+    throw new Error("A custom table layout must be a JSON object.");
   }
   const allowed = new Set([
     "name",
-    "feltColor",
+    "surfaceColor",
     "seatPositions",
-    "cardSize",
+    "tileSize",
     "dealPattern",
     "faceDownRule",
   ]);
   const unexpected = Object.keys(value).filter((key) => !allowed.has(key));
   if (unexpected.length) {
     throw new Error(
-      `Custom card table contains unsupported fields: ${unexpected.join(", ")}.`,
+      `Custom table layout contains unsupported fields: ${unexpected.join(", ")}.`,
     );
   }
-  if (!/^#[0-9a-f]{6}$/i.test(String(value.feltColor || ""))) {
-    throw new Error("Custom feltColor must be a six-digit hexadecimal color.");
+  if (!/^#[0-9a-f]{6}$/i.test(String(value.surfaceColor || ""))) {
+    throw new Error("Custom surfaceColor must be a six-digit hexadecimal color.");
   }
   if (
     !Array.isArray(value.seatPositions)
@@ -126,11 +126,11 @@ export function validateCustomTable(value) {
     };
   });
   if (
-    !value.cardSize
-    || typeof value.cardSize !== "object"
-    || Array.isArray(value.cardSize)
+    !value.tileSize
+    || typeof value.tileSize !== "object"
+    || Array.isArray(value.tileSize)
   ) {
-    throw new Error("Custom cardSize must be an object.");
+    throw new Error("Custom tileSize must be an object.");
   }
   const dealPatterns = new Set([
     "clockwise",
@@ -156,62 +156,62 @@ export function validateCustomTable(value) {
   }
   return {
     name,
-    feltColor: value.feltColor.toLowerCase(),
+    surfaceColor: value.surfaceColor.toLowerCase(),
     seatPositions,
-    cardSize: {
-      width: finiteNumber(value.cardSize.width, "Custom card width", 120, 320),
-      height: finiteNumber(value.cardSize.height, "Custom card height", 160, 440),
+    tileSize: {
+      width: finiteNumber(value.tileSize.width, "Custom tile width", 120, 320),
+      height: finiteNumber(value.tileSize.height, "Custom tile height", 160, 440),
     },
     dealPattern: value.dealPattern,
     faceDownRule: value.faceDownRule,
   };
 }
 
-export function readCustomTable(filePath) {
+export function readCustomLayout(filePath) {
   const requested = String(filePath || "");
   if (!requested || /^[a-z][a-z0-9+.-]*:\/\//i.test(requested)) {
-    throw new Error("A custom card table must be a local JSON file.");
+    throw new Error("A custom table layout must be a local JSON file.");
   }
   const absolute = path.resolve(requested);
   const size = statSync(absolute).size;
-  if (size > MAX_CUSTOM_TABLE_BYTES) {
+  if (size > MAX_CUSTOM_LAYOUT_BYTES) {
     throw new Error(
-      `Custom card tables are limited to ${MAX_CUSTOM_TABLE_BYTES} bytes.`,
+      `Custom table layouts are limited to ${MAX_CUSTOM_LAYOUT_BYTES} bytes.`,
     );
   }
   let value;
   try {
     value = JSON.parse(readFileSync(absolute, "utf8"));
   } catch (error) {
-    throw new Error(`Invalid custom card table at ${absolute}: ${error.message}`);
+    throw new Error(`Invalid custom table layout at ${absolute}: ${error.message}`);
   }
   return {
     file: absolute,
-    table: validateCustomTable(value),
+    layout: validateCustomLayout(value),
   };
 }
 
-export function resolveCustomTable(settings, {
-  read = readCustomTable,
+export function resolveCustomLayout(settings, {
+  read = readCustomLayout,
 } = {}) {
   if (
     !settings?.on
-    || settings.table !== "custom"
-    || !settings.customTablePath
+    || settings.layout !== "custom"
+    || !settings.customLayoutPath
   ) {
-    return { error: null, table: null };
+    return { error: null, layout: null };
   }
   try {
     return {
       error: null,
-      table: read(settings.customTablePath).table,
+      layout: read(settings.customLayoutPath).layout,
     };
   } catch (error) {
     return {
-      error: `Could not load custom card table: ${String(
+      error: `Could not load custom table layout: ${String(
         error?.message || error,
       )}`,
-      table: null,
+      layout: null,
     };
   }
 }

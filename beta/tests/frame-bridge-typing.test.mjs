@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import test from "node:test";
 
-import { composeChatCardsFrameBridgeSource } from "../electron/chat-cards.mjs";
+import { composeDimensionTilesFrameBridgeSource } from "../electron/dimension-tiles.mjs";
 
 await import("../ui/stream-follow.js");
 await import("../ui/stream-pacing.js");
@@ -89,12 +89,12 @@ test("mode-off bridge source is byte-identical to the bridge without the feature
   })};\n${materializeBridgeSource("smooth")}`;
   const hash = createHash("sha256").update(checkpointSource).digest("hex");
   t.diagnostic(`mode-off bridge source sha256: ${hash}`);
-  assert.doesNotMatch(checkpointSource, /installAprilFoolsFrameBridge|rappChatCards|april/i,
-    "the bridge without the feature carries no card code");
-  const disabled = composeChatCardsFrameBridgeSource(checkpointSource, {
+  assert.doesNotMatch(checkpointSource, /installTableViewFrameBridge|rappDimensionTiles|table.view/i,
+    "the bridge without the feature carries no tile code");
+  const disabled = composeDimensionTilesFrameBridgeSource(checkpointSource, {
     on: false,
-    table: "poker",
-    customTablePath: null,
+    layout: "table",
+    customLayoutPath: null,
   });
   assert.equal(disabled, checkpointSource);
   assert.equal(createHash("sha256").update(disabled).digest("hex"), hash);

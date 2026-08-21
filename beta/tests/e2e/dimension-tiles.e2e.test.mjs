@@ -10,8 +10,8 @@ import { launch } from "./harness/launch.mjs";
 import { frontierTest } from "./harness/test-support.mjs";
 
 const QUESTION = "Which path wins?";
-const FIRST_REPLY = "FIRST_CARD_REPLY: preserve the delayed dimension.";
-const SECOND_REPLY = "SECOND_CARD_REPLY: compare a fresh dimension.";
+const FIRST_REPLY = "FIRST_TILE_REPLY: preserve the delayed dimension.";
+const SECOND_REPLY = "SECOND_TILE_REPLY: compare a fresh dimension.";
 const FOLLOW_UP = "What did the first dimension answer?";
 const FOLLOW_UP_REPLY = "FOLLOW_UP_REPLY: the first history was restored.";
 const CHECKPOINT_OUTLINE = JSON.parse(readFileSync(
@@ -40,11 +40,11 @@ async function waitFor(predicate, {
   );
 }
 
-function readCards(cardsDirectory) {
-  if (!existsSync(cardsDirectory)) return [];
-  return readdirSync(cardsDirectory)
-    .filter((name) => /^card-.*\.json$/.test(name))
-    .map((name) => JSON.parse(readFileSync(path.join(cardsDirectory, name), "utf8")));
+function readTiles(tilesDirectory) {
+  if (!existsSync(tilesDirectory)) return [];
+  return readdirSync(tilesDirectory)
+    .filter((name) => /^tile-.*\.json$/.test(name))
+    .map((name) => JSON.parse(readFileSync(path.join(tilesDirectory, name), "utf8")));
 }
 
 function stableOutline(outline) {
@@ -74,7 +74,7 @@ async function sendBrainstem(app, text, {
   ]);
 }
 
-frontierTest("chat cards preserve delayed races, wake history, folds, and off identity", async () => {
+frontierTest("dimension tiles preserve delayed races, wake history, folds, and off identity", async () => {
   const app = await launch({
     modelScript: {
       steps: [
@@ -92,7 +92,7 @@ frontierTest("chat cards preserve delayed races, wake history, folds, and off id
         },
       ],
     },
-    scenario: "chat-cards",
+    scenario: "dimension-tiles",
   });
   try {
     await app.driver.run([{
@@ -106,7 +106,7 @@ frontierTest("chat cards preserve delayed races, wake history, folds, and off id
     );
     assert.deepEqual(initialOutline, CHECKPOINT_OUTLINE);
 
-    await sendBrainstem(app, "april fools");
+    await sendBrainstem(app, "table view");
     await app.driver.expect({
       selector: "#brainstem-chat-grab",
       target: "shell",
@@ -129,14 +129,14 @@ frontierTest("chat cards preserve delayed races, wake history, folds, and off id
       settleMs: 80,
     }], { target: "shell" });
     await app.driver.expect({
-      selector: ".chat-card",
+      selector: ".dimension-tile",
       target: "shell",
       text: QUESTION,
       timeoutMs: 10_000,
     });
-    const cardsDirectory = path.join(app.paths.betaHome, "cards");
-    await waitFor(() => readCards(cardsDirectory).length === 1, {
-      label: "first parked card file",
+    const tilesDirectory = path.join(app.paths.betaHome, "tiles");
+    await waitFor(() => readTiles(tilesDirectory).length === 1, {
+      label: "first parked tile file",
     });
     await app.driver.run([{
       action: "expect",
@@ -156,22 +156,22 @@ frontierTest("chat cards preserve delayed races, wake history, folds, and off id
       settleMs: 80,
     }], { target: "shell" });
 
-    const twoCards = await waitFor(() => {
-      const cards = readCards(cardsDirectory);
-      return cards.length === 2
-        && cards.some((card) => card.history.at(-1)?.content === FIRST_REPLY)
-        && cards.some((card) => card.history.at(-1)?.content === SECOND_REPLY)
-        ? cards
+    const twoTiles = await waitFor(() => {
+      const tiles = readTiles(tilesDirectory);
+      return tiles.length === 2
+        && tiles.some((tile) => tile.history.at(-1)?.content === FIRST_REPLY)
+        && tiles.some((tile) => tile.history.at(-1)?.content === SECOND_REPLY)
+        ? tiles
         : null;
     }, {
-      label: "both complete card files",
+      label: "both complete tile files",
       timeoutMs: 15_000,
     });
-    const first = twoCards.find((card) => (
-      card.history.at(-1)?.content === FIRST_REPLY
+    const first = twoTiles.find((tile) => (
+      tile.history.at(-1)?.content === FIRST_REPLY
     ));
-    const second = twoCards.find((card) => (
-      card.history.at(-1)?.content === SECOND_REPLY
+    const second = twoTiles.find((tile) => (
+      tile.history.at(-1)?.content === SECOND_REPLY
     ));
     assert(first);
     assert(second);
@@ -181,7 +181,7 @@ frontierTest("chat cards preserve delayed races, wake history, folds, and off id
       action: "swipe",
       direction: "right",
       distance: 110,
-      handle: `@herd.card[${first.id}]`,
+      handle: `@herd.tile[${first.id}]`,
       settleMs: 150,
     }], { target: "shell" });
     await app.driver.expect({
@@ -212,29 +212,29 @@ frontierTest("chat cards preserve delayed races, wake history, folds, and off id
       ["user", FOLLOW_UP],
     ]);
     await waitFor(() => {
-      const saved = readCards(cardsDirectory).find((card) => card.id === first.id);
+      const saved = readTiles(tilesDirectory).find((tile) => tile.id === first.id);
       return saved?.history.at(-1)?.content === FOLLOW_UP_REPLY ? saved : null;
-    }, { label: "active card continuation to persist" });
+    }, { label: "active tile continuation to persist" });
 
     await app.driver.run([{
       action: "click",
-      handle: `@herd.card[${second.id}].fold`,
+      handle: `@herd.tile[${second.id}].fold`,
       settleMs: 120,
     }], { target: "shell" });
     await waitFor(
-      () => readCards(cardsDirectory).find((card) => (
-        card.id === second.id && card.status === "folded"
+      () => readTiles(tilesDirectory).find((tile) => (
+        tile.id === second.id && tile.status === "folded"
       )),
-      { label: "folded card file" },
+      { label: "folded tile file" },
     );
 
-    await sendBrainstem(app, "april fools");
+    await sendBrainstem(app, "table view");
     await waitFor(async () => {
       const outline = await app.driver.inspect({ target: "shell" });
-      return outline.rows.some((row) => String(row.h).startsWith("@herd.card["))
+      return outline.rows.some((row) => String(row.h).startsWith("@herd.tile["))
         ? null
         : outline;
-    }, { label: "card handles to disappear" });
+    }, { label: "tile handles to disappear" });
     const offOutline = stableOutline(
       await app.driver.inspect({ target: "shell" }),
     );
@@ -247,16 +247,16 @@ frontierTest("chat cards preserve delayed races, wake history, folds, and off id
       }),
       /not found/,
     );
-    assert.equal(readCards(cardsDirectory).length, 2);
+    assert.equal(readTiles(tilesDirectory).length, 2);
 
-    await sendBrainstem(app, "april fools");
+    await sendBrainstem(app, "table view");
     await app.driver.expect({
-      selector: `[data-chat-card="${first.id}"]`,
+      selector: `[data-dimension-tile="${first.id}"]`,
       target: "shell",
       text: first.title,
       timeoutMs: 10_000,
     });
-    assert.equal(readCards(cardsDirectory).length, 2);
+    assert.equal(readTiles(tilesDirectory).length, 2);
   } finally {
     await app.stop();
   }
@@ -285,7 +285,7 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
         },
       ],
     },
-    scenario: "chat-cards-race",
+    scenario: "dimension-tiles-race",
   });
   try {
     await app.driver.run([{
@@ -294,7 +294,7 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       selector: "#enter",
       settleMs: 100,
     }], { target: "shell" });
-    await sendBrainstem(app, "april fools");
+    await sendBrainstem(app, "table view");
     await app.driver.expect({
       selector: "#brainstem-chat-grab",
       target: "shell",
@@ -318,15 +318,15 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       handle: "@brainstem.grab",
       settleMs: 100,
     }], { target: "shell" });
-    const cardsDirectory = path.join(app.paths.betaHome, "cards");
+    const tilesDirectory = path.join(app.paths.betaHome, "tiles");
     const [source] = await waitFor(() => {
-      const cards = readCards(cardsDirectory);
-      return cards.length === 1 ? cards : null;
-    }, { label: "race source card" });
+      const tiles = readTiles(tilesDirectory);
+      return tiles.length === 1 ? tiles : null;
+    }, { label: "race source tile" });
 
     await app.driver.run([{
       action: "click",
-      handle: `@herd.card[${source.id}].race`,
+      handle: `@herd.tile[${source.id}].race`,
       settleMs: 100,
     }], { target: "shell" });
     await app.driver.run([{
@@ -335,14 +335,14 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       state: "filled",
     }]);
     const staged = await waitFor(() => {
-      const cards = readCards(cardsDirectory);
-      return cards.length === 2
-        && cards.every((card) => card.status === "racing")
-        ? cards
+      const tiles = readTiles(tilesDirectory);
+      return tiles.length === 2
+        && tiles.every((tile) => tile.status === "racing")
+        ? tiles
         : null;
-    }, { label: "paired racing cards" });
-    const contender = staged.find((card) => card.id !== source.id);
-    assert.equal(contender.raceId, staged.find((card) => card.id === source.id).raceId);
+    }, { label: "paired racing tiles" });
+    const contender = staged.find((tile) => tile.id !== source.id);
+    assert.equal(contender.raceId, staged.find((tile) => tile.id === source.id).raceId);
 
     await app.driver.run([{
       action: "click",
@@ -355,8 +355,8 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       timeoutMs: 10_000,
     });
     await waitFor(() => {
-      const saved = readCards(cardsDirectory).find((card) => (
-        card.id === contender.id
+      const saved = readTiles(tilesDirectory).find((tile) => (
+        tile.id === contender.id
       ));
       return saved?.history.at(-1)?.content === contenderReply ? saved : null;
     }, { label: "race contender completion" });
@@ -365,24 +365,24 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       selector: "#chat",
     });
     assert.equal(transcript.text.split(contenderReply).length - 1, 1);
-    assert.equal(readCards(cardsDirectory).length, 2);
+    assert.equal(readTiles(tilesDirectory).length, 2);
 
     await app.driver.run([{
       action: "swipe",
       direction: "right",
       distance: 110,
-      handle: `@herd.card[${contender.id}]`,
+      handle: `@herd.tile[${contender.id}]`,
       settleMs: 150,
     }], { target: "shell" });
     await waitFor(() => {
-      const cards = readCards(cardsDirectory);
-      const winner = cards.find((card) => card.id === contender.id);
-      const rival = cards.find((card) => card.id === source.id);
+      const tiles = readTiles(tilesDirectory);
+      const winner = tiles.find((tile) => tile.id === contender.id);
+      const rival = tiles.find((tile) => tile.id === source.id);
       return winner?.status === "primary" && rival?.status === "folded"
-        ? cards
+        ? tiles
         : null;
     }, { label: "race winner and folded rival" });
-    assert.equal(readCards(cardsDirectory).length, 2);
+    assert.equal(readTiles(tilesDirectory).length, 2);
 
     await app.driver.run([{
       action: "click",
@@ -390,8 +390,8 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       settleMs: 100,
     }]);
     await waitFor(() => {
-      const saved = readCards(cardsDirectory).find((card) => (
-        card.id === contender.id
+      const saved = readTiles(tilesDirectory).find((tile) => (
+        tile.id === contender.id
       ));
       return saved?.status === "parked" ? saved : null;
     }, { label: "cleared winner to detach" });
@@ -406,12 +406,12 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       handle: "@brainstem.grab",
       settleMs: 100,
     }], { target: "shell" });
-    const afterClearCards = await waitFor(() => {
-      const cards = readCards(cardsDirectory);
-      return cards.length === 3 ? cards : null;
-    }, { label: "new card after manual Clear" });
+    const afterClearTiles = await waitFor(() => {
+      const tiles = readTiles(tilesDirectory);
+      return tiles.length === 3 ? tiles : null;
+    }, { label: "new tile after manual Clear" });
     assert.equal(
-      afterClearCards.find((card) => card.id === contender.id)
+      afterClearTiles.find((tile) => tile.id === contender.id)
         .history.at(-1).content,
       contenderReply,
     );

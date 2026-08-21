@@ -1,7 +1,7 @@
-(function registerChatCards(root) {
-  const STYLE_ID = "__rappChatCardsStyle";
+(function registerDimensionTiles(root) {
+  const STYLE_ID = "__rappDimensionTilesStyle";
   const SCRIPT_STATE = {
-    cards: [],
+    tiles: [],
     captureWaiters: new Map(),
     context: null,
     controller: null,
@@ -24,8 +24,8 @@
     return timer;
   }
 
-  function driveCard(id, part = "") {
-    return `herd.card[${id}]${part ? `.${part}` : ""}`;
+  function driveTile(id, part = "") {
+    return `herd.tile[${id}]${part ? `.${part}` : ""}`;
   }
 
   function installStyles() {
@@ -34,7 +34,7 @@
     link = document.createElement("link");
     link.id = STYLE_ID;
     link.rel = "stylesheet";
-    link.href = new URL("chat-cards.css", document.baseURI).href;
+    link.href = new URL("dimension-tiles.css", document.baseURI).href;
     document.head.appendChild(link);
     return link;
   }
@@ -53,10 +53,10 @@
     duration = 8000,
   } = {}) {
     if (!SCRIPT_STATE.enabled) return null;
-    document.querySelector(".chat-card-toast")?.remove();
+    document.querySelector(".dimension-tile-toast")?.remove();
     const toast = document.createElement("div");
-    toast.className = "chat-card-toast";
-    toast.dataset.drive = "cardTable.toast";
+    toast.className = "dimension-tile-toast";
+    toast.dataset.drive = "tableView.toast";
     toast.setAttribute("role", "status");
     const text = document.createElement("span");
     text.textContent = String(message || "");
@@ -104,7 +104,7 @@
         },
       });
       frameWindow.postMessage({
-        type: "rapp-beta:card-capture",
+        type: "rapp-beta:tile-capture",
         requestId,
       }, "*");
     });
@@ -131,15 +131,15 @@
     ].join("|");
   }
 
-  function assertCardRoute(card) {
+  function assertTileRoute(tile) {
     const current = routeKey();
     const stored = [
-      card.route?.rappid || "",
-      card.route?.compositionHash || "",
+      tile.route?.rappid || "",
+      tile.route?.compositionHash || "",
     ].join("|");
-    if (!card.route?.rappid || !card.route?.compositionHash || stored !== current) {
+    if (!tile.route?.rappid || !tile.route?.compositionHash || stored !== current) {
       throw new Error(
-        "This card belongs to a different Brainstem route or composition and cannot be restored here.",
+        "This tile belongs to a different Brainstem route or composition and cannot be restored here.",
       );
     }
   }
@@ -154,10 +154,10 @@
       && SCRIPT_STATE.primaryRouteKey === routeKey()
     );
     const existing = SCRIPT_STATE.primaryId && boundToCurrentFrame
-      ? SCRIPT_STATE.cards.find((card) => card.id === SCRIPT_STATE.primaryId)
+      ? SCRIPT_STATE.tiles.find((tile) => tile.id === SCRIPT_STATE.primaryId)
       : null;
     if (!boundToCurrentFrame) SCRIPT_STATE.primaryId = null;
-    const card = await SCRIPT_STATE.context.api.cardsPark({
+    const tile = await SCRIPT_STATE.context.api.tilesPark({
       ...(existing || {}),
       ...(existing ? { id: existing.id } : {}),
       title: capture.title,
@@ -173,85 +173,85 @@
       table: existing?.table || { faceUp: true },
     });
     postToFrame({
-      type: "rapp-beta:card-parked",
-      id: card.id,
+      type: "rapp-beta:tile-parked",
+      id: tile.id,
       requestIds: capture.pendingRequestIds || [],
     });
     SCRIPT_STATE.primaryId = null;
     SCRIPT_STATE.primaryFrameGeneration = null;
     SCRIPT_STATE.primaryRouteKey = null;
-    return card;
+    return tile;
   }
 
   async function parkCurrent() {
     const capture = await requestCapture();
-    const card = await persistCapture(capture);
-    await refreshCards();
-    showToast(`Parked "${card.title}".`);
-    return card;
+    const tile = await persistCapture(capture);
+    await refreshTiles();
+    showToast(`Parked "${tile.title}".`);
+    return tile;
   }
 
-  async function wakeCard(id) {
-    const requested = SCRIPT_STATE.cards.find((card) => card.id === id);
+  async function wakeTile(id) {
+    const requested = SCRIPT_STATE.tiles.find((tile) => tile.id === id);
     if (requested?.restorable === false) {
-      throw new Error(requested.restoreError || "This card cannot be restored.");
+      throw new Error(requested.restoreError || "This tile cannot be restored.");
     }
-    assertCardRoute(requested);
+    assertTileRoute(requested);
     if (
       SCRIPT_STATE.primaryId === id
       && SCRIPT_STATE.primaryFrameGeneration
         === SCRIPT_STATE.context.frameGeneration
       && SCRIPT_STATE.primaryRouteKey === routeKey()
     ) {
-      const winner = await SCRIPT_STATE.context.api.cardsWake(id);
-      await refreshCards();
+      const winner = await SCRIPT_STATE.context.api.tilesWake(id);
+      await refreshTiles();
       return winner;
     }
     if (SCRIPT_STATE.primaryId !== id) {
       const current = await requestCapture();
       if (hasConversation(current)) await persistCapture(current);
     }
-    const card = await SCRIPT_STATE.context.api.cardsWake(id);
-    SCRIPT_STATE.primaryId = card.id;
+    const tile = await SCRIPT_STATE.context.api.tilesWake(id);
+    SCRIPT_STATE.primaryId = tile.id;
     SCRIPT_STATE.primaryFrameGeneration = SCRIPT_STATE.context.frameGeneration;
     SCRIPT_STATE.primaryRouteKey = routeKey();
-    postToFrame({ type: "rapp-beta:card-wake", card });
-    await refreshCards();
-    showToast(`Woke "${card.title}".`);
-    return card;
+    postToFrame({ type: "rapp-beta:tile-wake", tile });
+    await refreshTiles();
+    showToast(`Woke "${tile.title}".`);
+    return tile;
   }
 
-  async function foldCard(id) {
+  async function foldTile(id) {
     if (SCRIPT_STATE.primaryId === id) {
       const current = await requestCapture();
       if (hasConversation(current)) await persistCapture(current);
     }
-    const result = await SCRIPT_STATE.context.api.cardsFold(id);
+    const result = await SCRIPT_STATE.context.api.tilesFold(id);
     if (SCRIPT_STATE.primaryId === id) {
       SCRIPT_STATE.primaryId = null;
       SCRIPT_STATE.primaryFrameGeneration = null;
       SCRIPT_STATE.primaryRouteKey = null;
-      postToFrame({ type: "rapp-beta:card-clear" });
+      postToFrame({ type: "rapp-beta:tile-clear" });
     }
-    await refreshCards();
-    showToast(`Folded "${result.card.title}".`, {
+    await refreshTiles();
+    showToast(`Folded "${result.tile.title}".`, {
       actionLabel: "Undo",
       action: async () => {
-        await SCRIPT_STATE.context.api.cardsUndo(id);
-        await refreshCards();
+        await SCRIPT_STATE.context.api.tilesUndo(id);
+        await refreshTiles();
       },
       duration: 10000,
     });
-    return result.card;
+    return result.tile;
   }
 
-  async function raceCard(id) {
-    const source = SCRIPT_STATE.cards.find((card) => card.id === id);
-    assertCardRoute(source);
+  async function raceTile(id) {
+    const source = SCRIPT_STATE.tiles.find((tile) => tile.id === id);
+    assertTileRoute(source);
     const current = await requestCapture();
     if (hasConversation(current)) await persistCapture(current);
-    const race = await SCRIPT_STATE.context.api.cardsRace(id);
-    const raceTarget = document.querySelector(".chat-card-race-target")?.value
+    const race = await SCRIPT_STATE.context.api.tilesRace(id);
+    const raceTarget = document.querySelector(".dimension-tile-race-target")?.value
       || "brainstem";
     if (raceTarget.startsWith("twin:")) {
       const twinId = raceTarget.slice(5);
@@ -263,7 +263,7 @@
         result.response || result.assistant_response || result.result || "",
       );
       if (!reply) throw new Error(`Twin ${twinId} returned an empty race reply.`);
-      await SCRIPT_STATE.context.api.cardsComplete(race.contender.id, {
+      await SCRIPT_STATE.context.api.tilesComplete(race.contender.id, {
         reply,
         html: "",
         history: [
@@ -276,7 +276,7 @@
       SCRIPT_STATE.primaryId = null;
       SCRIPT_STATE.primaryFrameGeneration = null;
       SCRIPT_STATE.primaryRouteKey = null;
-      await refreshCards();
+      await refreshTiles();
       showToast(`Twin ${twinId} answered the race.`);
       return race;
     }
@@ -284,11 +284,11 @@
     SCRIPT_STATE.primaryFrameGeneration = SCRIPT_STATE.context.frameGeneration;
     SCRIPT_STATE.primaryRouteKey = routeKey();
     postToFrame({
-      type: "rapp-beta:card-race",
+      type: "rapp-beta:tile-race",
       id: race.contender.id,
       question: race.question,
     });
-    await refreshCards();
+    await refreshTiles();
     showToast(
       "Race staged. Pick a model or companion, then send the question.",
       { duration: 10000 },
@@ -297,7 +297,7 @@
   }
 
   async function populateRaceTargets() {
-    const select = document.querySelector(".chat-card-race-target");
+    const select = document.querySelector(".dimension-tile-race-target");
     if (!select) return;
     const selected = select.value || "brainstem";
     select.replaceChildren();
@@ -325,23 +325,23 @@
     }
   }
 
-  function cardCanRace(card) {
-    if (card.status === "racing") return false;
-    const lastUser = [...(card.turns || [])]
+  function tileCanRace(tile) {
+    if (tile.status === "racing") return false;
+    const lastUser = [...(tile.turns || [])]
       .reverse()
       .find((turn) => turn.role === "user");
     return Boolean(lastUser?.text?.trim().endsWith("?"));
   }
 
-  function cardExcerpt(card) {
-    const last = [...(card.turns || [])]
+  function tileExcerpt(tile) {
+    const last = [...(tile.turns || [])]
       .reverse()
       .find((turn) => !turn.pending && turn.text);
     const text = String(last?.text || "Waiting for a reply...").trim();
     return [...text].slice(0, 140).join("");
   }
 
-  function attachSwipe(tile, card) {
+  function attachSwipe(element, tile) {
     let pointerId = null;
     let startX = 0;
     let deltaX = 0;
@@ -350,39 +350,39 @@
     const reset = () => {
       pointerId = null;
       deltaX = 0;
-      tile.classList.remove("swiping");
-      tile.style.removeProperty("--swipe-x");
-      tile.style.removeProperty("--swipe-tilt");
+      element.classList.remove("swiping");
+      element.style.removeProperty("--swipe-x");
+      element.style.removeProperty("--swipe-tilt");
     };
-    tile.addEventListener("pointerdown", (event) => {
+    element.addEventListener("pointerdown", (event) => {
       if (event.target.closest("button,select,a,input")) return;
       pointerId = event.pointerId;
       startX = event.clientX;
       try {
-        tile.setPointerCapture?.(pointerId);
+        element.setPointerCapture?.(pointerId);
       } catch {
         // Synthetic UI-driver pointers do not belong to a native pointer stream.
       }
-      tile.classList.add("swiping");
+      element.classList.add("swiping");
     });
-    tile.addEventListener("pointermove", (event) => {
+    element.addEventListener("pointermove", (event) => {
       if (pointerId !== event.pointerId) return;
       deltaX = event.clientX - startX;
-      tile.style.setProperty("--swipe-x", `${deltaX}px`);
-      tile.style.setProperty(
+      element.style.setProperty("--swipe-x", `${deltaX}px`);
+      element.style.setProperty(
         "--swipe-tilt",
         `${Math.max(-10, Math.min(10, deltaX / 14))}deg`,
       );
     });
-    tile.addEventListener("pointerup", (event) => {
+    element.addEventListener("pointerup", (event) => {
       if (pointerId !== event.pointerId) return;
       const movement = deltaX;
       reset();
-      if (movement >= 72) void wakeCard(card.id).catch(showError);
-      else if (movement <= -72) void foldCard(card.id).catch(showError);
+      if (movement >= 72) void wakeTile(tile.id).catch(showError);
+      else if (movement <= -72) void foldTile(tile.id).catch(showError);
     });
-    tile.addEventListener("pointercancel", reset);
-    tile.addEventListener("wheel", (event) => {
+    element.addEventListener("pointercancel", reset);
+    element.addEventListener("wheel", (event) => {
       if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
       event.preventDefault();
       wheelDelta += event.deltaX;
@@ -392,149 +392,152 @@
       const movement = wheelDelta;
       wheelDelta = 0;
       clearTimeout(wheelTimer);
-      if (movement > 0) void wakeCard(card.id).catch(showError);
-      else void foldCard(card.id).catch(showError);
+      if (movement > 0) void wakeTile(tile.id).catch(showError);
+      else void foldTile(tile.id).catch(showError);
     }, { passive: false });
   }
 
-  function attachCardDrag(handle, tile, card) {
+  function attachTileDrag(handle, element, tile) {
     handle.draggable = true;
     handle.addEventListener("dragstart", (event) => {
       event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("application/x-rapp-chat-card", card.id);
-      tile.classList.add("dragging");
+      event.dataTransfer.setData("application/x-rapp-dimension-tile", tile.id);
+      element.classList.add("dragging");
     });
-    handle.addEventListener("dragend", () => tile.classList.remove("dragging"));
+    handle.addEventListener("dragend", () => element.classList.remove("dragging"));
   }
 
-  function cardTile(card, { folded = false } = {}) {
-    const tile = document.createElement("article");
-    tile.className = `chat-card${folded ? " folded" : ""}`;
-    tile.dataset.chatCard = card.id;
-    tile.dataset.drive = driveCard(card.id);
-    tile.dataset.seat = card.table?.seat || "";
-    tile.dataset.status = card.status;
-    const seat = Number(card.table?.seat) || 1;
-    tile.style.setProperty("--fan-angle", `${(seat - 6) * 2}deg`);
-    tile.tabIndex = 0;
-    tile.setAttribute("aria-label", `${card.title}, ${card.status} chat card`);
+  function createTile(tile, { folded = false } = {}) {
+    const element = document.createElement("article");
+    element.className = `dimension-tile${folded ? " folded" : ""}`;
+    element.dataset.dimensionTile = tile.id;
+    element.dataset.drive = driveTile(tile.id);
+    element.dataset.seat = tile.table?.seat || "";
+    element.dataset.status = tile.status;
+    const seat = Number(tile.table?.seat) || 1;
+    element.style.setProperty("--fan-angle", `${(seat - 6) * 2}deg`);
+    element.tabIndex = 0;
+    element.setAttribute(
+      "aria-label",
+      `${tile.title}, ${tile.status} dimension tile`,
+    );
 
     const corner = document.createElement("span");
-    corner.className = "chat-card-corner";
-    corner.textContent = String(card.turns?.length || 0);
+    corner.className = "dimension-tile-corner";
+    corner.textContent = String(tile.turns?.length || 0);
     const drag = document.createElement("span");
-    drag.className = "chat-card-drag";
-    drag.dataset.drive = driveCard(card.id, "drag");
-    drag.title = "Drag this card onto the Brainstem";
-    drag.setAttribute("aria-label", `Drag ${card.title}`);
+    drag.className = "dimension-tile-drag";
+    drag.dataset.drive = driveTile(tile.id, "drag");
+    drag.title = "Drag this tile onto the Brainstem";
+    drag.setAttribute("aria-label", `Drag ${tile.title}`);
     drag.textContent = "⠿";
     const face = document.createElement("div");
-    face.className = "chat-card-face";
+    face.className = "dimension-tile-face";
     const banner = document.createElement("div");
-    banner.className = "chat-card-banner";
+    banner.className = "dimension-tile-banner";
     const title = document.createElement("strong");
-    title.textContent = card.title;
+    title.textContent = tile.title;
     const status = document.createElement("span");
-    status.textContent = card.status;
+    status.textContent = tile.status;
     banner.append(title, status);
     const art = document.createElement("div");
-    art.className = "chat-card-art";
+    art.className = "dimension-tile-art";
     art.setAttribute("aria-hidden", "true");
-    for (let index = 0; index < Math.min(6, card.turns?.length || 0); index += 1) {
+    for (let index = 0; index < Math.min(6, tile.turns?.length || 0); index += 1) {
       const pip = document.createElement("i");
       art.appendChild(pip);
     }
     const excerpt = document.createElement("p");
-    excerpt.textContent = cardExcerpt(card);
+    excerpt.textContent = tileExcerpt(tile);
     const meta = document.createElement("div");
-    meta.className = "chat-card-meta";
-    meta.textContent = `${card.route?.model || "auto"} · ${
-      card.turns?.length || 0
+    meta.className = "dimension-tile-meta";
+    meta.textContent = `${tile.route?.model || "auto"} · ${
+      tile.turns?.length || 0
     } turns`;
     const actions = document.createElement("div");
-    actions.className = "chat-card-actions";
+    actions.className = "dimension-tile-actions";
     const wake = document.createElement("button");
     wake.type = "button";
-    wake.dataset.drive = driveCard(card.id, "wake");
+    wake.dataset.drive = driveTile(tile.id, "wake");
     wake.textContent = "Wake";
-    wake.disabled = card.restorable === false;
-    wake.title = card.restorable === false
-      ? card.restoreError
+    wake.disabled = tile.restorable === false;
+    wake.title = tile.restorable === false
+      ? tile.restoreError
       : "Wake this chat in the Brainstem.";
-    wake.addEventListener("click", () => void wakeCard(card.id).catch(showError));
+    wake.addEventListener("click", () => void wakeTile(tile.id).catch(showError));
     actions.appendChild(wake);
     if (!folded) {
       const race = document.createElement("button");
       race.type = "button";
-      race.dataset.drive = driveCard(card.id, "race");
+      race.dataset.drive = driveTile(tile.id, "race");
       race.textContent = "Race";
-      race.disabled = !cardCanRace(card);
+      race.disabled = !tileCanRace(tile);
       race.title = race.disabled
         ? "The last user turn must be a question."
         : "Race this question with another model or companion.";
       race.addEventListener(
         "click",
-        () => void raceCard(card.id).catch(showError),
+        () => void raceTile(tile.id).catch(showError),
       );
       const fold = document.createElement("button");
       fold.type = "button";
-      fold.dataset.drive = driveCard(card.id, "fold");
+      fold.dataset.drive = driveTile(tile.id, "fold");
       fold.textContent = "Fold";
       fold.addEventListener(
         "click",
-        () => void foldCard(card.id).catch(showError),
+        () => void foldTile(tile.id).catch(showError),
       );
       actions.append(race, fold);
     }
     face.append(banner, art, excerpt, meta, actions);
-    tile.append(corner, drag, face);
-    attachSwipe(tile, card);
-    attachCardDrag(drag, tile, card);
-    tile.addEventListener("keydown", (event) => {
+    element.append(corner, drag, face);
+    attachSwipe(element, tile);
+    attachTileDrag(drag, element, tile);
+    element.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight" || event.key === "Enter") {
         event.preventDefault();
-        void wakeCard(card.id).catch(showError);
+        void wakeTile(tile.id).catch(showError);
       } else if (event.key === "ArrowLeft" && !folded) {
         event.preventDefault();
-        void foldCard(card.id).catch(showError);
-      } else if (event.key.toLowerCase() === "r" && !folded && cardCanRace(card)) {
+        void foldTile(tile.id).catch(showError);
+      } else if (event.key.toLowerCase() === "r" && !folded && tileCanRace(tile)) {
         event.preventDefault();
-        void raceCard(card.id).catch(showError);
+        void raceTile(tile.id).catch(showError);
       }
     });
-    const custom = SCRIPT_STATE.context?.state?.cardTable;
-    if (SCRIPT_STATE.context?.aprilFools?.table === "custom" && custom) {
-      const seat = Number(card.table?.seat) || 1;
+    const custom = SCRIPT_STATE.context?.state?.tableLayout;
+    if (SCRIPT_STATE.context?.tableView?.layout === "custom" && custom) {
+      const seat = Number(tile.table?.seat) || 1;
       const faceDown = custom.faceDownRule === "all"
-        || (custom.faceDownRule === "folded" && card.status === "folded")
+        || (custom.faceDownRule === "folded" && tile.status === "folded")
         || (custom.faceDownRule === "alternate" && seat % 2 === 0);
-      tile.classList.toggle("face-down", faceDown);
+      element.classList.toggle("face-down", faceDown);
     }
-    return tile;
+    return element;
   }
 
-  function applyCustomPosition(tile, card, customTable) {
-    const seat = Number(card.table?.seat) || 1;
-    const position = customTable?.seatPositions?.[(seat - 1)
-      % customTable.seatPositions.length];
+  function applyCustomPosition(element, tile, customLayout) {
+    const seat = Number(tile.table?.seat) || 1;
+    const position = customLayout?.seatPositions?.[(seat - 1)
+      % customLayout.seatPositions.length];
     if (!position) return;
-    tile.style.setProperty("--custom-x", `${position.x}%`);
-    tile.style.setProperty("--custom-y", `${position.y}%`);
-    tile.style.setProperty("--custom-rotation", `${position.rotation}deg`);
+    element.style.setProperty("--custom-x", `${position.x}%`);
+    element.style.setProperty("--custom-y", `${position.y}%`);
+    element.style.setProperty("--custom-rotation", `${position.rotation}deg`);
   }
 
   function renderDiscard(surface, folded) {
-    let pile = surface.querySelector(".chat-card-discard");
+    let pile = surface.querySelector(".dimension-tile-discard");
     if (!folded.length) {
       pile?.remove();
       return;
     }
     if (!pile) {
       pile = document.createElement("section");
-      pile.className = "chat-card-discard";
+      pile.className = "dimension-tile-discard";
       const button = document.createElement("button");
       button.type = "button";
-      button.dataset.drive = "cardTable.discard";
+      button.dataset.drive = "tableView.discard";
       button.addEventListener("click", () => {
         pile.classList.toggle("open");
         button.setAttribute(
@@ -547,31 +550,31 @@
     }
     const button = pile.querySelector("button");
     button.textContent = `Discard pile · ${folded.length}`;
-    pile.querySelectorAll(".chat-card.folded").forEach((card) => card.remove());
-    for (const [index, card] of folded.entries()) {
-      const tile = cardTile(card, { folded: true });
+    pile.querySelectorAll(".dimension-tile.folded").forEach((tile) => tile.remove());
+    for (const [index, tile] of folded.entries()) {
+      const element = createTile(tile, { folded: true });
       const spread = Math.min(8, 48 / Math.max(1, folded.length));
-      tile.style.setProperty(
+      element.style.setProperty(
         "--pile-angle",
         `${(index - ((folded.length - 1) / 2)) * spread}deg`,
       );
-      tile.style.setProperty("--pile-offset", `${index * -7}px`);
-      pile.appendChild(tile);
+      element.style.setProperty("--pile-offset", `${index * -7}px`);
+      pile.appendChild(element);
     }
   }
 
-  function renderOverflow(surface, overflowCards) {
-    let pile = surface.querySelector(".chat-card-overflow");
-    if (!overflowCards.length) {
+  function renderOverflow(surface, overflowTiles) {
+    let pile = surface.querySelector(".dimension-tile-overflow");
+    if (!overflowTiles.length) {
       pile?.remove();
       return;
     }
     if (!pile) {
       pile = document.createElement("section");
-      pile.className = "chat-card-overflow";
+      pile.className = "dimension-tile-overflow";
       const button = document.createElement("button");
       button.type = "button";
-      button.dataset.drive = "cardTable.overflow";
+      button.dataset.drive = "tableView.overflow";
       button.addEventListener("click", () => {
         pile.classList.toggle("open");
         button.setAttribute(
@@ -583,79 +586,79 @@
       surface.appendChild(pile);
     }
     pile.querySelector("button").textContent =
-      `Overflow pile · ${overflowCards.length}`;
-    pile.querySelectorAll(".chat-card").forEach((card) => card.remove());
-    for (const [index, card] of overflowCards.entries()) {
-      const tile = cardTile(card);
-      const spread = Math.min(8, 48 / Math.max(1, overflowCards.length));
-      tile.style.setProperty(
+      `Overflow pile · ${overflowTiles.length}`;
+    pile.querySelectorAll(".dimension-tile").forEach((tile) => tile.remove());
+    for (const [index, tile] of overflowTiles.entries()) {
+      const element = createTile(tile);
+      const spread = Math.min(8, 48 / Math.max(1, overflowTiles.length));
+      element.style.setProperty(
         "--pile-angle",
-        `${(index - ((overflowCards.length - 1) / 2)) * spread}deg`,
+        `${(index - ((overflowTiles.length - 1) / 2)) * spread}deg`,
       );
-      tile.style.setProperty("--pile-offset", `${index * 7}px`);
-      pile.appendChild(tile);
+      element.style.setProperty("--pile-offset", `${index * 7}px`);
+      pile.appendChild(element);
     }
   }
 
-  function renderCards() {
-    const surface = document.querySelector(".chat-card-surface");
+  function renderTiles() {
+    const surface = document.querySelector(".dimension-tile-surface");
     if (!surface) return;
-    surface.querySelectorAll(":scope > .chat-card").forEach((tile) => tile.remove());
-    surface.querySelector(".chat-card-overflow")?.remove();
-    const active = SCRIPT_STATE.cards.filter((card) => card.status !== "folded");
-    const folded = SCRIPT_STATE.cards.filter((card) => card.status === "folded");
-    const custom = SCRIPT_STATE.context?.state?.cardTable;
-    for (const card of active.slice(0, 12)) {
-      const tile = cardTile(card);
-      if (SCRIPT_STATE.context.aprilFools.table === "custom") {
-        applyCustomPosition(tile, card, custom);
+    surface.querySelectorAll(":scope > .dimension-tile").forEach((tile) => tile.remove());
+    surface.querySelector(".dimension-tile-overflow")?.remove();
+    const active = SCRIPT_STATE.tiles.filter((tile) => tile.status !== "folded");
+    const folded = SCRIPT_STATE.tiles.filter((tile) => tile.status === "folded");
+    const custom = SCRIPT_STATE.context?.state?.tableLayout;
+    for (const tile of active.slice(0, 12)) {
+      const element = createTile(tile);
+      if (SCRIPT_STATE.context.tableView.layout === "custom") {
+        applyCustomPosition(element, tile, custom);
       }
-      surface.appendChild(tile);
+      surface.appendChild(element);
     }
     renderOverflow(surface, active.slice(12));
     renderDiscard(surface, folded);
   }
 
-  function applyTheme() {
+  function applyLayout() {
     const herd = document.getElementById("surgeon-herd");
-    const surface = herd?.querySelector(".chat-card-surface");
+    const surface = herd?.querySelector(".dimension-tile-surface");
     if (!herd || !surface) return;
-    for (const name of ["poker", "yugioh", "pokemon", "mtg", "uno", "custom"]) {
-      herd.classList.remove(`card-theme-${name}`);
+    for (const name of ["table", "duel", "bench", "battlefield", "hand", "custom"]) {
+      herd.classList.remove(`tile-layout-${name}`);
     }
-    const table = SCRIPT_STATE.context.aprilFools.table || "poker";
-    herd.classList.add("chat-card-table", `card-theme-${table}`);
-    herd.dataset.cardTable = table;
-    const custom = SCRIPT_STATE.context.state.cardTable;
-    if (table === "custom" && custom) {
-      surface.style.setProperty("--table-felt", custom.feltColor);
-      surface.style.setProperty("--card-width", `${custom.cardSize.width}px`);
-      surface.style.setProperty("--card-height", `${custom.cardSize.height}px`);
+    const layoutName = SCRIPT_STATE.context.tableView.layout || "table";
+    herd.classList.add("dimension-tile-view", `tile-layout-${layoutName}`);
+    herd.dataset.tableLayout = layoutName;
+    const custom = SCRIPT_STATE.context.state.tableLayout;
+    if (layoutName === "custom" && custom) {
+      surface.style.setProperty("--table-surface", custom.surfaceColor);
+      surface.style.setProperty("--tile-width", `${custom.tileSize.width}px`);
+      surface.style.setProperty("--tile-height", `${custom.tileSize.height}px`);
       surface.dataset.faceDownRule = custom.faceDownRule;
       surface.dataset.dealPattern = custom.dealPattern;
     } else {
-      surface.style.removeProperty("--table-felt");
-      surface.style.removeProperty("--card-width");
-      surface.style.removeProperty("--card-height");
+      surface.style.removeProperty("--table-surface");
+      surface.style.removeProperty("--tile-width");
+      surface.style.removeProperty("--tile-height");
       delete surface.dataset.faceDownRule;
       delete surface.dataset.dealPattern;
     }
-    const theme = document.querySelector(".chat-card-theme");
-    if (theme) theme.value = table;
-    document.querySelector(".chat-card-load-custom")
-      ?.toggleAttribute("hidden", table !== "custom");
+    const layout = document.querySelector(".dimension-tile-layout");
+    if (layout) layout.value = layoutName;
+    document.querySelector(".dimension-tile-load-custom")
+      ?.toggleAttribute("hidden", layoutName !== "custom");
   }
 
-  async function changeTheme(value) {
+  async function changeLayout(value) {
     if (value === "custom") {
-      const loaded = await SCRIPT_STATE.context.api.cardsLoadCustomTable();
+      const loaded = await SCRIPT_STATE.context.api.tilesLoadCustomLayout();
       if (loaded.canceled) {
-        document.querySelector(".chat-card-theme").value =
-          SCRIPT_STATE.context.aprilFools.table;
+        document.querySelector(".dimension-tile-layout").value =
+          SCRIPT_STATE.context.tableView.layout;
       }
       return;
     }
-    await SCRIPT_STATE.context.api.setAprilFools({ table: value });
+    await SCRIPT_STATE.context.api.setTableView({ layout: value });
   }
 
   function randomIndex(length) {
@@ -666,66 +669,66 @@
   }
 
   async function runDeal(action) {
-    const surface = document.querySelector(".chat-card-surface");
+    const surface = document.querySelector(".dimension-tile-surface");
     if (!surface || !action) return;
     surface.classList.remove("deal-riffle", "deal-fan", "deal-seats", "deal-draw");
     void surface.offsetWidth;
     surface.classList.add(`deal-${action === "deal-to-seats" ? "seats" : action}`);
     if (action === "draw-one") {
-      const candidates = SCRIPT_STATE.cards.filter((card) => (
-        card.status === "parked" || card.status === "racing"
+      const candidates = SCRIPT_STATE.tiles.filter((tile) => (
+        tile.status === "parked" || tile.status === "racing"
       ));
       const index = randomIndex(candidates.length);
-      if (index < 0) throw new Error("There is no parked card to draw.");
+      if (index < 0) throw new Error("There is no parked tile to draw.");
       await new Promise((resolve) => addTimer(resolve, 320));
-      await wakeCard(candidates[index].id);
+      await wakeTile(candidates[index].id);
     }
   }
 
   function ensureControls(herd, surface) {
-    let controls = herd.querySelector(".chat-card-controls");
+    let controls = herd.querySelector(".dimension-tile-controls");
     if (controls) return controls;
     controls = document.createElement("div");
-    controls.className = "chat-card-controls";
-    controls.dataset.drive = "cardTable.controls";
+    controls.className = "dimension-tile-controls";
+    controls.dataset.drive = "tableView.controls";
     const label = document.createElement("strong");
-    label.textContent = "April Fools card table";
-    const theme = document.createElement("select");
-    theme.className = "chat-card-theme";
-    theme.dataset.drive = "cardTable.theme";
-    theme.setAttribute("aria-label", "Card table theme");
+    label.textContent = "Table view";
+    const layout = document.createElement("select");
+    layout.className = "dimension-tile-layout";
+    layout.dataset.drive = "tableView.layout";
+    layout.setAttribute("aria-label", "Table layout");
     const labels = {
-      poker: "Poker felt",
-      yugioh: "Duel zones",
-      pokemon: "Active bench",
-      mtg: "Battlefield",
-      uno: "Color hand",
-      custom: "Custom local JSON",
+      table: "Table",
+      duel: "Duel zones",
+      bench: "Bench",
+      battlefield: "Battlefield",
+      hand: "Hand",
+      custom: "Custom…",
     };
     for (const [value, text] of Object.entries(labels)) {
       const option = document.createElement("option");
       option.value = value;
       option.textContent = text;
-      theme.appendChild(option);
+      layout.appendChild(option);
     }
-    theme.addEventListener("change", () => {
-      void changeTheme(theme.value).catch(showError);
+    layout.addEventListener("change", () => {
+      void changeLayout(layout.value).catch(showError);
     });
     const load = document.createElement("button");
     load.type = "button";
-    load.className = "chat-card-load-custom";
-    load.dataset.drive = "cardTable.loadCustom";
-    load.textContent = "Load table…";
+    load.className = "dimension-tile-load-custom";
+    load.dataset.drive = "tableView.loadCustom";
+    load.textContent = "Load layout…";
     load.addEventListener("click", () => {
-      void SCRIPT_STATE.context.api.cardsLoadCustomTable().catch(showError);
+      void SCRIPT_STATE.context.api.tilesLoadCustomLayout().catch(showError);
     });
     const raceTarget = document.createElement("select");
-    raceTarget.className = "chat-card-race-target";
-    raceTarget.dataset.drive = "cardTable.raceTarget";
+    raceTarget.className = "dimension-tile-race-target";
+    raceTarget.dataset.drive = "tableView.raceTarget";
     raceTarget.setAttribute("aria-label", "Race target");
     const deal = document.createElement("select");
-    deal.dataset.drive = "cardTable.deal";
-    deal.setAttribute("aria-label", "Deal cards");
+    deal.dataset.drive = "tableView.deal";
+    deal.setAttribute("aria-label", "Deal tiles");
     for (const [value, text] of [
       ["", "Deal…"],
       ["riffle", "Riffle"],
@@ -743,7 +746,7 @@
       deal.value = "";
       void runDeal(action).catch(showError);
     });
-    controls.append(label, theme, load, raceTarget, deal);
+    controls.append(label, layout, load, raceTarget, deal);
     herd.insertBefore(controls, surface);
     return controls;
   }
@@ -768,12 +771,12 @@
   }
 
   function ensureSurface(herd, grid) {
-    let surface = herd.querySelector(".chat-card-surface");
+    let surface = herd.querySelector(".dimension-tile-surface");
     if (!surface) {
       surface = document.createElement("section");
-      surface.className = "chat-card-surface";
-      surface.dataset.drive = "cardTable.surface";
-      surface.setAttribute("aria-label", "Parked Brainstem chat cards");
+      surface.className = "dimension-tile-surface";
+      surface.dataset.drive = "tableView.surface";
+      surface.setAttribute("aria-label", "Parked Brainstem dimension tiles");
       herd.insertBefore(surface, grid);
     }
     return surface;
@@ -794,26 +797,26 @@
     }, { signal });
     const main = document.querySelector("main");
     main?.addEventListener("dragover", (event) => {
-      if (event.dataTransfer.types.includes("application/x-rapp-chat-card")) {
+      if (event.dataTransfer.types.includes("application/x-rapp-dimension-tile")) {
         event.preventDefault();
         event.dataTransfer.dropEffect = "move";
       }
     }, { signal });
     main?.addEventListener("drop", (event) => {
-      const id = event.dataTransfer.getData("application/x-rapp-chat-card");
+      const id = event.dataTransfer.getData("application/x-rapp-dimension-tile");
       if (!id) return;
       event.preventDefault();
-      void wakeCard(id).catch(showError);
+      void wakeTile(id).catch(showError);
     }, { signal });
   }
 
   function receiveFrameMessage(event) {
     if (event.source !== SCRIPT_STATE.context?.frame?.contentWindow) return;
-    if (event.data?.type === "rapp-beta:card-capture-result") {
+    if (event.data?.type === "rapp-beta:tile-capture-result") {
       const waiter = SCRIPT_STATE.captureWaiters.get(event.data.requestId);
       if (!waiter) return;
       SCRIPT_STATE.captureWaiters.delete(event.data.requestId);
-      if (event.data.ok) waiter.resolve(event.data.card);
+      if (event.data.ok) waiter.resolve(event.data.tile);
       else waiter.reject(new Error(event.data.error || "Chat capture failed."));
       return;
     }
@@ -826,26 +829,26 @@
       && SCRIPT_STATE.primaryId === event.id
     ) {
       postToFrame({
-        type: "rapp-beta:card-late-completion",
+        type: "rapp-beta:tile-late-completion",
         completion: event.completion,
       });
     }
-    void refreshCards().catch(showError);
+    void refreshTiles().catch(showError);
   }
 
   function completionFailed(error) {
     if (SCRIPT_STATE.enabled) showError(error);
   }
 
-  function cardDetached(id) {
+  function tileDetached(id) {
     if (!SCRIPT_STATE.enabled || SCRIPT_STATE.primaryId !== id) return;
-    const detached = SCRIPT_STATE.cards.find((card) => card.id === id);
+    const detached = SCRIPT_STATE.tiles.find((tile) => tile.id === id);
     SCRIPT_STATE.primaryId = null;
     SCRIPT_STATE.primaryFrameGeneration = null;
     SCRIPT_STATE.primaryRouteKey = null;
     if (detached) {
-      void SCRIPT_STATE.context.api.cardsParkExisting(detached.id)
-        .then(refreshCards)
+      void SCRIPT_STATE.context.api.tilesParkExisting(detached.id)
+        .then(refreshTiles)
         .catch(showError);
     }
   }
@@ -858,38 +861,38 @@
       SCRIPT_STATE.primaryId
       && SCRIPT_STATE.primaryFrameGeneration !== generation
     ) {
-      const detached = SCRIPT_STATE.cards.find((card) => (
-        card.id === SCRIPT_STATE.primaryId
+      const detached = SCRIPT_STATE.tiles.find((tile) => (
+        tile.id === SCRIPT_STATE.primaryId
       ));
       SCRIPT_STATE.primaryId = null;
       SCRIPT_STATE.primaryFrameGeneration = null;
       SCRIPT_STATE.primaryRouteKey = null;
       if (SCRIPT_STATE.enabled && detached) {
-        void SCRIPT_STATE.context.api.cardsParkExisting(detached.id)
-          .then(refreshCards)
+        void SCRIPT_STATE.context.api.tilesParkExisting(detached.id)
+          .then(refreshTiles)
           .catch(showError);
       }
     }
   }
 
-  async function refreshCards() {
+  async function refreshTiles() {
     if (!SCRIPT_STATE.enabled) return [];
     const sequence = ++SCRIPT_STATE.refreshSequence;
-    const cards = await SCRIPT_STATE.context.api.cardsList();
+    const tiles = await SCRIPT_STATE.context.api.tilesList();
     if (!SCRIPT_STATE.enabled || sequence !== SCRIPT_STATE.refreshSequence) {
-      return cards;
+      return tiles;
     }
-    SCRIPT_STATE.cards = cards;
-    renderCards();
-    return cards;
+    SCRIPT_STATE.tiles = tiles;
+    renderTiles();
+    return tiles;
   }
 
   async function enable(context) {
     SCRIPT_STATE.context = context;
     if (SCRIPT_STATE.enabled) {
-      applyTheme();
+      applyLayout();
       await populateRaceTargets();
-      await refreshCards();
+      await refreshTiles();
       return;
     }
     SCRIPT_STATE.enabled = true;
@@ -909,13 +912,13 @@
       window.addEventListener("message", receiveFrameMessage, {
         signal: SCRIPT_STATE.controller.signal,
       });
-      applyTheme();
-      if (context.state.cardTableError) showError(context.state.cardTableError);
+      applyLayout();
+      if (context.state.tableLayoutError) showError(context.state.tableLayoutError);
       await populateRaceTargets();
-      await refreshCards();
-      postToFrame({ type: "rapp-beta:card-ready" });
-      addTimer(() => postToFrame({ type: "rapp-beta:card-ready" }), 150);
-      addTimer(() => postToFrame({ type: "rapp-beta:card-ready" }), 600);
+      await refreshTiles();
+      postToFrame({ type: "rapp-beta:tile-ready" });
+      addTimer(() => postToFrame({ type: "rapp-beta:tile-ready" }), 150);
+      addTimer(() => postToFrame({ type: "rapp-beta:tile-ready" }), 600);
     } catch (error) {
       disable();
       throw error;
@@ -926,7 +929,7 @@
     if (!SCRIPT_STATE.enabled) {
       if (typeof document !== "undefined") {
         removeStyles();
-        document.getElementById("__rappChatCardsScript")?.remove();
+        document.getElementById("__rappDimensionTilesScript")?.remove();
       }
       return;
     }
@@ -937,30 +940,30 @@
     for (const timer of SCRIPT_STATE.timers) clearTimeout(timer);
     SCRIPT_STATE.timers.clear();
     for (const waiter of SCRIPT_STATE.captureWaiters.values()) {
-      waiter.reject(new Error("April Fools card table was turned off."));
+      waiter.reject(new Error("Table view was turned off."));
     }
     SCRIPT_STATE.captureWaiters.clear();
     document.getElementById("brainstem-chat-grab")?.remove();
-    document.querySelector(".chat-card-controls")?.remove();
-    document.querySelector(".chat-card-surface")?.remove();
-    document.querySelector(".chat-card-toast")?.remove();
+    document.querySelector(".dimension-tile-controls")?.remove();
+    document.querySelector(".dimension-tile-surface")?.remove();
+    document.querySelector(".dimension-tile-toast")?.remove();
     const herd = document.getElementById("surgeon-herd");
     if (herd) {
       herd.className = herd.className
         .split(/\s+/)
-        .filter((name) => !name.startsWith("card-theme-")
-          && name !== "chat-card-table")
+        .filter((name) => !name.startsWith("tile-layout-")
+          && name !== "dimension-tile-view")
         .join(" ");
-      delete herd.dataset.cardTable;
+      delete herd.dataset.tableLayout;
     }
     removeStyles();
-    document.getElementById("__rappChatCardsScript")?.remove();
+    document.getElementById("__rappDimensionTilesScript")?.remove();
     if (SCRIPT_STATE.createdHerd) {
       SCRIPT_STATE.context?.destroyHerd();
     } else if (!SCRIPT_STATE.openedHerd) {
       SCRIPT_STATE.context?.exitHerd();
     }
-    SCRIPT_STATE.cards = [];
+    SCRIPT_STATE.tiles = [];
     SCRIPT_STATE.createdHerd = false;
     SCRIPT_STATE.context = null;
     SCRIPT_STATE.primaryId = null;
@@ -968,15 +971,15 @@
     SCRIPT_STATE.primaryRouteKey = null;
   }
 
-  root.RappChatCards = Object.freeze({
-    cardDetached,
+  root.RappDimensionTiles = Object.freeze({
+    tileDetached,
     completionFailed,
     completionSaved,
     disable,
     enabled: () => SCRIPT_STATE.enabled,
     frameChanged,
     parkCurrent,
-    refresh: refreshCards,
+    refresh: refreshTiles,
     sync: enable,
   });
 })(globalThis);

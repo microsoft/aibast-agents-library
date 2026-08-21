@@ -1,7 +1,7 @@
 # Rappid dimension tiles — the `.card` file (`rar-card/2.0`)
 
 Direction (Kody, 2026-08-20): tiles must be globally scannable through GitHub raw URLs — a tile
-uploaded to the registry can be summoned for a task from the public repo, as the online form of a
+uploaded to the registry can be retrieved for a task from the public repo, as the online form of a
 local dimension tile. This is the next version of the registry's card spec: the registry is updated,
 the legacy cards are migrated, and the Frontier client proves interchange on-device and off. The file
 type must be simple and iconic, as friendly as `agent.py` and `.egg` files — a sleeve you can put an
@@ -78,7 +78,7 @@ at exactly that path.
   "id": "@kody-w/book_factory",
   "seed": 13467203979104256843,
   "name_seed": 3136112411,
-  "incantation": "TWIST MOLD BEQUEST VALOR LEFT ORBIT RUNE",
+  "seven_word_key": "TWIST MOLD BEQUEST VALOR LEFT ORBIT RUNE",
   "version": "1.2.0",
   "face": { "…every v1 holo-card field, unchanged: name, title, type_line, colors, hp, stats, abilities, rarity, evolution, avatar_svg…" },
   "manifest": { "schema": "…", "name": "@kody-w/book_factory", "display_name": "BookFactory", "description": "…", "author": "…", "tags": [], "category": "creative", "quality_tier": "community" },
@@ -99,12 +99,12 @@ Rules that make it simple:
 
 | Rule | Meaning |
 |---|---|
-| **The seed is the identity.** | `seed` = `forge_seed(manifest)`; `face` = `resolve_card_from_seed(seed)`; `incantation` = `seed_to_words(seed)`. A reader may recompute all three and must refuse a card whose `face` disagrees with its `seed`. |
+| **The seed is the identity.** | `seed` = `forge_seed(manifest)`; `face` = `resolve_card_from_seed(seed)`; `seven_word_key` = `seed_to_words(seed)`. A reader may recompute all three and must refuse a card whose `face` disagrees with its `seed`. |
 | **Payload items are inline OR pinned, always hashed.** | `inline` carries the bytes (UTF-8 text for `agent.py`; base64 for `egg`); `url` is a revision-pinned raw GitHub URL. Either way `sha256_lf_v1` (text) or `sha256` (binary) is mandatory and verified before anything runs. Inline when the card travels or must work offline; pinned when it lives in RAR and compact online resolution is acceptable. |
 | **The sleeve holds agents and eggs only.** | `kind` ∈ `agent.py` · `egg`. A card with an empty payload is a face-only card (v1 in v2 clothing). |
 | **State is a word.** | `dormant` (in a registry or on disk, no process) · `active` (in a herd: a live twin or a parked conversation). The same card moves between the two without changing identity. |
 | **The dimension stays home.** | `dimension` (a conversation: turns, history) is `null` in anything published; it exists only in the local binder copy unless the user exports it explicitly, and then it is its own choice on the export panel. The global RAPPID protocol tracks identity and lineage; it does not require uploading the private dimension. |
-| **Scannable means a URL.** | `scan.url` is the card's public raw URL; the QR on the face encodes it (or `rar://@publisher/slug@<seed>` for offline resolution). Summon = fetch → verify hashes → recompute the seed → hatch the payload as a twin, or wake the dimension. |
+| **Scannable means a URL.** | `scan.url` is the card's public raw URL; the QR on the face encodes it (or `rar://@publisher/slug@<seed>` for offline resolution). Retrieve = fetch → verify hashes → recompute the seed → hatch the payload as a twin, or wake the dimension. |
 | **Small.** | ≤ 1 MiB with inline payload; larger payloads must be pinned. |
 
 ## RAR v2 — what changes in `kody-w/RAR`
@@ -115,7 +115,7 @@ Rules that make it simple:
    **pinned** (url + `sha256-lf-v1` from `registry.json`), `state: "dormant"`, `scan.url` set.
    Keep `holo_cards.json` as the v1 index; add `cards/v2/index.json` (id → seed, sha, url).
 3. `rapp_sdk.py`: `card pack <agent.py> [--egg …] [--inline]` · `card unpack <x.card>` ·
-   `card scan <url|incantation|seed>` (fetch/resolve → verify → print the face and the payload
+   `card scan <url|seven-word-key|seed>` (fetch/resolve → verify → print the face and the payload
    hashes) · `card verify <x.card>`. `mint_card` gains `to_v2()`.
 4. The site renders v2 cards from `cards/v2/` with the QR; `api.json` gains `cards_v2`.
 5. Tests: v1 → v2 → v1 round-trip keeps every face byte; seed recomputation over the whole index;
@@ -123,12 +123,12 @@ Rules that make it simple:
 
 ## Frontier — what changes here
 
-1. `beta/electron/rar-card.mjs` (already ordered): the JS port of seed/face/incantation, plus
+1. `beta/electron/rar-card.mjs` (already ordered): the JS port of seed/face/seven-word key, plus
    `packCard` / `unpackCard` / `verifyCard` for `rar-card/2.0`.
-2. A dimension tile on disk **is** a `.card` (`~/.brainstem/beta-launcher/cards/<payload filename>.card`, or `<id>.card` for a conversation with no agent) with
+2. A dimension tile on disk **is** a `.card` (`~/.brainstem/beta-launcher/tiles/<payload filename>.card`, or `<id>.card` for a conversation with no agent) with
    `state: "active"` and a local `dimension`; *Export to RAR* writes the public form (payload
    inline or pinned, `dimension: null`, `state: "dormant"`) and shows those exact bytes first.
-3. **Summon**: paste a raw URL, a seed, or seven words into the Store picker (or scan a QR from the
+3. **Retrieve**: paste a raw URL, a seed, or seven words into the Store picker (or scan a QR from the
    phone companion later): fetch → verify → the card appears dormant in the herd; *◈ Hatch* makes
    it active.
 4. **Interchange proof** (local-first): pack a card from a live twin → unpack on a second isolated
@@ -139,7 +139,7 @@ Rules that make it simple:
 ## Migration of the legacy cards
 
 Every v1 face becomes a v2 card with a pinned payload — nothing is re-minted, so seeds and
-incantations do not change; anyone holding seven words still gets the same card. The v1 index stays
+seven-word keys do not change; anyone holding seven words still gets the same card. The v1 index stays
 until every client reads v2, then it is frozen, never deleted.
 
 ## Who does what

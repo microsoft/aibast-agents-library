@@ -31,9 +31,11 @@ Every interactive control gets a **handle**: `@area.name` for singletons,
   static controls by id (`#input` → `@brainstem.composer`, `#send` → `@brainstem.send`,
   `#chat` → `@brainstem.chat`, `#model-select`, the footer quick prompts by their text) and
   on dynamic chat messages by their stable `data-request-id` (`@brainstem.chat.msg[<id>]`).
-- **Renderer-generated lists** (Surgeon tabs, twin tiles, store cards, explorer tree rows):
-  stamp `data-drive` with the item's natural key (`session id`, `twin id`, `store id`,
-  agent filename) when they render.
+- **Renderer-generated lists** (Surgeon tabs, twin tiles, store protocol records,
+  dimension tiles, explorer tree rows): stamp `data-drive` with the item's
+  natural key (`session id`, `twin id`, `store id`, tile id, agent filename)
+  when they render. Table view exposes `@herd.tile[<id>]` plus `.wake`, `.fold`,
+  and `.race` actions; `@brainstem.grab` parks the active conversation.
 - **Fallback**: an element with no handle gets an **anchored** path — rooted at the nearest
   ancestor with an id or handle — never a 5-segment tail resolved from `document`.
 

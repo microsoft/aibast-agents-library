@@ -13,13 +13,13 @@ const chatLookArgument = process.argv.find((value) => (
 const chatLook = chatLookArgument?.split("=", 2)[1] === "business"
   ? "business"
   : "messages";
-const aprilFoolsArgument = process.argv.find((value) => (
-  value.startsWith("--rapp-april-fools=")
+const tableViewArgument = process.argv.find((value) => (
+  value.startsWith("--rapp-table-view=")
 ));
-let aprilFools = { on: false, table: "poker", customTablePath: null };
+let tableView = { on: false, layout: "table", customLayoutPath: null };
 try {
-  aprilFools = JSON.parse(Buffer.from(
-    aprilFoolsArgument?.split("=", 2)[1] || "",
+  tableView = JSON.parse(Buffer.from(
+    tableViewArgument?.split("=", 2)[1] || "",
     "base64url",
   ).toString("utf8"));
 } catch {
@@ -28,26 +28,26 @@ try {
 const chatTypingEnabled = chatStreamMode === "hold";
 
 contextBridge.exposeInMainWorld("brainstemBeta", {
-  aprilFools,
+  tableView,
   chatLook,
   chatStreamMode,
   chatTypingEnabled,
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
-  cardsComplete: (id, completion) => (
-    ipcRenderer.invoke("beta:cards-complete", id, completion || {})
+  tilesComplete: (id, completion) => (
+    ipcRenderer.invoke("beta:tiles-complete", id, completion || {})
   ),
-  cardsFold: (id) => ipcRenderer.invoke("beta:cards-fold", id),
-  cardsList: () => ipcRenderer.invoke("beta:cards-list"),
-  cardsLoadCustomTable: () => (
-    ipcRenderer.invoke("beta:cards-load-custom-table")
+  tilesFold: (id) => ipcRenderer.invoke("beta:tiles-fold", id),
+  tilesList: () => ipcRenderer.invoke("beta:tiles-list"),
+  tilesLoadCustomLayout: () => (
+    ipcRenderer.invoke("beta:tiles-load-custom-layout")
   ),
-  cardsPark: (card) => ipcRenderer.invoke("beta:cards-park", card),
-  cardsParkExisting: (id) => (
-    ipcRenderer.invoke("beta:cards-park-existing", id)
+  tilesPark: (tile) => ipcRenderer.invoke("beta:tiles-park", tile),
+  tilesParkExisting: (id) => (
+    ipcRenderer.invoke("beta:tiles-park-existing", id)
   ),
-  cardsRace: (id) => ipcRenderer.invoke("beta:cards-race", id),
-  cardsUndo: (id) => ipcRenderer.invoke("beta:cards-undo", id),
-  cardsWake: (id) => ipcRenderer.invoke("beta:cards-wake", id),
+  tilesRace: (id) => ipcRenderer.invoke("beta:tiles-race", id),
+  tilesUndo: (id) => ipcRenderer.invoke("beta:tiles-undo", id),
+  tilesWake: (id) => ipcRenderer.invoke("beta:tiles-wake", id),
   getState: () => ipcRenderer.invoke("beta:get-state"),
   getAmbientSettings: () => ipcRenderer.invoke("beta:get-ambient-settings"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),
@@ -86,7 +86,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   updateGeolocation: (location) => (
     ipcRenderer.invoke("beta:update-geolocation", location)
   ),
-  setAprilFools: (next) => ipcRenderer.invoke("beta:set-april-fools", next || {}),
+  setTableView: (next) => ipcRenderer.invoke("beta:set-table-view", next || {}),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
   surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),

@@ -67,42 +67,42 @@ const {
   surgeonCss,
 } = window.RappChatLook;
 let currentChatLook = normalizeChatLook(window.brainstemBeta.chatLook);
-let chatCardsLoader = null;
-let chatCardsGeneration = 0;
-let chatCardsRequested = false;
+let dimensionTilesLoader = null;
+let dimensionTilesGeneration = 0;
+let dimensionTilesRequested = false;
 
-function loadChatCards() {
-  if (window.RappChatCards) return Promise.resolve(window.RappChatCards);
-  if (chatCardsLoader) return chatCardsLoader;
-  chatCardsLoader = new Promise((resolve, reject) => {
+function loadDimensionTiles() {
+  if (window.RappDimensionTiles) return Promise.resolve(window.RappDimensionTiles);
+  if (dimensionTilesLoader) return dimensionTilesLoader;
+  dimensionTilesLoader = new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.id = "__rappChatCardsScript";
-    script.src = "chat-cards.js";
-    script.addEventListener("load", () => resolve(window.RappChatCards), {
+    script.id = "__rappDimensionTilesScript";
+    script.src = "dimension-tiles.js";
+    script.addEventListener("load", () => resolve(window.RappDimensionTiles), {
       once: true,
     });
     script.addEventListener("error", () => {
-      chatCardsLoader = null;
-      reject(new Error("Could not load the April Fools card table."));
+      dimensionTilesLoader = null;
+      reject(new Error("Could not load Table view."));
     }, { once: true });
     document.body.appendChild(script);
   });
-  return chatCardsLoader;
+  return dimensionTilesLoader;
 }
 
-async function syncChatCards(state, generation) {
-  const cards = await loadChatCards();
+async function syncDimensionTiles(state, generation) {
+  const tiles = await loadDimensionTiles();
   if (
-    generation !== chatCardsGeneration
-    || !chatCardsRequested
-    || !latestState?.aprilFools?.on
+    generation !== dimensionTilesGeneration
+    || !dimensionTilesRequested
+    || !latestState?.tableView?.on
   ) {
-    cards.disable();
+    tiles.disable();
     return;
   }
-  return cards.sync({
+  return tiles.sync({
     api: window.brainstemBeta,
-    aprilFools: state.aprilFools,
+    tableView: state.tableView,
     destroyHerd: destroySurgeonHerdDom,
     ensureHerd: () => {
       ensureSurgeonHerdDom();
@@ -346,7 +346,7 @@ frame.addEventListener("load", () => {
   }
   brainstemNavigationCount += 1;
   window.__brainstemBetaNavigationCount = brainstemNavigationCount;
-  window.RappChatCards?.frameChanged({
+  window.RappDimensionTiles?.frameChanged({
     generation: brainstemNavigationCount,
     url: loadedFrameUrl,
   });
@@ -399,9 +399,9 @@ window.addEventListener("message", async (event) => {
     return;
   }
   if (event.source !== frame.contentWindow) return;
-  if (type === "rapp-beta:card-pending-complete") {
+  if (type === "rapp-beta:tile-pending-complete") {
     try {
-      const card = await window.brainstemBeta.cardsComplete(
+      const tile = await window.brainstemBeta.tilesComplete(
         event.data.id,
         {
           ...event.data.completion,
@@ -409,21 +409,21 @@ window.addEventListener("message", async (event) => {
         },
       );
       event.source.postMessage({
-        type: "rapp-beta:card-completion-ack",
+        type: "rapp-beta:tile-completion-ack",
         requestId: event.data.requestId,
       }, "*");
-      window.RappChatCards?.completionSaved({
+      window.RappDimensionTiles?.completionSaved({
         ...event.data,
-        card,
+        tile,
       });
     } catch (cause) {
-      console.error("Could not persist a completed chat card reply:", cause);
-      window.RappChatCards?.completionFailed(cause);
+      console.error("Could not persist a completed dimension tile reply:", cause);
+      window.RappDimensionTiles?.completionFailed(cause);
     }
     return;
   }
-  if (type === "rapp-beta:card-detached") {
-    window.RappChatCards?.cardDetached(event.data.id);
+  if (type === "rapp-beta:tile-detached") {
+    window.RappDimensionTiles?.tileDetached(event.data.id);
     return;
   }
   if (type === "rapp-beta:set-chat-look") {
@@ -434,12 +434,12 @@ window.addEventListener("message", async (event) => {
     }
     return;
   }
-  if (type === "rapp-beta:set-april-fools") {
+  if (type === "rapp-beta:set-table-view") {
     try {
-      await window.brainstemBeta.setAprilFools(event.data.aprilFools || {});
+      await window.brainstemBeta.setTableView(event.data.tableView || {});
     } catch (cause) {
       window.alert(
-        `Could not change the card table: ${String(cause?.message || cause)}`,
+        `Could not change Table view: ${String(cause?.message || cause)}`,
       );
     }
     return;
@@ -2077,25 +2077,29 @@ function syncBetaUpdate(update, openPanel = false) {
 function render(state) {
   latestState = state;
   applyShellChatLook(state.chatLook, state.chatTypingEnabled);
-  const cardsWereRequested = chatCardsRequested;
-  chatCardsRequested = Boolean(state.aprilFools?.on);
-  const cardsGeneration = ++chatCardsGeneration;
-  if (state.aprilFools?.on) {
-    void syncChatCards(state, cardsGeneration).catch((cause) => {
+  const tilesWereRequested = dimensionTilesRequested;
+  dimensionTilesRequested = Boolean(state.tableView?.on);
+  const tilesGeneration = ++dimensionTilesGeneration;
+  if (state.tableView?.on) {
+    void syncDimensionTiles(state, tilesGeneration).catch((cause) => {
       if (
-        cardsGeneration !== chatCardsGeneration
-        || !chatCardsRequested
+        tilesGeneration !== dimensionTilesGeneration
+        || !dimensionTilesRequested
       ) return;
       window.alert(
-        `Could not show the card table: ${String(cause?.message || cause)}`,
+        `Could not show Table view: ${String(cause?.message || cause)}`,
       );
     });
-  } else if (cardsWereRequested || chatCardsLoader || window.RappChatCards) {
+  } else if (
+    tilesWereRequested
+    || dimensionTilesLoader
+    || window.RappDimensionTiles
+  ) {
     frame.contentWindow?.postMessage({
-      type: "rapp-beta:april-fools-state",
-      aprilFools: state.aprilFools,
+      type: "rapp-beta:table-view-state",
+      tableView: state.tableView,
     }, "*");
-    window.RappChatCards?.disable();
+    window.RappDimensionTiles?.disable();
   }
   const surgeonState = state.surgeon || state.copilot;
   document.getElementById("surgeon-model").textContent =

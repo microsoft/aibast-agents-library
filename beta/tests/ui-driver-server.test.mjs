@@ -133,7 +133,7 @@ test("visible UI driver accepts bounded v2 actions", () => {
         {
           action: "swipe",
           direction: "right",
-          handle: "@herd.card[card-fixture]",
+          handle: "@herd.tile[tile-fixture]",
         },
       ],
     }).action,

@@ -12,24 +12,24 @@ import { randomUUID } from "node:crypto";
 import path from "node:path";
 
 import {
-  DEFAULT_APRIL_FOOLS,
-  normalizeAprilFoolsSettings,
-} from "./card-tables.mjs";
+  DEFAULT_TABLE_VIEW,
+  normalizeTableViewSettings,
+} from "./table-layouts.mjs";
 
-export const CHAT_CARD_SCHEMA = "rapp-chat-card/1.0";
-export const MAX_CHAT_CARD_TURNS = 200;
-export const MAX_CHAT_CARD_BYTES = 256 * 1024;
-export const CHAT_CARD_UNDO_MS = 10_000;
-const CHAT_CARD_STATUSES = new Set([
+export const DIMENSION_TILE_SCHEMA = "rapp-dimension-tile/1.0";
+export const MAX_DIMENSION_TILE_TURNS = 200;
+export const MAX_DIMENSION_TILE_BYTES = 256 * 1024;
+export const DIMENSION_TILE_UNDO_MS = 10_000;
+const DIMENSION_TILE_STATUSES = new Set([
   "parked",
   "racing",
   "primary",
   "folded",
 ]);
-const CHAT_CARD_ID = /^card-[a-z0-9][a-z0-9-]{5,120}$/;
+const DIMENSION_TILE_ID = /^tile-[a-z0-9][a-z0-9-]{5,120}$/;
 
 function settingsPath(betaHome) {
-  if (!betaHome) throw new Error("A beta home is required for chat card settings.");
+  if (!betaHome) throw new Error("A beta home is required for dimension tile settings.");
   return path.join(betaHome, "settings.json");
 }
 
@@ -70,79 +70,79 @@ function writeSettings(betaHome, value) {
 }
 
 function environmentOverride(env) {
-  if (env.RAPP_APRIL_FOOLS === "1") return true;
-  if (env.RAPP_APRIL_FOOLS === "0") return false;
+  if (env.RAPP_TABLE_VIEW === "1") return true;
+  if (env.RAPP_TABLE_VIEW === "0") return false;
   return null;
 }
 
-export function readAprilFoolsSettings({
+export function readTableViewSettings({
   betaHome,
   env = process.env,
 } = {}) {
   const settings = readSettings(betaHome);
-  const storedAprilFools = normalizeAprilFoolsSettings(
-    settings.aprilFools || DEFAULT_APRIL_FOOLS,
+  const storedTableView = normalizeTableViewSettings(
+    settings.tableView || DEFAULT_TABLE_VIEW,
   );
   const override = environmentOverride(env);
-  const aprilFools = {
-    ...storedAprilFools,
-    on: override === null ? storedAprilFools.on : override,
+  const tableView = {
+    ...storedTableView,
+    on: override === null ? storedTableView.on : override,
   };
   return {
-    aprilFools,
-    aprilFoolsOverridden: override !== null,
+    tableView,
+    tableViewOverridden: override !== null,
     file: settingsPath(betaHome),
-    storedAprilFools,
+    storedTableView,
   };
 }
 
-export function writeAprilFoolsSettings({
-  aprilFools,
+export function writeTableViewSettings({
+  tableView,
   betaHome,
 } = {}) {
   const settings = readSettings(betaHome);
-  settings.aprilFools = normalizeAprilFoolsSettings({
-    ...DEFAULT_APRIL_FOOLS,
-    ...(settings.aprilFools || {}),
-    ...(aprilFools || {}),
+  settings.tableView = normalizeTableViewSettings({
+    ...DEFAULT_TABLE_VIEW,
+    ...(settings.tableView || {}),
+    ...(tableView || {}),
   });
   const file = writeSettings(betaHome, settings);
-  return { aprilFools: settings.aprilFools, file };
+  return { tableView: settings.tableView, file };
 }
 
-export function changeAprilFoolsSettings({
+export function changeTableViewSettings({
   apply,
-  aprilFools,
+  tableView,
   betaHome,
   env = process.env,
 } = {}) {
-  writeAprilFoolsSettings({ aprilFools, betaHome });
-  const effective = readAprilFoolsSettings({ betaHome, env });
+  writeTableViewSettings({ tableView, betaHome });
+  const effective = readTableViewSettings({ betaHome, env });
   apply?.(effective);
   return effective;
 }
 
-export function parseAprilFoolsCommand(message) {
-  return typeof message === "string" && message.trim() === "april fools"
-    ? { action: "toggle-april-fools", original: message }
+export function parseTableViewCommand(message) {
+  return typeof message === "string" && message.trim() === "table view"
+    ? { action: "toggle-table-view", original: message }
     : null;
 }
 
-function cardsPath(betaHome) {
-  if (!betaHome) throw new Error("A beta home is required for chat cards.");
-  return path.join(betaHome, "cards");
+function tilesPath(betaHome) {
+  if (!betaHome) throw new Error("A beta home is required for dimension tiles.");
+  return path.join(betaHome, "tiles");
 }
 
-function safeCardId(value) {
+function safeTileId(value) {
   const id = String(value || "");
-  if (!CHAT_CARD_ID.test(id)) {
-    throw new Error("A valid chat card id is required.");
+  if (!DIMENSION_TILE_ID.test(id)) {
+    throw new Error("A valid dimension tile id is required.");
   }
   return id;
 }
 
-function cardPath(betaHome, id) {
-  return path.join(cardsPath(betaHome), `${safeCardId(id)}.json`);
+function tilePath(betaHome, id) {
+  return path.join(tilesPath(betaHome), `${safeTileId(id)}.json`);
 }
 
 function timestamp(value, fallback) {
@@ -150,7 +150,7 @@ function timestamp(value, fallback) {
   return Number.isFinite(parsed) ? new Date(parsed).toISOString() : fallback;
 }
 
-function cardTitle(turns, value) {
+function tileTitle(turns, value) {
   const requested = String(value || "").trim();
   const firstUser = turns.find((turn) => turn.role === "user")?.text || "";
   const title = requested || firstUser.split(/\r?\n/, 1)[0].trim() || "Parked chat";
@@ -159,10 +159,10 @@ function cardTitle(turns, value) {
 
 function normalizeTurn(value, fallbackAt) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error("Every chat card turn must be an object.");
+    throw new Error("Every dimension tile turn must be an object.");
   }
   if (!["user", "assistant"].includes(value.role)) {
-    throw new Error("Chat card turns must use the user or assistant role.");
+    throw new Error("Dimension tile turns must use the user or assistant role.");
   }
   return {
     role: value.role,
@@ -178,10 +178,10 @@ function normalizeTurn(value, fallbackAt) {
 
 function normalizeHistoryMessage(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error("Every chat card history message must be an object.");
+    throw new Error("Every dimension tile history message must be an object.");
   }
   if (!["user", "assistant"].includes(value.role)) {
-    throw new Error("Chat card history must use the user or assistant role.");
+    throw new Error("Dimension tile history must use the user or assistant role.");
   }
   return {
     role: value.role,
@@ -215,26 +215,26 @@ function normalizeTable(value) {
   };
 }
 
-export function normalizeChatCard(value, {
+export function normalizeDimensionTile(value, {
   id,
   now = new Date().toISOString(),
 } = {}) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error("A chat card must be an object.");
+    throw new Error("A dimension tile must be an object.");
   }
-  const cardId = safeCardId(id || value.id);
+  const tileId = safeTileId(id || value.id);
   const turns = Array.isArray(value.turns)
     ? value.turns.map((turn) => normalizeTurn(turn, now))
     : [];
-  if (turns.length > MAX_CHAT_CARD_TURNS) {
+  if (turns.length > MAX_DIMENSION_TILE_TURNS) {
     throw new Error(
-      `Chat cards are limited to ${MAX_CHAT_CARD_TURNS} transcript turns.`,
+      `Dimension tiles are limited to ${MAX_DIMENSION_TILE_TURNS} transcript turns.`,
     );
   }
   const history = Array.isArray(value.history)
     ? value.history.map(normalizeHistoryMessage)
     : [];
-  const status = CHAT_CARD_STATUSES.has(value.status)
+  const status = DIMENSION_TILE_STATUSES.has(value.status)
     ? value.status
     : "parked";
   const createdAt = timestamp(value.createdAt, now);
@@ -242,9 +242,9 @@ export function normalizeChatCard(value, {
     ? [...new Set(value.completedRequestIds.map(String).filter(Boolean))].slice(-50)
     : [];
   return {
-    schema: CHAT_CARD_SCHEMA,
-    id: cardId,
-    title: cardTitle(turns, value.title),
+    schema: DIMENSION_TILE_SCHEMA,
+    id: tileId,
+    title: tileTitle(turns, value.title),
     createdAt,
     parkedAt: timestamp(value.parkedAt, now),
     route: normalizeRoute(value.route),
@@ -254,7 +254,7 @@ export function normalizeChatCard(value, {
     table: normalizeTable(value.table),
     restorable: value.restorable !== false,
     restoreError: value.restorable === false
-      ? String(value.restoreError || "This card has no observed wire history.")
+      ? String(value.restoreError || "This tile has no observed wire history.")
       : null,
     raceId: typeof value.raceId === "string" && value.raceId
       ? value.raceId
@@ -263,28 +263,28 @@ export function normalizeChatCard(value, {
   };
 }
 
-function serializeCard(card) {
-  const serialized = `${JSON.stringify(card, null, 2)}\n`;
+function serializeTile(tile) {
+  const serialized = `${JSON.stringify(tile, null, 2)}\n`;
   const size = Buffer.byteLength(serialized);
-  if (size > MAX_CHAT_CARD_BYTES) {
+  if (size > MAX_DIMENSION_TILE_BYTES) {
     throw new Error(
-      `Chat cards are limited to ${MAX_CHAT_CARD_BYTES} bytes; this card is ${size} bytes.`,
+      `Dimension tiles are limited to ${MAX_DIMENSION_TILE_BYTES} bytes; this tile is ${size} bytes.`,
     );
   }
   return serialized;
 }
 
-function atomicWriteCard(betaHome, card) {
-  const directory = cardsPath(betaHome);
+function atomicWriteTile(betaHome, tile) {
+  const directory = tilesPath(betaHome);
   mkdirSync(directory, { recursive: true, mode: 0o700 });
   try {
     chmodSync(directory, 0o700);
   } catch {
     // Windows does not expose POSIX directory modes.
   }
-  const file = cardPath(betaHome, card.id);
+  const file = tilePath(betaHome, tile.id);
   const temporary = `${file}.${process.pid}.${Date.now()}.tmp`;
-  writeFileSync(temporary, serializeCard(card), { mode: 0o600 });
+  writeFileSync(temporary, serializeTile(tile), { mode: 0o600 });
   renameSync(temporary, file);
   try {
     chmodSync(file, 0o600);
@@ -294,8 +294,8 @@ function atomicWriteCard(betaHome, card) {
   return file;
 }
 
-function lastQuestion(card) {
-  const question = [...card.turns]
+function lastQuestion(tile) {
+  const question = [...tile.turns]
     .reverse()
     .find((turn) => turn.role === "user")
     ?.text
@@ -303,16 +303,16 @@ function lastQuestion(card) {
   return question?.endsWith("?") ? question : null;
 }
 
-export class ChatCardStore {
+export class DimensionTileStore {
   constructor({
     betaHome,
     idFactory = () => (
-      `card-${Date.now().toString(36)}-${randomUUID().slice(0, 8)}`
+      `tile-${Date.now().toString(36)}-${randomUUID().slice(0, 8)}`
     ),
     raceIdFactory = () => `race-${randomUUID()}`,
     now = () => new Date(),
   } = {}) {
-    if (!betaHome) throw new Error("A beta home is required for chat cards.");
+    if (!betaHome) throw new Error("A beta home is required for dimension tiles.");
     this.betaHome = betaHome;
     this.idFactory = idFactory;
     this.raceIdFactory = raceIdFactory;
@@ -325,18 +325,18 @@ export class ChatCardStore {
   }
 
   list() {
-    const directory = cardsPath(this.betaHome);
+    const directory = tilesPath(this.betaHome);
     if (!existsSync(directory)) return [];
     return readdirSync(directory)
-      .filter((name) => /^card-[a-z0-9][a-z0-9-]{5,120}\.json$/.test(name))
+      .filter((name) => /^tile-[a-z0-9][a-z0-9-]{5,120}\.json$/.test(name))
       .map((name) => {
         const id = name.slice(0, -5);
         try {
           return this.read(id);
         } catch (error) {
-          return normalizeChatCard({
+          return normalizeDimensionTile({
             id,
-            title: `Unavailable card: ${id}`,
+            title: `Unavailable tile: ${id}`,
             turns: [],
             history: [],
             status: "folded",
@@ -356,38 +356,38 @@ export class ChatCardStore {
   }
 
   read(id) {
-    const file = cardPath(this.betaHome, id);
+    const file = tilePath(this.betaHome, id);
     if (!existsSync(file)) {
-      throw new Error(`Chat card ${safeCardId(id)} was not found.`);
+      throw new Error(`Dimension tile ${safeTileId(id)} was not found.`);
     }
     const size = statSync(file).size;
-    if (size > MAX_CHAT_CARD_BYTES) {
+    if (size > MAX_DIMENSION_TILE_BYTES) {
       throw new Error(
-        `Chat card ${id} exceeds the ${MAX_CHAT_CARD_BYTES} byte limit.`,
+        `Dimension tile ${id} exceeds the ${MAX_DIMENSION_TILE_BYTES} byte limit.`,
       );
     }
     const source = readFileSync(file, "utf8");
-    if (Buffer.byteLength(source) > MAX_CHAT_CARD_BYTES) {
+    if (Buffer.byteLength(source) > MAX_DIMENSION_TILE_BYTES) {
       throw new Error(
-        `Chat card ${id} exceeds the ${MAX_CHAT_CARD_BYTES} byte limit.`,
+        `Dimension tile ${id} exceeds the ${MAX_DIMENSION_TILE_BYTES} byte limit.`,
       );
     }
     let value;
     try {
       value = JSON.parse(source);
     } catch (error) {
-      throw new Error(`Chat card ${id} is invalid: ${error.message}`);
+      throw new Error(`Dimension tile ${id} is invalid: ${error.message}`);
     }
-    if (value?.schema !== CHAT_CARD_SCHEMA) {
-      throw new Error(`Chat card ${id} does not use ${CHAT_CARD_SCHEMA}.`);
+    if (value?.schema !== DIMENSION_TILE_SCHEMA) {
+      throw new Error(`Dimension tile ${id} does not use ${DIMENSION_TILE_SCHEMA}.`);
     }
-    return normalizeChatCard(value, { id });
+    return normalizeDimensionTile(value, { id });
   }
 
   nextSeat(excludeId = null) {
     const occupied = new Set(this.list()
-      .filter((card) => card.id !== excludeId && card.status !== "folded")
-      .map((card) => card.table.seat)
+      .filter((tile) => tile.id !== excludeId && tile.status !== "folded")
+      .map((tile) => tile.table.seat)
       .filter(Boolean));
     for (let seat = 1; seat <= 12; seat += 1) {
       if (!occupied.has(seat)) return seat;
@@ -396,18 +396,18 @@ export class ChatCardStore {
   }
 
   save(value) {
-    const card = normalizeChatCard(value, {
+    const tile = normalizeDimensionTile(value, {
       id: value.id,
       now: this.nowIso(),
     });
-    atomicWriteCard(this.betaHome, card);
-    return card;
+    atomicWriteTile(this.betaHome, tile);
+    return tile;
   }
 
   park(value) {
     const now = this.nowIso();
     const id = value?.id || this.idFactory();
-    const card = normalizeChatCard({
+    const tile = normalizeDimensionTile({
       ...value,
       id,
       createdAt: value?.createdAt || now,
@@ -418,15 +418,15 @@ export class ChatCardStore {
         seat: value?.table?.seat || this.nextSeat(id),
       },
     }, { id, now });
-    atomicWriteCard(this.betaHome, card);
-    return card;
+    atomicWriteTile(this.betaHome, tile);
+    return tile;
   }
 
   parkExisting(id) {
-    const card = this.read(id);
-    card.status = "parked";
-    card.parkedAt = this.nowIso();
-    return this.save(card);
+    const tile = this.read(id);
+    tile.status = "parked";
+    tile.parkedAt = this.nowIso();
+    return this.save(tile);
   }
 
   complete(id, {
@@ -438,13 +438,13 @@ export class ChatCardStore {
     reply,
     userInput = "",
   } = {}) {
-    const card = this.read(id);
+    const tile = this.read(id);
     const completionId = String(requestId || "");
-    if (completionId && card.completedRequestIds.includes(completionId)) {
-      return card;
+    if (completionId && tile.completedRequestIds.includes(completionId)) {
+      return tile;
     }
     const completedAt = timestamp(at, this.nowIso());
-    let pending = [...card.turns]
+    let pending = [...tile.turns]
       .reverse()
       .find((turn) => (
         turn.role === "assistant"
@@ -452,7 +452,7 @@ export class ChatCardStore {
         && (!completionId || turn.requestId === completionId)
       ));
     if (!pending && completionId) {
-      const unboundPending = card.turns.filter((turn) => (
+      const unboundPending = tile.turns.filter((turn) => (
         turn.role === "assistant" && turn.pending && !turn.requestId
       ));
       if (unboundPending.length === 1) pending = unboundPending[0];
@@ -465,13 +465,13 @@ export class ChatCardStore {
       delete pending.pending;
     } else {
       const additions = userInput ? 2 : 1;
-      if (card.turns.length + additions > MAX_CHAT_CARD_TURNS) {
+      if (tile.turns.length + additions > MAX_DIMENSION_TILE_TURNS) {
         throw new Error(
-          `Chat cards are limited to ${MAX_CHAT_CARD_TURNS} transcript turns.`,
+          `Dimension tiles are limited to ${MAX_DIMENSION_TILE_TURNS} transcript turns.`,
         );
       }
       if (userInput) {
-        card.turns.push({
+        tile.turns.push({
           role: "user",
           text: String(userInput),
           html: "",
@@ -479,7 +479,7 @@ export class ChatCardStore {
           ...(completionId ? { requestId: completionId } : {}),
         });
       }
-      card.turns.push({
+      tile.turns.push({
         role: "assistant",
         text: String(reply || ""),
         html: String(html || ""),
@@ -488,10 +488,10 @@ export class ChatCardStore {
       });
     }
     if (Array.isArray(history)) {
-      card.history = history.map(normalizeHistoryMessage);
+      tile.history = history.map(normalizeHistoryMessage);
     } else {
       const userIndex = completionId
-        ? card.history.findIndex((message) => (
+        ? tile.history.findIndex((message) => (
             message.role === "user" && message.requestId === completionId
           ))
         : -1;
@@ -500,83 +500,83 @@ export class ChatCardStore {
         content: String(reply || ""),
         ...(completionId ? { requestId: completionId } : {}),
       };
-      if (userIndex >= 0) card.history.splice(userIndex + 1, 0, assistant);
+      if (userIndex >= 0) tile.history.splice(userIndex + 1, 0, assistant);
       else if (userInput) {
-        card.history.push({
+        tile.history.push({
           role: "user",
           content: String(userInput),
           ...(completionId ? { requestId: completionId } : {}),
         }, assistant);
       } else {
-        card.history.push(assistant);
+        tile.history.push(assistant);
       }
     }
     if (completionId) {
-      card.completedRequestIds = [
-        ...card.completedRequestIds,
+      tile.completedRequestIds = [
+        ...tile.completedRequestIds,
         completionId,
       ].slice(-50);
     }
-    if (model) card.route.model = String(model);
-    if (!card.turns.some((turn) => turn.pending)) {
-      for (const turn of card.turns) delete turn.requestId;
-      card.history = card.history.map((message) => ({
+    if (model) tile.route.model = String(model);
+    if (!tile.turns.some((turn) => turn.pending)) {
+      for (const turn of tile.turns) delete turn.requestId;
+      tile.history = tile.history.map((message) => ({
         role: message.role,
         content: message.content,
       }));
     }
-    return this.save(card);
+    return this.save(tile);
   }
 
   fold(id) {
-    const card = this.read(id);
-    const undoUntil = this.now().getTime() + CHAT_CARD_UNDO_MS;
-    this.undoEntries.set(card.id, {
-      status: card.status,
-      faceUp: card.table.faceUp,
+    const tile = this.read(id);
+    const undoUntil = this.now().getTime() + DIMENSION_TILE_UNDO_MS;
+    this.undoEntries.set(tile.id, {
+      status: tile.status,
+      faceUp: tile.table.faceUp,
       undoUntil,
     });
-    card.status = "folded";
-    card.table.faceUp = false;
+    tile.status = "folded";
+    tile.table.faceUp = false;
     return {
-      card: this.save(card),
+      tile: this.save(tile),
       undoUntil: new Date(undoUntil).toISOString(),
     };
   }
 
   undo(id) {
-    const cardId = safeCardId(id);
-    const entry = this.undoEntries.get(cardId);
+    const tileId = safeTileId(id);
+    const entry = this.undoEntries.get(tileId);
     if (!entry || this.now().getTime() > entry.undoUntil) {
-      this.undoEntries.delete(cardId);
+      this.undoEntries.delete(tileId);
       throw new Error("The 10 second fold undo window has expired.");
     }
-    const card = this.read(cardId);
-    card.status = entry.status;
-    card.table.faceUp = entry.faceUp;
-    this.undoEntries.delete(cardId);
-    return this.save(card);
+    const tile = this.read(tileId);
+    tile.status = entry.status;
+    tile.table.faceUp = entry.faceUp;
+    this.undoEntries.delete(tileId);
+    return this.save(tile);
   }
 
   wake(id) {
     const target = this.read(id);
     if (!target.restorable) {
-      throw new Error(target.restoreError || "This chat card cannot be restored.");
+      throw new Error(target.restoreError || "This dimension tile cannot be restored.");
     }
     const raceId = target.status === "racing" ? target.raceId : null;
-    for (const card of this.list()) {
-      if (card.id === target.id) continue;
+    for (const tile of this.list()) {
+      if (tile.id === target.id) continue;
       if (
         raceId
-        && card.status === "racing"
-        && card.raceId === raceId
+        && tile.status === "racing"
+        && tile.raceId === raceId
       ) {
-        card.status = "folded";
-        card.table.faceUp = false;
-        this.save(card);
-      } else if (card.status === "primary") {
-        card.status = "parked";
-        this.save(card);
+        tile.status = "folded";
+        tile.table.faceUp = false;
+        this.save(tile);
+      } else if (tile.status === "primary") {
+        tile.status = "parked";
+        this.save(tile);
       }
     }
     target.status = "primary";
@@ -587,11 +587,11 @@ export class ChatCardStore {
   race(id) {
     const source = this.read(id);
     if (source.status === "racing") {
-      throw new Error("This card is already in an unresolved race.");
+      throw new Error("This tile is already in an unresolved race.");
     }
     const question = lastQuestion(source);
     if (!question) {
-      throw new Error("Race requires a card whose last user turn is a question.");
+      throw new Error("Race requires a tile whose last user turn is a question.");
     }
     const raceId = this.raceIdFactory();
     source.status = "racing";
@@ -629,14 +629,14 @@ export class ChatCardStore {
   }
 }
 
-export function registerChatCardIpc({
+export function registerDimensionTileIpc({
   assertTrustedIpc,
   ipcMain,
   isEnabled,
   store,
 } = {}) {
-  if (!ipcMain?.handle || !(store instanceof ChatCardStore)) {
-    throw new Error("Chat card IPC requires ipcMain and a ChatCardStore.");
+  if (!ipcMain?.handle || !(store instanceof DimensionTileStore)) {
+    throw new Error("Dimension tile IPC requires ipcMain and a DimensionTileStore.");
   }
   function trust(event) {
     assertTrustedIpc?.(event);
@@ -644,38 +644,38 @@ export function registerChatCardIpc({
   function guard(event) {
     trust(event);
     if (!isEnabled?.()) {
-      throw new Error("April Fools card table is off.");
+      throw new Error("Table view is off.");
     }
   }
-  ipcMain.handle("beta:cards-list", (event) => {
+  ipcMain.handle("beta:tiles-list", (event) => {
     guard(event);
     return store.list();
   });
-  ipcMain.handle("beta:cards-park", (event, card) => {
+  ipcMain.handle("beta:tiles-park", (event, tile) => {
     guard(event);
-    return store.park(card);
+    return store.park(tile);
   });
-  ipcMain.handle("beta:cards-park-existing", (event, id) => {
+  ipcMain.handle("beta:tiles-park-existing", (event, id) => {
     guard(event);
     return store.parkExisting(id);
   });
-  ipcMain.handle("beta:cards-wake", (event, id) => {
+  ipcMain.handle("beta:tiles-wake", (event, id) => {
     guard(event);
     return store.wake(id);
   });
-  ipcMain.handle("beta:cards-fold", (event, id) => {
+  ipcMain.handle("beta:tiles-fold", (event, id) => {
     guard(event);
     return store.fold(id);
   });
-  ipcMain.handle("beta:cards-undo", (event, id) => {
+  ipcMain.handle("beta:tiles-undo", (event, id) => {
     guard(event);
     return store.undo(id);
   });
-  ipcMain.handle("beta:cards-race", (event, id) => {
+  ipcMain.handle("beta:tiles-race", (event, id) => {
     guard(event);
     return store.race(id);
   });
-  ipcMain.handle("beta:cards-complete", (event, id, completion) => {
+  ipcMain.handle("beta:tiles-complete", (event, id, completion) => {
     trust(event);
     if (!isEnabled?.()) {
       const requestId = String(completion?.requestId || "");
@@ -690,7 +690,7 @@ export function registerChatCardIpc({
         && !pending[0].requestId;
       if (!identified && !singleUnbound) {
         throw new Error(
-          "Only the identified reply for an existing pending card may finish while the table is off.",
+          "Only the identified reply for an existing pending tile may finish while Table view is off.",
         );
       }
     }
@@ -698,53 +698,53 @@ export function registerChatCardIpc({
   });
 }
 
-function installAprilFoolsFrameBridge(settings) {
-  const prior = window.__rappBetaAprilFoolsBridge;
+function installTableViewFrameBridge(settings) {
+  const prior = window.__rappBetaTableViewBridge;
   if (prior) {
     prior.update(settings);
     return true;
   }
 
   let current = settings;
-  let activeCardId = null;
+  let activeTileId = null;
   let activeHistory = null;
   let conversationSequence = 0;
   let currentConversationId = null;
   let internalClear = false;
   let lastRequest = null;
-  let nextRaceCardId = null;
+  let nextRaceTileId = null;
   const completedRequests = new Map();
   const conversations = new Map();
   const pendingRequests = new Map();
   const upstreamFetch = window.fetch;
-  window.__rappBetaDeferredCardCompletions ||= [];
+  window.__rappBetaDeferredTileCompletions ||= [];
 
   function removeToggle() {
-    document.getElementById("beta-april-fools-toggle")?.remove();
+    document.getElementById("beta-table-view-toggle")?.remove();
   }
 
   function renderToggle() {
     const panel = document.getElementById("beta-app-panel");
     if (!panel) return false;
-    let button = document.getElementById("beta-april-fools-toggle");
+    let button = document.getElementById("beta-table-view-toggle");
     if (!button) {
       button = document.createElement("button");
-      button.id = "beta-april-fools-toggle";
+      button.id = "beta-table-view-toggle";
       button.className = "beta-panel-btn";
       button.type = "button";
-      button.textContent = "April Fools: Card Table";
+      button.textContent = "Table view";
       button.addEventListener("click", (event) => {
         event.stopPropagation();
         window.parent.postMessage({
-          type: "rapp-beta:set-april-fools",
-          aprilFools: { on: !current.on },
+          type: "rapp-beta:set-table-view",
+          tableView: { on: !current.on },
         }, "*");
       });
       const updateButton = document.getElementById("beta-check-updates");
       panel.insertBefore(button, updateButton || null);
     }
     button.setAttribute("aria-pressed", String(Boolean(current.on)));
-    button.textContent = `April Fools: Card Table ${current.on ? "✓" : ""}`.trim();
+    button.textContent = `Table view ${current.on ? "✓" : ""}`.trim();
     return true;
   }
 
@@ -803,13 +803,13 @@ function installAprilFoolsFrameBridge(settings) {
       ) {
         const turn = turnFromMessage(
           child,
-          child.dataset.rappCardRequestId || null,
+          child.dataset.rappTileRequestId || null,
         );
         if (turn.text) turns.push(turn);
         continue;
       }
       if (!child.classList?.contains("response-slot")) continue;
-      const requestId = child.dataset.rappCardRequestId || null;
+      const requestId = child.dataset.rappTileRequestId || null;
       const replies = [...child.querySelectorAll(
         ":scope > .msg.assistant:not(.typing-indicator)"
           + ":not(.stream-arriving):not([data-rapp-provisional])",
@@ -886,10 +886,10 @@ function installAprilFoolsFrameBridge(settings) {
     return activeHistory ? structuredClone(activeHistory) : [];
   }
 
-  function captureCard() {
+  function captureTile() {
     const turns = transcriptTurns();
     const pending = [...pendingRequests.values()]
-      .filter((request) => !request.parkedCardId);
+      .filter((request) => !request.parkedTileId);
     const model = document.getElementById("model-select")?.value || "auto";
     const observedHistory = canonicalHistory();
     const hasObservedHistory = Boolean(
@@ -906,14 +906,14 @@ function installAprilFoolsFrameBridge(settings) {
       restorable: hasObservedHistory || !turns.some((turn) => turn.role === "user"),
       restoreError: hasObservedHistory
         ? null
-        : "This transcript predates April Fools mode, so its exact wire history was not observed.",
+        : "This transcript predates Table view mode, so its exact wire history was not observed.",
     };
   }
 
   function completionEvent(request) {
     return {
-      type: "rapp-beta:card-pending-complete",
-      id: request.parkedCardId,
+      type: "rapp-beta:tile-pending-complete",
+      id: request.parkedTileId,
       requestId: request.id,
       completion: {
         ...request.completion,
@@ -926,8 +926,8 @@ function installAprilFoolsFrameBridge(settings) {
   }
 
   function emitCompletion(request) {
-    if (!request.parkedCardId || !request.completion) return;
-    const deferred = window.__rappBetaDeferredCardCompletions;
+    if (!request.parkedTileId || !request.completion) return;
+    const deferred = window.__rappBetaDeferredTileCompletions;
     if (!deferred.some((entry) => entry.requestId === request.id)) {
       deferred.push(completionEvent(request));
       if (deferred.length > 50) deferred.splice(0, deferred.length - 50);
@@ -936,13 +936,13 @@ function installAprilFoolsFrameBridge(settings) {
   }
 
   function drainDeferredCompletions() {
-    for (const completion of window.__rappBetaDeferredCardCompletions || []) {
+    for (const completion of window.__rappBetaDeferredTileCompletions || []) {
       window.parent.postMessage(completion, "*");
     }
   }
 
-  function markPendingForCard(cardId, requestIds = []) {
-    activeCardId = null;
+  function markPendingForTile(tileId, requestIds = []) {
+    activeTileId = null;
     activeHistory = null;
     const ids = requestIds.length
       ? requestIds
@@ -951,7 +951,7 @@ function installAprilFoolsFrameBridge(settings) {
       const request = pendingRequests.get(requestId)
         || completedRequests.get(requestId);
       if (!request) continue;
-      request.parkedCardId = cardId;
+      request.parkedTileId = tileId;
       request.preserveOnClear = true;
       request.clearedFromKernel = true;
       emitCompletion(request);
@@ -975,16 +975,16 @@ function installAprilFoolsFrameBridge(settings) {
     }
   }
 
-  function renderTranscript(card) {
+  function renderTranscript(tile) {
     clearKernel();
     lastRequest = null;
-    activeCardId = card.id || null;
-    activeHistory = Array.isArray(card.history)
-      ? structuredClone(card.history)
+    activeTileId = tile.id || null;
+    activeHistory = Array.isArray(tile.history)
+      ? structuredClone(tile.history)
       : [];
     startConversation(activeHistory);
     const modelSelect = document.getElementById("model-select");
-    const model = String(card.route?.model || "");
+    const model = String(tile.route?.model || "");
     if (
       modelSelect
       && model
@@ -996,7 +996,7 @@ function installAprilFoolsFrameBridge(settings) {
     }
     const chat = document.getElementById("chat");
     if (!chat) throw new Error("The Brainstem transcript is unavailable.");
-    for (const turn of card.turns || []) {
+    for (const turn of tile.turns || []) {
       if (turn.pending) continue;
       appendRestoredTurn(turn);
     }
@@ -1021,7 +1021,7 @@ function installAprilFoolsFrameBridge(settings) {
       chat.appendChild(message);
     }
     if (turn.requestId && message) {
-      message.dataset.rappCardRequestId = turn.requestId;
+      message.dataset.rappTileRequestId = turn.requestId;
     }
     const bubble = message?.querySelector?.(".bubble");
     if (bubble && turn.html) {
@@ -1054,12 +1054,12 @@ function installAprilFoolsFrameBridge(settings) {
     });
   }
 
-  function prepareRace(cardId, question) {
+  function prepareRace(tileId, question) {
     clearKernel();
-    activeCardId = cardId;
+    activeTileId = tileId;
     activeHistory = null;
     startConversation([]);
-    nextRaceCardId = cardId;
+    nextRaceTileId = tileId;
     const input = document.getElementById("input");
     if (!input) throw new Error("The Brainstem composer is unavailable.");
     input.value = String(question || "");
@@ -1116,7 +1116,7 @@ function installAprilFoolsFrameBridge(settings) {
         requestId: request.id,
         userInput: request.userInput,
       };
-      if (!request.parkedCardId) lastRequest = request;
+      if (!request.parkedTileId) lastRequest = request;
       completedRequests.set(request.id, request);
       while (completedRequests.size > 50) {
         completedRequests.delete(completedRequests.keys().next().value);
@@ -1135,7 +1135,7 @@ function installAprilFoolsFrameBridge(settings) {
     }
   }
 
-  async function cardFetch(resource, options = {}) {
+  async function tileFetch(resource, options = {}) {
     let target;
     try {
       const raw = resource instanceof Request ? resource.url : String(resource);
@@ -1177,8 +1177,8 @@ function installAprilFoolsFrameBridge(settings) {
       effectiveHistory: structuredClone(effectiveHistory),
       id: window.crypto.randomUUID(),
       conversationId: currentConversationId,
-      parkedCardId: nextRaceCardId || activeCardId,
-      preserveOnClear: Boolean(nextRaceCardId),
+      parkedTileId: nextRaceTileId || activeTileId,
+      preserveOnClear: Boolean(nextRaceTileId),
       model: document.getElementById("model-select")?.value || "auto",
       startedAt: new Date().toISOString(),
       userInput: body.user_input,
@@ -1186,9 +1186,9 @@ function installAprilFoolsFrameBridge(settings) {
     conversation.requests.push(request);
     const responseSlot = [...document.querySelectorAll(
       "#chat .response-slot",
-    )].reverse().find((slot) => !slot.dataset.rappCardRequestId);
-    if (responseSlot) responseSlot.dataset.rappCardRequestId = request.id;
-    nextRaceCardId = null;
+    )].reverse().find((slot) => !slot.dataset.rappTileRequestId);
+    if (responseSlot) responseSlot.dataset.rappTileRequestId = request.id;
+    nextRaceTileId = null;
     const forwardAbort = () => {
       if (!request.preserveOnClear) controller.abort(originalSignal?.reason);
     };
@@ -1234,14 +1234,14 @@ function installAprilFoolsFrameBridge(settings) {
       && button
       && button.textContent.trim() === "Clear"
     ) {
-      if (activeCardId) {
+      if (activeTileId) {
         window.parent.postMessage({
-          type: "rapp-beta:card-detached",
-          id: activeCardId,
+          type: "rapp-beta:tile-detached",
+          id: activeTileId,
         }, "*");
       }
       activeHistory = null;
-      activeCardId = null;
+      activeTileId = null;
       lastRequest = null;
       startConversation(null);
     }
@@ -1251,10 +1251,10 @@ function installAprilFoolsFrameBridge(settings) {
     removeToggle();
     document.removeEventListener("click", handleClear, true);
     window.removeEventListener("message", receive);
-    if (window.fetch === cardFetch) window.fetch = upstreamFetch;
-    if (activeCardId) {
+    if (window.fetch === tileFetch) window.fetch = upstreamFetch;
+    if (activeTileId) {
       for (const request of pendingRequests.values()) {
-        if (request.parkedCardId === activeCardId) {
+        if (request.parkedTileId === activeTileId) {
           request.preserveOnClear = true;
           request.clearedFromKernel = true;
         }
@@ -1262,15 +1262,15 @@ function installAprilFoolsFrameBridge(settings) {
       clearKernel({ preservePending: true });
     }
     startConversation(null);
-    activeCardId = null;
+    activeTileId = null;
     activeHistory = null;
-    delete window.__rappBetaAprilFoolsBridge;
+    delete window.__rappBetaTableViewBridge;
   }
 
   function receive(event) {
     if (event.source !== window.parent || !event.data) return;
-    if (event.data.type === "rapp-beta:april-fools-state") {
-      current = event.data.aprilFools || current;
+    if (event.data.type === "rapp-beta:table-view-state") {
+      current = event.data.tableView || current;
       if (!current.on) {
         disable();
       } else {
@@ -1278,17 +1278,17 @@ function installAprilFoolsFrameBridge(settings) {
       }
       return;
     }
-    if (event.data.type === "rapp-beta:card-capture") {
+    if (event.data.type === "rapp-beta:tile-capture") {
       try {
         event.source.postMessage({
-          type: "rapp-beta:card-capture-result",
+          type: "rapp-beta:tile-capture-result",
           requestId: event.data.requestId,
           ok: true,
-          card: captureCard(),
+          tile: captureTile(),
         }, "*");
       } catch (error) {
         event.source.postMessage({
-          type: "rapp-beta:card-capture-result",
+          type: "rapp-beta:tile-capture-result",
           requestId: event.data.requestId,
           ok: false,
           error: String(error?.message || error),
@@ -1296,46 +1296,46 @@ function installAprilFoolsFrameBridge(settings) {
       }
       return;
     }
-    if (event.data.type === "rapp-beta:card-parked") {
-      markPendingForCard(event.data.id, event.data.requestIds || []);
+    if (event.data.type === "rapp-beta:tile-parked") {
+      markPendingForTile(event.data.id, event.data.requestIds || []);
       clearKernel({ preservePending: true });
       startConversation(null);
       return;
     }
-    if (event.data.type === "rapp-beta:card-wake") {
-      renderTranscript(event.data.card || {});
+    if (event.data.type === "rapp-beta:tile-wake") {
+      renderTranscript(event.data.tile || {});
       return;
     }
-    if (event.data.type === "rapp-beta:card-clear") {
+    if (event.data.type === "rapp-beta:tile-clear") {
       clearKernel();
-      activeCardId = null;
+      activeTileId = null;
       activeHistory = null;
       lastRequest = null;
       startConversation(null);
       return;
     }
-    if (event.data.type === "rapp-beta:card-late-completion") {
+    if (event.data.type === "rapp-beta:tile-late-completion") {
       applyLateCompletion(event.data.completion);
       return;
     }
-    if (event.data.type === "rapp-beta:card-completion-ack") {
+    if (event.data.type === "rapp-beta:tile-completion-ack") {
       completedRequests.delete(event.data.requestId);
-      window.__rappBetaDeferredCardCompletions = (
-        window.__rappBetaDeferredCardCompletions || []
+      window.__rappBetaDeferredTileCompletions = (
+        window.__rappBetaDeferredTileCompletions || []
       ).filter((entry) => entry.requestId !== event.data.requestId);
       return;
     }
-    if (event.data.type === "rapp-beta:card-ready") {
+    if (event.data.type === "rapp-beta:tile-ready") {
       drainDeferredCompletions();
       return;
     }
-    if (event.data.type === "rapp-beta:card-race") {
+    if (event.data.type === "rapp-beta:tile-race") {
       prepareRace(event.data.id, event.data.question);
     }
   }
 
   const bridge = {
-    capture: captureCard,
+    capture: captureTile,
     disable,
     renderTranscript,
     update(next) {
@@ -1343,8 +1343,8 @@ function installAprilFoolsFrameBridge(settings) {
       renderToggle();
     },
   };
-  window.__rappBetaAprilFoolsBridge = bridge;
-  window.fetch = cardFetch;
+  window.__rappBetaTableViewBridge = bridge;
+  window.fetch = tileFetch;
   document.addEventListener("click", handleClear, true);
   window.addEventListener("message", receive);
   renderToggle();
@@ -1353,10 +1353,10 @@ function installAprilFoolsFrameBridge(settings) {
   return true;
 }
 
-export function composeChatCardsFrameBridgeSource(checkpointSource, aprilFools) {
+export function composeDimensionTilesFrameBridgeSource(checkpointSource, tableView) {
   const source = String(checkpointSource || "");
-  if (!aprilFools?.on) return source;
-  return `${source}\n;(${installAprilFoolsFrameBridge.toString()})(${
-    JSON.stringify(normalizeAprilFoolsSettings(aprilFools))
+  if (!tableView?.on) return source;
+  return `${source}\n;(${installTableViewFrameBridge.toString()})(${
+    JSON.stringify(normalizeTableViewSettings(tableView))
   });`;
 }

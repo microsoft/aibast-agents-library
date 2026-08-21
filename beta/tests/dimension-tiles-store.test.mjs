@@ -14,26 +14,26 @@ import path from "node:path";
 import test from "node:test";
 
 import {
-  CHAT_CARD_SCHEMA,
-  ChatCardStore,
-  MAX_CHAT_CARD_BYTES,
-  MAX_CHAT_CARD_TURNS,
-  registerChatCardIpc,
-} from "../electron/chat-cards.mjs";
+  DIMENSION_TILE_SCHEMA,
+  DimensionTileStore,
+  MAX_DIMENSION_TILE_BYTES,
+  MAX_DIMENSION_TILE_TURNS,
+  registerDimensionTileIpc,
+} from "../electron/dimension-tiles.mjs";
 
 function fixtureStore(t, options = {}) {
-  const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-card-store-"));
+  const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-tile-store-"));
   t.after(() => rmSync(betaHome, { recursive: true, force: true }));
   let sequence = 0;
-  const store = new ChatCardStore({
+  const store = new DimensionTileStore({
     betaHome,
-    idFactory: () => `card-fixture-${String(++sequence).padStart(3, "0")}`,
+    idFactory: () => `tile-fixture-${String(++sequence).padStart(3, "0")}`,
     ...options,
   });
   return { betaHome, store };
 }
 
-function cardFixture(question = "What should we build?") {
+function tileFixture(question = "What should we build?") {
   const at = "2026-08-20T20:00:00.000Z";
   return {
     title: question,
@@ -59,25 +59,25 @@ function cardFixture(question = "What should we build?") {
   };
 }
 
-test("card store parks atomic 0600 schema files and lists them by seat", (t) => {
+test("tile store parks atomic 0600 schema files and lists them by seat", (t) => {
   const { betaHome, store } = fixtureStore(t);
-  const first = store.park(cardFixture());
-  const second = store.park(cardFixture("Which model should race?"));
+  const first = store.park(tileFixture());
+  const second = store.park(tileFixture("Which model should race?"));
 
-  assert.equal(first.schema, CHAT_CARD_SCHEMA);
+  assert.equal(first.schema, DIMENSION_TILE_SCHEMA);
   assert.equal(first.status, "parked");
   assert.equal(first.table.seat, 1);
   assert.equal(second.table.seat, 2);
   assert.equal(first.title, "What should we build?");
-  assert.deepEqual(store.list().map((card) => card.id).sort(), [
+  assert.deepEqual(store.list().map((tile) => tile.id).sort(), [
     first.id,
     second.id,
   ].sort());
 
-  const directory = path.join(betaHome, "cards");
+  const directory = path.join(betaHome, "tiles");
   const file = path.join(directory, `${first.id}.json`);
   assert.equal(existsSync(file), true);
-  assert.equal(JSON.parse(readFileSync(file, "utf8")).schema, CHAT_CARD_SCHEMA);
+  assert.equal(JSON.parse(readFileSync(file, "utf8")).schema, DIMENSION_TILE_SCHEMA);
   assert.equal(
     readdirSync(directory).some((name) => name.endsWith(".tmp")),
     false,
@@ -88,16 +88,16 @@ test("card store parks atomic 0600 schema files and lists them by seat", (t) => 
   }
 });
 
-test("fold keeps the card, undo lasts ten seconds, and wake picks a primary", (t) => {
+test("fold keeps the tile, undo lasts ten seconds, and wake picks a primary", (t) => {
   let now = new Date("2026-08-20T20:00:00.000Z");
   const { betaHome, store } = fixtureStore(t, { now: () => now });
-  const first = store.park(cardFixture());
-  const second = store.park(cardFixture("Can a second card win?"));
+  const first = store.park(tileFixture());
+  const second = store.park(tileFixture("Can a second tile win?"));
 
   const folded = store.fold(first.id);
-  assert.equal(folded.card.status, "folded");
-  assert.equal(folded.card.table.faceUp, false);
-  assert.equal(existsSync(path.join(betaHome, "cards", `${first.id}.json`)), true);
+  assert.equal(folded.tile.status, "folded");
+  assert.equal(folded.tile.table.faceUp, false);
+  assert.equal(existsSync(path.join(betaHome, "tiles", `${first.id}.json`)), true);
   assert.equal(store.undo(first.id).status, "parked");
 
   store.fold(first.id);
@@ -110,7 +110,7 @@ test("fold keeps the card, undo lasts ten seconds, and wake picks a primary", (t
 
 test("race creates a pending contender and waking a winner folds its rival", (t) => {
   const { store } = fixtureStore(t);
-  const original = store.park(cardFixture("Which answer wins?"));
+  const original = store.park(tileFixture("Which answer wins?"));
   const race = store.race(original.id);
 
   assert.equal(race.question, "Which answer wins?");
@@ -149,8 +149,8 @@ test("a race winner folds only its paired rival", (t) => {
   const { store } = fixtureStore(t, {
     raceIdFactory: () => `race-fixture-${++raceSequence}`,
   });
-  const first = store.race(store.park(cardFixture("First race?")).id);
-  const second = store.race(store.park(cardFixture("Second race?")).id);
+  const first = store.race(store.park(tileFixture("First race?")).id);
+  const second = store.race(store.park(tileFixture("Second race?")).id);
 
   store.wake(first.source.id);
   assert.equal(store.read(first.contender.id).status, "folded");
@@ -160,27 +160,27 @@ test("a race winner folds only its paired rival", (t) => {
 
 test("a non-restorable transcript reports the reason instead of waking", (t) => {
   const { store } = fixtureStore(t);
-  const card = store.park({
-    ...cardFixture(),
+  const tile = store.park({
+    ...tileFixture(),
     restorable: false,
     restoreError: "Exact wire history was not observed.",
   });
-  assert.equal(card.restorable, false);
-  assert.throws(() => store.wake(card.id), /wire history was not observed/);
+  assert.equal(tile.restorable, false);
+  assert.throws(() => store.wake(tile.id), /wire history was not observed/);
 });
 
-test("race refuses a card whose last user turn is not a question", (t) => {
+test("race refuses a tile whose last user turn is not a question", (t) => {
   const { store } = fixtureStore(t);
-  const card = store.park(cardFixture("Build the answer."));
-  assert.throws(() => store.race(card.id), /last user turn is a question/);
+  const tile = store.park(tileFixture("Build the answer."));
+  assert.throws(() => store.race(tile.id), /last user turn is a question/);
 });
 
 test("concurrent pending replies reconcile by request id", (t) => {
   const { store } = fixtureStore(t);
   const at = "2026-08-20T20:00:00.000Z";
-  const card = store.park({
-    title: "Concurrent card",
-    route: cardFixture().route,
+  const tile = store.park({
+    title: "Concurrent tile",
+    route: tileFixture().route,
     turns: [
       { role: "user", text: "First?", html: "", at, requestId: "request-1" },
       {
@@ -207,11 +207,11 @@ test("concurrent pending replies reconcile by request id", (t) => {
     ],
   });
 
-  store.complete(card.id, {
+  store.complete(tile.id, {
     reply: "Second answer.",
     requestId: "request-2",
   });
-  const completed = store.complete(card.id, {
+  const completed = store.complete(tile.id, {
     reply: "First answer.",
     requestId: "request-1",
   });
@@ -236,10 +236,10 @@ test("concurrent pending replies reconcile by request id", (t) => {
   assert(completed.history.every((message) => !("requestId" in message)));
 });
 
-test("card store enforces turn and 256 KiB caps before writing", (t) => {
+test("tile store enforces turn and 256 KiB caps before writing", (t) => {
   const { betaHome, store } = fixtureStore(t);
   const oversizedTurns = Array.from(
-    { length: MAX_CHAT_CARD_TURNS + 1 },
+    { length: MAX_DIMENSION_TILE_TURNS + 1 },
     (_, index) => ({
       role: index % 2 ? "assistant" : "user",
       text: `turn ${index}`,
@@ -248,52 +248,52 @@ test("card store enforces turn and 256 KiB caps before writing", (t) => {
     }),
   );
   assert.throws(
-    () => store.park({ ...cardFixture(), turns: oversizedTurns }),
-    new RegExp(`${MAX_CHAT_CARD_TURNS} transcript turns`),
+    () => store.park({ ...tileFixture(), turns: oversizedTurns }),
+    new RegExp(`${MAX_DIMENSION_TILE_TURNS} transcript turns`),
   );
   assert.throws(
     () => store.park({
-      ...cardFixture(),
+      ...tileFixture(),
       turns: [{
         role: "user",
-        text: "x".repeat(MAX_CHAT_CARD_BYTES),
+        text: "x".repeat(MAX_DIMENSION_TILE_BYTES),
         html: "",
         at: "2026-08-20T20:00:00.000Z",
       }],
     }),
-    new RegExp(`${MAX_CHAT_CARD_BYTES} bytes`),
+    new RegExp(`${MAX_DIMENSION_TILE_BYTES} bytes`),
   );
   assert.equal(
-    existsSync(path.join(betaHome, "cards", "card-fixture-001.json")),
+    existsSync(path.join(betaHome, "tiles", "tile-fixture-001.json")),
     false,
   );
 });
 
-test("oversized or invalid on-disk cards are reported without hiding valid cards", (t) => {
+test("oversized or invalid on-disk tiles are reported without hiding valid tiles", (t) => {
   const { betaHome, store } = fixtureStore(t);
-  const valid = store.park(cardFixture());
-  const invalidId = "card-invalid-oversized";
-  const directory = path.join(betaHome, "cards");
+  const valid = store.park(tileFixture());
+  const invalidId = "tile-invalid-oversized";
+  const directory = path.join(betaHome, "tiles");
   mkdirSync(directory, { recursive: true });
   writeFileSync(
     path.join(directory, `${invalidId}.json`),
-    " ".repeat(MAX_CHAT_CARD_BYTES + 1),
+    " ".repeat(MAX_DIMENSION_TILE_BYTES + 1),
   );
 
   assert.throws(() => store.read(invalidId), /exceeds the 262144 byte limit/);
-  const cards = store.list();
-  assert(cards.some((card) => card.id === valid.id && card.restorable));
-  const unavailable = cards.find((card) => card.id === invalidId);
+  const tiles = store.list();
+  assert(tiles.some((tile) => tile.id === valid.id && tile.restorable));
+  const unavailable = tiles.find((tile) => tile.id === invalidId);
   assert.equal(unavailable.restorable, false);
   assert.match(unavailable.restoreError, /exceeds the 262144 byte limit/);
 });
 
-test("card IPC is inert off except identified durable completions", async (t) => {
+test("tile IPC is inert off except identified durable completions", async (t) => {
   const { store } = fixtureStore(t);
   const handlers = new Map();
   let trusted = 0;
   let enabled = false;
-  registerChatCardIpc({
+  registerDimensionTileIpc({
     assertTrustedIpc: () => { trusted += 1; },
     ipcMain: {
       handle(name, handler) {
@@ -305,20 +305,20 @@ test("card IPC is inert off except identified durable completions", async (t) =>
   });
 
   assert.deepEqual([...handlers.keys()].sort(), [
-    "beta:cards-complete",
-    "beta:cards-fold",
-    "beta:cards-list",
-    "beta:cards-park",
-    "beta:cards-park-existing",
-    "beta:cards-race",
-    "beta:cards-undo",
-    "beta:cards-wake",
+    "beta:tiles-complete",
+    "beta:tiles-fold",
+    "beta:tiles-list",
+    "beta:tiles-park",
+    "beta:tiles-park-existing",
+    "beta:tiles-race",
+    "beta:tiles-undo",
+    "beta:tiles-wake",
   ]);
-  assert.throws(() => handlers.get("beta:cards-list")({}), /card table is off/);
+  assert.throws(() => handlers.get("beta:tiles-list")({}), /Table view is off/);
   const pending = store.park({
-    ...cardFixture(),
+    ...tileFixture(),
     turns: [
-      ...cardFixture().turns.slice(0, 1),
+      ...tileFixture().turns.slice(0, 1),
       {
         role: "assistant",
         text: "Waiting for reply...",
@@ -334,7 +334,7 @@ test("card IPC is inert off except identified durable completions", async (t) =>
       requestId: "request-off-1",
     }],
   });
-  const completedOff = handlers.get("beta:cards-complete")(
+  const completedOff = handlers.get("beta:tiles-complete")(
     {},
     pending.id,
     {
@@ -344,18 +344,18 @@ test("card IPC is inert off except identified durable completions", async (t) =>
   );
   assert.equal(completedOff.history.at(-1).content, "Durable while off.");
   assert.throws(
-    () => handlers.get("beta:cards-complete")(
+    () => handlers.get("beta:tiles-complete")(
       {},
       pending.id,
       { reply: "Unexpected.", requestId: "request-off-2" },
     ),
-    /existing pending card/,
+    /existing pending tile/,
   );
   enabled = true;
   assert.equal(
-    handlers.get("beta:cards-park-existing")({}, pending.id).status,
+    handlers.get("beta:tiles-park-existing")({}, pending.id).status,
     "parked",
   );
-  assert.equal(handlers.get("beta:cards-list")({})[0].id, pending.id);
+  assert.equal(handlers.get("beta:tiles-list")({})[0].id, pending.id);
   assert.equal(trusted, 5);
 });

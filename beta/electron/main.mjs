@@ -36,17 +36,17 @@ import {
   writeAmbientSettings,
 } from "./chat-look-settings.mjs";
 import {
-  ChatCardStore,
-  changeAprilFoolsSettings,
-  composeChatCardsFrameBridgeSource,
-  parseAprilFoolsCommand,
-  readAprilFoolsSettings,
-  registerChatCardIpc,
-} from "./chat-cards.mjs";
+  DimensionTileStore,
+  changeTableViewSettings,
+  composeDimensionTilesFrameBridgeSource,
+  parseTableViewCommand,
+  readTableViewSettings,
+  registerDimensionTileIpc,
+} from "./dimension-tiles.mjs";
 import {
-  readCustomTable,
-  resolveCustomTable,
-} from "./card-tables.mjs";
+  readCustomLayout,
+  resolveCustomLayout,
+} from "./table-layouts.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
@@ -198,17 +198,17 @@ const initialChatLook = readChatLookSettings({
   betaHome,
   env: process.env,
 });
-const initialAprilFools = readAprilFoolsSettings({
+const initialTableView = readTableViewSettings({
   betaHome,
   env: process.env,
 });
 let chatLook = initialChatLook.chatLook;
 let chatLookOverridden = initialChatLook.chatLookOverridden;
 let chatTypingEnabled = chatStreamMode === "hold";
-let aprilFools = initialAprilFools.aprilFools;
-let aprilFoolsOverridden = initialAprilFools.aprilFoolsOverridden;
-let customCardTableState = resolveCustomTable(aprilFools);
-const chatCardStore = new ChatCardStore({ betaHome });
+let tableView = initialTableView.tableView;
+let tableViewOverridden = initialTableView.tableViewOverridden;
+let customLayoutState = resolveCustomLayout(tableView);
+const dimensionTileStore = new DimensionTileStore({ betaHome });
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -1624,7 +1624,7 @@ function frameBridgeInstallationSource() {
     chatLook,
     chatTypingEnabled,
   })};\n${BETA_FRAME_BRIDGE_SOURCE}`;
-  return composeChatCardsFrameBridgeSource(checkpointSource, aprilFools);
+  return composeDimensionTilesFrameBridgeSource(checkpointSource, tableView);
 }
 const copilot = new CopilotRuntime({
   tokenFile: path.join(config.brainstemDir, ".copilot_token"),
@@ -1651,10 +1651,10 @@ const chatLeaseRegistry = new Set();
 const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
-  aprilFools,
-  aprilFoolsOverridden,
-  cardTable: customCardTableState.table,
-  cardTableError: customCardTableState.error,
+  tableView,
+  tableViewOverridden,
+  tableLayout: customLayoutState.layout,
+  tableLayoutError: customLayoutState.error,
   chatLook,
   chatLookOverridden,
   chatTypingEnabled,
@@ -1839,11 +1839,11 @@ function syncChatLookMenu() {
   }
 }
 
-function syncAprilFoolsMenu() {
+function syncTableViewMenu() {
   const item = Menu.getApplicationMenu()?.getMenuItemById(
-    "april-fools-card-table",
+    "table-view",
   );
-  if (item) item.checked = aprilFools.on;
+  if (item) item.checked = tableView.on;
 }
 
 function applyEffectiveChatLook(value) {
@@ -1883,44 +1883,44 @@ function requestChatLookChange(nextLook) {
   });
 }
 
-function applyEffectiveAprilFools(value) {
-  customCardTableState = resolveCustomTable(value.aprilFools);
-  aprilFools = value.aprilFools;
-  aprilFoolsOverridden = value.aprilFoolsOverridden;
-  state.aprilFools = aprilFools;
-  state.aprilFoolsOverridden = aprilFoolsOverridden;
-  state.cardTable = customCardTableState.table;
-  state.cardTableError = customCardTableState.error;
-  syncAprilFoolsMenu();
+function applyEffectiveTableView(value) {
+  customLayoutState = resolveCustomLayout(value.tableView);
+  tableView = value.tableView;
+  tableViewOverridden = value.tableViewOverridden;
+  state.tableView = tableView;
+  state.tableViewOverridden = tableViewOverridden;
+  state.tableLayout = customLayoutState.layout;
+  state.tableLayoutError = customLayoutState.error;
+  syncTableViewMenu();
   emitState();
 }
 
-async function handleCustomCardTableLoad() {
+async function handleCustomTableLayoutLoad() {
   const selection = await dialog.showOpenDialog(mainWindow, {
-    title: "Load a custom card table",
-    buttonLabel: "Load table",
-    filters: [{ name: "JSON card table", extensions: ["json"] }],
+    title: "Load a custom table layout",
+    buttonLabel: "Load layout",
+    filters: [{ name: "JSON table layout", extensions: ["json"] }],
     properties: ["openFile"],
   });
   if (selection.canceled || !selection.filePaths[0]) {
     return { canceled: true };
   }
-  const loaded = readCustomTable(selection.filePaths[0]);
-  const settings = await handleAprilFoolsChange({
-    table: "custom",
-    customTablePath: loaded.file,
+  const loaded = readCustomLayout(selection.filePaths[0]);
+  const settings = await handleTableViewChange({
+    layout: "custom",
+    customLayoutPath: loaded.file,
   });
   return {
     canceled: false,
     ...settings,
-    cardTable: loaded.table,
+    tableLayout: loaded.layout,
   };
 }
 
-async function handleAprilFoolsChange(next) {
-  const value = changeAprilFoolsSettings({
-    apply: applyEffectiveAprilFools,
-    aprilFools: next,
+async function handleTableViewChange(next) {
+  const value = changeTableViewSettings({
+    apply: applyEffectiveTableView,
+    tableView: next,
     betaHome,
     env: process.env,
   });
@@ -1928,20 +1928,20 @@ async function handleAprilFoolsChange(next) {
   return structuredClone(value);
 }
 
-function requestAprilFoolsChange(next) {
-  void handleAprilFoolsChange(next).catch((error) => {
-    console.error("Could not change the April Fools card table:", error);
+function requestTableViewChange(next) {
+  void handleTableViewChange(next).catch((error) => {
+    console.error("Could not change Table view:", error);
   });
 }
 
 async function executeComposerControl(message) {
-  if (parseAprilFoolsCommand(message)) {
-    const value = await handleAprilFoolsChange({ on: !aprilFools.on });
+  if (parseTableViewCommand(message)) {
+    const value = await handleTableViewChange({ on: !tableView.on });
     return {
-      action: "toggle-april-fools",
+      action: "toggle-table-view",
       intercepted: true,
-      reply: `April Fools card table is ${
-        value.aprilFools.on ? "on" : "off"
+      reply: `Table view is ${
+        value.tableView.on ? "on" : "off"
       }.`,
       url: state.url,
     };
@@ -2535,8 +2535,8 @@ function createWindow() {
       additionalArguments: [
         `--rapp-chat-stream=${chatStreamMode}`,
         `--rapp-chat-look=${chatLook}`,
-        `--rapp-april-fools=${
-          Buffer.from(JSON.stringify(aprilFools)).toString("base64url")
+        `--rapp-table-view=${
+          Buffer.from(JSON.stringify(tableView)).toString("base64url")
         }`,
       ],
       contextIsolation: true,
@@ -2737,11 +2737,11 @@ function installApplicationMenu() {
       },
       { type: "separator" },
       {
-        id: "april-fools-card-table",
-        label: "April Fools: Card Table",
+        id: "table-view",
+        label: "Table view",
         type: "checkbox",
-        checked: aprilFools.on,
-        click: () => requestAprilFoolsChange({ on: !aprilFools.on }),
+        checked: tableView.on,
+        click: () => requestTableViewChange({ on: !tableView.on }),
       },
     ],
   };
@@ -2796,7 +2796,7 @@ function installApplicationMenu() {
     "check-for-updates",
   );
   syncChatLookMenu();
-  syncAprilFoolsMenu();
+  syncTableViewMenu();
 }
 
 function loadPendingUpdateResult() {
@@ -2877,20 +2877,20 @@ function registerIpc() {
     assertTrustedIpc(event);
     return handleGeolocationUpdate(payload);
   });
-  ipcMain.handle("beta:set-april-fools", async (event, next) => {
+  ipcMain.handle("beta:set-table-view", async (event, next) => {
     assertTrustedIpc(event);
-    return handleAprilFoolsChange(next || {});
+    return handleTableViewChange(next || {});
   });
-  registerChatCardIpc({
+  registerDimensionTileIpc({
     assertTrustedIpc,
     ipcMain,
-    isEnabled: () => aprilFools.on,
-    store: chatCardStore,
+    isEnabled: () => tableView.on,
+    store: dimensionTileStore,
   });
-  ipcMain.handle("beta:cards-load-custom-table", async (event) => {
+  ipcMain.handle("beta:tiles-load-custom-layout", async (event) => {
     assertTrustedIpc(event);
-    if (!aprilFools.on) throw new Error("April Fools card table is off.");
-    return handleCustomCardTableLoad();
+    if (!tableView.on) throw new Error("Table view is off.");
+    return handleCustomTableLayoutLoad();
   });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);
