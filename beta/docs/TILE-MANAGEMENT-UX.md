@@ -3,6 +3,27 @@
 This is the interaction guide for rappid tiles in the Frontier. It is deliberately small, because the
 whole point is that there is almost nothing to learn.
 
+## Why the tile exists
+
+A tile binds two things that are useless apart: **the transcript** — the history, the situation, what
+was being worked on — and **the exact agents that were hot-loaded for it**. That pairing is the
+whole idea. A conversation without its capabilities is a log; capabilities without their conversation
+are a toolbox with no job.
+
+Everything else follows from keeping those two together in one inert object:
+
+- **A tile is data, not a process.** A static transcript plus an agent payload. Nothing is running
+  inside it, nothing is serialised mid-flight, nothing has to be paused or resumed.
+- **Moving it is therefore trivial** — and moving it is the interface. Drop it on the chat and the
+  existing hot-load mechanism composes its agents and its history back into the one live window;
+  drag it out and the window is free again.
+- **So the machinery is already built.** No session manager, no process pool, no snapshotting: the
+  Brainstem hot-loads agents, and transcripts are just text. The tile is what makes those two
+  facts add up to fleet management.
+
+That is why the noun matters. A tile is the smallest thing that can hold a working situation and
+still be picked up.
+
 ## The principle
 
 **People already know how to move a physical tile.** You pick it up, you put it somewhere, and where

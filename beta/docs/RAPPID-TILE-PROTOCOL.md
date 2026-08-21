@@ -7,6 +7,10 @@ Readers accept both; writers emit tiles.
 > Direction: *"cards are flimsy — tiles are substantial for a rappid to live on."* A card is
 > something you look at. A **tile** is something a rappid **stands on**: a surface with a footprint,
 > an identity, and a load it can bear. The change of noun is the change of contract.
+>
+> And what it bears is a working situation: a **transcript** together with **the agents that were
+> hot-loaded for it**. A tile is inert data — static history plus an agent payload — which is why it
+> can be carried at all, and why dropping it back into the live window is enough to resume the work.
 
 ## The metaphor shift: cards on a table → tiles in an arena
 
