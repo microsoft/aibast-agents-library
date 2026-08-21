@@ -106,3 +106,53 @@ test("Agent Arena includes all layouts and four arrange moves", () => {
   assert.doesNotMatch(tilesSource, /folded\.slice\(/);
   assert.match(tilesSource, /if \(!SCRIPT_STATE\.enabled\) return null/);
 });
+
+// The herd and the arena are separate surfaces, not two renderings of one. The
+// arena's chrome — the felt it competes on and the ring drawn over it — must be
+// scoped so that switching to the herd surface shows a plain grid of parked
+// tiles. Before this was enforced, the base .dimension-tile-surface rule carried
+// the felt and an elliptical ::before, so the herd surface was drawn inside the
+// arena's ring.
+test("arena chrome is the arena's, and never reaches the herd surface", () => {
+  const felt = tilesCss.match(/^([^\n{]*)\{[^}]*var\(--arena-surface\)[^}]*\}/gm) || [];
+  const feltSelectors = felt
+    .map((rule) => rule.slice(0, rule.indexOf("{")).trim())
+    .filter((selector) => !selector.startsWith(":root"));
+  assert.ok(feltSelectors.length > 0, "the arena felt must still be styled somewhere");
+  for (const selector of feltSelectors) {
+    assert.match(
+      selector,
+      /\.tile-surface-arena\b/,
+      `arena felt must be scoped to the arena surface, found: ${selector}`,
+    );
+  }
+
+  // The ring outline is arena chrome for the same reason.
+  assert.doesNotMatch(
+    tilesCss,
+    /^\.dimension-tile-surface::before\s*\{/m,
+    "the ring outline must not be an unscoped surface decoration",
+  );
+  assert.match(tilesCss, /\.tile-surface-arena \.dimension-tile-surface::before/);
+
+  // And the herd surface says plainly that it carries neither.
+  assert.match(
+    tilesCss,
+    /\.tile-surface-herd \.dimension-tile-surface \{[^}]*background:\s*transparent[^}]*box-shadow:\s*none/,
+  );
+});
+
+test("arena arrangements never apply off the arena surface", () => {
+  // A tile-layout-* class on the container is what selects an arena
+  // arrangement. The herd is a grid and the binder is pages; applying an
+  // arrangement to either would re-skin one surface as another.
+  assert.match(
+    tilesSource,
+    /if \(selectedSurface === "arena"\) \{\s*herd\.classList\.add\(`tile-layout-\$\{layoutName\}`\)/,
+  );
+  assert.doesNotMatch(
+    tilesSource,
+    /classList\.add\("dimension-tile-view", `tile-layout-/,
+    "the container must not receive an arrangement class unconditionally",
+  );
+});

@@ -831,9 +831,17 @@
     const layoutName = selectedSurface === "arena"
       ? SCRIPT_STATE.context.viewMode.layout || "ring"
       : "ring";
-    herd.classList.add("dimension-tile-view", `tile-layout-${layoutName}`);
+    herd.classList.add("dimension-tile-view");
+    // Arena arrangements are the arena's. The herd stays a grid and the binder
+    // stays pages; neither is a layout of the other, so no tile-layout-* class
+    // is applied off the arena.
+    if (selectedSurface === "arena") {
+      herd.classList.add(`tile-layout-${layoutName}`);
+      herd.dataset.arenaLayout = layoutName;
+    } else {
+      delete herd.dataset.arenaLayout;
+    }
     herd.classList.add(`tile-surface-${selectedSurface}`);
-    herd.dataset.arenaLayout = layoutName;
     herd.dataset.tileSurface = selectedSurface;
     const custom = SCRIPT_STATE.context.state.arenaLayout;
     if (selectedSurface === "arena" && layoutName === "custom" && custom) {

@@ -76,6 +76,18 @@
   gap: 16px;
   padding: 34px 34px 48px;
   border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+/* The herd is a grid of parked tiles and nothing else: no felt, no ring, no
+   arena arrangement. It is a separate surface from the arena, not a rendering
+   of it, so the arena's chrome below is scoped and never reaches here. */
+.tile-surface-herd .dimension-tile-surface {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* The arena's own look — the felt it competes on. */
+.tile-surface-arena .dimension-tile-surface {
   background:
     radial-gradient(ellipse at center, rgba(255,255,255,.06), transparent 62%),
     var(--arena-surface);
@@ -103,7 +115,7 @@
   margin-top: 18px;
 }
 
-.dimension-tile-surface::before {
+.tile-surface-arena .dimension-tile-surface::before {
   position: absolute;
   inset: 18px;
   border: 1px solid rgba(238, 220, 172, .28);
