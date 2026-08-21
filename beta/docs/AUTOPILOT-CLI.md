@@ -11,9 +11,14 @@ the interface never requires the model**.
 > **Status.** The command surface is **implemented**: `rapp()` exists in `beta/ui/autopilot.js`,
 > takes both calling shapes, carries 21 verbs of which only `chat.send` reaches the model, performs
 > real drag gestures through the renderer's own drop handler, and yields a contested object to the
-> person. Still **specified and not yet built**: the activity view, per-actor attribution stamped on
-> the object, the station ident, and everything in [`VOICE.md`](VOICE.md). Those are described here
-> in the normative sense — what a conforming implementation does — not as shipped behaviour.
+> person. Also built: the **activity view** (the driver step feed is a click-through strip on the
+> body, off unless switched on, no longer inside the chat transcript) and **per-actor attribution**
+> (a driver's change stamps the tile instead of toasting, decided by `event.isTrusted`).
+>
+> Still **specified and not yet built**: wiring the activity view on automatically for Show Mode
+> and a Showtime run, the station ident, and everything in [`VOICE.md`](VOICE.md). Those are
+> described here in the normative sense — what a conforming implementation does — not as shipped
+> behaviour.
 
 **Any AI can use it, with two prerequisites: it knows CLI patterns, and it can
 reach the console on the page.** No SDK, no client library, no account, no service to register with.
