@@ -149,6 +149,49 @@ are stricter than for anything else a tile carries, and they are not optional:
   base changes underneath it, the crystal's meaning changes with it, and that has to be handled
   honestly rather than silently.
 
+## Wearing in parallel, and merging back
+
+A tile does not have to wear on one machine. The same starting crystal can be summoned onto a Mac
+mini, a phone, a television and a wallet pass, and each one wears it differently — because each is
+used differently. Those are separate dimensions of the same tile, worn at the same time.
+
+They can be brought back together. Each dimension records the ancestor it diverged from, so a merge
+has a common point to work from and can walk each history forward from it — the same shape as a
+three-way merge, and for the same reason: you cannot merge two things without knowing what they
+were before they parted.
+
+The result is one whole tile again, carrying every parent in its lineage, which becomes the current
+singleton that each device re-summons.
+
+### What merges cleanly, and what does not
+
+This is the part to be honest about, because the two halves of a tile behave completely differently.
+
+- **Transcripts and usage merge cleanly.** They are append-only records of things that happened.
+  Union them, order them, done — nothing is in conflict because nothing is claiming to replace
+  anything.
+- **Trained weights do not.** Combining adapters is a real technique and it is lossy: two
+  adaptations averaged can be worse than either, and confidently so. A merge that silently averages
+  and reports success is the failure mode here.
+
+So a weight merge must be allowed to **refuse**. If two dimensions were trained in incompatible
+directions — one toward terse answers, one toward thorough ones — the honest outcomes are to keep
+both as separate tiles, or to make the person choose, never to produce a blended thing that is
+quietly worse than what went in and carries a crystal implying it is better.
+
+### Wear does not add up
+
+Two dimensions each worn thirty percent do not merge into a tile worn sixty percent. The crystal
+measures **what the tile still needs**, which is a property of the merged weights — so wear is
+**recomputed after the merge**, never summed. Treating wear as a balance to be totalled would let a
+tile become a master by being used badly in two places at once.
+
+### The public and private faces merge the same way
+
+A dimension worn privately on a person's own device and one worn in public use are both real wear.
+They merge by the same rule, and the privacy rules above still hold: what merges into a published
+tile is the capability and its lineage, not the training taken from private material.
+
 ## Rules
 
 1. **Wear is monotonic.** It only ever goes down. Nothing resets a crystal, nothing regrows one, and
