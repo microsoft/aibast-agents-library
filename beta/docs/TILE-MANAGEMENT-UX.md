@@ -127,9 +127,13 @@ The conversation becomes a tile on that surface, and **the Brainstem opens a fre
 lost and nothing is asked: the thing you were talking to is now a tile you can see.
 
 ### 2. Drag a tile → the Brainstem chat
-**This drop is the hot-load.** The tile's agents are composed into the running Brainstem and its
-conversation is restored: dropping is how a capability gets into the primary window — there is no
-separate install step, no menu, no restart. What happens to what was already there depends on
+**This drop is the hot-load, and the tile self-assembles when it lands.** The runtime reads the
+tile's footprint, confirms this machine can satisfy it, composes its agents into the running
+Brainstem, restores its conversation, and brings up its own UI if it has one. Dropping is how a
+capability gets into the primary window — there is no separate install step, no menu, no restart.
+It assembles rather than hatches: nothing is consumed, an unsatisfiable footprint refuses before
+anything runs, and dragging it out takes the parts apart again
+([`RAPPID-TILE-PROTOCOL.md`](RAPPID-TILE-PROTOCOL.md)). What happens to what was already there depends on
 whether there *was* anything:
 
 - **The chat has a conversation → the two swap.** The incoming tile becomes primary; the outgoing

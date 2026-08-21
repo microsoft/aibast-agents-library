@@ -61,7 +61,7 @@ it, and they are the reason the protocol is superseded rather than extended:
 
 1. **A footprint** — a tile declares what it needs to run (`stands_on`): the kernel contract, the
    Python version, whether it wants network or a filesystem, and its declared tools. A reader can
-   answer *"will this run here?"* before it hatches anything. A card could not be asked that.
+   answer *"will this run here?"* before anything is assembled. A card could not be asked that.
 2. **A bearing surface** — a tile may carry more than one file (`payload[]` was already plural, but a
    tile makes the **primary** explicit and lets the rest be resources the agent legitimately needs:
    fixtures, a prompt, a small model card). The tile is the unit of transfer, not one file with
@@ -126,7 +126,7 @@ lineage, and no reader may rank tiles by them.
 | **Exactly one primary.** | `payload[0].role === "primary"` and the file is named after it. Resources are additive and may be omitted by a reader that only wants the agent. |
 | **Hashed, always.** | `sha256_lf_v1` for text, `sha256` for binary, verified before anything runs — inline or revision‑pinned alike. |
 | **Offline is a claim you must earn.** | A tile is `offline: ready` only when every required payload is inline and its hash matches. A pinned‑only tile is never called offline‑ready. |
-| **The footprint is honest.** | `stands_on` describes what the tile needs, not what it wishes for. A reader that cannot satisfy it refuses to hatch and says which requirement failed. |
+| **The footprint is honest.** | `stands_on` describes what the tile needs, not what it wishes for. A reader that cannot satisfy it refuses to assemble and says which requirement failed. |
 | **The dimension stays home.** | A conversation (`dimension`) is `null` in anything published; it exists only in the local copy unless the person exports it deliberately. |
 | **Small.** | ≤ 1 MiB with inline payloads; larger payloads must be pinned. |
 
@@ -155,6 +155,31 @@ offered for readers pinned to the old schema. `tile verify` reports what a downg
 `tiles/v1/@publisher/<filename>.tile` beside them and the index gains a `tiles` section; the card
 index is frozen, never deleted, once every client reads tiles.
 
+## A tile self-assembles; it does not hatch
+
+**Dropping a tile over the Brainstem is what assembles it.** The drop is the trigger, and what
+follows is assembly rather than birth: the runtime reads `stands_on`, confirms this machine can
+satisfy it, composes the primary payload and its resources into the running worker, restores the
+transcript, and brings up the tile's own UI if it has one.
+
+The distinction is not decoration — the two words describe different lifecycles, and only one of
+them is true of a tile:
+
+| | Hatching | Self-assembly |
+|---|---|---|
+| Happens | once | every time it is dropped |
+| The container | is consumed; there is no un-hatching | persists; the tile is unchanged by being assembled |
+| Reversible | no | yes — drag it out and the parts come apart again |
+| On failure | something has already begun | nothing was consumed; assembly simply refuses |
+
+That last row is why the verb matters. A tile declares what it needs and the runtime satisfies it,
+so an unsatisfiable footprint stops **before** anything runs and names the requirement that failed.
+Fail-closed is available to an assembly step and is not available to a birth.
+
+**Eggs still hatch.** A `.egg` becomes a twin, once, and that is the right word for it. A tile whose
+primary payload is an egg assembles — and part of assembling it is hatching that egg into its twin.
+The tile is the thing you pick up and put down; the egg is a thing the tile may contain.
+
 ## Tooling
 
 | Command | Does |
@@ -172,7 +197,7 @@ The Frontier reads and writes both; the registry keeps serving cards until every
 A conforming implementation demonstrates, offline: a card migrates to a tile with an identical seed,
 face and seven‑word key; a tile packs and unpacks byte‑identically for text and binary payloads,
 CRLF input included; a tampered payload hash is refused; a tile whose face disagrees with its seed is
-refused; an unsatisfiable `stands_on` refuses to hatch and names the failed requirement; and a
+refused; an unsatisfiable `stands_on` refuses to assemble and names the failed requirement; and a
 pinned‑only tile never reports `offline: ready`.
 
 ## Summoning on a device that has nothing
