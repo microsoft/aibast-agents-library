@@ -163,6 +163,31 @@ were before they parted.
 The result is one whole tile again, carrying every parent in its lineage, which becomes the current
 singleton that each device re-summons.
 
+### Where this goes
+
+The algorithm is fixable later. This is the shape it is being built toward, and it is worth
+stating plainly rather than only in constraints.
+
+**One tile, worn everywhere at once.** The Mac mini wears it on what you build. The television
+wears it on what you watch and ask about. The wallet pass wears it on where you actually went. The
+phone wears it on what you needed in the ten seconds you had. None of those contexts is visible to
+any of the others, and none of them could have been simulated — they had to be lived.
+
+**Merging is how the tile learns what no single device could teach it.** Not a synchronisation
+step, not a backup: the dimensions come home and the tile that results knows things none of its
+parents did, because it saw the same person from four directions. The singleton goes back out in
+the morning and every device starts again from a tile better than the one it contributed.
+
+**And it keeps going.** Wear that a person could never accumulate alone accrues across a life lived
+in several places at once, so over years the crystal grinds toward a nub — not because one machine
+was hammered, but because the tile was there for everything. What is left is small, specific, and
+extremely good at being *yours*.
+
+**The nub is a file.** It is not an account, a subscription, or a service that can be discontinued.
+It travels, it is summonable by seven words, and it works on a machine with no network. Whatever
+the person built over those years, they keep — which is the whole promise this project exists to
+make good on.
+
 ### What merges cleanly, and what does not
 
 This is the part to be honest about, because the two halves of a tile behave completely differently.
