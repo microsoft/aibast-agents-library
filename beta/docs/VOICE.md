@@ -106,7 +106,19 @@ off within a day; one that fires rarely is personality. So it is fenced:
   a row, which is exactly the thing that makes it annoying.
 - **Show Mode and demonstration only.** That is the context where being listened to is the point.
   Off everywhere else.
-- **It can be turned off, properly.** A named, user-visible setting — not a developer flag, not an
+- **One occurrence is all it gets.** If someone hears it once and dislikes it, they can end it
+  there and then — permanently, in a single action, without hunting for anything. The control is
+  attached to the occurrence itself, the way "turn these off" sits on the notification rather than
+  three menus away.
+
+  This is a requirement rather than a courtesy, and rarity is exactly why. A feature that fires once
+  in twenty-five turns is uniquely hard to switch off: the annoyance and the search are separated in
+  time, so by the time someone goes looking they no longer remember what the thing was called or
+  where it would live. Rarity makes a buried setting effectively unreachable. So the moment carries
+  its own exit: one action, no confirmation, no "not now" — off, immediately, and **never again**,
+  across this session and every session after it. Not a snooze, and not something a later update
+  turns back on.
+- **It can also be turned off ahead of time.** A named, user-visible setting — not a developer flag, not an
   environment variable, not something you have to know about to find. Off takes effect immediately
   and for the rest of the session, not at the next restart; it persists; and off means *never*,
   with no residual counter waiting to fire once the setting is toggled back. It is its own switch,
