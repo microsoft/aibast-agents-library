@@ -11,7 +11,8 @@ first boot. It contains exactly:
 
 1. The **Grail kernel** (unmodified `brainstem.py`) and its venv.
 2. The **Frontier launcher** (Electron shell, Grail chat, Brain Surgeon, and the tile surfaces:
-   the companion chat, the herd, the arena and the binder).
+   the companion chat, the herd, the arena, the flock and the binder — herd and arena out of the
+   box, all of them arrangeable by a preset the person can export and import).
 3. **Twins**: hatch from the RAPP Store or from a local `.egg` dropped on the
    window — fail-closed `rapp/1-egg` verification, loopback-only workers,
    isolated `AGENTS_PATH` per twin.

@@ -41,6 +41,7 @@ body already knows. It scales because nothing new has to be explained as the num
 | **The Brainstem chat** | the big window — **this is a tile too**, the primary one: the companion currently loaded | active, running |
 | **The herd** (default view) | the grid — every tile you have parked, at rest | parked, ready |
 | **The arena** | a separate view where the tiles you put there compete on a task | competing |
+| **The flock** | a separate view where tiles float together in a space, arranged as a working group rather than a grid | working together |
 | **The binder** | the tile keeper — where tiles you are not using are stored and organised in bunches, like a binder of pages | dormant, stored |
 
 **These are four separate places, not four renderings of one list.** A tile is in exactly one of
@@ -51,7 +52,30 @@ them, and moving it between them is a move. In particular:
 - **The arena is its own view for its own use case** — agents competing on a task. A tile only
   competes because you put it there. Its arrangements (Ring, Rows, Focus, Grid, Stack, Custom)
   belong to the arena alone.
+- **The flock is its own view too**, for when tiles are working together rather than parked. The
+  herd is a grid because a grid is what you want for *finding* something; the flock is a space
+  because that is what you want for *seeing a group at once* — who is near whom, what is grouped
+  with what. It is the right word precisely where the herd's word would be wrong: a herd is
+  something you tend, a flock moves together, and the difference matters when the tiles in it are
+  actually coordinating.
 - **The binder is storage**: nothing in it is running.
+
+## Surfaces are yours to arrange, and to keep
+
+The arena already accepts a custom layout from a local JSON file — seat positions, tile size,
+surface colour, how tiles arrange, when they face down. That machinery generalises, and it should:
+**a surface is a preset, and a person can make their own.**
+
+- **Any surface can be customised**, not only the arena. The flock in particular is meaningless
+  without it, because how a group is laid out *is* the information.
+- **A preset is a file.** It can be exported, kept, edited by hand, and imported again — a local
+  backup a person holds, in the same shape as everything else here: nothing syncs, and nothing is
+  trapped ([`ONE-TIME-SEALS.md`](ONE-TIME-SEALS.md)).
+- **Validation is not optional.** A preset arrives as data from outside the app, so it is checked
+  before it is applied and refused with a reason if it is malformed — the same posture the arena's
+  loader already takes.
+- **The defaults stay.** Herd and arena ship as they are; a custom preset is something added, never
+  something that replaces the surface a new person sees.
 
 ## Why you would move a tile at all
 
