@@ -4,7 +4,8 @@
 > [RAPPID-TILE-PROTOCOL.md](RAPPID-TILE-PROTOCOL.md). Cards stay readable forever and migrate
 > losslessly (same seed, same face, same seven-word key); tiles add the footprint a rappid needs to
 > stand on (`stands_on`), an explicit primary payload with resources, and lineage. This document
-> remains the reference for the card format the registry still serves.
+> remains the reference for the card format the registry still serves. The vocabulary shift is
+> total: cards on a table became tiles in an arena — see the protocol's *metaphor shift* section.
 
 Direction: tiles must be globally scannable through GitHub raw URLs — a tile
 uploaded to the registry can be retrieved for a task from the public repo, as the online form of a

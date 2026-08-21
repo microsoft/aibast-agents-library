@@ -8,6 +8,26 @@ Readers accept both; writers emit tiles.
 > something you look at. A **tile** is something a rappid **stands on**: a surface with a footprint,
 > an identity, and a load it can bear. The change of noun is the change of contract.
 
+## The metaphor shift: cards on a table → tiles in an arena
+
+The rename is not cosmetic. The old vocabulary came from collectible cards, and it carried
+assumptions that were wrong for what a rappid is:
+
+| Card metaphor | Tile metaphor | Why it matters |
+|---|---|---|
+| A **card** is dealt, held, and looked at | A **tile** is placed, and something *stands on it* | A rappid is a running thing with a footprint, not an illustration of one. `stands_on` exists because a tile must bear a load. |
+| Cards are flimsy and interchangeable | Tiles are substantial and load-bearing | A tile carries a primary payload plus the resources that payload needs — it is the whole unit of transfer, not a picture with attachments. |
+| A **table** is where cards are dealt and compared | An **arena** is where agents *compete* | The view is not a layout preference; it is the use case. Several rappids answer the same task side by side and a person picks the winner. |
+| A card's value is its rarity | A tile's value is what it can do, and where it came from | `lineage` records the ancestor, the ring, and the verdict that admitted it — provenance a collector's rarity never expressed. |
+
+**One takeover, not two features.** The Agent Arena *is* the former table view, renamed and re-aimed:
+the same surface, the same arrangements, the same moves. Nothing was kept in parallel — there is no
+"table view" left to choose. The herd is the default view; the arena is the same herd arranged for
+competition, with the tiles as the competitors.
+
+So the vocabulary now reads end to end: **rappid tiles**, held in a **herd**, arranged in an
+**arena** when they compete, each tile a `.tile` file that a rappid can stand on.
+
 ## What a tile is
 
 One UTF‑8 JSON object, one file, newline‑terminated, named after what it carries:
