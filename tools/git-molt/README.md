@@ -7,6 +7,9 @@ organism proof found:
 - a foreign `Molt-Verified` trailer no longer transfers activation authority on
   `frame import` (the verdict is a local ref that never travels);
 - frames carry the locus's agent path (`refs/molt/meta/<locus>`).
+- imported and locally configured agent paths are validated before persistence
+  and again before composition, so absolute/traversal paths cannot escape the
+  staging directory.
 
 Both are pending an upstream pull request; once merged, re-pin to the upstream
 commit. Used by `beta/scripts/organism-gitmolt-proof.sh` so the proof runs

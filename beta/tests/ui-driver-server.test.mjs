@@ -588,6 +588,8 @@ test("the frame watchdog budget follows the command's own budget, never truncati
   // a one-hour chat is honoured (capped at one hour plus grace)
   assert.ok(frameBudgetMs({ action: "chat", timeoutMs: 3_600_000 }) >= 3_600_000);
   assert.ok(frameBudgetMs({ action: "chat", timeoutMs: 99_999_999 }) <= 3_600_000 + 30_000);
+  // The visible Surgeon itself defaults to a one-hour wait.
+  assert.ok(frameBudgetMs({ action: "surgeon_chat" }) >= 3_600_000);
   // a run adds up its steps: typing 2000 chars at 18 ms is 36 s of legitimate work
   const typing = frameBudgetMs({ action: "run", steps: [{ action: "type", value: "x".repeat(2000) }, { action: "click", settleMs: 500 }] });
   assert.ok(typing >= 36_000 + 500);

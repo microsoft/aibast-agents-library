@@ -118,8 +118,25 @@ all_loci() {
 agent_path() {
   local locus="$1" p
   p="$(git_molt config --get "molt.locus.${locus}.path" 2>/dev/null || true)"
-  [ -n "$p" ] && { printf '%s' "$p"; return; }
+  [ -n "$p" ] && {
+    valid_agent_path "$p" || die "unsafe agent path for $locus: $p"
+    printf '%s' "$p"
+    return
+  }
   printf 'agent.py'
+}
+
+valid_agent_path() {
+  local p="${1:-}"
+  [ -n "$p" ] || return 1
+  [[ "$p" != *$'\n'* && "$p" != *$'\r'* ]] || return 1
+  case "$p" in
+    /*|*\\*) return 1 ;;
+  esac
+  case "/$p/" in
+    */../*|*/./*|*//*) return 1 ;;
+  esac
+  return 0
 }
 
 # ------------------------------------------------------------------ plumbing
@@ -133,6 +150,7 @@ write_tree() {
 
 record_path_metadata() {
   local locus="$1" path="$2" blob tree commit
+  valid_agent_path "$path" || die "unsafe agent path for $locus: $path"
   blob="$(printf '%s\n' "$path" | git_molt hash-object -w --stdin)"
   tree="$(printf '100644 blob %s\tpath\n' "$blob" | git_molt mktree)"
   commit="$(
@@ -494,6 +512,8 @@ cmd_compose() {
     [ "$(policy_of "$locus")" = "pinned" ] && pick="$base"
     if [ "$pick" != "$base" ] && ! is_verified "$pick"; then pick="$base"; fi
     path="$(agent_path "$locus")"
+    valid_agent_path "$path" || die "unsafe agent path for $locus: $path"
+    mkdir -p "$(dirname "${staging}/${path}")"
     if ! git_molt show "${pick}:${path}" > "${staging}/${path}" 2>/dev/null; then
       git_molt show "${base}:${path}" > "${staging}/${path}" 2>/dev/null || {
         warn "could not compose $locus"; continue; }
@@ -558,7 +578,11 @@ cmd_frame() {
           local meta path
           meta="$(resolve_ref "$(ref_meta "$l")")"
           path="$([ -n "$meta" ] && git_molt show "${meta}:path" 2>/dev/null || true)"
-          [ -n "$path" ] && git_molt config "molt.locus.${l}.path" "$path"
+          if [ -n "$path" ]; then
+            valid_agent_path "$path" \
+              || die "frame carries unsafe agent path for $l: $path"
+            git_molt config "molt.locus.${l}.path" "$path"
+          fi
         fi
         if [ -z "$(resolve_ref "$(ref_live "$l")")" ]; then
           git_molt update-ref "$(ref_live "$l")" "$(resolve_ref "$(ref_base "$l")")"

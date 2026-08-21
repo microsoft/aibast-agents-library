@@ -41,6 +41,12 @@ const ring1Path = path.join(
   "rings",
   "context_memory_agent.ring1.py",
 );
+const ring2Path = path.join(
+  betaRoot,
+  "electron",
+  "rings",
+  "context_memory_agent.ring2.py",
+);
 
 function integrationPython() {
   const candidates = [
@@ -369,11 +375,12 @@ test("HARD 2 — Grail remains blind to Molt Lineage", () => {
   );
 });
 
-test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", (t) => {
+test("HARD 3 — raw Grail stays pristine while ContextMemory ring 2 composes", (t) => {
   const root = mkdtempSync(path.join(tmpdir(), "rapp-context-ring1-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const pristineBefore = readFileSync(grailContextPath, "utf8");
   const ring1 = readFileSync(ring1Path, "utf8");
+  const ring2 = readFileSync(ring2Path, "utf8");
   assert.doesNotMatch(pristineBefore, /^import ast$|^import glob$/m);
   assert.doesNotMatch(pristineBefore, /scan_broken_agents|_self_status_block/);
   assert.match(pristineBefore, /"""Inject stored memories into the system prompt each turn\."""/);
@@ -392,22 +399,25 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
   );
   assert.ok(
     contextEntry.lineage,
-    "Frontier should seed ContextMemory HEAD at ring 1; lineage telemetry: "
+    "Frontier should seed ContextMemory HEAD at ring 2; lineage telemetry: "
       + JSON.stringify(
         manager.telemetry.filter((event) => String(event.type).startsWith("lineage-")),
       ),
   );
-  const routedRing1 = Buffer.from(contextEntry.bytes).toString("utf8");
-  assert.match(routedRing1, /def scan_broken_agents/);
-  assert.match(routedRing1, /def _self_status_block/);
-  assert.match(routedRing1, /def _operating_context_block/);
-  assert.match(routedRing1, /class _ContextMemoryRing1\(BasicAgent\):/);
+  const routedRing2 = Buffer.from(contextEntry.bytes).toString("utf8");
+  assert.match(routedRing2, /CONTEXT_MEMORY_RING = 2/);
+  assert.match(routedRing2, /def scan_broken_agents/);
+  assert.match(routedRing2, /def _self_status_block/);
+  assert.match(routedRing2, /def _operating_context_block/);
+  assert.match(routedRing2, /def _device_context_block/);
+  assert.match(routedRing2, /def _ledger_context_block/);
+  assert.match(routedRing2, /class _ContextMemoryRing1\(BasicAgent\):/);
   assert.match(
-    routedRing1,
+    routedRing2,
     /class RoutedContextMemoryAgent\(_ContextMemoryRing1\):/,
   );
   assert.doesNotMatch(
-    routedRing1,
+    routedRing2,
     /from agents\.context_memory_agent import ContextMemoryAgent/,
   );
   const materializedRing = manager.materializeComposition(ringDescriptor);
@@ -416,7 +426,7 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
       path.join(materializedRing.agentDirectory, "context_memory_agent.py"),
       "utf8",
     ),
-    routedRing1,
+    routedRing2,
   );
   const scan = scanBrokenAgents(
     manager.brainstemConfig.python,
@@ -426,6 +436,10 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
     scan.status,
     0,
     scan.stderr || scan.stdout || "ring-1 self-state scan reported a healthy routed agent as broken",
+  );
+  const routedRing1 = routeManagerInternals.routedContextMemoryMoltSource(
+    ring1,
+    manager.identity().memory_guid,
   );
   const bareAgentDirectory = path.join(root, "bare-kernel-agents");
   mkdirSync(bareAgentDirectory, { recursive: true });
@@ -458,16 +472,41 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
   const memoryMarker = "    def perform(self, **kwargs):";
   const canonical = (text) => text.replaceAll("\r\n", "\n");
   const ring1Lf = canonical(ring1);
+  const ring2Lf = canonical(ring2);
   const pristineLf = canonical(pristineBefore);
-  for (const [label, text] of [["ring 1", ring1Lf], ["the Grail", pristineLf]]) {
+  for (const [label, text] of [
+    ["ring 1", ring1Lf],
+    ["ring 2", ring2Lf],
+    ["the Grail", pristineLf],
+  ]) {
     const first = text.indexOf(memoryMarker);
     assert.notEqual(first, -1, `${label} must define perform()`);
     assert.equal(text.indexOf(memoryMarker, first + 1), -1, `${label} must define perform() once`);
   }
   assert.equal(
+    ring2Lf.slice(ring2Lf.indexOf(memoryMarker)),
+    ring1Lf.slice(ring1Lf.indexOf(memoryMarker)),
+    "ring 2 must preserve the ring-1 memory tail byte-for-byte",
+  );
+  assert.equal(
     ring1Lf.slice(ring1Lf.indexOf(memoryMarker)),
     pristineLf.slice(pristineLf.indexOf(memoryMarker)),
     "ring 1 must preserve perform/recall memory behavior byte-for-byte",
+  );
+  const contextBaseline = manager.lineageStore.baselineAncestors().find(
+    (entry) => entry.filename === "context_memory_agent.py",
+  );
+  const rings = manager.lineageStore.listRings(
+    contextBaseline.ancestorRappid,
+  );
+  const ring1Meta = rings.find((ring) => ring.meta?.ring === 1);
+  const ring2Meta = rings.find((ring) => ring.meta?.ring === 2);
+  assert.ok(ring1Meta);
+  assert.ok(ring2Meta);
+  assert.equal(ring2Meta.parentRappid, ring1Meta.ringRappid);
+  assert.equal(
+    manager.lineageStore.getHead(contextBaseline.ancestorRappid),
+    ring2Meta.ringRappid,
   );
   assert.equal(readFileSync(grailContextPath, "utf8"), pristineBefore);
 
@@ -491,6 +530,39 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
     ).lineage,
   );
   assert.equal(readFileSync(grailContextPath, "utf8"), pristineBefore);
+});
+
+test("existing ContextMemory ring 2 never resurrects over a parked ring 1", (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-context-ring2-parked-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const options = {
+    betaHome: path.join(root, "beta-home"),
+    brainstemConfig: {
+      brainstemDir: grailDirectory,
+      python: integrationPython(),
+    },
+    compositionValidator: () => true,
+    lineageRoot: path.join(root, "lineage"),
+    moltVerifier: () => true,
+  };
+  const seeded = new BetaRouteManager(options);
+  const baseline = seeded.baselineAncestor("context_memory_agent.py");
+  const rings = seeded.lineageStore.listRings(baseline.ancestorRappid);
+  const ring1 = rings.find((ring) => ring.meta?.ring === 1);
+  const ring2 = rings.find((ring) => ring.meta?.ring === 2);
+  assert.ok(ring1);
+  assert.ok(ring2);
+  seeded.lineageStore.setHead(
+    baseline.ancestorRappid,
+    ring1.ringRappid,
+  );
+
+  const restarted = new BetaRouteManager(options);
+  assert.equal(
+    restarted.lineageStore.getHead(baseline.ancestorRappid),
+    ring1.ringRappid,
+    "startup must preserve a fallback or user-selected parent generation",
+  );
 });
 
 test("HARD 4 — invalid live composition falls back to loadable baseline", (t) => {
@@ -1461,7 +1533,7 @@ test("a known-bad composition is not re-validated on every request", async (t) =
   await manager.stop();
 });
 
-test("a CRLF ring source (Windows autocrlf checkout) still composes ring 1", (t) => {
+test("CRLF ring sources (Windows autocrlf checkout) still compose", (t) => {
   // Found on the windows-latest installer job: beta/electron/rings/ was not
   // pinned -text, the checkout handed the Frontier a CRLF ring-1, the LF-written
   // scanner match in routedContextMemoryMoltSource silently failed, and the
@@ -1477,6 +1549,13 @@ test("a CRLF ring source (Windows autocrlf checkout) still composes ring 1", (t)
     routedContextMemoryMoltSource(crlf, "guid-1"),
     routedContextMemoryMoltSource(lf, "guid-1"),
     "CRLF and LF ring sources must produce the same routed molt",
+  );
+  const ring2Lf = readFileSync(ring2Path, "utf8").replaceAll("\r\n", "\n");
+  const ring2Crlf = ring2Lf.replaceAll("\n", "\r\n");
+  assert.equal(
+    routedContextMemoryMoltSource(ring2Crlf, "guid-2"),
+    routedContextMemoryMoltSource(ring2Lf, "guid-2"),
+    "CRLF and LF ring-2 sources must produce the same routed molt",
   );
 
   const manager = new BetaRouteManager({

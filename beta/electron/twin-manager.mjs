@@ -13,7 +13,9 @@
 //
 // Unlike BetaRouteManager's single-active-composition model (workers retire on
 // activate), twins are kept alive concurrently in a registry until closed.
+import { createHash, randomUUID } from "node:crypto";
 import {
+  chmodSync,
   existsSync,
   mkdirSync,
   readdirSync,
@@ -25,6 +27,10 @@ import net from "node:net";
 import path from "node:path";
 
 import { BrainstemProcess } from "./brainstem-process.mjs";
+import {
+  inferAgentToolName,
+  recordCompletedTurn,
+} from "./ledger.mjs";
 import { redactCredentialText } from "./log-redaction.mjs";
 import { readEgg, verifyEgg } from "./rapp-protocol.mjs";
 
@@ -74,11 +80,82 @@ function saysDone(text) {
 const planIsDone = (plan) => /(^|\n)\s*DONE\b/i.test(String(plan || ""));
 
 const OWNER_FILE = "owner.json";
+const CLAIM_SUFFIX = ".claim.json";
+
+function sha256(source) {
+  return createHash("sha256").update(source).digest("hex");
+}
+
+function discoverTwinMolts(molterHome, seen = new Set()) {
+  const records = [];
+  const moltsRoot = path.join(molterHome, "molts");
+  let capabilities = [];
+  try {
+    capabilities = readdirSync(moltsRoot, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .sort((left, right) => left.name.localeCompare(right.name));
+  } catch {
+    return records;
+  }
+  for (const capabilityEntry of capabilities) {
+    const capabilityDir = path.join(moltsRoot, capabilityEntry.name);
+    let generations = [];
+    try {
+      generations = readdirSync(capabilityDir, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory() && /^gen-\d+$/.test(entry.name))
+        .sort((left, right) => left.name.localeCompare(right.name));
+    } catch {
+      continue;
+    }
+    for (const generation of generations) {
+      const generationDir = path.join(capabilityDir, generation.name);
+      const metaPath = path.join(generationDir, "molt.json");
+      const sourcePath = path.join(generationDir, "agent.py");
+      if (seen.has(metaPath)) continue;
+      try {
+        const meta = JSON.parse(readFileSync(metaPath, "utf8"));
+        const source = readFileSync(sourcePath);
+        const capability = capabilityEntry.name;
+        const filename = `${capability.replace(/[^a-z0-9_]+/gi, "_")}_agent.py`;
+        seen.add(metaPath);
+        records.push({
+          capability,
+          detail: {
+            ...meta,
+            molt_path: metaPath,
+            recorded_sha256: meta.sha256 || null,
+          },
+          filename,
+          sha256: sha256(source),
+          source_path: sourcePath,
+          tool_name: meta.detail?.tool_name
+            || inferAgentToolName(source, filename),
+        });
+      } catch {
+        // A partial generation is not a reported molt; retry after the next turn.
+      }
+    }
+  }
+  return records;
+}
 
 function readOwner(dir) {
   try {
     const owner = JSON.parse(readFileSync(path.join(dir, OWNER_FILE), "utf8"));
     return Number.isInteger(owner?.pid) && owner.pid > 0 ? owner : null;
+  } catch {
+    return null;
+  }
+}
+
+function claimFilePath(twinsRoot, id) {
+  return path.join(twinsRoot, `.${id}${CLAIM_SUFFIX}`);
+}
+
+function readClaim(filePath) {
+  try {
+    const claim = JSON.parse(readFileSync(filePath, "utf8"));
+    return Number.isInteger(claim?.pid) && claim.pid > 0 ? claim : null;
   } catch {
     return null;
   }
@@ -94,7 +171,16 @@ function processAlive(pid) {
 }
 
 export class TwinManager {
-  constructor({ brainstemConfig, betaHome, routeManager = null, storeClient, brainstemUrl = null, onEvent = () => {} }) {
+  constructor({
+    brainstemConfig,
+    betaHome,
+    routeManager = null,
+    storeClient,
+    brainstemUrl = null,
+    ledger = null,
+    refreshAmbient = () => {},
+    onEvent = () => {},
+  }) {
     if (!brainstemConfig) throw new Error("TwinManager needs a brainstemConfig.");
     if (!storeClient) throw new Error("TwinManager needs a RAPP Store client.");
     this.brainstemConfig = brainstemConfig;
@@ -104,6 +190,10 @@ export class TwinManager {
     this.brainstemUrl = brainstemUrl || (() => this.brainstemConfig.url);
     this.betaHome = betaHome;
     this.routeManager = routeManager;
+    this.ledger = ledger;
+    this.refreshAmbient = typeof refreshAmbient === "function"
+      ? refreshAmbient
+      : () => {};
     this.store = storeClient;
     this.onEvent = onEvent;
     this.twins = new Map();
@@ -133,13 +223,32 @@ export class TwinManager {
     const removed = [];
     const kept = [];
     for (const entry of entries) {
+      if (
+        !entry.isFile()
+        || !entry.name.startsWith(".")
+        || !entry.name.endsWith(CLAIM_SUFFIX)
+      ) continue;
+      const filePath = path.join(this.twinsRoot, entry.name);
+      const claim = readClaim(filePath);
+      if (!claim || !processAlive(claim.pid)) {
+        try { rmSync(filePath, { force: true }); } catch { /* best effort */ }
+      }
+    }
+    for (const entry of entries) {
       if (!entry.isDirectory()) continue;
       const dir = path.join(this.twinsRoot, entry.name);
       const owner = readOwner(dir);
+      const claimPath = claimFilePath(this.twinsRoot, entry.name);
+      const claim = readClaim(claimPath);
+      if (claim && processAlive(claim.pid)) {
+        kept.push({ id: entry.name, pid: claim.pid });
+        continue;
+      }
       if (owner && owner.pid !== process.pid && processAlive(owner.pid)) {
         kept.push({ id: entry.name, pid: owner.pid });
         continue;
       }
+      try { rmSync(claimPath, { force: true }); } catch { /* best effort */ }
       try { rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ }
       removed.push(entry.name);
     }
@@ -334,27 +443,58 @@ export class TwinManager {
     mkdirSync(this.twinsRoot, { recursive: true });
     let id = null;
     let dir = null;
+    let claimPath = null;
     for (let candidate = this.seq + 1; candidate < this.seq + 10000; candidate += 1) {
       const candidateId = `${twinSlug(spec.idBase)}-${candidate}`;
       const candidateDir = path.join(this.twinsRoot, candidateId);
+      const candidateClaim = claimFilePath(this.twinsRoot, candidateId);
+      try {
+        writeFileSync(
+          candidateClaim,
+          JSON.stringify({
+            pid: process.pid,
+            startedAt: new Date().toISOString(),
+          }),
+          { flag: "wx", mode: 0o600 },
+        );
+      } catch (error) {
+        if (error?.code === "EEXIST") continue;
+        throw error;
+      }
       try {
         mkdirSync(candidateDir);
       } catch (error) {
+        try { rmSync(candidateClaim, { force: true }); } catch { /* best effort */ }
         if (error?.code === "EEXIST") continue;
         throw error;
       }
       this.seq = candidate;
       id = candidateId;
       dir = candidateDir;
+      claimPath = candidateClaim;
       break;
     }
     if (!id) throw new Error(`Refusing to hatch "${spec.name}": no free twin id.`);
     const agentsDir = path.join(dir, "agents");
-    writeFileSync(
-      path.join(dir, OWNER_FILE),
-      JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }),
-      { mode: 0o600 },
+    try {
+      writeFileSync(
+        path.join(dir, OWNER_FILE),
+        JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }),
+        { mode: 0o600 },
+      );
+    } catch (error) {
+      try { rmSync(claimPath, { force: true }); } catch { /* best effort */ }
+      try { rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ }
+      throw error;
+    }
+    try { rmSync(claimPath, { force: true }); } catch { /* best effort */ }
+    const molterHome = path.join(
+      this.betaHome,
+      "molts",
+      `${id}-${randomUUID()}`,
     );
+    mkdirSync(molterHome, { recursive: true, mode: 0o700 });
+    if (process.platform !== "win32") chmodSync(molterHome, 0o700);
     let materializedAgentSources = agentSources;
     try {
       if (this.routeManager?.materializeExternalAgentSet) {
@@ -410,6 +550,8 @@ export class TwinManager {
         AGENTS_PATH: agentsDir,
         BRAINSTEM_BETA_ROUTED_WORKER: "1",
         BRAINSTEM_BETA_TWIN: id,
+        MOLTER_HOME: molterHome,
+        RAPP_AMBIENT_DIR: path.join(this.betaHome, "ambient"),
         // A twin runs sha-pinned-but-still-third-party store code — it must ALWAYS
         // bind loopback, never inherit the main Brainstem's LAN mode and expose
         // itself on 0.0.0.0 (rapp-kernel-boundary/1.0: twins are loopback-only).
@@ -433,10 +575,34 @@ export class TwinManager {
       worker,
       uiHtml: null,
       loopLog: [],
+      molterHome,
       running: false,
+      seenMolts: new Set(),
     };
     this.twins.set(id, twin);
     this.emit({ type: "twin-hatched", id, twin: this.descriptor(twin) });
+    const hatchOrigin = spec.storeId ? "store" : (spec.egg ? "egg" : "surgeon");
+    for (const agent of materializedAgentSources) {
+      const archivedSource = this.ledger?.archiveAgentSource?.({
+        filename: agent.filename,
+        source: agent.source,
+      }) || null;
+      const sourcePath = archivedSource?.path
+        || path.join(agentsDir, agent.filename);
+      this.ledger?.recordAgent?.({
+        event: "hatched",
+        filename: agent.filename,
+        toolName: inferAgentToolName(agent.source, agent.filename),
+        rappid,
+        sha256: archivedSource?.sha256 || sha256(agent.source),
+        sourcePath,
+        origin: hatchOrigin,
+        detail: {
+          twin_id: id,
+          store_id: spec.storeId,
+        },
+      });
+    }
     this.#log(twin, `${spec.note} — hatching on ${url}`);
 
     try {
@@ -482,13 +648,20 @@ export class TwinManager {
     // per-twin room history so the loop, the Surgeon, and the user all build on
     // prior turns instead of speaking to a memoryless twin each time.
     if (!Array.isArray(twin.roomHistory)) twin.roomHistory = [];
+    const effectiveSessionId = sessionId || `twin-room-${id}`;
+    const requestId = randomUUID();
     const body = {
       user_input: text,
-      session_id: sessionId || `twin-room-${id}`,
+      session_id: effectiveSessionId,
       conversation_history: twin.roomHistory.slice(-40),
     };
     let data;
     try {
+      try {
+        await this.refreshAmbient();
+      } catch {
+        // Ambient context is additive; twin chat stays fail-open.
+      }
       const response = await fetch(`${twin.url}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -499,12 +672,51 @@ export class TwinManager {
     } catch (error) {
       this.emit({ type: "twin-message", id, author: twin.name || "twin", role: "error", text: error.message });
       throw error;
+    } finally {
+      this.mirrorMolts(twin);
     }
     const reply = String(data.response || data.assistant_response || data.result || "");
     twin.roomHistory.push({ role: "user", content: text }, { role: "assistant", content: reply });
     if (twin.roomHistory.length > 80) twin.roomHistory.splice(0, twin.roomHistory.length - 80);
     this.emit({ type: "twin-message", id, author: twin.name || "twin", role: "assistant", text: reply });
+    recordCompletedTurn(this.ledger, {
+      agentLogs: data.agent_logs,
+      model: data.model,
+      requestId,
+      response: reply,
+      sessionId: data.session_id || effectiveSessionId,
+      surface: `twin:${id}`,
+      userInput: text,
+    });
     return data;
+  }
+
+  mirrorMolts(twinOrId) {
+    const twin = typeof twinOrId === "string"
+      ? this.get(twinOrId)
+      : twinOrId;
+    if (!twin || !this.ledger) return [];
+    const records = discoverTwinMolts(
+      twin.molterHome || path.join(twin.dir, "molter"),
+      twin.seenMolts,
+    );
+    for (const record of records) {
+      this.ledger.recordAgent({
+        event: "molted",
+        filename: record.filename,
+        toolName: record.tool_name,
+        rappid: twin.rappid,
+        sha256: record.sha256,
+        sourcePath: record.source_path,
+        origin: "molter",
+        detail: {
+          ...record.detail,
+          capability: record.capability,
+          twin_id: twin.id,
+        },
+      });
+    }
+    return records;
   }
 
   // A bounded autonomous loop driven by the Brainstem over /chat. P1 proves the
@@ -557,16 +769,39 @@ export class TwinManager {
   async #brainstemPlan(sessionId, prompt, history = []) {
     const base = String(this.brainstemUrl() || "").replace(/\/$/, "");
     if (!base) throw new Error("No Brainstem URL to plan with.");
+    const userInput = String(prompt || "");
+    const requestId = randomUUID();
+    try {
+      await this.refreshAmbient();
+    } catch {
+      // Ambient context is additive; planner chat stays fail-open.
+    }
     const response = await fetch(`${base}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // The planner is stateless too — carry its running transcript so it never
       // loses the goal or what it already told the twin (see chat()).
-      body: JSON.stringify({ user_input: String(prompt || ""), session_id: sessionId, conversation_history: history.slice(-40) }),
+      body: JSON.stringify({
+        user_input: userInput,
+        session_id: sessionId,
+        conversation_history: history.slice(-40),
+      }),
     });
     if (!response.ok) throw new Error(`Brainstem /chat returned HTTP ${response.status}.`);
     const data = await response.json();
-    return String(data.response || data.assistant_response || data.result || "").trim();
+    const reply = String(
+      data.response || data.assistant_response || data.result || "",
+    ).trim();
+    recordCompletedTurn(this.ledger, {
+      agentLogs: data.agent_logs,
+      model: data.model,
+      requestId,
+      response: reply,
+      sessionId: data.session_id || sessionId,
+      surface: "brainstem",
+      userInput,
+    });
+    return reply;
   }
 
   // A GENUINE two-brain autonomous loop: the visible Brainstem plans each turn,
@@ -658,7 +893,9 @@ export class TwinManager {
     // emit can't resurrect the tile after we remove it.
     if (twin) { twin.closed = true; twin.running = false; }
     this.twins.delete(key);
+    if (twin) this.mirrorMolts(twin);
     if (twin?.worker) await twin.worker.stop().catch(() => {});
+    if (twin) this.mirrorMolts(twin);
     if (twin?.dir) {
       try { rmSync(twin.dir, { recursive: true, force: true }); } catch { /* best effort */ }
     }
@@ -670,8 +907,14 @@ export class TwinManager {
   async stopAll() {
     const twins = Array.from(this.twins.values());
     this.twins.clear();
+    for (const twin of twins) this.mirrorMolts(twin);
     await Promise.allSettled(twins.map((twin) => twin.worker.stop()));
+    for (const twin of twins) this.mirrorMolts(twin);
   }
 }
 
-export const twinManagerInternals = { allocatePort, twinSlug };
+export const twinManagerInternals = {
+  allocatePort,
+  discoverTwinMolts,
+  twinSlug,
+};

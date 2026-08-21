@@ -107,3 +107,49 @@ test("a twin id taken by another live launcher is skipped, never adopted", async
   assert.equal(readFileSync(path.join(foreignDir, "agents", "demo_agent.py"), "utf8"), "FOREIGN = True\n");
   assert.ok(!existsSync(path.join(root, "twins", "demo-2")), "the failed hatch cleaned up only its own directory");
 });
+
+test("a live in-progress claim cannot be reaped or adopted", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-twin-ownership-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const liveOwner = spawn(
+    process.execPath,
+    ["-e", "setInterval(() => {}, 1000)"],
+    { stdio: "ignore" },
+  );
+  t.after(() => { try { liveOwner.kill("SIGKILL"); } catch {} });
+  const twinsRoot = path.join(root, "twins");
+  const claimed = path.join(twinsRoot, "demo-1");
+  mkdirSync(claimed, { recursive: true });
+  writeFileSync(
+    path.join(twinsRoot, ".demo-1.claim.json"),
+    JSON.stringify({
+      pid: liveOwner.pid,
+      startedAt: "2026-08-20T00:00:00Z",
+    }),
+  );
+
+  let claimedDir = null;
+  const manager = new TwinManager({
+    betaHome: root,
+    brainstemConfig: { url: "http://127.0.0.1:1" },
+    routeManager: {
+      materializeExternalAgentSet(_agentSources, agentsDir) {
+        claimedDir = path.dirname(agentsDir);
+        throw new Error("stop after atomic claim");
+      },
+    },
+    storeClient: {
+      download: async () => ({
+        id: "demo",
+        filename: "demo_agent.py",
+        source: "OURS = True\n",
+        sha256: "0".repeat(64),
+        entry: { name: "Demo", id: "demo" },
+      }),
+    },
+  });
+  assert.ok(existsSync(claimed), "the live ownerless claim survives reaping");
+  await assert.rejects(() => manager.hatch("demo"), /stop after atomic claim/);
+  assert.equal(path.basename(claimedDir), "demo-2");
+  assert.ok(existsSync(claimed), "hatching skips rather than adopts the live claim");
+});

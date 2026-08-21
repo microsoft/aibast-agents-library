@@ -1041,6 +1041,8 @@ test("every HEAD-write path re-checks a kill switch flipped after construction",
   };
   const seed = manager.seedContextMemoryRing1();
   assert.equal(seed.disabled, true, "ring-1 seeding refuses at call time");
+  const seedRing2 = manager.seedContextMemoryRing2();
+  assert.equal(seedRing2.disabled, true, "ring-2 seeding refuses at call time");
 
   migrationStore.baselineAncestors();
   assert.equal(

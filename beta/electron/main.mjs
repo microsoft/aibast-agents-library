@@ -1,4 +1,5 @@
 import path from "node:path";
+import { randomUUID } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -20,13 +21,19 @@ import {
   resolveBrainstemConfig,
 } from "./brainstem-process.mjs";
 import {
+  lookupApproximateLocation,
+  openAmbient,
+} from "./ambient.mjs";
+import {
   resolveChatStreamMode,
 } from "./chat-stream-mode.mjs";
 import { humanizeAgentName } from "./agent-display.mjs";
 import { BrainSurgeon } from "./brain-surgeon.mjs";
 import {
   changeChatLook,
+  readAmbientSettings,
   readChatLookSettings,
+  writeAmbientSettings,
 } from "./chat-look-settings.mjs";
 import {
   ChatCardStore,
@@ -44,11 +51,16 @@ import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
 import {
+  openLedger,
+  recordCompletedTurn,
+} from "./ledger.mjs";
+import {
   createExportRedactionScript,
   redactSensitiveValue,
 } from "./log-redaction.mjs";
 import { BetaRouteManager } from "./route-manager.mjs";
 import { isAllowedStoreSourceUrl, RappStoreClient, STORE_SOURCES } from "./rapp-store.mjs";
+import { createTwinLedgerBridgeSource } from "./twin-ledger-bridge.mjs";
 import { TwinManager } from "./twin-manager.mjs";
 import {
   allowsUiDriverMediaPermission,
@@ -67,6 +79,7 @@ import "../ui/stream-follow.js";
 import "../ui/stream-render-pacing.js";
 import "../ui/chat-look.js";
 
+const hasLock = app.requestSingleInstanceLock();
 const {
   createTailFollower,
 } = globalThis.RappStreamFollow;
@@ -175,6 +188,12 @@ html[data-rapp-stream="smooth"] .typing span:nth-child(3) {
 `;
 const betaHome = process.env.BRAINSTEM_BETA_HOME
   || path.join(config.brainstemHome, "beta-launcher");
+const ledger = hasLock ? openLedger(betaHome) : null;
+const ambient = hasLock
+  ? openAmbient(betaHome, {
+      deviceEnabled: process.env.RAPP_AMBIENT_DEVICE !== "0",
+    })
+  : null;
 const initialChatLook = readChatLookSettings({
   betaHome,
   env: process.env,
@@ -718,6 +737,8 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
         + '<button id="beta-chat-look-messages" type="button" data-look="messages">'
         + 'Messages</button><button id="beta-chat-look-business" type="button" '
         + 'data-look="business">Business</button></div></div>'
+        + '<button class="beta-panel-btn" id="beta-location-settings" type="button">'
+        + 'My location and ambient context</button>'
         + '<button class="beta-panel-btn" id="beta-check-updates" type="button">'
         + 'Check for updates</button><div id="beta-update-status" '
         + 'data-phase="idle" role="status" aria-live="polite">Check GitHub for '
@@ -737,8 +758,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     button.removeAttribute("onclick");
     const checkButton = document.getElementById("beta-check-updates");
     const installButton = document.getElementById("beta-install-update");
+    const locationButton = document.getElementById("beta-location-settings");
     checkButton?.removeAttribute("onclick");
     installButton?.removeAttribute("onclick");
+    locationButton?.removeAttribute("onclick");
     if (!button.dataset.betaFrameBridge) {
       button.dataset.betaFrameBridge = "1";
       button.addEventListener("click", (event) => {
@@ -760,6 +783,13 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
           message: "Preparing the update and restart...",
         }, true);
         window.parent.postMessage({ type: "rapp-beta:install-update" }, "*");
+      });
+      locationButton?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setBetaMenuOpen(false);
+        window.parent.postMessage({
+          type: "rapp-beta:open-ambient-settings",
+        }, "*");
       });
       for (const look of ["messages", "business"]) {
         document.getElementById("beta-chat-look-" + look)?.addEventListener(
@@ -909,6 +939,106 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     } catch {
       return null;
     }
+  }
+  function postCompletedChat(request, result) {
+    const response = String(
+      result?.response || result?.assistant_response || result?.result || "",
+    );
+    if (!response) return;
+    window.parent.postMessage({
+      type: "rapp-beta:ledger-turn",
+      turn: {
+        agentLogs: result?.agent_logs || "",
+        model: result?.model || null,
+        requestId: request.requestId,
+        response,
+        sessionId: result?.session_id || request.body.session_id || null,
+        userInput: request.body.user_input,
+      },
+    }, "*");
+  }
+  function createChatCapture(request) {
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let reported = false;
+    let terminal = null;
+    return {
+      abort() {
+        terminal = null;
+      },
+      finish() {
+        if (reported || !terminal) return;
+        reported = true;
+        postCompletedChat(request, terminal);
+      },
+      push(value) {
+        if (reported || terminal || !value) return;
+        buffer += decoder.decode(value, { stream: true });
+        while (true) {
+          const separator = /\\r?\\n\\r?\\n/.exec(buffer);
+          if (!separator) return;
+          const end = separator.index + separator[0].length;
+          const frame = buffer.slice(0, end);
+          buffer = buffer.slice(end);
+          const event = parseSseEvent(frame);
+          if (event?.type !== "done") continue;
+          terminal = event;
+          return;
+        }
+      },
+    };
+  }
+  function instrumentChatResponse(response, request) {
+    if (!response.ok) return response;
+    if (request.pathname === "/chat/stream" && response.body) {
+      const capture = createChatCapture(request);
+      const nativeGetReader = response.body.getReader.bind(response.body);
+      response.body.getReader = function frontierLedgerReader(...args) {
+        const reader = nativeGetReader(...args);
+        const nativeRead = reader.read.bind(reader);
+        const nativeCancel = reader.cancel.bind(reader);
+        reader.read = async function frontierLedgerRead() {
+          try {
+            const result = await nativeRead();
+            if (result.done) capture.finish();
+            else capture.push(result.value);
+            return result;
+          } catch (cause) {
+            capture.abort();
+            throw cause;
+          }
+        };
+        reader.cancel = function frontierLedgerCancel(reason) {
+          capture.abort();
+          return nativeCancel(reason);
+        };
+        return reader;
+      };
+      return response;
+    }
+    let reported = false;
+    const report = (result) => {
+      if (reported) return;
+      reported = true;
+      postCompletedChat(request, result);
+    };
+    const nativeJson = response.json.bind(response);
+    response.json = async function frontierLedgerJson() {
+      const result = await nativeJson();
+      report(result);
+      return result;
+    };
+    const nativeText = response.text.bind(response);
+    response.text = async function frontierLedgerText() {
+      const result = await nativeText();
+      try {
+        report(JSON.parse(result));
+      } catch {
+        // The native response remains authoritative when text is not JSON.
+      }
+      return result;
+    };
+    return response;
   }
   function errorSseFrame(cause) {
     return "\\n\\ndata: " + JSON.stringify({
@@ -1273,8 +1403,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       headers: response.headers,
     });
   }
-  async function requestLineageCommand(message) {
-    const requestId = window.crypto.randomUUID();
+  async function requestLineageCommand(message, requestId = window.crypto.randomUUID()) {
     return new Promise((resolve, reject) => {
       const timeout = window.setTimeout(() => {
         window.removeEventListener("message", receive);
@@ -1299,6 +1428,33 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       }, "*");
     });
   }
+  async function requestAmbientRefresh() {
+    const requestId = window.crypto.randomUUID();
+    return new Promise((resolve, reject) => {
+      const timeout = window.setTimeout(() => {
+        window.removeEventListener("message", receive);
+        reject(new Error("Ambient context refresh timed out."));
+      }, 3000);
+      function receive(event) {
+        if (
+          event.source !== window.parent
+          || event.data?.type !== "rapp-beta:refresh-ambient-result"
+          || event.data?.requestId !== requestId
+        ) return;
+        window.clearTimeout(timeout);
+        window.removeEventListener("message", receive);
+        if (event.data.ok) resolve(event.data.result);
+        else reject(new Error(
+          event.data.error || "Ambient context refresh failed.",
+        ));
+      }
+      window.addEventListener("message", receive);
+      window.parent.postMessage({
+        type: "rapp-beta:refresh-ambient",
+        requestId,
+      }, "*");
+    });
+  }
   window.fetch = async function frontierFetch(resource, options = {}) {
     let target;
     try {
@@ -1317,16 +1473,25 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       && target.pathname === "/chat/stream";
     const requestSignal = options.signal
       || (resource instanceof Request ? resource.signal : null);
+    const claimed = shouldWrapChatStream && chatStreamMode !== "hold"
+      ? claimTypingIndicatorForRequest()
+      : null;
+    let completion = null;
     const fetchNative = async () => {
-      const claimed = shouldWrapChatStream && chatStreamMode !== "hold"
-        ? claimTypingIndicatorForRequest()
-        : null;
-      let response;
+      let nativeResponse;
       try {
-        response = await nativeFetch(resource, options);
+        nativeResponse = await nativeFetch(resource, options);
       } catch (error) {
         if (claimed) delete claimed.dataset.rappProvisionalClaimed;
         throw error;
+      }
+      let response = nativeResponse;
+      if (completion) {
+        try {
+          response = instrumentChatResponse(nativeResponse, completion);
+        } catch {
+          response = nativeResponse;
+        }
       }
       if (!shouldWrapChatStream) return response;
       return chatStreamMode === "hold"
@@ -1345,19 +1510,33 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     if (typeof body.user_input !== "string") {
       return fetchNative();
     }
+    completion = {
+      body,
+      pathname: target.pathname,
+      requestId: window.crypto.randomUUID(),
+    };
+    try {
+      await requestAmbientRefresh();
+    } catch {
+      // Ambient context is additive; chat must remain fail-open.
+    }
     // Fail OPEN, always. This interceptor sits in front of every chat message,
     // so a lineage-control failure (main busy, handler throw, window teardown,
     // timeout) must never take the user's ordinary chat down with it — the layer
     // may substitute, never subtract. On any error we fall through to Grail.
     let result;
     try {
-      result = await requestLineageCommand(body.user_input);
+      result = await requestLineageCommand(
+        body.user_input,
+        completion.requestId,
+      );
     } catch {
       return fetchNative();
     }
     if (!result?.intercepted) {
       return fetchNative();
     }
+    if (claimed) delete claimed.dataset.rappProvisionalClaimed;
     if (target.pathname === "/chat/stream") {
       const frame = "data: " + JSON.stringify({
         type: "done",
@@ -1365,18 +1544,18 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
         agent_logs: "",
         streamed: false,
       }) + "\\n\\n";
-      return new Response(frame, {
+      return instrumentChatResponse(new Response(frame, {
         status: 200,
         headers: { "Content-Type": "text/event-stream; charset=utf-8" },
-      });
+      }), completion);
     }
-    return new Response(JSON.stringify({
+    return instrumentChatResponse(new Response(JSON.stringify({
       response: result.reply,
       agent_logs: "",
     }), {
       status: 200,
       headers: { "Content-Type": "application/json; charset=utf-8" },
-    });
+    }), completion);
   };
   async function requestParent(type, filename) {
     const requestId = window.crypto.randomUUID();
@@ -1466,6 +1645,8 @@ let e2eStopTimer = null;
 // Brainstem — "several agents, one brainstem" — and every event they emit is
 // tagged with its sessionId so the renderer routes it to the right tab/tile.
 const brainSurgeons = new Map();
+const completedBrainstemRequests = new Set();
+const completedBrainstemRequestOrder = [];
 const chatLeaseRegistry = new Set();
 const MAX_BRAIN_SURGEONS = 12;
 
@@ -1490,9 +1671,146 @@ const state = {
   },
   url: config.url,
 };
+let navigatorLocation = null;
+let approximateLocation = null;
+let locationUnavailableReason = null;
+let locationLookupRevision = 0;
+let ambientDeviceTimer = null;
+let ambientManifestTimer = null;
+
+function refreshAmbientDevice() {
+  return ambient?.refreshDevice({
+    approximateLocation,
+    navigatorLocation,
+    settings: readAmbientSettings({ betaHome }),
+    unavailableReason: locationUnavailableReason,
+  });
+}
+
+function ambientState() {
+  return {
+    device: ambient?.readProvider("device") || null,
+    deviceEnabled: ambient?.deviceEnabled === true,
+    settings: readAmbientSettings({ betaHome }),
+  };
+}
+
+async function handleGeolocationUpdate(payload = {}) {
+  const revision = ++locationLookupRevision;
+  const lat = Number(payload.lat);
+  const lon = Number(payload.lon);
+  const validFix = Number.isFinite(lat)
+    && lat >= -90
+    && lat <= 90
+    && Number.isFinite(lon)
+    && lon >= -180
+    && lon <= 180;
+  if (validFix) {
+    const reportedAt = Date.parse(payload.at || "");
+    const now = Date.now();
+    navigatorLocation = {
+      accuracy_m: Number.isFinite(Number(payload.accuracy_m))
+        ? Math.max(0, Number(payload.accuracy_m))
+        : null,
+      at: Number.isFinite(reportedAt) && reportedAt <= now + 60000
+        ? new Date(reportedAt).toISOString()
+        : new Date(now).toISOString(),
+      label: payload.label ? String(payload.label).slice(0, 160) : null,
+      lat,
+      lon,
+    };
+    approximateLocation = null;
+    locationUnavailableReason = null;
+    return ambientStateAfterRefresh();
+  }
+
+  navigatorLocation = null;
+  locationUnavailableReason = String(
+    payload.reason || "navigator.geolocation unavailable",
+  ).slice(0, 160);
+  const settings = readAmbientSettings({ betaHome });
+  if (
+    ambient?.deviceEnabled === true
+    && settings.granularity !== "off"
+    && !settings.userLocation
+    && settings.approximateFallback
+  ) {
+    try {
+      const resolved = await lookupApproximateLocation({
+        fetchImpl: typeof net?.fetch === "function"
+          ? (url, options) => net.fetch(url, options)
+          : globalThis.fetch,
+        signal: AbortSignal.timeout(5000),
+      });
+      if (revision === locationLookupRevision) {
+        approximateLocation = {
+          ...resolved,
+          at: new Date().toISOString(),
+        };
+      }
+    } catch (error) {
+      if (revision === locationLookupRevision) {
+        approximateLocation = null;
+        locationUnavailableReason += `; approximate fallback failed: ${
+          String(error?.message || error).slice(0, 100)
+        }`;
+      }
+    }
+  }
+  return ambientStateAfterRefresh();
+}
+
+function ambientStateAfterRefresh() {
+  refreshAmbientDevice();
+  return ambientState();
+}
+
+function refreshAmbientBeforeTurn() {
+  const device = refreshAmbientDevice();
+  if (!device) ambient?.refreshManifest();
+  return ambientState();
+}
+
+function allowsAmbientGeolocation(webContents) {
+  const settings = readAmbientSettings({ betaHome });
+  return ambient?.deviceEnabled === true
+    && settings.granularity !== "off"
+    && webContents === mainWindow?.webContents;
+}
+
+function handleAmbientSettingsUpdate(payload = {}) {
+  const settings = writeAmbientSettings({
+    approximateFallback: payload.approximateFallback === true,
+    betaHome,
+    granularity: payload.granularity,
+    userLocation: payload.userLocation || null,
+  });
+  if (
+    settings.granularity === "off"
+    || settings.userLocation
+  ) {
+    locationLookupRevision += 1;
+    navigatorLocation = null;
+    approximateLocation = null;
+    locationUnavailableReason = settings.granularity === "off"
+      ? "location disabled"
+      : null;
+  } else if (!settings.approximateFallback) {
+    approximateLocation = null;
+  }
+  return ambientStateAfterRefresh();
+}
+
+ledger?.setOnWrite((_row, currentLedger) => {
+  ambient?.refreshLedger(currentLedger.describe());
+});
+ambient?.refreshLedger(ledger?.describe() || {});
+refreshAmbientBeforeTurn();
+
 const routeManager = new BetaRouteManager({
   betaHome,
   brainstemConfig: config,
+  ledger,
   onActivate: async (route) => {
     state.url = route.url;
     state.brainstem = {
@@ -1694,6 +2012,7 @@ async function installAgentToBrainstem(storeId) {
     : `${String(storeId).replace(/[^a-z0-9_]+/gi, "_")}_agent.py`;
   const installed = await routeManager.installScopedAgent({
     filename,
+    origin: "store",
     source: cartridge.source,
   });
   const route = await routeManager.startDefault();
@@ -1711,6 +2030,8 @@ async function installAgentToBrainstem(storeId) {
 const twinManager = new TwinManager({
   brainstemConfig: config,
   betaHome,
+  ledger,
+  refreshAmbient: refreshAmbientBeforeTurn,
   routeManager,
   storeClient: rappStore,
   // The Brainstem that plans a two-brain loop is whichever one is live now
@@ -1733,6 +2054,7 @@ const twinManager = new TwinManager({
 // pops open the auth page in the user's own browser (identity auth is completed
 // in their real session; the app never captures credentials).
 const twinAuthPrompts = new Map();   // twinId -> { url, code, note }
+const twinPopoutOwners = new Map();  // webContents.id -> twinId
 
 function parseAuthPrompt(message) {
   const text = String(message || "");
@@ -1820,6 +2142,10 @@ async function injectFrameUi(frame, twinId) {
     `(() => { const html = ${JSON.stringify(html)}; document.open(); document.write(html); document.close(); return true; })()`,
     true,
   );
+  await frame.executeJavaScript(
+    createTwinLedgerBridgeSource({ sink: "parent", twinId }),
+    true,
+  );
   return { ok: true, instrumented: true };
 }
 
@@ -1873,18 +2199,33 @@ function popOutTwin(id) {
     title: twin.name || "RAPPlication",
     backgroundColor: "#0d1117",
     parent: mainWindow || undefined,
-    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+    webPreferences: {
+      additionalArguments: [`--rapp-twin-id=${encodeURIComponent(id)}`],
+      contextIsolation: true,
+      nodeIntegration: false,
+      preload: path.join(dirname, "twin-preload.cjs"),
+      sandbox: true,
+    },
   });
+  const popoutWebContentsId = win.webContents.id;
+  twinPopoutOwners.set(popoutWebContentsId, id);
+  win.on("closed", () => twinPopoutOwners.delete(popoutWebContentsId));
   win.setMenuBarVisibility(false);
   const raw = twinManager.uiHtml(id);
   const html = raw ? instrumentRappUi(raw) + VIEW_TOGGLE(startMobile) : null;
   win.webContents.on("did-finish-load", () => {
-    if (html) {
-      win.webContents.executeJavaScript(
+    void (async () => {
+      if (html) {
+        await win.webContents.executeJavaScript(
         `(() => { const h = ${JSON.stringify(html)}; document.open(); document.write(h); document.close(); return true; })()`,
         true,
-      ).catch(() => {});
-    }
+        );
+      }
+      await win.webContents.executeJavaScript(
+        createTwinLedgerBridgeSource({ sink: "preload", twinId: id }),
+        true,
+      );
+    })().catch(() => {});
   });
   win.loadURL(`${twin.url}/?beta=1`);
   return { ok: true };
@@ -1992,6 +2333,81 @@ function normalizeSurgeonId(sessionId) {
   return Number.isFinite(id) && id > 0 ? id : 1;
 }
 
+function recordBrainstemCompletion(payload) {
+  if (!payload || typeof payload !== "object") {
+    return { ok: false, reason: "A completed turn payload is required." };
+  }
+  const requestId = payload.requestId ? String(payload.requestId) : null;
+  if (requestId && completedBrainstemRequests.has(requestId)) {
+    return { duplicate: true, ok: true, tools: 0 };
+  }
+  const result = recordCompletedTurn(ledger, {
+    agentLogs: String(payload.agentLogs || ""),
+    model: payload.model ? String(payload.model) : null,
+    requestId,
+    response: String(payload.response || ""),
+    sessionId: payload.sessionId ? String(payload.sessionId) : null,
+    surface: "brainstem",
+    userInput: String(payload.userInput || ""),
+  });
+  if (requestId && result.turns.length === 2) {
+    completedBrainstemRequests.add(requestId);
+    completedBrainstemRequestOrder.push(requestId);
+    if (completedBrainstemRequestOrder.length > 1000) {
+      completedBrainstemRequests.delete(completedBrainstemRequestOrder.shift());
+    }
+  }
+  return {
+    ok: result.turns.length === 2,
+    tools: result.tools.length,
+  };
+}
+
+function recordTwinCompletion(twinId, payload) {
+  const twin = twinManager.get(String(twinId || ""));
+  if (!payload || typeof payload !== "object") {
+    return { ok: false, reason: "A completed twin turn payload is required." };
+  }
+  if (payload.settledOnly === true) {
+    return {
+      molts: twinManager.mirrorMolts(twin).length,
+      ok: true,
+      settledOnly: true,
+      tools: 0,
+    };
+  }
+  const result = recordCompletedTurn(ledger, {
+    agentLogs: String(payload.agentLogs || ""),
+    model: payload.model ? String(payload.model) : null,
+    requestId: payload.requestId ? String(payload.requestId) : null,
+    response: String(payload.response || ""),
+    sessionId: payload.sessionId
+      ? String(payload.sessionId)
+      : `twin-ui-${twin.id}`,
+    surface: `twin:${twin.id}`,
+    userInput: String(payload.userInput || ""),
+  });
+  const molts = twinManager.mirrorMolts(twin);
+  return {
+    molts: molts.length,
+    ok: result.turns.length === 2,
+    tools: result.tools.length,
+  };
+}
+
+function ownedTwinForSender(event) {
+  const ownedTwinId = twinPopoutOwners.get(event.sender.id);
+  if (!ownedTwinId) return null;
+  const twin = twinManager.get(ownedTwinId);
+  if (
+    new URL(event.senderFrame.url).origin
+    !== new URL(twin.url).origin
+  ) {
+    throw new Error("Twin sender left its loopback origin.");
+  }
+  return ownedTwinId;
+}
+
 function ensureBrainSurgeon(sessionId = 1) {
   const id = normalizeSurgeonId(sessionId);
   let surgeon = brainSurgeons.get(id);
@@ -2001,6 +2417,7 @@ function ensureBrainSurgeon(sessionId = 1) {
         `You have ${MAX_BRAIN_SURGEONS} Copilot chats open — close one before opening another.`,
       );
     }
+
     surgeon = new BrainSurgeon({
       runtime: copilot,
       brainstemUrl: config.url,
@@ -2438,6 +2855,27 @@ function registerIpc() {
     assertTrustedIpc(event);
     return handleChatLookChange(nextLook);
   });
+  ipcMain.handle("beta:get-ambient-settings", (event) => {
+    assertTrustedIpc(event);
+    return ambientState();
+  });
+  ipcMain.handle("beta:refresh-ambient", (event) => {
+    const ownedTwinId = ownedTwinForSender(event);
+    if (!ownedTwinId) {
+      assertTrustedIpc(event);
+      return refreshAmbientBeforeTurn();
+    }
+    refreshAmbientBeforeTurn();
+    return { ok: true };
+  });
+  ipcMain.handle("beta:set-ambient-settings", (event, payload) => {
+    assertTrustedIpc(event);
+    return handleAmbientSettingsUpdate(payload);
+  });
+  ipcMain.handle("beta:update-geolocation", async (event, payload) => {
+    assertTrustedIpc(event);
+    return handleGeolocationUpdate(payload);
+  });
   ipcMain.handle("beta:set-april-fools", async (event, next) => {
     assertTrustedIpc(event);
     return handleAprilFoolsChange(next || {});
@@ -2526,6 +2964,21 @@ function registerIpc() {
     assertTrustedIpc(event);
     return applyChatLookToFrame();
   });
+  ipcMain.handle("beta:record-brainstem-turn", (event, payload) => {
+    assertTrustedIpc(event);
+    return recordBrainstemCompletion(payload);
+  });
+  ipcMain.handle("beta:record-twin-turn", (event, twinId, payload) => {
+    const ownedTwinId = ownedTwinForSender(event);
+    if (ownedTwinId) {
+      if (String(twinId || "") !== ownedTwinId) {
+        throw new Error("Twin ledger sender does not own that twin.");
+      }
+      return recordTwinCompletion(ownedTwinId, payload);
+    }
+    assertTrustedIpc(event);
+    return recordTwinCompletion(twinId, payload);
+  });
   ipcMain.handle("beta:lineage-command", async (event, message) => {
     assertTrustedIpc(event);
     return executeComposerControl(message);
@@ -2558,7 +3011,18 @@ function registerIpc() {
   );
   ipcMain.handle("beta:surgeon-send", async (event, sessionId, prompt) => {
     assertTrustedIpc(event);
-    return ensureBrainSurgeon(sessionId).send(prompt);
+    refreshAmbientBeforeTurn();
+    const id = normalizeSurgeonId(sessionId);
+    const requestId = randomUUID();
+    const result = await ensureBrainSurgeon(sessionId).send(prompt);
+    recordCompletedTurn(ledger, {
+      requestId,
+      response: result.content,
+      sessionId: `surgeon-${id}`,
+      surface: "surgeon",
+      userInput: String(prompt || ""),
+    });
+    return result;
   });
   ipcMain.handle("beta:surgeon-reset", async (event, sessionId) => {
     assertTrustedIpc(event);
@@ -2693,7 +3157,6 @@ async function startServices() {
   await Promise.allSettled([brainstemTask, copilotTask]);
 }
 
-const hasLock = app.requestSingleInstanceLock();
 if (!hasLock) {
   app.quit();
 } else {
@@ -2710,8 +3173,28 @@ if (!hasLock) {
       app.dock.setIcon(appIcon);
     }
     session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+      if (permission === "geolocation") {
+        callback(allowsAmbientGeolocation(webContents));
+        return;
+      }
       callback(allowsUiDriverMediaPermission(webContents, permission));
     });
+    session.defaultSession.setPermissionCheckHandler(
+      (webContents, permission) => {
+        if (permission === "geolocation") {
+          return allowsAmbientGeolocation(webContents);
+        }
+        return allowsUiDriverMediaPermission(webContents, permission);
+      },
+    );
+    ambientManifestTimer = setInterval(
+      () => ambient?.refreshManifest(),
+      45000,
+    );
+    ambientDeviceTimer = setInterval(
+      () => refreshAmbientDevice(),
+      240000,
+    );
     registerIpc();
     installApplicationMenu();
     loadPendingUpdateResult();
@@ -2777,6 +3260,8 @@ if (!hasLock) {
     event.preventDefault();
     if (shutdownStarted) return;
     shutdownStarted = true;
+    clearInterval(ambientManifestTimer);
+    clearInterval(ambientDeviceTimer);
     if (e2eStopTimer) {
       clearInterval(e2eStopTimer);
       e2eStopTimer = null;
@@ -2788,6 +3273,7 @@ if (!hasLock) {
       routeManager.stop(),
       uiDriver?.stop(),
     ]).finally(() => {
+      ledger?.close();
       shutdownComplete = true;
       app.quit();
     });

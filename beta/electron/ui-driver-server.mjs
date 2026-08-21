@@ -124,7 +124,11 @@ function stepBudgetMs(step) {
   const action = String(step?.action || "").toLowerCase();
   const settle = Math.max(0, Number(step?.settleMs) || 0);
   if (action === "chat" || action === "surgeon_chat") {
-    return Math.max(1000, Math.min(3600000, Number(step?.timeoutMs) || 180000)) + settle;
+    const defaultTimeout = action === "surgeon_chat" ? 3600000 : 180000;
+    return Math.max(
+      1000,
+      Math.min(3600000, Number(step?.timeoutMs) || defaultTimeout),
+    ) + settle;
   }
   if (action === "wait") return Math.max(100, Math.min(120000, Number(step?.timeoutMs) || 10000));
   if (action === "announce") return Math.max(120, Number(step?.durationMs) || 900);

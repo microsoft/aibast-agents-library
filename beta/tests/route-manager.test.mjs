@@ -13,6 +13,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
+import { openLedger } from "../electron/ledger.mjs";
 import { BetaRouteManager } from "../electron/route-manager.mjs";
 
 
@@ -340,6 +341,7 @@ test("active-agent deletion persists for stack and global sources", async () => 
       filename: "delete_me_agent.py",
       source: "class DeleteMeAgent: pass\n",
     });
+
     const descriptor = manager.compositionDescriptor();
     const materialized = manager.materializeComposition(descriptor);
     manager.activeRoute = {
@@ -375,6 +377,82 @@ test("active-agent deletion persists for stack and global sources", async () => 
       }),
       /generated from the Frontier identity/,
     );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("route telemetry writes complete install and removal rows to the ledger", async () => {
+  const { root, manager } = fixture();
+  const ledger = openLedger(path.join(root, "ledger-home"));
+  manager.ledger = ledger;
+  try {
+    const source = [
+      "class WeatherAgent:",
+      "    def __init__(self):",
+      "        self.name = \"WeatherAgent\"",
+      "    def perform(self, **kwargs): return 'sunny'",
+      "",
+    ].join("\n");
+    const installed = await manager.installScopedAgent({
+      filename: "weather_agent.py",
+      origin: "store",
+      source,
+    });
+    await manager.removeScopedAgent({
+      filename: "weather_agent.py",
+      origin: "store",
+    });
+
+    const events = ledger.database.prepare(`
+      SELECT event, filename, tool_name, rappid, sha256, source_path, origin
+      FROM agents
+      ORDER BY id
+    `).all();
+    assert.equal(events.length, 2);
+    assert.deepEqual(events.map(({ event }) => event), ["installed", "removed"]);
+    for (const event of events) {
+      assert.equal(event.filename, "weather_agent.py");
+      assert.equal(event.tool_name, "WeatherAgent");
+      assert.equal(event.rappid, installed.agent.agent_rappid);
+      assert.match(event.sha256, /^[a-f0-9]{64}$/);
+      assert.equal(event.source_path, installed.agent.object_path);
+      assert.equal(event.origin, "store");
+    }
+    assert.equal(
+      ledger.database.prepare("SELECT count(*) AS total FROM sources").get().total,
+      1,
+    );
+  } finally {
+    ledger.close();
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("ledger-only agent rows do not inflate route telemetry responses", () => {
+  const { root, manager } = fixture();
+  let ledgerEvent = null;
+  manager.ledger = {
+    recordRouteEvent: (event) => {
+      ledgerEvent = event;
+    },
+  };
+  try {
+    const event = manager.recordTelemetry("lineage-promote", {
+      agent_rows: [{
+        filename: "context_memory_agent.py",
+        origin: "lineage",
+        rappid: "rappid:@frontier/context-memory-ring:test",
+        sha256: "a".repeat(64),
+        source_path: "/private/lineage/source.py",
+        tool_name: "ContextMemory",
+      }],
+      changed: 1,
+    });
+    assert.equal(ledgerEvent.agent_rows.length, 1);
+    assert.equal(event.agent_rows, undefined);
+    assert.equal(event.agent_row_count, 1);
+    assert.equal(manager.telemetry.at(-1).agent_rows, undefined);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

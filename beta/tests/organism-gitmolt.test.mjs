@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { homedir } from "node:os";
+import {
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { homedir, tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
@@ -110,4 +116,59 @@ test("git-molt keeps two live Brainstem organisms healthy", {
   assert.match(result.stdout, /a foreign verified trailer does not transfer authority \| PASS/);
   assert.match(result.stdout, /unverified transfer tip is parked and the frame carried its path \| PASS/);
   assert.match(result.stdout, /Summary: \d+ claim\(s\), 0 failure\(s\)/);
+});
+
+test("git-molt composition refuses an escaping agent path", (t) => {
+  if (process.platform === "win32") {
+    t.skip("the vendored command is a Bash script");
+    return;
+  }
+  const root = mkdtempSync(path.join(tmpdir(), "git-molt-path-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const moltDir = path.join(root, "lineage.git");
+  const source = path.join(root, "demo_agent.py");
+  const output = path.join(root, "composition");
+  const escaped = path.join(root, "escaped_agent.py");
+  const command = path.join(repositoryRoot, "tools", "git-molt", "bin", "git-molt");
+  writeFileSync(source, "VALUE = 'safe'\n");
+  const env = { ...process.env, GIT_MOLT_DIR: moltDir, HOME: root };
+  assert.equal(spawnSync("bash", [command, "init"], {
+    cwd: root,
+    encoding: "utf8",
+    env,
+  }).status, 0);
+  assert.equal(spawnSync("bash", [
+    command,
+    "baseline",
+    "demo_agent.py",
+    source,
+  ], {
+    cwd: root,
+    encoding: "utf8",
+    env,
+  }).status, 0);
+  assert.equal(spawnSync("git", [
+    `--git-dir=${moltDir}`,
+    "config",
+    "molt.locus.demo_agent.py.path",
+    "../escaped_agent.py",
+  ], {
+    cwd: root,
+    encoding: "utf8",
+    env,
+  }).status, 0);
+
+  const composed = spawnSync("bash", [command, "compose", output], {
+    cwd: root,
+    encoding: "utf8",
+    env,
+  });
+  assert.notEqual(composed.status, 0);
+  assert.match(composed.stderr, /unsafe agent path/);
+  assert.equal(existsSync(escaped), false);
+  assert.equal(
+    readFileSync(source, "utf8"),
+    "VALUE = 'safe'\n",
+    "the source remains untouched",
+  );
 });

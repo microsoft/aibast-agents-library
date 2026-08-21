@@ -1,5 +1,12 @@
 import assert from "node:assert/strict";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -178,4 +185,70 @@ test("away-auth: notification + browser pop-out, never capturing credentials (P3
   assert.match(surgeon, /never capture or type their credentials/i);
   assert.match(preload, /twinPopOut:/);
   assert.match(preload, /openAuth:/);
+});
+
+test("twin molt.json generations mirror once with their archived source", (t) => {
+  const temporary = mkdtempSync(path.join(tmpdir(), "rapp-twin-molts-"));
+  t.after(() => rmSync(temporary, { recursive: true, force: true }));
+  const molterHome = path.join(temporary, "molter");
+  const generation = path.join(
+    molterHome,
+    "molts",
+    "weather",
+    "gen-001",
+  );
+  mkdirSync(generation, { recursive: true });
+  const source = [
+    "class WeatherAgent:",
+    "    def __init__(self):",
+    "        self.name = \"WeatherAgent\"",
+    "",
+  ].join("\n");
+  writeFileSync(path.join(generation, "agent.py"), source);
+  writeFileSync(path.join(generation, "molt.json"), JSON.stringify({
+    generation: 1,
+    kind: "mutate",
+    verdict: "verified",
+    sha256: "recorded-by-molter",
+    detail: { tool_name: "WeatherAgent" },
+  }));
+  const writes = [];
+  const manager = Object.create(TwinManager.prototype);
+  manager.ledger = {
+    recordAgent: (row) => writes.push(row),
+  };
+  const twin = {
+    dir: temporary,
+    id: "weather-1",
+    molterHome,
+    rappid: "rappid:@microsoft/weather",
+    seenMolts: new Set(),
+  };
+
+  const first = manager.mirrorMolts(twin);
+  const second = manager.mirrorMolts(twin);
+  assert.equal(first.length, 1);
+  assert.equal(second.length, 0);
+  assert.equal(writes.length, 1);
+  assert.equal(writes[0].event, "molted");
+  assert.equal(writes[0].filename, "weather_agent.py");
+  assert.equal(writes[0].toolName, "WeatherAgent");
+  assert.equal(writes[0].origin, "molter");
+  assert.equal(writes[0].sourcePath, path.join(generation, "agent.py"));
+  assert.match(writes[0].sha256, /^[a-f0-9]{64}$/);
+  assert.equal(writes[0].detail.recorded_sha256, "recorded-by-molter");
+});
+
+test("twin hatches and chat completions are wired into the shared ledger", () => {
+  const source = read("electron/twin-manager.mjs");
+  assert.match(source, /event: "hatched"/);
+  assert.match(source, /surface: `twin:\$\{id\}`/);
+  assert.match(source, /MOLTER_HOME: molterHome/);
+  assert.match(source, /path\.join\(\s*this\.betaHome,\s*"molts"/);
+  assert.match(source, /this\.mirrorMolts\(twin\)/);
+  assert.match(source, /recordCompletedTurn\(this\.ledger/);
+  assert.match(source, /finally \{\s*this\.mirrorMolts\(twin\)/);
+  assert.match(source, /if \(twin\) this\.mirrorMolts\(twin\)/);
+  assert.match(source, /surface: "brainstem"/);
+  assert.match(source, /sessionId: data\.session_id \|\| sessionId/);
 });

@@ -19,6 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { BrainstemProcess } from "./brainstem-process.mjs";
+import { inferAgentToolName } from "./ledger.mjs";
 import { redactSensitiveValue } from "./log-redaction.mjs";
 import {
   LineageStore,
@@ -46,6 +47,11 @@ const CONTEXT_MEMORY_RING1_PATH = path.join(
   "rings",
   "context_memory_agent.ring1.py",
 );
+const CONTEXT_MEMORY_RING2_PATH = path.join(
+  MODULE_DIRECTORY,
+  "rings",
+  "context_memory_agent.ring2.py",
+);
 const MOLTER_AGENT_PATH = unpackedAsarPath(path.resolve(
   MODULE_DIRECTORY,
   "..",
@@ -57,6 +63,8 @@ const MOLTER_AGENT_PATH = unpackedAsarPath(path.resolve(
 ));
 const CONTEXT_MEMORY_RING1_BASELINE_SHA256 =
   "3f9ba4ec5c625d541380cbccfbe084479ce12cafc0cec4b55e3dd62128e32266";
+const CONTEXT_MEMORY_RING2_LEGACY_SHA256 =
+  "f1e1a3c7c0db5ed3eb74a7d4ad3a355b85e8fca2649c5840726877c9283c9cc9";
 
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true });
@@ -76,6 +84,25 @@ function atomicWriteJson(filePath, value) {
 
 function sha256(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+function agentLedgerRow({
+  filename,
+  origin,
+  rappid = null,
+  source = null,
+  sourcePath = null,
+} = {}) {
+  return {
+    filename,
+    origin,
+    rappid,
+    sha256: source === null ? null : sha256(source),
+    source_path: sourcePath,
+    tool_name: source === null
+      ? null
+      : inferAgentToolName(source, filename),
+  };
 }
 
 function validatedMoltBytes(source, filename) {
@@ -416,12 +443,14 @@ export class BetaRouteManager {
     lineageEnv = process.env.RAPP_LINEAGE_ENV || "default",
     seedLineageDefaults = true,
     compositionValidator = null,
+    ledger = null,
     moltVerifier = null,
   } = {}) {
     this.betaHome = betaHome;
     this.brainstemConfig = brainstemConfig;
     this.owner = owner;
     this.onActivate = onActivate;
+    this.ledger = ledger;
     this.routingRoot = path.join(betaHome, "routing");
     this.identityFile = path.join(this.routingRoot, "identity.json");
     this.stackRoot = path.join(this.routingRoot, "stacks");
@@ -476,7 +505,8 @@ export class BetaRouteManager {
     }
     this.pruneRoutingArtifacts();
     if (this.lineageIsEnabled() && seedLineageDefaults) {
-      this.seedContextMemoryRing1();
+      const ring1 = this.seedContextMemoryRing1();
+      if (typeof ring1 === "string") this.seedContextMemoryRing2(ring1);
     }
   }
 
@@ -680,6 +710,19 @@ export class BetaRouteManager {
         return moved;
       }
       this.recordTelemetry("lineage-default-seeded", {
+        agent_rows: [agentLedgerRow({
+          filename: baseline.filename,
+          origin: "lineage",
+          rappid: appended,
+          source,
+          sourcePath: path.join(
+            this.lineageStore.root,
+            lineageStoreInternals.filesystemSegment(baseline.ancestorRappid),
+            "rings",
+            lineageStoreInternals.filesystemSegment(appended),
+            "source.py",
+          ),
+        })],
         ancestor_rappid: baseline.ancestorRappid,
         env: "default",
         ring_rappid: appended,
@@ -689,6 +732,174 @@ export class BetaRouteManager {
       this.recordTelemetry("lineage-default-skipped", {
         env: "default",
         reason: String(error?.message || error),
+      });
+      return null;
+    }
+  }
+
+  seedContextMemoryRing2(parentRappid = null) {
+    if (!this.lineageIsEnabled()) {
+      const refusal = {
+        ok: false,
+        disabled: true,
+        refused: true,
+        reason: "Molt Lineage is disabled (RAPP_MOLT_LINEAGE=0).",
+      };
+      this.recordTelemetry("lineage-default-skipped", {
+        env: "default",
+        reason: refusal.reason,
+        ring: 2,
+      });
+      return refusal;
+    }
+    try {
+      const baseline = this.lineageStore.baselineAncestors().find(
+        (candidate) => candidate.filename === "context_memory_agent.py",
+      );
+      if (!baseline) {
+        this.recordTelemetry("lineage-default-skipped", {
+          env: "default",
+          reason: "ContextMemory is not present in the Grail baseline.",
+          ring: 2,
+        });
+        return null;
+      }
+      if (baseline.sha256 !== CONTEXT_MEMORY_RING1_BASELINE_SHA256) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: "ContextMemory baseline bytes do not match the verified ring-2 lineage.",
+          ring: 2,
+        });
+        return null;
+      }
+      const ring1Source = readFileSync(CONTEXT_MEMORY_RING1_PATH, "utf8")
+        .replaceAll("\r\n", "\n");
+      const expectedParent = lineageStoreInternals.ringRappidFor(
+        baseline.ancestorRappid,
+        baseline.ancestorRappid,
+        ring1Source,
+        baseline.filename,
+      );
+      const parent = parentRappid || expectedParent;
+      if (
+        parent !== expectedParent
+        || !this.lineageStore.listRings(baseline.ancestorRappid)
+          .some((ring) => ring.ringRappid === parent)
+      ) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: "ContextMemory ring-2 requires the verified ring-1 parent.",
+          ring: 2,
+        });
+        return null;
+      }
+      const source = readFileSync(CONTEXT_MEMORY_RING2_PATH, "utf8")
+        .replaceAll("\r\n", "\n");
+      const ringRappid = lineageStoreInternals.ringRappidFor(
+        baseline.ancestorRappid,
+        parent,
+        source,
+        baseline.filename,
+      );
+      const rings = this.lineageStore.listRings(baseline.ancestorRappid);
+      const currentHead = this.lineageStore.getHead(
+        baseline.ancestorRappid,
+        { env: "default" },
+      );
+      const legacyDefault = rings.find((ring) => (
+        ring.ringRappid === currentHead
+        && ring.parentRappid === parent
+        && ring.meta?.ring === 2
+        && ring.sha256 === CONTEXT_MEMORY_RING2_LEGACY_SHA256
+      ));
+      if (rings.some((ring) => ring.ringRappid === ringRappid)) {
+        if (legacyDefault) {
+          const moved = this.lineageStore.setHead(
+            baseline.ancestorRappid,
+            ringRappid,
+            { env: "default" },
+          );
+          if (moved !== true) return moved;
+        }
+        return ringRappid;
+      }
+      if (currentHead !== parent && !legacyDefault) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: "ContextMemory HEAD moved beyond ring 1; preserving the selected lineage.",
+          ring: 2,
+        });
+        return null;
+      }
+      const verdict = this.moltVerifier(source);
+      if (verdict !== true && verdict?.ok !== true) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: verdict?.error || "ContextMemory ring-2 failed the Molter verify gate.",
+          ring: 2,
+        });
+        return null;
+      }
+      const appended = this.lineageStore.appendRing(
+        baseline.ancestorRappid,
+        {
+          source,
+          parentRappid: parent,
+          verified: true,
+          meta: {
+            author: "frontier",
+            kind: "ambient-context/1.0",
+            policy: "mutable",
+            ring: 2,
+            verifiedBy: "molter._verify",
+          },
+        },
+      );
+      const moved = this.lineageStore.setHead(
+        baseline.ancestorRappid,
+        appended,
+        { env: "default" },
+      );
+      if (moved !== true) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: moved?.reason || "ContextMemory ring-2 HEAD write was refused.",
+          ring: 2,
+        });
+        return moved;
+      }
+      this.recordTelemetry("lineage-default-seeded", {
+        agent_rows: [agentLedgerRow({
+          filename: baseline.filename,
+          origin: "lineage",
+          rappid: appended,
+          source,
+          sourcePath: path.join(
+            this.lineageStore.root,
+            lineageStoreInternals.filesystemSegment(baseline.ancestorRappid),
+            "rings",
+            lineageStoreInternals.filesystemSegment(appended),
+            "source.py",
+          ),
+        })],
+        ancestor_rappid: baseline.ancestorRappid,
+        env: "default",
+        parent_rappid: parent,
+        migrated_from: legacyDefault?.ringRappid || null,
+        ring: 2,
+        ring_rappid: appended,
+      });
+      return appended;
+    } catch (error) {
+      this.recordTelemetry("lineage-default-skipped", {
+        env: "default",
+        reason: String(error?.message || error),
+        ring: 2,
       });
       return null;
     }
@@ -775,6 +986,9 @@ export class BetaRouteManager {
       { env: this.lineageEnv },
     ) || null;
     this.recordTelemetry("lineage-rollback", {
+      agent_rows: (report?.changed || [])
+        .map((rappid) => this.lineageLedgerRow(rappid, this.lineageEnv))
+        .filter(Boolean),
       ancestor_rappid: ancestorRappid,
       scope: ancestorRappid ? "locus" : "all",
       disabled: Boolean(report?.disabled),
@@ -791,6 +1005,9 @@ export class BetaRouteManager {
       { env: this.lineageEnv },
     ) || null;
     this.recordTelemetry("lineage-restore", {
+      agent_rows: (report?.changed || [])
+        .map((rappid) => this.lineageLedgerRow(rappid, this.lineageEnv))
+        .filter(Boolean),
       ancestor_rappid: ancestorRappid,
       scope: ancestorRappid ? "locus" : "all",
       disabled: Boolean(report?.disabled),
@@ -845,6 +1062,9 @@ export class BetaRouteManager {
       utc,
     });
     this.recordTelemetry("lineage-promote", {
+      agent_rows: (report.changed || [])
+        .map((rappid) => this.lineageLedgerRow(rappid, targetEnvironment))
+        .filter(Boolean),
       changed: report.changed?.length ?? 0,
       conflicts: report.conflicts?.length ?? 0,
       disabled: Boolean(report.disabled),
@@ -1006,16 +1226,58 @@ export class BetaRouteManager {
     const lineageContext = String(type).startsWith("lineage-")
       ? { env: this.lineageEnv }
       : {};
-    const event = {
+    const ledgerEvent = {
       sequence: ++this.telemetrySequence,
       timestamp: new Date().toISOString(),
       type,
       ...lineageContext,
       ...redactSensitiveValue(details),
     };
+    this.ledger?.recordRouteEvent?.(ledgerEvent);
+    const {
+      agent_rows: agentRows,
+      ...event
+    } = ledgerEvent;
+    if (Array.isArray(agentRows)) {
+      event.agent_row_count = agentRows.length;
+    }
+    if (Array.isArray(event.excluded_files)) {
+      event.excluded_files = event.excluded_files.map(({ filename, reason }) => ({
+        filename,
+        reason,
+      }));
+    }
     this.telemetry.push(event);
     if (this.telemetry.length > 500) this.telemetry.shift();
     return event;
+  }
+
+  lineageLedgerRow(ancestorRappid, env = this.lineageEnv) {
+    try {
+      const baseline = this.lineageStore.baselineAncestors().find(
+        (candidate) => candidate.ancestorRappid === ancestorRappid,
+      );
+      const live = this.lineageStore.resolveLive(ancestorRappid, { env });
+      if (!baseline || !live) return null;
+      const sourcePath = live.isBaseline
+        ? baseline.sourcePath
+        : path.join(
+            this.lineageStore.root,
+            lineageStoreInternals.filesystemSegment(ancestorRappid),
+            "rings",
+            lineageStoreInternals.filesystemSegment(live.ringRappid),
+            "source.py",
+          );
+      return agentLedgerRow({
+        filename: baseline.filename,
+        origin: "lineage",
+        rappid: live.ringRappid,
+        source: live.source,
+        sourcePath,
+      });
+    } catch {
+      return null;
+    }
   }
 
   telemetrySnapshot() {
@@ -1383,7 +1645,12 @@ export class BetaRouteManager {
     }
   }
 
-  async installScopedAgent({ filename, source, stackRappid = null }) {
+  async installScopedAgent({
+    filename,
+    source,
+    stackRappid = null,
+    origin = "surgeon",
+  }) {
     const identity = this.identity();
     const stack = this.loadStack(
       stackRappid || identity.active_stack_rappid,
@@ -1415,6 +1682,13 @@ export class BetaRouteManager {
     stack.agents = agents;
     this.saveStack(stack);
     this.recordTelemetry("stack-agent-installed", {
+      ...agentLedgerRow({
+        filename: packaged.filename,
+        origin,
+        rappid: packaged.agent_rappid,
+        source,
+        sourcePath: packaged.object_path,
+      }),
       filename: packaged.filename,
       stack_rappid: stack.rappid,
     });
@@ -1443,19 +1717,39 @@ export class BetaRouteManager {
     };
   }
 
-  async removeScopedAgent({ filename, stackRappid = null }) {
+  async removeScopedAgent({
+    filename,
+    stackRappid = null,
+    origin = "surgeon",
+  }) {
     const identity = this.identity();
     const stack = this.loadStack(
       stackRappid || identity.active_stack_rappid,
     );
     const safeName = safeAgentFilename(filename);
+    const removedAgent = stack.agents.find(
+      (agent) => agent.filename === safeName,
+    );
     const before = stack.agents.length;
     stack.agents = stack.agents.filter((agent) => agent.filename !== safeName);
     if (stack.agents.length === before) {
       throw new Error(`Scoped agent not found: ${safeName}`);
     }
     this.saveStack(stack);
+    let removedSource = null;
+    try {
+      removedSource = readFileSync(removedAgent?.object_path);
+    } catch {
+      // Removal remains authoritative even if its content-addressed source is gone.
+    }
     this.recordTelemetry("stack-agent-removed", {
+      ...agentLedgerRow({
+        filename: safeName,
+        origin,
+        rappid: removedAgent?.agent_rappid || null,
+        source: removedSource,
+        sourcePath: removedAgent?.object_path || null,
+      }),
       filename: safeName,
       stack_rappid: stack.rappid,
     });
@@ -1493,8 +1787,16 @@ export class BetaRouteManager {
       if (!existsSync(sourcePath)) {
         throw new Error(`Global agent source not found: ${safeName}`);
       }
+      const source = readFileSync(sourcePath);
+      const cached = this.cacheSource(source);
       rmSync(sourcePath, { force: true });
       this.recordTelemetry("global-agent-removed", {
+        ...agentLedgerRow({
+          filename: safeName,
+          origin: "surgeon",
+          source: cached.bytes,
+          sourcePath: cached.objectPath,
+        }),
         filename: safeName,
       });
       return { removed: safeName, scope: active.scope };
@@ -2068,13 +2370,33 @@ export class BetaRouteManager {
           excludeFilenames: new Set(excluded.keys()),
         });
         const materialized = this.materializeCompositionOnce(fallbackDescriptor);
+        const descriptorEntries = new Map(
+          descriptor.entries.map((entry) => [entry.filename, entry]),
+        );
+        const excludedFiles = [...excluded].map(([filename, reason]) => {
+          const entry = descriptorEntries.get(filename);
+          let source = entry?.bytes ?? null;
+          if (source === null && entry?.objectPath) {
+            try {
+              source = readFileSync(entry.objectPath);
+            } catch {
+              source = null;
+            }
+          }
+          return {
+            ...agentLedgerRow({
+              filename,
+              origin: "lineage",
+              source,
+              sourcePath: entry?.objectPath || entry?.sourcePath || null,
+            }),
+            reason,
+          };
+        });
         this.recordTelemetry("composition-quarantine", {
           composition_hash: fallbackDescriptor.compositionHash,
           error: String(error?.message || error),
-          excluded_files: [...excluded].map(([filename, reason]) => ({
-            filename,
-            reason,
-          })),
+          excluded_files: excludedFiles,
           requested_composition_hash: descriptor.compositionHash,
         });
         if (!fallbackDescriptor.ephemeral) {
@@ -2312,6 +2634,7 @@ export class BetaRouteManager {
       env: {
         AGENTS_PATH: materialized.agentDirectory,
         BRAINSTEM_BETA_ROUTED_WORKER: "1",
+        RAPP_AMBIENT_DIR: path.join(this.betaHome, "ambient"),
         BRAINSTEM_SOURCE_AGENTS_PATH: path.join(
           this.brainstemConfig.brainstemDir,
           "agents",
@@ -2493,7 +2816,21 @@ export class BetaRouteManager {
         atomicWriteJson(manifestPath, manifest);
         route.transientCompositionHash = descriptor.compositionHash;
         worker.activeRequests += 1;
+        const archivedSource = this.ledger?.archiveAgentSource?.({
+          filename: entry.filename,
+          source: entry.bytes,
+        }) || null;
+        const ephemeralLedgerRow = {
+          ...agentLedgerRow({
+            filename: entry.filename,
+            origin: "surgeon",
+            source: entry.bytes,
+            sourcePath: archivedSource?.path || destination,
+          }),
+          ...(archivedSource ? { sha256: archivedSource.sha256 } : {}),
+        };
         this.recordTelemetry("ephemeral-injected", {
+          ...ephemeralLedgerRow,
           active_composition_hash: descriptor.compositionHash,
           base_composition_hash: route.compositionHash,
           egg_count: readdirSync(this.eggRoot).length,
@@ -2542,6 +2879,7 @@ export class BetaRouteManager {
           worker.activeRequests = Math.max(0, worker.activeRequests - 1);
           delete route.transientCompositionHash;
           this.recordTelemetry("ephemeral-cleaned", {
+            ...ephemeralLedgerRow,
             active_composition_hash: descriptor.compositionHash,
             egg_count: readdirSync(this.eggRoot).length,
             filename: entry.filename,

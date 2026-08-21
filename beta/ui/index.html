@@ -713,6 +713,40 @@
     }
     #surgeon-send:disabled { opacity: .55; cursor: default; }
     .surgeon-hint { margin-top: 7px; color: #5f636b; font-size: 10px; text-align: center; }
+    #ambient-settings {
+      width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
+      overflow: auto; padding: 0; border: 1px solid #30363d; border-radius: 14px;
+      background: #161b22; color: #e6edf3; box-shadow: 0 24px 80px rgba(0,0,0,.6);
+    }
+    #ambient-settings::backdrop { background: rgba(1,4,9,.8); backdrop-filter: blur(7px); }
+    .ambient-settings-head {
+      display: flex; align-items: center; gap: 12px; padding: 16px 18px;
+      border-bottom: 1px solid #30363d;
+    }
+    .ambient-settings-head strong { font-size: 15px; }
+    .ambient-settings-head button { margin-left: auto; width: 30px; height: 30px; padding: 0; }
+    .ambient-settings-body { display: grid; gap: 14px; padding: 18px; }
+    .ambient-settings-copy { margin: 0; color: #9da7b3; font-size: 12px; line-height: 1.5; }
+    .ambient-field { display: grid; gap: 6px; color: #c9d1d9; font-size: 12px; font-weight: 700; }
+    .ambient-field input, .ambient-field select {
+      width: 100%; padding: 9px 10px; border: 1px solid #30363d; border-radius: 7px;
+      outline: 0; background: #0d1117; color: #e6edf3; font: 13px inherit;
+    }
+    .ambient-field input:focus, .ambient-field select:focus { border-color: #58a6ff; }
+    .ambient-coordinates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ambient-check {
+      display: flex; align-items: flex-start; gap: 9px; color: #b1bac4;
+      font-size: 12px; line-height: 1.45;
+    }
+    .ambient-check input { margin-top: 2px; }
+    #ambient-settings-status {
+      min-height: 40px; padding: 9px 10px; border: 1px solid #30363d;
+      border-radius: 7px; background: #0d1117; color: #8fc4ff;
+      font: 11px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+    .ambient-settings-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ambient-settings-actions .primary { margin-left: auto; }
     @media (max-width: 850px) {
       .intro-grid, .tool-grid { grid-template-columns: 1fr; }
       .intro-card.wide { grid-column: auto; }
@@ -799,6 +833,56 @@
       <div class="surgeon-hint">runs on your GitHub Copilot account · ⌘↵ to send</div>
     </div>
   </aside>
+  <dialog id="ambient-settings" aria-labelledby="ambient-settings-title">
+    <div class="ambient-settings-head">
+      <strong id="ambient-settings-title">My location and ambient context</strong>
+      <button id="ambient-settings-close" data-drive="shell.ambientClose" type="button" aria-label="Close settings">×</button>
+    </div>
+    <div class="ambient-settings-body">
+      <p class="ambient-settings-copy">
+        Frontier keeps this context on this device and refreshes it for every completed turn.
+        A user-set location wins; device location is next. Approximate IP location is city-level,
+        opt-in, and off by default. Labels and addresses are never sent to a geocoder, so a saved
+        location also needs latitude and longitude.
+      </p>
+      <label class="ambient-field">
+        Location detail
+        <select id="ambient-granularity" data-drive="shell.ambientGranularity">
+          <option value="precise">Precise</option>
+          <option value="city">City-level</option>
+          <option value="off">Off</option>
+        </select>
+      </label>
+      <label class="ambient-field">
+        My location label
+        <input id="ambient-location-label" data-drive="shell.ambientLabel" type="text" maxlength="160"
+          placeholder="home or Seattle (coordinates required)">
+      </label>
+      <div class="ambient-coordinates">
+        <label class="ambient-field">
+          Latitude
+          <input id="ambient-location-lat" data-drive="shell.ambientLatitude" type="number" min="-90" max="90" step="any"
+            placeholder="47.6062">
+        </label>
+        <label class="ambient-field">
+          Longitude
+          <input id="ambient-location-lon" data-drive="shell.ambientLongitude" type="number" min="-180" max="180" step="any"
+            placeholder="-122.3321">
+        </label>
+      </div>
+      <label class="ambient-check">
+        <input id="ambient-approximate" data-drive="shell.ambientApproximate" type="checkbox">
+        <span>When device location is unavailable, allow a network lookup of my public IP
+          for a clearly labelled city-level estimate.</span>
+      </label>
+      <div id="ambient-settings-status" role="status" aria-live="polite"></div>
+      <div class="ambient-settings-actions">
+        <button id="ambient-use-device" data-drive="shell.ambientUseDevice" type="button">Use device location</button>
+        <button id="ambient-clear-location" data-drive="shell.ambientClear" type="button">Clear saved location</button>
+        <button class="primary" id="ambient-settings-save" data-drive="shell.ambientSave" type="button">Save</button>
+      </div>
+    </div>
+  </dialog>
   <section id="intro" data-drive="shell.intro" aria-labelledby="intro-title">
     <div class="intro-panel">
       <div class="intro-hero">

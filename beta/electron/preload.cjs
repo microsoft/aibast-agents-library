@@ -49,6 +49,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   cardsUndo: (id) => ipcRenderer.invoke("beta:cards-undo", id),
   cardsWake: (id) => ipcRenderer.invoke("beta:cards-wake", id),
   getState: () => ipcRenderer.invoke("beta:get-state"),
+  getAmbientSettings: () => ipcRenderer.invoke("beta:get-ambient-settings"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),
   deleteAgent: (filename) => ipcRenderer.invoke("beta:delete-agent", filename),
   exportAgent: (filename) => ipcRenderer.invoke("beta:export-agent", filename),
@@ -71,7 +72,20 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)
   ),
+  recordBrainstemTurn: (payload) => (
+    ipcRenderer.invoke("beta:record-brainstem-turn", payload)
+  ),
+  recordTwinTurn: (twinId, payload) => (
+    ipcRenderer.invoke("beta:record-twin-turn", twinId, payload)
+  ),
+  refreshAmbient: () => ipcRenderer.invoke("beta:refresh-ambient"),
   setChatLook: (look) => ipcRenderer.invoke("beta:set-chat-look", look),
+  setAmbientSettings: (settings) => (
+    ipcRenderer.invoke("beta:set-ambient-settings", settings)
+  ),
+  updateGeolocation: (location) => (
+    ipcRenderer.invoke("beta:update-geolocation", location)
+  ),
   setAprilFools: (next) => ipcRenderer.invoke("beta:set-april-fools", next || {}),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
