@@ -13,22 +13,22 @@ const chatLookArgument = process.argv.find((value) => (
 const chatLook = chatLookArgument?.split("=", 2)[1] === "business"
   ? "business"
   : "messages";
-const tableViewArgument = process.argv.find((value) => (
-  value.startsWith("--rapp-table-view=")
+const viewModeArgument = process.argv.find((value) => (
+  value.startsWith("--rapp-view-mode=")
 ));
-let tableView = { on: false, layout: "table", customLayoutPath: null };
+let viewMode = { mode: "herd", layout: "table", customLayoutPath: null };
 try {
-  tableView = JSON.parse(Buffer.from(
-    tableViewArgument?.split("=", 2)[1] || "",
+  viewMode = JSON.parse(Buffer.from(
+    viewModeArgument?.split("=", 2)[1] || "",
     "base64url",
   ).toString("utf8"));
 } catch {
-  // Invalid startup arguments retain the safe disabled default.
+  // Invalid startup arguments retain the safe herd-mode default.
 }
 const chatTypingEnabled = chatStreamMode === "hold";
 
 contextBridge.exposeInMainWorld("brainstemBeta", {
-  tableView,
+  viewMode,
   chatLook,
   chatStreamMode,
   chatTypingEnabled,
@@ -86,7 +86,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   updateGeolocation: (location) => (
     ipcRenderer.invoke("beta:update-geolocation", location)
   ),
-  setTableView: (next) => ipcRenderer.invoke("beta:set-table-view", next || {}),
+  setViewMode: (next) => ipcRenderer.invoke("beta:set-view-mode", next || {}),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
   surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),

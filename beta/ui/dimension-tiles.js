@@ -56,7 +56,7 @@
     document.querySelector(".dimension-tile-toast")?.remove();
     const toast = document.createElement("div");
     toast.className = "dimension-tile-toast";
-    toast.dataset.drive = "tableView.toast";
+    toast.dataset.drive = "arena.toast";
     toast.setAttribute("role", "status");
     const text = document.createElement("span");
     text.textContent = String(message || "");
@@ -415,7 +415,7 @@
     element.dataset.seat = tile.table?.seat || "";
     element.dataset.status = tile.status;
     const seat = Number(tile.table?.seat) || 1;
-    element.style.setProperty("--fan-angle", `${(seat - 6) * 2}deg`);
+    element.style.setProperty("--spread-angle", `${(seat - 6) * 2}deg`);
     element.tabIndex = 0;
     element.setAttribute(
       "aria-label",
@@ -505,8 +505,8 @@
         void raceTile(tile.id).catch(showError);
       }
     });
-    const custom = SCRIPT_STATE.context?.state?.tableLayout;
-    if (SCRIPT_STATE.context?.tableView?.layout === "custom" && custom) {
+    const custom = SCRIPT_STATE.context?.state?.arenaLayout;
+    if (SCRIPT_STATE.context?.viewMode?.layout === "custom" && custom) {
       const seat = Number(tile.table?.seat) || 1;
       const faceDown = custom.faceDownRule === "all"
         || (custom.faceDownRule === "folded" && tile.status === "folded")
@@ -537,7 +537,7 @@
       pile.className = "dimension-tile-discard";
       const button = document.createElement("button");
       button.type = "button";
-      button.dataset.drive = "tableView.discard";
+      button.dataset.drive = "arena.discard";
       button.addEventListener("click", () => {
         pile.classList.toggle("open");
         button.setAttribute(
@@ -574,7 +574,7 @@
       pile.className = "dimension-tile-overflow";
       const button = document.createElement("button");
       button.type = "button";
-      button.dataset.drive = "tableView.overflow";
+      button.dataset.drive = "arena.overflow";
       button.addEventListener("click", () => {
         pile.classList.toggle("open");
         button.setAttribute(
@@ -607,10 +607,10 @@
     surface.querySelector(".dimension-tile-overflow")?.remove();
     const active = SCRIPT_STATE.tiles.filter((tile) => tile.status !== "folded");
     const folded = SCRIPT_STATE.tiles.filter((tile) => tile.status === "folded");
-    const custom = SCRIPT_STATE.context?.state?.tableLayout;
+    const custom = SCRIPT_STATE.context?.state?.arenaLayout;
     for (const tile of active.slice(0, 12)) {
       const element = createTile(tile);
-      if (SCRIPT_STATE.context.tableView.layout === "custom") {
+      if (SCRIPT_STATE.context.viewMode.layout === "custom") {
         applyCustomPosition(element, tile, custom);
       }
       surface.appendChild(element);
@@ -626,18 +626,18 @@
     for (const name of ["table", "row", "focus", "grid", "stack", "custom"]) {
       herd.classList.remove(`tile-layout-${name}`);
     }
-    const layoutName = SCRIPT_STATE.context.tableView.layout || "table";
+    const layoutName = SCRIPT_STATE.context.viewMode.layout || "table";
     herd.classList.add("dimension-tile-view", `tile-layout-${layoutName}`);
-    herd.dataset.tableLayout = layoutName;
-    const custom = SCRIPT_STATE.context.state.tableLayout;
+    herd.dataset.arenaLayout = layoutName;
+    const custom = SCRIPT_STATE.context.state.arenaLayout;
     if (layoutName === "custom" && custom) {
-      surface.style.setProperty("--table-surface", custom.surfaceColor);
+      surface.style.setProperty("--arena-surface", custom.surfaceColor);
       surface.style.setProperty("--tile-width", `${custom.tileSize.width}px`);
       surface.style.setProperty("--tile-height", `${custom.tileSize.height}px`);
       surface.dataset.faceDownRule = custom.faceDownRule;
       surface.dataset.arrangePattern = custom.arrangePattern;
     } else {
-      surface.style.removeProperty("--table-surface");
+      surface.style.removeProperty("--arena-surface");
       surface.style.removeProperty("--tile-width");
       surface.style.removeProperty("--tile-height");
       delete surface.dataset.faceDownRule;
@@ -654,11 +654,11 @@
       const loaded = await SCRIPT_STATE.context.api.tilesLoadCustomLayout();
       if (loaded.canceled) {
         document.querySelector(".dimension-tile-layout").value =
-          SCRIPT_STATE.context.tableView.layout;
+          SCRIPT_STATE.context.viewMode.layout;
       }
       return;
     }
-    await SCRIPT_STATE.context.api.setTableView({ layout: value });
+    await SCRIPT_STATE.context.api.setViewMode({ layout: value });
   }
 
   function randomIndex(length) {
@@ -671,7 +671,12 @@
   async function runArrange(action) {
     const surface = document.querySelector(".dimension-tile-surface");
     if (!surface || !action) return;
-    surface.classList.remove("arrange-reorder", "arrange-spread", "arrange-distribute", "arrange-open");
+    surface.classList.remove(
+      "arrange-reorder",
+      "arrange-spread",
+      "arrange-distribute",
+      "arrange-open-one",
+    );
     void surface.offsetWidth;
     surface.classList.add(`arrange-${action}`);
     if (action === "open-one") {
@@ -679,7 +684,7 @@
         tile.status === "parked" || tile.status === "racing"
       ));
       const index = randomIndex(candidates.length);
-      if (index < 0) throw new Error("There is no parked tile to draw.");
+      if (index < 0) throw new Error("There is no parked tile to open.");
       await new Promise((resolve) => addTimer(resolve, 320));
       await wakeTile(candidates[index].id);
     }
@@ -690,13 +695,13 @@
     if (controls) return controls;
     controls = document.createElement("div");
     controls.className = "dimension-tile-controls";
-    controls.dataset.drive = "tableView.controls";
+    controls.dataset.drive = "arena.controls";
     const label = document.createElement("strong");
-    label.textContent = "Table view";
+    label.textContent = "Agent Arena — parked conversations compete side by side";
     const layout = document.createElement("select");
     layout.className = "dimension-tile-layout";
-    layout.dataset.drive = "tableView.layout";
-    layout.setAttribute("aria-label", "Table layout");
+    layout.dataset.drive = "arena.layout";
+    layout.setAttribute("aria-label", "Agent Arena layout");
     const labels = {
       table: "Table",
       row: "Rows",
@@ -717,22 +722,22 @@
     const load = document.createElement("button");
     load.type = "button";
     load.className = "dimension-tile-load-custom";
-    load.dataset.drive = "tableView.loadCustom";
+    load.dataset.drive = "arena.loadCustom";
     load.textContent = "Load layout…";
     load.addEventListener("click", () => {
       void SCRIPT_STATE.context.api.tilesLoadCustomLayout().catch(showError);
     });
     const raceTarget = document.createElement("select");
     raceTarget.className = "dimension-tile-race-target";
-    raceTarget.dataset.drive = "tableView.raceTarget";
+    raceTarget.dataset.drive = "arena.raceTarget";
     raceTarget.setAttribute("aria-label", "Race target");
     const arrange = document.createElement("select");
-    arrange.dataset.drive = "tableView.arrange";
+    arrange.dataset.drive = "arena.arrange";
     arrange.setAttribute("aria-label", "Arrange tiles");
     for (const [value, text] of [
       ["", "Arrange…"],
       ["reorder", "Reorder"],
-      ["fan", "Spread"],
+      ["spread", "Spread"],
       ["distribute", "Distribute"],
       ["open-one", "Open one"],
     ]) {
@@ -775,7 +780,7 @@
     if (!surface) {
       surface = document.createElement("section");
       surface.className = "dimension-tile-surface";
-      surface.dataset.drive = "tableView.surface";
+      surface.dataset.drive = "arena.surface";
       surface.setAttribute("aria-label", "Parked Brainstem dimension tiles");
       herd.insertBefore(surface, grid);
     }
@@ -913,7 +918,7 @@
         signal: SCRIPT_STATE.controller.signal,
       });
       applyLayout();
-      if (context.state.tableLayoutError) showError(context.state.tableLayoutError);
+      if (context.state.arenaLayoutError) showError(context.state.arenaLayoutError);
       await populateRaceTargets();
       await refreshTiles();
       postToFrame({ type: "rapp-beta:tile-ready" });
@@ -940,7 +945,7 @@
     for (const timer of SCRIPT_STATE.timers) clearTimeout(timer);
     SCRIPT_STATE.timers.clear();
     for (const waiter of SCRIPT_STATE.captureWaiters.values()) {
-      waiter.reject(new Error("Table view was turned off."));
+      waiter.reject(new Error("Agent Arena switched to herd mode."));
     }
     SCRIPT_STATE.captureWaiters.clear();
     document.getElementById("brainstem-chat-grab")?.remove();
@@ -954,7 +959,7 @@
         .filter((name) => !name.startsWith("tile-layout-")
           && name !== "dimension-tile-view")
         .join(" ");
-      delete herd.dataset.tableLayout;
+      delete herd.dataset.arenaLayout;
     }
     removeStyles();
     document.getElementById("__rappDimensionTilesScript")?.remove();

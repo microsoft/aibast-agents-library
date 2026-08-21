@@ -370,7 +370,7 @@ test("tile IPC is inert off except identified durable completions", async (t) =>
     "beta:tiles-undo",
     "beta:tiles-wake",
   ]);
-  assert.throws(() => handlers.get("beta:tiles-list")({}), /Table view is off/);
+  assert.throws(() => handlers.get("beta:tiles-list")({}), /Agent Arena is not active/);
   const pending = store.park({
     ...tileFixture(),
     turns: [

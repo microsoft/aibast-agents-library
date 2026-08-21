@@ -12,9 +12,9 @@ import { randomUUID } from "node:crypto";
 import path from "node:path";
 
 import {
-  DEFAULT_TABLE_VIEW,
-  normalizeTableViewSettings,
-} from "./table-layouts.mjs";
+  DEFAULT_VIEW_MODE,
+  normalizeViewModeSettings,
+} from "./arena-layouts.mjs";
 
 export const DIMENSION_TILE_SCHEMA = "rapp-dimension-tile/1.0";
 export const MAX_DIMENSION_TILE_TURNS = 200;
@@ -70,62 +70,66 @@ function writeSettings(betaHome, value) {
 }
 
 function environmentOverride(env) {
-  if (env.RAPP_TABLE_VIEW === "1") return true;
-  if (env.RAPP_TABLE_VIEW === "0") return false;
-  return null;
+  if (!Object.hasOwn(env, "RAPP_VIEW_MODE")) return null;
+  return env.RAPP_VIEW_MODE === "arena" ? "arena" : "herd";
 }
 
-export function readTableViewSettings({
+export function readViewModeSettings({
   betaHome,
   env = process.env,
 } = {}) {
   const settings = readSettings(betaHome);
-  const storedTableView = normalizeTableViewSettings(
-    settings.tableView || DEFAULT_TABLE_VIEW,
+  const storedViewMode = normalizeViewModeSettings(
+    settings.viewMode || DEFAULT_VIEW_MODE,
   );
   const override = environmentOverride(env);
-  const tableView = {
-    ...storedTableView,
-    on: override === null ? storedTableView.on : override,
+  const viewMode = {
+    ...storedViewMode,
+    mode: override === null ? storedViewMode.mode : override,
   };
   return {
-    tableView,
-    tableViewOverridden: override !== null,
+    viewMode,
+    viewModeOverridden: override !== null,
     file: settingsPath(betaHome),
-    storedTableView,
+    storedViewMode,
   };
 }
 
-export function writeTableViewSettings({
-  tableView,
+export function writeViewModeSettings({
+  viewMode,
   betaHome,
 } = {}) {
   const settings = readSettings(betaHome);
-  settings.tableView = normalizeTableViewSettings({
-    ...DEFAULT_TABLE_VIEW,
-    ...(settings.tableView || {}),
-    ...(tableView || {}),
+  settings.viewMode = normalizeViewModeSettings({
+    ...DEFAULT_VIEW_MODE,
+    ...(settings.viewMode || {}),
+    ...(viewMode || {}),
   });
   const file = writeSettings(betaHome, settings);
-  return { tableView: settings.tableView, file };
+  return { viewMode: settings.viewMode, file };
 }
 
-export function changeTableViewSettings({
+export function changeViewModeSettings({
   apply,
-  tableView,
+  viewMode,
   betaHome,
   env = process.env,
 } = {}) {
-  writeTableViewSettings({ tableView, betaHome });
-  const effective = readTableViewSettings({ betaHome, env });
+  writeViewModeSettings({ viewMode, betaHome });
+  const effective = readViewModeSettings({ betaHome, env });
   apply?.(effective);
   return effective;
 }
 
-export function parseTableViewCommand(message) {
-  return typeof message === "string" && message.trim() === "table view"
-    ? { action: "toggle-table-view", original: message }
-    : null;
+export function parseViewModeCommand(message) {
+  const command = typeof message === "string" ? message.trim() : "";
+  if (command === "agent arena") {
+    return { action: "set-view-mode", mode: "arena", original: message };
+  }
+  if (command === "herd") {
+    return { action: "set-view-mode", mode: "herd", original: message };
+  }
+  return null;
 }
 
 function tilesPath(betaHome) {
@@ -723,7 +727,7 @@ export function registerDimensionTileIpc({
   function guard(event) {
     trust(event);
     if (!isEnabled?.()) {
-      throw new Error("Table view is off.");
+      throw new Error("Agent Arena is not active.");
     }
   }
   ipcMain.handle("beta:tiles-list", (event) => {
@@ -769,7 +773,7 @@ export function registerDimensionTileIpc({
         && !pending[0].requestId;
       if (!identified && !singleUnbound) {
         throw new Error(
-          "Only the identified reply for an existing pending tile may finish while Table view is off.",
+          "Only the identified reply for an existing pending tile may finish in herd mode.",
         );
       }
     }
@@ -777,8 +781,8 @@ export function registerDimensionTileIpc({
   });
 }
 
-function installTableViewFrameBridge(settings) {
-  const prior = window.__rappBetaTableViewBridge;
+function installArenaFrameBridge(settings) {
+  const prior = window.__rappBetaArenaBridge;
   if (prior) {
     prior.update(settings);
     return true;
@@ -799,31 +803,34 @@ function installTableViewFrameBridge(settings) {
   window.__rappBetaDeferredTileCompletions ||= [];
 
   function removeToggle() {
-    document.getElementById("beta-table-view-toggle")?.remove();
+    document.getElementById("beta-agent-arena-toggle")?.remove();
   }
 
   function renderToggle() {
     const panel = document.getElementById("beta-app-panel");
     if (!panel) return false;
-    let button = document.getElementById("beta-table-view-toggle");
+    let button = document.getElementById("beta-agent-arena-toggle");
     if (!button) {
       button = document.createElement("button");
-      button.id = "beta-table-view-toggle";
+      button.id = "beta-agent-arena-toggle";
       button.className = "beta-panel-btn";
       button.type = "button";
-      button.textContent = "Table view";
+      button.textContent = "Agent Arena";
       button.addEventListener("click", (event) => {
         event.stopPropagation();
         window.parent.postMessage({
-          type: "rapp-beta:set-table-view",
-          tableView: { on: !current.on },
+          type: "rapp-beta:set-view-mode",
+          viewMode: {
+            mode: current.mode === "arena" ? "herd" : "arena",
+          },
         }, "*");
       });
       const updateButton = document.getElementById("beta-check-updates");
       panel.insertBefore(button, updateButton || null);
     }
-    button.setAttribute("aria-pressed", String(Boolean(current.on)));
-    button.textContent = `Table view ${current.on ? "✓" : ""}`.trim();
+    const arenaActive = current.mode === "arena";
+    button.setAttribute("aria-pressed", String(arenaActive));
+    button.textContent = `Agent Arena ${arenaActive ? "✓" : ""}`.trim();
     return true;
   }
 
@@ -985,7 +992,7 @@ function installTableViewFrameBridge(settings) {
       restorable: hasObservedHistory || !turns.some((turn) => turn.role === "user"),
       restoreError: hasObservedHistory
         ? null
-        : "This transcript predates Table view mode, so its exact wire history was not observed.",
+        : "This transcript predates Agent Arena, so its exact wire history was not observed.",
     };
   }
 
@@ -1348,14 +1355,14 @@ function installTableViewFrameBridge(settings) {
     activeTileId = null;
     activeHistory = null;
     nextRaceTileId = null;
-    delete window.__rappBetaTableViewBridge;
+    delete window.__rappBetaArenaBridge;
   }
 
   function receive(event) {
     if (event.source !== window.parent || !event.data) return;
-    if (event.data.type === "rapp-beta:table-view-state") {
-      current = event.data.tableView || current;
-      if (!current.on) {
+    if (event.data.type === "rapp-beta:view-mode-state") {
+      current = event.data.viewMode || current;
+      if (current.mode !== "arena") {
         disable();
       } else {
         renderToggle();
@@ -1428,7 +1435,7 @@ function installTableViewFrameBridge(settings) {
       renderToggle();
     },
   };
-  window.__rappBetaTableViewBridge = bridge;
+  window.__rappBetaArenaBridge = bridge;
   window.fetch = tileFetch;
   document.addEventListener("click", handleClear, true);
   window.addEventListener("message", receive);
@@ -1438,10 +1445,10 @@ function installTableViewFrameBridge(settings) {
   return true;
 }
 
-export function composeDimensionTilesFrameBridgeSource(checkpointSource, tableView) {
+export function composeDimensionTilesFrameBridgeSource(checkpointSource, viewMode) {
   const source = String(checkpointSource || "");
-  if (!tableView?.on) return source;
-  return `${source}\n;(${installTableViewFrameBridge.toString()})(${
-    JSON.stringify(normalizeTableViewSettings(tableView))
+  if (viewMode?.mode !== "arena") return source;
+  return `${source}\n;(${installArenaFrameBridge.toString()})(${
+    JSON.stringify(normalizeViewModeSettings(viewMode))
   });`;
 }

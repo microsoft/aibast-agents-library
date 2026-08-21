@@ -78,27 +78,27 @@ function materializeBridgeSource(
   });
 }
 
-test("mode-off bridge source is byte-identical to the bridge without the feature", (t) => {
-  // "Off is off" is a property of the composition, not of one recorded hash:
+test("herd-mode bridge source is byte-identical to the bridge without Agent Arena", (t) => {
+  // Herd-mode identity is a property of the composition, not of one recorded hash:
   // the bridge legitimately changes for unrelated reasons (streaming fixes,
   // look tweaks), and every such change must keep this test green. With the
-  // mode off the composed source must be the input source, byte for byte.
+  // herd mode active the composed source must be the input source, byte for byte.
   const checkpointSource = `window.__rappBetaChatLookConfig = ${JSON.stringify({
     chatLook: "messages",
     chatTypingEnabled: false,
   })};\n${materializeBridgeSource("smooth")}`;
   const hash = createHash("sha256").update(checkpointSource).digest("hex");
-  t.diagnostic(`mode-off bridge source sha256: ${hash}`);
-  assert.doesNotMatch(checkpointSource, /installTableViewFrameBridge|rappDimensionTiles|table.view/i,
+  t.diagnostic(`herd-mode bridge source sha256: ${hash}`);
+  assert.doesNotMatch(checkpointSource, /installArenaFrameBridge|rappDimensionTiles|agent.arena/i,
     "the bridge without the feature carries no tile code");
-  const disabled = composeDimensionTilesFrameBridgeSource(checkpointSource, {
-    on: false,
+  const herd = composeDimensionTilesFrameBridgeSource(checkpointSource, {
+    mode: "herd",
     layout: "table",
     customLayoutPath: null,
   });
-  assert.equal(disabled, checkpointSource);
-  assert.equal(createHash("sha256").update(disabled).digest("hex"), hash);
-  t.diagnostic(`mode-off bridge source sha256: ${hash}`);
+  assert.equal(herd, checkpointSource);
+  assert.equal(createHash("sha256").update(herd).digest("hex"), hash);
+  t.diagnostic(`herd-mode bridge source sha256: ${hash}`);
 });
 
 test("CRLF main.mjs extracts and materializes the frame bridge", () => {

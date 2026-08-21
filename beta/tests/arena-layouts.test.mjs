@@ -9,13 +9,13 @@ import path from "node:path";
 import test from "node:test";
 
 import {
+  ARENA_LAYOUT_NAMES,
+  ARENA_LAYOUTS,
   MAX_CUSTOM_LAYOUT_BYTES,
-  TABLE_LAYOUT_NAMES,
-  TABLE_LAYOUTS,
   readCustomLayout,
   resolveCustomLayout,
   validateCustomLayout,
-} from "../electron/table-layouts.mjs";
+} from "../electron/arena-layouts.mjs";
 
 function customFixture() {
   return {
@@ -33,9 +33,9 @@ function customFixture() {
   };
 }
 
-test("built-in table layouts all use original layout metadata", () => {
-  assert.deepEqual(Object.keys(TABLE_LAYOUTS), [...TABLE_LAYOUT_NAMES]);
-  for (const layout of Object.values(TABLE_LAYOUTS)) {
+test("built-in arena layouts all use original layout metadata", () => {
+  assert.deepEqual(Object.keys(ARENA_LAYOUTS), [...ARENA_LAYOUT_NAMES]);
+  for (const layout of Object.values(ARENA_LAYOUTS)) {
     assert.equal(typeof layout.label, "string");
     assert.equal(typeof layout.layout, "string");
     assert.equal(typeof layout.tileLook, "string");
@@ -72,16 +72,16 @@ test("custom layout validator bounds local visual primitives", () => {
 });
 
 test("custom layout loader accepts only size-bounded local JSON", (t) => {
-  const root = mkdtempSync(path.join(tmpdir(), "rapp-table-layout-"));
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-arena-layout-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  const file = path.join(root, "table.json");
+  const file = path.join(root, "arena.json");
   writeFileSync(file, JSON.stringify(customFixture()), { mode: 0o600 });
   assert.deepEqual(readCustomLayout(file), {
     file,
     layout: customFixture(),
   });
   assert.throws(
-    () => readCustomLayout("https://example.com/table.json"),
+    () => readCustomLayout("https://example.com/arena.json"),
     /local JSON file/,
   );
   const large = path.join(root, "large.json");
@@ -89,30 +89,30 @@ test("custom layout loader accepts only size-bounded local JSON", (t) => {
   assert.throws(() => readCustomLayout(large), /limited to 65536 bytes/);
 });
 
-test("a stale custom layout cannot break disabled mode", () => {
+test("a stale custom layout cannot break herd mode", () => {
   let reads = 0;
-  const disabled = resolveCustomLayout({
-    on: false,
+  const herd = resolveCustomLayout({
+    mode: "herd",
     layout: "custom",
-    customLayoutPath: "/deleted/table.json",
+    customLayoutPath: "/deleted/arena.json",
   }, {
     read() {
       reads += 1;
       throw new Error("should not read");
     },
   });
-  assert.deepEqual(disabled, { error: null, layout: null });
+  assert.deepEqual(herd, { error: null, layout: null });
   assert.equal(reads, 0);
 
-  const enabled = resolveCustomLayout({
-    on: true,
+  const arena = resolveCustomLayout({
+    mode: "arena",
     layout: "custom",
-    customLayoutPath: "/deleted/table.json",
+    customLayoutPath: "/deleted/arena.json",
   }, {
     read() {
       throw new Error("file is gone");
     },
   });
-  assert.equal(enabled.layout, null);
-  assert.match(enabled.error, /file is gone/);
+  assert.equal(arena.layout, null);
+  assert.match(arena.error, /file is gone/);
 });
