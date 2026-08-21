@@ -140,6 +140,13 @@ The gesture is already in the product; tiles reuse it rather than inventing a se
    move tiles the same way. A pointer-only design would exclude the people this is meant to include.
 5. **Empty is not a state worth keeping.** No empty tile, no empty swap, no placeholder.
 
+## The crystal
+
+A tile also carries a **crystal**, which runs backwards from the usual progression: the newest tile
+has the largest one and use wears it down, so a master's tile shows a nub. Expertise is subtractive —
+you need less scaffolding, not more — and the weight drops as the crystal wears, so a well-worn tile
+sits low and steady. See [`CRYSTALS.md`](CRYSTALS.md).
+
 ## Why this is core, not cosmetic
 
 The Frontier's promise is that a person can hold several capabilities at once and move between them
