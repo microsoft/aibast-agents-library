@@ -105,7 +105,13 @@ off within a day; one that fires rarely is personality. So it is fenced:
   testable, reproducible in a demo, and cannot cluster — random chance will eventually fire twice in
   a row, which is exactly the thing that makes it annoying.
 - **Show Mode and demonstration only.** That is the context where being listened to is the point.
-  Off everywhere else, and a single switch turns it off there too.
+  Off everywhere else.
+- **It can be turned off, properly.** A named, user-visible setting — not a developer flag, not an
+  environment variable, not something you have to know about to find. Off takes effect immediately
+  and for the rest of the session, not at the next restart; it persists; and off means *never*,
+  with no residual counter waiting to fire once the setting is toggled back. It is its own switch,
+  separate from voice itself: keeping the relay and dropping the ident is a normal thing to want,
+  and must not require giving up the good voice to get it.
 - **Never when audio is the only channel.** In the audio-bound case the voice is not entertainment,
   it is the interface; interrupting it is not a flourish, it is an obstruction.
 - **It never costs correctness.** It cannot delay the answer, obscure a word, or break the
