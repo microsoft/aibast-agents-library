@@ -66,6 +66,26 @@ Nothing about a bunch changes what a tile *is*. It is organisation, and organisa
 grouping never starts a worker, never touches a conversation, and never changes which tile is
 primary.
 
+## What a tile can hold — including a rapplication
+
+A tile holds a working situation. There is only one kind of tile; what differs is the payload it
+carries:
+
+| A tile can be | Payload | What "make it primary" does |
+|---|---|---|
+| a **conversation** | a transcript plus the agents that were hot-loaded for it | composes those agents and restores the history |
+| a **rapplication** | a RAPP/1 `.egg` — its agents, and its own UI if it has one | hatches it and puts it in the primary window, its UI included |
+| a **single agent** | one `agent.py` | composes that agent |
+
+**A rapplication is just another tile.** It is not a second concept with its own herd, its own
+buttons or its own rules: it is dragged, dropped, bunched, binder-kept and made primary exactly like
+any other tile, and the same invariants hold — nothing is lost, only the primary runs, no gesture
+needs a button. The protocol already says this: `rappid-tile/1.0` payloads are `agent.py` or `.egg`,
+and a rapplication is simply a tile whose primary payload is an egg.
+
+This is the whole reason to have one noun. A person should not have to learn that conversations are
+managed one way and applications another; they are all things you pick up and put down.
+
 ## The gestures, and exactly what each does
 
 ### 1. Drag the Brainstem chat → herd, arena, or binder

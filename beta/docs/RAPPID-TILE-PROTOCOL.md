@@ -37,6 +37,10 @@ So the vocabulary now reads end to end: **rappid tiles**, held in a **herd**, ar
 **Ring** (the default), **Rows**, **Focus**, **Grid**, **Stack** and a validated **Custom** layout;
 each describes how tiles are placed, never a game they came from.
 
+**A rapplication is a tile.** A tile whose primary payload is a RAPP/1 `.egg` is a rapplication —
+its agents and its own UI travel in the same object, verified by the same hashes, moved by the same
+gestures. There is no separate rapplication format and no separate way to manage one.
+
 ## What a tile is
 
 One UTF‑8 JSON object, one file, newline‑terminated, named after what it carries:
