@@ -27,6 +27,22 @@ Build downward; each depends on the one above it.
 
 1. **`stands_on` is read and enforced** — the footprint check in front of composition. Nothing else
    in the protocol family means anything until a runtime can refuse. ([SELF-ASSEMBLE-PROTOCOL](docs/SELF-ASSEMBLE-PROTOCOL.md))
+
+   *How, concretely:* a new `beta/electron/footprint.mjs` exports `RUNTIME_SUPPORTS` (the protocol
+   ids and versions, interpreter, and tools this runtime actually has) and
+   `checkFootprint(standsOn, supports)`, returning either `{ok:true}` or `{ok:false, missing:[…]}`
+   where each entry names the requirement, what was needed, what is present, and **which payload
+   wanted it**. The gate goes in `beta:tiles-wake` (`beta/electron/dimension-tiles.mjs:867`)
+   *before* `await activateTile?.(tile)`, and on the drop path, so a refusal happens with nothing
+   composed and nothing written. The local tile record gains an optional `stands_on`, carried in
+   when a portable tile is imported.
+
+   **Absence means no requirements, not refusal** — every tile that exists today has no
+   `stands_on`, and they must keep working.
+
+   *Tests that must fail without it:* an unsatisfiable footprint refuses **and `activateTile` is
+   never called** (assert on the spy, not on the error message); a satisfiable one proceeds; a tile
+   with no `stands_on` composes exactly as it does today.
 2. **A runtime publishes its `supports` set** — the other half of the intersection. ([PROTOCOLS](docs/PROTOCOLS.md))
 3. **The `.tile` producer** — RAR still emits `.card` into `cards/v2/`. Migration must preserve seed,
    face and seven-word key exactly. ([RAPPID-TILE-PROTOCOL](docs/RAPPID-TILE-PROTOCOL.md))
