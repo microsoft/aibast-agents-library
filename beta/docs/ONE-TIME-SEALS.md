@@ -57,6 +57,9 @@ and verified locally. That is the entire handshake:
 - **The bytes are verified before they are anything.** A public read must not become a trust hole:
   a summoned tile is checked against its seed and face before it is installed or run, exactly as a
   locally-dropped one is. Fetching is not trusting.
+- **The pipeline behind the door already exists.** Subscription, federation and deterministic
+  resolution are described in [`PUBLIC-LOOKUP.md`](PUBLIC-LOOKUP.md), which builds on the RAPP Vision
+  pattern rather than inventing one — and which is why a summon works offline from a cached profile.
 - **Reaching out is itself a seal.** The first summon pops the seal on public lookup — a decision
   made once, in the moment it means something ("go and get that"), rather than a network-access
   question asked during setup before the person knows why they would say yes.
