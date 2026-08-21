@@ -227,3 +227,14 @@ person who cannot.
   only channel the listener has.
 - Retaining synthesized audio of a person's conversations beyond the rolling buffer without an
   explicit save.
+
+## Status
+
+**Specified, not implemented — none of this exists in the tree.** There is no speech synthesis of
+any kind: no VibeVoice integration, no fast local voice, no relay, no station ident, no rolling
+buffer, no saved cutover, and no setting for any of it. Read every present-tense sentence above as
+"a conforming implementation does this", not as a description of shipped behaviour.
+
+What does exist that this would build on: the opt-in Sense model in `../CONSTITUTION.md` Article II,
+and `probeMediaOrgan` in `../electron/video-tools.mjs`, which is the right shape for gating a large
+first-run download behind consent.
