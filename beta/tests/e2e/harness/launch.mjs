@@ -313,21 +313,21 @@ function homeSnapshot(root, { skipDescendants = [] } = {}) {
       });
       return;
     }
+    const volatileEntry = skipped.has(path.resolve(current));
     output.push({
-      mtimeMs: Math.trunc(stat.mtimeMs),
+      // A directory owned by a live app churns in its own right: rotating or
+      // creating a file inside it moves the DIRECTORY's mtime too. For those
+      // entries record only that they still exist, never their timestamps.
+      ...(volatileEntry ? {} : { mtimeMs: Math.trunc(stat.mtimeMs), size: stat.size }),
       path: path.relative(homedir(), current) || ".",
-      size: stat.size,
       type: stat.isSymbolicLink()
         ? "symlink"
         : stat.isDirectory()
           ? "directory"
           : "file",
+      ...(volatileEntry ? { volatile: true } : {}),
     });
-    if (
-      !stat.isDirectory()
-      || stat.isSymbolicLink()
-      || skipped.has(path.resolve(current))
-    ) {
+    if (!stat.isDirectory() || stat.isSymbolicLink() || volatileEntry) {
       return;
     }
     let children = [];
@@ -359,8 +359,17 @@ export function snapshotProtectedHomes() {
       skipDescendants: [
         path.join(brainstemRoot, "src"),
         path.join(brainstemRoot, "venv"),
+        // A live Frontier also drives the SHARED Brainstem runtime, whose
+        // logs under ~/.brainstem/logs grow while the suite runs. Those bytes
+        // are that app's, not the isolated child's — which writes only inside
+        // its own throwaway home. Excluded only while such an app is alive, so
+        // CI (where none is) keeps the strict comparison.
         ...(liveFrontier
-          ? [path.join(betaHome, "logs"), path.join(betaHome, "routing")]
+          ? [
+              path.join(betaHome, "logs"),
+              path.join(betaHome, "routing"),
+              path.join(brainstemRoot, "logs"),
+            ]
           : []),
       ],
     }),
