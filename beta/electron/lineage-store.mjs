@@ -754,7 +754,7 @@ export class LineageStore {
       });
   }
 
-  /** Per-locus molt policy. "pinned" means this gene locus never leaves its
+  /** Per-locus molt policy. "pinned" means this agent locus never leaves its
    *  Grail baseline however many rings exist — the user's memory agent can be
    *  frozen at ring 0 while a news agent molts daily. Defaults to "mutable". */
   locusPolicy(ancestorRappid) {
@@ -964,7 +964,7 @@ export class LineageStore {
   }
 
   /** Move HEAD across loci, isolating each one. A single failing locus must never
-   *  abort the fleet and leave the rest molted — the whole point of the safe word
+   *  abort the fleet and leave the rest molted — the whole point of the control word
    *  is that it always lands somewhere safe. Returns a report, never throws. */
   _moveHeads(targets, pick, env = DEFAULT_ENV) {
     const environment = normalizeEnvironment(env);
@@ -1377,7 +1377,7 @@ export class LineageStore {
   /** Health report for a locus. verifyChain() answers only "does the reachable
    *  chain verify" — deliberately, so unreachable corruption never breaks
    *  composition. This surfaces the corruption that answer omits, so operators
-   *  (and the proprioception layer) can see rot on disk instead of inferring
+   *  (and the runtime diagnostics layer) can see corruption on disk instead of inferring
    *  health from a boolean that was never asked the question. */
   inspectLineage(ancestorRappid) {
     let corruptRings = 0;

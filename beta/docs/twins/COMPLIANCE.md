@@ -6,25 +6,24 @@
 > before P1. Re-crawl before each twin PR: `python crawl.py --collisions` and
 > `python crawl.py --plan "<situation>"`.
 
-## The layer we're building in: Leviathan — but sense (A), not (B)
+## The fleet topology we implement
 
-The spine names a **load-bearing collision**: "Leviathan" is two things that
-*stack*.
+The spine describes two distinct fleet topologies that must not be conflated:
 
-- **(A) Leviathan PROTOCOL** (`kody-w/leviathan`, SPEC v1.0): **one external mind
-  coordinates many brainstem bodies.** ← **this is our herd of twins.**
-- (B) Wrapped-Organism Leviathan: one operator's single digital *being* built of
-  many cells across 5 estates ("one being, many cells"). ← not us.
+- **(A) External coordination:** one coordinator manages many Brainstem workers.
+  This is the Frontier herd of twins.
+- **(B) Distributed single runtime:** one operator owns one runtime distributed
+  across several estates. This is not the Frontier topology.
 
-A herd where the Brainstem+Surgeon drives several twin workers is **sense (A)**:
-one mind, many bodies. We disambiguate by intent and never conflate the two.
+A herd where Brainstem and Brain Surgeon drive several twin workers implements
+topology A.
 
 ## The rules we must not drift from (with citations)
 
 | # | Canon rule (spec) | What it means for twins |
 |---|---|---|
 | 1 | **Chat is the only wire** — `POST /chat` is the *only* sanctioned channel for capability (`CONSTITUTION` Art. XXV; `rapp-kernel-boundary/1.0` §2). | A twin is driven **only** over its worker's `/chat`. We never invent a route. |
-| 2 | **Canonical fleet wire = `rapp-fleet-chat/1.0`** — one mind → many bodies via **signed twin-chat events over `/chat`**. The legacy injected `POST /api/agent/<name>` is a **known unauthenticated fleet-wide RCE**, "not the protocol's future." | When the Brainstem drives a twin fleet, it uses signed twin-chat over each twin's `/chat`. We **never** add an `/api/agent`-style route. |
+| 2 | **Canonical fleet wire = `rapp-fleet-chat/1.0`** — one coordinator → many workers via **signed twin-chat events over `/chat`**. The legacy injected `POST /api/agent/<name>` is a **known unauthenticated fleet-wide RCE** and is deprecated. | When the Brainstem drives a twin fleet, it uses signed twin-chat over each twin's `/chat`. We **never** add an `/api/agent`-style route. |
 | 3 | **No new privileged route** — a *new capability* MUST NOT introduce a new privileged route; privileged routes are **loopback-only or local-token** (`rapp-kernel-boundary/1.0` §3–§5). | Twins are ordinary Brainstem workers bound to **127.0.0.1** on their own port; the kernel is unchanged; no new route is added anywhere. |
 | 4 | **The single shippable unit is the cartridge `rapp-cart/1.0`** — "if it's an `agent.py` or an `.egg`: insert → boot → run → eject; everything else (ports, twins, registry) stays under the hood." | Hatching a RAPPlication = inserting its cartridge (the store's `singleton_url` `agent.py` + optional `egg_url` `.egg`). Ports/twins stay under the hood — exactly the user-invisible model we agreed. |
 | 5 | **Static-API discovery = `rapp-static-api/1.0`** (MIT); the RAPP Store is a static API. `RAPP_Hub` is **archived** — the live path is **RAR + RAPP_Store**. | The store client does read-only GETs against `RAPP_Store/index.json`. We use the store, never the archived hub. |

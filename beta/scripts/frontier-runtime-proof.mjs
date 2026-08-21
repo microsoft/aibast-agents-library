@@ -36,7 +36,7 @@ const pristineGrail = path.join(repositoryRoot, "rapp_brainstem");
 const python = process.env.BRAINSTEM_BETA_PYTHON
   || path.join(homedir(), ".brainstem", "venv", "bin", "python");
 const scratchRoot = mkdtempSync(
-  path.join(tmpdir(), "rapp-organism-frontier-proof-"),
+  path.join(tmpdir(), "rapp-frontier-runtime-proof-"),
 );
 const scratchHome = path.join(scratchRoot, "home");
 const betaHome = path.join(scratchRoot, "beta-home");
@@ -46,11 +46,11 @@ const memoryFile = path.join(
   grailDirectory,
   ".brainstem_data",
   "memory",
-  "organism-proof",
+  "runtime-proof",
   "user_memory.json",
 );
 const memoryBytes = Buffer.from(
-  '{"schema":"organism-proof/1","memory":"never touch these bytes"}\n',
+  '{"schema":"runtime-proof/1","memory":"never touch these bytes"}\n',
   "utf8",
 );
 const rows = [];
@@ -246,7 +246,7 @@ class ${className}(BasicAgent):
         self.name = ${JSON.stringify(toolName)}
         self.metadata = {
             "name": ${JSON.stringify(toolName)},
-            "description": "Deterministic organism-frontier proof creature.",
+            "description": "Deterministic Frontier runtime proof agent.",
             "parameters": {
                 "type": "object",
                 "properties": {},
@@ -288,18 +288,18 @@ function ingestVerifiedRing(manager, baseline, {
 
 async function startFixtureStore() {
   const firstSource = agentSource({
-    className: "FixtureCreatureAgent",
-    marker: "FIXTURE_CREATURE",
+    className: "FixtureAgent",
+    marker: "FIXTURE_AGENT",
     markerValue: "absorbed",
-    reply: "fixture creature alive",
-    toolName: "FixtureCreature",
+    reply: "fixture agent alive",
+    toolName: "FixtureAgent",
   });
   const collisionSource = agentSource({
-    className: "CollisionCreatureAgent",
-    marker: "COLLISION_CREATURE",
+    className: "CollisionAgent",
+    marker: "COLLISION_AGENT",
     markerValue: "must-not-replace",
-    reply: "collision creature",
-    toolName: "CollisionCreature",
+    reply: "collision agent",
+    toolName: "CollisionAgent",
   });
   let catalog = null;
   const server = createServer((request, response) => {
@@ -338,18 +338,18 @@ async function startFixtureStore() {
     generated_at: "2026-08-20T19:25:50.792Z",
     rapplications: [
       {
-        id: "fixture-creature",
-        name: "Fixture Creature",
+        id: "fixture-agent",
+        name: "Fixture Agent",
         version: "1.0.0",
-        singleton_filename: "fixture_creature_agent.py",
+        singleton_filename: "fixture_agent.py",
         singleton_url: `${baseUrl}/fixture_agent.py`,
         singleton_sha256: sha256Hex(Buffer.from(firstSource, "utf8")),
       },
       {
-        id: "collision-creature",
-        name: "Collision Creature",
+        id: "collision-agent",
+        name: "Collision Agent",
         version: "1.0.0",
-        singleton_filename: "fixture_creature_agent.py",
+        singleton_filename: "fixture_agent.py",
         singleton_url: `${baseUrl}/collision_agent.py`,
         singleton_sha256: sha256Hex(Buffer.from(collisionSource, "utf8")),
       },
@@ -489,7 +489,7 @@ try {
   hackerBaseline = manager.baselineAncestor("hacker_news_agent.py");
   learnBaseline = manager.baselineAncestor("rar_rapp_learn_new_agent.py");
 
-  await step("organism: real Molter seeds Frontier ring-1", () => {
+  await step("runtime: real Molter seeds Frontier ring-1", () => {
     const ring = store.listRings(contextBaseline?.ancestorRappid)
       .find((candidate) => candidate.ringRappid === contextRing1);
     return {
@@ -504,7 +504,7 @@ try {
     };
   });
 
-  await step("organism: real Grail worker starts and exposes tools", async () => {
+  await step("runtime: real Grail worker starts and exposes tools", async () => {
     route = await manager.startDefault();
     const evidence = await healthEvidence(
       manager,
@@ -519,8 +519,8 @@ try {
 
   const fixture = await startFixtureStore();
   fixtureServer = fixture.server;
-  await step("absorb: sha-pinned fixture creature becomes a live tool", async () => {
-    fixtureDownload = await fixture.client.download("fixture-creature");
+  await step("absorb: sha-pinned fixture agent becomes a live tool", async () => {
+    fixtureDownload = await fixture.client.download("fixture-agent");
     const installed = await manager.installScopedAgent({
       filename: fixtureDownload.filename,
       source: fixtureDownload.source,
@@ -529,7 +529,7 @@ try {
     const evidence = await healthEvidence(
       manager,
       route,
-      ["FixtureCreature"],
+      ["FixtureAgent"],
     );
     const composed = manager.readActiveAgent(fixtureDownload.filename);
     return {
@@ -537,11 +537,11 @@ try {
         && installed.agent.filename === fixtureDownload.filename
         && composed === fixtureDownload.source
         && evidence.ok,
-      detail: `catalog=${fixture.url}; sha256=${fixtureDownload.sha256}; pid=${evidence.pid}; tool=FixtureCreature`,
+      detail: `catalog=${fixture.url}; sha256=${fixtureDownload.sha256}; pid=${evidence.pid}; tool=FixtureAgent`,
     };
   });
 
-  await step("absorb: same-filename creature collision fails closed", async () => {
+  await step("absorb: same-filename agent collision fails closed", async () => {
     const identity = manager.identity();
     collisionStack = await manager.createStack({
       name: "collision-proof",
@@ -552,7 +552,7 @@ try {
       overlayRappids: [collisionStack.rappid],
     });
     const collisionDownload = await fixture.client.download(
-      "collision-creature",
+      "collision-agent",
     );
     let refusal = null;
     try {
@@ -568,7 +568,7 @@ try {
     const evidence = await healthEvidence(
       manager,
       route,
-      ["FixtureCreature"],
+      ["FixtureAgent"],
     );
     const overlay = manager.loadStack(collisionStack.rappid);
     return {
@@ -581,7 +581,7 @@ try {
     };
   });
 
-  await step("absorb: optional live AIBAST catalog creature", async () => {
+  await step("absorb: optional live AIBAST catalog agent", async () => {
     const client = new RappStoreClient({
       url: AIBAST_REGISTRY_URL,
       timeoutMs: 8_000,
@@ -652,7 +652,7 @@ try {
 
   const growthSource = agentSource({
     className: "HackerNewsGrowthAgent",
-    marker: "ORGANISM_GROWTH_RING",
+    marker: "RUNTIME_GROWTH_RING",
     markerValue: "ring-1-live",
     reply: "grown HackerNews behavior",
     toolName: "HackerNews",
@@ -660,7 +660,7 @@ try {
   await step("grow: verified ring restore moves HEAD and live worker serves it", async () => {
     const appended = ingestVerifiedRing(manager, hackerBaseline, {
       source: growthSource,
-      meta: { author: "user", proof: "organism-grow" },
+      meta: { author: "user", proof: "runtime-grow" },
     });
     hackerGrowthRing = appended.ringRappid;
     const restored = manager.restoreLineage(hackerBaseline.ancestorRappid);
@@ -817,7 +817,7 @@ class LethalMoltAgent(BasicAgent):
             source,
             verified: true,
             meta: {
-              author: "organism-proof",
+              author: "runtime-proof",
               verifiedBy: "molter._verify",
             },
           },
@@ -1085,7 +1085,7 @@ class LethalMoltAgent(BasicAgent):
     };
   });
 
-  await step("words: drift prod reports the divergent creature", async () => {
+  await step("words: drift prod reports the divergent agent", async () => {
     const result = await executeLineageCommand({
       message: "drift prod",
       routeManager: manager,
@@ -1116,7 +1116,7 @@ class LethalMoltAgent(BasicAgent):
     const refusal = store.promote(hackerBaseline.ancestorRappid, {
       fromEnv: "default",
       toEnv: "prod",
-      actor: "organism-proof",
+      actor: "runtime-proof",
     });
     const afterHead = store.getHead(
       hackerBaseline.ancestorRappid,
@@ -1236,7 +1236,7 @@ class LethalMoltAgent(BasicAgent):
     const evidence = await healthEvidence(
       manager,
       route,
-      ["FixtureCreature", "HackerNews", "ManageMemory"],
+      ["FixtureAgent", "HackerNews", "ManageMemory"],
     );
     requireMemoryIntact("route manager restart");
     return {
@@ -1303,7 +1303,7 @@ class LethalMoltAgent(BasicAgent):
   ).map((ring) => ring.ringRappid);
   writeFileSync(
     beforeUpgradeContext.sourcePath,
-    `${readFileSync(beforeUpgradeContext.sourcePath, "utf8").trimEnd()}\n\n# organism proof Grail v2\n`,
+    `${readFileSync(beforeUpgradeContext.sourcePath, "utf8").trimEnd()}\n\n# runtime proof Grail v2\n`,
   );
   await manager.stop();
   managers.delete(manager);

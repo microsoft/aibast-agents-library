@@ -33,7 +33,7 @@ if ! "$BRAINSTEM_PYTHON" -c "import flask" >/dev/null 2>&1; then
     exit 2
 fi
 
-SCRATCH=$(mktemp -d "${TMPDIR:-/tmp}/organism-gitmolt.XXXXXX") || exit 2
+SCRATCH=$(mktemp -d "${TMPDIR:-/tmp}/gitmolt-runtime.XXXXXX") || exit 2
 RESULTS="$SCRATCH/results.tsv"
 PRIMARY_PID=""
 SECONDARY_PID=""
@@ -56,7 +56,7 @@ cleanup() {
         fi
     done
     case "$(basename "$SCRATCH")" in
-        organism-gitmolt.*) rm -rf "$SCRATCH" ;;
+        gitmolt-runtime.*) rm -rf "$SCRATCH" ;;
     esac
     exit "$cleanup_status"
 }
@@ -277,15 +277,15 @@ scramble_attempt() {
     expected_lesson=$3
 
     scramble_ok=0
-    scramble_ring=$(molt_at "$PRIMARY_MOLT" record "$CREATURE_LOCUS" "$scramble_source" 2>&1)
+    scramble_ring=$(molt_at "$PRIMARY_MOLT" record "$AGENT_LOCUS" "$scramble_source" 2>&1)
     scramble_record_rc=$?
     scramble_lesson=$(direct_gate "$PRIMARY_BODY" "$scramble_source" 2>&1)
     scramble_gate_rc=$?
     scramble_verify=$(verify_at "$PRIMARY_MOLT" "$PRIMARY_BODY" \
-        "$CREATURE_LOCUS" "$scramble_ring" 2>&1)
+        "$AGENT_LOCUS" "$scramble_ring" 2>&1)
     scramble_verify_rc=$?
     scramble_activate=$(molt_at "$PRIMARY_MOLT" activate \
-        "$CREATURE_LOCUS" "$scramble_ring" 2>&1)
+        "$AGENT_LOCUS" "$scramble_ring" 2>&1)
     scramble_activate_rc=$?
     scramble_compose=$(molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" 2>&1)
     scramble_compose_rc=$?
@@ -307,13 +307,13 @@ scramble_attempt() {
         "Molter: $scramble_lesson; verify_rc=$scramble_verify_rc; activate_rc=$scramble_activate_rc; $LAST_OBSERVATION"
 }
 
-PRIMARY_BODY="$SCRATCH/organism-one"
+PRIMARY_BODY="$SCRATCH/runtime-one"
 PRIMARY_AGENTS="$SCRATCH/agents-one"
 PRIMARY_MOLT="$SCRATCH/molt-one.git"
 PRIMARY_HOME="$SCRATCH/home-one"
 mkdir -p "$PRIMARY_AGENTS" "$PRIMARY_HOME"
 if ! cp -R "$REPO_ROOT/rapp_brainstem" "$PRIMARY_BODY"; then
-    abort_proof "scratch organism" "could not copy rapp_brainstem"
+    abort_proof "scratch runtime" "could not copy rapp_brainstem"
 fi
 if ! molt_at "$PRIMARY_MOLT" init >/dev/null 2>&1; then
     abort_proof "git-molt init" "could not initialize the primary molt repository"
@@ -325,7 +325,7 @@ start_kernel "$PRIMARY_BODY" "$PRIMARY_AGENTS" "$PRIMARY_PORT" \
 PRIMARY_PID=$STARTED_PID
 if ! wait_for_health "$PRIMARY_PORT" "$PRIMARY_PID"; then
     kernel_tail=$(tail -30 "$SCRATCH/kernel-one.log" 2>/dev/null || true)
-    abort_proof "living copied kernel" "kernel did not answer /health: $kernel_tail"
+    abort_proof "running copied kernel" "kernel did not answer /health: $kernel_tail"
 fi
 observe "initialized" "$PRIMARY_PORT" "$PRIMARY_PID"
 kernel_start_ok=0
@@ -362,7 +362,7 @@ if [ "$FACTORY_BASELINE_COUNT" -eq 0 ] \
     || ! runtime_is_alive; then
     factory_ok=1
 fi
-record_claim "factory creatures compose exactly" "$factory_ok" \
+record_claim "factory agents compose exactly" "$factory_ok" \
     "$FACTORY_BASELINE_COUNT byte-identical loci; tools=[$FACTORY_AGENTS]; $LAST_OBSERVATION"
 
 if [ -n "${RAPP_SKILLS_DIR:-}" ]; then
@@ -386,7 +386,7 @@ else
 fi
 CORPUS_AGENT="$CORPUS_DIR/cat-agent-skills/rapp-agent-converter/assets/hello_rapp_agent.py"
 if [ ! -f "$CORPUS_AGENT" ]; then
-    abort_proof "RAPP skills creature" "missing corpus cartridge: cat-agent-skills/rapp-agent-converter/assets/hello_rapp_agent.py"
+    abort_proof "RAPP skills agent" "missing corpus cartridge: cat-agent-skills/rapp-agent-converter/assets/hello_rapp_agent.py"
 fi
 CORPUS_COMMIT=$(git -C "$CORPUS_DIR" rev-parse --short=12 HEAD 2>/dev/null || printf 'provided-tree')
 CORPUS_GATE=$(direct_gate "$PRIMARY_BODY" "$CORPUS_AGENT" 2>&1)
@@ -396,38 +396,38 @@ CORPUS_GATE_RC=$?
     "$CORPUS_AGENT" >"$SCRATCH/non-stdlib.txt" 2>&1
 STDLIB_RC=$?
 STDLIB_UNKNOWN=$(cat "$SCRATCH/non-stdlib.txt")
-CREATURE_LOCUS=$(molt_at "$PRIMARY_MOLT" baseline \
+AGENT_LOCUS=$(molt_at "$PRIMARY_MOLT" baseline \
     "hello_rapp_agent.py" "$CORPUS_AGENT" 2>&1)
-CREATURE_BASELINE_RC=$?
+AGENT_BASELINE_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
-CREATURE_COMPOSE_RC=$?
+AGENT_COMPOSE_RC=$?
 observe "absorbed-corpus" "$PRIMARY_PORT" "$PRIMARY_PID"
 GROWN_AGENTS=$LAST_AGENTS
 absorb_ok=0
 if [ "$CORPUS_GATE_RC" -ne 0 ] \
     || [ "$STDLIB_RC" -ne 0 ] \
-    || [ "$CREATURE_BASELINE_RC" -ne 0 ] \
-    || [ "$CREATURE_COMPOSE_RC" -ne 0 ] \
+    || [ "$AGENT_BASELINE_RC" -ne 0 ] \
+    || [ "$AGENT_COMPOSE_RC" -ne 0 ] \
     || ! is_exact_addition "$FACTORY_AGENTS" "$GROWN_AGENTS" "HelloRapp" \
     || ! cmp -s "$CORPUS_AGENT" "$PRIMARY_AGENTS/hello_rapp_agent.py" \
     || [ "$LAST_QUARANTINE" != "none" ] \
     || ! runtime_is_alive; then
     absorb_ok=1
 fi
-record_claim "organism absorbs one stdlib RAPPID creature" "$absorb_ok" \
+record_claim "runtime absorbs one stdlib RAPPID agent" "$absorb_ok" \
     "rapp-skills@$CORPUS_COMMIT; $CORPUS_GATE; non_stdlib=[$STDLIB_UNKNOWN]; tools=[$GROWN_AGENTS]; $LAST_OBSERVATION"
 
 CANDIDATES="$SCRATCH/candidates"
 mkdir -p "$CANDIDATES"
 GOOD_V2="$CANDIDATES/hello-v2.py"
 write_good_generation "$GOOD_V2" "GIT_MOLT_GENERATION_V2" "hello-rapp-v2"
-GOOD_RING=$(molt_at "$PRIMARY_MOLT" record "$CREATURE_LOCUS" "$GOOD_V2" 2>&1)
+GOOD_RING=$(molt_at "$PRIMARY_MOLT" record "$AGENT_LOCUS" "$GOOD_V2" 2>&1)
 GOOD_RECORD_RC=$?
 GOOD_VRING=$(verify_at "$PRIMARY_MOLT" "$PRIMARY_BODY" \
-    "$CREATURE_LOCUS" "$GOOD_RING" 2>&1)
+    "$AGENT_LOCUS" "$GOOD_RING" 2>&1)
 GOOD_VERIFY_RC=$?
 GOOD_ACTIVATE=$(molt_at "$PRIMARY_MOLT" activate \
-    "$CREATURE_LOCUS" "$GOOD_VRING" 2>&1)
+    "$AGENT_LOCUS" "$GOOD_VRING" 2>&1)
 GOOD_ACTIVATE_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
 GOOD_COMPOSE_RC=$?
@@ -445,7 +445,7 @@ if [ "$GOOD_RECORD_RC" -ne 0 ] \
     || ! runtime_is_alive; then
     grow_ok=1
 fi
-record_claim "verified generation grows live organism" "$grow_ok" \
+record_claim "verified generation grows live runtime" "$grow_ok" \
     "recorded, Molter-verified, activated; marker=GIT_MOLT_GENERATION_V2; $LAST_OBSERVATION"
 
 LETHAL="$CANDIDATES/lethal.py"
@@ -461,8 +461,8 @@ class HelloRapp(BasicAgent):
         return "never"
 PY
 
-STERILE="$CANDIDATES/sterile.py"
-cat >"$STERILE" <<'PY'
+NONFUNCTIONAL="$CANDIDATES/nonfunctional.py"
+cat >"$NONFUNCTIONAL" <<'PY'
 from agents.basic_agent import BasicAgent
 
 class HelloRapp(BasicAgent):
@@ -501,7 +501,7 @@ class HelloRapp(BasicAgent):
 PY
 
 scramble_attempt "lethal-os-exit" "$LETHAL" "terminate the Brainstem"
-scramble_attempt "sterile-no-perform" "$STERILE" "does not define perform()"
+scramble_attempt "nonfunctional-no-perform" "$NONFUNCTIONAL" "does not define perform()"
 scramble_attempt "syntax-error" "$SYNTAX_ERROR" "SyntaxError"
 scramble_attempt "import-exception" "$IMPORT_EXCEPTION" "failed to load cleanly"
 scramble_attempt "decoy-basic-agent" "$DECOY" "imported from agents.basic_agent"
@@ -526,13 +526,13 @@ PY
 COLLISION_GATE=$(direct_gate "$PRIMARY_BODY" "$COLLISION" 2>&1)
 COLLISION_GATE_RC=$?
 COLLISION_RING=$(molt_at "$PRIMARY_MOLT" record \
-    "$CREATURE_LOCUS" "$COLLISION" 2>&1)
+    "$AGENT_LOCUS" "$COLLISION" 2>&1)
 COLLISION_RECORD_RC=$?
 COLLISION_VRING=$(verify_at "$PRIMARY_MOLT" "$PRIMARY_BODY" \
-    "$CREATURE_LOCUS" "$COLLISION_RING" 2>&1)
+    "$AGENT_LOCUS" "$COLLISION_RING" 2>&1)
 COLLISION_VERIFY_RC=$?
 molt_at "$PRIMARY_MOLT" activate \
-    "$CREATURE_LOCUS" "$COLLISION_VRING" >/dev/null 2>&1
+    "$AGENT_LOCUS" "$COLLISION_VRING" >/dev/null 2>&1
 COLLISION_ACTIVATE_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
 COLLISION_COMPOSE_RC=$?
@@ -555,13 +555,13 @@ RECOVERY_V3="$CANDIDATES/hello-v3.py"
 write_good_generation "$RECOVERY_V3" \
     "GIT_MOLT_RECOVERY_V3" "hello-rapp-v3-recovered"
 RECOVERY_RING=$(molt_at "$PRIMARY_MOLT" record \
-    "$CREATURE_LOCUS" "$RECOVERY_V3" 2>&1)
+    "$AGENT_LOCUS" "$RECOVERY_V3" 2>&1)
 RECOVERY_RECORD_RC=$?
 RECOVERY_VRING=$(verify_at "$PRIMARY_MOLT" "$PRIMARY_BODY" \
-    "$CREATURE_LOCUS" "$RECOVERY_RING" 2>&1)
+    "$AGENT_LOCUS" "$RECOVERY_RING" 2>&1)
 RECOVERY_VERIFY_RC=$?
 molt_at "$PRIMARY_MOLT" activate \
-    "$CREATURE_LOCUS" "$RECOVERY_VRING" >/dev/null 2>&1
+    "$AGENT_LOCUS" "$RECOVERY_VRING" >/dev/null 2>&1
 RECOVERY_ACTIVATE_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
 RECOVERY_COMPOSE_RC=$?
@@ -580,9 +580,9 @@ fi
 record_claim "valid collision exposes gate/kernel disagreement" "$collision_ok" \
     "Molter accepted ($COLLISION_GATE); kernel quarantined the later duplicate ($COLLISION_OBSERVATION); recovered last good generation ($LAST_OBSERVATION)"
 
-LOCUS_LOG=$(molt_at "$PRIMARY_MOLT" log "$CREATURE_LOCUS" 2>&1)
+LOCUS_LOG=$(molt_at "$PRIMARY_MOLT" log "$AGENT_LOCUS" 2>&1)
 LOCUS_LOG_RC=$?
-printf '\n## Creature locus log\n%s\n\n' "$LOCUS_LOG"
+printf '\n## Agent locus log\n%s\n\n' "$LOCUS_LOG"
 observe "locus-log" "$PRIMARY_PORT" "$PRIMARY_PID"
 log_ok=0
 if [ "$LOCUS_LOG_RC" -ne 0 ] \
@@ -594,7 +594,7 @@ fi
 record_claim "locus log retains good and refused history" "$log_ok" \
     "$(printf '%s\n' "$LOCUS_LOG" | wc -l | tr -d ' ') entries with verified and unverified rings; $LAST_OBSERVATION"
 
-molt_at "$PRIMARY_MOLT" revert "$CREATURE_LOCUS" >/dev/null 2>&1
+molt_at "$PRIMARY_MOLT" revert "$AGENT_LOCUS" >/dev/null 2>&1
 REVERT_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
 REVERT_COMPOSE_RC=$?
@@ -610,7 +610,7 @@ fi
 record_claim "revert returns to absorbed corpus baseline" "$revert_ok" \
     "composed bytes match hello_rapp_agent.py at rapp-skills@$CORPUS_COMMIT; $LAST_OBSERVATION"
 
-molt_at "$PRIMARY_MOLT" restore "$CREATURE_LOCUS" >/dev/null 2>&1
+molt_at "$PRIMARY_MOLT" restore "$AGENT_LOCUS" >/dev/null 2>&1
 RESTORE_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
 RESTORE_COMPOSE_RC=$?
@@ -625,7 +625,7 @@ fi
 record_claim "restore selects newest verified safe generation" "$restore_ok" \
     "marker=GIT_MOLT_RECOVERY_V3; $LAST_OBSERVATION"
 
-molt_at "$PRIMARY_MOLT" policy "$CREATURE_LOCUS" pinned >/dev/null 2>&1
+molt_at "$PRIMARY_MOLT" policy "$AGENT_LOCUS" pinned >/dev/null 2>&1
 PIN_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
 PIN_COMPOSE_RC=$?
@@ -640,9 +640,9 @@ fi
 record_claim "pinned policy forces baseline" "$pin_ok" \
     "newer verified rings retained but baseline bytes composed; $LAST_OBSERVATION"
 
-molt_at "$PRIMARY_MOLT" policy "$CREATURE_LOCUS" mutable >/dev/null 2>&1
+molt_at "$PRIMARY_MOLT" policy "$AGENT_LOCUS" mutable >/dev/null 2>&1
 MUTABLE_RC=$?
-molt_at "$PRIMARY_MOLT" restore "$CREATURE_LOCUS" >/dev/null 2>&1
+molt_at "$PRIMARY_MOLT" restore "$AGENT_LOCUS" >/dev/null 2>&1
 MUTABLE_RESTORE_RC=$?
 molt_at "$PRIMARY_MOLT" compose "$PRIMARY_AGENTS" >/dev/null 2>&1
 MUTABLE_COMPOSE_RC=$?
@@ -662,11 +662,11 @@ TRANSFER_V4="$CANDIDATES/hello-v4-transfer.py"
 write_good_generation "$TRANSFER_V4" \
     "GIT_MOLT_TRANSFER_V4" "hello-rapp-v4-transferred"
 TRANSFER_RING=$(molt_at "$PRIMARY_MOLT" record \
-    "$CREATURE_LOCUS" "$TRANSFER_V4" 2>&1)
+    "$AGENT_LOCUS" "$TRANSFER_V4" 2>&1)
 TRANSFER_RECORD_RC=$?
 FRAME="$SCRATCH/hello-rapp.molt-frame"
 FRAME_EXPORT=$(molt_at "$PRIMARY_MOLT" frame export \
-    "$CREATURE_LOCUS" "$FRAME" 2>&1)
+    "$AGENT_LOCUS" "$FRAME" 2>&1)
 FRAME_EXPORT_RC=$?
 observe "frame-export" "$PRIMARY_PORT" "$PRIMARY_PID"
 frame_export_ok=0
@@ -677,16 +677,16 @@ if [ "$TRANSFER_RECORD_RC" -ne 0 ] \
     || ! runtime_is_alive; then
     frame_export_ok=1
 fi
-record_claim "frame exports full locus without changing live organism" \
+record_claim "frame exports full locus without changing live runtime" \
     "$frame_export_ok" "frame written; unverified transfer tip recorded; $LAST_OBSERVATION"
 
-SECONDARY_BODY="$SCRATCH/organism-two"
+SECONDARY_BODY="$SCRATCH/runtime-two"
 SECONDARY_AGENTS="$SCRATCH/agents-two"
 SECONDARY_MOLT="$SCRATCH/molt-two.git"
 SECONDARY_HOME="$SCRATCH/home-two"
 mkdir -p "$SECONDARY_AGENTS" "$SECONDARY_HOME"
 if ! cp -R "$REPO_ROOT/rapp_brainstem" "$SECONDARY_BODY"; then
-    abort_proof "second organism" "could not copy rapp_brainstem"
+    abort_proof "second runtime" "could not copy rapp_brainstem"
 fi
 if ! molt_at "$SECONDARY_MOLT" init >/dev/null 2>&1; then
     abort_proof "second molt repo" "could not initialize second molt repository"
@@ -702,20 +702,20 @@ done
 FRAME_IMPORT=$(molt_at "$SECONDARY_MOLT" frame import "$FRAME" 2>&1)
 FRAME_IMPORT_RC=$?
 IMPORTED_LIVE=$(git --git-dir="$SECONDARY_MOLT" rev-parse \
-    "refs/molt/live/$CREATURE_LOCUS" 2>/dev/null)
+    "refs/molt/live/$AGENT_LOCUS" 2>/dev/null)
 IMPORTED_BASE=$(git --git-dir="$SECONDARY_MOLT" rev-parse \
-    "refs/molt/base/$CREATURE_LOCUS" 2>/dev/null)
+    "refs/molt/base/$AGENT_LOCUS" 2>/dev/null)
 FOREIGN_VERIFIED_ACTIVATE=$(molt_at "$SECONDARY_MOLT" activate \
-    "$CREATURE_LOCUS" "$RECOVERY_VRING" 2>&1)
+    "$AGENT_LOCUS" "$RECOVERY_VRING" 2>&1)
 FOREIGN_VERIFIED_ACTIVATE_RC=$?
-molt_at "$SECONDARY_MOLT" revert "$CREATURE_LOCUS" >/dev/null 2>&1
+molt_at "$SECONDARY_MOLT" revert "$AGENT_LOCUS" >/dev/null 2>&1
 FOREIGN_REVERT_RC=$?
 IMPORTED_ACTIVATE=$(molt_at "$SECONDARY_MOLT" activate \
-    "$CREATURE_LOCUS" "$TRANSFER_RING" 2>&1)
+    "$AGENT_LOCUS" "$TRANSFER_RING" 2>&1)
 IMPORTED_ACTIVATE_RC=$?
 IMPORTED_PATH=$(
     git --git-dir="$SECONDARY_MOLT" config --get \
-        "molt.locus.$CREATURE_LOCUS.path" 2>/dev/null || true
+        "molt.locus.$AGENT_LOCUS.path" 2>/dev/null || true
 )
 observe "frame-import-primary-alive" "$PRIMARY_PORT" "$PRIMARY_PID"
 # Spec invariant I1: imported is not trusted. A ring that carries a foreign
@@ -749,10 +749,10 @@ record_claim "unverified transfer tip is parked and the frame carried its path" 
 SECOND_GATE=$(direct_gate "$SECONDARY_BODY" "$TRANSFER_V4" 2>&1)
 SECOND_GATE_RC=$?
 SECOND_VRING=$(verify_at "$SECONDARY_MOLT" "$SECONDARY_BODY" \
-    "$CREATURE_LOCUS" "$TRANSFER_RING" 2>&1)
+    "$AGENT_LOCUS" "$TRANSFER_RING" 2>&1)
 SECOND_VERIFY_RC=$?
 molt_at "$SECONDARY_MOLT" activate \
-    "$CREATURE_LOCUS" "$SECOND_VRING" >/dev/null 2>&1
+    "$AGENT_LOCUS" "$SECOND_VRING" >/dev/null 2>&1
 SECOND_ACTIVATE_RC=$?
 molt_at "$SECONDARY_MOLT" compose "$SECONDARY_AGENTS" >/dev/null 2>&1
 SECOND_COMPOSE_RC=$?
@@ -762,9 +762,9 @@ start_kernel "$SECONDARY_BODY" "$SECONDARY_AGENTS" "$SECONDARY_PORT" \
 SECONDARY_PID=$STARTED_PID
 if ! wait_for_health "$SECONDARY_PORT" "$SECONDARY_PID"; then
     kernel_tail=$(tail -30 "$SCRATCH/kernel-two.log" 2>/dev/null || true)
-    abort_proof "second living kernel" "kernel did not answer /health: $kernel_tail"
+    abort_proof "second running kernel" "kernel did not answer /health: $kernel_tail"
 fi
-observe "second-organism" "$SECONDARY_PORT" "$SECONDARY_PID"
+observe "second-runtime" "$SECONDARY_PORT" "$SECONDARY_PID"
 SECOND_FILES=""
 for second_file in "$SECONDARY_AGENTS"/*; do
     [ -f "$second_file" ] || continue
@@ -790,7 +790,7 @@ if [ "$SECOND_GATE_RC" -ne 0 ] \
     || ! runtime_is_alive; then
     second_ok=1
 fi
-record_claim "same gate admits creature into second organism" "$second_ok" \
+record_claim "same gate admits agent into second runtime" "$second_ok" \
     "$SECOND_GATE; files=[$SECOND_FILES]; marker=GIT_MOLT_TRANSFER_V4; loader=[$SECOND_LOAD_NOTE]; $LAST_OBSERVATION"
 
 HN_RING_SOURCE="$CANDIDATES/hacker-news-ring.py"
@@ -845,10 +845,10 @@ fi
 record_claim "Grail re-baseline preserves locus and rings" "$grail_upgrade_ok" \
     "locus=$HN_LOCUS unchanged; earlier verified ring $HN_SHORT retained; revert composed current factory marker; $LAST_OBSERVATION"
 
-LIVE_CREATURE=$(git --git-dir="$PRIMARY_MOLT" rev-parse \
-    "refs/molt/live/$CREATURE_LOCUS" 2>/dev/null)
-OBJECT_PREFIX=$(printf '%s' "$LIVE_CREATURE" | cut -c1-2)
-OBJECT_SUFFIX=$(printf '%s' "$LIVE_CREATURE" | cut -c3-)
+LIVE_AGENT=$(git --git-dir="$PRIMARY_MOLT" rev-parse \
+    "refs/molt/live/$AGENT_LOCUS" 2>/dev/null)
+OBJECT_PREFIX=$(printf '%s' "$LIVE_AGENT" | cut -c1-2)
+OBJECT_SUFFIX=$(printf '%s' "$LIVE_AGENT" | cut -c3-)
 LOOSE_OBJECT="$PRIMARY_MOLT/objects/$OBJECT_PREFIX/$OBJECT_SUFFIX"
 tamper_write_rc=0
 if [ -f "$LOOSE_OBJECT" ]; then
@@ -878,15 +878,15 @@ if printf '%s' "$FSCK_OUTPUT" | grep -F "is empty" >/dev/null 2>&1; then
     FSCK_FIRST="reported the active loose object as empty"
 fi
 record_claim "tampered loose object is detected and contained" "$tamper_ok" \
-    "git fsck rc=$FSCK_RC ($FSCK_FIRST); compose rc=$TAMPER_COMPOSE_RC fell back to creature baseline; $LAST_OBSERVATION"
+    "git fsck rc=$FSCK_RC ($FSCK_FIRST); compose rc=$TAMPER_COMPOSE_RC fell back to agent baseline; $LAST_OBSERVATION"
 
 observe "final-primary" "$PRIMARY_PORT" "$PRIMARY_PID"
 final_primary_ok=0
 runtime_is_alive || final_primary_ok=1
-record_claim "primary organism finishes alive" "$final_primary_ok" "$LAST_OBSERVATION"
+record_claim "primary runtime finishes alive" "$final_primary_ok" "$LAST_OBSERVATION"
 observe "final-secondary" "$SECONDARY_PORT" "$SECONDARY_PID"
 final_secondary_ok=0
 runtime_is_alive || final_secondary_ok=1
-record_claim "second organism finishes alive" "$final_secondary_ok" "$LAST_OBSERVATION"
+record_claim "second runtime finishes alive" "$final_secondary_ok" "$LAST_OBSERVATION"
 
 finish_proof

@@ -37,7 +37,7 @@ const KIND =
 const RAPPID =
   /^rappid:@([a-z0-9]+(?:-[a-z0-9]+)*)\/([a-z0-9]+(?:-[a-z0-9]+)*):([0-9a-f]{64})$/;
 const EGG_VARIANTS = new Set([
-  "organism",
+  "runtime",
   "rapplication",
   "session",
   "invite",

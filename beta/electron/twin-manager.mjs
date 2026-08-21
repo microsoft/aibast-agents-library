@@ -2,7 +2,7 @@
 // long-lived Brainstem workers ("twins"), each on its own loopback port.
 //
 // Canon (crawled kody-w/rapp-spine — see docs/twins/COMPLIANCE.md):
-//   * A herd of twins is Leviathan sense (A): one mind, many brainstem bodies.
+//   * A herd of twins is one coordinator managing many Brainstem workers.
 //   * Chat is the ONLY wire (Art. XXV): a twin is driven only over its worker's
 //     `/chat`. We add NO route, never the legacy `/api/agent` (a known RCE).
 //   * The shippable unit is the `rapp-cart/1.0` cartridge (the store's

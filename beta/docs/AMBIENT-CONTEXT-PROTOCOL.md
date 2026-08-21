@@ -119,7 +119,7 @@ Ambient Context's additive self-state and operating-limit layers do not edit the
 Grail factory agent. `ContextMemory` ring 0 is the pristine Grail implementation
 and retains the original memory behavior. Frontier seeds a verified ring 1 that
 preserves that memory path and adds the two ambient layers. The Molt Lineage
-safe word moves HEAD back to ring 0 without touching memory data; restore moves
+control word moves HEAD back to ring 0 without touching memory data; restore moves
 HEAD forward to the latest verified ring.
 
 ### Roadmap layers (future)

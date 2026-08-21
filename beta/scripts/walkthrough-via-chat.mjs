@@ -286,7 +286,7 @@ const prompt = [
   "- Use check_beta_updates and report the exact visible status without",
   "  clicking Update and Restart.",
   "- Explain the path in one sentence: prove locally in Frontier Brainstem, freeze",
-  "  the RAPP/1 organism for Hippocampus, then promote the proven capability",
+  "  the RAPP/1 runtime for Hippocampus, then promote the proven capability",
   "  into the Microsoft experience that fits.",
   "",
   "Chapter 6 — close the teaching loop:",

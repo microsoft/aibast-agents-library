@@ -1,7 +1,7 @@
-# Git for agents: keeping a living Brainstem intact
+# Git for agents: keeping a running Brainstem intact
 
 `git-molt` applies Git's content-addressed history to one evolving agent at a
-time. This proof uses the real RAPP Brainstem as the organism: its PID is the
+time. This proof uses the real RAPP Brainstem as the runtime: its PID is the
 heartbeat, and its `/health` response is the pulse. No model call or sign-in is
 needed.
 
@@ -23,20 +23,20 @@ Requirements:
 From the repository root:
 
 ```bash
-bash beta/scripts/organism-gitmolt-proof.sh
+bash beta/scripts/gitmolt-runtime-proof.sh
 ```
 
 To reuse a local corpus:
 
 ```bash
 RAPP_SKILLS_DIR=/path/to/rapp-skills \
-  bash beta/scripts/organism-gitmolt-proof.sh
+  bash beta/scripts/gitmolt-runtime-proof.sh
 ```
 
 The run should finish in well under three minutes. The beta test invokes the
 same command and skips with a reason if its external prerequisites are absent.
 
-## The three refs for one creature
+## The three refs for one agent
 
 Each locus is one stable agent identity in a bare Git repository:
 
@@ -57,17 +57,17 @@ the running process to them.
 
 ## What the proof does
 
-1. **Establishes the organism.** It starts a copied kernel with an empty
+1. **Establishes the runtime.** It starts a copied kernel with an empty
    composition. An HTTP 200 response with `status=unauthenticated` is expected:
    the proof deliberately supplies no credentials.
 2. **Baselines the factory.** Every copied top-level `*_agent.py` becomes a
    locus. The composed files are byte-identical, and `/health` reports exactly
    `ContextMemory,HackerNews,LearnNew,ManageMemory`.
-3. **Absorbs a real RAPPID creature.** It takes the 3.2 KB stdlib-only
+3. **Absorbs a real RAPPID agent.** It takes the 3.2 KB stdlib-only
    `hello_rapp_agent.py` from pinned `kody-w/rapp-skills` commit
    `312617f8479e28c654897d713141573a191d6552`, proves Molter accepts it,
    composes it, and observes exactly one new tool: `HelloRapp`.
-4. **Grows the creature.** A marked V2 generation is recorded, verified,
+4. **Grows the agent.** A marked V2 generation is recorded, verified,
    activated, and byte-checked while the kernel remains alive.
 5. **Attempts five scrambles.** Module-level `os._exit(0)`, no `perform`,
    invalid syntax, an import-time exception, and `BasicAgent = object` are each
@@ -80,13 +80,13 @@ the running process to them.
 7. **Time-travels.** `revert` selects the corpus baseline, `restore` selects the
    newest verified safe ring, `pinned` forces baseline bytes, and `mutable`
    permits restoration.
-8. **Moves a frame to a second organism.** A second bare molt repository and a
+8. **Moves a frame to a second runtime.** A second bare molt repository and a
    second copied kernel receive the lineage. The receiver locally verifies an
    unverified V4 tip before composing `HelloRapp`.
 9. **Upgrades the Grail.** The copied factory `hacker_news_agent.py` receives
    new baseline bytes. Its locus ID stays unchanged, its earlier user ring
    remains in the log, and `revert` lands on the new factory bytes.
-10. **Corrupts the object store.** The active creature commit is truncated.
+10. **Corrupts the object store.** The active agent commit is truncated.
     Native `git fsck` reports the empty loose object, compose falls back to that
     locus's baseline, and both kernels still answer `/health`.
 
@@ -113,7 +113,7 @@ The proof found three boundaries worth preserving or fixing:
 3. **Frames omitted locus pathname metadata — fixed.** The path lived in
    bare-repository Git config, which a bundle does not carry, so the receiver
    looked for `agent.py` instead of `hello_rapp_agent.py` and compose omitted
-   the creature while still exiting zero. Frames now carry the path in a
+   the agent while still exiting zero. Frames now carry the path in a
    metadata commit (`refs/molt/meta/<locus>`) and import restores it.
 
 Both fixes live in the vendored, pinned tool (`tools/git-molt/`, see its
@@ -129,20 +129,20 @@ refuses to mark it verified at all.
 This run used `rapp-skills` commit `312617f8479e` and the Brainstem venv:
 
 ```text
-$ RAPP_SKILLS_DIR=/path/to/rapp-skills bash beta/scripts/organism-gitmolt-proof.sh
+$ RAPP_SKILLS_DIR=/path/to/rapp-skills bash beta/scripts/gitmolt-runtime-proof.sh
 OBSERVE initialized              pulse(status=unauthenticated agents=[] quarantined=none); heartbeat=alive
 OBSERVE factory-baseline         pulse(status=unauthenticated agents=[ContextMemory,HackerNews,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE absorbed-corpus          pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE grown-v2                 pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE lethal-os-exit           pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
-OBSERVE sterile-no-perform       pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
+OBSERVE nonfunctional-no-perform pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE syntax-error             pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE import-exception         pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE decoy-basic-agent        pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE valid-name-collision     pulse(status=unauthenticated agents=[ContextMemory,HackerNews,LearnNew,ManageMemory] quarantined=hello_rapp_agent.py:duplicate agent name 'HackerNews'; already registered by an earlier file); heartbeat=alive
 OBSERVE collision-recovery       pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 
-## Creature locus log
+## Agent locus log
 * d76f65cce1d8 [ok] molt: verified generation for hello_rapp_agent.py
   860e238c6347 [ok] molt: verified generation for hello_rapp_agent.py
   b93fd200b43a [--] molt: generation for hello_rapp_agent.py
@@ -160,7 +160,7 @@ OBSERVE policy-pinned            pulse(status=unauthenticated agents=[ContextMem
 OBSERVE policy-mutable           pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE frame-export             pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE frame-import-primary-alive pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
-OBSERVE second-organism          pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
+OBSERVE second-runtime          pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE grail-user-ring          pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE grail-upgrade-revert     pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
 OBSERVE tampered-ring-fallback   pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive
@@ -172,11 +172,11 @@ OBSERVE final-secondary          pulse(status=unauthenticated agents=[ContextMem
 | Claim | Result | Evidence |
 |---|---|---|
 | copied kernel starts without sign-in | PASS | pulse(status=unauthenticated agents=[] quarantined=none); heartbeat=alive |
-| factory creatures compose exactly | PASS | 5 byte-identical loci; tools=[ContextMemory,HackerNews,LearnNew,ManageMemory]; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| organism absorbs one stdlib RAPPID creature | PASS | rapp-skills@312617f8479e; verified class=HelloRapp tool=HelloRapp; non_stdlib=[]; tools=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory]; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| verified generation grows live organism | PASS | recorded, Molter-verified, activated; marker=GIT_MOLT_GENERATION_V2; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| factory agents compose exactly | PASS | 5 byte-identical loci; tools=[ContextMemory,HackerNews,LearnNew,ManageMemory]; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| runtime absorbs one stdlib RAPPID agent | PASS | rapp-skills@312617f8479e; verified class=HelloRapp tool=HelloRapp; non_stdlib=[]; tools=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory]; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| verified generation grows live runtime | PASS | recorded, Molter-verified, activated; marker=GIT_MOLT_GENERATION_V2; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | scramble refused: lethal-os-exit | PASS | Molter: module-level os._exit() can terminate the Brainstem or mutate its process lifecycle on import; a molt must stay safe to load in a plain Grail brainstem; verify_rc=1; activate_rc=1; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| scramble refused: sterile-no-perform | PASS | Molter: HelloRapp does not define perform() — a molt must be able to act; verify_rc=1; activate_rc=1; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| scramble refused: nonfunctional-no-perform | PASS | Molter: HelloRapp does not define perform() — a molt must be able to act; verify_rc=1; activate_rc=1; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | scramble refused: syntax-error | PASS | Molter: SyntaxError: expected ':' at line 3; verify_rc=1; activate_rc=1; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | scramble refused: import-exception | PASS | Molter: candidate failed to load cleanly: RuntimeError: GIT_MOLT_IMPORT_BOOM; verify_rc=1; activate_rc=1; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | scramble refused: decoy-basic-agent | PASS | Molter: BasicAgent must be imported from agents.basic_agent and its name never reassigned (the base must be the real kernel class); verify_rc=1; activate_rc=1; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
@@ -186,14 +186,14 @@ OBSERVE final-secondary          pulse(status=unauthenticated agents=[ContextMem
 | restore selects newest verified safe generation | PASS | marker=GIT_MOLT_RECOVERY_V3; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | pinned policy forces baseline | PASS | newer verified rings retained but baseline bytes composed; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | mutable policy restores evolution | PASS | newest verified safe bytes active again; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| frame exports full locus without changing live organism | PASS | frame written; unverified transfer tip recorded; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| frame exports full locus without changing live runtime | PASS | frame written; unverified transfer tip recorded; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | a foreign verified trailer does not transfer authority | PASS | receiver activate rc=1 before local verification (want non-zero); pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | unverified transfer tip is parked and the frame carried its path | PASS | activate rc=1 (fatal: refusing to activate an unverified generation); imported path=hello_rapp_agent.py; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| same gate admits creature into second organism | PASS | verified class=HelloRapp tool=HelloRapp; files=[basic_agent.py,context_memory_agent.py,hacker_news_agent.py,hello_rapp_agent.py,manage_memory_agent.py,rar_rapp_learn_new_agent.py]; marker=GIT_MOLT_TRANSFER_V4; loader=[[brainstem] Agent loaded: HelloRapp [brainstem] Agent loaded: HelloRapp [brainstem] Agent loaded: HelloRapp ]; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| same gate admits agent into second runtime | PASS | verified class=HelloRapp tool=HelloRapp; files=[basic_agent.py,context_memory_agent.py,hacker_news_agent.py,hello_rapp_agent.py,manage_memory_agent.py,rar_rapp_learn_new_agent.py]; marker=GIT_MOLT_TRANSFER_V4; loader=[[brainstem] Agent loaded: HelloRapp [brainstem] Agent loaded: HelloRapp [brainstem] Agent loaded: HelloRapp ]; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | Grail re-baseline preserves locus and rings | PASS | locus=hacker_news_agent.py unchanged; earlier verified ring 9da18d3ac32e retained; revert composed current factory marker; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| tampered loose object is detected and contained | PASS | git fsck rc=3 (reported the active loose object as empty); compose rc=0 fell back to creature baseline; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| primary organism finishes alive | PASS | pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| second organism finishes alive | PASS | pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| tampered loose object is detected and contained | PASS | git fsck rc=3 (reported the active loose object as empty); compose rc=0 fell back to agent baseline; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| primary runtime finishes alive | PASS | pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| second runtime finishes alive | PASS | pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 
 Summary: 23 claim(s), 0 failure(s)
 ```

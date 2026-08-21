@@ -23,7 +23,7 @@ export function parseLineageCommand(message, env = process.env) {
   const original = String(message ?? "");
   const trimmed = original.trim();
   const baselineWord = configuredWord(
-    env.RAPP_BASELINE_SAFEWORD,
+    env.RAPP_BASELINE_WORD,
     "baseline",
   );
   const restoreWord = configuredWord(env.RAPP_RESTORE_WORD, "restore");

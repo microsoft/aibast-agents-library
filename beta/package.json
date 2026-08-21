@@ -24,7 +24,9 @@
     "show-mode:capture": "node scripts/show-mode-capture.mjs",
     "test": "node --test",
     "dist:mac": "electron-builder --mac dmg zip --arm64 --publish never",
-    "package:gate": "node scripts/package-gate.mjs"
+    "package:gate": "node scripts/package-gate.mjs",
+    "proof:frontier-runtime": "node scripts/frontier-runtime-proof.mjs",
+    "proof:gitmolt-runtime": "bash scripts/gitmolt-runtime-proof.sh"
   },
   "dependencies": {
     "@ffprobe-installer/ffprobe": "2.1.2",

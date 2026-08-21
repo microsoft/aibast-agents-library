@@ -6,8 +6,8 @@
 > next. Builds on the multi-chat herd (PR #175).
 >
 > **On-canon.** Checked against the RAPP spine (`kody-w/rapp-spine`) — see
-> [`COMPLIANCE.md`](COMPLIANCE.md). A herd of twins is **Leviathan sense (A)**
-> (one mind, many brainstem bodies); its canonical wire is
+> [`COMPLIANCE.md`](COMPLIANCE.md). A herd of twins uses one coordinator for
+> many Brainstem workers; its canonical wire is
 > **`rapp-fleet-chat/1.0`** (signed twin-chat over `/chat`), the shippable unit
 > is the cartridge **`rapp-cart/1.0`**, and per Art. XXV **chat is the only
 > wire** — twins add **no new route**.

@@ -87,7 +87,7 @@ async function runUpdater({
   script(electronPath, `echo electron >> "${markers}"; exit 0`);
   // The runner waits for the launcher process to exit. spawnSync below blocks
   // this event loop, so a live child would never be reaped and would look alive
-  // (zombie) for the whole run; use a pid that has already exited and been reaped.
+  // for the whole run; use a pid that has already exited and been reaped.
   const parent = spawnSync("sh", ["-c", "exit 0"]);
   const request = {
     betaHome: root,

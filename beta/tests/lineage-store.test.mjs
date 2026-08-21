@@ -411,7 +411,7 @@ test("a CRLF checkout mints the same identity as its LF form", (t) => {
   );
 });
 
-test("kill switch gates HEAD WRITES too: safe words cannot silently move rings", (t) => {
+test("kill switch gates HEAD WRITES too: control words cannot silently move rings", (t) => {
   const { store } = fixture(t);
   const alpha = store.baselineAncestors().find(
     (item) => item.filename === "alpha_agent.py",
@@ -453,7 +453,7 @@ test("a failing locus never aborts a fleet-wide rollback", (t) => {
   assert.ok(ancestors.length >= 2, "fixture needs multiple loci");
   const failing = ancestors[0].ancestorRappid;
 
-  // One locus cannot have its HEAD written. The safe word must still land every
+  // One locus cannot have its HEAD written. The control word must still land every
   // other agent on baseline instead of throwing out mid-fleet and leaving them molted.
   const realSetHead = store.setHead.bind(store);
   store.setHead = (ancestorRappid, ringRappid) => {
@@ -582,7 +582,7 @@ test("restore returns to where you were, not to whatever is newest", (t) => {
   store.setHead(alpha.ancestorRappid, first);
   assert.equal(store.getHead(alpha.ancestorRappid), first);
 
-  // Safe word: back to factory.
+  // Control word: back to factory.
   store.rollbackToBaseline(alpha.ancestorRappid);
   assert.equal(store.resolveLive(alpha.ancestorRappid).isBaseline, true);
 

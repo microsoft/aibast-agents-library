@@ -104,7 +104,7 @@ function managerFixture({
   };
 }
 
-test("safe-word interceptor matches only the exact trimmed word", async () => {
+test("control-word interceptor matches only the exact trimmed word", async () => {
   assert.equal(parseLineageCommand("talk about baseline"), null);
   assert.equal(parseLineageCommand("baseline please"), null);
   assert.equal(parseLineageCommand("BASELINE"), null);
@@ -148,9 +148,9 @@ test("ordinary promote and drift messages fail open to chat", async () => {
   assert.doesNotMatch(calls.join(","), /promote:|drift:|materialize/);
 });
 
-test("safe-word interceptor honors custom baseline and restore words", async () => {
+test("control-word interceptor honors custom baseline and restore words", async () => {
   const env = {
-    RAPP_BASELINE_SAFEWORD: "factory settings",
+    RAPP_BASELINE_WORD: "factory settings",
     RAPP_RESTORE_WORD: "grow again",
   };
   assert.equal(parseLineageCommand("baseline", env), null);
@@ -347,9 +347,9 @@ test("lineage commands round-trip the full wire result shape", async () => {
   assert.deepEqual(restoreRun.calls, ["restore", "materialize"]);
 });
 
-test("default safe words pass through untouched when custom words are configured", async () => {
+test("default control words pass through untouched when custom words are configured", async () => {
   const env = {
-    RAPP_BASELINE_SAFEWORD: "factory settings",
+    RAPP_BASELINE_WORD: "factory settings",
     RAPP_RESTORE_WORD: "grow again",
   };
   const { calls, manager } = managerFixture();
@@ -405,7 +405,7 @@ test("baseline never reports a partial restore even with fallback state", async 
   assert.equal(result.restored, undefined);
 });
 
-test("a safe word without the route manager is an error, not a silent pass", async () => {
+test("a control word without the route manager is an error, not a silent pass", async () => {
   await assert.rejects(
     executeLineageCommand({ message: "restore" }),
     /Frontier route manager/,
@@ -538,7 +538,7 @@ test("restore reports no change when a missing HEAD already resolves to baseline
   assert.equal(store.resolveLive(alpha.ancestorRappid).isBaseline, true);
 });
 
-test("a safe word returns before the lifecycle lock and restarts after release", async (t) => {
+test("a control word returns before the lifecycle lock and restarts after release", async (t) => {
   const root = mkdtempSync(path.join(tmpdir(), "rapp-lineage-control-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const brainstemDir = path.join(root, "brainstem");
@@ -606,7 +606,7 @@ test("a safe word returns before the lifecycle lock and restarts after release",
     releaseTask();
     await heldTask;
     await commandPromise;
-    assert.fail("safe word waited behind the lifecycle lock");
+    assert.fail("control word waited behind the lifecycle lock");
   }
   clearTimeout(timeoutId);
   assert.ok(Date.now() - startedAt < 1000);

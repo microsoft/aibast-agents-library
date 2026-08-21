@@ -1,11 +1,10 @@
 # Molt Lineage — `molt-lineage/1.0`
 
-Every on-device Brainstem is an **organism of one species**. It must adapt to the
-device, the user, and the moment — mutating its own agents in real time — while
-never losing the ability to return to a common, working baseline. Molt Lineage is
-the contract that lets an instance become a **unique snowflake without getting
-cancer, dying, or becoming a zombie**, and lets a fleet of such snowflakes always
-come back together.
+Every on-device Brainstem is a **runtime in one compatibility family**. It may
+adapt agents to the device, user, and current task while retaining the ability
+to return to a common working baseline. Molt Lineage is the contract that lets
+instances specialize independently without losing safety, availability, or
+fleet convergence.
 
 > **Standard.** The general, platform-neutral form of this design is
 > `gitprotocol-molt(5)`, published independently as
@@ -40,23 +39,23 @@ plain `HEAD` / `PRIOR_HEAD` files and composed bytes are unchanged.
 
 ## Definitions
 
-- **Genome / baseline (ring 0).** The pristine Grail factory agents on disk —
-  the sacred three plus `basic_agent` — byte-for-byte identical on every instance,
-  everywhere, forever. The species standard, the common ground, and the survival
-  floor. Pinned in a **baseline manifest**: `ancestor_rappid → sha256 → source`.
+- **Factory baseline (ring 0).** The pristine Grail factory agents on disk —
+  the three factory agents plus `basic_agent` — byte-for-byte identical on every
+  instance. This is the compatibility standard and recovery floor. It is pinned
+  in a **baseline manifest**: `ancestor_rappid → sha256 → source`.
 - **Molt.** A mutation of exactly one agent, produced by growth (the Molter's
   `generate` / `mutate`) or dropped in by a person. It descends from one ancestor.
 - **Ring.** One generation in an agent's lineage. Append-only; never deleted.
 - **Frame.** A ring made portable: a self-contained snapshot (`source` +
   lineage metadata + `rappid` + `sha256`) that can be hot-loaded on its own. Every
-  frame is a valid still of the organism at that generation.
-- **Gene locus.** One agent's independent lineage. Each agent molts on its own
+  frame is a valid still of the runtime at that generation.
+- **Agent locus.** One agent's independent lineage. Each agent molts on its own
   timeline, at its own cadence, under its own policy — memory pinned at ring 0
   while news molts daily, or the reverse; it is per-agent and per-use-case.
-- **HEAD.** The pointer, per gene locus, to the currently-live ring.
+- **HEAD.** The pointer, per agent locus, to the currently live ring.
 - **Ancestor rappid.** The lineage primary key, derived from the agent's stable
-  **name** alone — identical across all instances (the cross-instance "same
-  species" key). It deliberately does **not** include the baseline's content:
+  **name** alone — identical across all instances (the cross-instance agent
+  key). It deliberately does **not** include the baseline's content:
   folding content in would make it a *version* key, so a routine Grail upgrade
   would mint a new ancestor and silently orphan every molt the user had grown. A
   lineage must survive its baseline being updated. The baseline's digest is still
@@ -111,15 +110,15 @@ pin policy. A cached parent may remain as the fallback for a broken descendant,
 but rollback, pinning, branch movement, or corruption drops that cached ring and
 recomposes the fallback from the live store before any bytes are served.
 
-## Benjamin Button — non-destructive time travel
+## Non-destructive pointer movement
 
 Because the log is append-only and `HEAD` is a pointer, an instance can move
 through its entire growth history at will:
 
 - **Back:** walk `parent_rappid` from `HEAD` to any target ring, or jump straight
-  to `ancestor_rappid` for the newborn baseline (O(1)).
-- **Forward / fork:** point `HEAD` at a later ring (grow up again) or branch a new
-  ring from any past ring.
+  to `ancestor_rappid` for the factory baseline (O(1)).
+- **Forward / fork:** point `HEAD` at a later ring or branch a new ring from any
+  past ring.
 - **Restore is the inverse of baseline, not a fast-forward.** A rollback records
   the generation it displaced, so restoring returns the locus to exactly where it
   was — a deliberately-parked older generation is never silently replaced by
@@ -127,18 +126,18 @@ through its entire growth history at will:
   consults it only while HEAD remains at baseline. With nothing displaced, restore
   adopts the newest verified ring.
 
-Newborn → super-advanced → newborn, within a single chat, every frame valid. It is
-reversible aging, and it is always available.
+Baseline → latest verified generation → baseline remains available within one
+chat, with every selected frame valid.
 
-## The three deaths, and the safeguards against them
+## Failure modes and safeguards
 
-| Death | What it is | Safeguard |
-|-------|-----------|-----------|
-| **Cancer** | a malignant / fake-lineage / sterile mutation promoted as if healthy | the **fertility / compile gate** (below) + molt isolation |
-| **Dying** | the instance is bricked and cannot run | **fail-safe composition** (never serve an unverified ring; fall back last-good → baseline) + rollback |
-| **Zombie** | an agent that loads but is undead — broken, non-functional | **whole-set verification** at promote time + **proprioception** (Ambient Context surfaces a broken agent in chat) |
+| Failure mode | What it is | Safeguard |
+|---|---|---|
+| **Invalid lineage** | An unverifiable or nonfunctional candidate is promoted as valid. | The **validation / compile gate** below plus molt isolation |
+| **Runtime outage** | The selected composition cannot run. | **Fail-safe composition** (never serve an unverified ring; fall back last-good → baseline) plus rollback |
+| **Nonfunctional agent** | An agent loads but cannot perform its declared operation. | **Whole-set verification** at promotion time plus Ambient Context diagnostics |
 
-## The fertility / compile gate (the "TypeScript" step)
+## The validation / compile gate
 
 Dynamic composition at runtime is how a system gets JavaScript-style
 "undefined is not a function" *in front of the user*. Molt Lineage forbids it:
@@ -152,7 +151,7 @@ A ring is promoted to *live* only after passing an **isolated verifier**:
    from the kernel base module and never rebinds that name (the base is the genuine
    kernel class, not a `BasicAgent = object` decoy), (b) defines a class
    subclassing it, and (c) that class defines its own `perform()` — **a molt that
-   cannot act is sterile and is refused.** This is the fertility check.
+   cannot act is refused.** This is the functional validation.
 2. **Correctness signal (advisory).** A disposable subprocess imports and
    instantiates the candidate; the parent reads only its **exit status**, never any
    byte it writes. A candidate cannot forge a pass through what it prints, an
@@ -173,36 +172,34 @@ Reference implementation of the AST verdict + isolated correctness signal:
 `_verify` / `_ast_agent_verdict` in
 `beta/frontier/rapplications/molter/agents/molter_agent.py`.
 
-## Reproduction — no mules, no lethal inheritance
+## Lineage integrity
 
 - **Single lineage.** Every ring descends from exactly one `ancestor_rappid`; the
-  lineage marker is conserved through every generation. Two different ancestors are
-  never fused into one agent — no horse × donkey, so no sterile mule can be born.
-- **Fertile parents only.** The gate confirms each live ring is itself a valid,
-  mutatable parent — so reproduction never carries a dead-end.
-- **Safe inheritance.** When an instance seeds a twin or rapplication, the
-  offspring inherit only *verified* live rings plus the Grail baseline — never an
-  unverified or failed molt. And the offspring's own materialization re-applies the
-  fail-safe rule, so even a bad inherited reference falls back to Grail rather than
-  bricking the seed. A bad mutation can never end the line: it goes back to Grail
-  and keeps living.
+  lineage marker is conserved through every generation. Two different ancestors
+  are never merged into one agent.
+- **Verified sources only.** The gate confirms each live ring is a valid,
+  mutable source for a later generation.
+- **Safe transfer.** When an instance seeds a twin or rapplication, the target
+  receives only verified live rings plus the Grail baseline. The target's own
+  materialization re-applies the fail-safe rule, so an invalid transferred
+  reference falls back to Grail.
 
-## The dream catcher — reassimilation at scale
+## Fleet reassimilation
 
-Local devices grow their own frame-films independently — a hive of snowflakes.
-The **dream catcher** merges local frames back into the collective:
+Local devices maintain their lineage histories independently. Fleet
+reassimilation merges local frames back into the shared history:
 
-1. **Verified ingest.** Only frames that pass the fertility gate are reassimilated
+1. **Verified ingest.** Only frames that pass the validation gate are reassimilated
    — the gate applies on the way *in*, not just on the way out.
 2. **Merge by shared ancestry.** Because every frame is keyed by `rappid` and
    rooted at the shared `ancestor_rappid`, lineages that share an ancestor can be
    compared and merged; the hash-chain makes merges verifiable.
 3. **Branch, never force-cross.** Lineages that cannot merge cleanly stay as
    branches off the shared ancestor — never force-crossed into a hybrid.
-4. **Baseline is the convergence point.** However far the hive diverges, the Grail
-   baseline is identical everywhere, so any two instances can *always* come back
-   together by Benjamin-Buttoning to the common ancestor, then re-applying
-   compatible frames. Convergence is always available, even if a branch is abandoned.
+4. **Baseline is the convergence point.** However far the fleet diverges, the
+   Grail baseline is identical everywhere, so any two instances can return to
+   the common ancestor and re-apply compatible frames. Convergence remains
+   available even if a branch is abandoned.
 
 ## Layering over a Grail brainstem — the passthrough contract
 
@@ -264,7 +261,7 @@ surviving verified ancestor, and the legacy directory is archived even after a
 partial migration so the same bad input is not retried on every boot.
 
 1. **Environments are HEADs, not copies.** dev, staging, and production each pin
-   their own `HEAD` per gene locus into the *same* content-addressed ring store.
+   their own `HEAD` per agent locus into the *same* content-addressed ring store.
    Rings are environment-independent; "the same molt" is one object everywhere.
 2. **Promotion is a gated three-way merge.** Promote = advance the target
    environment's `HEAD` toward the source's, checked against their common ancestor.
@@ -272,8 +269,8 @@ partial migration so the same bad input is not retried on every boot.
    ring the promotion did not build on (a production-only molt), it is a
    **CONFLICT → refuse**, naming the diverging rappids and requiring explicit
    reconciliation (rebase the production molt onto the new base, or a deliberate,
-   recorded override). Never a silent overwrite — branches do not force-cross, the
-   same "no mule" law applied across environments.
+   recorded override). Never a silent overwrite: branches do not force-cross,
+   applying the same common-ancestor rule across environments.
 3. **Drift is detected before promotion.** The target's live ring rappids are
    compared against the base the promotion expects; any unexpected ring is drift and
    the promotion refuses with a precise diff — not a runtime surprise.
@@ -305,7 +302,7 @@ messages to Grail:
 - `promote <from> <to>` runs isolated, fleet-wide fast-forward promotion;
 - `drift <env>` compares that environment with `default`.
 
-Safe-word change counts compare the effective resolved artifacts, not raw HEAD
+Control-word change counts compare the effective resolved artifacts, not raw HEAD
 file strings. Repairing a pointer that already fell back to the same baseline
 bytes is reported as unchanged rather than as a successful restore.
 HEAD-moving chat commands never wait behind an in-flight route lifecycle lock:
@@ -313,7 +310,7 @@ the pointer moves immediately, the restart is scheduled for lifecycle idle, and
 the pending reply says the change takes effect as soon as the current task
 finishes. No-op and refused commands do not restart the active worker.
 
-The words are configurable with `RAPP_BASELINE_SAFEWORD`,
+The words are configurable with `RAPP_BASELINE_WORD`,
 `RAPP_RESTORE_WORD`, `RAPP_ENVIRONMENTS_WORD`, `RAPP_PROMOTE_WORD`, and
 `RAPP_DRIFT_WORD`. `RAPP_MOLT_LINEAGE=0` is checked at every invocation and
 every HEAD-writing path reports refusal without moving a pointer.
@@ -327,13 +324,13 @@ disabled state.
 
 ## Laws
 
-1. **The genome never drifts.** Baseline agents are immutable on disk; all growth
-   is additive overlay. Instance-level variation is unbounded; species-level
+1. **The factory baseline never drifts.** Baseline agents are immutable on disk; all growth
+   is additive overlay. Instance-level variation is unbounded; baseline-level
    drift (baseline mutation) is forbidden.
 2. **One lineage per ring.** A ring descends from exactly one ancestor; ancestors
    are never fused.
-3. **Fertility gate.** A ring is promoted only if it is a valid, actable,
-   genuinely-descended agent. Sterile and fake-lineage molts are refused.
+3. **Validation gate.** A ring is promoted only if it is a valid, functional,
+   genuinely descended agent. Invalid-lineage molts are refused.
 4. **Compile before run.** All verification is promote-time and isolated; runtime
    is a read-only load of a pinned, pre-validated artifact. No hot-mutation of live
    modules.
@@ -352,10 +349,10 @@ disabled state.
 
 ## Cross-references
 
-- `CONSTITUTION.md` — Article I (the sacred three + molt isolation: molts live
-  only in isolated twins, never the sacred Brainstem) and Article II (organs and
-  senses).
-- `AMBIENT-CONTEXT-PROTOCOL.md` — the proprioception layer that surfaces a broken
-  or bricked agent in chat (the anti-zombie sense).
+- `CONSTITUTION.md` — Article I (factory agents plus molt isolation: molts live
+  only in isolated twins, never in the unchanged Brainstem) and Article II
+  (runtime capabilities).
+- `AMBIENT-CONTEXT-PROTOCOL.md` — the diagnostics layer that surfaces a broken
+  or failed agent in chat.
 - `UI-AUTOSTEER-PROTOCOL.md` — the sibling protocol for driving an application
   through its surface.

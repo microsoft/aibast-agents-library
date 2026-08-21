@@ -417,19 +417,19 @@ assert "imported from agents.basic_agent" in detail["lesson"]
 `);
 });
 
-test("molter verifier refuses a sterile molt with no perform()", () => {
+test("molter verifier refuses a nonfunctional molt with no perform()", () => {
   runPython(importStub + String.raw`
 module = load(
     "frontier/rapplications/molter/agents/molter_agent.py",
-    "molter_agent_sterile",
+    "molter_agent_nonfunctional",
 )
 # A genuine BasicAgent subclass but with no perform() of its own — it cannot act,
-# so it is a sterile molt and is refused at the AST gate (before the os._exit runs).
+# so it is nonfunctional and is refused at the AST gate (before os._exit runs).
 source = """
 import os
 from agents.basic_agent import BasicAgent
 
-class Sterile(BasicAgent):
+class Nonfunctional(BasicAgent):
     pass
 
 os._exit(0)

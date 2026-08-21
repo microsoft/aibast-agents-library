@@ -135,7 +135,7 @@ test("an unverified ring can never go live, and a tampered ring resolves to base
   }
 });
 
-test("Benjamin Button: HEAD walks back to any ring or to baseline, non-destructively", () => {
+test("HEAD walks back to any ring or to baseline non-destructively", () => {
   const { store, cleanup } = freshStore();
   try {
     const ancestor = store.baselineAncestors()[0].ancestorRappid;
@@ -351,7 +351,7 @@ test("a corrupt promotion journal fails closed: promote refuses to move HEAD and
       assert.deepEqual(store.listPromotions(ancestor), []);
     }
 
-    // Restoring a valid journal restores promotion — fail-closed, not bricked.
+    // Restoring a valid journal restores promotion without leaving it unusable.
     rmSync(file);
     const recovered = store.promote(ancestor, { fromEnv: "dev", toEnv: "prod", actor: "carol" });
     assert.equal(recovered.ok, true);

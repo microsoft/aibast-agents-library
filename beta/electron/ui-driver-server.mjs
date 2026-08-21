@@ -79,7 +79,7 @@ function twinFrame(window, twinUrls) {
 
 // A frame script must never wedge the per-frame queue. Electron leaves the
 // executeJavaScript promise dangling when the frame navigates or is destroyed
-// mid-command (a route swap after a safe word, a reload, a twin closing), and
+// mid-command (a route swap after a control word, a reload, a twin closing), and
 // before v2 serialized commands per frame that only lost the one in-flight
 // command — with the queue it would block every later command on that frame.
 // So every frame script is raced against the frame going away and a deadline.

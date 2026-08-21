@@ -13,7 +13,7 @@ Installed `install.sh` from `main` under a throwaway `HOME`; kernel 0.6.16 on
 | baseline `/health` | `agents: 4, quarantined: 0` |
 | drag every Frontier agent in (+ ring-1 ContextMemory) | `/health`: **9 agents, `quarantined: []`**; `/chat` listed all nine tools |
 | drop a broken `weather_agent.py` (class that is not a `BasicAgent` subclass), ask "what is 2+2?" | reply: *"2 + 2 = 4. ⚠️ Agent issue: Your `weather_agent.py` failed to load because it doesn't define a `BasicAgent` subclass — it's not available as a tool…"* — Ambient Context volunteered it unprompted |
-| drop an agent with module-level `os._exit(0)`, hit `/health` | **process dead** (curl rc 52) — the going-home law's teeth |
+| drop an agent with module-level `os._exit(0)`, hit `/health` | **process dead** (curl rc 52) — the exit-on-fault rule's teeth |
 
 ## Windows (the lab branch on the fork, windows-latest)
 
@@ -24,7 +24,7 @@ Installed `install.sh` from `main` under a throwaway `HOME`; kernel 0.6.16 on
 | C — full beta suite | **221/221** on Windows |
 | final merged tree (`94436b6c`, lab `82a0daf6`) — A as checked out, B forced-CRLF ring + Grail, C full suite | **all three green on windows-latest** (after making the bridge-source tests CRLF-tolerant and the HEAD-is-a-directory fault expectation platform-neutral: Windows reports `EPERM`, POSIX `EISDIR`) |
 
-## Safe words typed into the real chat window (handoff §6.1 gap)
+## Control words typed into the real chat window (handoff §6.1 gap)
 
 Branch Frontier launched against the live kernel with an isolated lineage root;
 words typed into the Grail composer through `/drive`; HEAD files read from disk

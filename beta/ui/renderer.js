@@ -684,7 +684,7 @@ async function refreshAgentExplorer() {
         agentTree.replaceChildren();
         const root = document.createElement("div");
         root.className = "agent-tree-root";
-        root.textContent = "▾ RAPP/1 ORGANISM";
+        root.textContent = "▾ RAPP/1 RUNTIME";
         agentTree.append(root);
 
         for (const [label, value] of [

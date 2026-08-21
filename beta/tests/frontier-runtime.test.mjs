@@ -13,7 +13,7 @@ const betaRoot = path.resolve(
 );
 const repositoryRoot = path.resolve(betaRoot, "..");
 
-test("the Frontier organism proof passes against real Grail workers", (t) => {
+test("the Frontier runtime proof passes against real Grail workers", (t) => {
   // The proof copies the pristine Grail from the repository root. An installed
   // Frontier is a sparse checkout (beta/ + tools/rapp1) with no Grail beside it.
   if (!existsSync(path.join(repositoryRoot, "rapp_brainstem", "brainstem.py"))) {
@@ -28,7 +28,7 @@ test("the Frontier organism proof passes against real Grail workers", (t) => {
   }
   const result = spawnSync(
     process.execPath,
-    [path.join(betaRoot, "scripts", "organism-frontier-proof.mjs")],
+    [path.join(betaRoot, "scripts", "frontier-runtime-proof.mjs")],
     {
       cwd: repositoryRoot,
       encoding: "utf8",
@@ -42,7 +42,7 @@ test("the Frontier organism proof passes against real Grail workers", (t) => {
     result.status,
     0,
     [
-      "organism-frontier-proof.mjs failed:",
+      "frontier-runtime-proof.mjs failed:",
       result.stdout,
       result.stderr,
     ].join("\n"),

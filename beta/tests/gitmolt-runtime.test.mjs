@@ -15,7 +15,7 @@ import test from "node:test";
 
 const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = path.resolve(betaRoot, "..");
-const proofScript = path.join(betaRoot, "scripts", "organism-gitmolt-proof.sh");
+const proofScript = path.join(betaRoot, "scripts", "gitmolt-runtime-proof.sh");
 const corpusAgent = path.join(
   "cat-agent-skills",
   "rapp-agent-converter",
@@ -33,7 +33,7 @@ function probe(command, args, options = {}) {
   });
 }
 
-test("git-molt keeps two live Brainstem organisms healthy", {
+test("git-molt keeps two live Brainstem runtimes healthy", {
   timeout: 190_000,
 }, (t) => {
   if (process.platform === "win32") {
