@@ -13,6 +13,8 @@
     keyboardTileId: null,
     openedHerd: false,
     pendingWake: null,
+    pendingWakeDeadline: 0,
+    pendingWakeTimer: null,
     primaryFrameGeneration: null,
     primaryId: null,
     primaryRouteKey: null,
@@ -254,13 +256,61 @@
     return tile;
   }
 
+  const WAKE_RETRY_MS = 120;
+  const WAKE_DEADLINE_MS = 15000;
+
+  // The wake handshake had exactly two chances to land: once when the frame
+  // reports ready, and once when wakeTile's route transition finishes. Both can
+  // legitimately miss — the ready message arrives while routeTransition is still
+  // true, and a second navigation then nulls frameReadyGeneration while
+  // frameChanged returns early because a wake is pending. Nothing retried, so the
+  // tile was dropped silently and the chat showed a fresh Brainstem instead of the
+  // restored conversation. Retry until the generations agree, then give up loudly.
+  function clearWakeRetry() {
+    if (SCRIPT_STATE.pendingWakeTimer === null) return;
+    clearTimeout(SCRIPT_STATE.pendingWakeTimer);
+    SCRIPT_STATE.timers.delete(SCRIPT_STATE.pendingWakeTimer);
+    SCRIPT_STATE.pendingWakeTimer = null;
+  }
+
+  function scheduleWakeRetry() {
+    if (SCRIPT_STATE.pendingWakeTimer !== null) return;
+    if (!SCRIPT_STATE.pendingWakeDeadline) {
+      SCRIPT_STATE.pendingWakeDeadline = Date.now() + WAKE_DEADLINE_MS;
+    }
+    SCRIPT_STATE.pendingWakeTimer = addTimer(() => {
+      SCRIPT_STATE.pendingWakeTimer = null;
+      if (!SCRIPT_STATE.pendingWake) return;
+      if (Date.now() > SCRIPT_STATE.pendingWakeDeadline) {
+        const title = SCRIPT_STATE.pendingWake?.title || "that tile";
+        SCRIPT_STATE.pendingWake = null;
+        SCRIPT_STATE.pendingWakeDeadline = 0;
+        showError(new Error(
+          `"${title}" could not be restored into the Brainstem — the chat never `
+          + "became ready. Its conversation is still parked; try again.",
+        ));
+        return;
+      }
+      deliverPendingWake();
+    }, WAKE_RETRY_MS);
+  }
+
   function deliverPendingWake() {
+    if (!SCRIPT_STATE.pendingWake) {
+      clearWakeRetry();
+      SCRIPT_STATE.pendingWakeDeadline = 0;
+      return false;
+    }
     if (
-      !SCRIPT_STATE.pendingWake
-      || SCRIPT_STATE.routeTransition
+      SCRIPT_STATE.routeTransition
       || SCRIPT_STATE.frameReadyGeneration
         !== SCRIPT_STATE.context?.frameGeneration
-    ) return false;
+    ) {
+      scheduleWakeRetry();
+      return false;
+    }
+    clearWakeRetry();
+    SCRIPT_STATE.pendingWakeDeadline = 0;
     postToFrame({
       type: "rapp-beta:tile-wake",
       tile: SCRIPT_STATE.pendingWake,
