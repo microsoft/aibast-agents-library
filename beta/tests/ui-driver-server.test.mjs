@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
 import {
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readdirSync,
   rmSync,
+  utimesSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
@@ -736,11 +739,21 @@ test("a wedged frame command does not block the next command on the same frame",
   }
 });
 
-test("persisted UI driver trace errors cap caller-controlled text", async (t) => {
+test("persisted UI driver traces redact errors and rotate within bounded retention", async (t) => {
   const root = mkdtempSync(path.join(tmpdir(), "ui-driver-trace-cap-"));
   const betaHome = path.join(root, "beta-launcher");
   t.after(() => rmSync(root, { force: true, recursive: true }));
-  const oversized = "x".repeat(100 * 1024);
+  const fakeToken = `ghp_${"A".repeat(36)}`;
+  const oversized = `token=${fakeToken} ${"x".repeat(100 * 1024)}`;
+  const logDir = path.join(betaHome, "logs");
+  mkdirSync(logDir, { recursive: true });
+  const now = Date.now();
+  for (let index = 1; index <= 25; index += 1) {
+    const file = path.join(logDir, `ui-driver-old-${index}.jsonl`);
+    writeFileSync(file, "{}\n");
+    const when = new Date(now - index * 60 * 60 * 1000);
+    utimesSync(file, when, when);
+  }
   const brainstem = {
     executeJavaScript: async () => {
       throw new Error(`UI target not found: ${oversized}`);
@@ -755,25 +768,51 @@ test("persisted UI driver trace errors cap caller-controlled text", async (t) =>
   };
   const driver = await startUiDriverServer({
     brainstemHome: root,
-    env: { BRAINSTEM_BETA_HOME: betaHome },
+    env: {
+      BRAINSTEM_BETA_HOME: betaHome,
+      BRAINSTEM_BETA_UI_DRIVER_TRACE_MAX_BYTES: "1024",
+    },
     loopbackUrl: (url) => url.startsWith("http://127.0.0.1:707"),
     window: { webContents: { mainFrame } },
   });
   t.after(() => driver.stop());
   const metadata = JSON.parse(readFileSync(driver.metadataPath, "utf8"));
+  assert.equal(
+    readdirSync(logDir)
+      .filter((name) => /^ui-driver-.*\.jsonl(?:\.\d+)?$/.test(name))
+      .length,
+    20,
+  );
 
-  const response = await postCommand(metadata, {
-    action: "read",
-    selector: oversized,
-  });
+  let response;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    response = await postCommand(metadata, {
+      action: "read",
+      selector: oversized,
+    });
+    assert.equal(response.payload.ok, false);
+  }
 
-  assert.equal(response.payload.ok, false);
   const [trace] = readFileSync(metadata.tracePath, "utf8")
     .trim()
     .split("\n")
     .map((line) => JSON.parse(line));
   assert.ok(trace.effect.error.length <= 2000);
   assert.ok(readFileSync(metadata.tracePath).byteLength < 5000);
+  assert.ok(existsSync(`${metadata.tracePath}.1`));
+  const persisted = [
+    readFileSync(metadata.tracePath, "utf8"),
+    readFileSync(`${metadata.tracePath}.1`, "utf8"),
+  ].join("\n");
+  assert.doesNotMatch(persisted, /ghp_/);
+  assert.doesNotMatch(persisted, new RegExp(fakeToken));
+  assert.match(persisted, /\[redacted:token\]/);
+  assert.equal(
+    readdirSync(logDir)
+      .filter((name) => /^ui-driver-.*\.jsonl(?:\.\d+)?$/.test(name))
+      .length,
+    21,
+  );
 });
 
 test("the chat lease's aria-disabled marker does not make the send button unactionable for the driver", () => {

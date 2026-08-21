@@ -15,6 +15,11 @@ import { createServer } from "node:http";
 import { once } from "node:events";
 import path from "node:path";
 
+import {
+  pruneLogFiles,
+  redactCredentialText,
+  rotateLogIfLarge,
+} from "./log-redaction.mjs";
 import { createUiDriverHelpers } from "./ui-driver-helpers.mjs";
 import { resolveFfmpegExecutable } from "./video-tools.mjs";
 
@@ -2413,6 +2418,22 @@ export async function startUiDriverServer({
     randomBytes(5).toString("hex")
   }`;
   const tracePath = path.join(logDir, `ui-driver-${traceRunId}.jsonl`);
+  const configuredTraceMaxBytes = Number(
+    env.BRAINSTEM_BETA_UI_DRIVER_TRACE_MAX_BYTES,
+  );
+  const traceMaxBytes = Number.isFinite(configuredTraceMaxBytes)
+    && configuredTraceMaxBytes >= 1024
+    ? Math.floor(configuredTraceMaxBytes)
+    : 5 * 1024 * 1024;
+  const pruneUiDriverTraces = ({ protectCurrent = true } = {}) => (
+    pruneLogFiles(logDir, {
+      keep: 20,
+      match: (name) => /^ui-driver-.*\.jsonl(?:\.\d+)?$/.test(name),
+      maxAgeMs: 14 * 24 * 60 * 60 * 1000,
+      protectedNames: protectCurrent ? [path.basename(tracePath)] : [],
+    })
+  );
+  pruneUiDriverTraces({ protectCurrent: false });
   const frameQueue = createFrameQueue();
   const heartbeatMs = Math.max(
     10,
@@ -2493,7 +2514,12 @@ export async function startUiDriverServer({
         : {}),
     };
     mkdirSync(logDir, { recursive: true });
-    appendFileSync(tracePath, `${JSON.stringify(entry)}\n`, {
+    const rotated = rotateLogIfLarge(tracePath, {
+      maxBytes: traceMaxBytes,
+    });
+    if (rotated) pruneUiDriverTraces();
+    const serialized = redactCredentialText(JSON.stringify(entry));
+    appendFileSync(tracePath, `${serialized}\n`, {
       encoding: "utf8",
       mode: 0o600,
     });
