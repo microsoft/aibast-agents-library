@@ -53,6 +53,42 @@
     SCRIPT_STATE.context?.frame?.contentWindow?.postMessage(message, "*");
   }
 
+  // Who is acting. A person's interaction is a trusted event; anything the driver
+  // dispatches is synthetic and untrusted. Article VI: a person's own action may
+  // get brief feedback, a driver's does not, and attribution is carried on the
+  // object rather than in a message. Captured at the start of a mutation because
+  // the mutation then awaits, and the answer must not change underneath it.
+  let actingActor = "person";
+  // This module is imported headlessly by tests to prove herd mode loads nothing,
+  // so it must not touch the DOM at registration time.
+  if (typeof document !== "undefined") {
+    for (const type of ["pointerdown", "click", "keydown", "drop", "dragstart"]) {
+      document.addEventListener(type, (event) => {
+        actingActor = event.isTrusted ? "person" : "driver";
+      }, true);
+    }
+  }
+
+  // A change made by the driver is announced on the tile itself, briefly, so two
+  // hands on one window stay legible without narrating into the chat.
+  function stampActor(tileId, actor) {
+    if (!tileId || actor === "person") return;
+    // Tiles are identified in the DOM by their drive handle, not by a data-tile-id.
+    const element = document.querySelector(
+      `.dimension-tile[data-drive="${CSS.escape(driveTile(tileId))}"]`,
+    );
+    if (!element) return;
+    element.dataset.actor = actor;
+    element.classList.add("actor-marked");
+    addTimer(() => element.classList.remove("actor-marked"), 2600);
+  }
+
+  function announceChange(actor, tileId, message, options) {
+    stampActor(tileId, actor);
+    if (actor !== "person") return null;
+    return showToast(message, options);
+  }
+
   function showToast(message, {
     action,
     actionHandle,
@@ -201,6 +237,7 @@
   }
 
   async function parkCurrent(surface = SCRIPT_STATE.context?.viewMode?.surface || "herd") {
+    const actor = actingActor;
     const capture = await requestCapture();
     if (isPrimaryBlank(capture)) {
       throw new Error("There is no Brainstem conversation to park.");
@@ -213,7 +250,7 @@
       SCRIPT_STATE.routeTransition = false;
     }
     await refreshTiles();
-    showToast(`Parked "${tile.title}" in the ${surface}.`);
+    announceChange(actor, tile.id, `Parked "${tile.title}" in the ${surface}.`);
     return tile;
   }
 
@@ -234,6 +271,7 @@
   }
 
   async function wakeTile(id) {
+    const actor = actingActor;
     const requested = SCRIPT_STATE.tiles.find((tile) => tile.id === id);
     if (requested?.restorable === false) {
       throw new Error(requested.restoreError || "This tile cannot be restored.");
@@ -275,11 +313,12 @@
     }
     deliverPendingWake();
     await refreshTiles();
-    showToast(`Made "${tile.title}" primary.`);
+    announceChange(actor, tile.id, `Made "${tile.title}" primary.`);
     return tile;
   }
 
   async function foldTile(id) {
+    const actor = actingActor;
     if (SCRIPT_STATE.primaryId === id) {
       const current = await requestCapture();
       if (hasConversation(current)) await persistCapture(current);
@@ -292,7 +331,7 @@
       postToFrame({ type: "rapp-beta:tile-clear" });
     }
     await refreshTiles();
-    showToast(`Folded "${result.tile.title}".`, {
+    announceChange(actor, id, `Folded "${result.tile.title}".`, {
       actionLabel: "Undo",
       actionHandle: "tiles.undo",
       action: async () => {
@@ -305,18 +344,21 @@
   }
 
   async function moveTile(id, surface) {
+    const actor = actingActor;
     const tile = await SCRIPT_STATE.context.api.tilesMove(id, surface);
     SCRIPT_STATE.keyboardTileId = null;
     await refreshTiles();
-    showToast(`Moved "${tile.title}" to the ${surface}.`);
+    announceChange(actor, id, `Moved "${tile.title}" to the ${surface}.`);
     return tile;
   }
 
   async function bunchTiles(sourceId, targetId) {
+    const actor = actingActor;
     const result = await SCRIPT_STATE.context.api.tilesBunch(sourceId, targetId);
     SCRIPT_STATE.keyboardTileId = null;
     await refreshTiles();
-    showToast(`Bunched "${result.source.title}" with "${result.target.title}".`);
+    announceChange(actor, targetId,
+      `Bunched "${result.source.title}" with "${result.target.title}".`);
     return result;
   }
 

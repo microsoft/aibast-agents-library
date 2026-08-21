@@ -559,3 +559,20 @@
 .tile-surface-herd .dimension-tile-binder-page {
   border-color: #2a2c31;
 }
+
+/* Attribution is carried on the object. When the driver moves a tile the tile
+   itself says so, briefly — never a toast, never a message in the chat. */
+.dimension-tile.actor-marked::after {
+  position: absolute;
+  z-index: 4;
+  right: 6px;
+  bottom: 6px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(88, 166, 255, .92);
+  color: #06131f;
+  content: "AI";
+  font: 700 9px/1.35 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .06em;
+  pointer-events: none;
+}
