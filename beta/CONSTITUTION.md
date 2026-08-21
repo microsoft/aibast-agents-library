@@ -180,3 +180,27 @@ AgenticDrive postMessage bus, and treat emitted events as the only evidence an
 action happened. The bus mirrors the human surface exactly — steering, never a
 side door around the chat wire — and the embedded app's bytes arrive only
 sha-verified or inside a verified egg.
+
+## Article VI — The command surface, and where it lives
+
+The Frontier's own interface is drivable without the model, through the **RAPP
+command-line-less CLI** (`rapp-autopilot/1.0`, `beta/docs/AUTOPILOT-CLI.md`): a
+CLI interface with no command line, reached from the page console, taking a typed
+string or a structured call and answering in JSON — a CLI and an API in one
+surface. An AI needs two things and no more: CLI patterns, and the console on the
+page. Navigation, listing and moving tiles are deterministic and free; `chat.send`
+is the single crossing into the model, so intelligence is spent by decision and
+never as the side effect of a button press.
+
+That surface lives **in the client**. `index.html` is translation middleware: a new
+command is composed there out of what the Brainstem already exposes, so the kernel
+gains no endpoint, no field and no vocabulary — the protection Article I gives the
+sacred Brainstem against mutation, extended to its interface. The Grail's own
+`index.html` is never edited; additions arrive by injection into a copy or a frame,
+and a client may supersede it wholesale exactly as a rapplication does. Deployments
+that need different APIs ship different clients, not different kernels.
+
+Two tests decide compliance: **adding a command must never require a commit to
+`rapp_brainstem/`**, and the surface must never do what the interface cannot — no
+arbitrary code, no side door, the same controls a person uses, and visible in the
+window while it happens.
