@@ -102,6 +102,27 @@ off within a day; one that fires rarely is personality. So it is fenced:
 - **It never carries content.** Nothing the listener needs is ever inside the ident, so a listener
   who has it switched off has lost nothing at all.
 
+### Keeping one you liked
+
+A good cutover is a small piece of character — the moment the crappy voice gives way to the good one
+is genuinely distinctive, and no two land quite the same. So a person can **keep one**.
+
+The design consequence is the interesting part: **you only know you liked it after it has gone by.**
+A save control that only works while audio is playing is useless for something a few seconds long.
+So:
+
+- **A short rolling buffer.** The last few cutovers are held so "save that one" works retroactively,
+  the way a dashcam keeps the minute before you pressed the button. Everything else is discarded.
+- **Save the seam, not the whole reply.** What is worth keeping is a few seconds spanning both
+  voices, so the upgrade is audible in the saved clip. A recording of the answer is just the answer.
+- **Nothing is persisted until asked.** The buffer is temporary and on-device; only an explicit save
+  writes a file. A voice feature that quietly accumulated recordings of a person's conversations
+  would be a serious problem, not a nice extra — synthesized speech still carries what was said.
+- **It attaches to the conversation, so it travels.** A kept cutover belongs to the transcript it
+  came from, which means it rides along with the tile like anything else the conversation owns.
+- **It is deletable, and deleting it means gone.** Same rule as every other Sense under Article II:
+  removable without trace.
+
 ### Rules that keep it honest
 
 - **The relay never stalls speech.** If VibeVoice is late, the fast voice simply finishes the
@@ -158,3 +179,5 @@ person who cannot.
 - Any voice path that only works because the listener can also read the screen.
 - A station ident that fires often, fires at random, carries content, or fires when audio is the
   only channel the listener has.
+- Retaining synthesized audio of a person's conversations beyond the rolling buffer without an
+  explicit save.
