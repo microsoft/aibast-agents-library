@@ -1063,11 +1063,16 @@ export class BrainSurgeon {
   async releaseChatLease(token) {
     this.chatLeaseTokens.delete(token);
     this.chatLeaseRegistry.delete(token);
-    await this.uiCommand({
-      action: "set_chat_lease",
-      locked: false,
-      token,
-    });
+    try {
+      await this.uiCommand({
+        action: "set_chat_lease",
+        locked: false,
+        token,
+      });
+    } catch {
+      // A stale frame-side token can only leave a banner behind; the person's
+      // next composer interaction clears every token and self-heals it.
+    }
     this.routeManager?.recordTelemetry?.("chat-lease-released", {
       lease_count: this.chatLeaseRegistry.size,
     });
@@ -1377,7 +1382,7 @@ export class BrainSurgeon {
         await this.waitForVisibleBrainstem();
       }
       if (ephemeralAgent) await this.syncChatLeases();
-      return this.uiCommand({
+      const result = await this.uiCommand({
         action: "chat",
         value: task,
         label: String(narration || "Delegating this outcome to the Brainstem"),
@@ -1386,6 +1391,13 @@ export class BrainSurgeon {
           Math.min(3600000, Number(timeoutMs) || 180000),
         ),
       });
+      if (result?.yielded_to_user === true) {
+        this.emit({
+          type: "lease",
+          message: "You took the chat back — I stopped driving it.",
+        });
+      }
+      return result;
     };
 
     if (!ephemeralAgent && !this.routeManager) {

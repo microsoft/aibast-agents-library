@@ -225,10 +225,9 @@ export function createUiDriverHelpers(environment = {}) {
   function stateFor(element) {
     const explicit = element?.dataset?.driveState || element?.state;
     if (explicit) return normalizeText(explicit);
-    const leaseMarked = element?.dataset?.rappChatLease === "locked";
     if (
       Boolean(element?.disabled)
-      || (!leaseMarked && elementValue(element, "aria-disabled") === "true")
+      || elementValue(element, "aria-disabled") === "true"
     ) return "disabled";
     if (
       Boolean(element?.checked)

@@ -252,7 +252,7 @@ tile) shifts `nth-of-type` and silently retargets the path.
 | Twin frames | `:69-76`, `main.mjs:748-776` | tiles are found by URL prefix (works through the `document.write` injection, `main.mjs:698-709`); a popped-out twin is a separate `BrowserWindow`, not in `mainWindow`'s frame tree → not drivable |
 | Shadow DOM | `:206-224` | not traversed |
 | Visibility ≠ clickability | `:167-176` | `visible()` checks rect/display/visibility/opacity only — not `disabled`, `pointer-events`, or occlusion by `#splash`, the login overlay, `#intro`, or the driver's own overlays; `element.click()` on a disabled button is a silent no-op that still returns `{clicked}` |
-| Synthetic events | `:276-277`, `:669-670`, `:386-397` | `click()` and `KeyboardEvent`s are `isTrusted=false`; `press` dispatches only `keydown`+`keyup` (no `keypress`, no default action, so Enter does not submit unless the app listens on keydown); the chat-lease guard deliberately blocks only trusted events |
+| Synthetic events | `:276-277`, `:669-670`, `:386-397` | `click()` and `KeyboardEvent`s are `isTrusted=false`; `press` dispatches only `keydown`+`keyup` (no `keypress`, no default action, so Enter does not submit unless the app listens on keydown); the chat-lease witnesses observe only trusted events and never prevent one, and a trusted interaction hands the composer to the person so the driver's next checkpoint yields |
 | Wait semantics | `:342-376` | text-only `wait` is `document.body.innerText.includes(text)` polled every 100 ms — it is satisfied by any earlier occurrence, including the **user prompt that asked for the marker** (e.g. the walkthrough's `STACK_CHURN_READY` instruction is itself in the transcript), the driver's narration label, or the collapsed/visible logs; default timeout 10 s, max 120 s |
 | No post-action verification | `:264-285`, `:310-340`, `:651-675` | `click`/`type`/`press` sleep `settleMs` (defaults 520/300/280 ms) and return success unconditionally; only `chat` (`:509-585`) and `surgeon_chat` (`:458-499`) have completion detection (request-id slot / reply-count baseline) |
 | Python `force_mode` never reaches the server | `brainstem_ui_driver_agent.py:22-43`, `:102-108`, `:176`; `ui-driver-server.mjs:1756` | `_camelize` has no `force_mode → forceMode` mapping; the server checks `command.forceMode === true`; the schema and `system_context` tell the model to "pass force_mode=true on your run" — it is silently ignored (the `action:"force_mode"` form works) |
@@ -378,8 +378,11 @@ are present in herd mode.
 
 ### In-page state hooks
 
-`window.__brainstemAiDriver` (`ui-driver-server.mjs:80`) with `chatLeaseTokens`,
-`chatLeaseLocked`, `lastRun`, `cursorIdleTimer`; `window.__brainstemBetaNavigationCount`
+`window.__brainstemAiDriver` (`ui-driver-server.mjs:253`) with `chatLeaseTokens`,
+`chatLeaseLocked`, `composerHandoffs`, `composerHandoffAt`, `composerHandoffReason`,
+`driverComposerValue`, `chatLeaseBannerTimer`, `lastRun`, `cursorIdleTimer`; all of
+these fields die with the document on a route swap, so `composerHandoffs` is not a
+session-monotonic counter. `window.__brainstemBetaNavigationCount`
 (`:1787-1791`); `window.rappShowModeTour` (`:1468-1504`; 14 steps, `beta/ui/show-mode-tour.js:182`)
 exposing `steps`, `start/next/prev/stop`, `running`, `step`; `window.__brainstemBetaRecording`
 / `__brainstemBetaLastRecording` (`:713`, `:846`).

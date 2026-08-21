@@ -306,6 +306,93 @@ test("separate Surgeons reapply the shared lease registry after route swaps", as
   assert.equal(registry.size, 0);
 });
 
+test("a delegation whose composer was taken back reports yielded_to_user and does not re-drive", async () => {
+  const commands = [];
+  const events = [];
+  const surgeon = new BrainSurgeon({
+    runtime: {},
+    brainstemUrl: "http://127.0.0.1:7071",
+    onEvent: (event) => events.push(event),
+    routeManager: {
+      recordTelemetry: () => {},
+      withRoute: async (_options, callback) => callback(),
+    },
+    uiCommand: async (command) => {
+      commands.push(command);
+      if (command.action === "chat") {
+        return {
+          yielded_to_user: true,
+          reason: "person_took_composer",
+        };
+      }
+      return {};
+    },
+  });
+
+  const result = JSON.parse(await surgeon.delegateToBrainstem({
+    prompt: "do it",
+    ephemeral_agent: {
+      filename: "temporary_agent.py",
+      source: "print('temporary')",
+    },
+  }));
+
+  assert.equal(result.yielded_to_user, true);
+  assert.equal(
+    events.filter((event) => event.type === "lease").length,
+    1,
+  );
+  assert.equal(
+    commands.filter((command) => command.action === "chat").length,
+    1,
+  );
+  assert.equal(commands.at(-1).action, "set_chat_lease");
+  assert.equal(commands.at(-1).locked, false);
+  assert.equal(typeof commands.at(-1).token, "string");
+});
+
+test("a failed lease release cannot replace the delegation's result", async () => {
+  const commands = [];
+  const registry = new Set();
+  const telemetry = [];
+  const surgeon = new BrainSurgeon({
+    chatLeaseRegistry: registry,
+    runtime: {},
+    brainstemUrl: "http://127.0.0.1:7071",
+    routeManager: {
+      recordTelemetry: (type, data) => telemetry.push({ type, ...data }),
+      withRoute: async (_options, callback) => callback(),
+    },
+    uiCommand: async (command) => {
+      commands.push(command);
+      if (command.action === "chat") return { response: "ok" };
+      if (command.action === "set_chat_lease" && !command.locked) {
+        throw new Error("frame disappeared during release");
+      }
+      return {};
+    },
+  });
+
+  const result = JSON.parse(await surgeon.delegateToBrainstem({
+    prompt: "do it",
+    ephemeral_agent: {
+      filename: "temporary_agent.py",
+      source: "print('temporary')",
+    },
+  }));
+  const token = commands.find(
+    (command) => command.action === "set_chat_lease" && command.locked,
+  ).token;
+
+  assert.equal(result.response, "ok");
+  assert.deepEqual(
+    telemetry.filter((event) => event.type === "chat-lease-released"),
+    [{ type: "chat-lease-released", lease_count: 0 }],
+  );
+  assert.equal(surgeon.chatLeaseTokens.has(token), false);
+  assert.equal(registry.has(token), false);
+});
+
 test("Brain Surgeon manages nested RAPPID stacks and visibly reloads selection", async () => {
   const calls = [];
   const routeManager = {

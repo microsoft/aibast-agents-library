@@ -128,6 +128,396 @@ async function postCommand(metadata, command, token = metadata.token) {
   };
 }
 
+function eventRecorder(values = {}) {
+  return {
+    ...values,
+    preventDefaultCalled: false,
+    stopImmediatePropagationCalled: false,
+    preventDefault() {
+      this.preventDefaultCalled = true;
+    },
+    stopImmediatePropagation() {
+      this.stopImmediatePropagationCalled = true;
+    },
+  };
+}
+
+function makeLeaseHarness() {
+  const elements = new Map();
+  const timers = [];
+  let onSetAttribute = null;
+  const eventTarget = (id) => {
+    const attributes = new Map();
+    const listeners = new Map();
+    const element = {
+      addEventListener(type, listener) {
+        listeners.set(type, listener);
+      },
+      attributes,
+      dataset: {},
+      getAttribute(name) {
+        return attributes.get(name) ?? null;
+      },
+      id,
+      listeners,
+      setAttribute(name, value) {
+        attributes.set(name, String(value));
+        onSetAttribute?.({ element, name, value: String(value) });
+      },
+    };
+    elements.set(id, element);
+    return element;
+  };
+  const input = eventTarget("input");
+  const send = eventTarget("send");
+  const starters = eventTarget("starter-prompts");
+  const document = {
+    activeElement: null,
+    body: {
+      appendChild(element) {
+        elements.set(element.id, element);
+      },
+    },
+    createElement: () => ({
+      dataset: {},
+      hidden: false,
+      id: "",
+      style: {},
+      textContent: "",
+    }),
+    getElementById: (id) => elements.get(id) || null,
+    querySelector: () => null,
+    querySelectorAll: () => [],
+  };
+  const helpers = {
+    buildOutline: () => ({ rows: [], snapshot: "steady" }),
+    caps: { inspectDefault: 60 },
+    diffOutlines: () => ({ added: [], changed: [], removed: [] }),
+    selectorFor: () => null,
+  };
+  const context = vm.createContext({
+    clearTimeout() {},
+    document,
+    setTimeout(callback, ms) {
+      timers.push({ callback, ms });
+      return timers.length;
+    },
+    window: {},
+  });
+  const command = vm.runInContext(
+    `(${uiDriverInternals.browserDriverCommand.toString()})`,
+    context,
+  );
+  return {
+    command: (value) => command(value, () => helpers),
+    context,
+    elements,
+    input,
+    send,
+    setOnSetAttribute(callback) {
+      onSetAttribute = callback;
+    },
+    starters,
+    timers,
+  };
+}
+
+function makeChatHarness() {
+  const elements = new Map();
+  const observers = new Set();
+  const slots = [];
+  let onInputValue = null;
+  let onSend = null;
+  let onTimer = null;
+  let sendClicks = 0;
+
+  const classList = () => {
+    const values = new Set();
+    return {
+      add: (...names) => names.forEach((name) => values.add(name)),
+      contains: (name) => values.has(name),
+      remove: (...names) => names.forEach((name) => values.delete(name)),
+    };
+  };
+  const attributesFor = () => {
+    const attributes = new Map();
+    return {
+      attributes,
+      getAttribute(name) {
+        return attributes.get(name) ?? null;
+      },
+      setAttribute(name, value) {
+        attributes.set(name, String(value));
+      },
+    };
+  };
+  class FakeInput {
+    constructor() {
+      Object.assign(this, attributesFor());
+      this._value = "";
+      this.classList = classList();
+      this.dataset = {};
+      this.id = "input";
+      this.isContentEditable = false;
+      this.listeners = new Map();
+      this.localName = "textarea";
+    }
+
+    get value() {
+      return this._value;
+    }
+
+    set value(value) {
+      this._value = String(value);
+      onInputValue?.(this, this._value);
+    }
+
+    addEventListener(type, listener) {
+      this.listeners.set(type, listener);
+    }
+
+    contains(element) {
+      return element === this;
+    }
+
+    dispatchEvent(event) {
+      this.listeners.get(event.type)?.(event);
+      return true;
+    }
+
+    focus() {
+      document.activeElement = this;
+    }
+
+    getBoundingClientRect() {
+      return { height: 36, left: 80, top: 600, width: 300 };
+    }
+
+    scrollIntoView() {}
+  }
+  class FakeTextArea extends FakeInput {}
+  class FakeEvent {
+    constructor(type, options = {}) {
+      this.type = type;
+      this.bubbles = options.bubbles === true;
+      this.isTrusted = false;
+    }
+  }
+
+  const input = new FakeInput();
+  const sendAttributes = attributesFor();
+  const send = {
+    ...sendAttributes,
+    addEventListener(type, listener) {
+      this.listeners.set(type, listener);
+    },
+    classList: classList(),
+    click() {
+      sendClicks += 1;
+      this.listeners.get("click")?.({ isTrusted: false });
+      onSend?.();
+    },
+    contains(element) {
+      return element === this;
+    },
+    dataset: {},
+    disabled: false,
+    focus() {
+      document.activeElement = this;
+    },
+    getBoundingClientRect() {
+      return { height: 36, left: 420, top: 600, width: 80 };
+    },
+    id: "send",
+    listeners: new Map(),
+    localName: "button",
+    scrollIntoView() {},
+  };
+  const starters = {
+    addEventListener(type, listener) {
+      this.listeners.set(type, listener);
+    },
+    listeners: new Map(),
+  };
+  const chat = { id: "chat" };
+  elements.set("input", input);
+  elements.set("send", send);
+  elements.set("starter-prompts", starters);
+  elements.set("chat", chat);
+
+  const genericElement = (tag) => ({
+    classList: classList(),
+    dataset: {},
+    getBoundingClientRect: () => ({
+      height: 20,
+      left: 10,
+      top: 10,
+      width: 20,
+    }),
+    id: "",
+    localName: tag,
+    offsetWidth: 0,
+    style: {},
+    textContent: "",
+  });
+  const appendElement = (element) => {
+    if (element.id) elements.set(element.id, element);
+  };
+  const document = {
+    activeElement: null,
+    body: {
+      appendChild: appendElement,
+      cloneNode: () => ({
+        innerText: "",
+        querySelectorAll: () => [],
+      }),
+    },
+    createElement: genericElement,
+    elementFromPoint(x) {
+      return x < 360 ? input : send;
+    },
+    getElementById: (id) => elements.get(id) || null,
+    head: { appendChild: appendElement },
+    querySelector(selector) {
+      const match = selector.match(
+        /^#chat \.response-slot\[data-request-id="(\d+)"\]$/,
+      );
+      return match
+        ? slots.find((slot) => slot.dataset.requestId === match[1]) || null
+        : null;
+    },
+    querySelectorAll(selector) {
+      return selector === "#chat .response-slot" ? [...slots] : [];
+    },
+    readyState: "complete",
+    visibilityState: "visible",
+  };
+  class FakeMutationObserver {
+    constructor(callback) {
+      this.callback = callback;
+      this.connected = false;
+    }
+
+    disconnect() {
+      this.connected = false;
+      observers.delete(this);
+    }
+
+    observe() {
+      this.connected = true;
+      observers.add(this);
+    }
+  }
+  const notifyObservers = () => {
+    for (const observer of [...observers]) {
+      if (observer.connected) observer.callback([]);
+    }
+  };
+  const appendSlot = ({
+    agentLogs = "",
+    id,
+    response,
+    user,
+  }, notify = true) => {
+    const userBubble = {
+      dataset: {},
+      innerText: String(user),
+      title: "",
+    };
+    const responseBubble = { innerText: String(response) };
+    const reply = {
+      querySelector(selector) {
+        if (selector === ".bubble") return responseBubble;
+        if (selector === ".agent-logs") {
+          return agentLogs ? { innerText: agentLogs } : null;
+        }
+        return null;
+      },
+    };
+    const slot = {
+      dataset: { requestId: String(id) },
+      previousElementSibling: userBubble,
+      querySelector(selector) {
+        if (selector === ".msg.system") return null;
+        if (selector.startsWith(".msg.assistant")) return reply;
+        return null;
+      },
+    };
+    slots.push(slot);
+    if (notify) notifyObservers();
+    return slot;
+  };
+  onSend = () => {
+    const user = input.value;
+    input._value = "";
+    const id = Math.max(
+      0,
+      ...slots.map((slot) => Number(slot.dataset.requestId) || 0),
+    ) + 1;
+    appendSlot({ id, response: `reply:${user}`, user });
+  };
+
+  const helpers = {
+    buildOutline: () => ({ rows: [], snapshot: "steady" }),
+    caps: { inspectDefault: 60 },
+    diffOutlines: () => ({ added: [], changed: [], removed: [] }),
+    selectorFor: (element) => (element?.id ? `#${element.id}` : null),
+  };
+  const context = vm.createContext({
+    CSS: { escape: (value) => value },
+    clearTimeout() {},
+    document,
+    Event: FakeEvent,
+    getComputedStyle: () => ({
+      display: "block",
+      opacity: "1",
+      pointerEvents: "auto",
+      visibility: "visible",
+    }),
+    HTMLInputElement: FakeInput,
+    HTMLTextAreaElement: FakeTextArea,
+    innerHeight: 800,
+    innerWidth: 1000,
+    location: { href: "http://127.0.0.1:7071/" },
+    MutationObserver: FakeMutationObserver,
+    setTimeout(callback, ms) {
+      queueMicrotask(() => {
+        onTimer?.({ ms, observing: observers.size > 0 });
+        callback();
+      });
+      return 1;
+    },
+    window: {},
+  });
+  const driverCommand = vm.runInContext(
+    `(${uiDriverInternals.browserDriverCommand.toString()})`,
+    context,
+  );
+
+  return {
+    appendSlot,
+    command: (value) => driverCommand(value, () => helpers),
+    context,
+    input,
+    notifyObservers,
+    send,
+    sendClicks: () => sendClicks,
+    setInputValue(value) {
+      input._value = String(value);
+    },
+    setOnInputValue(callback) {
+      onInputValue = callback;
+    },
+    setOnSend(callback) {
+      onSend = callback;
+    },
+    setOnTimer(callback) {
+      onTimer = callback;
+    },
+    slots,
+  };
+}
+
 test("visible UI driver accepts bounded v2 actions", () => {
   assert.equal(
     uiDriverInternals.validateCommand({
@@ -519,8 +909,6 @@ test("visible chat waits for stable SSE replies and ignores prompt text", () => 
     /\.msg\.assistant:not\(\.typing-indicator\):not\(\.stream-arriving\)/,
   );
   assert.match(source, /data-request-id/);
-  assert.match(source, /chatLeaseLocked/);
-  assert.match(source, /event\.isTrusted/);
   assert.match(source, /const errorBaseline = document\.querySelectorAll/);
   assert.match(source, /errors\.length > errorBaseline/);
   assert.match(source, /\.msg\.user,\[data-brainstem-ai-driver\]/);
@@ -845,11 +1233,23 @@ test("persisted UI driver traces redact errors and rotate within bounded retenti
   );
 });
 
-test("the chat lease's aria-disabled marker does not make the send button unactionable for the driver", () => {
+test("the chat lease never marks the composer disabled", async () => {
   const source = uiDriverInternals.browserDriverCommand.toString();
-  assert.match(source, /rappChatLease === "locked"/);
-  assert.match(source, /\(!leaseMarked && element\.getAttribute\?\.\("aria-disabled"\) === "true"\)/);
-  assert.match(source, /send\.dataset\.rappChatLease = "locked"/);
+  assert.doesNotMatch(source, /rappChatLease === "locked"/);
+  assert.doesNotMatch(
+    source,
+    /aria-disabled", *\n? *state\.chatLeaseLocked/,
+  );
+  assert.doesNotMatch(source, /send\.dataset\.rappChatLease = "locked"/);
+
+  const harness = makeLeaseHarness();
+  await harness.command({
+    action: "set_chat_lease",
+    locked: true,
+    token: "delegate",
+  });
+  assert.equal(harness.send.attributes.get("aria-disabled"), "false");
+  assert.equal(harness.send.dataset.rappChatLease, "advisory");
 });
 
 test("the frame watchdog budget follows the command's own budget, never truncating a healthy chat", () => {
@@ -923,96 +1323,368 @@ test("a trace that cannot be written does not turn a finished command into a fai
   }
 });
 
-test("outline state treats the driver-owned leased send button as enabled", () => {
+test("outline state treats advisory leases as enabled without exempting disabled controls", () => {
   const helpers = uiDriverInternals.createUiDriverHelpers();
   const send = {
-    dataset: { rappChatLease: "locked" },
+    dataset: { rappChatLease: "advisory" },
     disabled: false,
-    getAttribute: (name) => (name === "aria-disabled" ? "true" : null),
+    getAttribute: (name) => (name === "aria-disabled" ? "false" : null),
     localName: "button",
   };
 
   assert.equal(helpers.stateFor(send), "enabled");
-  delete send.dataset.rappChatLease;
+  send.dataset.rappChatLease = "locked";
+  send.getAttribute = (name) => (name === "aria-disabled" ? "true" : null);
   assert.equal(helpers.stateFor(send), "disabled");
 });
 
-test("the chat lease blocks trusted starter-prompt clicks", async () => {
-  const elements = new Map();
-  const eventTarget = (id) => {
-    const listeners = new Map();
-    const element = {
-      addEventListener(type, listener) {
-        listeners.set(type, listener);
-      },
-      dataset: {},
-      id,
-      listeners,
-      setAttribute() {},
-    };
-    elements.set(id, element);
-    return element;
-  };
-  eventTarget("input");
-  eventTarget("send");
-  const starters = eventTarget("starter-prompts");
-  const document = {
-    activeElement: null,
-    body: {
-      appendChild(element) {
-        elements.set(element.id, element);
-      },
-    },
-    createElement: () => ({
-      dataset: {},
-      hidden: false,
-      id: "",
-      style: {},
-      textContent: "",
-    }),
-    getElementById: (id) => elements.get(id) || null,
-    querySelectorAll: () => [],
-  };
-  const helpers = {
-    buildOutline: () => ({ rows: [], snapshot: "steady" }),
-    caps: { inspectDefault: 60 },
-    diffOutlines: () => ({ added: [], changed: [], removed: [] }),
-    selectorFor: () => null,
-  };
-  const context = vm.createContext({
-    document,
-    setTimeout,
-    window: {},
-  });
-  const command = vm.runInContext(
-    `(${uiDriverInternals.browserDriverCommand.toString()})`,
-    context,
-  );
-  await command(
+test("a trusted starter-prompt click hands the composer to the person instead of being swallowed", async () => {
+  const harness = makeLeaseHarness();
+  await harness.command(
     { action: "set_chat_lease", locked: true, token: "delegate" },
-    () => helpers,
   );
-  const trustedClick = {
+  const trustedClick = eventRecorder({
     isTrusted: true,
-    preventDefaultCalled: false,
-    stopImmediatePropagationCalled: false,
-    preventDefault() {
-      this.preventDefaultCalled = true;
-    },
-    stopImmediatePropagation() {
-      this.stopImmediatePropagationCalled = true;
-    },
-  };
+    target: { closest: () => ({}) },
+  });
 
-  starters.listeners.get("click")(trustedClick);
+  harness.starters.listeners.get("click")(trustedClick);
 
-  assert.equal(trustedClick.preventDefaultCalled, true);
-  assert.equal(trustedClick.stopImmediatePropagationCalled, true);
-
-  trustedClick.isTrusted = false;
-  trustedClick.preventDefaultCalled = false;
-  trustedClick.stopImmediatePropagationCalled = false;
-  starters.listeners.get("click")(trustedClick);
   assert.equal(trustedClick.preventDefaultCalled, false);
   assert.equal(trustedClick.stopImmediatePropagationCalled, false);
+  const state = harness.context.window.__brainstemAiDriver;
+  assert.equal(state.chatLeaseTokens.size, 0);
+  assert.equal(state.chatLeaseLocked, false);
+  assert.equal(state.composerHandoffs, 1);
+  assert.equal(state.composerHandoffReason, "starter");
+  const banner = harness.elements.get("brainstem-beta-chat-lease");
+  assert.match(banner.textContent, /took this chat back/i);
+  assert.equal(banner.hidden, false);
+  assert.equal(harness.send.dataset.rappChatLease, undefined);
+});
+
+test("a trusted click in the starter-prompt container's padding does not hand off", async () => {
+  const harness = makeLeaseHarness();
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "delegate" },
+  );
+  const trustedClick = eventRecorder({
+    isTrusted: true,
+    target: { closest: () => null },
+  });
+
+  harness.starters.listeners.get("click")(trustedClick);
+
+  const state = harness.context.window.__brainstemAiDriver;
+  assert.equal(state.composerHandoffs || 0, 0);
+  assert.equal(state.chatLeaseTokens.size, 1);
+  assert.equal(state.chatLeaseLocked, true);
+  assert.equal(trustedClick.preventDefaultCalled, false);
+  assert.equal(trustedClick.stopImmediatePropagationCalled, false);
+});
+
+test("the person's Enter and Send click hand the composer off rather than being swallowed", async () => {
+  const harness = makeLeaseHarness();
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "send-token" },
+  );
+  const sendClick = eventRecorder({ isTrusted: true });
+  harness.send.listeners.get("click")(sendClick);
+  let state = harness.context.window.__brainstemAiDriver;
+  assert.equal(sendClick.preventDefaultCalled, false);
+  assert.equal(sendClick.stopImmediatePropagationCalled, false);
+  assert.equal(state.chatLeaseTokens.size, 0);
+  assert.equal(state.composerHandoffs, 1);
+  assert.equal(state.composerHandoffReason, "send");
+
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "enter-token" },
+  );
+  const enter = eventRecorder({
+    isTrusted: true,
+    key: "Enter",
+    shiftKey: false,
+  });
+  harness.input.listeners.get("keydown")(enter);
+  state = harness.context.window.__brainstemAiDriver;
+  assert.equal(enter.preventDefaultCalled, false);
+  assert.equal(enter.stopImmediatePropagationCalled, false);
+  assert.equal(state.chatLeaseTokens.size, 0);
+  assert.equal(state.composerHandoffs, 2);
+  assert.equal(state.composerHandoffReason, "enter");
+
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "ignored-token" },
+  );
+  const count = state.composerHandoffs;
+  const shiftEnter = eventRecorder({
+    isTrusted: true,
+    key: "Enter",
+    shiftKey: true,
+  });
+  const tab = eventRecorder({
+    isTrusted: true,
+    key: "Tab",
+    shiftKey: false,
+  });
+  harness.input.listeners.get("keydown")(shiftEnter);
+  harness.input.listeners.get("keydown")(tab);
+  assert.equal(state.chatLeaseTokens.size, 1);
+  assert.equal(state.composerHandoffs, count);
+  assert.equal(shiftEnter.preventDefaultCalled, false);
+  assert.equal(tab.preventDefaultCalled, false);
+});
+
+test("a real keystroke in the composer hands it back, exactly as the banner promises", async () => {
+  const harness = makeLeaseHarness();
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "person" },
+  );
+  const typing = eventRecorder({ isTrusted: true });
+  harness.input.listeners.get("beforeinput")(typing);
+  const state = harness.context.window.__brainstemAiDriver;
+  assert.equal(typing.preventDefaultCalled, false);
+  assert.equal(typing.stopImmediatePropagationCalled, false);
+  assert.equal(state.chatLeaseTokens.size, 0);
+  assert.equal(state.chatLeaseLocked, false);
+  assert.equal(state.composerHandoffs, 1);
+  assert.equal(state.composerHandoffReason, "typing");
+  assert.match(
+    harness.elements.get("brainstem-beta-chat-lease").textContent,
+    /took this chat back/i,
+  );
+
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "synthetic" },
+  );
+  harness.input.listeners.get("beforeinput")(
+    eventRecorder({ isTrusted: false }),
+  );
+  assert.equal(state.chatLeaseTokens.size, 1);
+  assert.equal(state.chatLeaseLocked, true);
+  assert.equal(state.composerHandoffs, 1);
+});
+
+test("a synthetic click never hands off the composer", async () => {
+  const harness = makeLeaseHarness();
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "delegate" },
+  );
+  const starterClick = eventRecorder({
+    isTrusted: false,
+    target: { closest: () => ({}) },
+  });
+  const sendClick = eventRecorder({ isTrusted: false });
+
+  harness.starters.listeners.get("click")(starterClick);
+  harness.send.listeners.get("click")(sendClick);
+
+  // This pins only that automation cannot impersonate a person's handoff.
+  const state = harness.context.window.__brainstemAiDriver;
+  assert.equal(starterClick.preventDefaultCalled, false);
+  assert.equal(sendClick.preventDefaultCalled, false);
+  assert.equal(state.chatLeaseTokens.size, 1);
+  assert.equal(state.chatLeaseLocked, true);
+  assert.equal(state.composerHandoffs || 0, 0);
+});
+
+test("chat yields without sending when the person takes the composer mid-type", async () => {
+  const harness = makeChatHarness();
+  await harness.command(
+    { action: "set_chat_lease", locked: true, token: "delegate" },
+  );
+  const prompt = "delegate this";
+  let handedOff = false;
+  harness.setOnInputValue((element, value) => {
+    if (handedOff || value.length < 4 || value === prompt) return;
+    handedOff = true;
+    element.listeners.get("beforeinput")?.({ isTrusted: true });
+    element._value += " + person's correction";
+  });
+
+  const result = await harness.command({
+    action: "chat",
+    typingDelayMs: 1,
+    value: prompt,
+  });
+
+  const publicResult = { ...result };
+  delete publicResult.__trace;
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(publicResult)),
+    { yielded_to_user: true, reason: "person_took_composer" },
+  );
+  assert.equal(harness.sendClicks(), 0);
+  assert.equal(harness.slots.length, 0);
+  assert.equal(
+    harness.context.window.__brainstemAiDriver.chatLeaseTokens.size,
+    0,
+  );
+  assert.match(harness.input.value, /person's correction/);
+});
+
+test("chat yields if the person acts during the send animation", async () => {
+  const harness = makeChatHarness();
+  const prompt = "delegate this";
+  let handedOff = false;
+  harness.setOnTimer(({ observing }) => {
+    if (handedOff || !observing) return;
+    handedOff = true;
+    harness.input.listeners.get("beforeinput")?.({ isTrusted: true });
+    harness.input._value += " + wait";
+  });
+
+  const result = await harness.command({
+    action: "chat",
+    typingDelayMs: 0,
+    value: prompt,
+  });
+
+  const publicResult = { ...result };
+  delete publicResult.__trace;
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(publicResult)),
+    { yielded_to_user: true, reason: "person_took_composer" },
+  );
+  assert.equal(harness.sendClicks(), 0);
+  assert.equal(harness.slots.length, 0);
+  assert.match(harness.input.value, /\+ wait$/);
+});
+
+test("chat never adopts a request slot the person created", async (t) => {
+  const prompt = "driver prompt";
+  await t.test("re-baselines request slots after typing", async () => {
+    const duringTyping = makeChatHarness();
+    let personSlotAdded = false;
+    duringTyping.setOnInputValue((_element, value) => {
+      if (personSlotAdded || !value) return;
+      personSlotAdded = true;
+      duringTyping.appendSlot({
+        id: 5,
+        response: "private reply",
+        user: "my private question",
+      }, false);
+    });
+    duringTyping.setOnSend(() => {
+      duringTyping.setInputValue("");
+      duringTyping.appendSlot({
+        id: 6,
+        response: "driver reply",
+        user: prompt,
+      });
+    });
+
+    const result = await duringTyping.command({
+      action: "chat",
+      typingDelayMs: 1,
+      value: prompt,
+    });
+    assert.equal(result.requestId, 6);
+    assert.equal(result.response, "driver reply");
+    assert.equal(
+      duringTyping.slots[0].previousElementSibling.dataset.rappActor,
+      undefined,
+    );
+  });
+
+  await t.test("correlates post-send slots by its own user-bubble text", async () => {
+    const afterBaseline = makeChatHarness();
+    afterBaseline.setOnSend(() => {
+      afterBaseline.setInputValue("");
+      afterBaseline.appendSlot({
+        id: 5,
+        response: "private reply",
+        user: "my private question",
+      }, false);
+      afterBaseline.appendSlot({
+        id: 6,
+        response: "driver reply",
+        user: prompt,
+      }, false);
+      afterBaseline.notifyObservers();
+    });
+    const correlated = await afterBaseline.command({
+      action: "chat",
+      typingDelayMs: 0,
+      value: prompt,
+    });
+    assert.equal(correlated.requestId, 6);
+    assert.equal(correlated.response, "driver reply");
+  });
+
+  await t.test("stamps AI attribution on the owned user bubble", async () => {
+    const attribution = makeChatHarness();
+    const result = await attribution.command({
+      action: "chat",
+      typingDelayMs: 0,
+      value: prompt,
+    });
+    const ownBubble = attribution.slots[0].previousElementSibling;
+    assert.equal(result.requestId, 1);
+    assert.equal(ownBubble.dataset.rappActor, "ai");
+    assert.equal(ownBubble.title, "Sent by the Brain Surgeon");
+  });
+});
+
+test("chat refuses to clobber text the person already typed", async () => {
+  const harness = makeChatHarness();
+  harness.setInputValue("stop, that's wrong");
+
+  const yielded = await harness.command({
+    action: "chat",
+    typingDelayMs: 0,
+    value: "do the thing",
+  });
+  const publicYield = { ...yielded };
+  delete publicYield.__trace;
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(publicYield)),
+    {
+      yielded_to_user: true,
+      reason: "person_has_text_in_composer",
+    },
+  );
+  assert.equal(harness.input.value, "stop, that's wrong");
+  assert.equal(harness.sendClicks(), 0);
+
+  harness.setInputValue("");
+  const completed = await harness.command({
+    action: "chat",
+    typingDelayMs: 0,
+    value: "do the thing",
+  });
+  assert.equal(completed.requestId, 1);
+  assert.equal(completed.response, "reply:do the thing");
+  assert.equal(harness.sendClicks(), 1);
+});
+
+test("a run breaks and reports yielded_to_user when the person takes the composer", async () => {
+  const harness = makeLeaseHarness();
+  let fired = false;
+  harness.setOnSetAttribute(({ name }) => {
+    if (fired || name !== "aria-disabled") return;
+    fired = true;
+    harness.setOnSetAttribute(null);
+    harness.input.listeners.get("beforeinput")?.({ isTrusted: true });
+  });
+  const yielded = await harness.command({
+    action: "run",
+    steps: [
+      { action: "set_chat_lease", locked: true, token: "first" },
+      { action: "recording_status" },
+      { action: "recording_status" },
+    ],
+  });
+  assert.equal(yielded.results.length, 1);
+  assert.equal(yielded.yielded_to_user, true);
+
+  const completed = await harness.command({
+    action: "run",
+    steps: [
+      { action: "recording_status" },
+      { action: "recording_status" },
+    ],
+  });
+  assert.deepEqual(Object.keys(completed), ["results", "summaries"]);
+  assert.equal(completed.results.length, 2);
 });

@@ -440,14 +440,9 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
 
   function actionabilityReason(element) {
     if (!visible(element)) return "not visible";
-    // The chat lease marks the composer aria-disabled so a PERSON sees and
-    // feels the lock (its guard only blocks trusted events). The AI holding
-    // the lease drives through this very element, so the lease marker is not
-    // "disabled" for the driver — only a real disabled control is.
-    const leaseMarked = element.dataset?.rappChatLease === "locked";
     if (
       Boolean(element.disabled)
-      || (!leaseMarked && element.getAttribute?.("aria-disabled") === "true")
+      || element.getAttribute?.("aria-disabled") === "true"
     ) return "disabled";
     if (getComputedStyle(element).pointerEvents === "none") {
       return "pointer-events is none";
@@ -471,6 +466,83 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
       return `occluded by ${selectorFor(top) || top.localName || "another element"}`;
     }
     return null;
+  }
+
+  function renderChatLease(handedOff = false) {
+    let banner = document.getElementById("brainstem-beta-chat-lease");
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "brainstem-beta-chat-lease";
+      Object.assign(banner.style, {
+        position: "fixed",
+        zIndex: "2147483645",
+        right: "18px",
+        bottom: "72px",
+        padding: "8px 11px",
+        border: "1px solid rgba(88, 166, 255, .55)",
+        borderRadius: "999px",
+        background: "rgba(13, 17, 23, .94)",
+        color: "#79c0ff",
+        font: "700 11px/1 ui-sans-serif, system-ui, sans-serif",
+        pointerEvents: "none",
+      });
+      document.body.appendChild(banner);
+    }
+    if (state.chatLeaseLocked) {
+      banner.textContent = `Brain Surgeon is using this chat (${
+        state.chatLeaseTokens.size
+      }) · type or press Send to take it back`;
+    } else if (handedOff) {
+      banner.textContent = "You took this chat back";
+    }
+    banner.hidden = !(state.chatLeaseLocked || handedOff);
+    if (handedOff) {
+      clearTimeout(state.chatLeaseBannerTimer);
+      state.chatLeaseBannerTimer = setTimeout(() => {
+        const element = document.getElementById("brainstem-beta-chat-lease");
+        if (element && !state.chatLeaseLocked) element.hidden = true;
+      }, 4000);
+    }
+    const send = document.getElementById("send");
+    if (send) {
+      send.setAttribute("aria-disabled", "false");
+      if (state.chatLeaseLocked) send.dataset.rappChatLease = "advisory";
+      else delete send.dataset.rappChatLease;
+    }
+  }
+
+  function handOffComposer(reason) {
+    state.composerHandoffs = (state.composerHandoffs || 0) + 1;
+    state.composerHandoffAt = Date.now();
+    state.composerHandoffReason = String(reason || "input");
+    state.chatLeaseTokens?.clear();
+    state.chatLeaseLocked = false;
+    state.driverComposerValue = null;
+    renderChatLease(true);
+  }
+
+  function ensureComposerWatch() {
+    if (state.chatLeaseGuardInstalled) return;
+    const input = document.getElementById("input");
+    const send = document.getElementById("send");
+    if (!input || !send) return;
+    const witness = (reason) => (event) => {
+      if (!event.isTrusted) return;
+      handOffComposer(reason);
+    };
+    send.addEventListener("click", witness("send"), true);
+    document.getElementById("starter-prompts")?.addEventListener("click", (event) => {
+      if (!event.isTrusted) return;
+      if (!event.target?.closest?.(".starter-btn")) return;
+      handOffComposer("starter");
+    }, true);
+    input.addEventListener("keydown", (event) => {
+      if (!event.isTrusted) return;
+      if (event.key !== "Enter" || event.shiftKey) return;
+      handOffComposer("enter");
+    }, true);
+    input.addEventListener("beforeinput", witness("typing"), true);
+    state.chatLeaseGuardInstalled = true;
   }
 
   function requireActionable(element) {
@@ -670,6 +742,12 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
     void pulse.offsetWidth;
     pulse.classList.add("go");
     element.focus({ preventScroll: true });
+    const beforeClickResult = step.beforeClick?.();
+    if (beforeClickResult) {
+      element.classList.remove("brainstem-ai-driver-target");
+      hideLabel(label);
+      return beforeClickResult;
+    }
     element.click();
     await sleep(bounded(step.settleMs, 260, limits.settleMs, 520));
     await waitUntil(step.until, before.snapshot);
@@ -774,12 +852,20 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
     const routeBefore = location.href;
     const value = String(step.value ?? "");
     const description = labelText(step, "Typing in the Brainstem");
+    const shouldAbort = () => step.abortWhen?.() === true;
+    const abortedResult = () => {
+      element.classList.remove("brainstem-ai-driver-target");
+      hideLabel();
+      return { aborted: true, h, selector: h };
+    };
     await pointAt(element, description);
     element.focus({ preventScroll: true });
+    if (shouldAbort()) return abortedResult();
     const startingValue = step.replace === false
       ? String(element.value || element.textContent || "")
       : "";
     setControlValue(element, startingValue);
+    if (shouldAbort()) return abortedResult();
     const requestedDelayMs = bounded(
       step.typingDelayMs,
       0,
@@ -796,10 +882,13 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
     if (!delayMs) {
       nextValue += value;
       setControlValue(element, nextValue);
+      if (shouldAbort()) return abortedResult();
     } else {
       for (const character of value) {
+        if (shouldAbort()) return abortedResult();
         nextValue += character;
         setControlValue(element, nextValue);
+        if (shouldAbort()) return abortedResult();
         await sleep(delayMs);
       }
     }
@@ -941,58 +1030,13 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
       if (!input || !send) {
         throw new Error("The visible Brainstem chat composer is unavailable.");
       }
-      if (!state.chatLeaseGuardInstalled) {
-        const block = (event) => {
-          if (state.chatLeaseLocked && event.isTrusted) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-          }
-        };
-        send.addEventListener("click", block, true);
-        document.getElementById("starter-prompts")?.addEventListener(
-          "click",
-          block,
-          true,
-        );
-        input.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" && !event.shiftKey) block(event);
-        }, true);
-        state.chatLeaseGuardInstalled = true;
-      }
+      ensureComposerWatch();
       state.chatLeaseTokens ||= new Set();
       const leaseToken = String(step.token || "legacy");
       if (step.locked) state.chatLeaseTokens.add(leaseToken);
       else state.chatLeaseTokens.delete(leaseToken);
       state.chatLeaseLocked = state.chatLeaseTokens.size > 0;
-      let banner = document.getElementById("brainstem-beta-chat-lease");
-      if (!banner) {
-        banner = document.createElement("div");
-        banner.id = "brainstem-beta-chat-lease";
-        Object.assign(banner.style, {
-          position: "fixed",
-          zIndex: "2147483645",
-          right: "18px",
-          bottom: "72px",
-          padding: "8px 11px",
-          border: "1px solid rgba(88, 166, 255, .55)",
-          borderRadius: "999px",
-          background: "rgba(13, 17, 23, .94)",
-          color: "#79c0ff",
-          font: "700 11px/1 ui-sans-serif, system-ui, sans-serif",
-          pointerEvents: "none",
-        });
-        document.body.appendChild(banner);
-      }
-      banner.textContent = `Brain Surgeon is using this chat (${
-        state.chatLeaseTokens.size
-      })`;
-      banner.hidden = !state.chatLeaseLocked;
-      send.setAttribute(
-        "aria-disabled",
-        state.chatLeaseLocked ? "true" : "false",
-      );
-      if (state.chatLeaseLocked) send.dataset.rappChatLease = "locked";
-      else delete send.dataset.rappChatLease;
+      renderChatLease(false);
       return {
         leaseCount: state.chatLeaseTokens.size,
         locked: state.chatLeaseLocked,
@@ -1073,28 +1117,63 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
       if (!visible(input) || !visible(send)) {
         throw new Error("The visible Brainstem chat composer is unavailable.");
       }
-      const baselineRequestId = Math.max(
-        0,
-        ...[...document.querySelectorAll("#chat .response-slot")]
-          .map((slot) => Number(slot.dataset.requestId) || 0),
-      );
+      ensureComposerWatch();
+      const handoffBaseline = state.composerHandoffs || 0;
+      const yielded = (reason) => ({ yielded_to_user: true, reason });
+      const existingText = String(input.value || "").trim();
+      if (
+        existingText
+        && existingText !== String(state.driverComposerValue || "").trim()
+      ) return yielded("person_has_text_in_composer");
+      if ((state.composerHandoffs || 0) > handoffBaseline) {
+        return yielded("person_took_composer");
+      }
       let requestId = null;
-      await typeInto(input, {
+      const typingResult = await typeInto(input, {
         action: "type",
+        abortWhen: () => (state.composerHandoffs || 0) > handoffBaseline,
         value: String(step.value || step.text || ""),
         label: step.label || "Giving the Brainstem the job",
         typingDelayMs: step.typingDelayMs ?? 5,
       });
+      if (typingResult?.aborted) {
+        state.driverComposerValue = null;
+        return yielded("person_took_composer");
+      }
+      state.driverComposerValue = String(step.value || step.text || "");
+      if ((state.composerHandoffs || 0) > handoffBaseline) {
+        return yielded("person_took_composer");
+      }
+      const sendBaselineRequestId = Math.max(
+        0,
+        ...[...document.querySelectorAll("#chat .response-slot")]
+          .map((slot) => Number(slot.dataset.requestId) || 0),
+      );
+      const mine = String(step.value || step.text || "").replace(/\s+/g, " ").trim();
+      const pickRequestId = () => {
+        const fresh = [...document.querySelectorAll("#chat .response-slot")]
+          .filter((slot) => (
+            (Number(slot.dataset.requestId) || 0) > sendBaselineRequestId
+          ));
+        if (!fresh.length) return null;
+        const owned = fresh.find(
+          (slot) => normalizedText(slot.previousElementSibling) === mine,
+        );
+        const chosen = owned
+          || fresh.reduce((low, slot) => (
+            (Number(slot.dataset.requestId) || 0)
+              < (Number(low.dataset.requestId) || 0)
+              ? slot
+              : low
+          ));
+        return Number(chosen.dataset.requestId) || null;
+      };
       let resolveRequestId;
       const requestCreated = new Promise((resolve) => {
         resolveRequestId = resolve;
       });
       const observer = new MutationObserver(() => {
-        const created = Math.min(
-          ...[...document.querySelectorAll("#chat .response-slot")]
-            .map((slot) => Number(slot.dataset.requestId) || 0)
-            .filter((candidate) => candidate > baselineRequestId),
-        );
+        const created = pickRequestId();
         if (Number.isFinite(created)) {
           observer.disconnect();
           resolveRequestId(created);
@@ -1104,11 +1183,26 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
         childList: true,
         subtree: true,
       });
-      await clickElement(send, {
+      const yieldBeforeSend = () => {
+        if ((state.composerHandoffs || 0) <= handoffBaseline) return null;
+        observer.disconnect();
+        if (String(input.value || "") === String(state.driverComposerValue || "")) {
+          setControlValue(input, "");
+        }
+        state.driverComposerValue = null;
+        return yielded("person_took_composer");
+      };
+      const preSendYield = yieldBeforeSend();
+      if (preSendYield) {
+        return preSendYield;
+      }
+      const clickResult = await clickElement(send, {
         action: "click",
+        beforeClick: yieldBeforeSend,
         label: step.sendLabel || "Sending through Brainstem chat",
         settleMs: 200,
       });
+      if (clickResult?.yielded_to_user === true) return clickResult;
       requestId = await Promise.race([
         requestCreated,
         sleep(2000).then(() => null),
@@ -1117,6 +1211,15 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
       if (!Number.isFinite(requestId)) {
         throw new Error("The visible Brainstem request ID was not created.");
       }
+      const ownSlot = document.querySelector(
+        `#chat .response-slot[data-request-id="${requestId}"]`,
+      );
+      const ownBubble = ownSlot?.previousElementSibling;
+      if (ownBubble?.dataset) {
+        ownBubble.dataset.rappActor = "ai";
+        ownBubble.title = "Sent by the Brain Surgeon";
+      }
+      state.driverComposerValue = null;
 
       const timeoutMs = bounded(
         step.timeoutMs,
@@ -1281,13 +1384,23 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
     }
     const results = [];
     const summaries = [];
+    const runHandoffBaseline = state.composerHandoffs || 0;
+    let yieldedToUser = false;
     for (const step of command.steps) {
       const result = await performWithTrace(step);
       summaries.push(publishStep(step, result));
       results.push(result);
+      if ((state.composerHandoffs || 0) > runHandoffBaseline) {
+        yieldedToUser = true;
+        break;
+      }
     }
     state.lastRun = Date.now();
-    return { results, summaries };
+    return {
+      results,
+      summaries,
+      ...(yieldedToUser ? { yielded_to_user: true } : {}),
+    };
   }
   const result = await performWithTrace(command);
   publishStep(command, result);
@@ -2590,6 +2703,7 @@ export async function startUiDriverServer({
       ...(Number.isInteger(result?.leaseCount)
         ? { lease_count: result.leaseCount, locked: result.locked === true }
         : {}),
+      ...(result?.yielded_to_user === true ? { yielded_to_user: true } : {}),
     };
     mkdirSync(logDir, { recursive: true });
     const rotated = rotateLogIfLarge(tracePath, {
@@ -2915,10 +3029,10 @@ export async function startUiDriverServer({
             true,
           );
         const activeFrame = brainstemFrame(window, loopbackUrl);
-        const chatLeaseCount = activeFrame
+        const composer = activeFrame
           ? await executeInFrame(
               activeFrame,
-              "Number(window.__brainstemAiDriver?.chatLeaseTokens?.size || 0)",
+              "(() => { const s = window.__brainstemAiDriver; return { count: Number(s?.chatLeaseTokens?.size || 0), handoffs: Number(s?.composerHandoffs || 0) }; })()",
               { timeoutMs: 5000, window },
             ).catch(() => null)
           : null;
@@ -2937,7 +3051,8 @@ export async function startUiDriverServer({
         ) || requestedCursor;
         commandResponse(response, command, {
           ...telemetry,
-          chat_lease_count: chatLeaseCount,
+          chat_lease_count: composer ? composer.count : null,
+          composer_handoffs: composer ? composer.handoffs : null,
           cursor,
           events,
           navigation_count: navigationCount,
