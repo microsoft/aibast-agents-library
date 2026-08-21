@@ -200,7 +200,19 @@ sacred Brainstem against mutation, extended to its interface. The Grail's own
 and a client may supersede it wholesale exactly as a rapplication does. Deployments
 that need different APIs ship different clients, not different kernels.
 
-Two tests decide compliance: **adding a command must never require a commit to
-`rapp_brainstem/`**, and the surface must never do what the interface cannot — no
-arbitrary code, no side door, the same controls a person uses, and visible in the
-window while it happens.
+The surface drives by **performing gestures, not by producing their outcomes**: a
+tile moves because a drag was made and a drop handled, at a speed a person can
+follow — so an AI can demonstrate the product to someone watching, and so the
+gesture's own machinery is exercised rather than bypassed.
+
+And it is **never exclusive**. A person and an AI drive the same live window at the
+same time: nothing captures focus or the pointer, nothing blocks the person's
+input, each has a visible cursor, every change is attributed to whoever made it,
+and any contested object goes to the person while the AI's gesture reports that it
+yielded. Leases are advisory and a real keystroke reclaims them. The window belongs
+to the person even while an AI is working in it.
+
+Three tests decide compliance: **adding a command must never require a commit to
+`rapp_brainstem/`**; the surface must never do what the interface cannot — no
+arbitrary code, no side door, the same controls a person uses, visible while it
+happens; and no gesture may lock a person out of their own window.

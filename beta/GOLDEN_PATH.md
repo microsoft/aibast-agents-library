@@ -107,16 +107,21 @@ with no command line, injected into the page and reached from the console: `rapp
    and deterministic. `chat.send` is the single crossing into the model, so spending intelligence is
    a decision rather than a side effect of clicking.
 4. **It drives the visible interface, and stays visible.** This is not hidden automation and must
-   never become it: the CLI operates the same controls a person uses, the window shows the work as it
-   happens, and every command is logged to the console and recorded in the driver trace. The
-   teach-by-doing loop is preserved — what changes is who is allowed to do the driving, not whether
-   the driving can be seen.
-5. **The client is the extension point, never the kernel.** The command surface lives in
+   never become it: the CLI operates the same controls a person uses — a move is performed as a real
+   drag through the real drop handler, at a speed a person can follow — the window shows the work as
+   it happens, and every command is logged to the console and recorded in the driver trace. The
+   teach-by-doing loop is not merely preserved, it is what this is for: an AI demonstrating the
+   product while someone watches.
+5. **Two can drive at once, and the person wins.** An AI working in the window never captures focus
+   or the pointer, never blocks the person's input, and yields any contested object to them — both
+   are live at the same time, each with a visible cursor, every change attributed to whoever made it.
+   This is collaboration in one window, not a machine operating the product on someone's behalf.
+6. **The client is the extension point, never the kernel.** The command surface lives in
    `index.html`, composed from what the Brainstem already exposes — so it is a CLI and an API at
    once, and a deployment that needs a different one ships a different client rather than a modified
    kernel. Adding a command must never require a commit to `rapp_brainstem/`; the Grail's own
    `index.html` is superseded, like a rapplication supersedes it, not edited.
-6. **It never becomes a ceiling.** Anything without a named verb is still reachable through the raw
+7. **It never becomes a ceiling.** Anything without a named verb is still reachable through the raw
    driver actions, so the naming layer can never make the product less operable than the UI itself.
 
 This is what makes the Frontier an agent-first product rather than a product with an AI in it: the

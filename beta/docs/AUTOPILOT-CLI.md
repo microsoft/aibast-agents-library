@@ -123,6 +123,56 @@ grow the kernel. A verb that forces a kernel change is in the wrong layer, and t
 boundary in the repository's `CLAUDE.md` says the same thing from the other direction: no beta
 routing fields or endpoints in `brainstem.py`.
 
+## The gesture is real — and two can drive at once
+
+Two requirements that look like polish and are actually the architecture.
+
+### 1. It drags. It does not shortcut to the outcome.
+
+Tiles are moved by dragging, so `tile.move` **performs a drag**: it grabs the tile, moves along a
+path, hovers the target — which highlights and names the outcome, exactly as it does for a person —
+and drops. The state changes *because the drop happened*, through the same handler and the same
+events a hand would produce. It never calls an internal function that produces the end state without
+the gesture.
+
+That distinction is worth being strict about, because the shortcut is always the easier
+implementation and it quietly breaks three things:
+
+- **The demonstration.** The hero use case is an AI *showing* someone how to work the product while
+  they watch. A state change that teleports teaches nothing; a drag teaches the gesture.
+- **The fidelity.** A verb that bypasses the drop handler stops testing the drop handler. Everything
+  the gesture does on the way — the highlight, the swap decision, the hot-load — goes unexercised.
+- **The law.** "Same surface a person uses" is only true if the same code runs.
+
+So the default speed is **watchable**, not instant: a person can follow the cursor and see the
+target light up. `--speed fast` and `--speed instant` exist for test runs; they change the tempo of
+the gesture, never whether the gesture happens.
+
+### 2. Two-player: the person and the AI drive the same window, at the same time
+
+The AI's driving is a *second* set of hands on the same live interface, not a takeover of it. Both
+are live simultaneously — the person can keep working while the AI works, in real time, and either
+can act at any moment. Concretely:
+
+- **Nothing is captured.** No exclusive focus, no pointer capture, no modal, no invisible overlay
+  that swallows clicks. The person's input path is never intercepted while an AI gesture is running.
+- **The AI has its own cursor.** Its pointer is rendered and visibly attributed, so at a glance you
+  can tell which hand is moving — yours or the one you are watching.
+- **The person wins every conflict.** If both reach for the same tile, the AI's gesture aborts and
+  reports `yielded_to_user`. It does not wait for a gap and retry silently; yielding is a result the
+  driver sees and can decide about.
+- **Every gesture is interruptible.** Take the tile, press Escape, or simply start doing something
+  else — nothing is atomic in a way that locks a person out of their own window mid-drag.
+- **Changes are attributed.** The trace records the actor for every change, and the interface shows
+  it briefly at the moment it happens. Two hands on one window is only trustworthy if you can always
+  tell whose hand did what.
+- **Leases are advisory.** The chat lease claims the composer against *other automation*; a real
+  keystroke from the person takes it back immediately. A lease that could lock a person out of their
+  own composer would be a bug, not a feature.
+
+This is the difference between automation that runs the product for you and an AI that works
+alongside you in it. The second one is the product.
+
 ## Built for other AIs, not for one of them
 
 The point of a CLI shape is that **any** AI can drive this — GitHub Copilot, another Claude, a local
@@ -173,15 +223,19 @@ a model call on a button.
    a hole.
 2. **Deterministic or nothing.** Every command either performs its effect and reports it, or fails
    with a reason. No command asks a model to interpret intent.
-3. **Same surface a person uses.** Commands drive the real controls and the real handles. If a
-   person cannot do it in the interface, autopilot cannot do it either.
-4. **Bounded and observable.** Every command is capped in time and output, logged to the console,
+3. **Same surface a person uses, by the same gesture.** Commands drive the real controls and the
+   real handles, and a gesture is performed rather than shortcut — a move is a drag, through the
+   drop handler. If a person cannot do it in the interface, autopilot cannot do it either.
+4. **Never exclusive.** Driving never captures focus or the pointer, never blocks the person's
+   input, and always yields the contested object to them. The window stays theirs while an AI works
+   in it.
+5. **Bounded and observable.** Every command is capped in time and output, logged to the console,
    and recorded in the driver trace — the existing budgets and traces apply unchanged.
-5. **One way in.** Autopilot is a thin naming layer over the existing driver actions; it does not
+6. **One way in.** Autopilot is a thin naming layer over the existing driver actions; it does not
    fork a second control path or a second security model. The loopback token still guards the bus.
-6. **No new Grail endpoints.** A command is composed in the client from what the Brainstem already
+7. **No new Grail endpoints.** A command is composed in the client from what the Brainstem already
    exposes. Needing a kernel change is the signal that the verb belongs in another layer.
-7. **The model stays reachable.** `chat.send` exists precisely so an AI can hand over when it needs
+8. **The model stays reachable.** `chat.send` exists precisely so an AI can hand over when it needs
    intelligence — the point is to make that a decision, not a default.
 
 ## Why this shape
@@ -202,7 +256,14 @@ a model call on a button.
 
 ## Proof obligations
 
-Driven end to end, with the model provably not invoked: a navigation sequence (open the herd, switch
+A drag is proven by the handler it went through: `tile.move` produces the same drop-handler
+invocation and the same resulting state as a hand-performed drag, and a run with the renderer's drop
+handler removed **fails** — proving the verb went through the gesture rather than around it. Two-player
+is proven live: while an AI gesture is in flight, a simulated person's click on another control is
+delivered and acted on; and when both reach for one tile, the person's grab wins and the AI's result
+is `yielded_to_user`.
+
+Then, driven end to end, with the model provably not invoked: a navigation sequence (open the herd, switch
 to the arena, park a tile, make another primary, read the transcript) completes through `rapp()`
 alone, and the model-request count for the session stays at zero; `chat.send` increments it by
 exactly one; a malformed or non-allowlisted command is refused without side effects; and every
