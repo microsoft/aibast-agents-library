@@ -367,7 +367,10 @@ installed via IPC `beta:install-frame-bridge` `main.mjs:1380-1388` from `rendere
 `#beta-check-updates`, `#beta-update-status[data-phase=idle|checking|applying|current|
 success|available|blocked|error]` (`role="status" aria-live`), `#beta-install-update`;
 `header .logo` gains `role="button"`, `tabindex=0`, `aria-label="Toggle
-live agents"`, `aria-expanded`, `data-beta-explorer-toggle`.
+live agents"`, `aria-expanded`, `data-beta-explorer-toggle`. Agent Arena adds
+`@brainstem.grab`, `@herd.tile[<id>]` plus `.wake`, `.fold`, and `.race`, and
+the `@arena.layout`, `@arena.arrange`, and `@arena.raceTarget` controls; none
+are present in herd mode.
 
 **Twin frames**: marker only — `window.__rappForceModeCapable=true` and
 `html[data-rapp-force-mode="ready"]` (`main.mjs:685-694`); popped-out windows add

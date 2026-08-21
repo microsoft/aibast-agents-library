@@ -120,11 +120,14 @@ restore the original styling; the choice is saved in `settings.json`, with
 `RAPP_CHAT_LOOK=messages|business` as an override. The look is theming only and
 does not change reply delivery.
 
-**Table view** is strictly opt-in and leaves Frontier unchanged while off.
-Enable it from the native **View → Table view** menu, with the exact chat
-message `table view`, or with `RAPP_TABLE_VIEW=1`; once enabled, the three-dot
-menu can turn it off. Park, wake, race, fold, and arrange saved dimension tiles
-without changing the Brainstem kernel; persisted tiles remain local. See
+The herd has two presentation modes. **Herd mode** is the default and is
+identical to Frontier without the optional tile presentation. **Agent Arena**
+is where parked conversations compete side by side. Select the checkable
+**Agent Arena** item from the native View or three-dot menu, send the exact chat
+control `agent arena`, or set `RAPP_VIEW_MODE=arena`; send `herd` or clear the
+menu item to return. `RAPP_VIEW_MODE=herd` and unknown values select the safe
+herd default. Park, wake, race, fold, and arrange saved dimension tiles without
+changing the Brainstem kernel; persisted tiles remain local. See
 [`docs/DIMENSION-TILES.md`](docs/DIMENSION-TILES.md).
 
 Delivery independently defaults to `RAPP_CHAT_STREAM=smooth`; use `raw` for the
