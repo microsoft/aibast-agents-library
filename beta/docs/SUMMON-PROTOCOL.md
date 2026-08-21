@@ -115,6 +115,46 @@ participant.
 A summoned tile arrives at full height: its [crystal](CRYSTALS.md) is untouched, because whatever
 its publisher wore down was theirs. It is new *to you*, and the wearing is yours to do.
 
+## The quantum-link: nothing is transmitted
+
+The reason a summon feels instantaneous is that **nothing travels**. The chant is not a request that
+carries a tile from somewhere to here — it is a computation whose answer is where the tile already
+is. The tile exists at that address in every dimension that can compute it, so arriving is
+*resolution*, not transfer.
+
+That is also the honest explanation of the properties that otherwise look like tricks:
+
+- It works with **no network**, because resolving an address is arithmetic and the bytes may already
+  be cached.
+- It behaves **identically on any machine**, because the address is a pure function of content, not
+  of who is asking or where they are.
+- It cannot be **revoked or rate-limited**, because there is no serving decision in the path to
+  make.
+
+### Tagging local signal onto the link
+
+A summon is not a copy — it is a resolution **plus a new frame emitted locally**. That local frame
+is where a device's own context attaches: what the person was doing, what the machine could see, the
+ambient context the host already gathers ([`AMBIENT-CONTEXT-PROTOCOL.md`](AMBIENT-CONTEXT-PROTOCOL.md)).
+The signal rides the frame, and when dimensions merge back the fold contains every device's signal
+in key order.
+
+**The constraint that makes this work: local signal never touches identity.**
+
+The seed, the face and the seven words are a pure function of the tile's canonical manifest. If
+local context were folded into identity, two devices summoning "the same" tile would compute
+different addresses, the chant would stop resolving, and the whole model collapses. So:
+
+| | Global and fixed | Local and additive |
+|---|---|---|
+| What | seed, face, seven-word key, payload digests | frames: signal, transcript, wear, ambient context |
+| Changes when | the tile's content changes — a new tile | anything happens on a device |
+| Merges by | never merging; identity is equality | folding in `(tick, utc)` order |
+
+So each dimension may carry as much local signal as it likes without ever moving the address it
+resolves from. The link stays the same link; what accumulates on it is the record of everywhere it
+has been.
+
 ## The same pattern serves a model
 
 A static API — `rapp-static-api/1.0`, a manifest plus generated JSON endpoints served from raw
