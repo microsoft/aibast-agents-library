@@ -1,4 +1,6 @@
-# The public lookup — subscribe once, resolve deterministically, work offline
+# RAPP Summon — `rapp-summon/1.0`
+
+Subscribe once, resolve deterministically, work offline.
 
 The Frontier's one door outward ([`ONE-TIME-SEALS.md`](ONE-TIME-SEALS.md)) needs a pipeline behind
 it: something that says where public things live, lets a person opt in to a source, and keeps
@@ -205,3 +207,13 @@ answer.** Offline is not a degraded mode; it is the same mechanism with one fewe
   confidently to old bytes. Staleness must be visible, and refreshing must be a normal action.
 - **No service also means no revocation.** Nothing can be recalled centrally, so verification on
   arrival is not optional — it is the only check there is.
+
+## Status
+
+**Partly built.** What works today: `../electron/rapp-store.mjs` reads a public catalog from an
+allowed source URL, records provenance, and verifies a `sha256` before anything installs — the
+public read and the verification.
+
+Not built: channel subscription, `rapp-hive/1.0` federation, seven-word chant addressing, the
+exported offline profile, gist publishing, and the participation loop that republishes a diverged
+dimension. The end-to-end path above is the design; step 4 cannot be performed today.

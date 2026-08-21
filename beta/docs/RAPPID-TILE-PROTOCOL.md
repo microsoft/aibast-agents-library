@@ -260,3 +260,13 @@ catalog, and that single decision carries most of the system:
 So the scope of this protocol is deliberately narrow: **the format and the verification, not the
 hosting.** Bytes arrive from somewhere public and are checked against their seed and face before
 they become anything. Where they were served from is somebody else's solved problem.
+
+## Status
+
+**Specified; the producer has not moved.** The format above is the contract, and nothing in this
+repository writes `.card` any more.
+
+Not yet true anywhere: the RAR-side producer still emits `.card` into `cards/v2/` and writes no
+`tiles/` tree; `stands_on` is not read or enforced by the Frontier; the `agent` payload role and
+its all-or-nothing kit rule are unbuilt; and the `tile` verbs (`pack`, `unpack`, `verify`, `scan`,
+`from-card`) do not exist.

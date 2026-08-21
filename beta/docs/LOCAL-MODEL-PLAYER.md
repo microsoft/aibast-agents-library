@@ -25,7 +25,7 @@ Two properties carry the design. Content is **append-only and content-addressed*
 carrying a hash never changes meaning and every version stays a pinnable fallback — "pin a
 `sha8`, verify before exec". And there is nothing to run: it is CDN-cached static files, which
 is exactly why a device with no network but a warm cache is not degraded
-([`PUBLIC-LOOKUP.md`](PUBLIC-LOOKUP.md)).
+([`SUMMON-PROTOCOL.md`](SUMMON-PROTOCOL.md)).
 
 So the model's **manifest** — which runtime, which weight files, their hashes and sizes —
 is a static API entry, summonable by the same chant as anything else.

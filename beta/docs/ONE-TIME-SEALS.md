@@ -58,7 +58,7 @@ and verified locally. That is the entire handshake:
   a summoned tile is checked against its seed and face before it is installed or run, exactly as a
   locally-dropped one is. Fetching is not trusting.
 - **The pipeline behind the door already exists.** Subscription, federation and deterministic
-  resolution are described in [`PUBLIC-LOOKUP.md`](PUBLIC-LOOKUP.md), which builds on the RAPP Vision
+  resolution are described in [`SUMMON-PROTOCOL.md`](SUMMON-PROTOCOL.md), which builds on the RAPP Vision
   pattern rather than inventing one — and which is why a summon works offline from a cached profile.
 - **Reaching out is itself a seal.** The first summon pops the seal on public lookup — a decision
   made once, in the moment it means something ("go and get that"), rather than a network-access
@@ -168,3 +168,11 @@ buried setting would not be found in time. The first instance is the station ide
 It is **not** the right shape for settings that need to be changed back and forth — a volume, a
 model choice, a theme. Those are ordinary preferences. A seal is for a decision that only ever gets
 made in one direction.
+
+## Implementation status
+
+**Specified, not implemented.** Nothing in the tree stores or reads a seal: there is no
+popped-seal state, no per-seal control, and no export or import of the local mapping. The nearest
+existing thing is the RAPP Store path (`../electron/rapp-store.mjs`), which does a public read from
+an allowed source and verifies bytes against a recorded hash before installing — the fetch-and-verify
+half of the door, without the seal or the chant in front of it.

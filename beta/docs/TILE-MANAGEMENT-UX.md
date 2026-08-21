@@ -191,3 +191,12 @@ fresh chat behind; a tile dragged onto a chat that has a conversation swaps the 
 and loses neither; the same drag onto a blank chat loads without creating an empty tile; a tile moved
 between herd, arena and binder keeps its conversation intact; and every one of those moves is also
 reachable from the keyboard and from the UI driver.
+
+## Status
+
+**Partly built.** Exists: tiles, the herd, the arena and the binder; drag and drop between them;
+the drop that hot-loads a tile's agents into the running Brainstem; swap-versus-load; bunching;
+fold with undo; and keyboard and driver paths for each gesture.
+
+Not built: the flock surface, exportable surface presets, and the crystal. The tile's footprint
+(`stands_on`) is not read or enforced, so an assembly that should refuse today proceeds instead.

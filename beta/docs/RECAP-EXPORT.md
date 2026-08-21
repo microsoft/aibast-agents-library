@@ -2,7 +2,7 @@
 
 An autosteer run that happened while nobody was watching is only useful if you can see what
 it did afterwards. So a driven run ends by writing a **recap**: a folder a person can review
-and, if they choose, upload to a [RAPP Vision](PUBLIC-LOOKUP.md) channel by hand.
+and, if they choose, upload to a [RAPP Vision](SUMMON-PROTOCOL.md) channel by hand.
 
 Nothing is uploaded automatically. The run produces the artifact; publishing is a separate,
 deliberate act, for the same reason nothing else here syncs.

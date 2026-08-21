@@ -31,7 +31,7 @@ them, they win.
 | | |
 |---|---|
 | [RAPPID-TILE-PROTOCOL.md](RAPPID-TILE-PROTOCOL.md) | `rappid-tile/1.0` — the file a capability travels in. |
-| [PUBLIC-LOOKUP.md](PUBLIC-LOOKUP.md) | Subscribe once, resolve deterministically, work offline. The one door outward. |
+| [SUMMON-PROTOCOL.md](SUMMON-PROTOCOL.md) | Subscribe once, resolve deterministically, work offline. The one door outward. |
 | [ONE-TIME-SEALS.md](ONE-TIME-SEALS.md) | Local-first preferences that need no setting up, and why nothing syncs. |
 | [DIMENSION-MINING.md](DIMENSION-MINING.md) | Racing many possible versions at a goal the machine can check. |
 | [LOCAL-MODEL-PLAYER.md](LOCAL-MODEL-PLAYER.md) | Making the last paid command local too. |
