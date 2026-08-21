@@ -74,7 +74,7 @@ async function sendBrainstem(app, text, {
   ]);
 }
 
-frontierTest("dimension tiles preserve delayed races, wake history, folds, and off identity", async () => {
+frontierTest("dimension tiles preserve delayed races, wake history, folds, and herd identity", async () => {
   const app = await launch({
     modelScript: {
       steps: [
@@ -106,7 +106,7 @@ frontierTest("dimension tiles preserve delayed races, wake history, folds, and o
     );
     assert.deepEqual(initialOutline, CHECKPOINT_OUTLINE);
 
-    await sendBrainstem(app, "table view");
+    await sendBrainstem(app, "agent arena");
     await app.driver.expect({
       selector: "#brainstem-chat-grab",
       target: "shell",
@@ -228,7 +228,7 @@ frontierTest("dimension tiles preserve delayed races, wake history, folds, and o
       { label: "folded tile file" },
     );
 
-    await sendBrainstem(app, "table view");
+    await sendBrainstem(app, "herd");
     await waitFor(async () => {
       const outline = await app.driver.inspect({ target: "shell" });
       return outline.rows.some((row) => String(row.h).startsWith("@herd.tile["))
@@ -249,7 +249,7 @@ frontierTest("dimension tiles preserve delayed races, wake history, folds, and o
     );
     assert.equal(readTiles(tilesDirectory).length, 2);
 
-    await sendBrainstem(app, "table view");
+    await sendBrainstem(app, "agent arena");
     await app.driver.expect({
       selector: `[data-dimension-tile="${first.id}"]`,
       target: "shell",
@@ -294,7 +294,7 @@ frontierTest("Race stages one contender, renders one reply, and folds only its r
       selector: "#enter",
       settleMs: 100,
     }], { target: "shell" });
-    await sendBrainstem(app, "table view");
+    await sendBrainstem(app, "agent arena");
     await app.driver.expect({
       selector: "#brainstem-chat-grab",
       target: "shell",

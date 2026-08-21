@@ -66,8 +66,8 @@ test("tile store parks atomic 0600 schema files and lists them by seat", (t) => 
 
   assert.equal(first.schema, DIMENSION_TILE_SCHEMA);
   assert.equal(first.status, "parked");
-  assert.equal(first.table.seat, 1);
-  assert.equal(second.table.seat, 2);
+  assert.equal(first.arena.seat, 1);
+  assert.equal(second.arena.seat, 2);
   assert.equal(first.title, "What should we build?");
   assert.deepEqual(store.list().map((tile) => tile.id).sort(), [
     first.id,
@@ -96,7 +96,7 @@ test("fold keeps the tile, undo lasts ten seconds, and wake picks a primary", (t
 
   const folded = store.fold(first.id);
   assert.equal(folded.tile.status, "folded");
-  assert.equal(folded.tile.table.faceUp, false);
+  assert.equal(folded.tile.arena.faceUp, false);
   assert.equal(existsSync(path.join(betaHome, "tiles", `${first.id}.json`)), true);
   assert.equal(store.undo(first.id).status, "parked");
 
@@ -370,7 +370,7 @@ test("tile IPC is inert off except identified durable completions", async (t) =>
     "beta:tiles-undo",
     "beta:tiles-wake",
   ]);
-  assert.throws(() => handlers.get("beta:tiles-list")({}), /Table view is off/);
+  assert.throws(() => handlers.get("beta:tiles-list")({}), /Agent Arena is not active/);
   const pending = store.park({
     ...tileFixture(),
     turns: [

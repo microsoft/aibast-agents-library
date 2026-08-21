@@ -37,16 +37,16 @@ import {
 } from "./chat-look-settings.mjs";
 import {
   DimensionTileStore,
-  changeTableViewSettings,
+  changeViewModeSettings,
   composeDimensionTilesFrameBridgeSource,
-  parseTableViewCommand,
-  readTableViewSettings,
+  parseViewModeCommand,
+  readViewModeSettings,
   registerDimensionTileIpc,
 } from "./dimension-tiles.mjs";
 import {
   readCustomLayout,
   resolveCustomLayout,
-} from "./table-layouts.mjs";
+} from "./arena-layouts.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
@@ -198,16 +198,16 @@ const initialChatLook = readChatLookSettings({
   betaHome,
   env: process.env,
 });
-const initialTableView = readTableViewSettings({
+const initialViewMode = readViewModeSettings({
   betaHome,
   env: process.env,
 });
 let chatLook = initialChatLook.chatLook;
 let chatLookOverridden = initialChatLook.chatLookOverridden;
 let chatTypingEnabled = chatStreamMode === "hold";
-let tableView = initialTableView.tableView;
-let tableViewOverridden = initialTableView.tableViewOverridden;
-let customLayoutState = resolveCustomLayout(tableView);
+let viewMode = initialViewMode.viewMode;
+let viewModeOverridden = initialViewMode.viewModeOverridden;
+let arenaLayoutState = resolveCustomLayout(viewMode);
 const dimensionTileStore = new DimensionTileStore({ betaHome });
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
@@ -1624,7 +1624,7 @@ function frameBridgeInstallationSource() {
     chatLook,
     chatTypingEnabled,
   })};\n${BETA_FRAME_BRIDGE_SOURCE}`;
-  return composeDimensionTilesFrameBridgeSource(checkpointSource, tableView);
+  return composeDimensionTilesFrameBridgeSource(checkpointSource, viewMode);
 }
 const copilot = new CopilotRuntime({
   tokenFile: path.join(config.brainstemDir, ".copilot_token"),
@@ -1651,10 +1651,10 @@ const chatLeaseRegistry = new Set();
 const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
-  tableView,
-  tableViewOverridden,
-  tableLayout: customLayoutState.layout,
-  tableLayoutError: customLayoutState.error,
+  viewMode,
+  viewModeOverridden,
+  arenaLayout: arenaLayoutState.layout,
+  arenaLayoutError: arenaLayoutState.error,
   chatLook,
   chatLookOverridden,
   chatTypingEnabled,
@@ -1839,11 +1839,11 @@ function syncChatLookMenu() {
   }
 }
 
-function syncTableViewMenu() {
+function syncAgentArenaMenu() {
   const item = Menu.getApplicationMenu()?.getMenuItemById(
-    "table-view",
+    "agent-arena",
   );
-  if (item) item.checked = tableView.on;
+  if (item) item.checked = viewMode.mode === "arena";
 }
 
 function applyEffectiveChatLook(value) {
@@ -1883,44 +1883,44 @@ function requestChatLookChange(nextLook) {
   });
 }
 
-function applyEffectiveTableView(value) {
-  customLayoutState = resolveCustomLayout(value.tableView);
-  tableView = value.tableView;
-  tableViewOverridden = value.tableViewOverridden;
-  state.tableView = tableView;
-  state.tableViewOverridden = tableViewOverridden;
-  state.tableLayout = customLayoutState.layout;
-  state.tableLayoutError = customLayoutState.error;
-  syncTableViewMenu();
+function applyEffectiveViewMode(value) {
+  arenaLayoutState = resolveCustomLayout(value.viewMode);
+  viewMode = value.viewMode;
+  viewModeOverridden = value.viewModeOverridden;
+  state.viewMode = viewMode;
+  state.viewModeOverridden = viewModeOverridden;
+  state.arenaLayout = arenaLayoutState.layout;
+  state.arenaLayoutError = arenaLayoutState.error;
+  syncAgentArenaMenu();
   emitState();
 }
 
-async function handleCustomTableLayoutLoad() {
+async function handleCustomArenaLayoutLoad() {
   const selection = await dialog.showOpenDialog(mainWindow, {
-    title: "Load a custom table layout",
+    title: "Load a custom Agent Arena layout",
     buttonLabel: "Load layout",
-    filters: [{ name: "JSON table layout", extensions: ["json"] }],
+    filters: [{ name: "Agent Arena layout JSON", extensions: ["json"] }],
     properties: ["openFile"],
   });
   if (selection.canceled || !selection.filePaths[0]) {
     return { canceled: true };
   }
   const loaded = readCustomLayout(selection.filePaths[0]);
-  const settings = await handleTableViewChange({
+  const settings = await handleViewModeChange({
     layout: "custom",
     customLayoutPath: loaded.file,
   });
   return {
     canceled: false,
     ...settings,
-    tableLayout: loaded.layout,
+    arenaLayout: loaded.layout,
   };
 }
 
-async function handleTableViewChange(next) {
-  const value = changeTableViewSettings({
-    apply: applyEffectiveTableView,
-    tableView: next,
+async function handleViewModeChange(next) {
+  const value = changeViewModeSettings({
+    apply: applyEffectiveViewMode,
+    viewMode: next,
     betaHome,
     env: process.env,
   });
@@ -1928,21 +1928,22 @@ async function handleTableViewChange(next) {
   return structuredClone(value);
 }
 
-function requestTableViewChange(next) {
-  void handleTableViewChange(next).catch((error) => {
-    console.error("Could not change Table view:", error);
+function requestViewModeChange(next) {
+  void handleViewModeChange(next).catch((error) => {
+    console.error("Could not change the herd view mode:", error);
   });
 }
 
 async function executeComposerControl(message) {
-  if (parseTableViewCommand(message)) {
-    const value = await handleTableViewChange({ on: !tableView.on });
+  const command = parseViewModeCommand(message);
+  if (command) {
+    await handleViewModeChange({ mode: command.mode });
     return {
-      action: "toggle-table-view",
+      action: command.action,
       intercepted: true,
-      reply: `Table view is ${
-        value.tableView.on ? "on" : "off"
-      }.`,
+      reply: command.mode === "arena"
+        ? "Agent Arena — parked conversations compete side by side."
+        : "Herd mode is on.",
       url: state.url,
     };
   }
@@ -2535,8 +2536,8 @@ function createWindow() {
       additionalArguments: [
         `--rapp-chat-stream=${chatStreamMode}`,
         `--rapp-chat-look=${chatLook}`,
-        `--rapp-table-view=${
-          Buffer.from(JSON.stringify(tableView)).toString("base64url")
+        `--rapp-view-mode=${
+          Buffer.from(JSON.stringify(viewMode)).toString("base64url")
         }`,
       ],
       contextIsolation: true,
@@ -2737,11 +2738,13 @@ function installApplicationMenu() {
       },
       { type: "separator" },
       {
-        id: "table-view",
-        label: "Table view",
+        id: "agent-arena",
+        label: "Agent Arena",
         type: "checkbox",
-        checked: tableView.on,
-        click: () => requestTableViewChange({ on: !tableView.on }),
+        checked: viewMode.mode === "arena",
+        click: () => requestViewModeChange({
+          mode: viewMode.mode === "arena" ? "herd" : "arena",
+        }),
       },
     ],
   };
@@ -2796,7 +2799,7 @@ function installApplicationMenu() {
     "check-for-updates",
   );
   syncChatLookMenu();
-  syncTableViewMenu();
+  syncAgentArenaMenu();
 }
 
 function loadPendingUpdateResult() {
@@ -2877,20 +2880,22 @@ function registerIpc() {
     assertTrustedIpc(event);
     return handleGeolocationUpdate(payload);
   });
-  ipcMain.handle("beta:set-table-view", async (event, next) => {
+  ipcMain.handle("beta:set-view-mode", async (event, next) => {
     assertTrustedIpc(event);
-    return handleTableViewChange(next || {});
+    return handleViewModeChange(next || {});
   });
   registerDimensionTileIpc({
     assertTrustedIpc,
     ipcMain,
-    isEnabled: () => tableView.on,
+    isEnabled: () => viewMode.mode === "arena",
     store: dimensionTileStore,
   });
   ipcMain.handle("beta:tiles-load-custom-layout", async (event) => {
     assertTrustedIpc(event);
-    if (!tableView.on) throw new Error("Table view is off.");
-    return handleCustomTableLayoutLoad();
+    if (viewMode.mode !== "arena") {
+      throw new Error("Agent Arena is not active.");
+    }
+    return handleCustomArenaLayoutLoad();
   });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);

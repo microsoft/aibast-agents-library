@@ -6,20 +6,23 @@ import {
   composeDimensionTilesFrameBridgeSource,
 } from "../electron/dimension-tiles.mjs";
 
-const enabled = {
-  on: true,
-  layout: "table",
+const arena = {
+  mode: "arena",
+  layout: "ring",
   customLayoutPath: null,
 };
 
-test("tile frame bridge exists only in enabled bridge source", () => {
+test("tile frame bridge exists only in Agent Arena bridge source", () => {
   const checkpoint = "window.__checkpointBridge = true;";
   assert.equal(
-    composeDimensionTilesFrameBridgeSource(checkpoint, { ...enabled, on: false }),
+    composeDimensionTilesFrameBridgeSource(checkpoint, {
+      ...arena,
+      mode: "herd",
+    }),
     checkpoint,
   );
-  const source = composeDimensionTilesFrameBridgeSource(checkpoint, enabled);
-  assert.match(source, /window\.__rappBetaTableViewBridge/);
+  const source = composeDimensionTilesFrameBridgeSource(checkpoint, arena);
+  assert.match(source, /window\.__rappBetaArenaBridge/);
   assert.match(source, /window\.fetch = tileFetch/);
   assert.match(source, /rapp-beta:tile-capture/);
   assert.match(source, /rapp-beta:tile-wake/);
@@ -29,7 +32,7 @@ test("tile frame bridge exists only in enabled bridge source", () => {
 });
 
 test("tile capture and restore use the page sanitizer", () => {
-  const source = composeDimensionTilesFrameBridgeSource("", enabled);
+  const source = composeDimensionTilesFrameBridgeSource("", arena);
   const uses = source.match(/window\.sanitizeMarkdownFragment/g) || [];
   assert.ok(uses.length >= 4);
   assert.match(source, /sanitizedHtml\(bubble\)/);
@@ -38,7 +41,7 @@ test("tile capture and restore use the page sanitizer", () => {
 });
 
 test("wake history substitutes by prefix and clear stops future splicing", () => {
-  const source = composeDimensionTilesFrameBridgeSource("", enabled);
+  const source = composeDimensionTilesFrameBridgeSource("", arena);
   assert.match(
     source,
     /activeHistory\s*\?\s*\[\.\.\.wireHistory\(activeHistory\), \.\.\.incomingHistory\]/,
@@ -49,7 +52,7 @@ test("wake history substitutes by prefix and clear stops future splicing", () =>
 });
 
 test("parking preserves an accepted delayed wire while kernel Clear runs", () => {
-  const source = composeDimensionTilesFrameBridgeSource("", enabled);
+  const source = composeDimensionTilesFrameBridgeSource("", arena);
   assert.match(source, /request\.preserveOnClear/);
   assert.match(source, /controller\.abort\(originalSignal\?\.reason\)/);
   assert.match(source, /clearKernel\(\{ preservePending: true \}\)/);

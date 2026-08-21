@@ -34,8 +34,9 @@ Every interactive control gets a **handle**: `@area.name` for singletons,
 - **Renderer-generated lists** (Surgeon tabs, twin tiles, store protocol records,
   dimension tiles, explorer tree rows): stamp `data-drive` with the item's
   natural key (`session id`, `twin id`, `store id`, tile id, agent filename)
-  when they render. Table view exposes `@herd.tile[<id>]` plus `.wake`, `.fold`,
-  and `.race` actions; `@brainstem.grab` parks the active conversation.
+  when they render. Agent Arena exposes `@herd.tile[<id>]` plus `.wake`, `.fold`,
+  and `.race` actions; `@brainstem.grab` parks the active conversation, while
+  `@arena.layout`, `@arena.arrange`, and `@arena.raceTarget` address its controls.
 - **Fallback**: an element with no handle gets an **anchored** path — rooted at the nearest
   ancestor with an id or handle — never a 5-segment tail resolved from `document`.
 

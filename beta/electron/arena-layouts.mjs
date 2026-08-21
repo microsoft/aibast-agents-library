@@ -4,8 +4,8 @@ import {
 } from "node:fs";
 import path from "node:path";
 
-export const TABLE_LAYOUT_NAMES = Object.freeze([
-  "table",
+export const ARENA_LAYOUT_NAMES = Object.freeze([
+  "ring",
   "row",
   "focus",
   "grid",
@@ -14,10 +14,10 @@ export const TABLE_LAYOUT_NAMES = Object.freeze([
 ]);
 
 export const MAX_CUSTOM_LAYOUT_BYTES = 64 * 1024;
-export const TABLE_LAYOUTS = Object.freeze({
-  table: Object.freeze({
-    label: "Table",
-    layout: "oval seats",
+export const ARENA_LAYOUTS = Object.freeze({
+  ring: Object.freeze({
+    label: "Ring",
+    layout: "tiles around a ring",
     tileLook: "plain frame",
   }),
   row: Object.freeze({
@@ -47,24 +47,24 @@ export const TABLE_LAYOUTS = Object.freeze({
   }),
 });
 
-export const DEFAULT_TABLE_VIEW = Object.freeze({
-  on: false,
-  layout: "table",
+export const DEFAULT_VIEW_MODE = Object.freeze({
+  mode: "herd",
+  layout: "ring",
   customLayoutPath: null,
 });
 
-export function validTableLayout(value) {
+export function validArenaLayout(value) {
   const normalized = String(value || "").toLowerCase();
-  return TABLE_LAYOUT_NAMES.includes(normalized) ? normalized : null;
+  return ARENA_LAYOUT_NAMES.includes(normalized) ? normalized : null;
 }
 
-export function normalizeTableViewSettings(value = {}) {
+export function normalizeViewModeSettings(value = {}) {
   const input = value && typeof value === "object" && !Array.isArray(value)
     ? value
     : {};
   return {
-    on: input.on === true,
-    layout: validTableLayout(input.layout) || DEFAULT_TABLE_VIEW.layout,
+    mode: input.mode === "arena" ? "arena" : "herd",
+    layout: validArenaLayout(input.layout) || DEFAULT_VIEW_MODE.layout,
     customLayoutPath: typeof input.customLayoutPath === "string"
       && input.customLayoutPath.trim()
       ? input.customLayoutPath
@@ -84,7 +84,7 @@ function finiteNumber(value, label, minimum, maximum) {
 
 export function validateCustomLayout(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error("A custom table layout must be a JSON object.");
+    throw new Error("A custom Agent Arena layout must be a JSON object.");
   }
   const allowed = new Set([
     "name",
@@ -97,7 +97,7 @@ export function validateCustomLayout(value) {
   const unexpected = Object.keys(value).filter((key) => !allowed.has(key));
   if (unexpected.length) {
     throw new Error(
-      `Custom table layout contains unsupported fields: ${unexpected.join(", ")}.`,
+      `Custom Agent Arena layout contains unsupported fields: ${unexpected.join(", ")}.`,
     );
   }
   if (!/^#[0-9a-f]{6}$/i.test(String(value.surfaceColor || ""))) {
@@ -150,9 +150,9 @@ export function validateCustomLayout(value) {
       "Custom faceDownRule must be never, folded, all, or alternate.",
     );
   }
-  const name = String(value.name || "Custom table").trim();
+  const name = String(value.name || "Custom arena").trim();
   if (!name || [...name].length > 60) {
-    throw new Error("Custom table name must contain at most 60 characters.");
+    throw new Error("Custom arena name must contain at most 60 characters.");
   }
   return {
     name,
@@ -170,20 +170,20 @@ export function validateCustomLayout(value) {
 export function readCustomLayout(filePath) {
   const requested = String(filePath || "");
   if (!requested || /^[a-z][a-z0-9+.-]*:\/\//i.test(requested)) {
-    throw new Error("A custom table layout must be a local JSON file.");
+    throw new Error("A custom Agent Arena layout must be a local JSON file.");
   }
   const absolute = path.resolve(requested);
   const size = statSync(absolute).size;
   if (size > MAX_CUSTOM_LAYOUT_BYTES) {
     throw new Error(
-      `Custom table layouts are limited to ${MAX_CUSTOM_LAYOUT_BYTES} bytes.`,
+      `Custom Agent Arena layouts are limited to ${MAX_CUSTOM_LAYOUT_BYTES} bytes.`,
     );
   }
   let value;
   try {
     value = JSON.parse(readFileSync(absolute, "utf8"));
   } catch (error) {
-    throw new Error(`Invalid custom table layout at ${absolute}: ${error.message}`);
+    throw new Error(`Invalid custom Agent Arena layout at ${absolute}: ${error.message}`);
   }
   return {
     file: absolute,
@@ -195,7 +195,7 @@ export function resolveCustomLayout(settings, {
   read = readCustomLayout,
 } = {}) {
   if (
-    !settings?.on
+    settings?.mode !== "arena"
     || settings.layout !== "custom"
     || !settings.customLayoutPath
   ) {
@@ -208,7 +208,7 @@ export function resolveCustomLayout(settings, {
     };
   } catch (error) {
     return {
-      error: `Could not load custom table layout: ${String(
+      error: `Could not load custom Agent Arena layout: ${String(
         error?.message || error,
       )}`,
       layout: null,

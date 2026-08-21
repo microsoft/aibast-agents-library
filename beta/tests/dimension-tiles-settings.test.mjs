@@ -10,42 +10,42 @@ import path from "node:path";
 import test from "node:test";
 
 import {
-  changeTableViewSettings,
+  changeViewModeSettings,
   composeDimensionTilesFrameBridgeSource,
-  parseTableViewCommand,
-  readTableViewSettings,
-  writeTableViewSettings,
+  parseViewModeCommand,
+  readViewModeSettings,
+  writeViewModeSettings,
 } from "../electron/dimension-tiles.mjs";
 
-test("Table view settings default off and persist beside Chat Look", (t) => {
+test("view mode defaults to herd and persists beside Chat Look", (t) => {
   const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-dimension-tiles-"));
   t.after(() => rmSync(betaHome, { recursive: true, force: true }));
 
-  assert.deepEqual(readTableViewSettings({ betaHome, env: {} }), {
-    tableView: { on: false, layout: "table", customLayoutPath: null },
-    tableViewOverridden: false,
+  assert.deepEqual(readViewModeSettings({ betaHome, env: {} }), {
+    viewMode: { mode: "herd", layout: "ring", customLayoutPath: null },
+    viewModeOverridden: false,
     file: path.join(betaHome, "settings.json"),
-    storedTableView: { on: false, layout: "table", customLayoutPath: null },
+    storedViewMode: { mode: "herd", layout: "ring", customLayoutPath: null },
   });
 
-  writeTableViewSettings({
+  writeViewModeSettings({
     betaHome,
-    tableView: { on: true, layout: "stack" },
+    viewMode: { mode: "arena", layout: "stack" },
   });
-  const changed = changeTableViewSettings({
+  const changed = changeViewModeSettings({
     betaHome,
-    tableView: { layout: "grid" },
+    viewMode: { layout: "grid" },
     env: {},
   });
-  assert.deepEqual(changed.tableView, {
-    on: true,
+  assert.deepEqual(changed.viewMode, {
+    mode: "arena",
     layout: "grid",
     customLayoutPath: null,
   });
   const file = path.join(betaHome, "settings.json");
   assert.deepEqual(JSON.parse(readFileSync(file, "utf8")), {
-    tableView: {
-      on: true,
+    viewMode: {
+      mode: "arena",
       layout: "grid",
       customLayoutPath: null,
     },
@@ -55,44 +55,55 @@ test("Table view settings default off and persist beside Chat Look", (t) => {
   }
 });
 
-test("RAPP_TABLE_VIEW is authoritative without overwriting the stored flag", (t) => {
+test("RAPP_VIEW_MODE is authoritative and unknown values fall back to herd", (t) => {
   const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-dimension-tiles-env-"));
   t.after(() => rmSync(betaHome, { recursive: true, force: true }));
-  writeTableViewSettings({ betaHome, tableView: { on: false } });
+  writeViewModeSettings({ betaHome, viewMode: { mode: "arena" } });
 
-  const forced = readTableViewSettings({
+  const forced = readViewModeSettings({
     betaHome,
-    env: { RAPP_TABLE_VIEW: "1" },
+    env: { RAPP_VIEW_MODE: "herd" },
   });
-  assert.equal(forced.tableView.on, true);
-  assert.equal(forced.storedTableView.on, false);
-  assert.equal(forced.tableViewOverridden, true);
+  assert.equal(forced.viewMode.mode, "herd");
+  assert.equal(forced.storedViewMode.mode, "arena");
+  assert.equal(forced.viewModeOverridden, true);
   assert.equal(
-    readTableViewSettings({
+    readViewModeSettings({
       betaHome,
-      env: { RAPP_TABLE_VIEW: "0" },
-    }).tableView.on,
-    false,
+      env: { RAPP_VIEW_MODE: "arena" },
+    }).viewMode.mode,
+    "arena",
+  );
+  assert.equal(
+    readViewModeSettings({
+      betaHome,
+      env: { RAPP_VIEW_MODE: "unknown" },
+    }).viewMode.mode,
+    "herd",
   );
 });
 
-test("Table view composer word is exact and trimmed", () => {
-  assert.equal(parseTableViewCommand("table view")?.action, "toggle-table-view");
-  assert.equal(parseTableViewCommand("  table view \n")?.action, "toggle-table-view");
-  assert.equal(parseTableViewCommand("Table view"), null);
-  assert.equal(parseTableViewCommand("please enable table view"), null);
+test("view mode composer words are exact and trimmed", () => {
+  assert.deepEqual(parseViewModeCommand("agent arena"), {
+    action: "set-view-mode",
+    mode: "arena",
+    original: "agent arena",
+  });
+  assert.equal(parseViewModeCommand("  herd \n")?.mode, "herd");
+  assert.equal(parseViewModeCommand("Agent Arena"), null);
+  assert.equal(parseViewModeCommand("please enable agent arena"), null);
 });
 
-test("mode-off bridge composition is byte-identical", (t) => {
+test("herd-mode bridge composition is byte-identical", (t) => {
   const checkpointSource = "checkpoint-frame-bridge\n\u0000bytes";
-  const disabled = composeDimensionTilesFrameBridgeSource(checkpointSource, {
-    on: false,
-    layout: "table",
+  const herd = composeDimensionTilesFrameBridgeSource(checkpointSource, {
+    mode: "herd",
+    layout: "ring",
     customLayoutPath: null,
   });
-  assert.equal(disabled, checkpointSource);
-  assert.doesNotMatch(disabled, /TableView|dimension.tile|table view/i);
-  t.diagnostic("mode-off bridge composition: byte-identical");
+  assert.equal(herd, checkpointSource);
+  assert.doesNotMatch(herd, /ArenaBridge|dimension.tile|agent arena/i);
+  t.diagnostic("herd-mode bridge composition: byte-identical");
 });
 
 test("main, preload, and both menus expose the guarded toggle", () => {
@@ -104,9 +115,15 @@ test("main, preload, and both menus expose the guarded toggle", () => {
     new URL("../electron/preload.cjs", import.meta.url),
     "utf8",
   );
-  assert.match(main, /ipcMain\.handle\("beta:set-table-view"/);
-  assert.match(main, /id: "table-view"/);
-  assert.match(main, /label: "Table view"/);
-  assert.match(main, /composeDimensionTilesFrameBridgeSource\(checkpointSource, tableView\)/);
-  assert.match(preload, /setTableView:/);
+  const tiles = readFileSync(
+    new URL("../electron/dimension-tiles.mjs", import.meta.url),
+    "utf8",
+  );
+  assert.match(main, /ipcMain\.handle\("beta:set-view-mode"/);
+  assert.match(main, /id: "agent-arena"/);
+  assert.match(main, /label: "Agent Arena"/);
+  assert.match(main, /composeDimensionTilesFrameBridgeSource\(checkpointSource, viewMode\)/);
+  assert.match(preload, /setViewMode:/);
+  assert.match(tiles, /id = "beta-agent-arena-toggle"/);
+  assert.match(tiles, /textContent = "Agent Arena"/);
 });

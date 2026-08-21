@@ -28,6 +28,11 @@ competition, with the tiles as the competitors.
 So the vocabulary now reads end to end: **rappid tiles**, held in a **herd**, arranged in an
 **arena** when they compete, each tile a `.tile` file that a rappid can stand on.
 
+**Placement is arena vocabulary too.** A tile that sits in an arena records where it stands —
+`arena: { seat, faceUp }` — the field the card format called `table`. The arena's arrangements are
+**Ring** (the default), **Rows**, **Focus**, **Grid**, **Stack** and a validated **Custom** layout;
+each describes how tiles are placed, never a game they came from.
+
 ## What a tile is
 
 One UTF‑8 JSON object, one file, newline‑terminated, named after what it carries:
@@ -93,6 +98,7 @@ unchanged, which is what keeps the two compatible.
     "verdict": "admitted"
   },
   "state": "dormant",
+  "arena": { "seat": 2, "faceUp": true },
   "origin": { "kind": "frontier", "brainstem": "rappid:…", "twin": null, "parkedAt": "…" },
   "dimension": null,
   "scan": { "url": "https://raw.githubusercontent.com/…/bookfactory_agent.py.tile", "qr": "<svg…>" },

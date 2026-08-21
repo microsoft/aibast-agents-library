@@ -24,7 +24,7 @@
 }
 
 #surgeon-herd.dimension-tile-view {
-  --table-surface: #124b34;
+  --arena-surface: #124b34;
   --tile-width: 190px;
   --tile-height: 260px;
   background:
@@ -79,7 +79,7 @@
   border-bottom: 1px solid rgba(255,255,255,.12);
   background:
     radial-gradient(ellipse at center, rgba(255,255,255,.06), transparent 62%),
-    var(--table-surface);
+    var(--arena-surface);
   box-shadow: inset 0 0 70px rgba(0,0,0,.36);
 }
 
@@ -412,13 +412,13 @@
 }
 .dimension-tile-surface.arrange-spread .dimension-tile {
   margin-right: calc(var(--tile-width) * -.55);
-  transform: rotate(var(--fan-angle));
+  transform: rotate(var(--spread-angle));
 }
 .dimension-tile-surface.arrange-distribute .dimension-tile {
   animation: dimension-tile-seat .52s cubic-bezier(.2,.8,.2,1) both;
 }
-.dimension-tile-surface.arrange-open .dimension-tile {
-  animation: dimension-tile-draw .34s ease both;
+.dimension-tile-surface.arrange-open-one .dimension-tile {
+  animation: dimension-tile-open .34s ease both;
 }
 
 @keyframes dimension-tile-reorder {
@@ -430,7 +430,7 @@
   from { opacity: .4; transform: translateY(-70px) rotate(-5deg); }
   to { opacity: 1; transform: translateY(0) rotate(0); }
 }
-@keyframes dimension-tile-draw {
+@keyframes dimension-tile-open {
   50% { transform: translateY(-20px) scale(1.04); }
 }
 

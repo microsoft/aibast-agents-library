@@ -83,7 +83,7 @@ function loadDimensionTiles() {
     });
     script.addEventListener("error", () => {
       dimensionTilesLoader = null;
-      reject(new Error("Could not load Table view."));
+      reject(new Error("Could not load Agent Arena."));
     }, { once: true });
     document.body.appendChild(script);
   });
@@ -95,14 +95,14 @@ async function syncDimensionTiles(state, generation) {
   if (
     generation !== dimensionTilesGeneration
     || !dimensionTilesRequested
-    || !latestState?.tableView?.on
+    || latestState?.viewMode?.mode !== "arena"
   ) {
     tiles.disable();
     return;
   }
   return tiles.sync({
     api: window.brainstemBeta,
-    tableView: state.tableView,
+    viewMode: state.viewMode,
     destroyHerd: destroySurgeonHerdDom,
     ensureHerd: () => {
       ensureSurgeonHerdDom();
@@ -434,12 +434,12 @@ window.addEventListener("message", async (event) => {
     }
     return;
   }
-  if (type === "rapp-beta:set-table-view") {
+  if (type === "rapp-beta:set-view-mode") {
     try {
-      await window.brainstemBeta.setTableView(event.data.tableView || {});
+      await window.brainstemBeta.setViewMode(event.data.viewMode || {});
     } catch (cause) {
       window.alert(
-        `Could not change Table view: ${String(cause?.message || cause)}`,
+        `Could not change the herd view mode: ${String(cause?.message || cause)}`,
       );
     }
     return;
@@ -2078,16 +2078,16 @@ function render(state) {
   latestState = state;
   applyShellChatLook(state.chatLook, state.chatTypingEnabled);
   const tilesWereRequested = dimensionTilesRequested;
-  dimensionTilesRequested = Boolean(state.tableView?.on);
+  dimensionTilesRequested = state.viewMode?.mode === "arena";
   const tilesGeneration = ++dimensionTilesGeneration;
-  if (state.tableView?.on) {
+  if (dimensionTilesRequested) {
     void syncDimensionTiles(state, tilesGeneration).catch((cause) => {
       if (
         tilesGeneration !== dimensionTilesGeneration
         || !dimensionTilesRequested
       ) return;
       window.alert(
-        `Could not show Table view: ${String(cause?.message || cause)}`,
+        `Could not show Agent Arena: ${String(cause?.message || cause)}`,
       );
     });
   } else if (
@@ -2096,8 +2096,8 @@ function render(state) {
     || window.RappDimensionTiles
   ) {
     frame.contentWindow?.postMessage({
-      type: "rapp-beta:table-view-state",
-      tableView: state.tableView,
+      type: "rapp-beta:view-mode-state",
+      viewMode: state.viewMode,
     }, "*");
     window.RappDimensionTiles?.disable();
   }
