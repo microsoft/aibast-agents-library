@@ -42,6 +42,30 @@ test("the floor is enforced at install rather than merely declared", () => {
   );
 });
 
+test("the running Node satisfies the range this package declares", () => {
+  // Enforcement without a correct bound is worse than no enforcement: turning on
+  // engine-strict against a stale upper bound would have refused installation on
+  // the one machine that ran the suite clean (Node 26.5.0, 510 of 518 passing)
+  // while the bound still said <26. If this fails, either the range is stale or
+  // the runtime is genuinely unsupported — and you want to know which, now.
+  const range = String(pkg.engines?.node || "");
+  const lower = range.match(/>=\s*(\d+)\.(\d+)\.(\d+)/);
+  const upper = range.match(/<\s*(\d+)/);
+  assert.ok(lower, `engines.node needs a lower bound, saw ${range}`);
+  const [maj, min, pat] = process.versions.node.split(".").map(Number);
+  const atLeast = maj > +lower[1]
+    || (maj === +lower[1] && (min > +lower[2] || (min === +lower[2] && pat >= +lower[3])));
+  assert.ok(atLeast, `running Node ${process.version} is below engines.node ${range}`);
+  if (upper) {
+    assert.ok(
+      maj < Number(upper[1]),
+      `running Node ${process.version} is excluded by engines.node ${range}, yet it is `
+        + "running this suite. Widen the bound or stop using this runtime — with "
+        + "engine-strict enabled, this configuration refuses to install.",
+    );
+  }
+});
+
 test("lifecycle scripts stay disabled", () => {
   // This nearly went the other way: appending engine-strict with `>` instead of
   // `>>` silently removed ignore-scripts, which would re-enable a postinstall
