@@ -31,6 +31,53 @@ carried.
 That makes the indicator honest in the only way that matters: it cannot be waited out, and it tracks
 the thing it claims to track.
 
+## The crystal is a view of a real thing: the tile's own weight
+
+The crystal is not a counter drawn on a card. It shows the state of an actual artifact the tile
+carries — **a small weight, trained locally, that improves as the tile is used.**
+
+That is what closes the loop. A tile already holds a transcript and the agents bound to it; add an
+adapter over the local base model, refined on this tile's own work, and the tile stops merely
+*remembering* what happened and starts *having learned* from it. The scaffolding falls away because
+the tile genuinely needs less prompting to do the thing it has done a hundred times — and the
+crystal, which measures assistance drawn down, wears accordingly. The indicator is honest because it
+is downstream of something real.
+
+**An adapter, not a model.** The trained artifact is small — a delta over a base model that is
+already on the device, not a model in its own right. That size is what makes the rest of the system
+possible: it fits inside a tile, so it can be parked, dragged, kept in a binder, exported in an
+`.egg`, and summoned. A tile that carried a whole model could do none of those things.
+
+### The consequence that must not be discovered later
+
+**A weight trained on your work encodes your work.** Not as a transcript that can be read, but not
+safely either: adapters can and do surface their training data. So the rules for a trained weight
+are stricter than for anything else a tile carries, and they are not optional:
+
+1. **Training is local, and it is a seal.** It happens on the device, on the person's own material,
+   and only after they popped that seal deliberately. Nothing trains in the background because a
+   feature seemed helpful.
+2. **A trained weight is private material by default.** It is not published with a tile, not
+   included in an export, and not carried by a summon unless the person deliberately chose to
+   include it — with the plain-language warning that it derives from their conversations.
+3. **Publishing a tile publishes the capability, not the training.** By default what leaves is the
+   agents, the structure and the lineage. A publisher who wants to share a trained weight is making
+   a separate, explicit decision about their own data.
+4. **Work material never trains a weight that leaves the device.** Anything belonging to an employer
+   or a customer is exactly the material that must not end up in something published, and "it is
+   only weights" is not a defence.
+5. **Deleting the tile deletes the weight.** Removable without trace, like every other Sense under
+   Article II — including any intermediate checkpoints.
+
+### What still has to be answered
+
+- **What counts as improvement.** Wear must track the tile genuinely needing less, not training
+  steps taken or tokens spent, or it becomes a progress bar for effort rather than a measure of
+  mastery. That definition does not exist yet and the feature cannot ship without it.
+- **What happens on a base-model change.** An adapter is a delta over something specific. If the
+  base changes underneath it, the crystal's meaning changes with it, and that has to be handled
+  honestly rather than silently.
+
 ## Rules
 
 1. **Wear is monotonic.** It only ever goes down. Nothing resets a crystal, nothing regrows one, and
@@ -57,6 +104,8 @@ honest, and it would be better to remove it than to keep it under those conditio
 
 ## Status
 
-Specified, not implemented. Nothing in the tree renders or tracks a crystal yet; this is the
-conforming behaviour, and the wear metric in particular needs a definition precise enough to
-compute before it can ship.
+Specified, not implemented. Nothing in the tree renders or tracks a crystal, and nothing trains a
+local weight. This is the conforming behaviour. Two things block shipping it: the wear metric needs
+a definition precise enough to compute, and the privacy rules above need to be enforced by the code
+rather than stated in a document — a trained weight that leaks is not a bug you can apologise for
+afterwards.
