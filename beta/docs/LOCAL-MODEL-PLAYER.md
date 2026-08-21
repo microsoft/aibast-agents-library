@@ -7,6 +7,24 @@ local too, so the whole product runs with no service in the loop.
 The shape is one this system already uses twice: **a self-made player in an iframe, fed by
 static data, driven over a declared bus.**
 
+## Which line this belongs to
+
+**This is an openrappter-line capability. It is deliberately not part of the Microsoft downstream's
+out-of-the-box experience**, and that is a product decision rather than a sequencing one.
+
+A managed business deployment already has model access: entitlements, governance, and a model the
+organisation has chosen and can reason about. Shipping an on-device fallback into that shape adds a
+large download, a second model whose behaviour differs from the sanctioned one, and a governance
+surface somebody now has to answer for — in exchange for solving a problem that deployment does not
+have. "Batteries included" there means the entitlements the org already holds simply work.
+
+The local player solves a different problem, for the line where nobody is entitled to anything: work
+from nothing, on any machine, with no service in the loop. That is what openrappter is for, and it is
+where this belongs.
+
+Neither line is a lesser version of the other. They are answering different questions, and a
+capability that is essential in one can be dead weight in the other.
+
 ## Where the data comes from
 
 [`kody-w/rapp-static-apis`](https://github.com/kody-w/rapp-static-apis) specifies
