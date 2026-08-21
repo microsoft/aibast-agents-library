@@ -76,9 +76,42 @@ actually wanted to do.
    seal. Nothing else does, and nothing does it silently.
 5. **If it cannot be written down**, honour it for the session and surface the failure. Silently
    discarding a person's choice is the one outcome that is never acceptable.
-6. **Seals do not sync.** A second device starts sealed, on purpose. Inheriting configuration is the
-   problem this avoids, not a feature it is missing — what a fresh device gets instead is the public
-   summon above.
+6. **Seals do not sync — but state is portable.** A second device starts sealed, on purpose;
+   inheriting configuration is the problem this avoids, not a feature it is missing. What a fresh
+   device gets instead is the public summon above, and what a person can carry deliberately is an
+   exported `.egg`.
+
+## Nothing syncs, but nothing is trapped
+
+"Seals do not sync" must not quietly become "your device state is disposable". The private mapping
+that builds up locally — the tiles, their transcripts, the agents bound to them, what has been
+popped — is the person's, and it has to be able to travel.
+
+The resolution is that **sync and portability are different things, and only one of them is a
+problem.**
+
+- **Sync is ambient.** It happens without being asked, it is invisible, and its result is a new
+  device inheriting an accumulated configuration nobody chose. That is the thing being avoided.
+- **Export is deliberate.** One action produces one artifact the person holds, can inspect, can
+  keep, and can carry to another device on their own terms.
+
+So the on-device state can be **exported as an `.egg`** — the Frontier's existing portable artifact
+(`CONSTITUTION.md` Article IV), reused rather than a new format invented for the purpose — and
+imported later on another device.
+
+The rules that keep this honest:
+
+1. **Both ends are explicit.** Exporting is an action; importing is an action. Neither happens
+   because two devices noticed each other.
+2. **It is inspectable, not an opaque blob.** A person can see what is inside before they carry it
+   somewhere or hand it to anyone.
+3. **Credentials do not travel.** The export carries the mapping — tiles, transcripts, bindings,
+   popped seals — and never tokens, keys or session material. An artifact a person might email to
+   themselves must not be a credential in a trench coat.
+4. **Import never silently overwrites.** It merges, or it refuses and says exactly what conflicted.
+   Arriving state does not get to quietly replace state that was already there.
+5. **It is optional.** Nothing depends on it. A device that never exports has lost nothing it was
+   promised, because the model never promised inheritance in the first place.
 
 ## The popping-the-local-seal test
 
