@@ -350,3 +350,28 @@ test("desktop chrome omits the redundant wrapper toolbar", () => {
   assert.doesNotMatch(renderer, /brainstemStatus|copilotStatus|setPill/);
   assert.doesNotMatch(renderer, /openBrowser|openVscode|restart/);
 });
+
+// npm runs a package's scripts with the shell's PATH, and `npm test` is
+// `node --test` — so `node` resolves from PATH rather than from the npm that
+// invoked it. install.sh has exported the portable runtime onto PATH since it was
+// written; install.cmd did not, so a Windows machine with an older system Node
+// installed with the portable runtime and then verified with the wrong one,
+// failing eleven test files on a missing node:sqlite while the correct runtime sat
+// unused beside it.
+test("both installers put the portable runtime first on PATH", () => {
+  assert.match(
+    unix,
+    /export PATH="\$node_dir\/bin:\$PATH"/,
+    "install.sh must export the portable node onto PATH",
+  );
+  assert.match(
+    windows,
+    /set "PATH=%NODE_DIR%;%PATH%"/,
+    "install.cmd must prepend the portable node to PATH, or npm test shells out "
+      + "to whatever node the machine happens to have",
+  );
+  // And it must happen before the verification block that depends on it.
+  const pathAt = windows.indexOf('set "PATH=%NODE_DIR%;%PATH%"');
+  const testAt = windows.indexOf('npm.cmd" test');
+  assert.ok(pathAt > 0 && testAt > 0 && pathAt < testAt, "PATH must be set before npm test runs");
+});
