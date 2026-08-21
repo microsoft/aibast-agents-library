@@ -198,6 +198,15 @@ So:
   'Which path wins?' primary." — is driving feedback wearing conversation's clothes. A *person's*
   own action may still get brief feedback, because that is ordinary interface courtesy; a
   *driver's* action does not toast by default.
+- **Show Mode may narrate, and narration can be spoken.** Where being watched is the point, saying
+  what is happening is genuinely useful — and the best channel for it is **audio**, through a local
+  voice model, not more things on screen. Spoken narration explains the work while leaving the
+  screen to the person, which is exactly what a second pair of hands should do. It is an opt-in
+  Sense under Article II: installed on first enable, removable without trace, on-device by default,
+  and never on outside Show Mode. The voice is **VibeVoice**, chosen deliberately for quality over
+  immediacy — narration is not conversation, so it may lag the action it describes by a moment, and
+  that slack buys a voice worth listening to. A latency-bound assistant voice cannot make that
+  trade; a narrator can.
 - **Attribution lives on the object, not in a message.** When the AI moves a tile, the tile
   briefly carries who moved it. That satisfies "you can always tell whose hand did what" without
   narrating anything into the chat — which is the only way attribution and this rule can both be

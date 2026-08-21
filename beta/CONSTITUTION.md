@@ -220,6 +220,11 @@ moving, by the console, and by the driver trace, with an optional activity view 
 anyone who wants to watch it happen. Nor does it toast: a person's own action may
 get brief feedback, a driver's does not, and attribution is carried **on the
 object** — the tile shows whose hand moved it — never as a message over the chat.
+In Show Mode narration is welcome, and it may be **spoken** by a local voice
+model rather than drawn — an opt-in Sense under Article II, on-device, which
+explains the work while leaving the screen to the person. The narrator is
+VibeVoice: narration is not conversation, so it may lag the action, and that
+slack is spent on a voice worth listening to.
 
 Three tests decide compliance: **adding a command must never require a commit to
 `rapp_brainstem/`**; the surface must never do what the interface cannot — no
