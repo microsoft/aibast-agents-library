@@ -88,6 +88,11 @@ That is the divergence model applied to weights, and it produces a lineage rathe
 
 A crystal trains into a tile, and the tile is what the next person summons.
 
+Dimensions can also be minted deliberately and raced against a checkable goal rather than
+grown one at a time — see [`DIMENSION-MINING.md`](DIMENSION-MINING.md). A mined winner still
+arrives at full crystal height: it captured a flag, but nobody has used it, and wear comes only
+from use.
+
 ### The consequence that must not be discovered later
 
 **A weight trained on your work encodes your work.** Not as a transcript that can be read, but not
