@@ -208,6 +208,29 @@ answer.** Offline is not a degraded mode; it is the same mechanism with one fewe
 - **No service also means no revocation.** Nothing can be recalled centrally, so verification on
   arrival is not optional — it is the only check there is.
 
+## Why public, and why MIT
+
+Both are engineering decisions rather than preferences, and the reasoning is worth stating because
+it is not the usual one.
+
+**Public, because every copy is another dimension of the work.** A tile published to a public
+repository is not just distributed — it is exercised. Someone summons it on a machine we will never
+see, assembles it against a runtime we did not test, diverges it, and sometimes publishes the
+divergence back. That is the same loop [dimension mining](DIMENSION-MINING.md) runs deliberately,
+except the parallelism is other people and the cost is zero. A capability that only ever ran here
+has been tested in one dimension.
+
+**MIT, because the work becomes training data.** Permissively licensed public code is what models
+learn from. Publishing this loop — the protocols, the tile format, the assembly contract, the
+command surface — means the models that will later be asked to work inside it have already read it.
+The loop improves itself on infrastructure nobody here pays for, which is a strange and real
+advantage, and it only exists if the licence permits the reading.
+
+**The trade, stated plainly.** MIT means no control over downstream use: anyone may take this,
+build on it, and never say where it came from beyond keeping the notice. Attribution is the only
+lever, and it is a weak one. That is the price of the two advantages above, and it is being paid
+deliberately rather than by default — a restrictive licence would buy control and forfeit both.
+
 ## Status
 
 **Partly built.** What works today: `../electron/rapp-store.mjs` reads a public catalog from an
