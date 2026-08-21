@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import {
   mkdtempSync,
+  readFileSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -11,7 +12,9 @@ import test from "node:test";
 import {
   ARENA_LAYOUT_NAMES,
   ARENA_LAYOUTS,
+  DEFAULT_VIEW_MODE,
   MAX_CUSTOM_LAYOUT_BYTES,
+  normalizeViewModeSettings,
   readCustomLayout,
   resolveCustomLayout,
   validateCustomLayout,
@@ -115,4 +118,28 @@ test("a stale custom layout cannot break herd mode", () => {
   });
   assert.equal(arena.layout, null);
   assert.match(arena.error, /file is gone/);
+});
+
+// The preload runs as CommonJS and cannot import arena-layouts.mjs, so it carries
+// a duplicated fallback for a missing or malformed --rapp-view-mode argument. A
+// stale duplicate is invisible at runtime — normalizeViewModeSettings would repair
+// the value everywhere except in the preload itself, leaving the renderer keyed on
+// a layout name that no longer exists. Pin the copies together.
+test("the preload's fallback view mode is the real default", () => {
+  const source = readFileSync(
+    new URL("../electron/preload.cjs", import.meta.url),
+    "utf8",
+  );
+  const match = source.match(/let viewMode = (\{[\s\S]*?\});/);
+  assert.ok(match, "preload.cjs must declare a literal viewMode fallback");
+  const literal = match[1]
+    .replace(/([A-Za-z_$][\w$]*)\s*:/g, '"$1":')
+    .replace(/,(\s*})/g, "$1");
+  const fallback = JSON.parse(literal);
+  assert.deepEqual(fallback, { ...DEFAULT_VIEW_MODE });
+  assert.deepEqual(
+    normalizeViewModeSettings(fallback),
+    fallback,
+    "the fallback must already be a valid, normalized view mode",
+  );
 });

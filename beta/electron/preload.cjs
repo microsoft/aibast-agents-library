@@ -16,10 +16,12 @@ const chatLook = chatLookArgument?.split("=", 2)[1] === "business"
 const viewModeArgument = process.argv.find((value) => (
   value.startsWith("--rapp-view-mode=")
 ));
+// Must stay equal to DEFAULT_VIEW_MODE in arena-layouts.mjs — preload is CommonJS
+// and cannot import it, so arena-layouts.test.mjs pins the two together.
 let viewMode = {
   mode: "herd",
   surface: "herd",
-  layout: "table",
+  layout: "ring",
   customLayoutPath: null,
 };
 try {
