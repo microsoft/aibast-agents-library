@@ -266,10 +266,29 @@ standard way to get an order that respects causality while staying close to wall
 deltas that converge without coordination are an **operation-based CRDT**; folding them to current
 state is **event sourcing**; merging from a common ancestor is a **three-way merge**.
 
-None of that is new, and that is the point — convergence is a solved problem and this inherits the
-proofs rather than re-deriving them. What is unusual here is the composition: the trained adapter is
-a *derived* artifact of the fold rather than something merged, and the interface object is the delta
-itself, so docking a tile is not a gesture that triggers a merge — it **is** the merge.
+Every one of those primitives is established and proven, which is the advantage: convergence is a
+solved problem and this inherits the proofs rather than re-deriving them.
+
+**But the primitives being known does not make the system known.** Each lives in its own pocket
+solving its own local problem — CRDTs in collaborative text editors, hybrid logical clocks in
+distributed databases, event sourcing in backends, adapters in machine learning, three-way merge in
+version control. Gunpowder was well understood as a firework long before anyone pointed it at a
+fortress; the chemistry was not the invention, the application was.
+
+What this assembles, and what no shipped system I can point to does end to end:
+
+- **One object that is three things at once** — the CRDT delta, the interface affordance a person
+  drags, and the unit a capability travels in. Normally the merge layer hides *under* the UI; here
+  the tile a person picks up is the delta itself, so docking does not trigger a merge, it **is** the
+  merge.
+- **Model adaptation as a fold rather than a merge.** The trained artifact is derived from the
+  stream instead of being something you combine, which routes around the one part of this that is
+  genuinely unsolved.
+- **The whole loop closed** — summon, assemble, wear across heterogeneous devices, merge
+  deterministically, re-derive, republish, re-summon — with no service anywhere in it.
+
+Stated with the honesty it deserves: *I cannot find prior art for the assembly* is a weaker claim
+than *none exists*, and the real test is whether it ships and works, not whether it is unprecedented.
 
 ### Wear does not add up
 
