@@ -114,7 +114,7 @@ carries:
 **A rapplication is just another tile.** It is not a second concept with its own herd, its own
 buttons or its own rules: it is dragged, dropped, bunched, binder-kept and made primary exactly like
 any other tile, and the same invariants hold — nothing is lost, only the primary runs, no gesture
-needs a button. The protocol already says this: `rappid-tile/1.0` payloads are `agent.py` or `.egg`,
+needs a button. The protocol already says this: `rapp-tile/1.0` payloads are `agent.py` or `.egg`,
 and a rapplication is simply a tile whose primary payload is an egg.
 
 This is the whole reason to have one noun. A person should not have to learn that conversations are

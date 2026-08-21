@@ -1,4 +1,4 @@
-# Rappid tiles — `rappid-tile/1.0`
+# Rappid tiles — `rapp-tile/1.0`
 
 **Status:** this specification supersedes `rar-card/2.0`. Every `rar-card/2.0` document is a valid
 rappid tile after a mechanical, lossless migration, and a tile carries everything a card carried.
@@ -80,7 +80,7 @@ lineage, and no reader may rank tiles by them.
 
 ```json
 {
-  "schema": "rappid-tile/1.0",
+  "schema": "rapp-tile/1.0",
   "supersedes": "rar-card/2.0",
   "id": "@kody-w/book_factory",
   "seed": 13467203979104256843,
@@ -136,7 +136,7 @@ lineage, and no reader may rank tiles by them.
 Mechanical and lossless, in both directions for everything a card could express:
 
 ```
-schema         "rar-card/2.0"            → "rappid-tile/1.0", supersedes: "rar-card/2.0"
+schema         "rar-card/2.0"            → "rapp-tile/1.0", supersedes: "rar-card/2.0"
 incantation    <7 words>                 → key            (same value)
 table          { seat, faceUp }          → arena          (same shape; the field is named for the
                                                             surface a tile stands in, not the one

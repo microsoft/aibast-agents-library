@@ -26,18 +26,25 @@ them, they win.
 | [UI-DRIVER-V2.md](UI-DRIVER-V2.md) | The driver underneath: accurate, bounded, quiet. |
 | [RECAP-EXPORT.md](RECAP-EXPORT.md) | What an unattended run leaves behind, and how to publish it by hand. |
 
+## The protocol family
+
+| | |
+|---|---|
+| [PROTOCOLS.md](PROTOCOLS.md) | Every `rapp-*` protocol, its stage, and how RAPP/1 adopts one without anybody upgrading in step. |
+| [SELF-ASSEMBLE-PROTOCOL.md](SELF-ASSEMBLE-PROTOCOL.md) | `rapp-selfassemble/1.0` — what a runtime does with a dropped tile, and what it must refuse. |
+
 ## What a capability is, and how it travels
 
 | | |
 |---|---|
-| [RAPPID-TILE-PROTOCOL.md](RAPPID-TILE-PROTOCOL.md) | `rappid-tile/1.0` — the file a capability travels in. |
+| [RAPPID-TILE-PROTOCOL.md](RAPPID-TILE-PROTOCOL.md) | `rapp-tile/1.0` — the file a capability travels in. |
 | [SUMMON-PROTOCOL.md](SUMMON-PROTOCOL.md) | Subscribe once, resolve deterministically, work offline. The one door outward. |
 | [ONE-TIME-SEALS.md](ONE-TIME-SEALS.md) | Local-first preferences that need no setting up, and why nothing syncs. |
 | [DIMENSION-MINING.md](DIMENSION-MINING.md) | Racing many possible versions at a goal the machine can check. |
 | [QQDRILL-PROTOCOL.md](QQDRILL-PROTOCOL.md) | `rapp-qqdrill/1.0` — the parallel execution engine underneath: how many drills run at once, isolated, and under what budget. |
 | [LOCAL-MODEL-PLAYER.md](LOCAL-MODEL-PLAYER.md) | Making the last paid command local too. |
 | [DIMENSION-TILES.md](DIMENSION-TILES.md) | The shipped herd/arena toggle and the on-disk tile record. |
-| [DIMENSION-TILES-V2.md](DIMENSION-TILES-V2.md) | **Superseded** by `rappid-tile/1.0`; kept as the reference for the `.card` format the registry still serves. |
+| [DIMENSION-TILES-V2.md](DIMENSION-TILES-V2.md) | **Superseded** by `rapp-tile/1.0`; kept as the reference for the `.card` format the registry still serves. |
 
 ## How the kernel stays intact
 

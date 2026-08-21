@@ -1,6 +1,6 @@
 # Rappid dimension tiles — the `.card` file (`rar-card/2.0`)
 
-> **Superseded.** `rar-card/2.0` is superseded by **`rappid-tile/1.0`** — see
+> **Superseded.** `rar-card/2.0` is superseded by **`rapp-tile/1.0`** — see
 > [RAPPID-TILE-PROTOCOL.md](RAPPID-TILE-PROTOCOL.md). Cards stay readable forever and migrate
 > losslessly (same seed, same face, same seven-word key); tiles add the footprint a rappid needs to
 > stand on (`stands_on`), an explicit primary payload with resources, and lineage. This document
