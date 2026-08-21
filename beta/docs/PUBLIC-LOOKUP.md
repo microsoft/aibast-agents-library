@@ -91,6 +91,13 @@ participant.
 A summoned tile arrives at full height: its [crystal](CRYSTALS.md) is untouched, because whatever
 its publisher wore down was theirs. It is new *to you*, and the wearing is yours to do.
 
+## The same pattern serves a model
+
+A static API — `rapp-static-api/1.0`, a manifest plus generated JSON endpoints served from raw
+content with no server — is how the same lookup can carry a model's manifest, so even the one
+command that costs money can be answered locally. See
+[`LOCAL-MODEL-PLAYER.md`](LOCAL-MODEL-PLAYER.md).
+
 ## The public phone: a gist is the smallest publishable thing
 
 A repository is a low bar. A **gist** is lower still — created in seconds, no project to set up, with
