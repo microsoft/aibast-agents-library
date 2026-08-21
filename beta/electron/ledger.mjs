@@ -3,7 +3,11 @@ import {
   closeSync,
   existsSync,
   mkdirSync,
+  readFileSync,
+  readdirSync,
   renameSync,
+  rmSync,
+  statSync,
   writeFileSync,
   writeSync,
 } from "node:fs";
@@ -21,6 +25,17 @@ import {
 const AGENT_EVENT_LIMIT = 10;
 const LEDGER_JSONL = "ledger.jsonl";
 const LEDGER_SQLITE = "ledger.sqlite";
+const LEDGER_SOURCE_DIRECTORY = "ledger-sources";
+const LEDGER_RETENTION_DEFAULTS = Object.freeze({
+  maxAgentRows: 2_000,
+  maxMirrorBytes: 32 * 1024 * 1024,
+  maxToolRows: 10_000,
+  maxTurnRows: 5_000,
+  pruneEveryWrites: 100,
+});
+const MAX_AGENT_DETAIL_BYTES = 16 * 1024;
+const MAX_TOOL_SUMMARY_BYTES = 4 * 1024;
+const MAX_TURN_CONTENT_BYTES = 64 * 1024;
 const ROUTE_AGENT_EVENTS = new Map([
   ["composition-quarantine", { event: "quarantined", origin: "lineage" }],
   ["ephemeral-cleaned", { event: "removed", origin: "surgeon" }],
@@ -49,17 +64,74 @@ function redactField(value) {
   return value;
 }
 
-function requiredField(value, name) {
+function boundedText(value, maxBytes) {
+  const text = String(value);
+  if (!maxBytes || Buffer.byteLength(text, "utf8") <= maxBytes) return text;
+  const marker = "\n[ledger entry truncated]";
+  const budget = Math.max(0, maxBytes - Buffer.byteLength(marker, "utf8"));
+  let low = 0;
+  let high = text.length;
+  while (low < high) {
+    const middle = Math.ceil((low + high) / 2);
+    if (Buffer.byteLength(text.slice(0, middle), "utf8") <= budget) {
+      low = middle;
+    } else {
+      high = middle - 1;
+    }
+  }
+  if (
+    low > 0
+    && low < text.length
+    && /[\uD800-\uDBFF]/.test(text[low - 1])
+    && /[\uDC00-\uDFFF]/.test(text[low])
+  ) low -= 1;
+  return `${text.slice(0, low)}${marker}`;
+}
+
+function requiredField(value, name, maxBytes = null) {
   const normalized = redactField(value);
   if (typeof normalized !== "string" || !normalized.trim()) {
     throw new TypeError(`${name} is required`);
   }
-  return normalized;
+  return boundedText(normalized, maxBytes);
 }
 
-function optionalField(value) {
+function optionalField(value, maxBytes = null) {
   const normalized = redactField(value);
-  return normalized === null ? null : String(normalized);
+  return normalized === null ? null : boundedText(normalized, maxBytes);
+}
+
+function positiveInteger(value, fallback, { minimum = 1 } = {}) {
+  const number = Number(value);
+  return Number.isFinite(number) && number >= minimum
+    ? Math.floor(number)
+    : fallback;
+}
+
+function normalizeRetention(value = {}) {
+  return {
+    maxAgentRows: positiveInteger(
+      value.maxAgentRows,
+      LEDGER_RETENTION_DEFAULTS.maxAgentRows,
+    ),
+    maxMirrorBytes: positiveInteger(
+      value.maxMirrorBytes,
+      LEDGER_RETENTION_DEFAULTS.maxMirrorBytes,
+      { minimum: 128 },
+    ),
+    maxToolRows: positiveInteger(
+      value.maxToolRows,
+      LEDGER_RETENTION_DEFAULTS.maxToolRows,
+    ),
+    maxTurnRows: positiveInteger(
+      value.maxTurnRows,
+      LEDGER_RETENTION_DEFAULTS.maxTurnRows,
+    ),
+    pruneEveryWrites: positiveInteger(
+      value.pruneEveryWrites,
+      LEDGER_RETENTION_DEFAULTS.pruneEveryWrites,
+    ),
+  };
 }
 
 function shellQuote(value, platform = process.platform) {
@@ -252,6 +324,7 @@ export class Ledger {
     logger = console,
     now = () => new Date().toISOString(),
     onWrite = null,
+    retention = {},
   } = {}) {
     this.betaHome = path.resolve(betaHome);
     this.databasePath = path.join(this.betaHome, LEDGER_SQLITE);
@@ -259,6 +332,8 @@ export class Ledger {
     this.logger = logger;
     this.now = now;
     this.onWrite = onWrite;
+    this.retention = normalizeRetention(retention);
+    this.writesSinceRetention = 0;
     this.errorReported = false;
     this.database = null;
     this.mirrorFd = null;
@@ -310,6 +385,11 @@ export class Ledger {
         CREATE INDEX IF NOT EXISTS agents_at_idx ON agents(at);
         CREATE INDEX IF NOT EXISTS tools_called_at_idx ON tools_called(at);
       `);
+      try {
+        this.pruneRetention({ compactDatabase: true });
+      } catch (error) {
+        this.#reportOnce(error);
+      }
       this.statements = {
         turn: this.database.prepare(`
           INSERT INTO turns (
@@ -368,7 +448,7 @@ export class Ledger {
         session_id: optionalField(session_id),
         surface: requiredField(surface, "surface"),
         role: requiredField(role, "role"),
-        content: requiredField(content, "content"),
+        content: requiredField(content, "content", MAX_TURN_CONTENT_BYTES),
         model: optionalField(model),
         request_id: optionalField(request_id),
       };
@@ -410,7 +490,7 @@ export class Ledger {
         sha256: optionalField(sha256),
         source_path: optionalField(source_path),
         origin: optionalField(origin),
-        detail: optionalField(detail),
+        detail: optionalField(detail, MAX_AGENT_DETAIL_BYTES),
       };
       this.statements.agent.run(
         row.at,
@@ -450,7 +530,7 @@ export class Ledger {
         session_id: optionalField(session_id),
         tool_name: requiredField(tool_name, "tool_name"),
         ok: ok ? 1 : 0,
-        summary: optionalField(summary),
+        summary: optionalField(summary, MAX_TOOL_SUMMARY_BYTES),
       };
       this.statements.tool.run(
         row.at,
@@ -480,7 +560,11 @@ export class Ledger {
         "utf8",
       );
       const digest = createHash("sha256").update(redacted).digest("hex");
-      const directory = path.join(this.betaHome, "ledger-sources", digest);
+      const directory = path.join(
+        this.betaHome,
+        LEDGER_SOURCE_DIRECTORY,
+        digest,
+      );
       mkdirSync(directory, { recursive: true, mode: 0o700 });
       if (process.platform !== "win32") chmodSync(directory, 0o700);
       const sourcePath = path.join(directory, safeName);
@@ -545,6 +629,110 @@ export class Ledger {
     return describe(this.betaHome, this.recentAgentEvents());
   }
 
+  pruneRetention({ compactDatabase = false } = {}) {
+    const report = {
+      agentRowsRemoved: 0,
+      databaseCompacted: false,
+      mirrorCompacted: false,
+      sourceArchivesRemoved: [],
+      sourceRowsRemoved: 0,
+      toolRowsRemoved: 0,
+      turnRowsRemoved: 0,
+    };
+    if (!this.database) return report;
+
+    this.database.exec("BEGIN IMMEDIATE");
+    try {
+      report.turnRowsRemoved = Number(this.database.prepare(`
+        DELETE FROM turns
+        WHERE id NOT IN (
+          SELECT id FROM turns ORDER BY id DESC LIMIT ?
+        )
+      `).run(this.retention.maxTurnRows).changes);
+      report.agentRowsRemoved = Number(this.database.prepare(`
+        DELETE FROM agents
+        WHERE id NOT IN (
+          SELECT id FROM agents ORDER BY id DESC LIMIT ?
+        )
+      `).run(this.retention.maxAgentRows).changes);
+      report.toolRowsRemoved = Number(this.database.prepare(`
+        DELETE FROM tools_called
+        WHERE id NOT IN (
+          SELECT id FROM tools_called ORDER BY id DESC LIMIT ?
+        )
+      `).run(this.retention.maxToolRows).changes);
+      report.sourceRowsRemoved = Number(this.database.prepare(`
+        DELETE FROM sources
+        WHERE NOT EXISTS (
+          SELECT 1
+          FROM agents
+          WHERE agents.sha256 = sources.sha256
+            AND agents.source_path = sources.path
+        )
+      `).run().changes);
+      this.database.exec("COMMIT");
+    } catch (error) {
+      try { this.database.exec("ROLLBACK"); } catch {}
+      throw error;
+    }
+
+    const sourceRoot = path.join(this.betaHome, LEDGER_SOURCE_DIRECTORY);
+    const referencedDirectories = new Set(
+      this.database.prepare(`
+        SELECT DISTINCT source_path
+        FROM agents
+        WHERE source_path IS NOT NULL
+      `).all().flatMap(({ source_path: sourcePath }) => {
+        const relative = path.relative(sourceRoot, path.resolve(sourcePath));
+        if (
+          !relative
+          || relative.startsWith("..")
+          || path.isAbsolute(relative)
+        ) return [];
+        const [directory] = relative.split(path.sep);
+        return /^[a-f0-9]{64}$/.test(directory) ? [directory] : [];
+      }),
+    );
+    let sourceEntries = [];
+    try {
+      sourceEntries = readdirSync(sourceRoot, { withFileTypes: true });
+    } catch {
+      sourceEntries = [];
+    }
+    for (const entry of sourceEntries) {
+      if (
+        !entry.isDirectory()
+        || !/^[a-f0-9]{64}$/.test(entry.name)
+        || referencedDirectories.has(entry.name)
+      ) continue;
+      try {
+        rmSync(path.join(sourceRoot, entry.name), {
+          force: true,
+          recursive: true,
+        });
+        report.sourceArchivesRemoved.push(entry.name);
+      } catch {
+        // A later retention pass can retry an archive that is temporarily busy.
+      }
+    }
+
+    report.mirrorCompacted = this.#compactMirror();
+    if (
+      compactDatabase
+      && (
+        report.agentRowsRemoved
+        || report.sourceRowsRemoved
+        || report.toolRowsRemoved
+        || report.turnRowsRemoved
+      )
+    ) {
+      this.database.exec("PRAGMA wal_checkpoint(TRUNCATE)");
+      this.database.exec("VACUUM");
+      report.databaseCompacted = true;
+    }
+    return report;
+  }
+
   close() {
     try {
       if (this.mirrorFd !== null) closeSync(this.mirrorFd);
@@ -580,6 +768,15 @@ export class Ledger {
     }
     try {
       const row = operation();
+      this.writesSinceRetention += 1;
+      if (this.writesSinceRetention >= this.retention.pruneEveryWrites) {
+        this.writesSinceRetention = 0;
+        try {
+          this.pruneRetention();
+        } catch (error) {
+          this.#reportOnce(error);
+        }
+      }
       this.#enforcePrivateFiles();
       if (row && this.onWrite) {
         try {
@@ -597,6 +794,47 @@ export class Ledger {
 
   #appendMirror(row) {
     writeSync(this.mirrorFd, `${JSON.stringify(row)}\n`);
+  }
+
+  #compactMirror() {
+    let size;
+    try {
+      size = statSync(this.mirrorPath).size;
+    } catch {
+      return false;
+    }
+    if (size <= this.retention.maxMirrorBytes) return false;
+
+    const reopen = this.mirrorFd !== null;
+    if (reopen) {
+      closeSync(this.mirrorFd);
+      this.mirrorFd = null;
+    }
+    try {
+      const lines = readFileSync(this.mirrorPath, "utf8")
+        .split(/\r?\n/)
+        .filter(Boolean);
+      const retained = [];
+      let retainedBytes = 0;
+      for (let index = lines.length - 1; index >= 0; index -= 1) {
+        const line = lines[index];
+        const lineBytes = Buffer.byteLength(line, "utf8") + 1;
+        if (lineBytes > this.retention.maxMirrorBytes) continue;
+        if (retainedBytes + lineBytes > this.retention.maxMirrorBytes) break;
+        retained.push(line);
+        retainedBytes += lineBytes;
+      }
+      retained.reverse();
+      writeFileSync(
+        this.mirrorPath,
+        retained.length ? `${retained.join("\n")}\n` : "",
+        { mode: 0o600 },
+      );
+      privateMode(this.mirrorPath);
+      return true;
+    } finally {
+      if (reopen) this.mirrorFd = openPrivateAppendFile(this.mirrorPath);
+    }
   }
 
   #enforcePrivateFiles() {
@@ -636,5 +874,9 @@ export function openLedger(betaHome, options = {}) {
 }
 
 export const ledgerInternals = {
+  MAX_AGENT_DETAIL_BYTES,
+  MAX_TOOL_SUMMARY_BYTES,
+  MAX_TURN_CONTENT_BYTES,
   ledgerShellPath,
+  retentionDefaults: LEDGER_RETENTION_DEFAULTS,
 };
