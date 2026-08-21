@@ -350,6 +350,29 @@ into anyone else's line.
 Read one way it is the private projection, read the other the public one. Same frames, same keys,
 opposite direction of travel.
 
+### This specifies the mechanism, not the policy
+
+The protocol fixes what a key *is*, what a pair *is*, what may be assimilated and what must be
+refused. It deliberately does **not** fix:
+
+- **which components are indexed**, or in what order a drill probes them;
+- **how substance is weighted** when scoring a run, or the threshold at which a span is called
+  determined rather than speculative;
+- **which coordinates are worth probing first** to make hits likely.
+
+Those are policy, and they are where implementations legitimately differ and compete. Two conforming
+implementations can search the same commons and hit at very different rates without either of them
+being wrong, in the same way two search engines can index the same web.
+
+What conformance requires is that **policy never changes the outcome of a merge.** Whatever a drill
+chooses to probe, and however it ranks what it finds, an assimilation must still refuse anything
+contradicting downstream, must still be whole-frame, and must still produce the same joined frame on
+any machine given the same frames and fixed points. Policy decides *what you look at*. It never
+decides *what is true*.
+
+An implementation is therefore expected to make its policy replaceable, and to ship a plain default
+that a reader can follow. This document is the mechanism; the default is an example, not the ceiling.
+
 ### What this is, named honestly
 
 Content-addressed lookup, plus an op-based merge of append-only event streams, plus a lineage whose
@@ -462,8 +485,31 @@ captured by nobody reports that honestly instead of promoting the best-looking l
 
 ## Status
 
-**Specified, not implemented.** Nothing in this repository runs a drill. Related machinery that
-exists: the single-contender race in `../electron/dimension-tiles.mjs` (`tiles-race`), and the
-worktree-isolated worker pattern used by twins. The flag checker described in
-[DIMENSION-MINING.md](DIMENSION-MINING.md) is the piece to build first — without it a drill has
-nothing to collapse on, and rule 2 cannot be satisfied.
+**Split.** The two halves of this protocol are at different stages, and saying so is the point.
+
+**Local instant transmission is implemented and proven headlessly.** `../electron/qqdrill.mjs`
+carries the mechanism — coordinate keys, fixed points, run-length fidelity, alignment, the
+compatibility rule, assimilation and retroactive zoom — and `../tests/qqdrill.test.mjs` has one test
+per proof obligation above, all passing. Nothing in RAPP/1 changed to make it fit: the frame spec is
+untouched, and the coordinate is computed about frames rather than stored in them.
+
+Run it and watch it work: `node beta/scripts/qqdrill-proof.mjs`. It builds two real dimensions,
+drills them, folds what may be folded, prints what it refused and what that frame contradicted, and
+zooms a span with a finer clock.
+
+Two facts the implementation established that inspection had not:
+
+- **RAPP/1 binds `prev` to the head's `payload_hash`, not its `frame_hash`**, so identical payloads
+  in two lines converge to identical frames after one tick. What distinguishes two dimensions running
+  the same content is *when* they ran it, and the fixed point is about exactly that.
+- **`prev_wave` is reserved for swarm streams** and is not a general second-parent field, so a join
+  names the frames it assimilated in its payload. The payload is hashed into `frame_hash`, so that
+  claim is bound just as tightly and the local chain stays single-parent and valid.
+
+**The race is still specified only.** Nothing here runs N candidate dimensions against a flag. The
+flag checker in [DIMENSION-MINING.md](DIMENSION-MINING.md) remains the piece to build first — without
+it there is nothing to collapse on, and rule 2 cannot be satisfied. Related machinery that exists:
+the single-contender race in `../electron/dimension-tiles.mjs` (`tiles-race`), and the
+worktree-isolated worker pattern used by twins.
+
+Also unbuilt: fetching a real commons over the network, and the UI surface for either half.
