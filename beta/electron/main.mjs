@@ -2522,6 +2522,23 @@ function isTwinFrameUrl(raw) {
   }
 }
 
+// A driven run must not take the screen from the person using this machine. The
+// window stays real — a never-shown window makes the renderer behave differently
+// and stops the run being a proof — but it is shown WITHOUT activating the app,
+// so focus stays wherever the person put it. This is the two-player law applied
+// to the whole application: automation works in the window without taking it.
+const drivenRun = process.env.BRAINSTEM_BETA_E2E === "1";
+
+function presentWindow(window, { focus = true } = {}) {
+  if (!window || window.isDestroyed()) return;
+  if (drivenRun) {
+    window.showInactive();
+    return;
+  }
+  window.show();
+  if (focus) window.focus();
+}
+
 function routeFrameNavigation(details) {
   const raw = details?.url;
   if (!raw || raw === "about:blank") return;
@@ -3221,11 +3238,13 @@ if (!hasLock) {
   app.on("second-instance", () => {
     if (!mainWindow || mainWindow.isDestroyed()) mainWindow = createWindow();
     if (mainWindow.isMinimized()) mainWindow.restore();
-    mainWindow.show();
-    mainWindow.focus();
+    presentWindow(mainWindow);
   });
 
   app.whenReady().then(() => {
+    if (drivenRun && process.platform === "darwin" && app.setActivationPolicy) {
+      app.setActivationPolicy("accessory");
+    }
     // Blue-brain dock icon in dev too (packaged builds get it from the bundle).
     if (appIcon && !appIcon.isEmpty() && process.platform === "darwin" && app.dock) {
       app.dock.setIcon(appIcon);
@@ -3306,7 +3325,7 @@ if (!hasLock) {
 
   app.on("activate", () => {
     if (!mainWindow || mainWindow.isDestroyed()) mainWindow = createWindow();
-    mainWindow.show();
+    presentWindow(mainWindow, { focus: false });
   });
 
   app.on("window-all-closed", () => {
