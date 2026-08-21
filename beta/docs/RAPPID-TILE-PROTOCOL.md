@@ -180,3 +180,28 @@ synced, summoning a tile by its seven-word key is the one door outward — a pub
 and no identity transmitted, with the bytes verified against seed and face before they become
 anything. See [`ONE-TIME-SEALS.md`](ONE-TIME-SEALS.md) for why a fresh device starts sealed and what
 that door is for.
+
+## Why a public account is the whole store
+
+There is no registry service behind this, and there should not be one. A public repository *is* the
+catalog, and that single decision carries most of the system:
+
+- **Nothing to run.** No hosting, no auth server, no CDN, no uptime obligation. The raw file
+  endpoint is already global and already free, which is why a tile can be summoned from a device
+  that has nothing on it.
+- **Publishing is `git push`.** The namespace is one people already have, so becoming a publisher
+  costs nothing and asks no one's permission. A catalog nobody has to be admitted to is a
+  fundamentally different thing from one that is curated by whoever runs the server.
+- **Reading is anonymous; only publishing needs an account.** That asymmetry is what makes the door
+  outward free: a fresh device summons without identifying itself, and an account is the thing that
+  turns someone from a consumer into a publisher. Set-up never has to ask for a login.
+- **Provenance and versioning come free.** Commits are the history, the account is the identity, and
+  what was served at a given moment is recoverable. None of that had to be designed.
+- **The public/private boundary is the platform's, not ours.** A public repository is the public
+  face; a private one is not reachable through the public door at all. The separation is enforced by
+  infrastructure rather than by our code remembering to be careful — which is the only kind of
+  boundary worth relying on.
+
+So the scope of this protocol is deliberately narrow: **the format and the verification, not the
+hosting.** Bytes arrive from somewhere public and are checked against their seed and face before
+they become anything. Where they were served from is somebody else's solved problem.
