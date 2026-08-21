@@ -82,10 +82,21 @@ only changes voice between sentences is still a relay.
 
 ### The occasional station ident
 
-Once in a while — not often — the handoff can be played rather than hidden: the good voice comes in
-over the top of the fast one the way a station breaks into a broadcast, says something brief, and
-carries on with the answer. Radio has a name for this; it is a **station ident**, and treating it as
-a known format element rather than a joke in the code is what keeps it from becoming a liability.
+**Decision: accepted.** This is a deliberate product choice, made by the repository owner with the
+tradeoff understood. It is not an oversight, and it is not to be quietly removed by a later tidying
+pass — if it is ever dropped, that is a decision someone makes on purpose and records here.
+
+Once in a while — not often — the handoff is played rather than hidden: the good voice comes in over
+the top of the fast one the way a station breaks into a broadcast, says something brief, and carries
+on with the answer. Radio has a name for this; it is a **station ident**, and treating it as a known
+format element rather than a joke in the code is what keeps it legible to anyone reading the design.
+
+**Why it earns its place.** A product people enjoy using is not a lesser goal than a product that
+works, and the two are not in tension here: the ident costs nothing, blocks nothing, and carries
+nothing. What it buys is character — the thing that makes a voice feel like a voice rather than a
+speech synthesiser, gives a demo a moment people remember, and makes individual replies distinctive
+enough that someone would want to keep one. Software that is merely correct is forgettable, and
+forgettable infrastructure does not get adopted.
 
 The charm is entirely in the scarcity. A bit that fires every turn is an irritation to be switched
 off within a day; one that fires rarely is personality. So it is fenced:
