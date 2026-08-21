@@ -279,6 +279,39 @@ Every useful demonstration follows the same observable loop:
 9. **Explain** — summarize what worked and what the user just learned.
 10. **Promote** — package the proven organism for the right downstream target.
 
+## Checkpoint — a tile is a frame, and that is what makes it all one system
+
+**Locked in 2026-08-21.** The pieces below were built separately and turn out to be one mechanism.
+This is the chain, and it is a product-lifetime invariant: change any link and the rest stops
+composing.
+
+1. **A tile is the unit of a working situation** — a transcript, the agents hot-loaded for it, and
+   the footprint it needs. Not a unit of code; a unit of *work*.
+2. **A tile is a RAPP frame.** It carries a frame tick and a UTC timestamp, which are its position
+   in a stream rather than metadata about it.
+3. **Therefore a tile is a delta**, and the [Dream Catcher](docs/CRYSTALS.md) rule applies natively:
+   parallel streams produce deltas, deltas merge deterministically on that key, and nothing is ever
+   overwritten — only appended.
+4. **Docking is merging.** Dropping a tile onto the Brainstem appends a frame. Parking one emits a
+   frame. Editing one emits a new frame. They are the same operation seen from different ends,
+   which is why there is no separate merge protocol to design.
+5. **So a tile can be worn in parallel**, on as many devices as a person has, each emitting frames
+   from a context none of the others can see.
+6. **Merging dimensions is folding frames in key order.** Two devices acting at the same moment
+   produce two frames, not a conflict.
+7. **Wear is derived from the fold, never summed** — the crystal measures what the tile still needs,
+   which is a property of the merged whole.
+8. **The adapter is re-derived from the merged stream**, not blended from two adapters. Model
+   merging becoming good is an optimisation, not a dependency — if it never arrives, nothing here
+   breaks.
+9. **The fold is the singleton** every device re-summons, better than any one of them contributed.
+10. **And it stays a file** — summonable by seven words, verifiable, assembling on a machine with no
+    network, and the person's to keep.
+
+The reason to lock this as a checkpoint: each link was arrived at separately, and any one of them
+looks like a design preference in isolation. Together they are the mechanism, and the value is in
+the composition rather than in any single choice.
+
 ## RAPP/1 constitutional boundary
 
 Frontier may orchestrate around the kernel, but it does not fork the kernel.
