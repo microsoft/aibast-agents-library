@@ -48,6 +48,49 @@ though it does:
 - **Subscription as a seal.** Opting into a source is a decision made once, in the moment it means
   something — the same primitive as everything else here.
 
+## One chant, a working local intelligence
+
+Everything in this document composes into a single property, and it is worth stating on its own
+because it is what the whole design is for:
+
+**A person says seven words on any machine and a complete, working capability materialises, running
+locally.**
+
+Call it a **summoned capability**: *virtual*, because nothing was installed until it was asked for;
+*dynamic*, because it is composed at the moment of summoning rather than shipped as a build;
+*real-time and local*, because the model it runs against is on the device, answering now, with no
+service in the loop.
+
+### Why it feels like magic, and what the trick actually is
+
+It feels like magic because there is no visible infrastructure. No server was contacted for
+permission, no account was signed into, no installer was run, no sync completed. A phrase was spoken
+and a capability was there.
+
+The trick is that every individual mechanism is unremarkable:
+
+| What happens | What it actually is |
+|---|---|
+| the chant resolves | deterministic addressing — the manifest and the id give the location, so there is nothing to ask |
+| the bytes arrive | a public raw file, or the copy already cached, in which case no network is involved at all |
+| they are trusted | a hash check against the recorded value; fetching is not trusting |
+| it runs | a local model that was already on the device, composed with the tile's agents |
+| it remembers | the transcript came with the tile, because that is what a tile is |
+
+None of those are clever on their own. What produces the effect is that **not one of them requires
+anything of the person** — no identity, no permission, no configuration, no connection. Magic is
+what a stack of ordinary mechanisms looks like when every one of them has had its prerequisites
+removed.
+
+That is also why it survives the demo. A trick that depends on a service can fail in front of an
+audience; this one degrades to "the same thing, offline" — which is the same trick with one fewer
+participant.
+
+### What arrives with it
+
+A summoned tile arrives at full height: its [crystal](CRYSTALS.md) is untouched, because whatever
+its publisher wore down was theirs. It is new *to you*, and the wearing is yours to do.
+
 ## The public phone: a gist is the smallest publishable thing
 
 A repository is a low bar. A **gist** is lower still — created in seconds, no project to set up, with
