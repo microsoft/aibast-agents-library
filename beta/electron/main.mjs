@@ -404,8 +404,9 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     ".beta-frame-menu #beta-update-status[data-phase=blocked],",
     ".beta-frame-menu #beta-update-status[data-phase=error]",
     "{border-color:#da3633;color:#ff7b72}",
-    ".beta-drive-feed{display:flex;flex-direction:column;align-items:center;gap:6px;",
-    "margin:7px 0;max-width:100%}",
+    ".beta-drive-feed{position:fixed;right:14px;bottom:14px;z-index:2147483644;",
+    "display:flex;flex-direction:column;align-items:flex-end;gap:6px;",
+    "max-width:min(420px,42vw);pointer-events:none}",
     ".beta-drive-step-tile{max-width:min(760px,92%);overflow:hidden;",
     "padding:5px 9px;border:1px solid #30363d;border-radius:999px;",
     "background:#161b22;color:#8b949e;font:600 11px/1.25 ui-monospace,monospace;",
@@ -587,16 +588,30 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     });
     stampChatMessageHandles();
   }
+  // Driver steps are not conversation. They used to be appended INSIDE #chat, which
+  // put machine steps into the record of an exchange with the model — and with
+  // deterministic driving most of those steps never reach the model at all. The feed
+  // is now its own activity strip on the body, off unless someone asked to watch;
+  // the console and the driver trace remain the record either way.
+  window.__rappBetaActivityView = window.__rappBetaActivityView === true;
+  window.__rappBetaSetActivityView = (on) => {
+    window.__rappBetaActivityView = on === true;
+    if (!window.__rappBetaActivityView) {
+      document.getElementById("beta-drive-feed")?.remove();
+    }
+    return window.__rappBetaActivityView;
+  };
   function driveFeed() {
-    const chat = document.getElementById("chat");
-    if (!chat) return null;
+    if (!window.__rappBetaActivityView) return null;
+    const host = document.body;
+    if (!host) return null;
     let feed = document.getElementById("beta-drive-feed");
     if (!feed) {
       feed = document.createElement("div");
       feed.id = "beta-drive-feed";
       feed.className = "beta-drive-feed";
       feed.dataset.brainstemAiDriver = "true";
-      chat.appendChild(feed);
+      host.appendChild(feed);
     }
     return feed;
   }
