@@ -48,6 +48,46 @@ already on the device, not a model in its own right. That size is what makes the
 possible: it fits inside a tile, so it can be parked, dragged, kept in a binder, exported in an
 `.egg`, and summoned. A tile that carried a whole model could do none of those things.
 
+### Holding is not running
+
+A device that cannot run a model is still a full participant. Possession and execution are separate
+concerns, and keeping them separate is what lets a thin machine take part at all:
+
+- **The tile always accumulates the material.** What it learned from — the work, the corrections,
+  the transcript — is collected locally on any device, because that costs nothing but storage.
+- **Turning that into a weight needs compute, which may be elsewhere.** A laptop, a workstation, a
+  machine the person walks to. The training happens where there is capacity.
+- **The tile carries the resulting weight regardless of whether this device can execute it.** You
+  can hold a file you cannot open yet. A phone can carry, park, export, publish and summon a
+  crystal it has no hope of running.
+
+So the weak device is not a degraded client. It participates in everything except execution, and
+execution is the one part that can happen somewhere else without anyone losing anything.
+
+**Which makes the format a hard requirement, not a detail.** The weight must be a standard,
+documented adapter that ordinary runtimes can load — not a blob only this product understands. The
+Golden Path promises a capability that follows a person for life; a weight that can only be run by
+us is not that, it is a hostage. If someone wants to load their crystal into an entirely different
+LLM stack, that has to work, and if it does not, the promise was never true.
+
+### Every crystal is a dimension of the one it came from
+
+A summoned crystal is a **starting crystal**. From the moment it is used it begins to diverge: your
+work trains it, your corrections shape it, and what you end up holding is no longer the thing you
+summoned. It is **your dimension of it**.
+
+That is the divergence model applied to weights, and it produces a lineage rather than a copy:
+
+- One starting crystal can be summoned by a hundred people and become a hundred dimensions, each
+  worn differently because each was used differently.
+- A dimension carries the lineage of what it descended from, so where it came from stays legible
+  no matter how far it has travelled.
+- **A dimension can itself be published as a starting crystal** for the next person — subject to the
+  privacy rules above, which is precisely why "publish the capability, not the training" is the
+  default rather than an afterthought.
+
+A crystal trains into a tile, and the tile is what the next person summons.
+
 ### The consequence that must not be discovered later
 
 **A weight trained on your work encodes your work.** Not as a transcript that can be read, but not
