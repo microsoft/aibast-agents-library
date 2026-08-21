@@ -13,7 +13,7 @@ Brainstem first**, then promote into the Microsoft AI stack.
 This page is the built-in click-through preview, frame by frame. It is a
 **preview**: the panes paint synthetic content over the real UI; nothing is
 recorded, analyzed, hotloaded, or sent. Run it yourself from the **Show Mode:
-click-through preview** pill in the Brain Surgeon, from the intro card, or open
+click-through preview** pill in the Brain Surgeon, from the intro tile, or open
 [`beta/show-mode.html`](../../show-mode.html) as a shareable page.
 
 > Screenshots below are produced by driving the real Frontier window through the

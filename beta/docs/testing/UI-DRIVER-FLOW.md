@@ -322,7 +322,7 @@ tile) shifts `nth-of-type` and silently retargets the path.
   `raw` appends each SDK delta directly; `hold` keeps the accessible three-dot typing bubble
   and atomic delivery. Reduced motion disables the caret/fade and leaves the pre-response dots
   static.
-- `artifact` events render `<img>`/`<video controls>` cards with a link (`:552-577`) — only
+- `artifact` events render `<img>`/`<video controls>` tiles with a link (`:552-577`) — only
   from `capture_visible_brainstem`, `stop_demo_recording`, and `show_mode_click_through
   capture` (`brain-surgeon.mjs:1375-1383`, `:1405-1413`, `:1436-1453`).
 - `lease` events add an assistant bubble "Temporary capability leased." (`:1292-1293`).
