@@ -69,7 +69,7 @@
       text-align: center;
     }
     #splash.hidden { display: none; }
-    .card {
+    .tile {
       width: min(620px, 90vw);
       border: 1px solid #30363d;
       border-radius: 12px;
@@ -77,8 +77,8 @@
       background: #161b22;
       box-shadow: 0 20px 70px rgba(0,0,0,.35);
     }
-    .card h1 { margin: 0 0 10px; font-size: 24px; }
-    .card p { margin: 7px 0; color: #8c959f; line-height: 1.55; }
+    .tile h1 { margin: 0 0 10px; font-size: 24px; }
+    .tile p { margin: 7px 0; color: #8c959f; line-height: 1.55; }
     #error { color: #ff7b72; white-space: pre-wrap; }
     #intro {
       position: fixed;
@@ -118,17 +118,17 @@
     .intro-hero p { max-width: 850px; margin: 0; color: #b1bac4; font-size: 16px; line-height: 1.6; }
     .intro-body { padding: 24px 32px 30px; }
     .intro-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    .intro-card {
+    .intro-tile {
       border: 1px solid #30363d;
       border-radius: 10px;
       padding: 18px;
       background: #161b22;
     }
-    .intro-card.wide { grid-column: 1 / -1; }
-    .intro-card h2 { margin: 0 0 8px; font-size: 16px; color: #f0f6fc; }
-    .intro-card p, .intro-card li { color: #b1bac4; font-size: 14px; line-height: 1.55; }
-    .intro-card p { margin: 6px 0; }
-    .intro-card ul, .intro-card ol { margin: 8px 0 0; padding-left: 20px; }
+    .intro-tile.wide { grid-column: 1 / -1; }
+    .intro-tile h2 { margin: 0 0 8px; font-size: 16px; color: #f0f6fc; }
+    .intro-tile p, .intro-tile li { color: #b1bac4; font-size: 14px; line-height: 1.55; }
+    .intro-tile p { margin: 6px 0; }
+    .intro-tile ul, .intro-tile ol { margin: 8px 0 0; padding-left: 20px; }
     .tool-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
     .tool {
       border: 1px solid #30363d;
@@ -551,16 +551,16 @@
       background: #ff5f52; margin-right: 9px; vertical-align: 1px;
       box-shadow: 0 0 0 3px rgba(255,95,82,.25);
     }
-    .intro-card .intro-show-mode {
+    .intro-tile .intro-show-mode {
       display: flex; align-items: center; justify-content: space-between; gap: 14px;
       margin-top: 12px; padding: 12px 14px; border: 1px solid #5a2320; border-radius: 8px;
       background: linear-gradient(135deg,#2a1210,#1a1519);
     }
-    .intro-card .intro-show-mode span { color: #f0c9c4; font-size: 13px; line-height: 1.5; }
-    .intro-card .intro-show-mode button {
+    .intro-tile .intro-show-mode span { color: #f0c9c4; font-size: 13px; line-height: 1.5; }
+    .intro-tile .intro-show-mode button {
       flex: none; border-color: #d0463a; background: #3a1614; color: #ffe9e6; font-weight: 800;
     }
-    .intro-card .intro-show-mode button::before {
+    .intro-tile .intro-show-mode button::before {
       content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%;
       background: #ff5f52; margin-right: 8px; vertical-align: 1px; box-shadow: 0 0 0 3px rgba(255,95,82,.25);
     }
@@ -749,7 +749,7 @@
     .ambient-settings-actions .primary { margin-left: auto; }
     @media (max-width: 850px) {
       .intro-grid, .tool-grid { grid-template-columns: 1fr; }
-      .intro-card.wide { grid-column: auto; }
+      .intro-tile.wide { grid-column: auto; }
       .intro-body, .intro-hero { padding-left: 20px; padding-right: 20px; }
       #explorer { width: 100vw; }
       #surgeon { width: 100vw; }
@@ -759,7 +759,7 @@
 <body>
   <main>
     <div id="splash" data-drive="shell.splash">
-      <div class="card">
+      <div class="tile">
         <h1>Starting your global Brainstem</h1>
         <p>This launcher uses the same agents, memories, authentication, and port 7071 as the regular installer.</p>
         <p id="error" data-drive="shell.error"></p>
@@ -893,17 +893,17 @@
       </div>
       <div class="intro-body">
         <div class="intro-grid">
-          <article class="intro-card">
+          <article class="intro-tile">
             <h2>What is this for?</h2>
             <p>Tell Copilot the outcome you need. It helps you learn the pattern, turns that learning into a single-file capability, hotloads it beside the global agents, and proves it through the real Brainstem chat.</p>
             <p><strong>It is the fastest path from an idea to evidence.</strong> It is not the final production host.</p>
           </article>
-          <article class="intro-card">
+          <article class="intro-tile">
             <h2>Who should use it?</h2>
             <p>Technical sellers, architects, specialists, engineers, partners, and customer builders who can steer a prototype and judge whether it solves the business problem.</p>
             <p>It is not the default interface for account executives or end users. They consume the validated outcome in the right production experience.</p>
           </article>
-          <article class="intro-card">
+          <article class="intro-tile">
             <h2>When should I reach for it?</h2>
             <ul>
               <li>A customer asks, "Can AI do this process?"</li>
@@ -913,7 +913,7 @@
               <li>You need portable agent files that teammates can hot-load and improve.</li>
             </ul>
           </article>
-          <article class="intro-card">
+          <article class="intro-tile">
             <h2>When should I not use it?</h2>
             <ul>
               <li>Simple employee knowledge or Work IQ tasks already fit Scout.</li>
@@ -922,7 +922,7 @@
               <li>You are treating a local proof as a production-ready solution.</li>
             </ul>
           </article>
-          <article class="intro-card wide">
+          <article class="intro-tile wide">
             <h2>How the tools fit together</h2>
             <div class="tool-grid">
               <div class="tool"><strong>Scout</strong><span>Use for accessible employee workflows, Work IQ, knowledge, and shareable skills when the experience already fits.</span></div>
@@ -931,7 +931,7 @@
               <div class="tool"><strong>Copilot Studio / Foundry</strong><span>Use for governed production delivery, enterprise identity, connectors, telemetry, scale, and customer handoff.</span></div>
             </div>
           </article>
-          <article class="intro-card">
+          <article class="intro-tile">
             <h2>The rapid customer loop</h2>
             <ol>
               <li><strong>Frame:</strong> capture the problem, users, inputs, outputs, constraints, and success proof.</li>
@@ -941,7 +941,7 @@
               <li><strong>Package:</strong> share the agents, demo, evidence, requirements, and recommended production route.</li>
             </ol>
           </article>
-          <article class="intro-card">
+          <article class="intro-tile">
             <h2>What should come out?</h2>
             <ul>
               <li>A working, evidence-backed local prototype.</li>
@@ -951,7 +951,7 @@
               <li>A clear route to Scout, Copilot Studio, Foundry, custom code, or "do not proceed."</li>
             </ul>
           </article>
-          <article class="intro-card wide">
+          <article class="intro-tile wide">
             <h2>Start with this prompt — or show it instead</h2>
             <div class="prompt" id="show-mode-interview-prompt" data-drive="shell.showModePrompt">I am working on a rapid customer proof. Interview me until you understand the business problem, users, inputs, expected outputs, constraints, and what would prove success. Then propose the smallest single-file RAPP agent set that can test the idea locally with synthetic or approved data. Build it, run it through Brainstem, show me the evidence, identify production gaps, and recommend whether the final experience belongs in Scout, Copilot Studio, Foundry, or custom code. Do not call the prototype production-ready.</div>
             <div class="intro-show-mode">

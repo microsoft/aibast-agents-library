@@ -68,7 +68,7 @@ HELP_TEXT = """UI Driver v2 operates the actual visible RAPP Brainstem Frontier 
 - run accepts up to 40 steps. Steps support action, handle, selector, target_text, text, value, key, target, optional, tail, limit, and timing fields.
 - click/type/press return effect. Add until={handle,state}, until={handle,text}, or until={snapshot_changed:true} to verify inside the same call.
 - expect with handle plus state or text returns {ok,actual}. read is capped at 4000; wait returns {matched,h}.
-- screenshot returns a 300-character caption; include_text=true adds at most 2000 characters. Captures and recordings render as media cards.
+- screenshot returns a 300-character caption; include_text=true adds at most 2000 characters. Captures and recordings render as media tiles.
 - target is brainstem by default or shell for Frontier chrome. AI force mode is hidden until asked for; use it only when explicitly requested.
 - Results use a 6000-byte budget by default; a truncation marker names the handle to read for more."""
 
