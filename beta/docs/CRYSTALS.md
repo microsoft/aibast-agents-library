@@ -174,7 +174,13 @@ This is the part to be honest about, because the two halves of a tile behave com
   adaptations averaged can be worse than either, and confidently so. A merge that silently averages
   and reports success is the failure mode here.
 
-So a weight merge must be allowed to **refuse**. If two dimensions were trained in incompatible
+**Today.** That is a statement about the current state of the art, not a property of the problem —
+merging adaptations is an active area and it will get better. So the refusal below is a *stage*,
+not a verdict, and the design has to leave the path open: record every merge attempt and its inputs
+whether it succeeded or refused, so that when a better merger exists it can be run over histories
+already captured rather than needing a protocol change. Do not prune a green bud.
+
+So, for now, a weight merge must be allowed to **refuse**. If two dimensions were trained in incompatible
 directions — one toward terse answers, one toward thorough ones — the honest outcomes are to keep
 both as separate tiles, or to make the person choose, never to produce a blended thing that is
 quietly worse than what went in and carries a crystal implying it is better.
