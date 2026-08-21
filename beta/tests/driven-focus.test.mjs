@@ -29,11 +29,12 @@ test("a driven run shows its window without taking focus", () => {
 });
 
 test("no window is shown or focused outside presentWindow", () => {
-  // mainWindow.show()/focus() called directly would bypass the driven-run check.
+  // mainWindow.show()/focus() or local win.show()/focus() would bypass the
+  // driven-run check.
   // The notification handler's focus() is deliberate: a person clicked it.
   const offenders = [];
   for (const [index, line] of main.split("\n").entries()) {
-    if (!/mainWindow\.(show|focus)\(\)/.test(line)) continue;
+    if (!/\b(mainWindow|win)\.(show|focus)\(\)/.test(line)) continue;
     const context = main.split("\n").slice(Math.max(0, index - 6), index).join("\n");
     if (/notification|\.on\("click"/i.test(context)) continue;
     offenders.push(`${index + 1}: ${line.trim()}`);
@@ -44,5 +45,19 @@ test("no window is shown or focused outside presentWindow", () => {
     "Call presentWindow() instead — a direct show()/focus() steals the screen\n"
       + "during a driven run. See beta/tests/driven-focus.test.mjs.\n"
       + offenders.join("\n"),
+  );
+});
+
+test("the primary window constructor cannot activate a driven launch", () => {
+  const start = main.indexOf("function createWindow()");
+  const end = main.indexOf("\n}\n\nfunction shortCommit", start);
+  const createWindow = main.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.match(createWindow, /const headless = .*BRAINSTEM_BETA_HEADLESS/);
+  assert.match(createWindow, /new BrowserWindow\(\{\s*show: false,/);
+  assert.match(createWindow, /if \(!headless\) presentWindow\(win\)/);
+  assert.doesNotMatch(
+    createWindow,
+    /show:\s*process\.env\.BRAINSTEM_BETA_HEADLESS !== "1"/,
   );
 });
