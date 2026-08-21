@@ -126,6 +126,9 @@ Mechanical and lossless, in both directions for everything a card could express:
 ```
 schema         "rar-card/2.0"            → "rappid-tile/1.0", supersedes: "rar-card/2.0"
 incantation    <7 words>                 → key            (same value)
+table          { seat, faceUp }          → arena          (same shape; the field is named for the
+                                                            surface a tile stands in, not the one
+                                                            cards were dealt on)
 payload[0]                               → role: "primary"  (others become role: "resource")
 —                                        → stands_on      (derived: kernel rapp/1, python from the
                                                             manifest, tools from the manifest)
@@ -133,7 +136,8 @@ payload[0]                               → role: "primary"  (others become rol
 file           x_agent.py.card           → x_agent.py.tile
 ```
 
-Downgrading a tile to a card drops `stands_on`, `lineage`, and any non‑primary payload, and is only
+Downgrading a tile to a card renames `arena` back to `table` and drops `stands_on`, `lineage`,
+and any non‑primary payload, and is only
 offered for readers pinned to the old schema. `tile verify` reports what a downgrade would lose.
 
 **Registry:** `cards/v2/**.card` stay where they are and keep resolving. The migration writes
