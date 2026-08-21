@@ -78,6 +78,51 @@ no model, no network beyond the app's own loopback.
 That table is the point of the whole document: **one row costs money.** If a task can be expressed
 with the others, it should be.
 
+## One surface, two shapes: it is a CLI *and* an API
+
+The same entry point takes a string or a structured call, because the difference between a CLI and an
+API is a calling convention, not a system:
+
+```js
+rapp("tile.primary tile-7")                       // CLI shape — what an AI or a person types
+rapp({ cmd: "tile.primary", args: { id: "tile-7" } })  // API shape — what a program calls
+```
+
+Both go through the same allowlist, the same validation and the same result envelope. Neither is a
+"text mode" bolted onto the other, so a driver picks whichever shape it emits reliably — and an AI
+that is good at CLIs and a program that is good at JSON are the same client to us.
+
+## The client is the extension point — the Grail is not
+
+This is the part worth taking seriously, because it decides where a decade of feature pressure lands.
+
+Normally a new capability becomes a new server endpoint: somebody needs to list tiles, so `/v1/tiles`
+is added to `brainstem.py`. Do that a dozen times and the kernel permanently carries the Frontier's
+vocabulary — and so does every downstream that ships it.
+
+Invert it. **`index.html` is the translation middleware.** The client already holds the state, the
+DOM and the session, and it can already call what the Grail exposes; so a new command is *composed
+there*, out of primitives that already exist, and the surface is defined by the client that is
+loaded rather than by the server that is running. Which gives four properties:
+
+1. **The Grail gains no endpoints.** `brainstem.py` keeps `/chat`, `/health` and the surface it
+   already had. Adding a verb is a client-side composition, never a route — and never a field on an
+   existing route either.
+2. **The Grail's own `index.html` stays pristine.** Additions arrive by injection into a copy or a
+   frame, the rule [`UI-AUTOSTEER-PROTOCOL.md`](UI-AUTOSTEER-PROTOCOL.md) already enforces.
+3. **And it can be superseded outright.** A different `index.html` may replace it wholesale — which
+   is exactly what a rapplication does — and the command surface travels with it. Supersession is a
+   supported move, not a fork.
+4. **Two needs, two clients, one Brainstem.** Deployments that want different APIs ship different
+   clients. Nobody maintains a second kernel to get a different vocabulary.
+
+**The test, and it is checkable:** *adding a command must never require a commit to
+`rapp_brainstem/`.* If a proposed verb cannot be built from what the Grail already exposes, the
+answer is to drive the interface (that is what autosteer is for) or to spend a `chat.send` — not to
+grow the kernel. A verb that forces a kernel change is in the wrong layer, and the constitutional
+boundary in the repository's `CLAUDE.md` says the same thing from the other direction: no beta
+routing fields or endpoints in `brainstem.py`.
+
 ## Built for other AIs, not for one of them
 
 The point of a CLI shape is that **any** AI can drive this — GitHub Copilot, another Claude, a local
@@ -134,7 +179,9 @@ a model call on a button.
    and recorded in the driver trace — the existing budgets and traces apply unchanged.
 5. **One way in.** Autopilot is a thin naming layer over the existing driver actions; it does not
    fork a second control path or a second security model. The loopback token still guards the bus.
-6. **The model stays reachable.** `chat.send` exists precisely so an AI can hand over when it needs
+6. **No new Grail endpoints.** A command is composed in the client from what the Brainstem already
+   exposes. Needing a kernel change is the signal that the verb belongs in another layer.
+7. **The model stays reachable.** `chat.send` exists precisely so an AI can hand over when it needs
    intelligence — the point is to make that a decision, not a default.
 
 ## Why this shape
@@ -146,6 +193,9 @@ a model call on a button.
   writes a DOM traversal unreliably.
 - **It degrades to the raw driver.** Anything without a verb is still reachable through `ui.click`
   and friends, so the layer never becomes a ceiling.
+- **The client is replaceable, so the surface is negotiable.** Because the command layer lives in
+  `index.html` and not in the kernel, a deployment can extend it, trim it, or supersede it entirely
+  without a fork of the Brainstem — the same property that lets a rapplication bring its own UI.
 - **It assumes nothing about who is driving.** A frontier model, a small local one, a shell script or
   a person in DevTools all issue the same strings and read the same JSON. Nothing in the surface
   encodes which AI is on the other end, so nothing has to be ported when that changes.

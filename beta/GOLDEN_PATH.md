@@ -111,7 +111,12 @@ with no command line, injected into the page and reached from the console: `rapp
    happens, and every command is logged to the console and recorded in the driver trace. The
    teach-by-doing loop is preserved — what changes is who is allowed to do the driving, not whether
    the driving can be seen.
-5. **It never becomes a ceiling.** Anything without a named verb is still reachable through the raw
+5. **The client is the extension point, never the kernel.** The command surface lives in
+   `index.html`, composed from what the Brainstem already exposes — so it is a CLI and an API at
+   once, and a deployment that needs a different one ships a different client rather than a modified
+   kernel. Adding a command must never require a commit to `rapp_brainstem/`; the Grail's own
+   `index.html` is superseded, like a rapplication supersedes it, not edited.
+6. **It never becomes a ceiling.** Anything without a named verb is still reachable through the raw
    driver actions, so the naming layer can never make the product less operable than the UI itself.
 
 This is what makes the Frontier an agent-first product rather than a product with an AI in it: the

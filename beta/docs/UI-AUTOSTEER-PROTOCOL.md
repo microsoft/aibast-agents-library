@@ -63,5 +63,51 @@ Pick the tier. In every tier:
 
 ### 4. DRIVE — the Autosteer bus (AgenticDrive)
 
-**Addressing.** A parent drives a specific app by posting to that iframe's
-`contentWindow` (the frame *
+**Addressing.** A parent drives a specific app by posting to that iframe's `contentWindow`: the
+frame *is* the address, so several apps can be driven at once without a router, a session id, or any
+shared namespace between them. Inside a frame, an intent addresses a **handle** from the drive map —
+a stable name — never a CSS path, so re-layout cannot silently re-target a command.
+
+**Two messages, one direction each.** `agentic-drive` carries a command from the parent into the app.
+`agentic-event` carries everything the app says back: the result of a command, correlated by the id
+the parent sent, and unsolicited events the app raises on its own. One name per direction keeps the
+contract small enough to implement from this page.
+
+```js
+// parent → app
+frame.contentWindow.postMessage({ type: "agentic-drive", id, intent: "submit", args }, origin)
+// app → parent
+parent.postMessage({ type: "agentic-event", id, ok: true, observed: "result-rendered" }, origin)
+```
+
+**Every command completes exactly once.** Success or failure, always with the id it was given, never
+silence. If an intent has no completion signal to report, the drive map is wrong and the fix is in
+stage 1 — a timeout tuned until it usually passes is how a driver starts lying about what it did.
+
+**Bounded and observed.** Commands carry a budget and the parent supersedes a command that outlives
+it, so a wedged app fails visibly instead of hanging the driver. Completion is *observed* — the
+signal named in the drive map appeared — never assumed from elapsed time.
+
+**Same origin, no privilege.** The bus is postMessage between the parent and an app running at the
+app's own origin, checked against an expected origin on both ends. It grants nothing the interface
+does not already grant: if a person cannot do it in the UI, no intent can either.
+
+### 5. PROVE — the drive must be shown, not asserted
+
+An autosteer implementation is proven when, from a cold start and with no human input, a scripted
+drive exercises **every intent in the drive map** and each one is confirmed by its named completion
+signal. That run is the artifact — a recording, a trace, or both.
+
+Three obligations that are easy to skip and are the whole value of the stage:
+
+1. **The original is untouched.** Checksum the app's own files before and after a driven run: byte
+   identical. Injection landed in the copy, the generated output, or the frame — as stage 3 requires.
+2. **The injection declares itself.** The delivered bytes carry the banner naming what was added and
+   why, and the proof reads it out of the *shipped* artifact, not out of the injector's source.
+3. **Failure is reported as failure.** Inject a fault — remove a control, break a completion signal —
+   and confirm the drive reports that intent as failed rather than passing on a timeout. A harness
+   that cannot fail has not proven anything about the runs where it passed.
+
+What is not exercised is reported as unverified. An intent in the drive map with no proving run is a
+claim, and the point of this protocol is that driving an interface produces evidence rather than
+confidence.
