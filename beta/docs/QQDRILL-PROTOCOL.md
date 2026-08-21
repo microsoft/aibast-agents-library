@@ -135,6 +135,35 @@ with the other dimension. Given the same frames and the same fixed points, two m
 speak to each other compute the same joined frame — because the alignment was derived from the data
 rather than decided by whoever merged first.
 
+### Fidelity accrues with the length of the run
+
+A fixed point is not binary, and the merge's confidence is not one number for the whole join.
+
+**The longer the bytes match without contradicting anything downstream, the higher the sync fidelity
+for that part of the merge.** One isolated identical frame is a weak pin — frames can coincide by
+accident, especially trivial ones. A long uninterrupted run of identical frames, each of which also
+contradicts nothing downstream, is not coincidence: the two dimensions were doing the same thing,
+tick after tick, and the alignment across that whole span is as certain as the data can make it.
+
+So fidelity is a property of a **span**, not of the join:
+
+- A run **starts** where the frames begin matching and **ends** at the first contradiction. The
+  length it reached is what it earned; the contradiction is recorded as the boundary rather than
+  discarded, because where two dimensions stopped agreeing is the most informative thing about them.
+- **Two dimensions can be tightly synced in one region and loosely aligned in another.** The same
+  merge is deterministic across a long run and speculative in a gap, and the lineage records which
+  region is which instead of averaging them into a single claim.
+- **Long runs carry the short ones.** A gap bracketed by two high-fidelity runs is pinned from both
+  sides, so its frames place by arithmetic even though they do not match. An unbracketed tail is the
+  weakest part of any join and is marked as such.
+- **What matched matters, not only how much.** A run of empty or no-op frames is cheap agreement and
+  should not read as strongly as a run of frames that each asserted something. The record keeps what
+  the matching frames actually contained, so a long trivial run cannot present as a long meaningful
+  one.
+
+This is why publishing frames that contain nothing novel is still worth doing. They lengthen runs,
+and run length is the currency that turns a merge from plausible into determined.
+
 ### The digest is the global lookup handle
 
 A frame's bytes give it a handle that **anyone can compute and nobody has to assign**. Two machines
@@ -251,6 +280,76 @@ ancestry is the one thing here that only ever grows.
 A machine that pops a seal and finds nothing is unchanged and can drill again. A machine that pops a
 seal and hits has a different history, permanently.
 
+### The same drill runs against global tiles
+
+Everything above is written about frames, and **a tile is a frame**
+([`RAPPID-TILE-PROTOCOL.md`](RAPPID-TILE-PROTOCOL.md), [`CRYSTALS.md`](CRYSTALS.md)). That identity
+is literal, not a metaphor, so the entire mechanism applies one level up with nothing added:
+
+- **The commons of published tiles is a drillable space.** Every tile anyone publishes is a
+  potential pair for someone else's tile.
+- **A global tile pairs by the same key** — same rappid, same clock, same tick, or an identical
+  payload — and is refused by the same compatibility rule if it contradicts anything downstream of
+  the local tile.
+- **Assimilating it joins the tiles**: both lineages, both wear, both payloads, one tile. The local
+  tile continues as the joined tile, and its offspring carry both ancestries.
+
+So a capability that someone else wore into exactly the shape you need does not have to be found by
+browsing, evaluated by reading, or installed as a dependency. It is a drill hit at a coordinate, and
+what arrives is already worn.
+
+And because tiles hold frames while themselves being frames, the mechanism is **scale-free**: drill
+the commons for tiles, drill a joined tile's frames, drill within those. The same key, the same fixed
+points, the same run-length fidelity, the same refusal rule at every level. There is one merge in
+this system, and it works at whatever scale it is pointed at.
+
+### Retroactive zoom: another dimension's finer clock is resolution on your own past
+
+The coordinate contains a clock-speed key, and dimensions do not all run at the same clock. That has
+a consequence worth stating on its own, because it is the most useful thing this whole mechanism
+does.
+
+**A dimension running at a finer clock holds more frames across the same span of your time.** Where
+your line recorded one frame, theirs recorded ten. If a fixed point pins the two clocks and the ten
+frames contradict nothing downstream, assimilating them **raises the resolution of your own history
+at that moment** — from one frame to ten, in a past you have already lived through.
+
+That is the zoom, and three properties make it safe:
+
+- **It is retroactive but not revisionist.** The finer frames refine an interval; they may not
+  contradict the coarse frame they refine, or backward fidelity refuses them. Your past gains detail
+  it never had, and loses nothing it did.
+- **It is addressable, so it is targeted.** You zoom on a span you name, because the key names the
+  span. There is no need to pull a dimension wholesale to look inside one moment of it.
+- **It is global.** The finer frames come from the commons — anyone who ran that situation at a
+  faster clock and published it is a zoom source, including for a tile you already hold.
+
+The clock keys relate by ratio and a fixed point pins the phase, so the placement of the finer frames
+inside the coarse interval is arithmetic rather than a judgement. Zoom without a fixed point in the
+span is guesswork and is refused as such.
+
+### This is what closes DOGG–GGOD
+
+The two faces — **DOGG**, the local line on this device, and **GGOD**, the public commons of frames
+and tiles — have been described everywhere in these documents as an exchange. Local instant
+transmission is the part that makes it a cycle rather than two directions of copying:
+
+1. The local line produces frames. What it publishes goes out under computable handles; the private
+   mapping stays on the device ([`ONE-TIME-SEALS.md`](ONE-TIME-SEALS.md)).
+2. Anyone's drill can find those frames by handle. No account, no registry, no service in between.
+3. A drill here finds a pair in the commons — a frame, a span, a whole tile.
+4. Compatible frames assimilate locally. The local line continues from the joined frame.
+5. What that line produces next is publishable in turn, and now carries both ancestries.
+
+The direction of authority never reverses, and that is the whole safety argument: **global data is
+always a candidate, and the local line always decides.** The commons cannot overwrite a device,
+because the only way in is a merge that must contradict nothing the device already established. This
+is precisely why the public face can be fully public — nothing about publishing grants anyone reach
+into anyone else's line.
+
+Read one way it is the private projection, read the other the public one. Same frames, same keys,
+opposite direction of travel.
+
 ### What this is, named honestly
 
 Content-addressed lookup, plus an op-based merge of append-only event streams, plus a lineage whose
@@ -349,7 +448,10 @@ changes nothing; the same key computed on two machines that never communicate re
 frames; an incoming frame that contradicts a downstream descendant is refused whole, with what it
 contradicted recorded; a byte-identical frame from a different ancestry is assimilated and joins that
 ancestry without changing content; two machines given the same frames and the same fixed points
-compute the same joined frame; and after a successful join the local line's HEAD is the joined frame,
+compute the same joined frame; a run of matching frames ends at the first contradiction and is
+recorded with the length it reached and what those frames asserted; a span covered by a long run and
+a span covered by none are reported at different fidelity rather than as one number; and after a
+successful join the local line's HEAD is the joined frame,
 with no operation available that returns it to the pre-join frame.
 
 And for the race: two drills cannot observe each other's workspace; a drill
