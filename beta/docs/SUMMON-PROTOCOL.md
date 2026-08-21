@@ -131,6 +131,32 @@ That is also the honest explanation of the properties that otherwise look like t
 - It cannot be **revoked or rate-limited**, because there is no serving decision in the path to
   make.
 
+### There is no original, so it really is in both places
+
+This is not a manner of speaking. Under ordinary location-addressing — a URL pointing at a server —
+one copy is authoritative and every other is a replica of it. Content-addressing removes that:
+**identity is the content**, so every instance that computes to the same address is equally the
+tile. There is no original for the others to be copies of.
+
+Two devices resolving the same chant at the same moment therefore hold **one tile in two places**,
+not two copies of one tile. Which changes what divergence is:
+
+- It is **not drift.** Nothing wandered away from an authority, because there is no authority to
+  wander from.
+- It is **one object having two experiences.** The tile was in a living room and in an office at the
+  same time, and both of those actually happened to it.
+- So a merge is not reconciliation. It is **folding two futures of the same object**, which is why
+  keeping both sides where they do not contradict is the correct default rather than a compromise.
+
+Three engineering consequences follow directly, and they are the reason this shape is worth the
+trouble:
+
+1. **No primary replica.** No device is the master, so none has to be reachable for another to work.
+2. **No last-writer-wins.** There is no writer whose lateness makes them right; there is an order,
+   and the order is in the key.
+3. **No sync protocol.** Devices never negotiate. They emit frames and fold them, and two machines
+   that never once communicate still converge the moment their streams meet.
+
 ### Tagging local signal onto the link
 
 A summon is not a copy — it is a resolution **plus a new frame emitted locally**. That local frame
