@@ -48,6 +48,39 @@ though it does:
 - **Subscription as a seal.** Opting into a source is a decision made once, in the moment it means
   something — the same primitive as everything else here.
 
+## Participating: local state is the substrate, and divergence is the point
+
+The local state a person accumulates by using this — what they subscribed to, what they cached, the
+tiles they built, how a capability was adapted — is not exhaust. It is the useful part, and the
+model should treat it that way.
+
+**Divergence is expected, and it is how the catalog grows.** A public thing arrives; it gets used;
+it changes. The local copy stops being a copy and becomes **its own dimension of that data** — a
+branch with its own history, still carrying the lineage that says where it came from, so the
+divergence is legible rather than mysterious. That is the same shape the tile model already has: a
+dimension is a branch of a situation, not a corruption of one.
+
+**And the loop closes.** What diverged locally can go back out: a person publishes it to their own
+public channel, where it becomes an entry addressed deterministically like any other, summonable by
+anyone. Nobody grants permission, because it is their namespace — which is exactly what makes a
+catalog with no curator able to grow.
+
+Three constraints keep participation from becoming something else:
+
+1. **Nothing is uploaded on its own.** Publishing is an action a person takes, to a destination they
+   chose. There is no ambient sync, no background contribution, no "help us improve" telemetry
+   riding along. A model whose whole premise is that local state never leaves the device cannot have
+   an exception.
+2. **What goes out is the artifact, not the person.** A published divergence carries the capability
+   and its lineage. It does not carry watch history, caches, credentials, or the contents of
+   unrelated conversations.
+3. **Work does not flow out this way.** Anything belonging to an employer or a customer is not
+   material for a personal public channel, and the fact that publishing is easy is not a reason to
+   treat that boundary as softer.
+
+The result is a system where using it produces something worth having offline, and where the thing
+you made by using it can become the next person's starting point.
+
 ## Offline is the normal case, not the fallback
 
 Because the manifest is data and resolution is arithmetic, a subscribed and cached profile is a
