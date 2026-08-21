@@ -1,13 +1,19 @@
 # Autopilot — a headless CLI inside the page
 
-**The Brainstem's intelligence is expensive; its user interface is not.** Opening the herd, switching
-to the arena, parking a tile, reading the transcript — none of that needs a model. Today an AI that
-wants to do those things often asks the Brainstem in chat, which spends a model call (and tool
-rounds) on a button click.
+**An agent-first experience any AI can use, with two prerequisites: it knows CLI patterns, and it can
+reach the console on the page.** No SDK, no API key, no client library, no protocol handshake, no
+server to register with. If an AI can evaluate one expression in a frame, it can operate the whole
+product — the same screens, the same controls, the same feedback a person gets.
 
-Autopilot is the deterministic half: **a CLI injected into the frame and driven from the console**,
-so an AI operates the interface exactly as a person would, for free, and reaches the model only when
-it actually needs intelligence.
+That universality is the point. Every integration path that requires something *specific* — our
+library, our transport, our credentials — excludes whatever AI does not have it. A console and a
+command string are the smallest common denominator that already exists everywhere.
+
+**And the interface is free.** The Brainstem's intelligence costs money; opening the herd, switching
+to the arena, parking a tile or reading the transcript does not. Today an AI that wants those things
+often asks the Brainstem in chat, spending a model call and tool rounds on a button click. Autopilot
+is the deterministic half: an AI drives the interface for nothing and reaches the model only when it
+actually needs intelligence.
 
 There is no terminal window. The "CLI" is a shape — verbs, arguments, text results — because that
 shape is what an AI drives well and a person can read.
@@ -131,6 +137,9 @@ a model call on a button.
   writes a DOM traversal unreliably.
 - **It degrades to the raw driver.** Anything without a verb is still reachable through `ui.click`
   and friends, so the layer never becomes a ceiling.
+- **It assumes nothing about who is driving.** A frontier model, a small local one, a shell script or
+  a person in DevTools all issue the same strings and read the same JSON. Nothing in the surface
+  encodes which AI is on the other end, so nothing has to be ported when that changes.
 
 ## Proof obligations
 
