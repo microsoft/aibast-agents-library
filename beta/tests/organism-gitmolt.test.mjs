@@ -123,6 +123,10 @@ test("git-molt composition refuses an escaping agent path", (t) => {
     t.skip("the vendored command is a Bash script");
     return;
   }
+  if (!existsSync(path.join(repositoryRoot, "tools", "git-molt", "bin", "git-molt"))) {
+    t.skip("vendored git-molt is not beside beta/ (installed sparse checkout, not a repository)");
+    return;
+  }
   const root = mkdtempSync(path.join(tmpdir(), "git-molt-path-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const moltDir = path.join(root, "lineage.git");

@@ -10,6 +10,17 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
+// Scratch removal is best-effort and retried: on Windows an SQLite handle that
+// a later after-hook closes still locks ledger.sqlite while this hook runs, and
+// a leftover temp directory must not fail the test that already passed.
+function removeScratch(directory) {
+  try {
+    rmSync(directory, { force: true, maxRetries: 10, recursive: true, retryDelay: 50 });
+  } catch (error) {
+    if (!["EBUSY", "EPERM", "ENOTEMPTY"].includes(error?.code)) throw error;
+  }
+}
+
 import {
   lookupApproximateLocation,
   openAmbient,
@@ -19,7 +30,7 @@ import { openLedger } from "../electron/ledger.mjs";
 
 function scratch(t) {
   const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-ambient-"));
-  t.after(() => rmSync(betaHome, { recursive: true, force: true }));
+  t.after(() => removeScratch(betaHome));
   return betaHome;
 }
 

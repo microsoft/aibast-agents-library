@@ -12,6 +12,17 @@ import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
 
+// Scratch removal is best-effort and retried: on Windows an SQLite handle that
+// a later after-hook closes still locks ledger.sqlite while this hook runs, and
+// a leftover temp directory must not fail the test that already passed.
+function removeScratch(directory) {
+  try {
+    rmSync(directory, { force: true, maxRetries: 10, recursive: true, retryDelay: 50 });
+  } catch (error) {
+    if (!["EBUSY", "EPERM", "ENOTEMPTY"].includes(error?.code)) throw error;
+  }
+}
+
 import {
   describe,
   inferAgentToolName,
@@ -24,7 +35,7 @@ import {
 
 function scratch(t, prefix = "rapp-ledger-") {
   const root = mkdtempSync(path.join(tmpdir(), prefix));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
+  t.after(() => removeScratch(root));
   return root;
 }
 
