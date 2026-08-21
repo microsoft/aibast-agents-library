@@ -2250,7 +2250,7 @@ async function setForceMode(browserWindow, on, options = {}) {
         #${ID}[hidden] { display: none; }
         #${ID} .brainstem-ai-force-edge { position: absolute; inset: 0;
           box-shadow: inset 0 0 0 2px rgba(124,140,255,.9), inset 0 0 44px rgba(124,140,255,.30), inset 0 0 130px rgba(88,166,255,.16);
-          animation: brainstem-ai-force-breathe 2.4s ease-in-out infinite; }
+          animation: brainstem-ai-force-glow 2.4s ease-in-out infinite; }
         #${ID} .brainstem-ai-force-tag { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
           display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px;
           border: 1px solid rgba(124,140,255,.75); background: rgba(10,12,32,.94); color: #c7ceff;
@@ -2258,7 +2258,7 @@ async function setForceMode(browserWindow, on, options = {}) {
           box-shadow: 0 6px 24px rgba(0,0,0,.45), 0 0 18px rgba(124,140,255,.35); white-space: nowrap; }
         #${ID} .brainstem-ai-force-dot { width: 8px; height: 8px; border-radius: 50%; background: #9aa6ff;
           box-shadow: 0 0 0 3px rgba(154,166,255,.25); animation: brainstem-ai-force-pulse 1.6s ease-in-out infinite; }
-        @keyframes brainstem-ai-force-breathe { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+        @keyframes brainstem-ai-force-glow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
         @keyframes brainstem-ai-force-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.35); } }
         @media (prefers-reduced-motion: reduce) {
           #${ID} .brainstem-ai-force-edge, #${ID} .brainstem-ai-force-dot { animation: none; }

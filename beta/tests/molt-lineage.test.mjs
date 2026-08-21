@@ -143,7 +143,7 @@ test("HEAD walks back to any ring or to baseline non-destructively", () => {
     const r2 = store.appendRing(ancestor, { source: MOLT_2, parentRappid: r1, verified: true });
     assert.ok(store.setHead(ancestor, r2));
     assert.deepEqual(store.walk(ancestor, r2), [ancestor, r1, r2]);
-    // Back one ring, then to birth; every ring is retained throughout.
+    // Back one ring, then to the baseline; every ring is retained throughout.
     assert.ok(store.setHead(ancestor, r1));
     assert.equal(store.resolveLive(ancestor).source, MOLT_1);
     assert.deepEqual(store.rollbackToBaseline(ancestor).changed, [ancestor]);
