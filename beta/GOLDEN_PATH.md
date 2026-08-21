@@ -189,8 +189,8 @@ present and are never copied into chat, source, logs, or checkpoints.
 The deployment engine remains the existing agent.py pipeline. The Frontier pill is
 only the visible conversational entry point and safety/control loop around it.
 
-Generic conversion is proven against the Frontier-owned industry matrix at
-`resources/copilot-studio/industry-agent-matrix.json`. The matrix covers
+Generic conversion is evaluated against the Frontier-owned industry matrix at
+`beta/resources/copilot-studio/industry-agent-matrix.json`. The matrix covers
 read-only network tools, deterministic content, workflow orchestration,
 business scoring, stateful operations, memory, and complex reporting. Every
 case must pass doctor, static plan, and dry-run build; representative cases must
@@ -198,7 +198,7 @@ also complete Draft push, parity, and finalize before the one-click story is
 considered generic.
 
 The Hacker News plus memory preset binds its trusted Draft parity run to
-`resources/copilot-studio/hacker-news-memory-parity-cases.json`. These cases
+`beta/resources/copilot-studio/hacker-news-memory-parity-cases.json`. These cases
 execute both the frozen local agent snapshot and the exact Draft in Edge
 Preview, inject per-run challenges, compare normalized outputs, and mutation
 test the gate.
@@ -350,7 +350,7 @@ path.
 
 ## Product promise
 
-The user can work only through chat.
+The user never has to leave the product to get work done: everything that needs intelligence is asked for in chat, and everything else is a thing they pick up and put down.
 
 They can watch the system do their work, understand how it did it, inspect the
 capabilities it used, replay the demonstration, and promote the proven solution

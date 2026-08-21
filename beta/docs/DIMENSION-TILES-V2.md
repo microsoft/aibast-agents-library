@@ -15,7 +15,8 @@ type must be simple and iconic, as friendly as `agent.py` and `.egg` files — a
 `agent.py` or an `.egg` into for safekeeping.
 
 **Name.** The human-facing name
-is **rappid tile** (a parked conversation is a **dimension tile**); the file extension `.card`, the schema id
+is **rappid tile**; the term *dimension tile* is retired with this document — `dimension` survives
+only as the local-only conversation field inside a tile. The file extension `.card`, the schema id
 `rar-card/2.0`, and the SDK verb `card` are protocol surface and stay as they are.
 
 ## The decision: one JSON object, extension `.card`
@@ -151,5 +152,5 @@ until every client reads v2, then it is frozen, never deleted.
 
 ## Who does what
 
-RAR changes land as a pull request prepared in a clone of `kody-w/RAR` — Kody pushes/merges (his
-repo, his call). Frontier changes ride PR #182's branch behind the same gates as everything else.
+RAR changes land as a pull request prepared in a clone of the upstream RAR repository and are merged
+by its maintainer. Frontier changes ride the working branch behind the same gates as everything else.

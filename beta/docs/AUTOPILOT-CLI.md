@@ -66,14 +66,16 @@ what an AI did, in order — the same evidence trail the driver's traces already
 ## The command surface
 
 Nouns are the surfaces; verbs are what a person can do to them. Everything here is deterministic —
-no model, no network beyond the app's own loopback.
+no model, and no network beyond the app's own loopback, with one named exception: making a
+pinned-only tile primary fetches its pinned bytes and verifies their hashes before anything runs,
+and reports `fetched: true` when it did.
 
 | Command | Does | Costs a model call |
 |---|---|---|
 | `herd.open` / `arena.switch` / `binder.open` | show a surface | no |
 | `herd.list` / `arena.list` / `binder.list` | the tiles on a surface, with ids | no |
 | `tile.park [--to herd\|arena\|binder]` | park the current chat as a tile | no |
-| `tile.primary <id>` | make a tile primary — hot-loads its agents, restores its history | no |
+| `tile.primary <id>` | make a tile primary — hot-loads its agents and restores its history; an occupied chat swaps out to a tile where the incoming one came from | no |
 | `tile.move <id> --to <surface>` | move a tile between surfaces | no |
 | `tile.bunch <id> <id>` / `tile.unbunch <id>` | group and ungroup | no |
 | `tile.fold <id>` / `tile.undo` | fold, and take it back | no |
@@ -172,8 +174,8 @@ can act at any moment. Concretely:
   driver sees and can decide about.
 - **Every gesture is interruptible.** Take the tile, press Escape, or simply start doing something
   else — nothing is atomic in a way that locks a person out of their own window mid-drag.
-- **Changes are attributed.** The trace records the actor for every change, and the interface shows
-  it briefly at the moment it happens. Two hands on one window is only trustworthy if you can always
+- **Changes are attributed.** The trace records the actor for every change, and the changed object
+  itself carries it briefly at the moment it happens — never a toast and never a chat message (§3). Two hands on one window is only trustworthy if you can always
   tell whose hand did what.
 - **Leases are advisory.** The chat lease claims the composer against *other automation*; a real
   keystroke from the person takes it back immediately. A lease that could lock a person out of their
@@ -199,7 +201,8 @@ So:
   Nothing is written into the chat that was not said to, or by, the model.
 - **Driving stays observable by better means.** The interface itself moves — that is what performing
   real gestures buys — every command is logged to the console, and every command is recorded in the
-  driver trace. Those are the record.
+  driver trace. Those are the record. The announce overlay is not a step record: it is retired as a
+  default surface and stays available only for pointing at a control while demonstrating.
 - **An activity view exists for when someone wants to watch**: a separate surface, never the
   transcript. Off by default; on in Showtime and while demonstrating, where being watched is the
   entire point.
@@ -239,7 +242,7 @@ learns the interface at runtime instead of being taught it.
   "commands": [
     { "cmd": "tile.primary", "args": [{"name":"id","type":"tile-id","required":true}],
       "costs_model": false, "example": "tile.primary tile-7",
-      "does": "make a tile primary — hot-loads its agents and restores its history" }
+      "does": "make a tile primary — hot-loads its agents and restores its history; an occupied chat swaps out to a tile where the incoming one came from" }
   ] }
 ```
 
@@ -260,7 +263,8 @@ which argument and what it accepts. An AI recovers on the next turn instead of f
 whether a surface is open.
 
 **5. The vocabulary matches the documentation a person reads.** The verbs are the gestures in
-[`TILE-MANAGEMENT-UX.md`](TILE-MANAGEMENT-UX.md) — park, primary, move, bunch, fold. One vocabulary
+[`TILE-MANAGEMENT-UX.md`](TILE-MANAGEMENT-UX.md) — park, primary, move, bunch — plus fold and its
+ten-second undo from [`DIMENSION-TILES.md`](DIMENSION-TILES.md). One vocabulary
 for the person, the AI, and the tests.
 
 **6. It is discoverable from inside the product.** The same `help` output is what the Brain Surgeon

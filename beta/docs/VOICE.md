@@ -10,8 +10,10 @@ voice features get slow, or bad, or both.
 | The trade | **quality over latency** | latency is the whole problem |
 | Default | on during a Showtime run and in Show Mode, off otherwise | **off** |
 
-Both use **VibeVoice**, and both are an opt-in Sense under `CONSTITUTION.md` Article II: installed
-on first enable, removable without trace, on-device.
+Both take their quality voice from **VibeVoice**; chat voice may additionally open with a fast local
+voice (see *The relay*). Every engine here ships in the opt-in Voice Sense under `CONSTITUTION.md`
+Article II: installed on first enable, removable without trace, and on-device — no utterance, in
+either contract, is synthesized off the machine.
 
 ## Narration: latency is free, so spend it on quality
 
@@ -22,8 +24,9 @@ and still follow along.
 
 ## Chat voice: it is a voice *message*, not a live voice
 
-VibeVoice is too slow to answer conversationally. The fix is not a worse voice — it is to stop
-pretending the reply is live.
+VibeVoice is too slow to answer conversationally. Where there is no fast voice to open with, the fix
+is not a worse voice — it is to stop pretending the reply is live. (Where there is one, see *The
+relay*.)
 
 People already know what a voice message is. It arrives from the person you are talking with, you
 can see it coming, you do not expect it instantly, and it plays when it lands. That idiom fits the

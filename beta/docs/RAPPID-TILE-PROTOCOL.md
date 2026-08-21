@@ -44,7 +44,7 @@ gestures. There is no separate rapplication format and no separate way to manage
 
 ## What a tile is
 
-One UTF‑8 JSON object, one file, newline‑terminated, named after what it carries:
+One UTF-8 JSON object, one file, newline-terminated, named after what it carries:
 
 | Carries | File name |
 |---|---|
@@ -70,9 +70,11 @@ it, and they are the reason the protocol is superseded rather than extended:
    tile's seed, the ring, and the verification verdict that admitted it. A rappid that molts writes a
    new tile whose lineage points at the old one, so a chain of growth is readable offline.
 
-Everything else — the deterministic seed, the face, the seven‑word key, the hashes, the
-`dormant`/`active` states, the local‑only `dimension` — is carried over from `rar-card/2.0`
-unchanged, which is what keeps the two compatible.
+Everything else — the deterministic seed, the face, the seven-word key, the hashes, the
+`dormant`/`active` states, the local-only `dimension` — is carried over from `rar-card/2.0`
+unchanged, which is what keeps the two compatible. The face keeps its card-era game fields (`hp`,
+`rarity`, `evolution`, `type_line`) for compatibility only: a tile's value is its footprint and its
+lineage, and no reader may rank tiles by them.
 
 ## The document
 

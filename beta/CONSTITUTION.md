@@ -10,8 +10,8 @@ The factory install is **batteries included, and no more** — like a machine on
 first boot. It contains exactly:
 
 1. The **Grail kernel** (unmodified `brainstem.py`) and its venv.
-2. The **Frontier launcher** (Electron shell, Grail chat, Brain Surgeon,
-   multi-chat herd view).
+2. The **Frontier launcher** (Electron shell, Grail chat, Brain Surgeon, and the tile surfaces:
+   the companion chat, the herd, the arena and the binder).
 3. **Twins**: hatch from the RAPP Store or from a local `.egg` dropped on the
    window — fail-closed `rapp/1-egg` verification, loopback-only workers,
    isolated `AGENTS_PATH` per twin.
@@ -52,7 +52,7 @@ schema), a fit-for-purpose UI can be **generated on the fly** from that schema
 and then molted through generations for that twin — never a pre-built UI the
 user must learn.
 
-### The one pattern (the iPod of AI)
+### The one pattern
 
 There is exactly **one mental model**, learned on day one and never added to:
 `brainstem.py` + `agents/` + **drag a file into `agents/` to hot-load it**. That
@@ -69,9 +69,8 @@ the **one unified vehicle**, so a user who learns the pattern once recognizes it
 everywhere. The structure is
 **self-organizing**: the user drops files into `agents/`; the system files
 everything else along the same fractal grain. This radical simplicity — one
-pattern that composes with itself — is the Frontier Brainstem's magic. It is the
-**iPod of AI**: not more knobs than the MP3 players, far fewer, arranged so the
-one thing you learn is the only thing you ever need.
+pattern that composes with itself — is the design constraint: fewer controls than the
+alternatives, arranged so the one thing you learn is the only thing you ever need.
 
 Corollary — **clean source, separate exhaust**: source (`agents/`, `index.html`)
 and runtime output (molts, live-state, generated files) never sit in the same
@@ -136,9 +135,10 @@ Laws:
 3. **Local by default.** A sense that captures (screen, mic) writes on-device
    and never transmits; capture surfaces are per-window (CDP), never whole
    desktop, so unrelated windows cannot leak into frame.
-4. **The catalog is the RAPP Sense Store** (kody-w.github.io/RAPP_Sense_Store)
-   pattern: one entry per organ/sense, pinned digests, install = verified
-   fetch, same fail-closed posture as eggs.
+4. **The catalog follows the RAPP Store pattern** (`beta/electron/rapp-store.mjs`, schema
+   `rapp-store/1.0`): one entry per organ/sense, pinned digests, install = verified fetch, same
+   fail-closed posture as eggs. The catalog host is configured per distribution; no organ/sense
+   catalog is published yet.
 
 Named organs/senses as of this draft: **Showtime** (capture browser + ffmpeg +
 VibeVoice narration), **Voice** (whisper server / TTS), **Film** (HyperFrames

@@ -22,16 +22,19 @@ the behavior it standardizes (the `beta/CONSTITUTION.md` rule).
   kernel never imports it: first line a `#` comment, then exactly one JSON
   object; written atomically (`tmp` + `os.replace`, mode 0600) on every engine
   action. The kernel serves it at `GET /agents/export/<name>_live_state.py` —
-  free for loopback callers, and gated for any LAN caller by the per-install
-  `X-Brainstem-Secret` (only relevant when `BRAINSTEM_LAN_MODE` is on; the
-  route is **not** "loopback-only", it is loopback-free and secret-gated).
+  free for **same-origin** loopback callers, and gated by the per-install
+  `X-Brainstem-Secret` for any LAN caller *and* any cross-origin browser caller — including another
+  loopback port, which `_is_foreign_browser_request()` treats as foreign
+  (`rapp_brainstem/brainstem.py:345-357`). The route is **not** "loopback-only"; it is
+  same-origin-free and secret-gated, which is why stage 3 requires injected code to run at the app's
+  own origin.
 - **Autosteer bus (AgenticDrive)** — the postMessage wire specified in stage 4.
 
-Proven implementations in this tree (read them before writing a new one):
+Reference implementations (read the committed ones before writing a new one — tier B is a described pattern, not a committed file):
 
 | Tier | Where the controllers enter | How the app is served | Reference |
 |------|-----------------------------|-----------------------|-----------|
-| **A — generation-time** | The rapplication generates the app; the bus is baked into the generated code | A local server the rapplication starts (static files + a same-origin `/chat` proxy, e.g. the studio's generated `serve.py`) | `beta/frontier/rapplications/agentic-app-studio/agentic_app_studio_agent.py` (`LOCAL_APP_HTML`); parent side in its `ui.html` |
+| **A — generation-time** | The rapplication generates the app; the bus is baked into the generated code | A local server the rapplication starts (static files + a same-origin `/chat` proxy, e.g. the studio's generated `serve.py`) | `beta/frontier/rapplications/agentic-app-studio/agents/agentic_app_studio_agent.py` (`LOCAL_APP_HTML`); parent side in its `index.html` |
 | **B — wrap-time** | An existing app is carried (e.g. inside an `.egg`); a **copy** is surgically patched with the shims it needs | Injected over the twin's own frame (`document.write` at the twin origin) or its pop-out window | the AIdeate workshop egg pattern: AI calls re-pointed to the twin's `/chat`, live-state poller added, original app untouched |
 | **C — host-injection** | The Frontier host injects a capability marker into every rapplication frame it renders | n/a (instrumentation only) | `instrumentRappUi()` / `injectFrameUi()` in `beta/electron/main.mjs` |
 
@@ -91,6 +94,10 @@ signal named in the drive map appeared — never assumed from elapsed time.
 **Same origin, no privilege.** The bus is postMessage between the parent and an app running at the
 app's own origin, checked against an expected origin on both ends. It grants nothing the interface
 does not already grant: if a person cannot do it in the UI, no intent can either.
+
+**Never exclusive.** A drive never captures focus or the pointer, never installs a modal or a
+click-swallowing overlay, and yields any contested control to the person, reporting
+`yielded_to_user`. The person's input path stays live for the whole drive.
 
 ### 5. PROVE — the drive must be shown, not asserted
 

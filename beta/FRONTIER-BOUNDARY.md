@@ -13,6 +13,7 @@ it.** Concretely:
 | Kind | Where it goes |
 |---|---|
 | Code, UI, tests, scripts | `beta/**` |
+| Charter, product direction, boundary | `beta/` root |
 | Docs, specs, visual guides, style guides | `beta/docs/**` |
 | Vendored tools a Frontier proof needs | `beta/tools/**` |
 | EOL and ignore rules for Frontier files | `beta/.gitattributes`, `beta/.gitignore` |
@@ -22,6 +23,11 @@ And the mainline surface — the landing page (`index.html`), the library README
 `registry.json`, the root installers, `rapp_brainstem/` — **never links to, embeds, or depends on
 Frontier content.** A reader of the library must be able to use it without encountering the
 Frontier at all.
+
+One file crosses on purpose: the repository's `CLAUDE.md` points at `beta/GOLDEN_PATH.md`, because a
+contributor needs the product direction before touching the Frontier. `CLAUDE.md` is a contributor
+document, not a mainline surface, and the boundary test scopes itself to exactly that list
+(`beta/tests/frontier-boundary.test.mjs`: `index.html`, `README.md`, `docs/*`).
 
 ## Why
 
