@@ -80,6 +80,49 @@ actually wanted to do.
    problem this avoids, not a feature it is missing — what a fresh device gets instead is the public
    summon above.
 
+## The popping-the-local-seal test
+
+This is the hero proof for the whole model, and it is deliberately end-to-end: it exercises a device
+that has nothing, a public read, verification, and the permanence of a popped seal in one run.
+
+It must be run on a **clean environment** — an isolated home with no prior state — and never on the
+machine that just built the thing, because the interesting failures are all about what is or is not
+already present.
+
+### The run
+
+1. **Start from nothing.** No local state, every seal intact, nothing synced from anywhere.
+2. **It opens and works.** No set-up screen, no login, no configuration required before the first
+   useful action.
+3. **Summon a tile by its seven-word key.** This is the first reach outward, and it pops the
+   public-lookup seal.
+4. **The bytes are verified before they are anything** — checked against seed and face — and only
+   then become a tile.
+5. **Make it primary and use it.** Its agents compose and a real turn happens. A tile that arrives
+   but cannot be used has not proven the path.
+6. **Restart.** The popped seal is still popped, and the tile is still there.
+7. **Pop a second seal in the other direction.** Trigger the station ident, end it in one action,
+   then restart and confirm it never fires again on this install.
+
+### What must also be true — the half that makes it a test
+
+- **Nothing reached the network before step 3.** This is the assertion that gives a seal meaning: if
+  a lookup happened while the seal was intact, the seal was decoration. Observe it, do not assume it.
+- **A tile whose bytes fail verification is refused**, and nothing is installed, hatched or run.
+  Fetching is not trusting, and the failure path is the one worth proving.
+- **No identity was required or transmitted** for the read. The device asked for a name and got
+  bytes.
+- **Nothing private is reachable** through the public door — not by a crafted key, not by a
+  redirect, not by a path that walks out of the public namespace.
+- **The seal state is inspectable and honest**: what has been popped can be shown to the person, and
+  clearing it restores exactly the set of seals and nothing else.
+
+### Status
+
+**Unverified.** This is the obligation, not a result. It cannot be claimed as passing until it has
+been run on a clean environment and each numbered step observed — in particular the network
+assertion in the first bullet, which is the one that is easy to assume and easy to get wrong.
+
 ## Where it applies
 
 Anything a person may reasonably want to end on first contact, and anything rare enough that a
