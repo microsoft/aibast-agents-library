@@ -179,6 +179,28 @@ test("city-level location uses a coordinate cell no finer than its 50 km accurac
   );
 });
 
+test("city-level unavailable location keeps its reason without fabricated accuracy", (t) => {
+  const ambient = openAmbient(scratch(t), {
+    now: () => "2026-08-20T20:12:00.000Z",
+  });
+  const device = ambient.refreshDevice({
+    settings: {
+      approximateFallback: false,
+      granularity: "city",
+    },
+    unavailableReason: "User denied Geolocation",
+  });
+
+  assert.deepEqual(device.data.location, {
+    accuracy_m: null,
+    granularity: "city",
+    label: "unavailable: User denied Geolocation",
+    lat: null,
+    lon: null,
+    source: "unavailable",
+  });
+});
+
 test("ambient never renews stale cached coordinates as a fresh fix", (t) => {
   const betaHome = scratch(t);
   const ambient = openAmbient(betaHome, {

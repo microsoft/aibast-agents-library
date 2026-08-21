@@ -66,6 +66,11 @@ function normalizedLocation(value, {
   }
   let lat = finiteCoordinate(value?.lat, -90, 90);
   let lon = finiteCoordinate(value?.lon, -180, 180);
+  const hasCoordinates = lat !== null && lon !== null;
+  if (!hasCoordinates) {
+    lat = null;
+    lon = null;
+  }
   if (requestedGranularity === "city") {
     lat = lat === null
       ? null
@@ -77,15 +82,18 @@ function normalizedLocation(value, {
         / CITY_GRID_STEPS_PER_DEGREE;
   }
   const cityLevel = requestedGranularity === "city";
-  return {
-    accuracy_m: cityLevel
+  const accuracy = hasCoordinates
+    ? cityLevel
       ? Math.max(CITY_ACCURACY_METERS, Number(value?.accuracy_m) || 0)
       : Number.isFinite(Number(value?.accuracy_m))
         ? Math.max(0, Number(value.accuracy_m))
-        : null,
+        : null
+    : null;
+  return {
+    accuracy_m: accuracy,
     granularity: requestedGranularity,
     label: cityLevel
-      ? (source === "ip-approximate" && value?.label
+      ? (["ip-approximate", "unavailable"].includes(source) && value?.label
           ? String(value.label).slice(0, 160)
           : null)
       : value?.label
