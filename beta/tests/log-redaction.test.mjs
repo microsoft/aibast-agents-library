@@ -526,12 +526,12 @@ test("a log that outgrew its limit rotates into free predecessor slots", () => {
     assert.equal(readFileSync(file, "utf8").length, 2048);
 
     writeFileSync(file, "y".repeat(8192));
-    assert.equal(rotateLogIfLarge(file, { keep: 2, maxBytes: 4096 }), true);
+    assert.equal(rotateLogIfLarge(file, { maxArchives: 2, maxBytes: 4096 }), true);
     assert.ok(!existsSync(file), "the live log is rotated away");
     assert.equal(readFileSync(`${file}.1`, "utf8").length, 8192);
 
     writeFileSync(file, "z".repeat(8192));
-    assert.equal(rotateLogIfLarge(file, { keep: 2, maxBytes: 4096 }), true);
+    assert.equal(rotateLogIfLarge(file, { maxArchives: 2, maxBytes: 4096 }), true);
     assert.equal(readFileSync(`${file}.1`, "utf8")[0], "y");
     assert.equal(readFileSync(`${file}.2`, "utf8")[0], "z");
 
@@ -541,7 +541,7 @@ test("a log that outgrew its limit rotates into free predecessor slots", () => {
   }
 });
 
-test("rotation preserves live writer inodes and reports refusal", () => {
+test("repeated rotation preserves every live writer inode in a new slot", () => {
   const root = mkdtempSync(path.join(tmpdir(), "rapp-log-live-rotate-"));
   let firstFd = null;
   let secondFd = null;
@@ -555,11 +555,11 @@ test("rotation preserves live writer inodes and reports refusal", () => {
     secondFd = openPrivateAppendFile(file);
     assert.equal(
       rotateLogIfLarge(file, { maxBytes: 1 }),
-      false,
-      "a full archive set must refuse instead of unlinking a live predecessor",
+      true,
+      "an occupied predecessor must move the next inode into a new slot",
     );
     writeSync(firstFd, "first-after-second-rotation\n");
-    writeSync(secondFd, "second-after-refusal\n");
+    writeSync(secondFd, "second-after-rotation\n");
     if (process.platform !== "win32") {
       assert.ok(fstatSync(firstFd).nlink > 0);
       assert.ok(fstatSync(secondFd).nlink > 0);
@@ -567,9 +567,9 @@ test("rotation preserves live writer inodes and reports refusal", () => {
 
     const archives = readdirSync(root)
       .filter((name) => name.startsWith("shared.log."));
-    assert.deepEqual(archives, ["shared.log.1"]);
+    assert.deepEqual(archives, ["shared.log.1", "shared.log.2"]);
     assert.match(readFileSync(`${file}.1`, "utf8"), /first-after-second-rotation/);
-    assert.match(readFileSync(file, "utf8"), /second-after-refusal/);
+    assert.match(readFileSync(`${file}.2`, "utf8"), /second-after-rotation/);
 
     const failed = path.join(root, "failed.log");
     writeFileSync(failed, "too large");

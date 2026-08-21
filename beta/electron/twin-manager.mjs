@@ -31,7 +31,10 @@ import {
   inferAgentToolName,
   recordCompletedTurn,
 } from "./ledger.mjs";
-import { redactCredentialText } from "./log-redaction.mjs";
+import {
+  pruneLogFiles,
+  redactCredentialText,
+} from "./log-redaction.mjs";
 import { readEgg, verifyEgg } from "./rapp-protocol.mjs";
 
 const AGENT_FILE = /^[A-Za-z0-9_.-]+_agent\.py$/;
@@ -214,6 +217,7 @@ export class TwinManager {
     this.seq = 0;
     this.maxTwins = 8;   // cap concurrent workers so a runaway can't exhaust the machine
     this.twinsRoot = path.join(betaHome, "twins");
+    this.twinLogRoot = path.join(betaHome, "logs", "twins");
     // Clear stale twin dirs left by a crashed previous session — but only the
     // ones nobody owns. The twins root is shared state under the beta home; a
     // second launcher, a CLI, or a parallel session may be running its own twins
@@ -222,6 +226,9 @@ export class TwinManager {
     // NOTE: this does NOT reap an orphaned worker process from a hard-killed
     // prior session (that stays until the OS reclaims its port).
     this.reapStaleTwinDirectories();
+    mkdirSync(this.twinLogRoot, { recursive: true, mode: 0o700 });
+    if (process.platform !== "win32") chmodSync(this.twinLogRoot, 0o700);
+    this.pruneTwinLogs();
   }
 
   // A twin directory is stale when its recorded owner process is gone (or it
@@ -270,6 +277,22 @@ export class TwinManager {
       this.emit({ type: "twin-dir-kept", id: twin.id, ownerPid: twin.pid });
     }
     return { removed, kept };
+  }
+
+  pruneTwinLogs({
+    keep = 20,
+    maxAgeMs = 14 * 24 * 60 * 60 * 1000,
+    now = Date.now(),
+  } = {}) {
+    return pruneLogFiles(this.twinLogRoot, {
+      keep,
+      match: (name) => /\.log(?:\.\d+)?$/.test(name),
+      maxAgeMs,
+      now,
+      protectedNames: new Set(
+        [...this.twins.keys()].map((id) => `${id}.log`),
+      ),
+    });
   }
 
   emit(event) {
@@ -432,6 +455,7 @@ export class TwinManager {
   // Shared core: compose an isolated AGENTS_PATH, start a dedicated worker on
   // its own loopback port, register it, and (optionally) kick its async loop.
   async #hatchComposed(spec, { instruction = null } = {}) {
+    this.pruneTwinLogs();
     if (this.twins.size >= this.maxTwins) {
       throw new Error(`You have ${this.maxTwins} twins open — close one before hatching another.`);
     }
@@ -559,7 +583,7 @@ export class TwinManager {
         port,
         portPreallocated: true,
         url,
-        logFile: path.join(this.betaHome, "logs", "twins", `${id}.log`),
+        logFile: path.join(this.twinLogRoot, `${id}.log`),
         env: {
           ...(this.brainstemConfig.env || {}),
           AGENTS_PATH: agentsDir,
@@ -933,6 +957,7 @@ export class TwinManager {
     if (twin.worker) await twin.worker.stop().catch(() => {});
     try { this.mirrorMolts(twin); } catch { /* preserve teardown */ }
     removeTwinDirectories(twin);
+    this.pruneTwinLogs();
   }
 }
 

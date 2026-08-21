@@ -20,7 +20,10 @@ import { fileURLToPath } from "node:url";
 
 import { BrainstemProcess } from "./brainstem-process.mjs";
 import { inferAgentToolName } from "./ledger.mjs";
-import { redactSensitiveValue } from "./log-redaction.mjs";
+import {
+  pruneLogFiles,
+  redactSensitiveValue,
+} from "./log-redaction.mjs";
 import {
   LineageStore,
   MAX_AGENT_BYTES,
@@ -597,23 +600,13 @@ export class BetaRouteManager {
       try { rmSync(composition.full, { recursive: true, force: true }); } catch { return; }
       report.compositionsRemoved.push(composition.hash);
     });
-    let logs = [];
-    try {
-      logs = readdirSync(this.workerLogRoot)
-        .filter((name) => /\.log(\.\d+)?$/.test(name))
-        .map((name) => ({ name, full: path.join(this.workerLogRoot, name) }))
-        .map((log) => ({ ...log, mtime: mtimeOf(log.full) }));
-    } catch {
-      logs = [];
-    }
-    logs.sort((left, right) => right.mtime - left.mtime);
-    logs.forEach((log, index) => {
-      const hash = log.name.split(".")[0];
-      if (protectedHashes.has(hash)) return;
-      if (index >= keepWorkerLogs || now - log.mtime > maxWorkerLogAgeMs) {
-        try { rmSync(log.full, { force: true }); } catch { return; }
-        report.workerLogsRemoved.push(log.name);
-      }
+    report.workerLogsRemoved = pruneLogFiles(this.workerLogRoot, {
+      keep: keepWorkerLogs,
+      maxAgeMs: maxWorkerLogAgeMs,
+      now,
+      protectedNames: new Set(
+        [...protectedHashes].map((hash) => `${hash}.log`),
+      ),
     });
     if (
       report.compositionsRemoved.length

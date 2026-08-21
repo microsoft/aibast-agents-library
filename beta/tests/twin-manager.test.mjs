@@ -6,6 +6,7 @@ import {
   readFileSync,
   readdirSync,
   rmSync,
+  utimesSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
@@ -139,6 +140,45 @@ test("closing and stopping twins removes every per-hatch directory", async (t) =
   assert.equal(existsSync(secondPaths.molterHome), false);
   assert.ok(stopped.has(second.id));
   assert.equal(manager.twins.size, 0);
+});
+
+test("twin logs are pruned by count and age while active logs stay live", (t) => {
+  const temporary = mkdtempSync(path.join(tmpdir(), "rapp-twin-logs-"));
+  const betaHome = path.join(temporary, "home");
+  t.after(() => rmSync(temporary, { recursive: true, force: true }));
+  const manager = new TwinManager({
+    betaHome,
+    brainstemConfig: {},
+    createWorkerProcess: () => null,
+    storeClient: {},
+  });
+  const now = Date.now();
+  const hour = 60 * 60 * 1000;
+  const log = (name, ageMs) => {
+    const file = path.join(manager.twinLogRoot, name);
+    writeFileSync(file, "log\n");
+    const when = new Date(now - ageMs);
+    utimesSync(file, when, when);
+    return file;
+  };
+  for (let index = 1; index <= 25; index += 1) {
+    log(`closed-${index}.log`, index * hour);
+  }
+  const oldArchive = log("molter-1.log.1", 40 * 24 * hour);
+  const activeLog = log("active-1.log", 40 * 24 * hour);
+  log("notes.txt", 40 * 24 * hour);
+  manager.twins.set("active-1", {});
+
+  const removed = manager.pruneTwinLogs({ keep: 20, now });
+  const remaining = readdirSync(manager.twinLogRoot);
+  assert.equal(
+    remaining.filter((name) => /\.log(?:\.\d+)?$/.test(name)).length,
+    21,
+  );
+  assert.equal(existsSync(activeLog), true);
+  assert.equal(existsSync(oldArchive), false);
+  assert.ok(removed.includes("molter-1.log.1"));
+  assert.ok(remaining.includes("notes.txt"));
 });
 
 test("a twin is driven only over /chat — never a new route (canon)", () => {
