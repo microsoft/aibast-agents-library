@@ -378,9 +378,9 @@ module = load(
 source = """
 from agents.basic_agent import BasicAgent
 
-class BoomAgent(BasicAgent):
+class FailingInitAgent(BasicAgent):
     def __init__(self):
-        raise RuntimeError("kaboom during init")
+        raise RuntimeError("agent raised during init")
 
     def perform(self, **kwargs):
         return "never"

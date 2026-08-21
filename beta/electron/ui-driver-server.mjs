@@ -2277,7 +2277,7 @@ async function setForceMode(browserWindow, on, options = {}) {
       document.body.appendChild(overlay);
     }
     overlay.querySelector(".brainstem-ai-force-text").textContent = String(
-      settings.label || "AI force mode · an AI is driving this Brainstem — you're watching",
+      settings.label || "Automated control · an agent is operating this Brainstem",
     ).slice(0, 120);
     overlay.hidden = !settings.on;
     return { forceMode: Boolean(settings.on) };

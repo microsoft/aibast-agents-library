@@ -230,7 +230,7 @@ test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
   assert.match(main, /BETA_FRAME_BRIDGE_SOURCE/);
   assert.match(main, /beta-app-btn/);
   assert.match(main, /rapp-beta:check-updates/);
-  assert.match(main, /we are above that/);
+  assert.match(main, /brainLogo\.title = "Toggle live agents"/);
   assert.match(main, /button\.title = "RAPP Brainstem Frontier menu"/);
   assert.match(main, /panel\.querySelector\("h3"\)/);
   assert.match(main, /app\.getPath\("downloads"\)/);

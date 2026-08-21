@@ -1,6 +1,6 @@
 # Rappid dimension tiles — the `.card` file (`rar-card/2.0`)
 
-Direction (Kody, 2026-08-20): tiles must be globally scannable through GitHub raw URLs — a tile
+Direction: tiles must be globally scannable through GitHub raw URLs — a tile
 uploaded to the registry can be retrieved for a task from the public repo, as the online form of a
 local dimension tile. This is the next version of the registry's card spec: the registry is updated,
 the legacy cards are migrated, and the Frontier client proves interchange on-device and off. The file

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -56,4 +57,34 @@ test("parking preserves an accepted delayed wire while kernel Clear runs", () =>
   assert.match(source, /rapp-beta:tile-completion-ack/);
   assert.match(source, /canonicalHistory/);
   assert.match(source, /rapp-beta:tile-detached/);
+});
+
+test("abandoning a staged race disarms it, so the next conversation is not filed into the contender", () => {
+  // prepareRace arms nextRaceTileId and only the chat POST consumed it, so
+  // every abandonment path (clear, wake, fold, disable) left it armed and the
+  // NEXT conversation's reply and history were written into the contender.
+  const source = readFileSync(
+    new URL("../electron/dimension-tiles.mjs", import.meta.url),
+    "utf8",
+  );
+  const armed = source.indexOf("nextRaceTileId = tileId;");
+  assert.ok(armed > 0, "prepareRace still arms the race");
+  const disarms = source.split("nextRaceTileId = null;").length - 1;
+  assert.ok(
+    disarms >= 6,
+    `every abandonment path must disarm the race; found ${disarms} clear sites`,
+  );
+  for (const path of [
+    "function markPendingForTile",
+    "rapp-beta:tile-clear",
+  ]) {
+    const at = source.indexOf(path);
+    assert.ok(at > 0, `${path} exists`);
+    const window = source.slice(at, at + 700);
+    assert.match(
+      window,
+      /nextRaceTileId = null;/,
+      `${path} must disarm a staged race`,
+    );
+  }
 });

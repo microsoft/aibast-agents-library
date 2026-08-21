@@ -124,14 +124,14 @@ conversation history, actions, or route validation.
 | `tableView.layout` | Label | Arrangement |
 |---|---|---|
 | `table` | Table | Oval positions and a discard group |
-| `duel` | Duel zones | Five positions and a discard row |
-| `bench` | Bench | One active position above five secondary positions |
-| `battlefield` | Battlefield | Two horizontal rows |
-| `hand` | Hand | Draw and discard groups with a fanned row |
+| `row` | Rows | Five positions and a discard row |
+| `focus` | Focus | One active position above five secondary positions |
+| `grid` | Grid | Two horizontal rows |
+| `stack` | Stack | Draw and discard groups with a fanned row |
 | `custom` | Custom… | Validated local JSON |
 
 A custom layout may define `name`, `surfaceColor`, `seatPositions`, `tileSize`,
-`dealPattern`, and `faceDownRule`. The loader accepts only local JSON up to
+`arrangePattern`, and `faceDownRule`. The loader accepts only local JSON up to
 64 KiB, rejects unknown fields and remote assets, and bounds every numeric
 position and size.
 
@@ -139,7 +139,7 @@ position and size.
 
 Human-facing Frontier records are dimension tiles. The public RAR protocol keeps
 the `.card` extension, `rar-card/2.0` schema ID, and `card` SDK verb. RAR calls
-its deterministic seven-word key an incant&#97;tion; Frontier documentation uses
+its deterministic seven-word key an seven-word key; Frontier documentation uses
 **seven-word key**. These protocol names do not change the Table view storage
 directory, feature schema, identifiers, or UI terminology.
 

@@ -366,7 +366,7 @@ installed via IPC `beta:install-frame-bridge` `main.mjs:1380-1388` from `rendere
 `:110`): `#beta-app-btn` (`aria-label`, `aria-haspopup`, `aria-expanded`), `#beta-app-panel`,
 `#beta-check-updates`, `#beta-update-status[data-phase=idle|checking|applying|current|
 success|available|blocked|error]` (`role="status" aria-live`), `#beta-install-update`;
-`header .logo` gains `role="button"`, `tabindex=0`, `aria-label="we are above that — toggle
+`header .logo` gains `role="button"`, `tabindex=0`, `aria-label="Toggle
 live agents"`, `aria-expanded`, `data-beta-explorer-toggle`.
 
 **Twin frames**: marker only — `window.__rappForceModeCapable=true` and

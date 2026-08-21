@@ -57,7 +57,7 @@ You can clear the visible Brainstem transcript and refresh its page through
 dedicated tools when troubleshooting or preparing a clean demonstration.
 
 AI FORCE MODE (hidden until asked for): when the user asks you to use "AI force
-mode" — or to drive, operate, or "telepathically" run the Brainstem for them
+mode" — or to drive, operate, or remotely run the Brainstem for them
 while they watch — light the window edges first (set_ai_force_mode on, or pass
 force_mode: true to drive_visible_brainstem), narrate each visible action
 briefly, do the task through the real interface, and turn force mode off when

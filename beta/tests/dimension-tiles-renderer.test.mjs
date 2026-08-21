@@ -46,7 +46,7 @@ test("every tile move and the Brainstem grab control has a drive handle", () => 
   for (const move of ["wake", "fold", "race"]) {
     assert.match(tilesSource, new RegExp(`driveTile\\(tile\\.id, "${move}"\\)`));
   }
-  assert.match(tilesSource, /tableView\.deal/);
+  assert.match(tilesSource, /tableView\.arrange/);
   assert.match(tilesSource, /tableView\.layout/);
   assert.match(tilesSource, /tableView\.raceTarget/);
   assert.match(tilesSource, /\.api\.twinChat/);
@@ -64,11 +64,11 @@ test("tiles support drag, threshold swipes, buttons, and keyboard paths", () => 
   assert.match(tilesSource, /event\.key\.toLowerCase\(\) === "r"/);
 });
 
-test("table UI includes all layouts and four deal moves", () => {
-  for (const layout of ["table", "duel", "bench", "battlefield", "hand", "custom"]) {
+test("table UI includes all layouts and four arrange moves", () => {
+  for (const layout of ["table", "row", "focus", "grid", "stack", "custom"]) {
     assert.match(tilesSource, new RegExp(`${layout}:`));
   }
-  for (const deal of ["riffle", "fan", "deal-to-seats", "draw-one"]) {
+  for (const deal of ["reorder", "fan", "distribute", "open-one"]) {
     assert.match(tilesSource, new RegExp(`"${deal}"`));
   }
   assert.match(tilesSource, /renderOverflow\(surface, active\.slice\(12\)\)/);

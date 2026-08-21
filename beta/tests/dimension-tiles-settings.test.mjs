@@ -30,23 +30,23 @@ test("Table view settings default off and persist beside Chat Look", (t) => {
 
   writeTableViewSettings({
     betaHome,
-    tableView: { on: true, layout: "hand" },
+    tableView: { on: true, layout: "stack" },
   });
   const changed = changeTableViewSettings({
     betaHome,
-    tableView: { layout: "battlefield" },
+    tableView: { layout: "grid" },
     env: {},
   });
   assert.deepEqual(changed.tableView, {
     on: true,
-    layout: "battlefield",
+    layout: "grid",
     customLayoutPath: null,
   });
   const file = path.join(betaHome, "settings.json");
   assert.deepEqual(JSON.parse(readFileSync(file, "utf8")), {
     tableView: {
       on: true,
-      layout: "battlefield",
+      layout: "grid",
       customLayoutPath: null,
     },
   });

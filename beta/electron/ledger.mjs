@@ -164,6 +164,11 @@ export function inferAgentToolName(source, filename = null) {
     : null;
 }
 
+// One turn cannot describe more tool calls than the kernel can make in it,
+// and a single result cannot outgrow the summary column.
+const MAX_TOOL_ROWS_PER_TURN = 64;
+const MAX_TOOL_SUMMARY = 2000;
+
 export function parseAgentLogs(agentLogs) {
   if (Array.isArray(agentLogs)) {
     return agentLogs.flatMap((entry) => {
@@ -177,18 +182,32 @@ export function parseAgentLogs(agentLogs) {
       }];
     });
   }
-  return String(agentLogs || "")
-    .split(/\r?\n/)
-    .flatMap((line) => {
-      const match = line.match(/^\[([^\]]+)]\s*(.*)$/);
-      if (!match || match[1] === "?") return [];
-      const summary = match[2].trim();
-      return [{
-        tool_name: match[1].trim(),
-        ok: !/^(?:ERROR|Error):/.test(summary),
-        summary: summary.slice(0, 2000),
-      }];
-    });
+  // The kernel writes one entry per tool call as `[toolName] result`, and the
+  // result is inlined whole — so it may span many lines, and those lines may
+  // themselves start with a bracket (a log tail, a timestamped transcript).
+  // Only a bracket holding something shaped like a TOOL NAME opens a new
+  // entry; every other line continues the result above it. Without this, one
+  // tool that returns timestamped output became one fabricated row per line.
+  const TOOL_NAME = /^\[([A-Za-z_][A-Za-z0-9_.-]{0,63})]\s*(.*)$/;
+  const entries = [];
+  for (const line of String(agentLogs || "").split(/\r?\n/)) {
+    const match = line.match(TOOL_NAME);
+    if (match && match[1] !== "?") {
+      if (entries.length >= MAX_TOOL_ROWS_PER_TURN) break;
+      entries.push({ tool_name: match[1].trim(), summary: match[2].trim() });
+      continue;
+    }
+    const current = entries[entries.length - 1];
+    if (!current || !line.trim()) continue;
+    if (current.summary.length < MAX_TOOL_SUMMARY) {
+      current.summary = `${current.summary}\n${line.trim()}`;
+    }
+  }
+  return entries.map((entry) => ({
+    tool_name: entry.tool_name,
+    ok: !/^(?:ERROR|Error):/.test(entry.summary),
+    summary: entry.summary.slice(0, MAX_TOOL_SUMMARY),
+  }));
 }
 
 export function recordCompletedTurn(ledger, {

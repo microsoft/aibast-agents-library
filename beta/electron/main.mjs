@@ -694,10 +694,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
   function installBetaMenu() {
     const brainLogo = document.querySelector("header .logo");
     if (brainLogo) {
-      brainLogo.title = "we are above that";
+      brainLogo.title = "Toggle live agents";
       brainLogo.setAttribute(
         "aria-label",
-        "we are above that — toggle live agents",
+        "Toggle live agents",
       );
       brainLogo.setAttribute("role", "button");
       brainLogo.setAttribute("aria-expanded", "false");

@@ -313,7 +313,10 @@ test("completed turns normalize tool logs and persist both roles at the terminal
       {
         tool_name: "PinDrop",
         ok: false,
-        summary: "ERROR: destination refused",
+        // The continuation line belongs to PinDrop's result: the kernel
+        // inlines the whole result after the tool name, so a line that does
+        // not open a new tool call is part of the one above it.
+        summary: "ERROR: destination refused\ncontinuation text",
       },
     ],
   );
@@ -452,5 +455,39 @@ test("human ledger paths never quote a non-expanding home shortcut", () => {
       platform: "win32",
     }),
     `"${windows}"`,
+  );
+});
+
+test("a multi-line tool result is one tool call, not one per line", () => {
+  // The kernel inlines a tool's ENTIRE result after `[toolName]`, so the
+  // result may span lines that themselves begin with a bracket. Treating each
+  // such line as its own call fabricated thousands of rows from one call and
+  // blocked the main thread while writing them.
+  const logs = ["[ReadLogAgent] tail follows"]
+    .concat(Array.from(
+      { length: 3000 },
+      (_, index) => `[2026-08-20 10:${String(index % 60).padStart(2, "0")}:00] worker ${index} finished`,
+    ))
+    .join("\n");
+  const rows = parseAgentLogs(logs);
+  assert.equal(rows.length, 1, "one tool call produces one row");
+  assert.equal(rows[0].tool_name, "ReadLogAgent");
+  assert.match(rows[0].summary, /tail follows/);
+
+  // ...and the continuation lines are kept, not silently dropped.
+  const multi = parseAgentLogs("[Reader] line one\nline two\nline three");
+  assert.equal(multi.length, 1);
+  assert.equal(multi[0].summary, "line one\nline two\nline three");
+
+  // Real consecutive tool calls are still separate rows.
+  assert.deepEqual(
+    parseAgentLogs("[Alpha] did a thing\n[Beta] did another").map((row) => row.tool_name),
+    ["Alpha", "Beta"],
+  );
+
+  // And a turn cannot describe an unbounded number of calls.
+  assert.equal(
+    parseAgentLogs(Array.from({ length: 500 }, (_, i) => `[Tool${i}] x`).join("\n")).length,
+    64,
   );
 });

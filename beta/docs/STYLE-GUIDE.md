@@ -11,10 +11,10 @@ sake.
 
 ---
 
-## 1. The brandmark (the "swoosh")
+## 1. The brandmark
 
 The Brainstem **brain glyph** is the single, fixed identity mark. Kody: *"like
-our nike swoosh or golden arches — get it right and the same."* **Never redraw,
+a permanent identity mark — get it right, and keep it the same everywhere."* **Never redraw,
 restyle, or approximate it.** It has one canonical source: the glyph the Grail
 app already serves as its favicon.
 

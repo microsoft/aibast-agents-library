@@ -623,7 +623,7 @@
     const herd = document.getElementById("surgeon-herd");
     const surface = herd?.querySelector(".dimension-tile-surface");
     if (!herd || !surface) return;
-    for (const name of ["table", "duel", "bench", "battlefield", "hand", "custom"]) {
+    for (const name of ["table", "row", "focus", "grid", "stack", "custom"]) {
       herd.classList.remove(`tile-layout-${name}`);
     }
     const layoutName = SCRIPT_STATE.context.tableView.layout || "table";
@@ -635,13 +635,13 @@
       surface.style.setProperty("--tile-width", `${custom.tileSize.width}px`);
       surface.style.setProperty("--tile-height", `${custom.tileSize.height}px`);
       surface.dataset.faceDownRule = custom.faceDownRule;
-      surface.dataset.dealPattern = custom.dealPattern;
+      surface.dataset.arrangePattern = custom.arrangePattern;
     } else {
       surface.style.removeProperty("--table-surface");
       surface.style.removeProperty("--tile-width");
       surface.style.removeProperty("--tile-height");
       delete surface.dataset.faceDownRule;
-      delete surface.dataset.dealPattern;
+      delete surface.dataset.arrangePattern;
     }
     const layout = document.querySelector(".dimension-tile-layout");
     if (layout) layout.value = layoutName;
@@ -668,13 +668,13 @@
     return values[0] % length;
   }
 
-  async function runDeal(action) {
+  async function runArrange(action) {
     const surface = document.querySelector(".dimension-tile-surface");
     if (!surface || !action) return;
-    surface.classList.remove("deal-riffle", "deal-fan", "deal-seats", "deal-draw");
+    surface.classList.remove("arrange-reorder", "arrange-spread", "arrange-distribute", "arrange-open");
     void surface.offsetWidth;
-    surface.classList.add(`deal-${action === "deal-to-seats" ? "seats" : action}`);
-    if (action === "draw-one") {
+    surface.classList.add(`arrange-${action}`);
+    if (action === "open-one") {
       const candidates = SCRIPT_STATE.tiles.filter((tile) => (
         tile.status === "parked" || tile.status === "racing"
       ));
@@ -699,10 +699,10 @@
     layout.setAttribute("aria-label", "Table layout");
     const labels = {
       table: "Table",
-      duel: "Duel zones",
-      bench: "Bench",
-      battlefield: "Battlefield",
-      hand: "Hand",
+      row: "Rows",
+      focus: "Focus",
+      grid: "Grid",
+      stack: "Stack",
       custom: "Custom…",
     };
     for (const [value, text] of Object.entries(labels)) {
@@ -726,27 +726,27 @@
     raceTarget.className = "dimension-tile-race-target";
     raceTarget.dataset.drive = "tableView.raceTarget";
     raceTarget.setAttribute("aria-label", "Race target");
-    const deal = document.createElement("select");
-    deal.dataset.drive = "tableView.deal";
-    deal.setAttribute("aria-label", "Deal tiles");
+    const arrange = document.createElement("select");
+    arrange.dataset.drive = "tableView.arrange";
+    arrange.setAttribute("aria-label", "Arrange tiles");
     for (const [value, text] of [
-      ["", "Deal…"],
-      ["riffle", "Riffle"],
-      ["fan", "Fan"],
-      ["deal-to-seats", "Deal to seats"],
-      ["draw-one", "Draw one"],
+      ["", "Arrange…"],
+      ["reorder", "Reorder"],
+      ["fan", "Spread"],
+      ["distribute", "Distribute"],
+      ["open-one", "Open one"],
     ]) {
       const option = document.createElement("option");
       option.value = value;
       option.textContent = text;
-      deal.appendChild(option);
+      arrange.appendChild(option);
     }
-    deal.addEventListener("change", () => {
-      const action = deal.value;
-      deal.value = "";
-      void runDeal(action).catch(showError);
+    arrange.addEventListener("change", () => {
+      const action = arrange.value;
+      arrange.value = "";
+      void runArrange(action).catch(showError);
     });
-    controls.append(label, layout, load, raceTarget, deal);
+    controls.append(label, layout, load, raceTarget, arrange);
     herd.insertBefore(controls, surface);
     return controls;
   }
@@ -760,7 +760,7 @@
     grab.draggable = true;
     grab.dataset.drive = "brainstem.grab";
     grab.title = "Grab this chat and park it in the herd";
-    grab.innerHTML = "<span aria-hidden=\"true\">♠</span> Park chat";
+    grab.innerHTML = "<span aria-hidden=\"true\">▤</span> Park chat";
     grab.addEventListener("click", () => void parkCurrent().catch(showError));
     grab.addEventListener("dragstart", (event) => {
       event.dataTransfer.effectAllowed = "move";

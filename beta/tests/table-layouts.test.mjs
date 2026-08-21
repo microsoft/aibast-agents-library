@@ -28,7 +28,7 @@ function customFixture() {
       { x: 14, y: 50, rotation: -90 },
     ],
     tileSize: { width: 180, height: 260 },
-    dealPattern: "clockwise",
+    arrangePattern: "clockwise",
     faceDownRule: "folded",
   };
 }

@@ -6,10 +6,10 @@ import path from "node:path";
 
 export const TABLE_LAYOUT_NAMES = Object.freeze([
   "table",
-  "duel",
-  "bench",
-  "battlefield",
-  "hand",
+  "row",
+  "focus",
+  "grid",
+  "stack",
   "custom",
 ]);
 
@@ -20,25 +20,25 @@ export const TABLE_LAYOUTS = Object.freeze({
     layout: "oval seats",
     tileLook: "plain frame",
   }),
-  duel: Object.freeze({
-    label: "Duel zones",
-    layout: "five zones and a discard row",
-    tileLook: "tall bronze frame",
+  row: Object.freeze({
+    label: "Rows",
+    layout: "five slots in a row over a closed pile",
+    tileLook: "tall frame",
   }),
-  bench: Object.freeze({
-    label: "Bench",
-    layout: "one active seat over a bench of five",
-    tileLook: "rounded pip frame",
+  focus: Object.freeze({
+    label: "Focus",
+    layout: "one active tile over a strip of five",
+    tileLook: "rounded frame",
   }),
-  battlefield: Object.freeze({
-    label: "Battlefield",
-    layout: "two battlefield rows",
-    tileLook: "title banner and art window",
+  grid: Object.freeze({
+    label: "Grid",
+    layout: "two rows of equal tiles",
+    tileLook: "title banner and preview",
   }),
-  hand: Object.freeze({
-    label: "Hand",
-    layout: "draw pile, discard pile, and fan",
-    tileLook: "bold model color and turn number",
+  stack: Object.freeze({
+    label: "Stack",
+    layout: "a spread of tiles over two closed piles",
+    tileLook: "model color and turn count",
   }),
   custom: Object.freeze({
     label: "Custom…",
@@ -91,7 +91,7 @@ export function validateCustomLayout(value) {
     "surfaceColor",
     "seatPositions",
     "tileSize",
-    "dealPattern",
+    "arrangePattern",
     "faceDownRule",
   ]);
   const unexpected = Object.keys(value).filter((key) => !allowed.has(key));
@@ -132,16 +132,16 @@ export function validateCustomLayout(value) {
   ) {
     throw new Error("Custom tileSize must be an object.");
   }
-  const dealPatterns = new Set([
+  const arrangePatterns = new Set([
     "clockwise",
     "counterclockwise",
     "fan",
     "rows",
     "stack",
   ]);
-  if (!dealPatterns.has(value.dealPattern)) {
+  if (!arrangePatterns.has(value.arrangePattern)) {
     throw new Error(
-      "Custom dealPattern must be clockwise, counterclockwise, fan, rows, or stack.",
+      "Custom arrangePattern must be clockwise, counterclockwise, fan, rows, or stack.",
     );
   }
   const faceDownRules = new Set(["never", "folded", "all", "alternate"]);
@@ -162,7 +162,7 @@ export function validateCustomLayout(value) {
       width: finiteNumber(value.tileSize.width, "Custom tile width", 120, 320),
       height: finiteNumber(value.tileSize.height, "Custom tile height", 160, 440),
     },
-    dealPattern: value.dealPattern,
+    arrangePattern: value.arrangePattern,
     faceDownRule: value.faceDownRule,
   };
 }

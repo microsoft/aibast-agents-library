@@ -944,6 +944,7 @@ function installTableViewFrameBridge(settings) {
   function markPendingForTile(tileId, requestIds = []) {
     activeTileId = null;
     activeHistory = null;
+    nextRaceTileId = null;
     const ids = requestIds.length
       ? requestIds
       : [...pendingRequests.keys()];
@@ -978,6 +979,8 @@ function installTableViewFrameBridge(settings) {
   function renderTranscript(tile) {
     clearKernel();
     lastRequest = null;
+    // Waking a tile abandons any race that was staged but never sent.
+    nextRaceTileId = null;
     activeTileId = tile.id || null;
     activeHistory = Array.isArray(tile.history)
       ? structuredClone(tile.history)
@@ -1242,6 +1245,7 @@ function installTableViewFrameBridge(settings) {
       }
       activeHistory = null;
       activeTileId = null;
+      nextRaceTileId = null;
       lastRequest = null;
       startConversation(null);
     }
@@ -1264,6 +1268,7 @@ function installTableViewFrameBridge(settings) {
     startConversation(null);
     activeTileId = null;
     activeHistory = null;
+    nextRaceTileId = null;
     delete window.__rappBetaTableViewBridge;
   }
 
@@ -1310,6 +1315,7 @@ function installTableViewFrameBridge(settings) {
       clearKernel();
       activeTileId = null;
       activeHistory = null;
+      nextRaceTileId = null;
       lastRequest = null;
       startConversation(null);
       return;

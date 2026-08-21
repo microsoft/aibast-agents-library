@@ -841,7 +841,7 @@ const SURGEON_STARTERS = [
       "Draft parity evidence, and warning that live publication is a manual",
       "user action in the linked Copilot Studio UI. Record the evidence and",
       "return the Copilot Studio agent ID and URL. Do not stop at",
-      "instructions or hand work to VS Code.",
+      "instructions or stack work to VS Code.",
     ].join(" "),
   },
 ];
