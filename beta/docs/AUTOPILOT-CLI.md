@@ -1,6 +1,14 @@
-# Autopilot — a headless CLI inside the page
+# The RAPP command-line-less CLI — `rapp-autopilot/1.0`
 
-**An agent-first experience any AI can use, with two prerequisites: it knows CLI patterns, and it can
+**A CLI interface with no command line.** All the shape of a command line — verbs, arguments, flags,
+text results, `help` — and none of the apparatus: no terminal, no shell, no process, no window. It
+lives in the page and answers from the console, so an AI drives the product the way it already knows
+how to drive tools, and a person never has to open a command line for any of it to work.
+
+Call it Autopilot for short. It is the agent-first control surface, and it exists so that **driving
+the interface never requires the model**.
+
+**Any AI can use it, with two prerequisites: it knows CLI patterns, and it can
 reach the console on the page.** No SDK, no API key, no client library, no protocol handshake, no
 server to register with. If an AI can evaluate one expression in a frame, it can operate the whole
 product — the same screens, the same controls, the same feedback a person gets.
@@ -15,8 +23,9 @@ often asks the Brainstem in chat, spending a model call and tool rounds on a but
 is the deterministic half: an AI drives the interface for nothing and reaches the model only when it
 actually needs intelligence.
 
-There is no terminal window. The "CLI" is a shape — verbs, arguments, text results — because that
-shape is what an AI drives well and a person can read.
+The name is the design: *command-line-less* because there is no command line, *CLI* because the
+shape is exactly what an AI already drives well and a person can read at a glance. Removing the
+terminal removes the only part that was ever a prerequisite.
 
 ## How it is driven
 

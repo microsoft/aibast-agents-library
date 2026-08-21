@@ -92,9 +92,10 @@ person sees.
 Chat is the control surface for **intelligence**. It is not the control surface for **navigation**,
 and treating it as one makes every button press cost a model call.
 
-So the Frontier's interface is drivable headlessly, by a CLI shape injected into the page and reached
-through the console — `rapp("herd.open")`, `rapp("tile.primary tile-7")` — specified in
-[`docs/AUTOPILOT-CLI.md`](docs/AUTOPILOT-CLI.md). The invariants:
+So the Frontier's interface is drivable through the **RAPP command-line-less CLI** — a CLI interface
+with no command line, injected into the page and reached from the console: `rapp("herd.open")`,
+`rapp("tile.primary tile-7")`. Specified in [`docs/AUTOPILOT-CLI.md`](docs/AUTOPILOT-CLI.md)
+(`rapp-autopilot/1.0`). The invariants:
 
 1. **Two prerequisites, nothing else.** An AI needs to know CLI patterns and be able to reach the
    console on the page. No SDK, no API key, no client library, no handshake, no server to register
