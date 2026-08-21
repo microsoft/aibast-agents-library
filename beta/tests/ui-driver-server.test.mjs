@@ -510,7 +510,7 @@ test("driver UI opens off-canvas panels and clears faded narration", () => {
   assert.match(source, /label\.textContent = ""/);
 });
 
-test("walkthrough recording pads with visible recap cards", () => {
+test("walkthrough recording pads with visible recap tiles", () => {
   const source = uiDriverInternals.stopWindowRecording.toString();
   assert.match(source, /minimumDurationMs/);
   assert.match(source, /brainstem-beta-walkthrough-recap/);
@@ -545,7 +545,7 @@ test("long recordings stream to disk without base64 IPC", () => {
 test("a control inside its own overlay is actionable: an ancestor hit is not an occluder", () => {
   // Live regression: `click #enter` on the first-run intro returned ok:false
   // ("occluded by @shell.intro") because elementFromPoint reported the intro
-  // card — the button's own ancestor — and the walkthrough could no longer
+  // tile — the button's own ancestor — and the walkthrough could no longer
   // dismiss the intro. Only something OUTSIDE the element's subtree and
   // ancestry occludes it.
   const source = uiDriverInternals.browserDriverCommand.toString();

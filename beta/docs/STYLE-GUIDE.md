@@ -60,7 +60,7 @@ Dark-first, GitHub-dark lineage. Use the tokens below; don't introduce new greys
 | Token | Hex | Where |
 |-------|-----|-------|
 | App ground | `#0d1117` | window background |
-| Panel | `#0f1013` / `#161b22` | chat log, cards |
+| Panel | `#0f1013` / `#161b22` | chat log, tiles |
 | Raised | `#17181b` / `#1c1e23` | composer, input, bubbles |
 | Border | `#26282d` | default hairline |
 | Border strong | `#2a2d33` / `#30363d` | inputs, emphasis |
@@ -106,7 +106,7 @@ are **semantic status only**, never brand accents. One accent per surface.
   Each tile: header (`.hh`) → body → composer, laid out with flex + `gap`.
 - **Spacing:** 8-based rhythm (`gap: 8`, padding `9–12`). Let flex/grid `gap` do
   spacing, not per-element margins.
-- **Radius:** tiles/cards 9–12; chat bubbles 11 (with a 4px "tail" corner on the
+- **Radius:** tiles 9–12; chat bubbles 11 (with a 4px "tail" corner on the
   speaker's side); buttons/pills 6–9; the brandmark tile `rx 224/1024`.
 - **Scrollbars:** thin, `#33363c` on transparent. Wide content scrolls inside its
   own container; the app body never scrolls sideways.

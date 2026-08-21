@@ -88,7 +88,7 @@ const app = await launch({ cassette: "hatch-json-doctor" });
 const t = app.driver;
 await t.run([
   { action: "click", handle: "@shell.store.open" },
-  { action: "click", handle: "@store.card[json-doctor].hatch", until: { handle: "@twin.tile[json-doctor]", state: "ready" } },
+  { action: "click", handle: "@store.tile[json-doctor].hatch", until: { handle: "@twin.tile[json-doctor]", state: "ready" } },
 ]);
 await t.expect({ handle: "@twin.tile[json-doctor].status", text: "ready" });
 t.trace.assertMatchesGolden("hatch-json-doctor");   // action→effect JSONL, volatile fields masked

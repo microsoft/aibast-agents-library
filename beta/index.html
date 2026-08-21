@@ -266,7 +266,7 @@
       margin-bottom: 28px;
     }
 
-    .install-card {
+    .install-tile {
       position: relative;
       overflow: hidden;
       padding: 28px;
@@ -276,7 +276,7 @@
       box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border);
     }
 
-    .install-card.recommended {
+    .install-tile.recommended {
       border-color: var(--cp-accent);
     }
 
@@ -293,7 +293,7 @@
       font-weight: 700;
     }
 
-    .install-card.recommended .recommended-badge {
+    .install-tile.recommended .recommended-badge {
       display: block;
     }
 
@@ -397,7 +397,7 @@
       margin-bottom: 28px;
     }
 
-    .detail-card {
+    .detail-tile {
       padding: 20px;
       border: 1px solid var(--cp-border);
       border-radius: 16px;
@@ -417,12 +417,12 @@
       font-weight: 800;
     }
 
-    .detail-card h3 {
+    .detail-tile h3 {
       margin: 0 0 7px;
       font-size: 16px;
     }
 
-    .detail-card p {
+    .detail-tile p {
       margin: 0;
       color: var(--cp-text-muted);
       font-size: 14px;
@@ -518,7 +518,7 @@
         grid-template-columns: 1fr;
       }
 
-      .install-card {
+      .install-tile {
         padding: 22px;
       }
 
@@ -586,7 +586,7 @@
     </section>
 
     <section class="install-grid" aria-label="Install commands">
-      <article class="install-card" id="unix-card">
+      <article class="install-tile" id="unix-tile">
         <span class="recommended-badge">Your platform</span>
         <h2 class="platform-title">
           <span class="platform-icon" aria-hidden="true">&gt;_</span>
@@ -607,7 +607,7 @@
         </div>
       </article>
 
-      <article class="install-card" id="windows-card">
+      <article class="install-tile" id="windows-tile">
         <span class="recommended-badge">Your platform</span>
         <h2 class="platform-title">
           <span class="platform-icon" aria-hidden="true">PS</span>
@@ -630,7 +630,7 @@
     </section>
 
     <section class="details-grid" aria-label="Installation boundaries">
-      <article class="detail-card">
+      <article class="detail-tile">
         <span class="detail-number">1</span>
         <h3>Exact source revision</h3>
         <p>
@@ -638,7 +638,7 @@
           both downloaded scripts and checked-out source to that SHA.
         </p>
       </article>
-      <article class="detail-card">
+      <article class="detail-tile">
         <span class="detail-number">2</span>
         <h3>Shared Brainstem</h3>
         <p>
@@ -646,7 +646,7 @@
           authentication, memories, and local storage remain in one place.
         </p>
       </article>
-      <article class="detail-card">
+      <article class="detail-tile">
         <span class="detail-number">3</span>
         <h3>Isolated launcher</h3>
         <p>
@@ -768,7 +768,7 @@
       function markRecommendedPlatform() {
         const platform = navigator.userAgentData?.platform || navigator.platform || "";
         const windows = /win/i.test(platform);
-        document.getElementById(windows ? "windows-card" : "unix-card")
+        document.getElementById(windows ? "windows-tile" : "unix-tile")
           .classList.add("recommended");
       }
 

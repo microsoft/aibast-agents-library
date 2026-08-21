@@ -130,7 +130,7 @@ hatch cs-deploy twin (own port)
   → twin loop: doctor → plan → build → provision
      → [visible: PAC device login, once, if needed]
      → push (Draft) → parity → finalize
-  → emit a Copilot Studio Draft link card back into the Brainstem/herd
+  → emit a Copilot Studio Draft link tile back into the Brainstem/herd
   → user watches; publishing stays their manual action
 ```
 

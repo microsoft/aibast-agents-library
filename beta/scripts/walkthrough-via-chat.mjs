@@ -299,7 +299,7 @@ const prompt = [
           ? "control-handoff"
         : "baseline"
   }' so this is a true`,
-  "  five-minute replay. Let the visible recap cards fill any remaining time.",
+  "  five-minute replay. Let the visible recap tiles fill any remaining time.",
   "- State what the learner can now repeat without VS Code or a terminal.",
   additionalDirection
     ? `- Also incorporate this direction: ${additionalDirection}`
@@ -575,7 +575,7 @@ function artifactDescriptor(filePath) {
   };
 }
 
-function reportCard(report) {
+function reportTile(report) {
   const passed = Boolean(report.ok);
   const checks = Object.entries(report.checks || {})
     .map(([name, value]) => (
@@ -636,7 +636,7 @@ function writeReportAndGallery(report) {
       .filter((recording) => !referenced.has(recording))
       .sort((left, right) => statSync(right).mtimeMs - statSync(left).mtimeMs)
     : [];
-  const historyCards = historical.map((recording) => (
+  const historyTiles = historical.map((recording) => (
     `<article class="run historical"><header><div><strong>Historical recording</strong>`
     + `<small>${escapeHtml(path.basename(recording))}</small></div>`
     + `<a href="${fileUrl(recording)}">Open WebM</a></header>`
@@ -664,8 +664,8 @@ pre{white-space:pre-wrap;word-break:break-word;background:#0d1117;padding:12px;b
 </style></head><body><main>
 <h1>RAPP Brainstem Frontier improvements</h1>
 <p>Newest first. Every scored run was fully decoded and sampled before the next loop.</p>
-${reports.map(reportCard).join("")}
-${historyCards ? `<h2>Earlier recordings</h2>${historyCards}` : ""}
+${reports.map(reportTile).join("")}
+${historyTiles ? `<h2>Earlier recordings</h2>${historyTiles}` : ""}
 </main></body></html>\n`, { mode: 0o600 });
   return galleryPath;
 }

@@ -17,7 +17,7 @@ outlines, and verified effects.
 | `read` / `wait` | unbounded `innerText` | hard ceiling 4,000 / returns a handle, not text |
 | per-turn overhead (Loop A) | 3,776 B schema + 919 B system context | ≤ 1,200 B total |
 | post-action verification | none (sleep `settleMs`, return success) | `effect` diff + optional `until` post-condition |
-| what the user sees | one bubble + a collapsed dump of every payload | one-line step cards; payloads never rendered |
+| what the user sees | one bubble + a collapsed dump of every payload | one-line step tiles; payloads never rendered |
 
 ## 1. Stable addressing: handles, not paths
 
@@ -66,7 +66,7 @@ count — not a silent first-match.
 - `read` keeps working for genuine text needs but is capped at 4,000 chars with `tail` and
   `handle` scoping; `wait` resolves to `{ matched: true, h }` and never returns element text;
   `screenshot` returns the artifact path and a 300-char caption (the title, the active
-  handle, and the last step card), with `include_text: true` capped at 2,000.
+  handle, and the last step tile), with `include_text: true` capped at 2,000.
 - `route_telemetry` returns the last 20 events and a cursor.
 
 ## 3. Verified effects, fewer rounds
@@ -103,10 +103,10 @@ the Frontier cannot change that, so it makes the results small instead:
 - The Brainstem-side agent's tool schema keeps one-line descriptions; the long guidance
   moves behind a `help` action the model calls once per session. `system_context` drops to
   ~250 bytes and no longer tells the model to screenshot after every click.
-- The bridge renders **step cards** in the frame — one line per action, from `effect`:
+- The bridge renders **step tiles** in the frame — one line per action, from `effect`:
   `▶ clicked Send → reply r-42 streaming ✓` — and the Surgeon panel's `⚙ tool` row shows the
   same one-liner. Payloads are never rendered anywhere; artifacts (captures, recordings)
-  render as media cards, which the Grail path does not do today.
+  render as media tiles, which the Grail path does not do today.
 - A per-turn **byte budget** (default 6 KB) on the driver: when a result would exceed it the
   server truncates with `…(+N bytes — read handle:@x)`; the model is told how to get more
   rather than getting everything.
@@ -131,4 +131,4 @@ the Frontier cannot change that, so it makes the results small instead:
   with a test in `beta/tests/ui-driver-server.test.mjs` that **spins up the real server**
   against a fixture page (today that file only greps the source).
 - Order: handles + outline + caps (most of the quiet, no behavior risk) → effects + `until` +
-  `expect` (accuracy) → step cards and media cards (UX) → shared queue and byte budget.
+  `expect` (accuracy) → step tiles and media tiles (UX) → shared queue and byte budget.

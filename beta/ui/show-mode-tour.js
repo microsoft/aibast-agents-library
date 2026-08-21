@@ -10,7 +10,7 @@
 // about the page differs from stock.
 //
 // Entry points: the "Show Mode: click-through preview" Brain Surgeon pill,
-// the intro card button, `window.rappShowModeTour.start()`, the
+// the intro tile button, `window.rappShowModeTour.start()`, the
 // `rapp-beta:show-mode-tour` window event, or `?tour=show-mode` / `#show-mode-tour`.
 //
 // The same file drives beta/show-mode.html (a static replica of the shell) so
@@ -44,8 +44,8 @@
     .smt-ghost .smt-msg.user { align-self: flex-end; background: #14284a; border-color: #1f4b8f; color: #e8f0ff; }
     .smt-ghost .smt-msg.tool { font: 11.5px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       color: #8b949e; background: #0d1117; border-color: #21262d; }
-    .smt-ghost .smt-msg.card { border-color: #30363d; background: #161b22; }
-    .smt-ghost .smt-msg.card b { color: #f0f6fc; }
+    .smt-ghost .smt-msg.tile { border-color: #30363d; background: #161b22; }
+    .smt-ghost .smt-msg.tile b { color: #f0f6fc; }
     .smt-ghost .smt-msg.link { border-color: #8957e5; background: linear-gradient(135deg,#25163f,#10263f); color: #f0e7ff; }
     .smt-ghost .smt-msg.evidence { border-color: #1f6feb; background: #071d36; color: #dbeafe; }
     .smt-ghost .smt-msg .smt-mono { font: 11.5px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #9ea7b3; }
@@ -82,36 +82,36 @@
     .smt-ghost .smt-thumb { display: inline-block; width: 92px; height: 58px; border-radius: 6px; margin: 6px 8px 0 0; vertical-align: top;
       background: linear-gradient(135deg,#0d1117 0 30%,#161b22 30% 70%,#0d1117 70%); border: 1px solid #30363d; }
     .smt-ghost .smt-thumb.center { background: linear-gradient(90deg,#161b22 0 28%,#0d1117 28% 72%,#161b22 72%); }
-    #smt-card { position: fixed; z-index: 9995; width: min(430px, calc(100vw - 32px));
+    #smt-tile { position: fixed; z-index: 9995; width: min(430px, calc(100vw - 32px));
       background: #161b22; border: 1px solid #30363d; border-radius: 12px; color: #e6edf3;
       box-shadow: 0 8px 30px rgba(1,4,9,.7); font: 14px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       transition: top .25s ease, left .25s ease; }
-    #smt-card .smt-bar { height: 3px; margin: 12px 18px 0; background: #21262d; border-radius: 3px; overflow: hidden; }
-    #smt-card .smt-bar > div { height: 100%; background: linear-gradient(90deg,#ff5f52,#1f6feb); transition: width .3s ease; }
-    #smt-card .smt-head { display: flex; align-items: center; gap: 10px; padding: 8px 18px 0; font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: .12em; }
-    #smt-card .smt-head .smt-rec { width: 8px; height: 8px; border-radius: 50%; background: #ff5f52; box-shadow: 0 0 0 3px rgba(255,95,82,.25); animation: smt-blink 2.2s ease-in-out infinite; }
-    #smt-card .smt-head .smt-x { margin-left: auto; background: none; border: 0; color: #8b949e; cursor: pointer; font-size: 14px; padding: 0 2px; }
-    #smt-card .smt-head .smt-x:hover { color: #e6edf3; }
-    #smt-card .smt-body { padding: 2px 18px 6px; }
-    #smt-card .smt-body h3 { margin: 8px 0 6px; font-size: 18px; font-weight: 650; letter-spacing: -.01em; line-height: 1.3; }
-    #smt-card .smt-body p { margin: 0 0 8px; color: #9ea7b3; font-size: 13.5px; }
-    #smt-card .smt-body p b { color: #e6edf3; font-weight: 600; }
-    #smt-card .smt-body ol { margin: 4px 0 8px; padding-left: 20px; color: #c9d1d9; font-size: 13.5px; }
-    #smt-card .smt-body ol li { margin: 2px 0; }
-    #smt-card .smt-body .smt-quote { margin: 8px 0; padding: 2px 0 2px 12px; border-left: 3px solid #30363d; font-size: 12.5px; font-style: italic; color: #8b949e; }
-    #smt-card .smt-body .smt-punch { color: #e6edf3; font-weight: 600; font-size: 13.5px; }
-    #smt-card .smt-notes { margin: 4px 16px; padding: 8px 12px; border-radius: 8px; background: #0d1117; border: 1px solid #21262d; color: #e3b341; font-size: 12.5px; line-height: 1.5; }
-    #smt-card .smt-notes b { color: #f0f6fc; font-weight: 600; }
-    #smt-card .smt-notes.off { display: none; }
-    #smt-card .smt-foot { display: flex; align-items: center; gap: 10px; padding: 8px 16px 14px; }
-    #smt-card .smt-foot .smt-ghostbtn { background: none; border: 0; color: #8b949e; cursor: pointer; font-size: 12.5px; padding: 4px 0; }
-    #smt-card .smt-foot .smt-ghostbtn:hover { color: #e6edf3; text-decoration: underline; }
-    #smt-card .smt-foot .smt-ghostbtn.on { color: #e3b341; }
-    #smt-card .smt-foot .smt-next { margin-left: auto; background: #1f6feb; color: #fff; border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 600; }
-    #smt-card .smt-foot .smt-next:hover { background: #388bfd; }
-    #smt-card .smt-foot .smt-back { background: none; border: 1px solid #30363d; color: #c9d1d9; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 12.5px; }
-    #smt-card .smt-foot .smt-back:disabled { opacity: .35; cursor: default; }
-    #smt-card .smt-keys { padding: 0 18px 12px; font-size: 10.5px; color: #5f636b; }
+    #smt-tile .smt-bar { height: 3px; margin: 12px 18px 0; background: #21262d; border-radius: 3px; overflow: hidden; }
+    #smt-tile .smt-bar > div { height: 100%; background: linear-gradient(90deg,#ff5f52,#1f6feb); transition: width .3s ease; }
+    #smt-tile .smt-head { display: flex; align-items: center; gap: 10px; padding: 8px 18px 0; font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: .12em; }
+    #smt-tile .smt-head .smt-rec { width: 8px; height: 8px; border-radius: 50%; background: #ff5f52; box-shadow: 0 0 0 3px rgba(255,95,82,.25); animation: smt-blink 2.2s ease-in-out infinite; }
+    #smt-tile .smt-head .smt-x { margin-left: auto; background: none; border: 0; color: #8b949e; cursor: pointer; font-size: 14px; padding: 0 2px; }
+    #smt-tile .smt-head .smt-x:hover { color: #e6edf3; }
+    #smt-tile .smt-body { padding: 2px 18px 6px; }
+    #smt-tile .smt-body h3 { margin: 8px 0 6px; font-size: 18px; font-weight: 650; letter-spacing: -.01em; line-height: 1.3; }
+    #smt-tile .smt-body p { margin: 0 0 8px; color: #9ea7b3; font-size: 13.5px; }
+    #smt-tile .smt-body p b { color: #e6edf3; font-weight: 600; }
+    #smt-tile .smt-body ol { margin: 4px 0 8px; padding-left: 20px; color: #c9d1d9; font-size: 13.5px; }
+    #smt-tile .smt-body ol li { margin: 2px 0; }
+    #smt-tile .smt-body .smt-quote { margin: 8px 0; padding: 2px 0 2px 12px; border-left: 3px solid #30363d; font-size: 12.5px; font-style: italic; color: #8b949e; }
+    #smt-tile .smt-body .smt-punch { color: #e6edf3; font-weight: 600; font-size: 13.5px; }
+    #smt-tile .smt-notes { margin: 4px 16px; padding: 8px 12px; border-radius: 8px; background: #0d1117; border: 1px solid #21262d; color: #e3b341; font-size: 12.5px; line-height: 1.5; }
+    #smt-tile .smt-notes b { color: #f0f6fc; font-weight: 600; }
+    #smt-tile .smt-notes.off { display: none; }
+    #smt-tile .smt-foot { display: flex; align-items: center; gap: 10px; padding: 8px 16px 14px; }
+    #smt-tile .smt-foot .smt-ghostbtn { background: none; border: 0; color: #8b949e; cursor: pointer; font-size: 12.5px; padding: 4px 0; }
+    #smt-tile .smt-foot .smt-ghostbtn:hover { color: #e6edf3; text-decoration: underline; }
+    #smt-tile .smt-foot .smt-ghostbtn.on { color: #e3b341; }
+    #smt-tile .smt-foot .smt-next { margin-left: auto; background: #1f6feb; color: #fff; border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 600; }
+    #smt-tile .smt-foot .smt-next:hover { background: #388bfd; }
+    #smt-tile .smt-foot .smt-back { background: none; border: 1px solid #30363d; color: #c9d1d9; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 12.5px; }
+    #smt-tile .smt-foot .smt-back:disabled { opacity: .35; cursor: default; }
+    #smt-tile .smt-keys { padding: 0 18px 12px; font-size: 10.5px; color: #5f636b; }
     #smt-cursor { position: fixed; z-index: 9996; width: 22px; height: 22px; pointer-events: none; opacity: 0;
       transition: left .9s cubic-bezier(.4,0,.2,1), top .9s cubic-bezier(.4,0,.2,1), opacity .3s; }
     #smt-cursor svg { filter: drop-shadow(0 1px 2px rgba(1,4,9,.6)); }
@@ -123,7 +123,7 @@
     @keyframes smt-blink { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
     @keyframes smt-click { 0% { opacity: .9; transform: translate(-50%,-50%) scale(.4); } 100% { opacity: 0; transform: translate(-50%,-50%) scale(1.6); } }
     @media (prefers-reduced-motion: reduce) {
-      #smt-cursor, #smt-card, #smt-hole, #smt-ring, .smt-ghost .smt-msg { transition: none; animation: none; }
+      #smt-cursor, #smt-tile, #smt-hole, #smt-ring, .smt-ghost .smt-msg { transition: none; animation: none; }
     }
   `;
 
@@ -245,7 +245,7 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
       open: { surgeon: true },
       ghosts: { surgeon: `
         <div class="smt-msg tool">describe_recording · reading the timeline… 6 scenes<br>looking at 9 frames around 00:41 and 02:10<br>reading 38 transcript cues · redaction: 0 hits</div>
-        <div class="smt-msg card"><b>Weekly campaign makegood reconciliation</b><br>
+        <div class="smt-msg tile"><b>Weekly campaign makegood reconciliation</b><br>
           <span class="smt-mono">intent · high confidence</span><br>
           Every Monday, compare last week's delivered impressions against what was booked on the insertion order, flag under-delivery, and send the advertiser a makegood proposal.
           ${STEP_LIST(false)}
@@ -261,7 +261,7 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
       open: { surgeon: true },
       ghosts: { surgeon: `
         <div class="smt-msg user">Step 4 is wrong — we only flag under-delivery over 5%, and only for guaranteed lines.</div>
-        <div class="smt-msg card"><b>Revision 2</b>
+        <div class="smt-msg tile"><b>Revision 2</b>
           ${STEP_LIST(true)}
           <span class="smt-mono">changed: step 4 · other steps unchanged</span></div>
         <div class="smt-msg">Updated. Approve, or keep editing.</div>
@@ -407,11 +407,11 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
   const visibleIntroPrompt = () => {
     const intro = $("#intro");
     if (!intro || intro.classList.contains("hidden")) return null;
-    return $("#show-mode-interview-prompt") || $("#intro .intro-card.wide .prompt") || intro;
+    return $("#show-mode-interview-prompt") || $("#intro .intro-tile.wide .prompt") || intro;
   };
   const ghostEl = (sel) => $(sel, root);
 
-  let root, shade, hole, ring, card, cursor, pulse, ghosts;
+  let root, shade, hole, ring, tile, cursor, pulse, ghosts;
   let idx = 0, running = false, prevState = null, resizeTimer = 0;
   let notesOn = safeGet(NOTES_KEY) === "on";
 
@@ -435,7 +435,7 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
       <div class="smt-ghost smt-surgeon" data-pane="surgeon" hidden></div>
       <div id="smt-pulse"></div>
       <div id="smt-cursor"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 3l14 8-6 1.5L16 20l-2.5 1-3-7.5L6 18z" fill="#fff" stroke="#0d1117" stroke-width="1.2"/></svg></div>
-      <div id="smt-card" role="dialog" aria-modal="true" aria-label="Show Mode click-through">
+      <div id="smt-tile" role="dialog" aria-modal="true" aria-label="Show Mode click-through">
         <div class="smt-bar"><div></div></div>
         <div class="smt-head"><span class="smt-rec" aria-hidden="true"></span><span class="smt-step">Show Mode · click-through preview</span><button class="smt-x" type="button" title="Exit (Esc)" aria-label="Exit click-through">✕</button></div>
         <div class="smt-body"></div>
@@ -449,16 +449,16 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
       </div>`;
     document.body.appendChild(root);
     shade = $("#smt-shade", root); hole = $("#smt-hole", root); ring = $("#smt-ring", root);
-    card = $("#smt-card", root); cursor = $("#smt-cursor", root); pulse = $("#smt-pulse", root);
+    tile = $("#smt-tile", root); cursor = $("#smt-cursor", root); pulse = $("#smt-pulse", root);
     ghosts = {
       explorer: $('.smt-ghost[data-pane="explorer"]', root),
       center: $('.smt-ghost[data-pane="center"]', root),
       surgeon: $('.smt-ghost[data-pane="surgeon"]', root),
     };
-    $(".smt-x", card).addEventListener("click", () => stop());
-    $(".smt-next", card).addEventListener("click", () => next());
-    $(".smt-back", card).addEventListener("click", () => prev());
-    $(".smt-notes-toggle", card).addEventListener("click", () => toggleNotes());
+    $(".smt-x", tile).addEventListener("click", () => stop());
+    $(".smt-next", tile).addEventListener("click", () => next());
+    $(".smt-back", tile).addEventListener("click", () => prev());
+    $(".smt-notes-toggle", tile).addEventListener("click", () => toggleNotes());
     root.hidden = true;
   }
 
@@ -538,9 +538,9 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
         el.style.left = `${r.left - pad}px`; el.style.top = `${r.top - pad}px`;
         el.style.width = `${r.width + pad * 2}px`; el.style.height = `${r.height + pad * 2}px`;
       }
-      const cw = card.offsetWidth, ch = card.offsetHeight;
+      const cw = tile.offsetWidth, ch = tile.offsetHeight;
       let top, left;
-      // Keep the card off the spotlighted pane: beside it when there is room
+      // Keep the tile off the spotlighted pane: beside it when there is room
       // (right first, then left), otherwise below/above, otherwise the bottom.
       const spaceRight = innerWidth - r.right, spaceLeft = r.left;
       if (spaceRight >= cw + 24) {
@@ -559,11 +559,11 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
         top = Math.max(8, innerHeight - ch - 8);
         left = Math.max(8, Math.min(r.left + r.width / 2 - cw / 2, innerWidth - cw - 8));
       }
-      card.style.top = `${top}px`; card.style.left = `${left}px`;
+      tile.style.top = `${top}px`; tile.style.left = `${left}px`;
     } else {
       hole.classList.add("off"); ring.classList.add("off"); shade.classList.remove("off");
-      card.style.top = `${Math.max(8, innerHeight / 2 - card.offsetHeight / 2)}px`;
-      card.style.left = `${Math.max(8, innerWidth / 2 - card.offsetWidth / 2)}px`;
+      tile.style.top = `${Math.max(8, innerHeight / 2 - tile.offsetHeight / 2)}px`;
+      tile.style.left = `${Math.max(8, innerWidth / 2 - tile.offsetWidth / 2)}px`;
     }
     placeGhosts(step);
     if (step.cursorTo) {
@@ -586,15 +586,15 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
 
   function render() {
     const step = steps[idx];
-    $(".smt-bar > div", card).style.width = `${((idx + 1) / steps.length) * 100}%`;
-    $(".smt-step", card).textContent = `Show Mode · click-through preview · ${idx + 1} / ${steps.length}`;
-    $(".smt-body", card).innerHTML = step.html;
-    const notes = $(".smt-notes", card);
+    $(".smt-bar > div", tile).style.width = `${((idx + 1) / steps.length) * 100}%`;
+    $(".smt-step", tile).textContent = `Show Mode · click-through preview · ${idx + 1} / ${steps.length}`;
+    $(".smt-body", tile).innerHTML = step.html;
+    const notes = $(".smt-notes", tile);
     notes.innerHTML = step.notes || "";
     notes.classList.toggle("off", !notesOn || !step.notes);
-    $(".smt-notes-toggle", card).classList.toggle("on", notesOn);
-    $(".smt-back", card).disabled = idx === 0;
-    $(".smt-next", card).textContent = step.last ? "Finish" : "Next →";
+    $(".smt-notes-toggle", tile).classList.toggle("on", notesOn);
+    $(".smt-back", tile).disabled = idx === 0;
+    $(".smt-next", tile).textContent = step.last ? "Finish" : "Next →";
     document.body.classList.toggle("smt-intro-step", !!step.introStep && !!visibleIntroPrompt());
     if (step.open) {
       if (step.open.explorer) setPane("explorer", true);
@@ -616,7 +616,7 @@ __manifest__ = {<span class="s">"schema"</span>: <span class="s">"rapp-agent/1.0
     setStep(typeof at === "number" ? at : 0);
     window.addEventListener("keydown", onKey, true);
     window.addEventListener("resize", onResize);
-    $(".smt-next", card).focus();
+    $(".smt-next", tile).focus();
   }
   function stop() {
     if (!running) return;

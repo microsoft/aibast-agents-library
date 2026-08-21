@@ -876,7 +876,7 @@ export class BrainSurgeon {
         name: "stop_demo_recording",
         description: "Stop the Frontier-window recording and attach the WebM plus "
           + "final screenshot. A minimum duration keeps a full walkthrough "
-          + "watchable with visible recap cards instead of dead air.",
+          + "watchable with visible recap tiles instead of dead air.",
         defer: "never",
         skipPermission: true,
         parameters: {

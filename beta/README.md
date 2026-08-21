@@ -192,7 +192,7 @@ Brainstem first**, then promote into Copilot Studio, Scout, Cowork, Foundry, or
 custom Azure code — the tested bytes are the bytes that ship.
 
 Open it from the **Show Mode: click-through preview** pill in the Brain Surgeon,
-from the first-run intro card, or as a shareable page at `/beta/show-mode.html`.
+from the first-run intro tile, or as a shareable page at `/beta/show-mode.html`.
 The step-by-step walkthrough with screenshots is in
 [`docs/show-mode/`](docs/show-mode/README.md).
 

@@ -1158,29 +1158,29 @@ function finishSurgeonTool(session, toolName, toolCallId, success, summary = nul
 
 function addSurgeonArtifact(session, artifact) {
   if (!artifact?.url) return;
-  const card = document.createElement("div");
-  card.className = "surgeon-artifact";
+  const tile = document.createElement("div");
+  tile.className = "surgeon-artifact";
   if (artifact.kind === "link") {
-    card.classList.add("link");
+    tile.classList.add("link");
   } else if (artifact.kind === "video") {
     const video = document.createElement("video");
     video.src = artifact.url;
     video.controls = true;
     video.preload = "metadata";
-    card.appendChild(video);
+    tile.appendChild(video);
   } else {
     const image = document.createElement("img");
     image.src = artifact.url;
     image.alt = artifact.alt || "Brain Surgeon result";
-    card.appendChild(image);
+    tile.appendChild(image);
   }
   const link = document.createElement("a");
   link.href = artifact.url;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
   link.textContent = artifact.alt || "Open artifact";
-  card.appendChild(link);
-  surgeonPlace(session, card);
+  tile.appendChild(link);
+  surgeonPlace(session, tile);
 }
 
 // ── empty-state + starters (per session) ──

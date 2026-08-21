@@ -397,15 +397,15 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     "{border-color:#da3633;color:#ff7b72}",
     ".beta-drive-feed{display:flex;flex-direction:column;align-items:center;gap:6px;",
     "margin:7px 0;max-width:100%}",
-    ".beta-drive-step-card{max-width:min(760px,92%);overflow:hidden;",
+    ".beta-drive-step-tile{max-width:min(760px,92%);overflow:hidden;",
     "padding:5px 9px;border:1px solid #30363d;border-radius:999px;",
     "background:#161b22;color:#8b949e;font:600 11px/1.25 ui-monospace,monospace;",
     "text-overflow:ellipsis;white-space:nowrap}",
-    ".beta-drive-media-card{width:min(560px,92%);overflow:hidden;",
+    ".beta-drive-media-tile{width:min(560px,92%);overflow:hidden;",
     "border:1px solid #30363d;border-radius:10px;background:#0d1117}",
-    ".beta-drive-media-card img,.beta-drive-media-card video{display:block;",
+    ".beta-drive-media-tile img,.beta-drive-media-tile video{display:block;",
     "width:100%;max-height:320px;object-fit:contain}",
-    ".beta-drive-media-card a{display:block;padding:7px 9px;color:#58a6ff;",
+    ".beta-drive-media-tile a{display:block;padding:7px 9px;color:#58a6ff;",
     "font-size:11px;text-decoration:none}",
   ].join("");
   document.head.appendChild(style);
@@ -595,14 +595,14 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     const feed = driveFeed();
     const line = String(summary || "").replace(/\s+/g, " ").trim().slice(0, 220);
     if (!feed || !line) return false;
-    const card = document.createElement("div");
-    card.className = "beta-drive-step-card";
-    card.dataset.driveStepCard = "true";
-    card.setAttribute("role", "status");
-    card.textContent = line;
-    feed.appendChild(card);
-    while (feed.querySelectorAll(".beta-drive-step-card").length > 20) {
-      feed.querySelector(".beta-drive-step-card")?.remove();
+    const tile = document.createElement("div");
+    tile.className = "beta-drive-step-tile";
+    tile.dataset.driveStepTile = "true";
+    tile.setAttribute("role", "status");
+    tile.textContent = line;
+    feed.appendChild(tile);
+    while (feed.querySelectorAll(".beta-drive-step-tile").length > 20) {
+      feed.querySelector(".beta-drive-step-tile")?.remove();
     }
     feed.parentElement.scrollTop = feed.parentElement.scrollHeight;
     return true;
@@ -610,8 +610,8 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
   window.__rappBetaRenderDriveMedia = (artifact) => {
     const feed = driveFeed();
     if (!feed || !artifact?.url) return false;
-    const card = document.createElement("div");
-    card.className = "beta-drive-media-card";
+    const tile = document.createElement("div");
+    tile.className = "beta-drive-media-tile";
     const media = artifact.kind === "video"
       ? document.createElement("video")
       : document.createElement("img");
@@ -627,10 +627,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.textContent = String(artifact.alt || "Open artifact");
-    card.append(media, link);
-    feed.appendChild(card);
-    while (feed.querySelectorAll(".beta-drive-media-card").length > 8) {
-      feed.querySelector(".beta-drive-media-card")?.remove();
+    tile.append(media, link);
+    feed.appendChild(tile);
+    while (feed.querySelectorAll(".beta-drive-media-tile").length > 8) {
+      feed.querySelector(".beta-drive-media-tile")?.remove();
     }
     feed.parentElement.scrollTop = feed.parentElement.scrollHeight;
     return true;

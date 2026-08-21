@@ -452,7 +452,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
     const top = document.elementFromPoint?.(x, y);
     // Occluded means something ELSE is on top. A hit on the element, on one
     // of its descendants, or on one of its own ancestors (a button inside the
-    // first-run intro card, a link inside a panel) is the element itself being
+    // first-run intro tile, a link inside a panel) is the element itself being
     // reachable — the ancestor rule is what lets the driver dismiss an overlay
     // through the overlay's own button.
     if (
@@ -2600,7 +2600,7 @@ export async function startUiDriverServer({
               : (active?.id ? `#${active.id}` : "");
             const lastStep = normalize(
               window.__brainstemAiDriver?.lastStep
-              || document.querySelector("[data-drive-step-card]:last-of-type")?.textContent,
+              || document.querySelector("[data-drive-step-tile]:last-of-type")?.textContent,
             );
             const caption = [
               normalize(document.title),
