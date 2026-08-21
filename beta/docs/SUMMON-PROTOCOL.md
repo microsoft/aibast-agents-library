@@ -181,6 +181,35 @@ So each dimension may carry as much local signal as it likes without ever moving
 resolves from. The link stays the same link; what accumulates on it is the record of everywhere it
 has been.
 
+### What the signal is actually good for
+
+The link carries more than tiles, and the frames it accumulates are worth something on their own.
+
+**1. Shape on arrival.** Published bytes are canonical; the *shape* is computed at the destination.
+One published dataset can materialise locally as a table, a graph, a card, a chart or an index,
+because the projection happens here rather than being served. Publish once, and every consumer
+builds the form it needs — which is the [static API](LOCAL-MODEL-PLAYER.md) pattern generalised past
+models to any data at all.
+
+**2. A compatibility matrix nobody maintains.** Frames record assembly outcomes, including refusals:
+*this tile would not assemble on that runtime, because that requirement was unmet.* Fold those
+publicly and a compatibility table emerges from actual attempts rather than from anyone's claims.
+Nobody writes it, nobody keeps it current, and it is derived from what really happened.
+
+**3. A catalog that describes itself.** What gets summoned, what assembles, what is abandoned — all
+of it is already in the stream. Popularity, reliability and failure modes are computable from public
+frames with no analytics service, no telemetry endpoint, and nothing reporting home, because the
+record was already being kept for a different reason.
+
+**The boundary, which is not optional.** Frames contain transcripts, local context and ambient
+data. **Public signal is a deliberate, stripped publication — never a side effect of using the
+thing.** The same rule that governs tiles governs this: what leaves is the capability and the
+outcome, never the material it was learned from. A system whose usefulness depended on quietly
+publishing what people did with it would be exactly the thing this design exists to avoid.
+
+And it does not weaken verification: a shape computed locally from canonical bytes is still checked
+against those bytes' digests before it is trusted.
+
 ## The same pattern serves a model
 
 A static API — `rapp-static-api/1.0`, a manifest plus generated JSON endpoints served from raw
