@@ -48,6 +48,41 @@ though it does:
 - **Subscription as a seal.** Opting into a source is a decision made once, in the moment it means
   something — the same primitive as everything else here.
 
+## The public phone: a gist is the smallest publishable thing
+
+A repository is a low bar. A **gist** is lower still — created in seconds, no project to set up, with
+a raw URL, revision history and the account's identity attached. That makes it the minimal unit of
+publishing here: a tile can be a gist, and the gist's raw bytes *are* the tile.
+
+The property that matters is the one it gives a person on the other end. A gist under an account
+behaves like a **public phone**: anyone on any internet-connected device that can reach GitHub raw
+can dial the chant and get the tile. No install, no local state, no prior relationship with the
+machine they are standing at.
+
+Which produces a symmetry worth noticing, because both ends of it fall out of the same deterministic
+address:
+
+- **Everything cached, no network** — a subscribed and exported profile resolves the chant offline.
+- **Nothing cached, any machine** — the same chant resolves from a borrowed device with no state at
+  all.
+
+One addressing scheme, and it does not care which end of that range you are at. That is what makes a
+memorised phrase worth having: it is portable in the strongest sense — it works where you have
+everything, and it works where you have nothing.
+
+**Two honest cautions.**
+
+1. **Pin the revision, or verify the bytes — preferably both.** A gist's raw URL without a revision
+   is *mutable*: it serves whatever the latest revision holds, so an address that resolved to one
+   thing can later resolve to another. Deterministic addressing guarantees you reach the same
+   *location*, never that the location holds the same *content*. Pin the revision sha where the
+   address is meant to be permanent, and verify on arrival regardless — the check that already
+   exists is the one that makes this safe.
+2. **Gists are reachable, not discoverable.** Nothing browses them meaningfully, so a gist is found
+   by being dialled: through the chant, or through a channel that lists it. That is a property of
+   the design rather than a gap in it — but it means publishing to a gist and telling no one is the
+   same as not publishing.
+
 ## Participating: local state is the substrate, and divergence is the point
 
 The local state a person accumulates by using this — what they subscribed to, what they cached, the
