@@ -17,6 +17,8 @@ import {
 
 
 const DEVICE_TTL_SECONDS = 300;
+const CITY_ACCURACY_METERS = 50_000;
+const CITY_GRID_STEPS_PER_DEGREE = 2;
 const LEDGER_TTL_SECONDS = 3600;
 const MANIFEST_TTL_SECONDS = 60;
 const OWNED_PROVIDERS = new Set(["device", "ledger"]);
@@ -65,13 +67,19 @@ function normalizedLocation(value, {
   let lat = finiteCoordinate(value?.lat, -90, 90);
   let lon = finiteCoordinate(value?.lon, -180, 180);
   if (requestedGranularity === "city") {
-    lat = lat === null ? null : Math.round(lat * 100) / 100;
-    lon = lon === null ? null : Math.round(lon * 100) / 100;
+    lat = lat === null
+      ? null
+      : Math.round(lat * CITY_GRID_STEPS_PER_DEGREE)
+        / CITY_GRID_STEPS_PER_DEGREE;
+    lon = lon === null
+      ? null
+      : Math.round(lon * CITY_GRID_STEPS_PER_DEGREE)
+        / CITY_GRID_STEPS_PER_DEGREE;
   }
   const cityLevel = requestedGranularity === "city";
   return {
     accuracy_m: cityLevel
-      ? Math.max(50000, Number(value?.accuracy_m) || 0)
+      ? Math.max(CITY_ACCURACY_METERS, Number(value?.accuracy_m) || 0)
       : Number.isFinite(Number(value?.accuracy_m))
         ? Math.max(0, Number(value.accuracy_m))
         : null,
@@ -368,6 +376,8 @@ export async function lookupApproximateLocation({
 }
 
 export const ambientInternals = {
+  CITY_ACCURACY_METERS,
+  CITY_GRID_STEPS_PER_DEGREE,
   DEVICE_TTL_SECONDS,
   LEDGER_TTL_SECONDS,
   MANIFEST_TTL_SECONDS,

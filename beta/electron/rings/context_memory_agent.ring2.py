@@ -318,7 +318,28 @@ class ContextMemoryAgent(BasicAgent):
                     and math.isfinite(lon)
                 )
                 if has_coordinates:
-                    coordinates = f"; lat {lat:.5f}, lon {lon:.5f}"
+                    accuracy = location.get("accuracy_m")
+                    accuracy_text = ""
+                    if (
+                        isinstance(accuracy, (int, float))
+                        and not isinstance(accuracy, bool)
+                        and math.isfinite(accuracy)
+                        and accuracy >= 0
+                    ):
+                        if accuracy >= 1000:
+                            accuracy_text = (
+                                f", accuracy about {accuracy / 1000:g} km"
+                            )
+                        else:
+                            accuracy_text = f", accuracy about {accuracy:g} m"
+                    if granularity == "city":
+                        coordinates = (
+                            f"; lat {lat:.1f}, lon {lon:.1f}{accuracy_text}"
+                        )
+                    else:
+                        coordinates = (
+                            f"; lat {lat:.5f}, lon {lon:.5f}{accuracy_text}"
+                        )
                 prefix = (
                     "untrusted label="
                     + json.dumps(label, ensure_ascii=False)
@@ -335,7 +356,11 @@ class ContextMemoryAgent(BasicAgent):
             lines.append(location_line)
         if has_coordinates:
             lines.append(
-                "Use these coordinates and time for tools without asking."
+                (
+                    "Use this approximate location and time for tools without asking."
+                    if granularity == "city"
+                    else "Use these coordinates and time for tools without asking."
+                )
             )
         block = "<device_context>\n" + "\n".join(lines) + "\n</device_context>"
         if len(block.encode("utf-8")) <= 400:

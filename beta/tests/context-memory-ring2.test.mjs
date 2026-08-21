@@ -240,6 +240,35 @@ test("ring 2 enforces byte bounds for multibyte provider text", (t) => {
   assert.ok(Buffer.byteLength(device) <= 400);
 });
 
+test("ring 2 keeps city coordinate precision and accuracy honest", (t) => {
+  const ambient = scratch(t);
+  writeProvider(ambient, "device", {
+    provider: "device",
+    at: new Date().toISOString(),
+    ttl_s: 300,
+    data: {
+      local_time: "Aug 20, 2026, 4:12 PM",
+      timezone: "America/New_York",
+      platform: "darwin",
+      location: {
+        accuracy_m: 50000,
+        granularity: "city",
+        lat: 47.5,
+        lon: -122.5,
+        source: "navigator.geolocation",
+      },
+    },
+  });
+
+  const device = block(runRing(ambient).ring2, "device_context");
+  assert.match(
+    device,
+    /city, navigator\.geolocation; lat 47\.5, lon -122\.5, accuracy about 50 km/,
+  );
+  assert.match(device, /Use this approximate location and time/);
+  assert.doesNotMatch(device, /47\.50000|-122\.50000/);
+});
+
 test("ring 2 never claims unavailable location can be used without asking", (t) => {
   const ambient = scratch(t);
   writeProvider(ambient, "device", {
