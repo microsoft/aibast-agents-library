@@ -155,9 +155,12 @@ windows, and edits a narrated, captioned film of what happened — usable live
 2. Captures only Frontier windows via CDP — never the desktop.
 3. The film pipeline is deterministic post-production over real captures;
    narration timing derives from the measured audio, never authored guesses.
-4. Every Showtime run leaves its raw window captures beside the edited film,
+4. A run leaves a **recap** a person can review and publish by hand
+   ([`docs/RECAP-EXPORT.md`](docs/RECAP-EXPORT.md)) — never published by the run
+   itself — and a failed run leaves one too.
+5. Every Showtime run leaves its raw window captures beside the edited film,
    so the edit can always be audited against what actually happened.
-5. Show Mode (Article I) may annotate the run in real time; Showtime is the
+6. Show Mode (Article I) may annotate the run in real time; Showtime is the
    recording and the edit, Show Mode is the on-screen show-and-tell.
 
 ## Article IV — Eggs and the local boundary
