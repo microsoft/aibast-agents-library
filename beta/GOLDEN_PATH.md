@@ -87,6 +87,36 @@ brainstem-walkthrough
 These commands do not bypass the UI. They visibly type into the same chats the
 person sees.
 
+## Agent-first control: the interface is drivable without the model
+
+Chat is the control surface for **intelligence**. It is not the control surface for **navigation**,
+and treating it as one makes every button press cost a model call.
+
+So the Frontier's interface is drivable headlessly, by a CLI shape injected into the page and reached
+through the console — `rapp("herd.open")`, `rapp("tile.primary tile-7")` — specified in
+[`docs/AUTOPILOT-CLI.md`](docs/AUTOPILOT-CLI.md). The invariants:
+
+1. **Two prerequisites, nothing else.** An AI needs to know CLI patterns and be able to reach the
+   console on the page. No SDK, no API key, no client library, no handshake, no server to register
+   with. Anything that required something specific to us would exclude whatever AI lacks it.
+2. **Any AI, not one AI.** The surface describes itself (`rapp("help")` returns every verb, its
+   arguments and whether it costs a model call), so a driver learns it at runtime. Nothing in it
+   encodes which model is on the other end.
+3. **One command costs money.** Navigation, listing, moving tiles, reading the transcript are free
+   and deterministic. `chat.send` is the single crossing into the model, so spending intelligence is
+   a decision rather than a side effect of clicking.
+4. **It drives the visible interface, and stays visible.** This is not hidden automation and must
+   never become it: the CLI operates the same controls a person uses, the window shows the work as it
+   happens, and every command is logged to the console and recorded in the driver trace. The
+   teach-by-doing loop is preserved — what changes is who is allowed to do the driving, not whether
+   the driving can be seen.
+5. **It never becomes a ceiling.** Anything without a named verb is still reachable through the raw
+   driver actions, so the naming layer can never make the product less operable than the UI itself.
+
+This is what makes the Frontier an agent-first product rather than a product with an AI in it: the
+fastest path for a person is the visible interface, and the fastest path for an AI is the same
+interface, driven the same way, with the model reserved for the part only a model can do.
+
 ## Autonomous five-minute walkthrough
 
 `brainstem-walkthrough` is the release demonstration of the golden path. An
