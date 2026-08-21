@@ -80,6 +80,28 @@ If VibeVoice cannot give word-level timings, hand off at the next **sentence** b
 That is a longer wait for a better seam, and it is a perfectly good implementation — a relay that
 only changes voice between sentences is still a relay.
 
+### The occasional station ident
+
+Once in a while — not often — the handoff can be played rather than hidden: the good voice comes in
+over the top of the fast one the way a station breaks into a broadcast, says something brief, and
+carries on with the answer. Radio has a name for this; it is a **station ident**, and treating it as
+a known format element rather than a joke in the code is what keeps it from becoming a liability.
+
+The charm is entirely in the scarcity. A bit that fires every turn is an irritation to be switched
+off within a day; one that fires rarely is personality. So it is fenced:
+
+- **Roughly one handoff in twenty-five**, and driven by a **counter, not randomness**. A counter is
+  testable, reproducible in a demo, and cannot cluster — random chance will eventually fire twice in
+  a row, which is exactly the thing that makes it annoying.
+- **Show Mode and demonstration only.** That is the context where being listened to is the point.
+  Off everywhere else, and a single switch turns it off there too.
+- **Never when audio is the only channel.** In the audio-bound case the voice is not entertainment,
+  it is the interface; interrupting it is not a flourish, it is an obstruction.
+- **It never costs correctness.** It cannot delay the answer, obscure a word, or break the
+  word-exactly-once rule. It rides on a handoff that was going to happen anyway.
+- **It never carries content.** Nothing the listener needs is ever inside the ident, so a listener
+  who has it switched off has lost nothing at all.
+
 ### Rules that keep it honest
 
 - **The relay never stalls speech.** If VibeVoice is late, the fast voice simply finishes the
@@ -134,3 +156,5 @@ person who cannot.
 - A relay that repeats or drops the word it hands off on, or that hands off into different text.
 - Making the fast voice deliberately worse so the upgrade sounds bigger.
 - Any voice path that only works because the listener can also read the screen.
+- A station ident that fires often, fires at random, carries content, or fires when audio is the
+  only channel the listener has.
