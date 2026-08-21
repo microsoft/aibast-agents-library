@@ -1,15 +1,13 @@
 # Rappid dimension tiles — the `.card` file (`rar-card/2.0`)
 
-Kody, 2026-08-20: *"make them globally scannable through GitHub raw user data — if uploaded to the
-RAR store, immediately summon that card for a task from the global public repo (online versions of
-the local dimension tiles). They are rappid tiles v2 — the next version of that spec; update the RAR
-repo and migrate the legacy cards to the new protocol, then test with usage on the Frontier client
-for local-first tests to make sure they interchange on device and off. What data type should we make
-these cards to get this right — simple and iconic without being hard to use as a file type, but
-still very user-friendly like `agent.py` and `.egg` files… like a grail you can put `agent.py` and
-`.egg` files INTO for safekeeping, just like Pokémon cards."*
+Direction (Kody, 2026-08-20): tiles must be globally scannable through GitHub raw URLs — a tile
+uploaded to the registry can be summoned for a task from the public repo, as the online form of a
+local dimension tile. This is the next version of the registry's card spec: the registry is updated,
+the legacy cards are migrated, and the Frontier client proves interchange on-device and off. The file
+type must be simple and iconic, as friendly as `agent.py` and `.egg` files — a sleeve you can put an
+`agent.py` or an `.egg` into for safekeeping.
 
-**Name (business-friendly).** Kody: *"call them rappid tiles instead of RAR cards."* The human-facing name
+**Name.** The human-facing name
 is **rappid tile** (a parked conversation is a **dimension tile**); the file extension `.card`, the schema id
 `rar-card/2.0`, and the SDK verb `card` are protocol surface and stay as they are.
 
@@ -18,35 +16,29 @@ is **rappid tile** (a parked conversation is a **dimension tile**); the file ext
 A card is **one UTF-8 JSON file, one object, newline-terminated, extension `.card`**, schema
 `rar-card/2.0`. Not a new container format.
 
-## The hero law: the medium is the message
+## The offline path
 
-The card is the **Grail vehicle** for an `agent.py` or RAPP/1 `.egg`: the friendly
-face, deterministic identity, integrity proof, portable payload, and optional
-local dimension are one object. The visual card is not a screenshot or a link
-to the real artifact. The `.card` file **is the artifact a person keeps**.
+The tile is the **vehicle** for an `agent.py` or a RAPP/1 `.egg`: the face, the deterministic
+identity, the integrity proof, the portable payload, and the optional local dimension are one object.
+The visual tile is not a screenshot of, or a link to, the real artifact — the `.card` file **is** the
+artifact a person keeps.
 
-The acceptance story is **Charizard in the Woods**:
+The acceptance story is the **offline path**:
 
 1. Two devices have no network.
-2. One device has a saved `.card`; the other needs its capability.
-3. The card crosses by any local file transport.
-4. The receiver recomputes the seed/face and verifies every payload hash without
-   fetching a repository.
-5. The receiver unsleeves the exact `agent.py` or verifies and hatches the exact
-   RAPP/1 `.egg`.
-6. Any new conversation or experience enters only the receiver's local
-   `dimension`.
+2. One holds a saved tile; the other needs its capability.
+3. The tile crosses by any local file transport.
+4. The receiver recomputes the seed and face and verifies every payload hash without fetching a
+   repository.
+5. The receiver unsleeves the exact `agent.py`, or verifies and hatches the exact `.egg`.
+6. Any new conversation enters only the receiver's local `dimension`.
 7. Publishing later is an explicit export that strips the local dimension.
 
-**Therefore, a woods-ready card MUST carry every required payload inline.** A
-revision-pinned URL is a valid compact public/RAR representation, but it does
-not pass the offline hero path unless those pinned bytes are already present in
-the local content-addressed cache. A reader MUST never call a pinned-only card
-"offline ready."
-
-This is a north-star acceptance contract, not a claim that the historical
-phone-to-phone QR/WebRTC flow currently ships. The currently deliverable unit
-is the self-contained, locally verifiable file.
+**Therefore an offline-ready tile carries every required payload inline.** A revision-pinned URL is
+a valid compact registry form, but it does not pass the offline path unless the pinned bytes are
+already in the local content-addressed cache; a reader never calls a pinned-only tile
+"offline ready". This is the acceptance contract; the deliverable unit today is the self-contained,
+locally verifiable file.
 
 Why this and not a zip, a Markdown page, or a single-file HTML:
 
@@ -62,8 +54,6 @@ Why this and not a zip, a Markdown page, or a single-file HTML:
   is two parsers. JSON is one.
 
 ## The file name: the sleeve says what is inside
-
-Kody: *"the data structure should be `agent.py.card` and/or `foo.egg.card`."*
 
 A card's file name is **the sleeved artifact's file name plus `.card`**, the way `.tar.gz` stacks:
 

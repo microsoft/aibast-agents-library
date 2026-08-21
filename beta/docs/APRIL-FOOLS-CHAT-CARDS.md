@@ -1,31 +1,16 @@
 # Rappid dimension tiles and the April Fools card table
 
-Kody, 2026-08-20 (four messages, one feature):
+Direction (Kody, 2026-08-20): while a user waits on a reply they can grab the live chat and park it
+in the herd as a tile, keeping its history instead of clearing it, start a fresh chat from that
+point, and let different AIs race the same task (swipe right to keep, left to fold). Nothing else in
+the product changes: it is one drag-and-drop component that moves conversation context around like
+tiles, with a dealing and shuffling mini-game as a playful onboarding for people who know card
+games. An **April Fools mode** re-skins the herd as a game table — several layouts, or a custom one
+the user loads — where each tile is a conversation the user is "playing with"; dragging a tile back
+into the Brainstem wakes it as the primary companion. A checkpoint was taken first, and nothing is
+exposed or changed until the mode is switched on; it can be switched off at any time.
 
-> *"When users are waiting on an AI this is when they can GRAB and DRAG THE CHAT INTO THE HERD FOR
-> SAFE KEEPING WHILE THEY START A NEW CHAT from that spot forward, to have the AIs able to RACE for
-> the same task but different AIs are in the challenge (swipe-right / swipe-left mechanics, but for
-> the Brainstem chat) instead of just being able to have one chat and clear it — this way the
-> history is preserved instead of getting completely wiped."*
->
-> *"This is the UI/UX we want to wrap this around without changing anything else… just add this
-> drag-and-drop component that moves chat context around just like they are chat cards — they can
-> grab and shuffle the chats, through an easter egg with different ways of dealing, as a fun minigame
-> for people that play card games to be onboarded onto this UI/UX."*
->
-> *"An April Fools version of the herd area to make it look like a poker table (or Yu-Gi-Oh, or
-> Pokémon trading cards, or Magic: The Gathering, or UNO, or their custom version they can load in
-> for games that are not default — mahjong etc.) for at least how the cards are laid on the table
-> just like they were playing the game, but they are playing with the AI that is represented as
-> contained in that chat card (they can drag it back into the main Brainstem to wake it back up
-> fully as the primary companion — the user's Pikachu, but just for the chat transcript representing
-> that dimension of the rappid creature)."*
->
-> *"Save a checkpoint before you start this because this is an easter egg that we don't want to
-> break anything or change anything with the default AI until April Fools mode is turned on and then
-> this is exposed (and they can quickly turn it back off at any time once the joke is over)."*
-
-**Name.** Kody: *"yes, these are rappid dimension tiles."* A card is one **dimension** of a rappid
+**Name.** A tile is one **dimension** of a rappid
 creature — a conversation, a twin, an agent — frozen so it can be held, shuffled, woken, or sent
 to the registry. Below, "dimension tile" means a dimension tile that holds a conversation; the schema
 is `rapp-dimension-card/1.0`; user-facing copy says **dimension tile** (and "rapplication",
@@ -144,19 +129,18 @@ using theirs:
 ## The table (themes)
 
 Themes change only how cards are laid on the table and how a card looks; the moves are the same.
-Original art only: felt, chips, frames, and color language that *evoke* each game — never a
-trademarked logo, character, card face, or copyrighted artwork.
+Original art only.
 
 | `aprilFools.table` | Layout | Card look |
 |---|---|---|
-| `poker` (default) | green felt, seats around an oval, a dealer button, a discard pile | plain playing-card frame, corner index = turn count |
-| `yugioh` | five monster zones in a row over a graveyard | tall frame, attribute-style dot, "ATK/DEF" = turns/tools |
-| `pokemon` | bench of five under one active seat (the primary) | rounded frame, energy-style pips for tools used |
-| `mtg` | battlefield rows, tapped = folded (rotated 90°) | framed art box with the title banner |
-| `uno` | a draw pile and a discard pile; cards fanned in a hand | bold color per model, big center number = turns |
+| `table` (default) | green felt, seats around an oval, a dealer marker, a discard pile | plain playing-card frame, corner index = turn count |
+| `duel` | five zones in a row over a discard pile | tall frame, a type dot, attack/defense = turns/tools |
+| `bench` | a bench of five under one active seat (the primary) | rounded frame, pips for tools used |
+| `battlefield` | rows on a battlefield; folded tiles turn sideways | framed art box with the title banner |
+| `hand` | a draw pile and a discard pile; tiles fanned in a hand | bold color per model, big center number = turns |
 | `custom` | a JSON the user loads (`Load table…`): felt color, seat positions, card size, deal pattern, face-down rule | as the JSON says; validated, size-bounded, no remote assets |
 
-`mahjong` and anything else are what `custom` is for.
+Anything else is what `custom` is for. Layouts only evoke a family of games; no game's name, logo, character, or artwork appears anywhere.
 
 ## Laws
 
