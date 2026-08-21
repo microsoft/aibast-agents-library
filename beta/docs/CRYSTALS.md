@@ -246,6 +246,31 @@ directions — one toward terse answers, one toward thorough ones — the honest
 both as separate tiles, or to make the person choose, never to produce a blended thing that is
 quietly worse than what went in and carries a crystal implying it is better.
 
+### Reassimilation: forward from a point, both dimensions where they agree
+
+A merge does not produce a compromise. It produces **one tile that goes forward from a chosen
+point**, carrying both dimensions wherever they do not contradict what came before them.
+
+- **Non-contradicting frames are simply both kept.** Two devices that learned different things
+  learned different things; there is nothing to reconcile, and the fold contains both.
+- **A contradiction is surfaced, never resolved silently.** Where two dimensions disagree about the
+  same thing upstream, the merge stops and says so. Picking a winner quietly is how a person ends up
+  with a tile that behaves in a way nobody chose.
+- **The result goes forward from the merge point**, with every parent in its lineage, so the
+  history that produced it stays walkable rather than being flattened away.
+
+### On the ordering — what it is, honestly
+
+The key is a **hybrid logical clock**: a logical tick paired with physical time, which is the
+standard way to get an order that respects causality while staying close to wall-clock. Append-only
+deltas that converge without coordination are an **operation-based CRDT**; folding them to current
+state is **event sourcing**; merging from a common ancestor is a **three-way merge**.
+
+None of that is new, and that is the point — convergence is a solved problem and this inherits the
+proofs rather than re-deriving them. What is unusual here is the composition: the trained adapter is
+a *derived* artifact of the fold rather than something merged, and the interface object is the delta
+itself, so docking a tile is not a gesture that triggers a merge — it **is** the merge.
+
 ### Wear does not add up
 
 Two dimensions each worn thirty percent do not merge into a tile worn sixty percent. The crystal
