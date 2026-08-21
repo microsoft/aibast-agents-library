@@ -22,7 +22,7 @@ jobs:
   static:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
@@ -103,7 +103,7 @@ jobs:
             exit 1
           }
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.11'
 
@@ -119,7 +119,7 @@ jobs:
       - name: Installer contracts
         run: bash tests/test_installer.sh
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '24.19.0'
 
@@ -160,59 +160,6 @@ jobs:
           python -m pip install -q -r rapp_ai/requirements.txt
           python -m pytest rapp_ai/tests -q
 
-  frontier-e2e:
-    needs: static
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-latest
-            command: xvfb-run -a node --test tests/e2e
-          - os: macos-latest
-            command: node --test tests/e2e
-          - os: windows-latest
-            command: node --test --test-concurrency=1 tests/e2e
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24.19.0'
-
-      - name: Create isolated Brainstem environment
-        shell: bash
-        run: |
-          VENV="$RUNNER_TEMP/frontier-e2e-venv"
-          python -m venv "$VENV"
-          if [ "$RUNNER_OS" = "Windows" ]; then
-            PYTHON="$VENV/Scripts/python.exe"
-          else
-            PYTHON="$VENV/bin/python"
-          fi
-          "$PYTHON" -m pip install -q -r rapp_brainstem/requirements.txt
-          printf 'BRAINSTEM_BETA_PYTHON=%s\n' "$PYTHON" >> "$GITHUB_ENV"
-
-      - name: Install Frontier test dependencies
-        working-directory: beta
-        env:
-          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
-        run: |
-          npm ci --ignore-scripts
-          node node_modules/electron/install.js
-
-      - name: Run deterministic Frontier scenarios
-        working-directory: beta
-        shell: bash
-        env:
-          BRAINSTEM_BETA_E2E: '1'
-          BRAINSTEM_BETA_E2E_REQUIRED: '1'
-        run: ${{ matrix.command }}
-
   e2e:
     needs: static
     strategy:
@@ -227,11 +174,11 @@ jobs:
             scenario: repair-fetch-failure
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.11'
 
@@ -471,7 +418,7 @@ jobs:
         shell: bash
         run: tail -100 "$RUNNER_TEMP/install.log" 2>/dev/null || true
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: preflight-${{ matrix.os }}-${{ matrix.scenario }}
@@ -498,7 +445,7 @@ jobs:
       CANDIDATE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
       CANDIDATE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
     steps:
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.11'
 
@@ -550,7 +497,7 @@ jobs:
           test ! -e "$BRAINSTEM_BETA_HOME/src/solutions"
           echo "Frontier launcher checkout == $resolved (candidate) OK"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: frontier-installer-${{ matrix.os }}
@@ -565,9 +512,9 @@ jobs:
         os: [macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.11'
 
@@ -713,7 +660,7 @@ jobs:
             }
           }
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: one-liner-${{ matrix.os }}

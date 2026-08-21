@@ -116,7 +116,7 @@ The proof found three boundaries worth preserving or fixing:
    the agent while still exiting zero. Frames now carry the path in a
    metadata commit (`refs/molt/meta/<locus>`) and import restores it.
 
-Both fixes live in the vendored, pinned tool (`tools/git-molt/`, see its
+Both fixes live in the vendored, pinned tool (`beta/tools/git-molt/`, see its
 README) on the git-molt branch `fix/local-verdicts-and-frame-path` (51/51
 upstream tests); the upstream pull request is pending.
 

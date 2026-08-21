@@ -45,7 +45,7 @@ test("git-molt keeps two live Brainstem runtimes healthy", {
   const repositoryRoot = path.resolve(betaRoot, "..");
   for (const [label, required] of [
     ["pristine Grail", path.join(repositoryRoot, "rapp_brainstem", "brainstem.py")],
-    ["vendored git-molt", process.env.GIT_MOLT || path.join(repositoryRoot, "tools", "git-molt", "bin", "git-molt")],
+    ["vendored git-molt", process.env.GIT_MOLT || path.join(betaRoot, "tools", "git-molt", "bin", "git-molt")],
   ]) {
     if (!existsSync(required)) {
       t.skip(`${label} is not beside beta/ (installed sparse checkout, not a repository): ${required}`);
@@ -123,7 +123,7 @@ test("git-molt composition refuses an escaping agent path", (t) => {
     t.skip("the vendored command is a Bash script");
     return;
   }
-  if (!existsSync(path.join(repositoryRoot, "tools", "git-molt", "bin", "git-molt"))) {
+  if (!existsSync(path.join(betaRoot, "tools", "git-molt", "bin", "git-molt"))) {
     t.skip("vendored git-molt is not beside beta/ (installed sparse checkout, not a repository)");
     return;
   }
@@ -133,7 +133,7 @@ test("git-molt composition refuses an escaping agent path", (t) => {
   const source = path.join(root, "demo_agent.py");
   const output = path.join(root, "composition");
   const escaped = path.join(root, "escaped_agent.py");
-  const command = path.join(repositoryRoot, "tools", "git-molt", "bin", "git-molt");
+  const command = path.join(betaRoot, "tools", "git-molt", "bin", "git-molt");
   writeFileSync(source, "VALUE = 'safe'\n");
   const env = { ...process.env, GIT_MOLT_DIR: moltDir, HOME: root };
   assert.equal(spawnSync("bash", [command, "init"], {
