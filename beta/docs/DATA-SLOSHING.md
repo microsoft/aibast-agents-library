@@ -37,6 +37,10 @@ tail -f ~/.brainstem/beta-launcher/ledger.jsonl | grep agents
 ```
 
 Redaction runs through the same transform as the logs (`log-redaction.mjs`); secrets never land.
+Retention keeps the newest 5,000 turns, 10,000 tool calls, and 2,000 agent
+events. Turn content is capped at 64 KiB, the JSONL mirror is compacted at
+32 MiB, and content-addressed source archives are removed once no retained
+agent event references them. Retention runs at startup and every 100 writes.
 
 ### 2. Ambient providers — small JSON files the Frontier keeps fresh
 

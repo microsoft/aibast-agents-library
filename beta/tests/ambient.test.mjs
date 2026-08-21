@@ -115,8 +115,8 @@ test("ambient applies honest location fallback, granularity, and device kill swi
   });
   assert.equal(approximate.data.location.source, "ip-approximate");
   assert.equal(approximate.data.location.granularity, "city");
-  assert.equal(approximate.data.location.lat, 47.61);
-  assert.equal(approximate.data.location.lon, -122.33);
+  assert.equal(approximate.data.location.lat, 47.5);
+  assert.equal(approximate.data.location.lon, -122.5);
 
   const cityPrivate = ambient.refreshDevice({
     settings: {
@@ -132,6 +132,8 @@ test("ambient applies honest location fallback, granularity, and device kill swi
   });
   assert.equal(cityPrivate.data.location.label, null);
   assert.equal(cityPrivate.data.location.accuracy_m, 50000);
+  assert.equal(cityPrivate.data.location.lat, 47.5);
+  assert.equal(cityPrivate.data.location.lon, -122.5);
 
   const off = ambient.refreshDevice({
     settings: {
@@ -148,6 +150,55 @@ test("ambient applies honest location fallback, granularity, and device kill swi
   });
   assert.equal(disabled.refreshDevice(), null);
   assert.equal(disabled.readProvider("device"), null);
+});
+
+test("city-level location uses a coordinate cell no finer than its 50 km accuracy", (t) => {
+  const ambient = openAmbient(scratch(t), {
+    now: () => "2026-08-20T20:12:00.000Z",
+  });
+  const device = ambient.refreshDevice({
+    navigatorLocation: {
+      accuracy_m: 8,
+      at: "2026-08-20T20:12:00.000Z",
+      lat: 47.6062,
+      lon: -122.3321,
+    },
+    settings: {
+      approximateFallback: false,
+      granularity: "city",
+    },
+  });
+
+  assert.deepEqual(
+    {
+      accuracy_m: device.data.location.accuracy_m,
+      lat: device.data.location.lat,
+      lon: device.data.location.lon,
+    },
+    { accuracy_m: 50000, lat: 47.5, lon: -122.5 },
+  );
+});
+
+test("city-level unavailable location keeps its reason without fabricated accuracy", (t) => {
+  const ambient = openAmbient(scratch(t), {
+    now: () => "2026-08-20T20:12:00.000Z",
+  });
+  const device = ambient.refreshDevice({
+    settings: {
+      approximateFallback: false,
+      granularity: "city",
+    },
+    unavailableReason: "User denied Geolocation",
+  });
+
+  assert.deepEqual(device.data.location, {
+    accuracy_m: null,
+    granularity: "city",
+    label: "unavailable: User denied Geolocation",
+    lat: null,
+    lon: null,
+    source: "unavailable",
+  });
 });
 
 test("ambient never renews stale cached coordinates as a fresh fix", (t) => {

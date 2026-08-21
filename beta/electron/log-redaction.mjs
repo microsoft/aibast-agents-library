@@ -4,6 +4,7 @@ import {
   linkSync,
   mkdirSync,
   openSync,
+  readdirSync,
   rmSync,
   statSync,
 } from "node:fs";
@@ -246,16 +247,14 @@ export function createExportRedactionScript({ roots = [] } = {}) {
   ].join("\n");
 }
 
-// Persistent logs were never rotated: a worker log grew for the life of the
-// install (6.9 MB across 35 files on one developer machine, unbounded on a
-// chatty one). Link the current inode into the first free predecessor slot
-// before unlinking its live path. Existing predecessors may still have writers,
-// so they are never replaced; a full archive set refuses rotation.
+// Link the current inode into a free predecessor slot before unlinking its live
+// path. Existing predecessors may still have writers, so they are never
+// replaced; lifecycle pruning bounds archives after their writers are gone.
 export function rotateLogIfLarge(
   filePath,
   {
     maxBytes = 5 * 1024 * 1024,
-    keep = 1,
+    maxArchives = 10_000,
     link = linkSync,
   } = {},
 ) {
@@ -266,7 +265,10 @@ export function rotateLogIfLarge(
     return false;
   }
   if (size <= maxBytes) return false;
-  const archiveCount = Math.max(0, Math.floor(Number(keep) || 0));
+  const archiveCount = Math.max(
+    0,
+    Math.floor(Number(maxArchives) || 0),
+  );
   for (let index = 1; index <= archiveCount; index += 1) {
     const to = `${filePath}.${index}`;
     try {
@@ -284,6 +286,50 @@ export function rotateLogIfLarge(
     }
   }
   return false;
+}
+
+export function pruneLogFiles(directory, {
+  keep = 20,
+  match = (name) => /\.log(?:\.\d+)?$/.test(name),
+  maxAgeMs = 14 * 24 * 60 * 60 * 1000,
+  now = Date.now(),
+  protectedNames = [],
+} = {}) {
+  const protectedSet = protectedNames instanceof Set
+    ? protectedNames
+    : new Set(protectedNames);
+  let files = [];
+  try {
+    files = readdirSync(directory, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && match(entry.name))
+      .map((entry) => {
+        const full = path.join(directory, entry.name);
+        let mtime = 0;
+        try { mtime = statSync(full).mtimeMs; } catch {}
+        return { full, mtime, name: entry.name };
+      });
+  } catch {
+    return [];
+  }
+  files.sort((left, right) => right.mtime - left.mtime);
+  const keepCount = Math.max(0, Math.floor(Number(keep) || 0));
+  const removed = [];
+  let retained = 0;
+  for (const file of files) {
+    if (protectedSet.has(file.name)) continue;
+    const expired = now - file.mtime > maxAgeMs;
+    if (!expired && retained < keepCount) {
+      retained += 1;
+      continue;
+    }
+    try {
+      rmSync(file.full, { force: true });
+      removed.push(file.name);
+    } catch {
+      // A live or locked file remains for the next lifecycle pruning pass.
+    }
+  }
+  return removed;
 }
 
 export function openPrivateAppendFile(

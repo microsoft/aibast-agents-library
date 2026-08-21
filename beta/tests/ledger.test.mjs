@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import {
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readdirSync,
   rmSync,
   statSync,
   writeFileSync,
@@ -162,6 +164,86 @@ test("ledger mirrors turns, tools, agents, and source locations synchronously", 
     ["turns", "tools_called", "agents", "sources"],
   );
   assert.equal(mirror[2].detail, '{"stack":"default"}');
+});
+
+test("ledger retention bounds rows, mirror bytes, content, and source archives", (t) => {
+  const betaHome = scratch(t, "rapp-ledger-retention-");
+  const ledger = openLedger(betaHome, {
+    now: () => "2026-08-20T20:12:00.000Z",
+    retention: {
+      maxAgentRows: 2,
+      maxMirrorBytes: 400,
+      maxToolRows: 2,
+      maxTurnRows: 2,
+      pruneEveryWrites: 1,
+    },
+  });
+  t.after(() => ledger.close());
+  const archives = [];
+
+  for (let index = 1; index <= 4; index += 1) {
+    const archived = ledger.archiveAgentSource({
+      filename: `agent_${index}_agent.py`,
+      source: `class Agent${index}:\n    value = ${index}\n`,
+    });
+    archives.push(archived);
+    ledger.recordAgent({
+      event: "installed",
+      filename: `agent_${index}_agent.py`,
+      sha256: archived.sha256,
+      sourcePath: archived.path,
+    });
+    ledger.recordTurn({
+      content: index === 4
+        ? "x".repeat(ledgerInternals.MAX_TURN_CONTENT_BYTES + 100)
+        : `turn ${index}`,
+      role: "user",
+      surface: "brainstem",
+    });
+    ledger.recordToolCall({
+      ok: true,
+      summary: `tool ${index}`,
+      toolName: `Tool${index}`,
+    });
+  }
+
+  assert.deepEqual(
+    rows(
+      ledger.databasePath,
+      `
+        SELECT
+          (SELECT count(*) FROM agents) AS agents,
+          (SELECT count(*) FROM sources) AS sources,
+          (SELECT count(*) FROM tools_called) AS tools,
+          (SELECT count(*) FROM turns) AS turns
+      `,
+    ),
+    [{ agents: 2, sources: 2, tools: 2, turns: 2 }],
+  );
+  const retainedContent = rows(
+    ledger.databasePath,
+    "SELECT content FROM turns ORDER BY id DESC LIMIT 1",
+  )[0].content;
+  assert.equal(
+    Buffer.byteLength(retainedContent, "utf8"),
+    ledgerInternals.MAX_TURN_CONTENT_BYTES,
+  );
+  assert.match(retainedContent, /\[ledger entry truncated\]$/);
+
+  assert.ok(!existsSync(archives[0].path));
+  assert.ok(!existsSync(archives[1].path));
+  assert.ok(existsSync(archives[2].path));
+  assert.ok(existsSync(archives[3].path));
+  assert.equal(
+    readdirSync(path.join(betaHome, "ledger-sources")).length,
+    2,
+  );
+
+  const mirror = readFileSync(ledger.mirrorPath, "utf8");
+  assert.ok(Buffer.byteLength(mirror) <= 400);
+  for (const line of mirror.trim().split("\n").filter(Boolean)) {
+    assert.doesNotThrow(() => JSON.parse(line));
+  }
 });
 
 test("every persisted ledger field passes through credential redaction", (t) => {

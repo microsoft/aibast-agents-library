@@ -236,6 +236,62 @@ test("concurrent pending replies reconcile by request id", (t) => {
   assert(completed.history.every((message) => !("requestId" in message)));
 });
 
+test("reparking a woken pending tile preserves its placeholder and user turn", (t) => {
+  const { store } = fixtureStore(t);
+  const at = "2026-08-20T20:00:00.000Z";
+  const question = "Will the delayed answer survive?";
+  const requestId = "request-delayed-1";
+  const parked = store.park({
+    title: question,
+    route: tileFixture().route,
+    turns: [
+      { role: "user", text: question, html: "", at },
+      {
+        role: "assistant",
+        text: "Waiting for reply...",
+        html: "",
+        at,
+        pending: true,
+        requestId,
+      },
+    ],
+    history: [{ role: "user", content: question, requestId }],
+  });
+  const woken = store.wake(parked.id);
+
+  const reparked = store.park({
+    ...woken,
+    turns: [woken.turns[0]],
+  });
+  assert.deepEqual(
+    reparked.turns.map((turn) => [turn.role, turn.text, turn.pending]),
+    [
+      ["user", question, undefined],
+      ["assistant", "Waiting for reply...", true],
+    ],
+  );
+
+  const completed = store.complete(reparked.id, {
+    reply: "The delayed answer survived.",
+    requestId,
+    userInput: question,
+  });
+  assert.deepEqual(
+    completed.turns.map((turn) => [turn.role, turn.text]),
+    [
+      ["user", question],
+      ["assistant", "The delayed answer survived."],
+    ],
+  );
+  assert.deepEqual(
+    completed.history.map((message) => [message.role, message.content]),
+    [
+      ["user", question],
+      ["assistant", "The delayed answer survived."],
+    ],
+  );
+});
+
 test("tile store enforces turn and 256 KiB caps before writing", (t) => {
   const { betaHome, store } = fixtureStore(t);
   const oversizedTurns = Array.from(

@@ -303,6 +303,66 @@ function lastQuestion(tile) {
   return question?.endsWith("?") ? question : null;
 }
 
+function sameUserAnchor(left, right) {
+  if (!left || !right || left.role !== "user" || right.role !== "user") {
+    return false;
+  }
+  if (left.requestId && right.requestId) return left.requestId === right.requestId;
+  return left.text === right.text;
+}
+
+function mergePendingTurns(existingTurns, incomingTurns, completedRequestIds) {
+  const merged = Array.isArray(incomingTurns) ? structuredClone(incomingTurns) : [];
+  const completed = new Set(completedRequestIds);
+  const representedRequestIds = new Set(
+    merged.map((turn) => turn?.requestId).filter(Boolean),
+  );
+  let representedUnbound = merged.filter((turn) => (
+    turn?.role === "assistant" && turn.pending && !turn.requestId
+  )).length;
+
+  existingTurns.forEach((turn, pendingIndex) => {
+    if (turn.role !== "assistant" || !turn.pending) return;
+    if (turn.requestId && completed.has(turn.requestId)) return;
+    if (turn.requestId && representedRequestIds.has(turn.requestId)) return;
+    if (!turn.requestId && representedUnbound > 0) {
+      representedUnbound -= 1;
+      return;
+    }
+
+    const anchor = existingTurns
+      .slice(0, pendingIndex)
+      .reverse()
+      .find((candidate) => candidate.role === "user");
+    if (!anchor) {
+      merged.push(structuredClone(turn));
+      return;
+    }
+    const occurrence = existingTurns
+      .slice(0, pendingIndex)
+      .filter((candidate) => sameUserAnchor(candidate, anchor))
+      .length;
+    let seen = 0;
+    let anchorIndex = -1;
+    for (let index = 0; index < merged.length; index += 1) {
+      if (!sameUserAnchor(merged[index], anchor)) continue;
+      seen += 1;
+      if (seen === occurrence) {
+        anchorIndex = index;
+        break;
+      }
+    }
+    if (anchorIndex < 0) {
+      merged.push(structuredClone(turn));
+      return;
+    }
+    let insertionIndex = anchorIndex + 1;
+    while (merged[insertionIndex]?.pending) insertionIndex += 1;
+    merged.splice(insertionIndex, 0, structuredClone(turn));
+  });
+  return merged;
+}
+
 export class DimensionTileStore {
   constructor({
     betaHome,
@@ -407,9 +467,21 @@ export class DimensionTileStore {
   park(value) {
     const now = this.nowIso();
     const id = value?.id || this.idFactory();
+    const existing = value?.id && existsSync(tilePath(this.betaHome, id))
+      ? this.read(id)
+      : null;
+    const completedRequestIds = [
+      ...new Set([
+        ...(existing?.completedRequestIds || []),
+        ...(Array.isArray(value?.completedRequestIds)
+          ? value.completedRequestIds
+          : []),
+      ]),
+    ].slice(-50);
     const tile = normalizeDimensionTile({
       ...value,
       id,
+      completedRequestIds,
       createdAt: value?.createdAt || now,
       parkedAt: now,
       status: value?.status === "racing" ? "racing" : "parked",
@@ -417,6 +489,13 @@ export class DimensionTileStore {
         ...(value?.table || {}),
         seat: value?.table?.seat || this.nextSeat(id),
       },
+      turns: existing
+        ? mergePendingTurns(
+            existing.turns,
+            value?.turns,
+            completedRequestIds,
+          )
+        : value?.turns,
     }, { id, now });
     atomicWriteTile(this.betaHome, tile);
     return tile;
