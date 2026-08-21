@@ -51,6 +51,36 @@ one's data went anywhere.
    deterministic and composition order is declared, so the composition hash is reproducible. A chain
    that assembled differently on two machines would be a defect, not flexibility.
 
+### The stronger form: a declared shape, filled locally
+
+There are two ways private material can take part, and the second is better.
+
+**Weaker:** private data *chooses the chain* — which links, in what order. The capability then
+differs per person, and with it the composition hash, so two people running "the same" recipe do not
+have the same thing and reproducibility is gone.
+
+**Stronger, and the one to build:** the rapplication is **statically assembled and identical for
+everyone**, and it *declares the shape* of the private data it consumes. The public artifact is the
+same bytes for every person who resolves that chant; what differs is only the local material poured
+into the declared shape, on device.
+
+That difference buys three things worth having:
+
+1. **Reproducibility survives.** The composition hash is the same everywhere, so a rapplication can
+   be verified, compared and cached like any other addressed object. Data does not fork the
+   capability.
+2. **The shape is a contract, so it is auditable.** A rapplication declares what it consumes before
+   it runs. It cannot quietly reach for more, and a reader can see the full extent of what it could
+   ever see without running it — which is a far stronger privacy statement than a promise in a
+   description.
+3. **Import stays on device.** Mapping local material into the declared shape happens locally, so
+   the private data is *used* without being *moved* — the capability comes to the data rather than
+   the other way round.
+
+So the rule is: **a chain builds the capability; a declared shape feeds it.** Where a choice looks
+like it needs private data to select a link, prefer widening the shape so the same artifact handles
+both cases, and keep the selection in the data rather than in the build.
+
 ### Publishing a chain publishes a bill of materials
 
 This deserves stating on its own, because it is easy to miss and hard to undo.
