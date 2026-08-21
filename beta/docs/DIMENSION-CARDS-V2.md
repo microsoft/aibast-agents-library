@@ -57,6 +57,25 @@ Why this and not a zip, a Markdown page, or a single-file HTML:
 - A zip hides the contents; an HTML card is active content from a stranger; Markdown front matter
   is two parsers. JSON is one.
 
+## The file name: the sleeve says what is inside
+
+Kody: *"the data structure should be `agent.py.card` and/or `foo.egg.card`."*
+
+A card's file name is **the sleeved artifact's file name plus `.card`**, the way `.tar.gz` stacks:
+
+| Holds | File name |
+|---|---|
+| `bookfactory_agent.py` | `bookfactory_agent.py.card` |
+| `bookfactory.egg` (which may itself hold several agent files) | `bookfactory.egg.card` |
+| a face only (no payload; a v1 card in v2 clothing) | `<slug>.card` |
+
+Rules: one **primary** payload per card (`payload[0]`), and its `filename` decides the card's name;
+`card pack x_agent.py` writes `x_agent.py.card` beside it; `card unpack x_agent.py.card` restores
+`x_agent.py` (and verifies it first); a reader refuses a card whose name and primary payload disagree.
+In RAR the migrated cards live at `cards/v2/@publisher/<agent filename>.card`
+(e.g. `cards/v2/@aibast-agents-library/account_intelligence_agent.py.card`) and `scan.url` points
+at exactly that path.
+
 ## What is in a card
 
 ```json
@@ -76,7 +95,7 @@ Why this and not a zip, a Markdown page, or a single-file HTML:
   "state": "dormant",
   "origin": { "kind": "frontier", "brainstem": "rappid:…", "twin": null, "parkedAt": "2026-08-20T18:44:00Z" },
   "dimension": null,
-  "scan": { "url": "https://raw.githubusercontent.com/kody-w/RAR/main/cards/v2/@kody-w/book_factory.card", "qr": "<svg…>" },
+  "scan": { "url": "https://raw.githubusercontent.com/kody-w/RAR/main/cards/v2/@kody-w/bookfactory_agent.py.card", "qr": "<svg…>" },
   "provenance": { "minted_by": "rapp_sdk 2.0 | frontier 0.6.x", "rar_revision": "e47755fa…" },
   "signature": null
 }
@@ -98,7 +117,7 @@ Rules that make it simple:
 
 1. `spec/rar-card-v2.md` (this contract, in the repo's voice) and `schema/rar-card-2.0.json`.
 2. `scripts/migrate_cards_v2.py`: for every v1 entry in `cards/holo_cards.json` write
-   `cards/v2/@publisher/slug.card` with `face` = the v1 entry, `payload` = the registry's agent file
+   `cards/v2/@publisher/<agent filename>.card` with `face` = the v1 entry, `payload` = the registry's agent file
    **pinned** (url + `sha256-lf-v1` from `registry.json`), `state: "dormant"`, `scan.url` set.
    Keep `holo_cards.json` as the v1 index; add `cards/v2/index.json` (id → seed, sha, url).
 3. `rapp_sdk.py`: `card pack <agent.py> [--egg …] [--inline]` · `card unpack <x.card>` ·
@@ -112,7 +131,7 @@ Rules that make it simple:
 
 1. `beta/electron/rar-card.mjs` (already ordered): the JS port of seed/face/incantation, plus
    `packCard` / `unpackCard` / `verifyCard` for `rar-card/2.0`.
-2. A dimension card on disk **is** a `.card` (`~/.brainstem/beta-launcher/cards/<id>.card`) with
+2. A dimension card on disk **is** a `.card` (`~/.brainstem/beta-launcher/cards/<payload filename>.card`, or `<id>.card` for a conversation with no agent) with
    `state: "active"` and a local `dimension`; *Export to RAR* writes the public form (payload
    inline or pinned, `dimension: null`, `state: "dormant"`) and shows those exact bytes first.
 3. **Summon**: paste a raw URL, a seed, or seven words into the Store picker (or scan a QR from the
