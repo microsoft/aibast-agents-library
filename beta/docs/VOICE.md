@@ -8,7 +8,7 @@ voice features get slow, or bad, or both.
 | What it is | the Frontier saying what it is doing while someone watches | the Brainstem's reply, spoken |
 | Who is waiting | nobody — the work proceeds regardless | a person, mid-conversation |
 | The trade | **quality over latency** | latency is the whole problem |
-| Default | on in Show Mode, off otherwise | **off** |
+| Default | on during a Showtime run and in Show Mode, off otherwise | **off** |
 
 Both use **VibeVoice**, and both are an opt-in Sense under `CONSTITUTION.md` Article II: installed
 on first enable, removable without trace, on-device.

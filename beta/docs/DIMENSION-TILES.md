@@ -1,5 +1,10 @@
 # Herd and Agent Arena dimension tiles
 
+> **Scope.** This document specifies the shipped herd/arena view-mode toggle and the on-disk tile
+> record. The current surface model is [TILE-MANAGEMENT-UX.md](TILE-MANAGEMENT-UX.md), where the
+> herd, the arena and the binder are separate places rather than renderings of one list. Where the
+> two disagree, that document wins.
+
 The herd has two presentation modes. **Herd mode** is the default, unchanged
 Frontier presentation. **Agent Arena** lets a user move a live Brainstem
 conversation into the herd as a dimension tile, retain its exact history, start

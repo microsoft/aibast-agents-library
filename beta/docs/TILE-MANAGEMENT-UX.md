@@ -55,8 +55,10 @@ them, and moving it between them is a move. In particular:
 
 ## Why you would move a tile at all
 
-**Only the primary tile is running.** The Brainstem loads one companion; everything else sits
-dormant — no worker, no port, no cost. That is the point of moving tiles rather than loading
+**Only the primary tile is running in the companion Brainstem.** It loads one companion, and
+conversation tiles and single-agent tiles sit dormant — no worker, no port, no cost. A hatched
+rapplication twin is the exception: it runs in its own isolated loopback worker and appears in the
+herd as a live tile. That is the point of moving tiles rather than loading
 agents: a person can keep many capabilities without paying for all of them being live, and reach
 for one by dragging it in.
 

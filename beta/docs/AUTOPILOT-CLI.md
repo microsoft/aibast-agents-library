@@ -8,9 +8,18 @@ how to drive tools, and a person never has to open a command line for any of it 
 Call it Autopilot for short. It is the agent-first control surface, and it exists so that **driving
 the interface never requires the model**.
 
+> **Status.** The command surface is **implemented**: `rapp()` exists in `beta/ui/autopilot.js`,
+> takes both calling shapes, carries 21 verbs of which only `chat.send` reaches the model, performs
+> real drag gestures through the renderer's own drop handler, and yields a contested object to the
+> person. Still **specified and not yet built**: the activity view, per-actor attribution stamped on
+> the object, the station ident, and everything in [`VOICE.md`](VOICE.md). Those are described here
+> in the normative sense — what a conforming implementation does — not as shipped behaviour.
+
 **Any AI can use it, with two prerequisites: it knows CLI patterns, and it can
-reach the console on the page.** No SDK, no API key, no client library, no protocol handshake, no
-server to register with. If an AI can evaluate one expression in a frame, it can operate the whole
+reach the console on the page.** No SDK, no client library, no account, no service to register with.
+From inside the page there is no credential at all. An AI that is *not* already in the page reaches
+the same surface over the local driver bus, which is guarded by the install's own loopback token —
+the single credential anywhere in this system, generated locally and never leaving the machine. If an AI can evaluate one expression in a frame, it can operate the whole
 product — the same screens, the same controls, the same feedback a person gets.
 
 That universality is the point. Every integration path that requires something *specific* — our
@@ -197,13 +206,13 @@ So:
 - **Toasts follow the same rule.** A confirmation floating over the companion chat — "Made
   'Which path wins?' primary." — is driving feedback wearing conversation's clothes. A *person's*
   own action may still get brief feedback, because that is ordinary interface courtesy; a
-  *driver's* action does not toast by default.
+  *driver's* action does not toast, and there is no setting that turns it on.
 - **Show Mode may narrate, and narration can be spoken.** Where being watched is the point, saying
   what is happening is genuinely useful — and the best channel for it is **audio**, through a local
   voice model, not more things on screen. Spoken narration explains the work while leaving the
   screen to the person, which is exactly what a second pair of hands should do. It is an opt-in
   Sense under Article II: installed on first enable, removable without trace, on-device by default,
-  and never on outside Show Mode. The voice is **VibeVoice**, chosen deliberately for quality over
+  and never on outside a Showtime run or Show Mode. The voice is **VibeVoice**, chosen deliberately for quality over
   immediacy — narration is not conversation, so it may lag the action it describes by a moment, and
   that slack buys a voice worth listening to. A latency-bound assistant voice cannot make that
   trade; a narrator can.

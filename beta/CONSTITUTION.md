@@ -168,7 +168,9 @@ windows, and edits a narrated, captioned film of what happened — usable live
    uploaded, and their on-device stores (`~/.rapp/<slug>/`) never leave the
    machine. The Frontier must never sync a twin's device store anywhere.
 3. A twin's custom UI overrides the Grail chat by injection; both drive the
-   same `/chat`. Chat remains the only write wire.
+   same `/chat`. Chat remains the only wire into the model — deterministic
+   client-side state (which tile is primary, which agents a worker composes,
+   which surface is shown) is not a chat write.
 
 ## Article V — Driving applications through their UI
 

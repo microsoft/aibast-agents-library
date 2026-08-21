@@ -98,8 +98,9 @@ with no command line, injected into the page and reached from the console: `rapp
 (`rapp-autopilot/1.0`). The invariants:
 
 1. **Two prerequisites, nothing else.** An AI needs to know CLI patterns and be able to reach the
-   console on the page. No SDK, no API key, no client library, no handshake, no server to register
-   with. Anything that required something specific to us would exclude whatever AI lacks it.
+   console on the page. No SDK, no client library, no account, no service to register with, and no
+   credential at all from inside the page. Reaching the driver bus from outside it uses the
+   install's own loopback token, which is generated locally and never leaves the machine. Anything that required something specific to us would exclude whatever AI lacks it.
 2. **Any AI, not one AI.** The surface describes itself (`rapp("help")` returns every verb, its
    arguments and whether it costs a model call), so a driver learns it at runtime. Nothing in it
    encodes which model is on the other end.
