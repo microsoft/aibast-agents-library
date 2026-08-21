@@ -119,6 +119,10 @@ off within a day; one that fires rarely is personality. So it is fenced:
   across this session and every session after it. Not a snooze, and not something a later update
   turns back on.
 
+  This is a **one-time seal**, the Frontier's general shape for local-first preferences — see
+  [`ONE-TIME-SEALS.md`](ONE-TIME-SEALS.md). Everything ships sealed, one action pops the seal, and a
+  popped seal never re-seals.
+
   "Never" is scoped honestly: it is as strong as a local preference can be — this device, this
   install, for as long as it stands, surviving restarts and updates. It does not follow the person
   to another machine, because nothing here syncs; a Sense is on-device by Article II, and claiming

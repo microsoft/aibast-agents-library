@@ -232,7 +232,11 @@ good one cooks in behind it, and VibeVoice takes the baton mid-utterance at a
 word boundary — a seam the listener should hear as an upgrade, never a switch — so a reply starts
 without waiting and improves while it is still being spoken — every word spoken
 exactly once, and never a handoff into different text. All three are set out in
-[`docs/VOICE.md`](docs/VOICE.md).
+[`docs/VOICE.md`](docs/VOICE.md). Preferences of this kind are **one-time seals**
+([`docs/ONE-TIME-SEALS.md`](docs/ONE-TIME-SEALS.md)): everything ships sealed on
+the device, one action pops a seal, a popped seal never re-seals, and seals never
+sync — so a new device is intuitive from nothing rather than inheriting a
+configuration it did not choose.
 
 Three tests decide compliance: **adding a command must never require a commit to
 `rapp_brainstem/`**; the surface must never do what the interface cannot — no
