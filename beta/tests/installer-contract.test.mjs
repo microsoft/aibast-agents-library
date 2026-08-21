@@ -375,3 +375,45 @@ test("both installers put the portable runtime first on PATH", () => {
   const testAt = windows.indexOf('npm.cmd" test');
   assert.ok(pathAt > 0 && testAt > 0 && pathAt < testAt, "PATH must be set before npm test runs");
 });
+
+// The kernel and the Frontier are separate artifacts and do not always live in the
+// same repository. One URL used to serve both, so pointing REPO_URL at a
+// distribution that ships only beta/ also redirected the kernel clone there, and
+// the install failed fetching a kernel that was never in that repository.
+test("the kernel source is separable from the Frontier source", () => {
+  for (const [name, installer] of [["install.sh", unix], ["install.cmd", windows]]) {
+    assert.match(
+      installer,
+      /KERNEL_REPO_URL/,
+      `${name} must have a kernel source distinct from REPO_URL`,
+    );
+    assert.match(
+      installer,
+      /BRAINSTEM_BETA_KERNEL_REPO_URL/,
+      `${name} must let the kernel source be overridden independently`,
+    );
+  }
+  // The redirect must target the kernel's home, not the Frontier's.
+  assert.match(unix, /url\.\$\{KERNEL_REPO_URL\}\.insteadOf/);
+  assert.match(windows, /url\.%KERNEL_REPO_URL%\.insteadOf/);
+  assert.doesNotMatch(unix, /url\.\$\{REPO_URL\}\.insteadOf/);
+  assert.doesNotMatch(windows, /url\.%REPO_URL%\.insteadOf/);
+});
+
+// The bootstrap is the KERNEL's installer, fetched from its own URL. A blanket
+// repoint of this file — replacing every upstream reference when standing up a
+// downstream distribution — moves BOOTSTRAP_URL too, and Windows then downloads
+// that distribution's own unrelated root installer. That is what broke the first
+// v3 install attempt.
+test("the kernel bootstrap URL is not the Frontier's URL", () => {
+  const line = windows.split("\n").find((l) => l.includes("set \"BOOTSTRAP_URL="));
+  assert.ok(line, "install.cmd must define BOOTSTRAP_URL");
+  assert.match(line, /install\.ps1"?$/, "BOOTSTRAP_URL must point at a kernel installer");
+  assert.doesNotMatch(
+    line,
+    /%REPO_URL%/,
+    "BOOTSTRAP_URL must not be derived from REPO_URL — the kernel and the Frontier "
+      + "are separate artifacts with separate homes",
+  );
+});
+
