@@ -49,9 +49,16 @@ The two contracts above assume you must choose. You do not.
 
 **Start speaking immediately in the fast voice, and let VibeVoice take the baton mid-utterance.**
 Both engines are given the same text at the same moment. The fast one begins at once, so speech
-starts with no wait at all. VibeVoice generates in the background; the instant its audio is ready,
-playback hands off — at the next word boundary, into the same sentence, already in progress. The
-listener hears a reply that starts instantly and gets better while it is still being spoken.
+starts with no wait at all. Behind it the good voice is **cooking in** — being generated while the
+first one talks — and the instant its audio is ready, playback hands off at the next word boundary,
+into the same sentence, already in progress. The listener hears a reply that starts instantly and
+gets better while it is still being spoken.
+
+**The bar for the seam is a radio one.** A late-night DJ crossfading between tracks is exactly the
+effect: you notice that what you are hearing got *better*, never that something *switched*. A seam
+audible as a seam is a bug; a seam audible as an upgrade is the whole feature. That framing also
+sets the target for the good voice itself — the warmth and evenness of a late-night radio voice is
+what "better" means here, not simply a higher sample rate.
 
 This is the best of the trade rather than a compromise between its halves: latency is paid by the
 fast voice, quality is delivered by the good one, and the seam is a single word.
