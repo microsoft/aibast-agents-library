@@ -178,7 +178,10 @@ can act at any moment. Concretely:
   itself carries it briefly at the moment it happens — never a toast and never a chat message (§3). Two hands on one window is only trustworthy if you can always
   tell whose hand did what.
 - **Leases are advisory.** The chat lease claims the composer against *other automation*; a real
-  keystroke from the person takes it back immediately. A lease that could lock a person out of their
+  keystroke from the person takes it back immediately. Today it is advisory in both
+  directions: the keystroke reclaim is implemented, while the claim against other automation is
+  not yet enforced — the only serialisation that exists is the driver's `activeCommandId`, which
+  supersedes an older command rather than deferring to the lease holder. A lease that could lock a person out of their
   own composer would be a bug, not a feature.
 
 This is the difference between automation that runs the product for you and an AI that works
