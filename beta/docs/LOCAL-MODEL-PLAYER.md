@@ -81,6 +81,35 @@ has gone:
 - **No arbitrary execution.** The same law the command surface already holds: an injected thing
   that can run anything is not a payload, it is a hole.
 
+## The link carries layers, not just tiles
+
+A model layer is bytes with a hash, which is exactly what the
+[quantum-link](SUMMON-PROTOCOL.md) resolves. Nothing about the mechanism cares whether the bytes are
+a capability or a tensor, so the same addressing that summons a tile summons **a layer** — and that
+is what makes a local model practical rather than aspirational.
+
+- **Deduplication across models.** Fine-tunes overwhelmingly share a base. Content-addressed layers
+  mean the shared ones resolve to the same address, so summoning a second model fetches only what
+  actually differs from the first.
+- **Progressive materialisation.** You do not need the whole model before anything can happen.
+  Resolve the layers needed to start, begin, and continue resolving underneath — which is what makes
+  it feel instant even the first time.
+- **The cache becomes the network.** Once a layer is local, every model that shares it resolves with
+  no fetch at all, on a machine with no connection.
+- **Verification is free.** The hash is the address, so checking what arrived is the same operation
+  as finding it.
+
+This is what "bring layers of the AI down locally, instantly" means concretely: not one enormous
+transfer, but a lot of small immutable pieces that mostly turn out to be already here.
+
+### What it does not fix
+
+The first resolution of any given layer is still a real download over a real connection — instant
+applies to everything after that, and to everything shared with something already local. Layer-level
+dedupe also needs publishers to emit layers as separate addressable objects; a monolithic weight
+file is one address and dedupes with nothing. And large layers exceed raw file endpoints, so the
+manifest points at release assets or chunked sets.
+
 ## What this is honestly not
 
 - **Not a small download.** Weights are hundreds of megabytes at best. A raw file endpoint has
