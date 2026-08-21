@@ -102,9 +102,18 @@ The comparison also sets the right expectations about *quality and range*: podca
 professional productions and things somebody made in a kitchen, and the ecosystem is healthier for
 carrying both. A catalog nobody has to be admitted to will look like that, and should.
 
-**Short form: a rapp.** Application shortens to app; rapplication shortens to **rapp** — the same
-contraction English already makes, so nobody has to be taught it, and it is already the root of the
-protocol names. Podcasts became casts; these are rapps.
+**Short form, in two registers.** Application shortens to app; rapplication shortens the same way —
+the contraction English already makes, so nobody has to be taught it.
+
+- **`(r)app` — the display form.** Written with the parenthesis, it shows its own derivation: an app
+  with the r in front. Use it in prose, in the interface, and anywhere it is read rather than typed.
+- **`rapp` — the identifier form.** Parentheses cannot appear in a filename, a protocol id, a URL,
+  a package name or a shell argument, so anything a machine handles uses `rapp`, which is already
+  the root of `rapp-tile`, `rapp-summon` and the rest.
+
+The split is the ordinary one between a wordmark and a package name, and keeping it means the
+typography works where it is read without breaking anything where it is executed. Podcasts became
+casts; these are (r)apps.
 
 ## It is a learning tool, and saying so does the onboarding
 
