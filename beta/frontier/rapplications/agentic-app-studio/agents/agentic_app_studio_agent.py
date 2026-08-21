@@ -510,8 +510,12 @@ footer{font-size:10.5px;color:var(--t3);padding:6px 16px;border-top:1px solid va
 <script>
 // ── AgenticDrive: the app's own automation bus. The rapplication that
 // generated this app (or any parent embedding it in an iframe) can drive it:
-//   parent → app : postMessage({type:"agentic-drive", cmd:"ask", text}) | {cmd:"status"}
-//   app → parent : postMessage({type:"agentic-event", event, ...})
+//   parent → app : postMessage({type:"agentic-drive", id, cmd:"ask", text}) | {cmd:"status"}
+//   app → parent : postMessage({type:"agentic-event", id, event, ...})
+// Only the embedding parent may drive: a message is ignored unless it came from
+// that window AND from its origin, and replies go to that origin, never "*".
+// Every command answers exactly once carrying the id it was given — including
+// failures and unknown commands — so a dropped command is visible, not silent.
 // Also exposed as window.AgenticDrive for direct automation. Explicit and
 // visible by design — an agentic app should be drivable, not scraped.
 let cfg={brainstemUrl:"http://127.0.0.1:7071",agents:[]};
@@ -525,19 +529,29 @@ fetch("app-config.json").then(r=>r.json()).then(c=>{cfg=c;
     d.append(n,sh);roster.appendChild(d);}});
 const log=document.getElementById("log");
 function add(cls,text){const d=document.createElement("div");d.className="msg "+cls;d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
-async function ask(q){
-  add("you",q);const w=add("bot","…");emit({event:"asked",text:q});
+async function ask(q,id){
+  add("you",q);const w=add("bot","…");emit({event:"asked",text:q},id);
   const chatUrl=cfg.proxyChat?"chat":cfg.brainstemUrl.replace(/\\/$/,"")+"/chat";
   try{const r=await fetch(chatUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_input:q,user_guid:"agentic-app"})});
     const d=await r.json();w.textContent=d.response||d.error||("HTTP "+r.status);
-    emit({event:"answered",text:w.textContent});}
+    emit({event:"answered",text:w.textContent},id);}
   catch(err){w.textContent="Brainstem unreachable at "+cfg.brainstemUrl+" — is it running? ("+err.message+")";
-    emit({event:"error",text:w.textContent});}}
-function emit(m){try{parent!==window&&parent.postMessage(Object.assign({type:"agentic-event",app:cfg.appName},m),"*");}catch(e){}}
+    emit({event:"error",text:w.textContent},id);}}
+const PARENT_ORIGIN=(()=>{try{const a=location.ancestorOrigins;if(a&&a.length)return a[0];}catch(e){}
+  try{if(document.referrer)return new URL(document.referrer).origin;}catch(e){}return null;})();
+function emit(m,id){try{if(parent===window||!PARENT_ORIGIN)return;
+  const p=Object.assign({type:"agentic-event",app:cfg.appName},m);if(id!==undefined&&id!==null)p.id=id;
+  parent.postMessage(p,PARENT_ORIGIN);}catch(e){}}
 window.AgenticDrive={ask,status:()=>({app:cfg.appName,agents:cfg.agents.map(a=>a.id),messages:log.children.length})};
 window.addEventListener("message",e=>{const m=e.data;if(!m||m.type!=="agentic-drive")return;
-  if(m.cmd==="ask"&&m.text){document.getElementById("q").value=m.text;ask(m.text);document.getElementById("q").value="";}
-  if(m.cmd==="status")emit(Object.assign({event:"status"},window.AgenticDrive.status()));});
+  if(e.source!==parent)return;
+  if(PARENT_ORIGIN&&e.origin!==PARENT_ORIGIN)return;
+  const id=m.id;
+  try{
+    if(m.cmd==="ask"&&m.text){document.getElementById("q").value=m.text;ask(m.text,id);document.getElementById("q").value="";}
+    else if(m.cmd==="status")emit(Object.assign({event:"status"},window.AgenticDrive.status()),id);
+    else emit({event:"error",text:"unknown command: "+String(m.cmd)},id);
+  }catch(err){emit({event:"error",text:String((err&&err.message)||err)},id);}});
 document.getElementById("f").addEventListener("submit",e=>{e.preventDefault();
   const q=document.getElementById("q").value.trim();if(!q)return;document.getElementById("q").value="";ask(q);});
 emit({event:"ready"});
