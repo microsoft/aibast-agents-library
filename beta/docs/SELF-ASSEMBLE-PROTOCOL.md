@@ -21,6 +21,48 @@ agreed it can hold them.
 5. **Restore the situation.** The transcript, then the tile's own UI if it carries one.
 6. **Report what assembled**, as data: which payloads, in what order, at what composition hash.
 
+## Assembling from a chain of summons
+
+A tile does not have to carry its payloads. It can carry **a chain of chants** — an ordered list of
+seven-word keys plus how to compose what they resolve to — and assemble itself by resolving each
+link in turn.
+
+That makes a rapplication something you can write down rather than something you have to ship. The
+tile is small enough to memorise the important part of, and the bytes arrive by
+[resolution](SUMMON-PROTOCOL.md) rather than by being carried.
+
+**The local private layer chooses the chain.** Which links, in which order, with which parameters is
+a function of what this device knows — the person's own material, never transmitted. Two people
+running the same recipe against different private data assemble different rapplications, and neither
+one's data went anywhere.
+
+### The rules a chain needs
+
+1. **Every link is verified, not just the first.** A chain is a sequence of fetches, and each one
+   is checked against its recorded hashes before it is composed. A trusted first link does not
+   vouch for the rest.
+2. **Chains terminate.** A link may itself resolve to a chain, which is what makes this compose —
+   and also what makes it capable of looping. Cycles are detected against the set of keys already
+   resolved, and depth is bounded, with a refusal that names the cycle rather than a stack overflow.
+3. **Availability is the weakest link.** A chain assembles offline only if *every* link is cached.
+   Partial availability is a refusal with the missing chant named, never a partial assembly —
+   all-or-nothing applies across the chain exactly as it applies across payloads.
+4. **The same chain and the same private data assemble the same thing.** Resolution is
+   deterministic and composition order is declared, so the composition hash is reproducible. A chain
+   that assembled differently on two machines would be a defect, not flexibility.
+
+### Publishing a chain publishes a bill of materials
+
+This deserves stating on its own, because it is easy to miss and hard to undo.
+
+A chain is a list of what you assembled from. Publishing it does not leak the private data that
+*chose* the links — but it does reveal **which links were chosen**, and that is often enough to
+infer the shape of the private material behind it. A recipe naming five industry-specific
+capabilities says something about who wrote it.
+
+So publishing a chain is a deliberate act with its own consideration, separate from publishing a
+capability: the bytes may be public while the *selection* is not.
+
 ## The refusals
 
 A conforming runtime refuses, before running anything, when:
