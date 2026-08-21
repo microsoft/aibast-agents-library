@@ -12,5 +12,5 @@ organism proof found:
   staging directory.
 
 Both are pending an upstream pull request; once merged, re-pin to the upstream
-commit. Used by `beta/scripts/organism-gitmolt-proof.sh` so the proof runs
+commit. Used by `beta/scripts/gitmolt-runtime-proof.sh` so the proof runs
 offline and deterministically. Override with `GIT_MOLT=/path/to/git-molt`.
