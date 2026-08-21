@@ -226,8 +226,12 @@ explains the work while leaving the screen to the person. The narrator is
 VibeVoice: narration is not conversation, so it may lag the action, and that
 slack is spent on a voice worth listening to. Chat voice is a different contract
 — someone is waiting there — and it is off by default, arriving as a voice
-message that plays itself while the text reply lands at full speed. Both are set
-out in [`docs/VOICE.md`](docs/VOICE.md).
+message that plays itself while the text reply lands at full speed. Where speech
+should begin at once, the two are relayed: a fast voice starts immediately and
+VibeVoice takes the baton mid-utterance at a word boundary, so a reply starts
+without waiting and improves while it is still being spoken — every word spoken
+exactly once, and never a handoff into different text. All three are set out in
+[`docs/VOICE.md`](docs/VOICE.md).
 
 Three tests decide compliance: **adding a command must never require a commit to
 `rapp_brainstem/`**; the surface must never do what the interface cannot — no
