@@ -1,4 +1,4 @@
-# Rappid dimension cards and the April Fools card table
+# Rappid dimension tiles and the April Fools card table
 
 Kody, 2026-08-20 (four messages, one feature):
 
@@ -25,10 +25,10 @@ Kody, 2026-08-20 (four messages, one feature):
 > break anything or change anything with the default AI until April Fools mode is turned on and then
 > this is exposed (and they can quickly turn it back off at any time once the joke is over)."*
 
-**Name.** Kody: *"yes, these are rappid dimension cards."* A card is one **dimension** of a rappid
+**Name.** Kody: *"yes, these are rappid dimension tiles."* A card is one **dimension** of a rappid
 creature — a conversation, a twin, an agent — frozen so it can be held, shuffled, woken, or sent
-to the registry. Below, "chat card" means a dimension card that holds a conversation; the schema
-is `rapp-dimension-card/1.0`; user-facing copy says **dimension card** (and "rapplication",
+to the registry. Below, "dimension tile" means a dimension tile that holds a conversation; the schema
+is `rapp-dimension-card/1.0`; user-facing copy says **dimension tile** (and "rapplication",
 lowercase).
 
 ## The one invariant
@@ -46,7 +46,7 @@ Toggle: **Chat Look → April Fools: Card Table** in the Frontier three-dot and 
 chat word `april fools` (exact, trimmed) in the Brainstem composer flips it — intercepted by the
 same fail-open layer as the lineage words.
 
-## What a chat card is
+## What a dimension tile is
 
 A card is a parked dimension of the companion: one transcript plus everything needed to wake it up.
 
@@ -117,7 +117,7 @@ using theirs:
 - **Same seed, same card.** `beta/electron/rar-card.mjs` ports `seed_hash` → `mulberry32` →
   `forge_seed` / `resolve_card_from_seed` / `seed_to_words` to JavaScript, with a conformance test
   that re-mints every entry of `cards/holo_cards.json` at the pinned RAR revision `e47755faaa04`
-  and asserts byte-equal stats, types, rarity, stage, and incantation. The tile wears the RAR card:
+  and asserts byte-equal stats, types, rarity, stage, and incantation. The tile wears the rappid tile:
   the type colors ring the ◈ badge, the stage and HP/ATK/DEF sit in the meta line, the incantation
   is the card's caption, the avatar is the art. Nothing is invented twice — the April Fools themes
   are *layouts* around RAR's card vocabulary (RAR already carries both the creature-card stats and
@@ -134,8 +134,8 @@ using theirs:
   user's own GitHub identity (`gh auth` / `GITHUB_TOKEN`, never stored by the Frontier). The card's
   pill reads *submitted · issue #N* until the forge mints it; the seed is already known locally, so
   the dormant and active cards match before RAR ever answers.
-- **What exports, what stays.** Only the agent file goes. A chat card's transcript never leaves the
-  machine (RAR Issues are public by design); a chat card exports when it *carries* an agent — a
+- **What exports, what stays.** Only the agent file goes. A dimension tile's transcript never leaves the
+  machine (RAR Issues are public by design); a dimension tile exports when it *carries* an agent — a
   twin's agent, a Surgeon-built or Molter-grown agent the conversation produced — and says plainly
   when it carries none.
 - **Card JSON grows one block:** `"rar": { "seed", "name_seed", "incantation", "manifest",

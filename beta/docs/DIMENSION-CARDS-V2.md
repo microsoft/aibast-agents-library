@@ -1,13 +1,17 @@
-# Rappid dimension cards — the `.card` file (`rar-card/2.0`)
+# Rappid dimension tiles — the `.card` file (`rar-card/2.0`)
 
 Kody, 2026-08-20: *"make them globally scannable through GitHub raw user data — if uploaded to the
 RAR store, immediately summon that card for a task from the global public repo (online versions of
-the local dimension cards). They are RAR cards v2 — the next version of that spec; update the RAR
+the local dimension tiles). They are rappid tiles v2 — the next version of that spec; update the RAR
 repo and migrate the legacy cards to the new protocol, then test with usage on the Frontier client
 for local-first tests to make sure they interchange on device and off. What data type should we make
 these cards to get this right — simple and iconic without being hard to use as a file type, but
 still very user-friendly like `agent.py` and `.egg` files… like a grail you can put `agent.py` and
 `.egg` files INTO for safekeeping, just like Pokémon cards."*
+
+**Name (business-friendly).** Kody: *"call them rappid tiles instead of RAR cards."* The human-facing name
+is **rappid tile** (a parked conversation is a **dimension tile**); the file extension `.card`, the schema id
+`rar-card/2.0`, and the SDK verb `card` are protocol surface and stay as they are.
 
 ## The decision: one JSON object, extension `.card`
 
@@ -131,7 +135,7 @@ Rules that make it simple:
 
 1. `beta/electron/rar-card.mjs` (already ordered): the JS port of seed/face/incantation, plus
    `packCard` / `unpackCard` / `verifyCard` for `rar-card/2.0`.
-2. A dimension card on disk **is** a `.card` (`~/.brainstem/beta-launcher/cards/<payload filename>.card`, or `<id>.card` for a conversation with no agent) with
+2. A dimension tile on disk **is** a `.card` (`~/.brainstem/beta-launcher/cards/<payload filename>.card`, or `<id>.card` for a conversation with no agent) with
    `state: "active"` and a local `dimension`; *Export to RAR* writes the public form (payload
    inline or pinned, `dimension: null`, `state: "dormant"`) and shows those exact bytes first.
 3. **Summon**: paste a raw URL, a seed, or seven words into the Store picker (or scan a QR from the
