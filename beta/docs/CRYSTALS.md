@@ -188,7 +188,39 @@ It travels, it is summonable by seven words, and it works on a machine with no n
 the person built over those years, they keep — which is the whole promise this project exists to
 make good on.
 
-### What merges cleanly, and what does not
+### Merge deltas, not weights — the Dream Catcher rule
+
+The hard problem above dissolves once the right thing is being merged.
+
+**Dream Catcher Protocol** (Amendment XVI, the scaling law for parallel AI-produced content) says
+it in one line: *parallel streams produce deltas, not state; deltas merge deterministically via a
+composite key of frame tick and UTC timestamp; nothing is ever overwritten, only appended.* Its
+reason is exactly ours — without it, scaling the fleet scales the collision rate; with it, scaling
+scales throughput.
+
+Applied here: **a dimension's real substance is its delta stream, not its adapter.** What the Mac
+mini learned is an ordered, append-only record of what happened; the trained weights are a
+*derivation* of that record. So:
+
+- **Deltas merge deterministically.** Keyed by frame and timestamp, dedupable, order-stable, and
+  never overwriting. Two devices that ran at the same moment produce two entries, not a conflict.
+- **The adapter is re-derived from the merged stream**, not blended from two adapters. There is no
+  averaging step to be lossy about.
+- **A better trainer later is a re-derivation, not a migration.** The merged stream is the durable
+  asset; every improvement in how weights are learned can be applied retroactively to histories
+  already captured.
+
+This is also why the design survives the pessimistic case. **If models never get good at merging
+adaptations, nothing here breaks** — the delta stream is still complete, still ordered, still
+merged, and still the thing a capability is rebuilt from. What would be lost is a shortcut, not the
+system.
+
+And the stream is independently useful even setting weights aside entirely: it is a faithful record
+of how a capability was actually used across every device, which is what you want for replaying a
+session, auditing what a tile did, teaching someone the path, or reproducing any dimension exactly
+as it was.
+
+### What merges cleanly, and what does not (the weights half)
 
 This is the part to be honest about, because the two halves of a tile behave completely differently.
 
