@@ -123,7 +123,8 @@ lineage, and no reader may rank tiles by them.
 | Rule | Meaning |
 |---|---|
 | **The seed is still the identity.** | `seed = forge_seed(manifest)`, `face = resolve_from_seed(seed)`, `key = seed_to_words(seed)` — the same functions, the same numbers, the same seven words as `rar-card/2.0`. A tile migrated from a card keeps its seed, so anyone holding those seven words still gets the same thing. |
-| **Exactly one primary.** | `payload[0].role === "primary"` and the file is named after it. Resources are additive and may be omitted by a reader that only wants the agent. |
+| **Exactly one primary.** | `payload[0].role === "primary"` and the file is named after it. The primary is what the tile *is*; identity is singular even when contents are not. |
+| **Three payload roles.** | `primary` (identity, exactly one), `agent` (a further executable capability — another `agent.py` or `.egg` — **required**), `resource` (inert data, omittable). A second agent is not a resource: dropping it changes what the kit does. |
 | **Hashed, always.** | `sha256_lf_v1` for text, `sha256` for binary, verified before anything runs — inline or revision‑pinned alike. |
 | **Offline is a claim you must earn.** | A tile is `offline: ready` only when every required payload is inline and its hash matches. A pinned‑only tile is never called offline‑ready. |
 | **The footprint is honest.** | `stands_on` describes what the tile needs, not what it wishes for. A reader that cannot satisfy it refuses to assemble and says which requirement failed. |
@@ -154,6 +155,33 @@ offered for readers pinned to the old schema. `tile verify` reports what a downg
 **Registry:** `cards/v2/**.card` stay where they are and keep resolving. The migration writes
 `tiles/v1/@publisher/<filename>.tile` beside them and the index gains a `tiles` section; the card
 index is frozen, never deleted, once every client reads tiles.
+
+## A tile is a kit: many agents in one
+
+Assembly is plural by nature, and that is the point of it. **A tile may carry many `agent.py`
+files and many `.egg`s**, and assembling it composes all of them into the running worker at once.
+One thing to pick up; a whole working set on the other side of the drop.
+
+That is what makes a tile a unit of *work* rather than a unit of *code*. A job usually needs
+several capabilities that only make sense together — the one that reads the data, the one that
+checks it, the one that writes the report. Shipping those as three things a person must find and
+compose is how capability libraries become unusable.
+
+The rules that keep a kit honest:
+
+1. **All or nothing.** Every `primary` and `agent` payload assembles, or none does. A half-built
+   kit is worse than a refusal, because it looks like it worked.
+2. **Order is declared, and assembly is deterministic.** Payloads compose in manifest order, so
+   the same tile produces the same composition and the same composition hash on every machine.
+   Two runs that differ are a defect, not a variation.
+3. **`stands_on` is the union.** The footprint covers what *every* executable payload needs, and
+   an unsatisfiable requirement names both the requirement and the payload that wanted it.
+4. **Identity covers the whole set.** The seed is forged over the manifest including every
+   payload's hash and its position, so two kits sharing a primary but differing by one agent are
+   different tiles with different seven words. A key that resolved to "mostly the same kit" would
+   be worse than no key.
+5. **Bounded.** The 1 MiB inline limit still holds and payloads beyond it must be pinned; a
+   reader may also refuse an unreasonable payload count rather than assemble a monster.
 
 ## A tile self-assembles; it does not hatch
 
