@@ -5,6 +5,28 @@ it: something that says where public things live, lets a person opt in to a sour
 working when the network does not. That pipeline should not be invented here, because a working
 instance of it already exists.
 
+## The whole path, end to end
+
+Every piece of this is specified somewhere; this is the walk that connects them.
+
+| | Step | What actually happens | Specified in |
+|---|---|---|---|
+| 1 | **Make** | A tile is minted from one or more `agent.py` files and `.egg`s on someone's machine — a kit, not a single capability. | [RAPPID-TILE-PROTOCOL](RAPPID-TILE-PROTOCOL.md) |
+| 2 | **Publish** | `git push` to a public repository, or a gist. No permission is asked, because it is their namespace. | this document |
+| 3 | **Address** | The seven-word key resolves against a subscribed channel manifest by arithmetic — relative paths from the manifest's own URL. There is no query and nothing to ask. | this document |
+| 4 | **Summon** | Any internet-connected device dials the chant and receives bytes; a device holding a cached manifest dials it with no network at all. Nothing about the person is transmitted. | [ONE-TIME-SEALS](ONE-TIME-SEALS.md) |
+| 5 | **Verify** | The bytes are checked against seed, face and hashes before they are anything. Fetching is not trusting. | [RAPPID-TILE-PROTOCOL](RAPPID-TILE-PROTOCOL.md) |
+| 6 | **Assemble** | Dropping the tile over the Brainstem composes every payload at once, all-or-nothing, refusing up front if `stands_on` cannot be satisfied here. | [RAPPID-TILE-PROTOCOL](RAPPID-TILE-PROTOCOL.md) |
+| 7 | **Diverge** | Using it trains it. The local copy stops being a copy and becomes that person's dimension, its crystal wearing down as they need less. | [CRYSTALS](CRYSTALS.md) |
+| 8 | **Republish** | That dimension can become the next person's starting crystal, carrying its lineage — the capability, never the training. | this document |
+
+**The property worth noticing: there is no service anywhere in that list.** Not one step needs
+something of ours to be running, reachable, paid for, or up. Every one of them is a static file, a
+hash, or a computation on the person's own machine — which is why step 4 works identically on a
+borrowed laptop and on a machine with no network, and why nothing in the chain can be taken away
+from someone who already has the bytes.
+
+
 ## The precedent: RAPP Vision
 
 [`kody-w/rapp-vision`](https://kody-w.github.io/rapp-vision/) is a local-first player — "one HTML
