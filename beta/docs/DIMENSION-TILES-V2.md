@@ -1,5 +1,11 @@
 # Rappid dimension tiles — the `.card` file (`rar-card/2.0`)
 
+> **Superseded.** `rar-card/2.0` is superseded by **`rappid-tile/1.0`** — see
+> [RAPPID-TILE-PROTOCOL.md](RAPPID-TILE-PROTOCOL.md). Cards stay readable forever and migrate
+> losslessly (same seed, same face, same seven-word key); tiles add the footprint a rappid needs to
+> stand on (`stands_on`), an explicit primary payload with resources, and lineage. This document
+> remains the reference for the card format the registry still serves.
+
 Direction: tiles must be globally scannable through GitHub raw URLs — a tile
 uploaded to the registry can be retrieved for a task from the public repo, as the online form of a
 local dimension tile. This is the next version of the registry's card spec: the registry is updated,

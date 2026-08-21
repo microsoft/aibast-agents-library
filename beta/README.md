@@ -62,6 +62,12 @@ bounded `<device_context>` and `<ledger>` layers through the existing
 `RAPP_MOLT_LINEAGE=0` still composes pure Grail. Run the isolated real-worker
 proof with `node beta/scripts/data-sloshing-proof.mjs`.
 
+## The Frontier boundary
+
+Everything the Frontier owns lives under `beta/`, and the mainline library never links to it — the
+rule, the reasons and how something graduates are in [`FRONTIER-BOUNDARY.md`](FRONTIER-BOUNDARY.md),
+and `tests/frontier-boundary.test.mjs` fails if a link crosses.
+
 ## What it is for
 
 Use Frontier as a builder-operated rapid proof harness for the customer
