@@ -181,6 +181,25 @@ So each dimension may carry as much local signal as it likes without ever moving
 resolves from. The link stays the same link; what accumulates on it is the record of everywhere it
 has been.
 
+### Addressing is not search, and the difference matters
+
+Because the key is computed from content, retrieving something is *resolution* rather than lookup —
+there is no index to query and no server to ask. That is what makes a chant work offline and behave
+identically everywhere, and it is tempting to describe it as querying unstructured data without a
+database.
+
+**It is not that, and the distinction is the honest part.** You can compute the address of something
+that exists. You cannot compute the address of an answer nobody has published — resolution finds
+what is there, it does not produce what is not. So:
+
+- **Addressing solves retrieval.** Given the key, the bytes, with no infrastructure in the path.
+- **It does not solve discovery.** Knowing *which* key to say is a separate problem, and it is what
+  channels, registries and the seven-word key being memorable are for.
+
+Conflating the two would promise a search engine and deliver a hash table. What is genuinely
+unusual is narrower and still valuable: once you know what you want, getting it costs nothing, works
+offline, and cannot be revoked.
+
 ### What the signal is actually good for
 
 The link carries more than tiles, and the frames it accumulates are worth something on their own.

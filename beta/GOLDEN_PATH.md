@@ -87,6 +87,25 @@ brainstem-walkthrough
 These commands do not bypass the UI. They visibly type into the same chats the
 person sees.
 
+## Rapplications are podcasts, not apps in a store
+
+The distribution model is the podcast one, and saying so explains it faster than any description of
+the mechanism.
+
+A podcast needs no store approval, no platform, and no gatekeeper. You publish a file and a feed;
+anyone subscribes with any client; it downloads and plays offline; nobody can remove it from the
+people who already have it. That is exactly what a **rapplication** is — published to a public
+repository, listed in a channel anyone may subscribe to, summoned by any host, verified locally,
+and working with no network once it is here.
+
+The comparison also sets the right expectations about *quality and range*: podcasts include
+professional productions and things somebody made in a kitchen, and the ecosystem is healthier for
+carrying both. A catalog nobody has to be admitted to will look like that, and should.
+
+**Short form: a rapp.** Application shortens to app; rapplication shortens to **rapp** — the same
+contraction English already makes, so nobody has to be taught it, and it is already the root of the
+protocol names. Podcasts became casts; these are rapps.
+
 ## It is a learning tool, and saying so does the onboarding
 
 Classify this as a **learning tool** and most of the onboarding explains itself. People already
