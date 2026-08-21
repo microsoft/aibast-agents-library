@@ -55,6 +55,7 @@
 
   function showToast(message, {
     action,
+    actionHandle,
     actionLabel,
     duration = 8000,
   } = {}) {
@@ -70,6 +71,7 @@
     if (action && actionLabel) {
       const button = document.createElement("button");
       button.type = "button";
+      if (actionHandle) button.dataset.drive = actionHandle;
       button.textContent = actionLabel;
       button.addEventListener("click", () => {
         toast.remove();
@@ -84,6 +86,15 @@
 
   function showError(error) {
     showToast(String(error?.message || error), { duration: 10000 });
+  }
+
+  function emitHandledChange(type, detail) {
+    window.dispatchEvent(new CustomEvent(type, { detail }));
+  }
+
+  function changeActor(event) {
+    return event.__rappAutopilotActor
+      || (window.__rappAutopilotEvents?.has(event) ? "ai" : "user");
   }
 
   function requestCapture() {
@@ -283,6 +294,7 @@
     await refreshTiles();
     showToast(`Folded "${result.tile.title}".`, {
       actionLabel: "Undo",
+      actionHandle: "tiles.undo",
       action: async () => {
         await SCRIPT_STATE.context.api.tilesUndo(id);
         await refreshTiles();
@@ -612,10 +624,18 @@
     element.addEventListener("drop", (event) => {
       const sourceId = tileDragId(event);
       if (!sourceId || sourceId === tile.id) return;
+      const actor = changeActor(event);
       event.preventDefault();
       event.stopPropagation();
       hideDropOverlay();
-      void bunchTiles(sourceId, tile.id).catch(showError);
+      void bunchTiles(sourceId, tile.id).then((result) => {
+        emitHandledChange("rapp-beta:tile-bunch-complete", {
+          actor,
+          bunch: result.bunch,
+          sourceId,
+          targetId: tile.id,
+        });
+      }).catch(showError);
     });
     element.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight" || event.key === "Enter") {
@@ -1091,14 +1111,30 @@
         || hasDragType(event, "application/x-rapp-brainstem-chat");
       const id = tileDragId(event);
       if (!chatDrag && !id) return;
+      const actor = changeActor(event);
       event.preventDefault();
       event.stopPropagation();
       const surface = typeof surfaceForEvent === "function"
         ? surfaceForEvent()
         : surfaceForEvent;
       hideDropOverlay();
-      if (chatDrag) void parkCurrent(surface).catch(showError);
-      else void moveTile(id, surface).catch(showError);
+      if (chatDrag) {
+        void parkCurrent(surface).then((tile) => {
+          emitHandledChange("rapp-beta:tile-park-complete", {
+            actor,
+            id: tile.id,
+            surface,
+          });
+        }).catch(showError);
+      } else {
+        void moveTile(id, surface).then((tile) => {
+          emitHandledChange("rapp-beta:tile-move-complete", {
+            actor,
+            id: tile.id,
+            surface,
+          });
+        }).catch(showError);
+      }
     }, { signal });
   }
 
@@ -1125,7 +1161,15 @@
     }
     if (event.data?.type === "rapp-beta:tile-drop-primary") {
       const id = String(event.data.id || SCRIPT_STATE.draggedTileId || "");
-      if (id) void wakeTile(id).catch(showError);
+      if (id) {
+        const actor = String(event.data.actor || "user");
+        void wakeTile(id).then((tile) => {
+          emitHandledChange("rapp-beta:tile-primary-complete", {
+            actor,
+            id: tile.id,
+          });
+        }).catch(showError);
+      }
       return;
     }
     if (event.data?.type === "rapp-beta:tile-keyboard-park") {

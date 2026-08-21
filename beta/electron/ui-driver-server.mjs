@@ -168,6 +168,13 @@ function stepBudgetMs(step) {
     return length * delay + Math.max(160, settle || 300);
   }
   if (action === "tour") return Math.max(1000, Number(step?.durationMs) || 60000);
+  if (action === "autopilot") {
+    const commands = String(step?.script || "")
+      .split(/\r?\n/)
+      .filter((line) => line.trim() && !line.trim().startsWith("#"))
+      .length;
+    return Math.max(1000, Math.min(64, commands || 1) * 12000);
+  }
   return settle + 1000;
 }
 
@@ -504,6 +511,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
     const action = String(step.action || "action").toLowerCase();
     const verbs = {
       announce: "announced",
+      autopilot: "ran",
       chat: "sent",
       click: "clicked",
       expect: "checked",
@@ -1215,6 +1223,12 @@ async function browserDriverCommand(command, createHelpers, commandId = null, li
           tail: Boolean(step.tail),
         }),
       };
+    }
+    if (action === "autopilot") {
+      if (typeof window.rapp !== "function") {
+        throw new Error("RAPP Autopilot is not installed in this driven frame.");
+      }
+      return window.rapp(String(step.script || ""));
     }
     if (action === "wait") return waitFor(step);
     if (action === "tour" || action === "force_mode") {
@@ -1991,6 +2005,13 @@ function estimatedCommandDuration(command) {
       900,
     );
   }
+  if (action === "autopilot") {
+    const commands = String(command.script || "")
+      .split(/\r?\n/)
+      .filter((line) => line.trim() && !line.trim().startsWith("#"))
+      .length;
+    return Math.max(1000, Math.min(64, commands || 1) * 12000);
+  }
   if (action === "click") {
     return pointerMs
       + boundedNumber(command.settleMs, 260, UI_DRIVER_LIMITS.settleMs, 520)
@@ -2046,6 +2067,7 @@ function validateCommand(command, { nested = false } = {}) {
   const action = String(command.action || "").toLowerCase();
   const allowed = new Set([
     "announce",
+    "autopilot",
     "chat",
     "click",
     "expect",
@@ -2071,6 +2093,18 @@ function validateCommand(command, { nested = false } = {}) {
     throw new Error(`Unsupported UI driver action: ${action || "(empty)"}`);
   }
   const normalized = { ...command, action };
+  if (action === "autopilot") {
+    if (typeof command.script !== "string") {
+      throw new Error("UI driver autopilot script must be a string.");
+    }
+    if (command.script.length > UI_DRIVER_LIMITS.typedCharacters) {
+      throw new Error(
+        `UI driver autopilot script must be at most ${
+          UI_DRIVER_LIMITS.typedCharacters
+        } characters.`,
+      );
+    }
+  }
   validateNumberField(
     command.durationMs,
     "durationMs",
@@ -2159,6 +2193,7 @@ function validateCommand(command, { nested = false } = {}) {
       return nestedCommand;
     });
   }
+  if (!nested && commandHasAutopilot(normalized)) normalized.target = "shell";
   if (nested) return normalized;
 
   const requiredFrameTimeoutMs = Math.ceil(
@@ -2188,6 +2223,17 @@ function twinTarget(command) {
   return id || null;
 }
 
+function commandHasAutopilot(command) {
+  const action = String(command?.action || "").toLowerCase();
+  return action === "autopilot"
+    || (
+      action === "run"
+      && command.steps?.some((step) => (
+        String(step?.action || "").toLowerCase() === "autopilot"
+      ))
+    );
+}
+
 function frameKeyForCommand(command) {
   const twin = twinTarget(command);
   if (twin) return `twin:${twin}`;
@@ -2204,6 +2250,7 @@ function frameKeyForCommand(command) {
       "surgeon_chat",
       "tour",
     ].includes(action)
+    || commandHasAutopilot(command)
   ) return "shell";
   return "brainstem";
 }
@@ -2463,7 +2510,22 @@ export async function startUiDriverServer({
   }
 
   function traceItems(result) {
-    return Array.isArray(result?.results) ? result.results : [result];
+    if (!Array.isArray(result?.results)) return [result];
+    return result?.__trace ? [result, ...result.results] : result.results;
+  }
+
+  function autopilotTraceResults(command, result) {
+    const action = String(command?.action || "").toLowerCase();
+    if (action === "autopilot") {
+      return Array.isArray(result?.results) ? result.results : [];
+    }
+    if (action !== "run" || !Array.isArray(result?.results)) return [];
+    return result.results.flatMap((stepResult, index) => (
+      String(command.steps?.[index]?.action || "").toLowerCase() === "autopilot"
+      && Array.isArray(stepResult?.results)
+        ? stepResult.results
+        : []
+    ));
   }
 
   function mergedEffect(items) {
@@ -2489,6 +2551,14 @@ export async function startUiDriverServer({
     const traceText = (value) => (
       value == null ? null : nodeHelpers.capText(value, 2000)
     );
+    const autopilotCommands = autopilotTraceResults(command, result)
+      .slice(0, 64)
+      .map((item) => ({
+        actor: item?.actor === "ai" ? "ai" : null,
+        cmd: traceText(item?.cmd || ""),
+        ok: item?.ok === true,
+        reason: traceText(item?.reason || null),
+      }));
     const entry = {
       action: String(command?.action || ""),
       handle: traceText(
@@ -2505,6 +2575,14 @@ export async function startUiDriverServer({
           || result?.snapshot
           || null,
       ),
+      ...(autopilotCommands.length
+        ? {
+            actor: autopilotCommands.every((item) => item.actor === "ai")
+              ? "ai"
+              : null,
+            commands: autopilotCommands,
+          }
+        : {}),
       // Lease transitions are the one fact about concurrency that polling a
       // banner cannot observe reliably (a "(2)" can last milliseconds); the
       // trace records the count the lock or unlock saw, so a test can assert
@@ -2938,7 +3016,7 @@ export async function startUiDriverServer({
       const wantedTwin = twinTarget(command);
       const target = wantedTwin
         ? twinFrame(window, resolveTwinUrls(wantedTwin))
-        : (command.target === "shell"
+        : (command.target === "shell" || commandHasAutopilot(command)
           ? window.webContents.mainFrame
           : brainstemFrame(window, loopbackUrl));
       if (!target) {

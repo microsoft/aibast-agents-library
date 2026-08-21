@@ -105,6 +105,15 @@ const appIconFile = path.join(packageDir, "build", "icon.png");
 const appIcon = existsSync(appIconFile) ? nativeImage.createFromPath(appIconFile) : null;
 const uiFile = path.join(dirname, "..", "ui", "index.html");
 const uiUrl = pathToFileURL(uiFile).href;
+const autopilotSource = readFileSync(
+  path.join(packageDir, "ui", "autopilot.js"),
+  "utf8",
+);
+const autopilotClassicSource = autopilotSource.replace(
+  "export function createAutopilot",
+  "function createAutopilot",
+);
+const autopilotCapability = randomUUID();
 const config = resolveBrainstemConfig();
 const chatStreamMode = resolveChatStreamMode(process.env);
 const smoothStreamCss = `
@@ -1624,7 +1633,8 @@ function frameBridgeInstallationSource() {
     chatLook,
     chatTypingEnabled,
   })};\n${BETA_FRAME_BRIDGE_SOURCE}`;
-  return composeDimensionTilesFrameBridgeSource(checkpointSource, viewMode);
+  const bridgeSource = composeDimensionTilesFrameBridgeSource(checkpointSource, viewMode);
+  return `${bridgeSource}\n${autopilotInstallationSource()}`;
 }
 const copilot = new CopilotRuntime({
   tokenFile: path.join(config.brainstemDir, ".copilot_token"),
@@ -2131,8 +2141,18 @@ function findTwinFrame(twinUrl) {
 const FORCE_MODE_BOOTSTRAP = "<script>window.__rappForceModeCapable=true;"
   + "try{document.documentElement.setAttribute('data-rapp-force-mode','ready');}catch(e){}</script>";
 
+function autopilotInstallationSource() {
+  return `;(() => {
+window.__rappAutopilotCapability = ${JSON.stringify(autopilotCapability)};
+${autopilotClassicSource}
+})();`;
+}
+
 function instrumentRappUi(html) {
-  const marker = FORCE_MODE_BOOTSTRAP;
+  const classicSource = autopilotInstallationSource()
+    .replace(/<\/script/gi, "<\\/script");
+  const marker = FORCE_MODE_BOOTSTRAP
+    + `<script>${classicSource}</script>`;
   // Inject right after <head> when present, else prepend.
   return /<head[^>]*>/i.test(html)
     ? html.replace(/<head[^>]*>/i, (m) => m + marker)
@@ -2560,6 +2580,15 @@ function createWindow() {
   });
   win.webContents.on("will-navigate", routeMainNavigation);
   win.webContents.on("will-frame-navigate", routeFrameNavigation);
+  win.webContents.on("did-finish-load", () => {
+    if (win.isDestroyed()) return;
+    void win.webContents.mainFrame.executeJavaScript(
+      autopilotInstallationSource(),
+      true,
+    ).catch((error) => {
+      console.error("Could not install RAPP Autopilot in the shell:", error);
+    });
+  });
   win.on("closed", () => {
     mainWindow = null;
   });

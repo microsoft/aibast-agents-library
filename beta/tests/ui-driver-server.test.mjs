@@ -69,6 +69,13 @@ function fakeDriverWindow({ delayMs = 0 } = {}) {
         ok: true,
       };
     }
+    if (source.includes('"action":"autopilot"')) {
+      return {
+        ok: true,
+        ran: 1,
+        results: [{ cmd: "help", ok: true }],
+      };
+    }
     return {
       __trace: {
         snapshot_after: "osteady",
@@ -426,6 +433,20 @@ test("real server enforces auth, body, heartbeat, conditions, and traces", async
     },
   });
 
+  const autopilot = await postCommand(metadata, {
+    action: "autopilot",
+    script: "help",
+  });
+  assert.equal(autopilot.status, 200);
+  assert.deepEqual(autopilot.payload, {
+    ok: true,
+    result: {
+      ok: true,
+      ran: 1,
+      results: [{ cmd: "help", ok: true }],
+    },
+  });
+
   const effect = await postCommand(metadata, {
     action: "click",
     handle: "@brainstem.send",
@@ -467,14 +488,23 @@ test("real server enforces auth, body, heartbeat, conditions, and traces", async
     .split("\n")
     .map((line) => JSON.parse(line));
   assert.ok(traces.length >= 3);
+  const autopilotTrace = traces.find((entry) => entry.action === "autopilot");
+  assert.deepEqual(autopilotTrace.commands, [{
+    actor: null,
+    cmd: "help",
+    ok: true,
+    reason: null,
+  }]);
   for (const trace of traces) {
-    assert.deepEqual(Object.keys(trace), [
+    const expectedKeys = [
       "action",
       "handle",
       "effect",
       "snapshot_before",
       "snapshot_after",
-    ]);
+    ];
+    if (trace.action === "autopilot") expectedKeys.push("actor", "commands");
+    assert.deepEqual(Object.keys(trace), expectedKeys);
   }
   const clickTrace = traces.find((trace) => trace.action === "click");
   assert.equal(clickTrace.handle, "@brainstem.send");

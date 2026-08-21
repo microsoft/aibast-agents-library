@@ -1735,6 +1735,8 @@ function installTileDragFrameBridge(settings) {
     armedTileId = null;
     window.parent.postMessage({
       type: "rapp-beta:tile-drop-primary",
+      actor: event.__rappAutopilotActor
+        || (window.__rappAutopilotEvents?.has(event) ? "ai" : "user"),
       id,
     }, "*");
   }, { signal: controller.signal });
