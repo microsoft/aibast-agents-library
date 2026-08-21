@@ -212,6 +212,13 @@ and any contested object goes to the person while the AI's gesture reports that 
 yielded. Leases are advisory and a real keystroke reclaims them. The window belongs
 to the person even while an AI is working in it.
 
+Driver steps are **not conversation**. The narration of actions existed because
+driving once went through the Brainstem in chat; deterministic driving does not,
+so its steps are never appended to a transcript — the companion chat records only
+what was said to or by the model. Driving is made visible instead by the interface
+moving, by the console, and by the driver trace, with an optional activity view for
+anyone who wants to watch it happen.
+
 Three tests decide compliance: **adding a command must never require a commit to
 `rapp_brainstem/`**; the surface must never do what the interface cannot — no
 arbitrary code, no side door, the same controls a person uses, visible while it

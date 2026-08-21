@@ -173,6 +173,31 @@ can act at any moment. Concretely:
 This is the difference between automation that runs the product for you and an AI that works
 alongside you in it. The second one is the product.
 
+### 3. Actions are not conversation
+
+The driver narrates its steps into an announce overlay — "▶ pressed @herd.tile[…] ✓". That
+existed for a good reason: driving used to go *through* the Brainstem. An AI asked the model, in
+chat, to do something; the steps were part of that exchange, so they belonged in the transcript.
+
+Deterministic driving breaks that assumption. Navigation never reaches the model, so narrating it
+as chat messages writes machine steps into the record of a conversation that did not happen. In the
+large companion Brainstem chat especially, it is simply wrong: that surface is a conversation, and
+these actions are not one.
+
+So:
+
+- **The companion chat shows conversation only.** Driver steps are never appended to the transcript.
+  Nothing is written into the chat that was not said to, or by, the model.
+- **Driving stays observable by better means.** The interface itself moves — that is what performing
+  real gestures buys — every command is logged to the console, and every command is recorded in the
+  driver trace. Those are the record.
+- **An activity view exists for when someone wants to watch**: a separate surface, never the
+  transcript. Off by default; on in Showtime and while demonstrating, where being watched is the
+  entire point.
+
+This is the honest reading of "not hidden automation". What makes driving visible is that it happens
+in the visible interface, not that a log is pasted into a conversation.
+
 ## Built for other AIs, not for one of them
 
 The point of a CLI shape is that **any** AI can drive this — GitHub Copilot, another Claude, a local

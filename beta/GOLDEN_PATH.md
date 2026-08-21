@@ -109,7 +109,10 @@ with no command line, injected into the page and reached from the console: `rapp
 4. **It drives the visible interface, and stays visible.** This is not hidden automation and must
    never become it: the CLI operates the same controls a person uses — a move is performed as a real
    drag through the real drop handler, at a speed a person can follow — the window shows the work as
-   it happens, and every command is logged to the console and recorded in the driver trace. The
+   it happens, and every command is logged to the console and recorded in the driver trace. What it
+   does not do is narrate itself into the chat: deterministic driving never reaches the model, so
+   writing its steps into the transcript would record a conversation that never happened. The
+   companion chat holds conversation; an optional activity view holds driving. The
    teach-by-doing loop is not merely preserved, it is what this is for: an AI demonstrating the
    product while someone watches.
 5. **Two can drive at once, and the person wins.** An AI working in the window never captures focus
