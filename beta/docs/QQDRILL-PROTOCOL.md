@@ -1,10 +1,14 @@
-# RAPP Quantum Drill — `rapp-qdrill/1.0`
+# RAPP Quantum Drill — `rapp-qqdrill/1.0`
 
 The execution engine under [dimension mining](DIMENSION-MINING.md). Mining decides *what* to race
 and *what counts as winning*; the drill is *how many at once, and under what constraints*.
 
 Given a tile, a task and a flag, a **drill** runs N candidate dimensions concurrently — each an
 independent worker, each in its own workspace — and collapses to the one that captures the flag.
+
+**On the spelling.** The doubled `q` is deliberate, not a slip: `ra`**`pp`**`-`**`qq`**`drill`
+sets two pairs of descenders against each other so the word reads as though it were dripping. It is
+a mark, and it is the one place in this protocol where something is chosen for how it looks.
 
 **On the name.** The metaphor is superposition and collapse: hold many candidate dimensions at once,
 then collapse to one on measurement. It is a metaphor and nothing more — there is no quantum

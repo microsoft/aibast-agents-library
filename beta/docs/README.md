@@ -34,6 +34,7 @@ them, they win.
 | [SUMMON-PROTOCOL.md](SUMMON-PROTOCOL.md) | Subscribe once, resolve deterministically, work offline. The one door outward. |
 | [ONE-TIME-SEALS.md](ONE-TIME-SEALS.md) | Local-first preferences that need no setting up, and why nothing syncs. |
 | [DIMENSION-MINING.md](DIMENSION-MINING.md) | Racing many possible versions at a goal the machine can check. |
+| [QQDRILL-PROTOCOL.md](QQDRILL-PROTOCOL.md) | `rapp-qqdrill/1.0` — the parallel execution engine underneath: how many drills run at once, isolated, and under what budget. |
 | [LOCAL-MODEL-PLAYER.md](LOCAL-MODEL-PLAYER.md) | Making the last paid command local too. |
 | [DIMENSION-TILES.md](DIMENSION-TILES.md) | The shipped herd/arena toggle and the on-disk tile record. |
 | [DIMENSION-TILES-V2.md](DIMENSION-TILES-V2.md) | **Superseded** by `rappid-tile/1.0`; kept as the reference for the `.card` format the registry still serves. |
