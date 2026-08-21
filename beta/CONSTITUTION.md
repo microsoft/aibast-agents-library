@@ -217,7 +217,9 @@ driving once went through the Brainstem in chat; deterministic driving does not,
 so its steps are never appended to a transcript — the companion chat records only
 what was said to or by the model. Driving is made visible instead by the interface
 moving, by the console, and by the driver trace, with an optional activity view for
-anyone who wants to watch it happen.
+anyone who wants to watch it happen. Nor does it toast: a person's own action may
+get brief feedback, a driver's does not, and attribution is carried **on the
+object** — the tile shows whose hand moved it — never as a message over the chat.
 
 Three tests decide compliance: **adding a command must never require a commit to
 `rapp_brainstem/`**; the surface must never do what the interface cannot — no

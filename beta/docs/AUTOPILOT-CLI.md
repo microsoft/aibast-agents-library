@@ -194,6 +194,14 @@ So:
 - **An activity view exists for when someone wants to watch**: a separate surface, never the
   transcript. Off by default; on in Showtime and while demonstrating, where being watched is the
   entire point.
+- **Toasts follow the same rule.** A confirmation floating over the companion chat — "Made
+  'Which path wins?' primary." — is driving feedback wearing conversation's clothes. A *person's*
+  own action may still get brief feedback, because that is ordinary interface courtesy; a
+  *driver's* action does not toast by default.
+- **Attribution lives on the object, not in a message.** When the AI moves a tile, the tile
+  briefly carries who moved it. That satisfies "you can always tell whose hand did what" without
+  narrating anything into the chat — which is the only way attribution and this rule can both be
+  true at once.
 
 This is the honest reading of "not hidden automation". What makes driving visible is that it happens
 in the visible interface, not that a log is pasted into a conversation.

@@ -1,13 +1,20 @@
+/* Opening tiles must not repaint the herd. The shell's herd is a dark column of
+   chat panels (#surgeon-herd is #0f1013 with a #1c1e22 bar); the felt, the cream
+   cards and the ring are the ARENA's look and are scoped to it. A tile parked in
+   the herd is a panel like every other chat there — not a card on a table. */
 #surgeon-herd.dimension-tile-view {
-  --arena-surface: #124b34;
   --tile-width: 190px;
   --tile-height: 260px;
+}
+
+#surgeon-herd.dimension-tile-view.tile-surface-arena {
+  --arena-surface: #124b34;
   background:
     radial-gradient(ellipse at 50% 18%, rgba(255,255,255,.08), transparent 46%),
     #092d20;
 }
 
-#surgeon-herd.dimension-tile-view .hbar {
+#surgeon-herd.dimension-tile-view.tile-surface-arena .hbar {
   border-bottom-color: rgba(255,255,255,.12);
   background: linear-gradient(180deg, #173a2b, #10271e);
 }
@@ -17,15 +24,22 @@
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  border-bottom: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid #26282d;
+  background: #17181b;
+}
+
+.tile-surface-arena .dimension-tile-controls {
+  border-bottom-color: rgba(255,255,255,.1);
   background: rgba(4, 16, 11, .45);
 }
 
 .dimension-tile-controls strong {
   margin-right: auto;
-  color: #f5ead1;
+  color: #e6e9ef;
   font: 700 12px/1.2 system-ui, sans-serif;
 }
+
+.tile-surface-arena .dimension-tile-controls strong { color: #f5ead1; }
 
 .dimension-tile-controls select,
 .dimension-tile-controls button {
@@ -483,4 +497,65 @@
     --tile-width: 160px;
     --tile-height: 228px;
   }
+}
+
+
+/* ── The herd's tiles are panels ───────────────────────────────────────────────
+   The card look — cream stock, a serif corner index, fixed playing-card
+   proportions, the face-down art — is the arena's, because competing tiles are
+   what a card-table metaphor is for. In the herd a tile is a parked conversation
+   sitting beside the live ones, so it wears the shell's panel language. */
+
+.tile-surface-herd .dimension-tile-surface {
+  grid-template-columns: repeat(auto-fill, minmax(276px, 1fr));
+  padding: 18px 18px 26px;
+}
+
+.tile-surface-herd .dimension-tile {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  border: 1px solid #2a2c31;
+  border-radius: 12px;
+  background: #15171b;
+  box-shadow: none;
+  color: #e6e9ef;
+  font: 12.5px/1.45 system-ui, sans-serif;
+}
+
+.tile-surface-herd .dimension-tile:focus-visible {
+  outline: 3px solid #58a6ff;
+  outline-offset: 3px;
+}
+
+/* Card furniture has no meaning on a panel. */
+.tile-surface-herd .dimension-tile-corner,
+.tile-surface-herd .dimension-tile-art {
+  display: none;
+}
+
+.tile-surface-herd .dimension-tile-banner {
+  border-bottom: 1px solid #26282d;
+  background: linear-gradient(180deg, #1c1e22, #17181b);
+  color: #e6e9ef;
+}
+
+.tile-surface-herd .dimension-tile-meta {
+  color: #8b8f98;
+}
+
+.tile-surface-herd .dimension-tile-actions button {
+  border: 1px solid #2f3237;
+  background: #1c1e22;
+  color: #d5d9e0;
+}
+
+.tile-surface-herd .dimension-tile-actions button:hover {
+  border-color: #3a3d44;
+  background: #23262b;
+}
+
+.tile-surface-herd .dimension-tile-bunch,
+.tile-surface-herd .dimension-tile-binder-page {
+  border-color: #2a2c31;
 }
