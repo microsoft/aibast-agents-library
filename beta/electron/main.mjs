@@ -1936,7 +1936,7 @@ function emitSurgeonEvent(event) {
   }
 }
 
-// RAPPlication twins — specialized rapplications hatched from the RAPP Store as
+// rapplication twins — specialized rapplications hatched from the RAPP Store as
 // concurrent long-lived workers on their own loopback ports, beside the
 // Brainstem chats in the herd. Kernel unchanged; driven only over /chat.
 // RAR library source selection: AIBAST (default) / public RAR / a custom
@@ -2049,7 +2049,7 @@ function openExternalUrl(url) {
 
 function notifyTwinNeedsAuth(event) {
   const twin = twinManager.list().find((t) => t.id === event.id);
-  const name = twin?.name || event.id || "A RAPPlication twin";
+  const name = twin?.name || event.id || "A rapplication twin";
   const { url, code } = parseAuthPrompt(event.message);
   twinAuthPrompts.set(event.id, { url, code, note: event.message });
   if (!Notification.isSupported()) return;
@@ -2070,7 +2070,7 @@ function notifyTwinNeedsAuth(event) {
 }
 
 // Pop a twin's own UI out into a phone-sized window — "mobile-first" literally —
-// so a RAPPlication is comfortable to use at a real small-screen size.
+// so a rapplication is comfortable to use at a real small-screen size.
 // Walk the main window's frame tree to find the iframe hosting a twin's UI
 // (loaded from the twin's own loopback origin).
 function findTwinFrame(twinUrl) {
@@ -2145,9 +2145,13 @@ function popOutTwin(id) {
     height: 860,
     minWidth: 380,
     minHeight: 480,
-    title: twin.name || "RAPPlication",
+    title: twin.name || "rapplication",
     backgroundColor: "#0d1117",
-    parent: mainWindow || undefined,
+    // Deliberately NOT a child of mainWindow. A parented window shares the
+    // parent's fullscreen space on macOS, so taking the pop-out fullscreen took
+    // over the Brainstem window and left it blank. A popped-out rapplication is
+    // meant to be worked with on its own screen while the Frontier chat carries
+    // on beside it, which requires a top-level window.
     webPreferences: {
       additionalArguments: [`--rapp-twin-id=${encodeURIComponent(id)}`],
       contextIsolation: true,
