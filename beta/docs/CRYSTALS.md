@@ -5,6 +5,21 @@ the inversion is the whole idea.
 
 **The newest tile has the largest crystal. Use wears it down. A master's crystal is a nub.**
 
+## Wear is disclosure, not loss
+
+The crystal does not shrink because something was taken. It shrinks because what the tile actually
+is has been uncovered — the scaffolding it no longer needs falls away, and what is left is the
+thing itself.
+
+Pindar's line is the exact shape of it: *become such as you are, having learned what that is*. Not
+become something else, and not acquire something new — **become what you already were**, by
+learning. That is what a worn tile is: the same tile, with the parts that were only ever
+compensation ground off.
+
+Which is why the direction has to be downward. A model where mastery is *added* says the expert
+has more than the novice. This one says the expert needs less, and that the tile has been revealed
+rather than upgraded.
+
 ## Why backwards
 
 Collecting is the wrong model for expertise. Badges, levels and streaks all say the same thing — you

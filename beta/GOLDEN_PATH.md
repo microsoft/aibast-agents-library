@@ -87,6 +87,21 @@ brainstem-walkthrough
 These commands do not bypass the UI. They visibly type into the same chats the
 person sees.
 
+## It is a learning tool, and saying so does the onboarding
+
+Classify this as a **learning tool** and most of the onboarding explains itself. People already
+know what a learning tool asks of them — that you start not knowing, that early output is rough,
+that the point is to get better at something rather than to receive a finished result. None of
+that has to be taught; it arrives with the category.
+
+Call it an agent platform instead and the expectations invert: a platform is supposed to work
+immediately, and every rough edge reads as a defect rather than as a stage. The same product,
+under the wrong noun, disappoints people who would have been delighted.
+
+It is also simply true. The path here is learn AI, teach it back as a working capability, and keep
+that capability — and the [crystal](docs/CRYSTALS.md) makes the learning visible on the object
+itself.
+
 ## Agent-first control: the interface is drivable without the model
 
 Chat is the control surface for **intelligence**. It is not the control surface for **navigation**,
