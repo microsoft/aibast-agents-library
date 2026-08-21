@@ -3,15 +3,21 @@
   const SCRIPT_STATE = {
     tiles: [],
     captureWaiters: new Map(),
+    chatDragArmed: false,
     context: null,
     controller: null,
     createdHerd: false,
+    draggedTileId: null,
     enabled: false,
+    frameReadyGeneration: null,
+    keyboardTileId: null,
     openedHerd: false,
+    pendingWake: null,
     primaryFrameGeneration: null,
     primaryId: null,
     primaryRouteKey: null,
     refreshSequence: 0,
+    routeTransition: false,
     timers: new Set(),
   };
 
@@ -114,6 +120,10 @@
     return capture?.turns?.some((turn) => turn.role === "user");
   }
 
+  function isPrimaryBlank(capture) {
+    return !SCRIPT_STATE.primaryId && !hasConversation(capture);
+  }
+
   function routeForCapture(capture) {
     const state = SCRIPT_STATE.context?.state || {};
     return {
@@ -125,27 +135,21 @@
   }
 
   function routeKey(state = SCRIPT_STATE.context?.state) {
-    return [
-      state?.brainstem?.callerRappid || "",
-      state?.brainstem?.compositionHash || "",
-    ].join("|");
+    return String(state?.brainstem?.callerRappid || "");
   }
 
   function assertTileRoute(tile) {
     const current = routeKey();
-    const stored = [
-      tile.route?.rappid || "",
-      tile.route?.compositionHash || "",
-    ].join("|");
-    if (!tile.route?.rappid || !tile.route?.compositionHash || stored !== current) {
+    const stored = String(tile?.route?.rappid || "");
+    if (!tile || !stored || stored !== current) {
       throw new Error(
-        "This tile belongs to a different Brainstem route or composition and cannot be restored here.",
+        "This tile belongs to a different Brainstem identity and cannot be restored here.",
       );
     }
   }
 
-  async function persistCapture(capture) {
-    if (!hasConversation(capture)) {
+  async function persistCapture(capture, { surface = "herd" } = {}) {
+    if (!hasConversation(capture) && !SCRIPT_STATE.primaryId) {
       throw new Error("There is no Brainstem conversation to park.");
     }
     const boundToCurrentFrame = (
@@ -170,6 +174,8 @@
       restoreError: capture.restorable || existing?.restorable === true
         ? null
         : capture.restoreError,
+      surface,
+      bunch: null,
       arena: existing?.arena || { faceUp: true },
     });
     postToFrame({
@@ -183,12 +189,37 @@
     return tile;
   }
 
-  async function parkCurrent() {
+  async function parkCurrent(surface = SCRIPT_STATE.context?.viewMode?.surface || "herd") {
     const capture = await requestCapture();
-    const tile = await persistCapture(capture);
+    if (isPrimaryBlank(capture)) {
+      throw new Error("There is no Brainstem conversation to park.");
+    }
+    const tile = await persistCapture(capture, { surface });
+    SCRIPT_STATE.routeTransition = true;
+    try {
+      await SCRIPT_STATE.context.api.tilesDeactivate();
+    } finally {
+      SCRIPT_STATE.routeTransition = false;
+    }
     await refreshTiles();
-    showToast(`Parked "${tile.title}".`);
+    showToast(`Parked "${tile.title}" in the ${surface}.`);
     return tile;
+  }
+
+  function deliverPendingWake() {
+    if (
+      !SCRIPT_STATE.pendingWake
+      || SCRIPT_STATE.routeTransition
+      || SCRIPT_STATE.frameReadyGeneration
+        !== SCRIPT_STATE.context?.frameGeneration
+    ) return false;
+    postToFrame({
+      type: "rapp-beta:tile-wake",
+      tile: SCRIPT_STATE.pendingWake,
+    });
+    SCRIPT_STATE.primaryFrameGeneration = SCRIPT_STATE.context.frameGeneration;
+    SCRIPT_STATE.pendingWake = null;
+    return true;
   }
 
   async function wakeTile(id) {
@@ -207,17 +238,33 @@
       await refreshTiles();
       return winner;
     }
-    if (SCRIPT_STATE.primaryId !== id) {
-      const current = await requestCapture();
-      if (hasConversation(current)) await persistCapture(current);
+    const current = await requestCapture();
+    if (!isPrimaryBlank(current)) {
+      await persistCapture(current, {
+        surface: requested.surface || "herd",
+      });
+    } else {
+      SCRIPT_STATE.primaryId = null;
+      SCRIPT_STATE.primaryFrameGeneration = null;
+      SCRIPT_STATE.primaryRouteKey = null;
     }
-    const tile = await SCRIPT_STATE.context.api.tilesWake(id);
-    SCRIPT_STATE.primaryId = tile.id;
-    SCRIPT_STATE.primaryFrameGeneration = SCRIPT_STATE.context.frameGeneration;
-    SCRIPT_STATE.primaryRouteKey = routeKey();
-    postToFrame({ type: "rapp-beta:tile-wake", tile });
+    SCRIPT_STATE.routeTransition = true;
+    SCRIPT_STATE.pendingWake = requested;
+    let tile;
+    try {
+      tile = await SCRIPT_STATE.context.api.tilesWake(id);
+      SCRIPT_STATE.pendingWake = tile;
+      SCRIPT_STATE.primaryId = tile.id;
+      SCRIPT_STATE.primaryRouteKey = routeKey();
+    } catch (error) {
+      SCRIPT_STATE.pendingWake = null;
+      throw error;
+    } finally {
+      SCRIPT_STATE.routeTransition = false;
+    }
+    deliverPendingWake();
     await refreshTiles();
-    showToast(`Woke "${tile.title}".`);
+    showToast(`Made "${tile.title}" primary.`);
     return tile;
   }
 
@@ -243,6 +290,39 @@
       duration: 10000,
     });
     return result.tile;
+  }
+
+  async function moveTile(id, surface) {
+    const tile = await SCRIPT_STATE.context.api.tilesMove(id, surface);
+    SCRIPT_STATE.keyboardTileId = null;
+    await refreshTiles();
+    showToast(`Moved "${tile.title}" to the ${surface}.`);
+    return tile;
+  }
+
+  async function bunchTiles(sourceId, targetId) {
+    const result = await SCRIPT_STATE.context.api.tilesBunch(sourceId, targetId);
+    SCRIPT_STATE.keyboardTileId = null;
+    await refreshTiles();
+    showToast(`Bunched "${result.source.title}" with "${result.target.title}".`);
+    return result;
+  }
+
+  function toggleKeyboardPickup(tile) {
+    if (!SCRIPT_STATE.keyboardTileId) {
+      SCRIPT_STATE.keyboardTileId = tile.id;
+      showToast(`Picked up "${tile.title}". Focus another tile and press Space.`);
+      renderTiles();
+      return;
+    }
+    if (SCRIPT_STATE.keyboardTileId === tile.id) {
+      SCRIPT_STATE.keyboardTileId = null;
+      showToast(`Put down "${tile.title}".`);
+      renderTiles();
+      return;
+    }
+    const sourceId = SCRIPT_STATE.keyboardTileId;
+    void bunchTiles(sourceId, tile.id).catch(showError);
   }
 
   async function raceTile(id) {
@@ -397,14 +477,44 @@
     }, { passive: false });
   }
 
-  function attachTileDrag(handle, element, tile) {
-    handle.draggable = true;
-    handle.addEventListener("dragstart", (event) => {
+  function tileDragId(event) {
+    return event.dataTransfer?.getData("application/x-rapp-dimension-tile")
+      || SCRIPT_STATE.draggedTileId;
+  }
+
+  function attachTileDrag(element, tile) {
+    element.draggable = true;
+    element.addEventListener("dragstart", (event) => {
+      if (event.target.closest("button,select,a,input")) {
+        event.preventDefault();
+        return;
+      }
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("application/x-rapp-dimension-tile", tile.id);
+      SCRIPT_STATE.draggedTileId = tile.id;
       element.classList.add("dragging");
+      postToFrame({
+        type: "rapp-beta:tile-drag-armed",
+        id: tile.id,
+        label: SCRIPT_STATE.primaryId ? "Swap with this chat" : "Make primary",
+      });
+      void requestCapture().then((capture) => {
+        if (SCRIPT_STATE.draggedTileId !== tile.id) return;
+        postToFrame({
+          type: "rapp-beta:tile-drag-armed",
+          id: tile.id,
+          label: isPrimaryBlank(capture)
+            ? "Make primary"
+            : "Swap with this chat",
+        });
+      }).catch(showError);
     });
-    handle.addEventListener("dragend", () => element.classList.remove("dragging"));
+    element.addEventListener("dragend", () => {
+      SCRIPT_STATE.draggedTileId = null;
+      element.classList.remove("dragging");
+      postToFrame({ type: "rapp-beta:tile-drag-disarmed" });
+      hideDropOverlay();
+    });
   }
 
   function createTile(tile, { folded = false } = {}) {
@@ -414,9 +524,16 @@
     element.dataset.drive = driveTile(tile.id);
     element.dataset.seat = tile.arena?.seat || "";
     element.dataset.status = tile.status;
+    element.dataset.surface = tile.surface;
+    element.dataset.bunch = tile.bunch || "";
     const seat = Number(tile.arena?.seat) || 1;
     element.style.setProperty("--spread-angle", `${(seat - 6) * 2}deg`);
     element.tabIndex = 0;
+    element.setAttribute("aria-keyshortcuts", "Enter H A B Space");
+    element.setAttribute(
+      "aria-grabbed",
+      String(SCRIPT_STATE.keyboardTileId === tile.id),
+    );
     element.setAttribute(
       "aria-label",
       `${tile.title}, ${tile.status} dimension tile`,
@@ -428,7 +545,7 @@
     const drag = document.createElement("span");
     drag.className = "dimension-tile-drag";
     drag.dataset.drive = driveTile(tile.id, "drag");
-    drag.title = "Drag this tile onto the Brainstem";
+    drag.title = "Drag this tile";
     drag.setAttribute("aria-label", `Drag ${tile.title}`);
     drag.textContent = "⠿";
     const face = document.createElement("div");
@@ -456,16 +573,6 @@
     } turns`;
     const actions = document.createElement("div");
     actions.className = "dimension-tile-actions";
-    const wake = document.createElement("button");
-    wake.type = "button";
-    wake.dataset.drive = driveTile(tile.id, "wake");
-    wake.textContent = "Wake";
-    wake.disabled = tile.restorable === false;
-    wake.title = tile.restorable === false
-      ? tile.restoreError
-      : "Wake this chat in the Brainstem.";
-    wake.addEventListener("click", () => void wakeTile(tile.id).catch(showError));
-    actions.appendChild(wake);
     if (!folded) {
       const race = document.createElement("button");
       race.type = "button";
@@ -492,7 +599,24 @@
     face.append(banner, art, excerpt, meta, actions);
     element.append(corner, drag, face);
     attachSwipe(element, tile);
-    attachTileDrag(drag, element, tile);
+    attachTileDrag(element, tile);
+    element.addEventListener("dragover", (event) => {
+      const sourceId = tileDragId(event);
+      if (!sourceId || sourceId === tile.id) return;
+      event.preventDefault();
+      event.stopPropagation();
+      event.dataTransfer.dropEffect = "move";
+      showDropOverlay("Bunch these tiles");
+    });
+    element.addEventListener("dragleave", hideDropOverlayOnRealLeave);
+    element.addEventListener("drop", (event) => {
+      const sourceId = tileDragId(event);
+      if (!sourceId || sourceId === tile.id) return;
+      event.preventDefault();
+      event.stopPropagation();
+      hideDropOverlay();
+      void bunchTiles(sourceId, tile.id).catch(showError);
+    });
     element.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight" || event.key === "Enter") {
         event.preventDefault();
@@ -503,6 +627,21 @@
       } else if (event.key.toLowerCase() === "r" && !folded && tileCanRace(tile)) {
         event.preventDefault();
         void raceTile(tile.id).catch(showError);
+      } else if (["h", "a", "b"].includes(event.key.toLowerCase())) {
+        event.preventDefault();
+        const surface = {
+          h: "herd",
+          a: "arena",
+          b: "binder",
+        }[event.key.toLowerCase()];
+        void moveTile(tile.id, surface).catch(showError);
+      } else if (event.key === " ") {
+        event.preventDefault();
+        toggleKeyboardPickup(tile);
+      } else if (event.key === "Escape" && SCRIPT_STATE.keyboardTileId) {
+        event.preventDefault();
+        SCRIPT_STATE.keyboardTileId = null;
+        renderTiles();
       }
     });
     const custom = SCRIPT_STATE.context?.state?.arenaLayout;
@@ -600,22 +739,81 @@
     }
   }
 
+  function appendTileCollection(container, tiles) {
+    const renderedBunches = new Set();
+    for (const tile of tiles) {
+      let target = container;
+      if (tile.bunch) {
+        if (renderedBunches.has(tile.bunch)) continue;
+        renderedBunches.add(tile.bunch);
+        target = document.createElement("section");
+        target.className = "dimension-tile-bunch";
+        target.dataset.bunch = tile.bunch;
+        target.dataset.drive = `tiles.bunch[${tile.bunch}]`;
+        target.setAttribute("aria-label", "Tile bunch");
+        container.appendChild(target);
+      }
+      const members = tile.bunch
+        ? tiles.filter((candidate) => candidate.bunch === tile.bunch)
+        : [tile];
+      for (const member of members) {
+        const element = createTile(member);
+        if (
+          SCRIPT_STATE.context.viewMode.surface === "arena"
+          && SCRIPT_STATE.context.viewMode.layout === "custom"
+        ) {
+          applyCustomPosition(
+            element,
+            member,
+            SCRIPT_STATE.context.state.arenaLayout,
+          );
+        }
+        target.appendChild(element);
+      }
+    }
+  }
+
+  function renderBinderPages(surface, tiles) {
+    const pageSize = 12;
+    const pageCount = Math.max(1, Math.ceil(tiles.length / pageSize));
+    for (let page = 0; page < pageCount; page += 1) {
+      const element = document.createElement("section");
+      element.className = "dimension-tile-binder-page";
+      element.dataset.drive = `binder.page[${page + 1}]`;
+      element.setAttribute(
+        "aria-label",
+        `Binder page ${page + 1} of ${pageCount}`,
+      );
+      appendTileCollection(
+        element,
+        tiles.slice(page * pageSize, (page + 1) * pageSize),
+      );
+      surface.appendChild(element);
+    }
+  }
+
   function renderTiles() {
     const surface = document.querySelector(".dimension-tile-surface");
     if (!surface) return;
-    surface.querySelectorAll(":scope > .dimension-tile").forEach((tile) => tile.remove());
-    surface.querySelector(".dimension-tile-overflow")?.remove();
-    const active = SCRIPT_STATE.tiles.filter((tile) => tile.status !== "folded");
-    const folded = SCRIPT_STATE.tiles.filter((tile) => tile.status === "folded");
-    const custom = SCRIPT_STATE.context?.state?.arenaLayout;
-    for (const tile of active.slice(0, 12)) {
-      const element = createTile(tile);
-      if (SCRIPT_STATE.context.viewMode.layout === "custom") {
-        applyCustomPosition(element, tile, custom);
-      }
-      surface.appendChild(element);
+    surface.replaceChildren();
+    const selectedSurface = SCRIPT_STATE.context.viewMode.surface || "herd";
+    surface.dataset.surface = selectedSurface;
+    surface.dataset.drive = `tiles.surface[${selectedSurface}]`;
+    surface.setAttribute(
+      "aria-label",
+      `${selectedSurface} Brainstem dimension tiles`,
+    );
+    const matching = SCRIPT_STATE.tiles.filter((tile) => (
+      tile.surface === selectedSurface && tile.status !== "primary"
+    ));
+    const active = matching.filter((tile) => tile.status !== "folded");
+    const folded = matching.filter((tile) => tile.status === "folded");
+    if (selectedSurface === "binder") {
+      renderBinderPages(surface, active);
+    } else {
+      appendTileCollection(surface, active.slice(0, 12));
+      renderOverflow(surface, active.slice(12));
     }
-    renderOverflow(surface, active.slice(12));
     renderDiscard(surface, folded);
   }
 
@@ -626,11 +824,19 @@
     for (const name of ["ring", "row", "focus", "grid", "stack", "custom"]) {
       herd.classList.remove(`tile-layout-${name}`);
     }
-    const layoutName = SCRIPT_STATE.context.viewMode.layout || "ring";
+    for (const name of ["herd", "arena", "binder"]) {
+      herd.classList.remove(`tile-surface-${name}`);
+    }
+    const selectedSurface = SCRIPT_STATE.context.viewMode.surface || "herd";
+    const layoutName = selectedSurface === "arena"
+      ? SCRIPT_STATE.context.viewMode.layout || "ring"
+      : "ring";
     herd.classList.add("dimension-tile-view", `tile-layout-${layoutName}`);
+    herd.classList.add(`tile-surface-${selectedSurface}`);
     herd.dataset.arenaLayout = layoutName;
+    herd.dataset.tileSurface = selectedSurface;
     const custom = SCRIPT_STATE.context.state.arenaLayout;
-    if (layoutName === "custom" && custom) {
+    if (selectedSurface === "arena" && layoutName === "custom" && custom) {
       surface.style.setProperty("--arena-surface", custom.surfaceColor);
       surface.style.setProperty("--tile-width", `${custom.tileSize.width}px`);
       surface.style.setProperty("--tile-height", `${custom.tileSize.height}px`);
@@ -647,6 +853,22 @@
     if (layout) layout.value = layoutName;
     document.querySelector(".dimension-tile-load-custom")
       ?.toggleAttribute("hidden", layoutName !== "custom");
+    document.querySelectorAll(".dimension-tile-arena-only").forEach((control) => {
+      control.toggleAttribute("hidden", selectedSurface !== "arena");
+    });
+    const label = document.querySelector(".dimension-tile-controls > strong");
+    if (label) {
+      label.textContent = {
+        herd: "Herd — parked conversations, side by side",
+        arena: "Agent Arena — parked conversations compete side by side",
+        binder: "Binder — dormant tiles kept in pages and bunches",
+      }[selectedSurface];
+    }
+    document.querySelectorAll("[data-tile-surface-target]").forEach((button) => {
+      const selected = button.dataset.tileSurfaceTarget === selectedSurface;
+      button.setAttribute("aria-pressed", String(selected));
+    });
+    renderTiles();
   }
 
   async function changeLayout(value) {
@@ -697,9 +919,26 @@
     controls.className = "dimension-tile-controls";
     controls.dataset.drive = "arena.controls";
     const label = document.createElement("strong");
-    label.textContent = "Agent Arena — parked conversations compete side by side";
+    const surfaceControl = document.createElement("div");
+    surfaceControl.className = "dimension-tile-surface-control";
+    surfaceControl.dataset.drive = "tiles.surfaces";
+    surfaceControl.setAttribute("role", "group");
+    surfaceControl.setAttribute("aria-label", "Tile surface");
+    for (const name of ["herd", "arena", "binder"]) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.tileSurfaceTarget = name;
+      button.dataset.drive = `tiles.surface.${name}`;
+      button.textContent = name[0].toUpperCase() + name.slice(1);
+      button.addEventListener("click", () => {
+        void SCRIPT_STATE.context.api.setViewMode({ surface: name })
+          .catch(showError);
+      });
+      surfaceControl.appendChild(button);
+    }
     const layout = document.createElement("select");
     layout.className = "dimension-tile-layout";
+    layout.classList.add("dimension-tile-arena-only");
     layout.dataset.drive = "arena.layout";
     layout.setAttribute("aria-label", "Agent Arena layout");
     const labels = {
@@ -722,6 +961,7 @@
     const load = document.createElement("button");
     load.type = "button";
     load.className = "dimension-tile-load-custom";
+    load.classList.add("dimension-tile-arena-only");
     load.dataset.drive = "arena.loadCustom";
     load.textContent = "Load layout…";
     load.addEventListener("click", () => {
@@ -729,9 +969,11 @@
     });
     const raceTarget = document.createElement("select");
     raceTarget.className = "dimension-tile-race-target";
+    raceTarget.classList.add("dimension-tile-arena-only");
     raceTarget.dataset.drive = "arena.raceTarget";
     raceTarget.setAttribute("aria-label", "Race target");
     const arrange = document.createElement("select");
+    arrange.className = "dimension-tile-arena-only";
     arrange.dataset.drive = "arena.arrange";
     arrange.setAttribute("aria-label", "Arrange tiles");
     for (const [value, text] of [
@@ -751,28 +993,53 @@
       arrange.value = "";
       void runArrange(action).catch(showError);
     });
-    controls.append(label, layout, load, raceTarget, arrange);
+    controls.append(
+      label,
+      surfaceControl,
+      layout,
+      load,
+      raceTarget,
+      arrange,
+    );
     herd.insertBefore(controls, surface);
     return controls;
   }
 
-  function ensureGrabHandle() {
-    let grab = document.getElementById("brainstem-chat-grab");
-    if (grab) return grab;
-    grab = document.createElement("button");
-    grab.id = "brainstem-chat-grab";
-    grab.type = "button";
-    grab.draggable = true;
-    grab.dataset.drive = "brainstem.grab";
-    grab.title = "Grab this chat and park it in the herd";
-    grab.innerHTML = "<span aria-hidden=\"true\">▤</span> Park chat";
-    grab.addEventListener("click", () => void parkCurrent().catch(showError));
-    grab.addEventListener("dragstart", (event) => {
-      event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("application/x-rapp-brainstem-chat", "park");
-    });
-    document.querySelector("main")?.appendChild(grab);
-    return grab;
+  function ensureDropOverlay(herd) {
+    let overlay = herd.querySelector(".dimension-tile-drop-overlay");
+    if (overlay) return overlay;
+    overlay = document.createElement("div");
+    overlay.className = "dimension-tile-drop-overlay";
+    overlay.dataset.drive = "tiles.dropOverlay";
+    overlay.setAttribute("role", "status");
+    const line = document.createElement("span");
+    overlay.appendChild(line);
+    herd.appendChild(overlay);
+    return overlay;
+  }
+
+  function showDropOverlay(message) {
+    const overlay = document.querySelector(".dimension-tile-drop-overlay");
+    if (!overlay) return;
+    overlay.querySelector("span").textContent = String(message || "");
+    overlay.style.display = "flex";
+  }
+
+  function hideDropOverlay() {
+    const overlay = document.querySelector(".dimension-tile-drop-overlay");
+    if (overlay) overlay.style.display = "none";
+  }
+
+  function hideDropOverlayOnRealLeave(event) {
+    if (
+      event.relatedTarget === null
+      || event.clientX <= 0
+      || event.clientY <= 0
+      || event.clientX >= window.innerWidth
+      || event.clientY >= window.innerHeight
+    ) {
+      hideDropOverlay();
+    }
   }
 
   function ensureSurface(herd, grid) {
@@ -780,43 +1047,88 @@
     if (!surface) {
       surface = document.createElement("section");
       surface.className = "dimension-tile-surface";
-      surface.dataset.drive = "arena.surface";
       surface.setAttribute("aria-label", "Parked Brainstem dimension tiles");
       herd.insertBefore(surface, grid);
     }
     return surface;
   }
 
-  function installDragTargets(herd) {
+  function hasDragType(event, type) {
+    return Boolean(event.dataTransfer?.types?.includes(type));
+  }
+
+  function surfaceDropLabel(surface, chatDrag) {
+    if (surface === "binder") return "Keep in the binder";
+    if (chatDrag) return "Park as a tile";
+    return `Move to the ${surface}`;
+  }
+
+  function installSurfaceDropTarget(target, surfaceForEvent) {
     const signal = SCRIPT_STATE.controller.signal;
-    herd.addEventListener("dragover", (event) => {
-      if (event.dataTransfer.types.includes("application/x-rapp-brainstem-chat")) {
-        event.preventDefault();
-        event.dataTransfer.dropEffect = "move";
-      }
-    }, { signal });
-    herd.addEventListener("drop", (event) => {
-      if (!event.dataTransfer.getData("application/x-rapp-brainstem-chat")) return;
+    target.addEventListener("dragover", (event) => {
+      const chatDrag = SCRIPT_STATE.chatDragArmed
+        || hasDragType(event, "application/x-rapp-brainstem-chat");
+      const tileDrag = Boolean(tileDragId(event));
+      if (!chatDrag && !tileDrag) return;
       event.preventDefault();
-      void parkCurrent().catch(showError);
+      event.dataTransfer.dropEffect = "move";
+      const surface = typeof surfaceForEvent === "function"
+        ? surfaceForEvent()
+        : surfaceForEvent;
+      showDropOverlay(surfaceDropLabel(surface, chatDrag));
     }, { signal });
-    const main = document.querySelector("main");
-    main?.addEventListener("dragover", (event) => {
-      if (event.dataTransfer.types.includes("application/x-rapp-dimension-tile")) {
-        event.preventDefault();
-        event.dataTransfer.dropEffect = "move";
-      }
-    }, { signal });
-    main?.addEventListener("drop", (event) => {
-      const id = event.dataTransfer.getData("application/x-rapp-dimension-tile");
-      if (!id) return;
+    target.addEventListener("dragleave", hideDropOverlayOnRealLeave, { signal });
+    target.addEventListener("drop", (event) => {
+      const chatDrag = SCRIPT_STATE.chatDragArmed
+        || hasDragType(event, "application/x-rapp-brainstem-chat");
+      const id = tileDragId(event);
+      if (!chatDrag && !id) return;
       event.preventDefault();
-      void wakeTile(id).catch(showError);
+      event.stopPropagation();
+      const surface = typeof surfaceForEvent === "function"
+        ? surfaceForEvent()
+        : surfaceForEvent;
+      hideDropOverlay();
+      if (chatDrag) void parkCurrent(surface).catch(showError);
+      else void moveTile(id, surface).catch(showError);
     }, { signal });
+  }
+
+  function installDragTargets(herd, surface) {
+    installSurfaceDropTarget(
+      surface,
+      () => SCRIPT_STATE.context.viewMode.surface || "herd",
+    );
+    herd.querySelectorAll("[data-tile-surface-target]").forEach((button) => {
+      installSurfaceDropTarget(button, button.dataset.tileSurfaceTarget);
+    });
   }
 
   function receiveFrameMessage(event) {
     if (event.source !== SCRIPT_STATE.context?.frame?.contentWindow) return;
+    if (event.data?.type === "rapp-beta:chat-drag-start") {
+      SCRIPT_STATE.chatDragArmed = true;
+      return;
+    }
+    if (event.data?.type === "rapp-beta:chat-drag-end") {
+      SCRIPT_STATE.chatDragArmed = false;
+      hideDropOverlay();
+      return;
+    }
+    if (event.data?.type === "rapp-beta:tile-drop-primary") {
+      const id = String(event.data.id || SCRIPT_STATE.draggedTileId || "");
+      if (id) void wakeTile(id).catch(showError);
+      return;
+    }
+    if (event.data?.type === "rapp-beta:tile-keyboard-park") {
+      void parkCurrent(event.data.surface).catch(showError);
+      return;
+    }
+    if (event.data?.type === "rapp-beta:tile-frame-ready") {
+      SCRIPT_STATE.frameReadyGeneration = SCRIPT_STATE.context.frameGeneration;
+      deliverPendingWake();
+      return;
+    }
     if (event.data?.type === "rapp-beta:tile-capture-result") {
       const waiter = SCRIPT_STATE.captureWaiters.get(event.data.requestId);
       if (!waiter) return;
@@ -853,6 +1165,7 @@
     SCRIPT_STATE.primaryRouteKey = null;
     if (detached) {
       void SCRIPT_STATE.context.api.tilesParkExisting(detached.id)
+        .then(() => SCRIPT_STATE.context.api.tilesDeactivate())
         .then(refreshTiles)
         .catch(showError);
     }
@@ -862,6 +1175,8 @@
     if (SCRIPT_STATE.context) {
       SCRIPT_STATE.context.frameGeneration = generation;
     }
+    SCRIPT_STATE.frameReadyGeneration = null;
+    if (SCRIPT_STATE.routeTransition || SCRIPT_STATE.pendingWake) return;
     if (
       SCRIPT_STATE.primaryId
       && SCRIPT_STATE.primaryFrameGeneration !== generation
@@ -869,6 +1184,17 @@
       const detached = SCRIPT_STATE.tiles.find((tile) => (
         tile.id === SCRIPT_STATE.primaryId
       ));
+      const currentComposition = String(
+        SCRIPT_STATE.context?.state?.brainstem?.compositionHash || "",
+      );
+      if (
+        detached
+        && detached.route?.compositionHash === currentComposition
+      ) {
+        SCRIPT_STATE.pendingWake = detached;
+        SCRIPT_STATE.primaryFrameGeneration = null;
+        return;
+      }
       SCRIPT_STATE.primaryId = null;
       SCRIPT_STATE.primaryFrameGeneration = null;
       SCRIPT_STATE.primaryRouteKey = null;
@@ -912,8 +1238,8 @@
       const { grid, herd } = context.ensureHerd();
       const surface = ensureSurface(herd, grid);
       ensureControls(herd, surface);
-      ensureGrabHandle();
-      installDragTargets(herd);
+      ensureDropOverlay(herd);
+      installDragTargets(herd, surface);
       window.addEventListener("message", receiveFrameMessage, {
         signal: SCRIPT_STATE.controller.signal,
       });
@@ -948,18 +1274,20 @@
       waiter.reject(new Error("Agent Arena switched to herd mode."));
     }
     SCRIPT_STATE.captureWaiters.clear();
-    document.getElementById("brainstem-chat-grab")?.remove();
     document.querySelector(".dimension-tile-controls")?.remove();
     document.querySelector(".dimension-tile-surface")?.remove();
+    document.querySelector(".dimension-tile-drop-overlay")?.remove();
     document.querySelector(".dimension-tile-toast")?.remove();
     const herd = document.getElementById("surgeon-herd");
     if (herd) {
       herd.className = herd.className
         .split(/\s+/)
         .filter((name) => !name.startsWith("tile-layout-")
+          && !name.startsWith("tile-surface-")
           && name !== "dimension-tile-view")
         .join(" ");
       delete herd.dataset.arenaLayout;
+      delete herd.dataset.tileSurface;
     }
     removeStyles();
     document.getElementById("__rappDimensionTilesScript")?.remove();
@@ -974,6 +1302,12 @@
     SCRIPT_STATE.primaryId = null;
     SCRIPT_STATE.primaryFrameGeneration = null;
     SCRIPT_STATE.primaryRouteKey = null;
+    SCRIPT_STATE.chatDragArmed = false;
+    SCRIPT_STATE.draggedTileId = null;
+    SCRIPT_STATE.frameReadyGeneration = null;
+    SCRIPT_STATE.keyboardTileId = null;
+    SCRIPT_STATE.pendingWake = null;
+    SCRIPT_STATE.routeTransition = false;
   }
 
   root.RappDimensionTiles = Object.freeze({

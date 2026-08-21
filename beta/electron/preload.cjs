@@ -16,7 +16,12 @@ const chatLook = chatLookArgument?.split("=", 2)[1] === "business"
 const viewModeArgument = process.argv.find((value) => (
   value.startsWith("--rapp-view-mode=")
 ));
-let viewMode = { mode: "herd", layout: "table", customLayoutPath: null };
+let viewMode = {
+  mode: "herd",
+  surface: "herd",
+  layout: "table",
+  customLayoutPath: null,
+};
 try {
   viewMode = JSON.parse(Buffer.from(
     viewModeArgument?.split("=", 2)[1] || "",
@@ -36,6 +41,10 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   tilesComplete: (id, completion) => (
     ipcRenderer.invoke("beta:tiles-complete", id, completion || {})
   ),
+  tilesBunch: (sourceId, targetId) => (
+    ipcRenderer.invoke("beta:tiles-bunch", sourceId, targetId)
+  ),
+  tilesDeactivate: () => ipcRenderer.invoke("beta:tiles-deactivate"),
   tilesFold: (id) => ipcRenderer.invoke("beta:tiles-fold", id),
   tilesList: () => ipcRenderer.invoke("beta:tiles-list"),
   tilesLoadCustomLayout: () => (
@@ -44,6 +53,9 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   tilesPark: (tile) => ipcRenderer.invoke("beta:tiles-park", tile),
   tilesParkExisting: (id) => (
     ipcRenderer.invoke("beta:tiles-park-existing", id)
+  ),
+  tilesMove: (id, surface) => (
+    ipcRenderer.invoke("beta:tiles-move", id, surface)
   ),
   tilesRace: (id) => ipcRenderer.invoke("beta:tiles-race", id),
   tilesUndo: (id) => ipcRenderer.invoke("beta:tiles-undo", id),

@@ -1990,6 +1990,44 @@ export class BetaRouteManager {
     });
   }
 
+  tileCompositionDescriptor(agentSources = []) {
+    if (!Array.isArray(agentSources)) {
+      throw new Error("A tile agent payload must be an array.");
+    }
+    const identity = this.identity();
+    const tileIdentity = {
+      ...identity,
+      overlay_stack_rappids: [],
+    };
+    const stack = this.loadStack(identity.active_stack_rappid);
+    const entries = this.globalAgentEntries(identity.memory_guid);
+    const filenames = new Set(entries.map((entry) => entry.filename));
+    for (const agent of agentSources) {
+      if (!agent || typeof agent !== "object" || Array.isArray(agent)) {
+        throw new Error("Every tile agent payload entry must be an object.");
+      }
+      const filename = safeAgentFilename(agent.filename);
+      if (filenames.has(filename)) {
+        throw new Error(
+          `Agent composition collision for ${filename}; `
+          + "a tile cannot replace a global or memory agent.",
+        );
+      }
+      filenames.add(filename);
+      entries.push({
+        filename,
+        ...this.cacheSource(String(agent.source || "")),
+        scope: "tile",
+      });
+    }
+    return this.finalizeCompositionDescriptor({
+      entries,
+      identity: tileIdentity,
+      stack,
+      selectedStacks: [],
+    });
+  }
+
   compositionIsComplete(descriptor, agentDirectory, manifest) {
     if (
       manifest?.composition_hash !== descriptor.compositionHash
@@ -2636,14 +2674,16 @@ export class BetaRouteManager {
     }
   }
 
-  async startWorker(descriptor) {
+  async startWorker(descriptor, { allowLineageFallback = true } = {}) {
     this.lastLineageFallback = null;
     const existing = this.workers.get(descriptor.compositionHash);
     if (existing) {
       existing.lastUsed = Date.now();
       return existing.route;
     }
-    const materialized = this.materializeComposition(descriptor);
+    const materialized = this.materializeComposition(descriptor, {
+      allowLineageFallback,
+    });
     const effectiveDescriptor = materialized.descriptor || descriptor;
     if (materialized.fallbackStrategy) {
       this.lastLineageFallback = {
@@ -2757,10 +2797,9 @@ export class BetaRouteManager {
     return route;
   }
 
-  async startDefaultUnlocked() {
+  async activateDescriptorUnlocked(descriptor, options = {}) {
     const previous = this.activeRoute;
-    const descriptor = this.compositionDescriptor();
-    const route = await this.activate(await this.startWorker(descriptor));
+    const route = await this.activate(await this.startWorker(descriptor, options));
     if (
       previous
       && previous.compositionHash !== route.compositionHash
@@ -2770,10 +2809,31 @@ export class BetaRouteManager {
     return route;
   }
 
+  async startDefaultUnlocked() {
+    return this.activateDescriptorUnlocked(this.compositionDescriptor());
+  }
+
   async startDefault() {
     return this.withRouteLock(
       "__lifecycle__",
       () => this.startDefaultUnlocked(),
+    );
+  }
+
+  async startBlank() {
+    return this.withRouteLock(
+      "__lifecycle__",
+      () => this.activateDescriptorUnlocked(this.tileCompositionDescriptor()),
+    );
+  }
+
+  async startTile(agentSources) {
+    return this.withRouteLock(
+      "__lifecycle__",
+      () => this.activateDescriptorUnlocked(
+        this.tileCompositionDescriptor(agentSources),
+        { allowLineageFallback: false },
+      ),
     );
   }
 
@@ -3058,6 +3118,16 @@ export class BetaRouteManager {
           "complete.json",
         );
     return JSON.parse(readFileSync(manifestPath, "utf8")).agents;
+  }
+
+  activeTileAgentPayload() {
+    return this.activeAgentFiles()
+      .filter((agent) => !["global", "memory"].includes(agent.scope))
+      .map((agent) => ({
+        filename: agent.filename,
+        scope: agent.scope,
+        source: this.readActiveAgent(agent.filename),
+      }));
   }
 
   readActiveAgent(filename) {

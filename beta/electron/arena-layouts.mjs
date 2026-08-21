@@ -49,6 +49,7 @@ export const ARENA_LAYOUTS = Object.freeze({
 
 export const DEFAULT_VIEW_MODE = Object.freeze({
   mode: "herd",
+  surface: "herd",
   layout: "ring",
   customLayoutPath: null,
 });
@@ -64,6 +65,9 @@ export function normalizeViewModeSettings(value = {}) {
     : {};
   return {
     mode: input.mode === "arena" ? "arena" : "herd",
+    surface: ["herd", "arena", "binder"].includes(input.surface)
+      ? input.surface
+      : DEFAULT_VIEW_MODE.surface,
     layout: validArenaLayout(input.layout) || DEFAULT_VIEW_MODE.layout,
     customLayoutPath: typeof input.customLayoutPath === "string"
       && input.customLayoutPath.trim()

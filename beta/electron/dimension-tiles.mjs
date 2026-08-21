@@ -26,7 +26,10 @@ const DIMENSION_TILE_STATUSES = new Set([
   "primary",
   "folded",
 ]);
+const DIMENSION_TILE_SURFACES = new Set(["herd", "arena", "binder"]);
 const DIMENSION_TILE_ID = /^tile-[a-z0-9][a-z0-9-]{5,120}$/;
+const DIMENSION_TILE_BUNCH_ID = /^bunch-[a-z0-9][a-z0-9-]{5,120}$/;
+const DIMENSION_TILE_AGENT_FILE = /^[A-Za-z0-9_.-]+_agent\.py$/;
 
 function settingsPath(betaHome) {
   if (!betaHome) throw new Error("A beta home is required for dimension tile settings.");
@@ -219,6 +222,40 @@ function normalizeArenaPlacement(value) {
   };
 }
 
+function normalizeTileAgents(value) {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) {
+    throw new Error("A dimension tile agent payload must be an array.");
+  }
+  const seen = new Set();
+  return value.map((agent) => {
+    if (!agent || typeof agent !== "object" || Array.isArray(agent)) {
+      throw new Error("Every dimension tile agent must be an object.");
+    }
+    const filename = String(agent.filename || "");
+    if (
+      path.basename(filename) !== filename
+      || !DIMENSION_TILE_AGENT_FILE.test(filename)
+      || filename === "basic_agent.py"
+    ) {
+      throw new Error("Dimension tile agents require safe *_agent.py filenames.");
+    }
+    if (seen.has(filename)) {
+      throw new Error(`Dimension tile agent payload repeats ${filename}.`);
+    }
+    seen.add(filename);
+    const source = String(agent.source || "");
+    if (!source) {
+      throw new Error(`Dimension tile agent ${filename} has no source payload.`);
+    }
+    return {
+      filename,
+      source,
+      scope: String(agent.scope || "tile"),
+    };
+  });
+}
+
 export function normalizeDimensionTile(value, {
   id,
   now = new Date().toISOString(),
@@ -255,6 +292,14 @@ export function normalizeDimensionTile(value, {
     turns,
     history,
     status,
+    surface: DIMENSION_TILE_SURFACES.has(value.surface)
+      ? value.surface
+      : "herd",
+    bunch: typeof value.bunch === "string"
+      && DIMENSION_TILE_BUNCH_ID.test(value.bunch)
+      ? value.bunch
+      : null,
+    agents: normalizeTileAgents(value.agents),
     arena: normalizeArenaPlacement(value.arena),
     restorable: value.restorable !== false,
     restoreError: value.restorable === false
@@ -373,12 +418,14 @@ export class DimensionTileStore {
     idFactory = () => (
       `tile-${Date.now().toString(36)}-${randomUUID().slice(0, 8)}`
     ),
+    bunchIdFactory = () => `bunch-${randomUUID()}`,
     raceIdFactory = () => `race-${randomUUID()}`,
     now = () => new Date(),
   } = {}) {
     if (!betaHome) throw new Error("A beta home is required for dimension tiles.");
     this.betaHome = betaHome;
     this.idFactory = idFactory;
+    this.bunchIdFactory = bunchIdFactory;
     this.raceIdFactory = raceIdFactory;
     this.now = now;
     this.undoEntries = new Map();
@@ -468,6 +515,14 @@ export class DimensionTileStore {
     return tile;
   }
 
+  clearOrphanedBunch(bunch) {
+    if (!bunch) return;
+    const members = this.list().filter((tile) => tile.bunch === bunch);
+    if (members.length !== 1) return;
+    members[0].bunch = null;
+    this.save(members[0]);
+  }
+
   park(value) {
     const now = this.nowIso();
     const id = value?.id || this.idFactory();
@@ -485,9 +540,12 @@ export class DimensionTileStore {
     const tile = normalizeDimensionTile({
       ...value,
       id,
+      agents: value?.agents ?? existing?.agents ?? [],
+      bunch: value?.bunch !== undefined ? value.bunch : existing?.bunch,
       completedRequestIds,
       createdAt: value?.createdAt || now,
       parkedAt: now,
+      surface: value?.surface || existing?.surface || "herd",
       status: value?.status === "racing" ? "racing" : "parked",
       arena: {
         ...(value?.arena || {}),
@@ -510,6 +568,52 @@ export class DimensionTileStore {
     tile.status = "parked";
     tile.parkedAt = this.nowIso();
     return this.save(tile);
+  }
+
+  move(id, surface) {
+    if (!DIMENSION_TILE_SURFACES.has(surface)) {
+      throw new Error("A tile surface must be herd, arena, or binder.");
+    }
+    const tile = this.read(id);
+    if (tile.status === "primary") {
+      throw new Error("Move the primary chat by its title bar.");
+    }
+    const previousBunch = tile.bunch;
+    tile.surface = surface;
+    tile.bunch = null;
+    tile.parkedAt = this.nowIso();
+    const moved = this.save(tile);
+    this.clearOrphanedBunch(previousBunch);
+    return moved;
+  }
+
+  bunch(sourceId, targetId) {
+    const source = this.read(sourceId);
+    const target = this.read(targetId);
+    if (source.id === target.id) {
+      throw new Error("A tile cannot be bunched with itself.");
+    }
+    if (source.status === "primary" || target.status === "primary") {
+      throw new Error("Only dormant tiles can be bunched.");
+    }
+    if (source.surface !== target.surface) {
+      throw new Error("Tiles must share a surface before they can be bunched.");
+    }
+    const previousBunch = source.bunch;
+    const bunch = target.bunch || this.bunchIdFactory();
+    if (!DIMENSION_TILE_BUNCH_ID.test(bunch)) {
+      throw new Error("A valid dimension tile bunch id is required.");
+    }
+    source.bunch = bunch;
+    target.bunch = bunch;
+    this.save(target);
+    const result = {
+      bunch,
+      source: this.save(source),
+      target: this.read(target.id),
+    };
+    if (previousBunch !== bunch) this.clearOrphanedBunch(previousBunch);
+    return result;
   }
 
   complete(id, {
@@ -662,9 +766,13 @@ export class DimensionTileStore {
         this.save(tile);
       }
     }
+    const previousBunch = target.bunch;
     target.status = "primary";
+    target.bunch = null;
     target.arena.faceUp = true;
-    return this.save(target);
+    const primary = this.save(target);
+    this.clearOrphanedBunch(previousBunch);
+    return primary;
   }
 
   race(id) {
@@ -684,6 +792,7 @@ export class DimensionTileStore {
     const contender = this.park({
       title: `${source.title} race`,
       route: source.route,
+      agents: source.agents,
       turns: [
         {
           role: "user",
@@ -701,6 +810,8 @@ export class DimensionTileStore {
       ],
       history: [{ role: "user", content: question }],
       status: "racing",
+      surface: source.surface,
+      bunch: null,
       arena: { faceUp: true },
       raceId,
     });
@@ -713,7 +824,10 @@ export class DimensionTileStore {
 }
 
 export function registerDimensionTileIpc({
+  activateTile = null,
   assertTrustedIpc,
+  captureActivePayload = null,
+  deactivatePrimary = null,
   ipcMain,
   isEnabled,
   store,
@@ -734,17 +848,51 @@ export function registerDimensionTileIpc({
     guard(event);
     return store.list();
   });
-  ipcMain.handle("beta:tiles-park", (event, tile) => {
+  ipcMain.handle("beta:tiles-park", async (event, tile) => {
     guard(event);
-    return store.park(tile);
+    const payload = await captureActivePayload?.();
+    return store.park({
+      ...(tile || {}),
+      ...(payload?.agents ? { agents: payload.agents } : {}),
+      route: {
+        ...(tile?.route || {}),
+        ...(payload?.route || {}),
+      },
+    });
   });
   ipcMain.handle("beta:tiles-park-existing", (event, id) => {
     guard(event);
     return store.parkExisting(id);
   });
-  ipcMain.handle("beta:tiles-wake", (event, id) => {
+  ipcMain.handle("beta:tiles-wake", async (event, id) => {
     guard(event);
-    return store.wake(id);
+    const tile = store.read(id);
+    const route = await activateTile?.(tile);
+    const primary = store.wake(id);
+    if (route?.compositionHash) {
+      primary.route = {
+        ...primary.route,
+        url: String(route.url || primary.route.url),
+        rappid: String(route.callerRappid || primary.route.rappid),
+        compositionHash: String(route.transientCompositionHash
+          || route.compositionHash),
+      };
+      return store.save(primary);
+    }
+    return primary;
+  });
+  ipcMain.handle("beta:tiles-deactivate", async (event) => {
+    guard(event);
+    await deactivatePrimary?.();
+    return { ok: true };
+  });
+  ipcMain.handle("beta:tiles-move", (event, id, surface) => {
+    guard(event);
+    return store.move(id, surface);
+  });
+  ipcMain.handle("beta:tiles-bunch", (event, sourceId, targetId) => {
+    guard(event);
+    return store.bunch(sourceId, targetId);
   });
   ipcMain.handle("beta:tiles-fold", (event, id) => {
     guard(event);
@@ -1445,10 +1593,168 @@ function installArenaFrameBridge(settings) {
   return true;
 }
 
+function installTileDragFrameBridge(settings) {
+  const prior = window.__rappBetaTileDragBridge;
+  if (prior) {
+    prior.update(settings);
+    return true;
+  }
+
+  let current = settings;
+  let armedTileId = null;
+  let armedTileLabel = "Make primary";
+  const controller = new AbortController();
+  const header = document.querySelector("header");
+  const headerAttributes = header ? {
+    ariaKeyshortcuts: header.getAttribute("aria-keyshortcuts"),
+    dataDrive: header.getAttribute("data-drive"),
+    draggable: header.getAttribute("draggable"),
+    tabindex: header.getAttribute("tabindex"),
+  } : null;
+  const dropOverlay = document.getElementById("drop-overlay");
+  const dropOverlayText = dropOverlay
+    ? [...dropOverlay.childNodes].find((node) => (
+        node.nodeType === Node.TEXT_NODE && node.nodeValue.trim()
+      ))
+    : null;
+  const originalDropOverlayText = dropOverlayText?.nodeValue || "";
+
+  function restoreAttribute(element, name, value) {
+    if (value === null) element.removeAttribute(name);
+    else element.setAttribute(name, value);
+  }
+
+  function showDropOverlay() {
+    if (!dropOverlay || !dropOverlayText) return;
+    dropOverlayText.nodeValue = ` ${armedTileLabel} `;
+    dropOverlay.style.display = "flex";
+  }
+
+  function hideDropOverlay() {
+    if (!dropOverlay || !dropOverlayText) return;
+    dropOverlay.style.display = "none";
+    dropOverlayText.nodeValue = originalDropOverlayText;
+  }
+
+  function realDragLeave(event) {
+    return event.relatedTarget === null
+      || event.clientX <= 0
+      || event.clientY <= 0
+      || event.clientX >= window.innerWidth
+      || event.clientY >= window.innerHeight;
+  }
+
+  function incomingTileId(event) {
+    return event.dataTransfer?.getData("application/x-rapp-dimension-tile")
+      || armedTileId;
+  }
+
+  function disable() {
+    controller.abort();
+    window.removeEventListener("message", receive);
+    hideDropOverlay();
+    if (header && headerAttributes) {
+      restoreAttribute(header, "aria-keyshortcuts", headerAttributes.ariaKeyshortcuts);
+      restoreAttribute(header, "data-drive", headerAttributes.dataDrive);
+      restoreAttribute(header, "draggable", headerAttributes.draggable);
+      restoreAttribute(header, "tabindex", headerAttributes.tabindex);
+    }
+    delete window.__rappBetaTileDragBridge;
+  }
+
+  function receive(event) {
+    if (event.source !== window.parent || !event.data) return;
+    if (event.data.type === "rapp-beta:view-mode-state") {
+      current = event.data.viewMode || current;
+      if (current.mode !== "arena") disable();
+      return;
+    }
+    if (event.data.type === "rapp-beta:tile-drag-armed") {
+      armedTileId = String(event.data.id || "");
+      armedTileLabel = String(event.data.label || "Make primary");
+      return;
+    }
+    if (event.data.type === "rapp-beta:tile-drag-disarmed") {
+      armedTileId = null;
+      hideDropOverlay();
+      return;
+    }
+    if (event.data.type === "rapp-beta:tile-ready") {
+      window.parent.postMessage({ type: "rapp-beta:tile-frame-ready" }, "*");
+    }
+  }
+
+  if (header) {
+    header.draggable = true;
+    header.tabIndex = 0;
+    header.dataset.drive = "brainstem.primary";
+    header.setAttribute("aria-keyshortcuts", "H A B");
+    header.addEventListener("dragstart", (event) => {
+      if (event.target.closest?.("button,select,a,input")) {
+        event.preventDefault();
+        return;
+      }
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("application/x-rapp-brainstem-chat", "primary");
+      window.parent.postMessage({ type: "rapp-beta:chat-drag-start" }, "*");
+    }, { signal: controller.signal });
+    header.addEventListener("dragend", () => {
+      window.parent.postMessage({ type: "rapp-beta:chat-drag-end" }, "*");
+    }, { signal: controller.signal });
+    header.addEventListener("keydown", (event) => {
+      if (event.target !== header) return;
+      const surface = {
+        h: "herd",
+        a: "arena",
+        b: "binder",
+      }[event.key.toLowerCase()];
+      if (!surface) return;
+      event.preventDefault();
+      window.parent.postMessage({
+        type: "rapp-beta:tile-keyboard-park",
+        surface,
+      }, "*");
+    }, { signal: controller.signal });
+  }
+
+  window.addEventListener("dragover", (event) => {
+    if (!incomingTileId(event)) return;
+    event.preventDefault();
+    if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+    showDropOverlay();
+  }, { signal: controller.signal });
+  window.addEventListener("dragleave", (event) => {
+    if (realDragLeave(event)) hideDropOverlay();
+  }, { signal: controller.signal });
+  window.addEventListener("drop", (event) => {
+    const id = incomingTileId(event);
+    if (!id) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    hideDropOverlay();
+    armedTileId = null;
+    window.parent.postMessage({
+      type: "rapp-beta:tile-drop-primary",
+      id,
+    }, "*");
+  }, { signal: controller.signal });
+  window.addEventListener("message", receive);
+
+  window.__rappBetaTileDragBridge = {
+    disable,
+    update(next) {
+      current = next;
+      if (current.mode !== "arena") disable();
+    },
+  };
+  window.parent.postMessage({ type: "rapp-beta:tile-frame-ready" }, "*");
+  return true;
+}
+
 export function composeDimensionTilesFrameBridgeSource(checkpointSource, viewMode) {
   const source = String(checkpointSource || "");
   if (viewMode?.mode !== "arena") return source;
-  return `${source}\n;(${installArenaFrameBridge.toString()})(${
-    JSON.stringify(normalizeViewModeSettings(viewMode))
-  });`;
+  const settings = JSON.stringify(normalizeViewModeSettings(viewMode));
+  return `${source}\n;(${installArenaFrameBridge.toString()})(${settings});`
+    + `\n;(${installTileDragFrameBridge.toString()})(${settings});`;
 }

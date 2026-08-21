@@ -1918,6 +1918,13 @@ async function handleCustomArenaLayoutLoad() {
 }
 
 async function handleViewModeChange(next) {
+  const leavingTileView = viewMode.mode === "arena" && next?.mode === "herd";
+  if (leavingTileView) {
+    const primary = dimensionTileStore.list().find((tile) => (
+      tile.status === "primary"
+    ));
+    if (primary) dimensionTileStore.parkExisting(primary.id);
+  }
   const value = changeViewModeSettings({
     apply: applyEffectiveViewMode,
     viewMode: next,
@@ -1925,6 +1932,7 @@ async function handleViewModeChange(next) {
     env: process.env,
   });
   await applyChatLookToFrame();
+  if (leavingTileView) await routeManager.startBlank();
   return structuredClone(value);
 }
 
@@ -2885,7 +2893,22 @@ function registerIpc() {
     return handleViewModeChange(next || {});
   });
   registerDimensionTileIpc({
+    activateTile: (tile) => routeManager.startTile(tile.agents),
     assertTrustedIpc,
+    captureActivePayload: () => {
+      const route = routeManager.activeRoute;
+      if (!route) throw new Error("No active Brainstem route can be captured.");
+      return {
+        agents: routeManager.activeTileAgentPayload(),
+        route: {
+          url: route.url,
+          rappid: route.callerRappid,
+          compositionHash: route.transientCompositionHash
+            || route.compositionHash,
+        },
+      };
+    },
+    deactivatePrimary: () => routeManager.startBlank(),
     ipcMain,
     isEnabled: () => viewMode.mode === "arena",
     store: dimensionTileStore,
