@@ -265,8 +265,9 @@ test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
   // The walkthrough teaches where a capability comes from and how a preference is
   // made — the public summon and the popped seal. A new learner should see the
   // model demonstrated, not read about it later. See docs/ONE-TIME-SEALS.md.
-  assert.match(walkthrough, /seven-word key/);
+  assert.match(walkthrough, /public RAPP Store/);
   assert.match(walkthrough, /still sealed/);
+  assert.match(walkthrough, /seal being popped/);
   assert.match(walkthrough, /exported \.egg/);
   assert.match(walkthrough, /control-handoff/);
   assert.match(walkthrough, /DIRECT_BRAINSTEM_READY_1/);
