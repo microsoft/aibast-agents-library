@@ -3,6 +3,9 @@
 The execution engine under [dimension mining](DIMENSION-MINING.md). Mining decides *what* to race
 and *what counts as winning*; the drill is *how many at once, and under what constraints*.
 
+**The unit of drilling is a tile.** You drill a tile — not a repository, not a task — because the
+tile is the thing that carries the capability, the lineage and the adapter that training lands in.
+
 Given a tile, a task and a flag, a **drill** runs N candidate dimensions concurrently — each an
 independent worker, each in its own workspace — and collapses to the one that captures the flag.
 
@@ -61,6 +64,24 @@ A person can stop the whole drill at once: every worker dies, every workspace is
 partial work is discarded rather than half-merged. There is no state in which a killed drill has
 changed something.
 
+## A drill yields two things
+
+Specifying only the winner misses half of what a drill produces.
+
+1. **The collapse** — the dimension that captured the flag, promoted; or an honest report that
+   nobody did.
+2. **The wear** — the training that landed in the tile's adapter along the way, which persists
+   regardless of who won or whether anyone did.
+
+The second is the one that compounds, and it has a consequence worth stating plainly: **a drill that
+captures no flag is not a wasted drill.** The tile came out of it needing less than it did going in,
+and every folded dimension left a trace of something that does not work. A run that fails its flag
+still returns two useful things, so "the flag was not captured" is a result rather than a loss.
+
+That is also why the wear must be attributed. Training earned by drilling against a synthetic flag
+is real and is not the same as a person using the tile; the lineage records which, and neither may
+present as the other ([CRYSTALS](CRYSTALS.md)).
+
 ## What a drill run records
 
 | Field | Why |
@@ -70,6 +91,7 @@ changed something.
 | `winner` | the capturing dimension, and the tie-break rule if one was needed |
 | `budget` | declared and consumed, so an overrun is visible rather than inferred |
 | `folded[]` | the losers, with their traces |
+| `wear` | training that landed, and that it was drilled rather than used |
 
 ## Proof obligations
 
