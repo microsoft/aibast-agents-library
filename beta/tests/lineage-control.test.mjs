@@ -150,7 +150,7 @@ test("ordinary promote and drift messages fail open to chat", async () => {
 
 test("control-word interceptor honors custom baseline and restore words", async () => {
   const env = {
-    RAPP_BASELINE_WORD: "factory settings",
+    RAPP_BASELINE_SAFEWORD: "factory settings",
     RAPP_RESTORE_WORD: "grow again",
   };
   assert.equal(parseLineageCommand("baseline", env), null);
@@ -349,7 +349,7 @@ test("lineage commands round-trip the full wire result shape", async () => {
 
 test("default control words pass through untouched when custom words are configured", async () => {
   const env = {
-    RAPP_BASELINE_WORD: "factory settings",
+    RAPP_BASELINE_SAFEWORD: "factory settings",
     RAPP_RESTORE_WORD: "grow again",
   };
   const { calls, manager } = managerFixture();

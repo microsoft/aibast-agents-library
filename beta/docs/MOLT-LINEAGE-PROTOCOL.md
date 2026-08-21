@@ -310,7 +310,7 @@ the pointer moves immediately, the restart is scheduled for lifecycle idle, and
 the pending reply says the change takes effect as soon as the current task
 finishes. No-op and refused commands do not restart the active worker.
 
-The words are configurable with `RAPP_BASELINE_WORD`,
+The words are configurable with `RAPP_BASELINE_SAFEWORD`,
 `RAPP_RESTORE_WORD`, `RAPP_ENVIRONMENTS_WORD`, `RAPP_PROMOTE_WORD`, and
 `RAPP_DRIFT_WORD`. `RAPP_MOLT_LINEAGE=0` is checked at every invocation and
 every HEAD-writing path reports refusal without moving a pointer.
