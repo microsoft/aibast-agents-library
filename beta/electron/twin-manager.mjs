@@ -127,6 +127,7 @@ function discoverTwinMolts(molterHome, seen = new Set()) {
           },
           filename,
           sha256: sha256(source),
+          source,
           source_path: sourcePath,
           tool_name: meta.detail?.tool_name
             || inferAgentToolName(source, filename),
@@ -170,10 +171,22 @@ function processAlive(pid) {
   }
 }
 
+function removeTwinDirectories(twin) {
+  for (const directory of new Set([twin?.dir, twin?.molterHome])) {
+    if (!directory) continue;
+    try {
+      rmSync(directory, { recursive: true, force: true });
+    } catch {
+      // Teardown remains best effort on platforms with transient file locks.
+    }
+  }
+}
+
 export class TwinManager {
   constructor({
     brainstemConfig,
     betaHome,
+    createWorkerProcess = (config) => new BrainstemProcess(config),
     routeManager = null,
     storeClient,
     brainstemUrl = null,
@@ -189,6 +202,7 @@ export class TwinManager {
     // main passes () => state.url so a routed Brainstem is honored.
     this.brainstemUrl = brainstemUrl || (() => this.brainstemConfig.url);
     this.betaHome = betaHome;
+    this.createWorkerProcess = createWorkerProcess;
     this.routeManager = routeManager;
     this.ledger = ledger;
     this.refreshAmbient = typeof refreshAmbient === "function"
@@ -496,6 +510,11 @@ export class TwinManager {
     mkdirSync(molterHome, { recursive: true, mode: 0o700 });
     if (process.platform !== "win32") chmodSync(molterHome, 0o700);
     let materializedAgentSources = agentSources;
+    let port;
+    let url;
+    let worker;
+    let rappid = null;
+    const resourcePaths = {};
     try {
       if (this.routeManager?.materializeExternalAgentSet) {
         materializedAgentSources = this.routeManager.materializeExternalAgentSet(
@@ -512,52 +531,51 @@ export class TwinManager {
           );
         }
       }
+      if (spec.egg) {
+        writeFileSync(path.join(dir, `${id}.egg`), spec.egg, { mode: 0o600 });
+      }
+      // Materialize any resource files (e.g. parity cases / industry matrix)
+      // into the twin dir so its agents can read them locally.
+      for (const resource of spec.resources || []) {
+        const target = path.join(dir, resource.name);
+        writeFileSync(target, resource.bytes, { mode: 0o600 });
+        resourcePaths[resource.name] = target;
+      }
+
+      // Mint a mint-once RAPPID from the first agent (UUID-anchor; rapp/1 §6.2).
+      try {
+        const first = materializedAgentSources[0];
+        rappid = this.routeManager?.packageAgent
+          ? this.routeManager.packageAgent({ filename: first.filename, source: first.source }).agent_rappid
+          : null;
+      } catch {
+        rappid = null;
+      }
+
+      port = await allocatePort();
+      url = `http://127.0.0.1:${port}`;
+      worker = this.createWorkerProcess({
+        ...this.brainstemConfig,
+        port,
+        portPreallocated: true,
+        url,
+        logFile: path.join(this.betaHome, "logs", "twins", `${id}.log`),
+        env: {
+          ...(this.brainstemConfig.env || {}),
+          AGENTS_PATH: agentsDir,
+          BRAINSTEM_BETA_ROUTED_WORKER: "1",
+          BRAINSTEM_BETA_TWIN: id,
+          MOLTER_HOME: molterHome,
+          RAPP_AMBIENT_DIR: path.join(this.betaHome, "ambient"),
+          // A twin runs sha-pinned-but-still-third-party store code — it must
+          // always bind loopback, never inherit the main Brainstem's LAN mode.
+          BRAINSTEM_LAN_MODE: "0",
+        },
+      });
     } catch (error) {
-      rmSync(dir, { recursive: true, force: true });
+      removeTwinDirectories({ dir, molterHome });
       throw error;
     }
-    if (spec.egg) writeFileSync(path.join(dir, `${id}.egg`), spec.egg, { mode: 0o600 });
-    // Materialize any resource files (e.g. parity cases / industry matrix) into
-    // the twin dir so its agents can read them locally.
-    const resourcePaths = {};
-    for (const resource of spec.resources || []) {
-      const target = path.join(dir, resource.name);
-      writeFileSync(target, resource.bytes, { mode: 0o600 });
-      resourcePaths[resource.name] = target;
-    }
-
-    // Mint a mint-once RAPPID from the first agent (UUID-anchor; rapp/1 §6.2).
-    let rappid = null;
-    try {
-      const first = materializedAgentSources[0];
-      rappid = this.routeManager?.packageAgent
-        ? this.routeManager.packageAgent({ filename: first.filename, source: first.source }).agent_rappid
-        : null;
-    } catch {
-      rappid = null;
-    }
-
-    const port = await allocatePort();
-    const url = `http://127.0.0.1:${port}`;
-    const worker = new BrainstemProcess({
-      ...this.brainstemConfig,
-      port,
-      portPreallocated: true,
-      url,
-      logFile: path.join(this.betaHome, "logs", "twins", `${id}.log`),
-      env: {
-        ...(this.brainstemConfig.env || {}),
-        AGENTS_PATH: agentsDir,
-        BRAINSTEM_BETA_ROUTED_WORKER: "1",
-        BRAINSTEM_BETA_TWIN: id,
-        MOLTER_HOME: molterHome,
-        RAPP_AMBIENT_DIR: path.join(this.betaHome, "ambient"),
-        // A twin runs sha-pinned-but-still-third-party store code — it must ALWAYS
-        // bind loopback, never inherit the main Brainstem's LAN mode and expose
-        // itself on 0.0.0.0 (rapp-kernel-boundary/1.0: twins are loopback-only).
-        BRAINSTEM_LAN_MODE: "0",
-      },
-    });
 
     const twin = {
       id,
@@ -610,6 +628,8 @@ export class TwinManager {
     } catch (error) {
       this.#setStatus(twin, "error");
       this.#log(twin, `Failed to start: ${error.message}`);
+      await this.#disposeTwin(twin);
+      this.emit({ type: "twin-closed", id });
       throw error;
     }
     this.#setStatus(twin, "ready");
@@ -701,13 +721,17 @@ export class TwinManager {
       twin.seenMolts,
     );
     for (const record of records) {
+      const archivedSource = this.ledger.archiveAgentSource?.({
+        filename: record.filename,
+        source: record.source,
+      }) || null;
       this.ledger.recordAgent({
         event: "molted",
         filename: record.filename,
         toolName: record.tool_name,
         rappid: twin.rappid,
-        sha256: record.sha256,
-        sourcePath: record.source_path,
+        sha256: archivedSource?.sha256 || record.sha256,
+        sourcePath: archivedSource?.path || record.source_path,
         origin: "molter",
         detail: {
           ...record.detail,
@@ -889,16 +913,7 @@ export class TwinManager {
   async close(id) {
     const key = String(id);
     const twin = this.twins.get(key);
-    // Signal any in-flight loop/run to stop BEFORE teardown so its next status
-    // emit can't resurrect the tile after we remove it.
-    if (twin) { twin.closed = true; twin.running = false; }
-    this.twins.delete(key);
-    if (twin) this.mirrorMolts(twin);
-    if (twin?.worker) await twin.worker.stop().catch(() => {});
-    if (twin) this.mirrorMolts(twin);
-    if (twin?.dir) {
-      try { rmSync(twin.dir, { recursive: true, force: true }); } catch { /* best effort */ }
-    }
+    if (twin) await this.#disposeTwin(twin);
     // Always emit — even for an already-absent id — so a stale tile is dismissable.
     this.emit({ type: "twin-closed", id: key });
     return { ok: true };
@@ -906,10 +921,18 @@ export class TwinManager {
 
   async stopAll() {
     const twins = Array.from(this.twins.values());
-    this.twins.clear();
-    for (const twin of twins) this.mirrorMolts(twin);
-    await Promise.allSettled(twins.map((twin) => twin.worker.stop()));
-    for (const twin of twins) this.mirrorMolts(twin);
+    await Promise.allSettled(twins.map((twin) => this.#disposeTwin(twin)));
+  }
+
+  async #disposeTwin(twin) {
+    // Stop before deleting either directory; no live worker may still own them.
+    twin.closed = true;
+    twin.running = false;
+    this.twins.delete(String(twin.id));
+    try { this.mirrorMolts(twin); } catch { /* preserve teardown */ }
+    if (twin.worker) await twin.worker.stop().catch(() => {});
+    try { this.mirrorMolts(twin); } catch { /* preserve teardown */ }
+    removeTwinDirectories(twin);
   }
 }
 

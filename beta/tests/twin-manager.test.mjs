@@ -4,6 +4,7 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readdirSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -54,6 +55,90 @@ test("store hatch refuses a traversal filename before it can escape the twin age
 
   await assert.rejects(() => manager.hatch("escape"), /safe \*_agent\.py basename/);
   assert.equal(existsSync(escaped), false);
+});
+
+test("a failed twin hatch removes its twin and Molter directories", async (t) => {
+  const temporary = mkdtempSync(path.join(tmpdir(), "rapp-twin-failed-"));
+  const betaHome = path.join(temporary, "home");
+  t.after(() => rmSync(temporary, { recursive: true, force: true }));
+  let stops = 0;
+  const manager = new TwinManager({
+    betaHome,
+    brainstemConfig: {},
+    createWorkerProcess: () => ({
+      start: async () => {
+        throw new Error("worker start failed");
+      },
+      stop: async () => {
+        stops += 1;
+      },
+    }),
+    storeClient: {},
+  });
+
+  await assert.rejects(
+    () => manager.hatchLocal({
+      id: "failed",
+      agentSources: [{
+        filename: "failed_agent.py",
+        source: "class FailedAgent:\n    pass\n",
+      }],
+    }),
+    /worker start failed/,
+  );
+  assert.equal(stops, 1);
+  assert.equal(manager.twins.size, 0);
+  assert.deepEqual(readdirSync(path.join(betaHome, "twins")), []);
+  assert.deepEqual(readdirSync(path.join(betaHome, "molts")), []);
+});
+
+test("closing and stopping twins removes every per-hatch directory", async (t) => {
+  const temporary = mkdtempSync(path.join(tmpdir(), "rapp-twin-cleanup-"));
+  const betaHome = path.join(temporary, "home");
+  t.after(() => rmSync(temporary, { recursive: true, force: true }));
+  const stopped = new Set();
+  const manager = new TwinManager({
+    betaHome,
+    brainstemConfig: {},
+    createWorkerProcess: (config) => ({
+      start: async () => {},
+      stop: async () => {
+        stopped.add(config.env.BRAINSTEM_BETA_TWIN);
+      },
+    }),
+    storeClient: {},
+  });
+  const source = [{
+    filename: "cleanup_agent.py",
+    source: "class CleanupAgent:\n    pass\n",
+  }];
+  const first = await manager.hatchLocal({
+    id: "first",
+    agentSources: source,
+  });
+  const second = await manager.hatchLocal({
+    id: "second",
+    agentSources: source,
+  });
+  const firstPaths = {
+    dir: manager.get(first.id).dir,
+    molterHome: manager.get(first.id).molterHome,
+  };
+  const secondPaths = {
+    dir: manager.get(second.id).dir,
+    molterHome: manager.get(second.id).molterHome,
+  };
+
+  await manager.close(first.id);
+  assert.equal(existsSync(firstPaths.dir), false);
+  assert.equal(existsSync(firstPaths.molterHome), false);
+  assert.ok(stopped.has(first.id));
+
+  await manager.stopAll();
+  assert.equal(existsSync(secondPaths.dir), false);
+  assert.equal(existsSync(secondPaths.molterHome), false);
+  assert.ok(stopped.has(second.id));
+  assert.equal(manager.twins.size, 0);
 });
 
 test("a twin is driven only over /chat — never a new route (canon)", () => {
@@ -213,8 +298,14 @@ test("twin molt.json generations mirror once with their archived source", (t) =>
     detail: { tool_name: "WeatherAgent" },
   }));
   const writes = [];
+  const archivedPath = path.join(temporary, "ledger-sources", "weather_agent.py");
   const manager = Object.create(TwinManager.prototype);
   manager.ledger = {
+    archiveAgentSource: ({ filename, source: archivedSource }) => {
+      assert.equal(filename, "weather_agent.py");
+      assert.equal(Buffer.compare(archivedSource, Buffer.from(source)), 0);
+      return { path: archivedPath, sha256: "archived-by-ledger" };
+    },
     recordAgent: (row) => writes.push(row),
   };
   const twin = {
@@ -234,8 +325,8 @@ test("twin molt.json generations mirror once with their archived source", (t) =>
   assert.equal(writes[0].filename, "weather_agent.py");
   assert.equal(writes[0].toolName, "WeatherAgent");
   assert.equal(writes[0].origin, "molter");
-  assert.equal(writes[0].sourcePath, path.join(generation, "agent.py"));
-  assert.match(writes[0].sha256, /^[a-f0-9]{64}$/);
+  assert.equal(writes[0].sourcePath, archivedPath);
+  assert.equal(writes[0].sha256, "archived-by-ledger");
   assert.equal(writes[0].detail.recorded_sha256, "recorded-by-molter");
 });
 
@@ -248,7 +339,7 @@ test("twin hatches and chat completions are wired into the shared ledger", () =>
   assert.match(source, /this\.mirrorMolts\(twin\)/);
   assert.match(source, /recordCompletedTurn\(this\.ledger/);
   assert.match(source, /finally \{\s*this\.mirrorMolts\(twin\)/);
-  assert.match(source, /if \(twin\) this\.mirrorMolts\(twin\)/);
+  assert.match(source, /async #disposeTwin[\s\S]*this\.mirrorMolts\(twin\)/);
   assert.match(source, /surface: "brainstem"/);
   assert.match(source, /sessionId: data\.session_id \|\| sessionId/);
 });
