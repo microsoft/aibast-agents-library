@@ -26,8 +26,9 @@ assumptions that were wrong for what a rappid is:
 
 **One takeover, not two features.** The Agent Arena *is* the former table view, renamed and re-aimed:
 the same surface, the same arrangements, the same moves. Nothing was kept in parallel — there is no
-"table view" left to choose. The herd is the default view; the arena is the same herd arranged for
-competition, with the tiles as the competitors.
+"table view" left to choose. The arena is a **separate view with its own use case** — tiles
+competing on a task — and not a rearrangement of the herd: the herd remains the grid of tiles at
+rest, and a tile competes only because someone moved it into the arena.
 
 So the vocabulary now reads end to end: **rappid tiles**, held in a **herd**, arranged in an
 **arena** when they compete, each tile a `.tile` file that a rappid can stand on.

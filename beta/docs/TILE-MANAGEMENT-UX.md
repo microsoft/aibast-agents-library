@@ -39,11 +39,19 @@ body already knows. It scales because nothing new has to be explained as the num
 | Surface | What it is | State of tiles on it |
 |---|---|---|
 | **The Brainstem chat** | the big window — **this is a tile too**, the primary one: the companion currently loaded | active, running |
-| **The herd** (default view) | every tile you have parked, side by side | parked, ready |
-| **The arena** | the same tiles arranged to compete on a task | parked, competing |
+| **The herd** (default view) | the grid — every tile you have parked, at rest | parked, ready |
+| **The arena** | a separate view where the tiles you put there compete on a task | competing |
 | **The binder** | the tile keeper — where tiles you are not using are stored and organised in bunches, like a binder of pages | dormant, stored |
 
-The herd and the arena are two views of one set. The binder is storage: nothing in it is running.
+**These are four separate places, not four renderings of one list.** A tile is in exactly one of
+them, and moving it between them is a move. In particular:
+
+- **The herd is the grid.** It is the default view and it stays what it is: your tiles, laid out in
+  a grid, at rest. It is not a mode of the arena and the arena's arrangements do not apply to it.
+- **The arena is its own view for its own use case** — agents competing on a task. A tile only
+  competes because you put it there. Its arrangements (Ring, Rows, Focus, Grid, Stack, Custom)
+  belong to the arena alone.
+- **The binder is storage**: nothing in it is running.
 
 ## Why you would move a tile at all
 
