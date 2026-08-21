@@ -98,6 +98,33 @@ The voice-message idiom stays right for the case where there is no fast voice to
 reply, or a person who wants only the good voice. Where speech should begin at once, the relay is
 the better default, because it removes the wait without giving up the voice.
 
+## If it were audio-bound
+
+Everything above assumes text is carrying the conversation and voice is an extra channel. Take the
+text away — an audio-only conversation, on the radio — and the same design becomes strict rather
+than optional. That case is worth designing for directly, for two reasons: it is the honest test of
+whether the voice path is any good, and it is the situation of anyone who cannot see the screen.
+
+What changes when audio is the only channel:
+
+- **Dead air is the failure mode, not latency.** A station never goes silent while the next thing is
+  cued; something is always on air. That is precisely what the fast voice is for, and why the good
+  one cooks in behind it rather than in front of it. "Wait three seconds for a better voice" is a
+  reasonable trade when you can read in the meantime and an unacceptable one when you cannot.
+- **The seam has no safety net.** With text on screen, a dropped or duplicated word is recoverable —
+  the reader just looks. In audio it is simply lost. The word-exactly-once rule stops being
+  fastidiousness and becomes the correctness condition.
+- **Interruption must work mid-utterance.** A listener cannot skim ahead or stop reading; the only
+  way out of a long answer is to talk over it. Speech must stop the instant the person speaks, which
+  is the two-player law in another medium: the person wins the moment they act.
+- **Pacing carries meaning.** Pauses, emphasis and speed are the audio equivalent of paragraphs and
+  headings. A handoff that preserves the words but resets the prosody mid-sentence will still sound
+  wrong, so continuity is a property of delivery, not only of text.
+
+**Design the voice path as though it were audio-bound, and the text-bound case gets it for free.**
+The reverse does not hold: a voice built assuming someone can always read the screen fails the
+person who cannot.
+
 ## What this rules out
 
 - Holding the text reply until the audio is ready.
@@ -106,3 +133,4 @@ the better default, because it removes the wait without giving up the voice.
   and only one of them has someone waiting.
 - A relay that repeats or drops the word it hands off on, or that hands off into different text.
 - Making the fast voice deliberately worse so the upgrade sounds bigger.
+- Any voice path that only works because the listener can also read the screen.
