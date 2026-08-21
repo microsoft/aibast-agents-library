@@ -226,5 +226,8 @@ export function createTwinLedgerBridgeSource(options = {}) {
     sink: options.sink === "parent" ? "parent" : "preload",
     twinId: options.twinId ? String(options.twinId) : null,
   };
-  return `(${installTwinLedgerBridge.toString()})(${JSON.stringify(normalized)})`;
+  return "/* Added by the RAPP Brainstem Frontier host: the twin ledger bridge, which"
+    + " forwards this twin's tool and turn events to the ledger so the run leaves a"
+    + " record. It reads events already emitted here and adds no capability. */\n"
+    + `(${installTwinLedgerBridge.toString()})(${JSON.stringify(normalized)})`;
 }

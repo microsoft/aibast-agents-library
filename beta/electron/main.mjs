@@ -2153,7 +2153,10 @@ function findTwinFrame(twinUrl) {
 // "force-mode capable" — the AI drives it in-frame with the ui-driver's cursor,
 // and this flag lets the UI (or us) know it is under AI control. A rapplication
 // may also ship its own force-mode affordances; this never overrides them.
-const FORCE_MODE_BOOTSTRAP = "<script>window.__rappForceModeCapable=true;"
+const FORCE_MODE_BOOTSTRAP = "<!-- Added by the RAPP Brainstem Frontier host: a force-mode"
+  + " capability marker, so the driver can tell a real responsive layout from one"
+  + " the host is simulating. Nothing else is changed. -->"
+  + "<script>window.__rappForceModeCapable=true;"
   + "try{document.documentElement.setAttribute('data-rapp-force-mode','ready');}catch(e){}</script>";
 
 function autopilotInstallationSource() {
@@ -2205,8 +2208,12 @@ async function injectTwinUi(twinId) {
 // desktop real estate by default (a rapplication with a lot of UI shouldn't be
 // mashed into a phone column), and the user can flip it to a centered mobile
 // column any time. A rapplication may declare preferred_view:"mobile" to start
-// narrow. This is the ONLY thing the host adds to the popped-out frame.
+// narrow. The host also adds the instrumentation from instrumentRappUi() and, for
+// a twin, the ledger bridge; each declares itself in its own delivered bytes, as
+// docs/UI-AUTOSTEER-PROTOCOL.md stage 3 requires.
 const VIEW_TOGGLE = (startMobile) => `
+<!-- Added by the RAPP Brainstem Frontier host: a viewport toggle so a person can
+     see the page as it looks on a narrow screen. It changes presentation only. -->
 <style id="__rappViewStyle">
   html[data-rapp-view="mobile"] body { max-width: 480px !important; margin: 0 auto !important;
     box-shadow: 0 0 0 100vmax rgba(0,0,0,.25); }
