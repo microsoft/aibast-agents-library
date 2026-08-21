@@ -172,3 +172,11 @@ face and seven‑word key; a tile packs and unpacks byte‑identically for text 
 CRLF input included; a tampered payload hash is refused; a tile whose face disagrees with its seed is
 refused; an unsatisfiable `stands_on` refuses to hatch and names the failed requirement; and a
 pinned‑only tile never reports `offline: ready`.
+
+## Summoning on a device that has nothing
+
+The public lookup is also the handshake a brand-new device performs: with no local state and nothing
+synced, summoning a tile by its seven-word key is the one door outward — a public read, no account
+and no identity transmitted, with the bytes verified against seed and face before they become
+anything. See [`ONE-TIME-SEALS.md`](ONE-TIME-SEALS.md) for why a fresh device starts sealed and what
+that door is for.

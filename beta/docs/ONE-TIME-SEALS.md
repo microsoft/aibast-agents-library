@@ -37,6 +37,34 @@ popped seals *is* the preference state, and it only ever grows.
   scope of "never" is this device and this install. Claiming more would be claiming something the
   product cannot deliver.
 
+## The one door outward: the public summon
+
+Seals do not sync, so a new device starts sealed and empty. That raises the obvious question — if
+nothing carries over, how does a person get anything? — and the answer is the part that makes the
+whole model work rather than merely tidy.
+
+**There is exactly one door outward, and it is a public read.** A device with nothing on it can
+**summon** a rappid tile from the public catalog by its seven-word key
+([`RAPPID-TILE-PROTOCOL.md`](RAPPID-TILE-PROTOCOL.md)) — the tile is fetched from the public store
+and verified locally. That is the entire handshake:
+
+- **No account, no sign-in, no sync.** Nothing about the person is transmitted. The device asks for
+  a name and receives bytes. That is what lets it work from nothing, and what makes it safe to
+  offer on a device that has made no decisions yet.
+- **Only the public face crosses.** The catalog reached through this door is public by
+  construction; private material is not on the other side of it and cannot arrive through it. A
+  device starting from nothing gets the public world, and only the public world.
+- **The bytes are verified before they are anything.** A public read must not become a trust hole:
+  a summoned tile is checked against its seed and face before it is installed or run, exactly as a
+  locally-dropped one is. Fetching is not trusting.
+- **Reaching out is itself a seal.** The first summon pops the seal on public lookup — a decision
+  made once, in the moment it means something ("go and get that"), rather than a network-access
+  question asked during setup before the person knows why they would say yes.
+
+So the shape of a fresh device is: everything sealed, nothing inherited, and one public door a
+person can choose to walk through. Set-up is not a screen to get through; it is the first thing you
+actually wanted to do.
+
 ## Rules
 
 1. **One action pops it.** No confirmation dialog, no "not now", no multi-step flow. A person who
@@ -49,7 +77,8 @@ popped seals *is* the preference state, and it only ever grows.
 5. **If it cannot be written down**, honour it for the session and surface the failure. Silently
    discarding a person's choice is the one outcome that is never acceptable.
 6. **Seals do not sync.** A second device starts sealed, on purpose. Inheriting configuration is the
-   problem this avoids, not a feature it is missing.
+   problem this avoids, not a feature it is missing — what a fresh device gets instead is the public
+   summon above.
 
 ## Where it applies
 
