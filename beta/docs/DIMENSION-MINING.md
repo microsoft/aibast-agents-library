@@ -11,6 +11,9 @@ hypothesis explored in the virtual, and most of them are meant to lose.
 
 The arena already races tiles that exist. This mints the contenders.
 
+The parallel execution engine underneath — how many run at once, in what isolation, under what
+budget — is [`rapp-qdrill/1.0`](QDRILL-PROTOCOL.md).
+
 ## The one constraint that makes it engineering
 
 **A mined race requires a flag the machine can check.**
