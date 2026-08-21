@@ -53,6 +53,211 @@ is a candidate that arrives pre-worn, and it captures the flag or it does not, e
 checker as everything else. Finding something is not the same as it being right, and the drill's
 discipline is precisely that it never confuses the two.
 
+## Local instant transmission: the drill finds the pair, the fold merges it
+
+Everything above describes a drill racing candidates. There is a second, cheaper use of exactly the
+same machinery, and it is the one that runs most often: **drilling to find a pair.**
+
+### The drill's only job is to find pairs
+
+A drill searching for instant transmission does not generate, does not merge, and does not
+assimilate. It searches for **a dimension trigger** — a key that addresses a frame in more than one
+dimension — and its entire output is the pair it found:
+
+```
+{ "key": "<the trigger>", "here": "<local frame address>", "there": "<the other frame's address>" }
+```
+
+That is the whole result. The drill hands back a pair and stops. Everything after that is the fold's
+job, and keeping the two apart is what makes this safe to run constantly: a search that cannot
+mutate anything can be wrong as often as it likes.
+
+### The key is a coordinate, and similar frames share one
+
+The trigger is not a similarity score — nothing is guessed, nothing is embedded, nothing is
+approximate. A quantum key is a **composite coordinate**, and matching is exact equality of its
+components. What makes it reach further than a lookup is that the components can name *where* a
+frame sits as well as *what* it contains:
+
+| Component | What it fixes | What a match on it means |
+|---|---|---|
+| **frame rappid** | which capability this is a frame of | the same thing, in another dimension |
+| **clock-speed key** | the cadence the dimension ran at | frames that line up tick for tick |
+| **frame tick** | the position in that dimension's own time | the same moment of the same situation |
+| **content digest** | the frame's bytes | two lines converged on an identical frame |
+| further components | whatever else a dimension declares as shared | declared by the dimension, not inferred |
+
+Because those components are coordinates and not only contents, **two frames that are merely similar
+can legitimately share a key** — same capability, same clock, same tick, different history. That is
+the hit that pays: frames of the same situation as it ran elsewhere, whose deltas differ, so folding
+them produces something neither side had.
+
+**Byte-identity is a key too, and a strong one.** A content digest is a perfectly good component,
+and a hit on it is not a wasted hit just because the content adds nothing. Two frames with identical
+bytes and *different ancestries* are proof that two lines converged independently — and what
+assimilating one transmits is not content but **the other dimension's lineage, provenance and
+wear**, attached to a frame this machine already holds. It is also the safest possible assimilation:
+a frame asserting exactly what is already asserted cannot contradict anything downstream, so it
+passes the compatibility check below by construction.
+
+So the two kinds of hit pay differently and both pay: **matching on position** brings new deltas,
+**matching on content** brings joined ancestry.
+
+It is also the sense in which the situation is in two places at once, and why the transmission is
+instant: the key already names where the frame is in both dimensions, so nothing has to be searched
+for by content or reconstructed on arrival.
+
+Most drills find nothing, which is the expected case and costs a search. A hit names one pair.
+
+### An identical frame is a fixed point, and it calibrates the rest
+
+A content-digest hit does something the joined ancestry alone does not: it **pins the two dimensions
+against each other**, and that signal is what makes the local merge deterministic.
+
+Two frames with identical bytes and different ancestries are a **fixed point** — a place where the
+two lines are known to coincide exactly. Once one exists, the correspondence between everything
+around it is no longer a judgement call:
+
+- The local frame's tick and the incoming frame's tick are the same moment, so the **offset between
+  the two dimensions' clocks is now known** rather than assumed.
+- With the offset known, the neighbouring frames — the ones that are *not* identical, the ones
+  carrying the deltas actually worth having — line up by arithmetic instead of by heuristic.
+- Every further fixed point tightens the registration, and disagreeing fixed points are themselves a
+  result: two dimensions that coincide at one tick and contradict at another have diverged in a way
+  the trace should record.
+
+So the calibration runs in the useful direction. The hit that transmits **no new content** is the one
+that tells you exactly how to place the hits that do. It is why identical frames are worth drilling
+for and worth publishing: they are the survey markers of the commons.
+
+And it is what keeps the merge deterministic **locally**, with no coordination and no negotiation
+with the other dimension. Given the same frames and the same fixed points, two machines that never
+speak to each other compute the same joined frame — because the alignment was derived from the data
+rather than decided by whoever merged first.
+
+### The digest is the global lookup handle
+
+A frame's bytes give it a handle that **anyone can compute and nobody has to assign**. Two machines
+that have never met derive the same digest for the same frame, so the digest works as a global index
+key without a registry, an account, or a namespace to reserve.
+
+That is what makes the commons dialable. Publish frames under their digest — a static JSON index, a
+raw file path, a gist ([`SUMMON-PROTOCOL.md`](SUMMON-PROTOCOL.md)) — and a drill on any
+internet-connected device can look one up by computing the handle locally and asking for it by name.
+No search, no crawl, no service in the middle.
+
+**The digest is not the only lookup, and it should not be.** Any component of the key that both
+sides compute the same way can carry an index: the frame rappid for "every frame of this
+capability", the clock-speed key for "everything running at this cadence", the tick for a moment,
+a declared shape name for a family. Which ones get published is a question of **convenience** —
+index what the lookups you actually perform need, add more when a new lookup turns out to be common,
+and skip the rest.
+
+Two rules keep that open-ended set safe:
+
+1. **An index is a convenience; the key is the key.** A lookup narrows the candidates. It never
+   decides the merge — the compatibility rule above does, identically, no matter which index found
+   the pair.
+2. **A handle addresses a declared data object, never something executed on arrival.** Pulling a
+   frame by digest fetches data that is checked, diffed and refusable before anything runs. The
+   handle being globally computable is exactly why that matters: a global address that could execute
+   on arrival would be a global attack surface.
+
+### The hit pulls the full frame, not a summary
+
+On a hit, the key is used to pull **the entire frame** from that address — its deltas, its lineage,
+its wear, its provenance. Not a digest, not a diff of a diff, not a description of what is there.
+Anything less would have to be reconstructed on arrival, and a reconstruction is exactly the thing
+that is not instant.
+
+### Compatible, or refused: backward fidelity
+
+A pair is a candidate, not an assimilation. Sharing a coordinate makes two frames *comparable*; it
+does not make the incoming one safe to fold in.
+
+**The rule: a frame is assimilated only if it contradicts nothing downstream of the current frame.**
+
+The local frame already has offspring — everything the line produced after it. Those descendants
+were built on facts the local frame established. An incoming frame from another dimension carries
+its own deltas, and some of them may assert something a descendant here already contradicts. Folding
+one of those in would silently invalidate work that has already happened.
+
+So before the merge, the incoming frame's deltas are checked against the downstream line: replay
+what descends from the current frame, and if any descendant's preconditions no longer hold under the
+incoming deltas, **the frame is refused, whole.** Not partially applied, not merged with the
+conflicting deltas dropped — a frame with pieces removed is a frame that existed in neither
+dimension, and the fold is not entitled to invent one.
+
+Refusal is per frame, so a drill hit that returns several frames assimilates each on its own merits:
+the compatible ones join, the contradicting ones are recorded in the trace with what they
+contradicted. **A refusal is a result, not a failure** — it means the drill reached a dimension that
+diverged past the point where its frames still fit here, which is worth knowing and worth keeping.
+
+This is what backward fidelity means: **the merge may only add ancestry, never invalidate a
+descendant.** Everything that held before the join still holds after it.
+
+That guarantee is also what makes the join safe to be permanent. If no assimilated frame can ever
+break a descendant, then nothing that merged ever needs to be un-merged — so an append-only lineage
+with no un-merge operation is not a limitation being lived with, it is the shape the compatibility
+rule allows. The seal argument below depends on this one.
+
+### The merge is the Dream Catcher, unchanged
+
+The two frames merge by the rules already specified in [`CRYSTALS.md`](CRYSTALS.md) — deltas, not
+state; ordered on the composite key `(frame_tick, utc_timestamp)`; append-only, so neither side is
+overwritten. **No new merge rule is invented for instant transmission.** Frames from a drill hit
+merge exactly like frames from a parallel stream on another device, because they are the same kind
+of object and the fold cannot tell where they came from. That is deliberate: one merge path means
+one set of failure modes.
+
+What comes out is a **joined frame**.
+
+### The local line continues from the joined frame
+
+This is the part that matters, and it is a lineage statement rather than a data one.
+
+After the merge, **the local line's HEAD is the joined frame**, and everything the local line
+produces from then on descends from it. Not from the local-only frame with a joined frame filed
+somewhere beside it — from the join itself. The offspring of the joined frame are the offspring of
+both dimensions, and the tile carries both dimensions' wear because it carries both dimensions'
+frames.
+
+Several keys can hit, so a frame can join along several paths. Each join is another merge under the
+same ordering, so **multi-dimension paths are ordinary**: a frame joined three ways is one frame with
+three ancestries, not three frames to choose between.
+
+### Local first: the drill does not need the network
+
+A drill for pairs runs against whatever frames this machine already has — imported tiles, the
+binder, an `.egg` carried in on a stick, an earlier summon's cache. Instant transmission over a
+public address is one source of pairs, not the definition of one. A machine that has been offline
+for a week can still drill its own frames, find a pair among things it already holds, and assimilate
+them into a joined frame that neither of them was.
+
+That makes the offline path a real path rather than a degraded one, and it is what
+[`CARTRIDGE-PWA.md`](CARTRIDGE-PWA.md) exchanges: frames, addressable by key, mergeable on arrival.
+
+### Why a popped seal can never reset
+
+[`ONE-TIME-SEALS.md`](ONE-TIME-SEALS.md) says a popped seal never resets. Local instant transmission
+is *why* that is structurally true rather than merely enforced.
+
+Popping a seal is not setting a flag that some later code could unset. It runs a drill, and if the
+drill hits, the local line merges and continues from the joined frame. Resetting the seal afterwards
+would mean disowning an ancestor that everything since has descended from — and an append-only
+lineage has no operation for that. The seal stays popped because the line's ancestry changed, and
+ancestry is the one thing here that only ever grows.
+
+A machine that pops a seal and finds nothing is unchanged and can drill again. A machine that pops a
+seal and hits has a different history, permanently.
+
+### What this is, named honestly
+
+Content-addressed lookup, plus an op-based merge of append-only event streams, plus a lineage whose
+HEAD advances to the merge. Each is a known primitive. What is not standard is the composition:
+using the address itself as the pairing evidence, so that discovery and merge share one key and a
+capability arrives already worn rather than needing to be trained on arrival.
+
 ## The contract
 
 ### 1. Isolation is mandatory, not an optimisation
@@ -99,6 +304,15 @@ A person can stop the whole drill at once: every worker dies, every workspace is
 partial work is discarded rather than half-merged. There is no state in which a killed drill has
 changed something.
 
+### 8. A drill finds; it never merges
+
+A drill's output is a pair — a key and the two addresses it resolves. It does not fold, does not
+assimilate, and does not advance any lineage. The merge happens afterwards, locally, under the
+compatibility rule, by the same fold that merges frames from any other source.
+
+Keeping the two apart is what makes searching cheap: a search that cannot mutate anything can run
+constantly and be wrong every time without costing more than the search.
+
 ## A drill yields two things
 
 Specifying only the winner misses half of what a drill produces.
@@ -130,7 +344,15 @@ present as the other ([CRYSTALS](CRYSTALS.md)).
 
 ## Proof obligations
 
-A conforming implementation demonstrates: two drills cannot observe each other's workspace; a drill
+A conforming implementation demonstrates, for instant transmission: a drill returns a pair and
+changes nothing; the same key computed on two machines that never communicate resolves to the same
+frames; an incoming frame that contradicts a downstream descendant is refused whole, with what it
+contradicted recorded; a byte-identical frame from a different ancestry is assimilated and joins that
+ancestry without changing content; two machines given the same frames and the same fixed points
+compute the same joined frame; and after a successful join the local line's HEAD is the joined frame,
+with no operation available that returns it to the pre-join frame.
+
+And for the race: two drills cannot observe each other's workspace; a drill
 that writes outside its workspace is prevented, not merely discouraged; the flag checker produces
 the same verdict for the same artifact regardless of which drill produced it; a run stops at its
 declared budget rather than exceeding it; a kill leaves nothing changed; and a run whose flag is
