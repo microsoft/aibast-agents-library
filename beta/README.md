@@ -4,6 +4,9 @@ See [`GOLDEN_PATH.md`](GOLDEN_PATH.md) for the guiding product path:
 learn AI, teach it back immediately as a working capability, and keep that
 portable skill for life.
 
+**Documentation index: [`docs/README.md`](docs/README.md)** — every Frontier document, grouped by
+the question it answers.
+
 This opt-in Frontier experience applies the launcher architecture used by Skill Recorder to
 RAPP Brainstem:
 
