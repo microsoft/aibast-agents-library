@@ -4,7 +4,8 @@
 // installer prepareUpdate staged BEFORE anything moved, and reports what it
 // did in the result file the reopened app reads. Real git, real scripts.
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
+import { once } from "node:events";
 import {
   chmodSync,
   existsSync,
@@ -24,6 +25,12 @@ const runnerSource = path.resolve(
   "..",
   "electron",
   "update-runner.mjs",
+);
+const redactionSource = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "electron",
+  "log-redaction.mjs",
 );
 const posix = process.platform !== "win32";
 
@@ -60,13 +67,20 @@ function script(file, body) {
   chmodSync(file, 0o700);
 }
 
-async function runUpdater({ forward, rollback = null, expectedHead = null }) {
+async function runUpdater({
+  forward,
+  rollback = null,
+  expectedHead = null,
+  relaunchWaitMs = 3_000,
+  requestOverrides = {},
+}) {
   const root = mkdtempSync(path.join(tmpdir(), "rapp-update-runner-"));
   const beta = repoWithTwoCommits(root, "beta-src");
   const brainstem = repoWithTwoCommits(root, "brainstem-src");
   const markers = path.join(root, "markers.log");
   const installerPath = path.join(root, "forward.sh");
   const rollbackInstallerPath = path.join(root, "rollback.sh");
+  const redactionPath = path.join(root, "log-redaction.mjs");
   const electronPath = path.join(root, "electron.sh");
   script(installerPath, forward({ beta, markers }));
   if (rollback) script(rollbackInstallerPath, rollback({ beta, markers }));
@@ -93,14 +107,17 @@ async function runUpdater({ forward, rollback = null, expectedHead = null }) {
     parentPid: parent.pid,
     platform: process.platform,
     remoteUrl: "https://github.com/microsoft/aibast-agents-library.git",
+    redactionPath,
     requestPath: path.join(root, "request.json"),
     resultPath: path.join(root, "update-result.json"),
     runnerPath: path.join(root, "runner-copy.mjs"),
     updateRef: "main",
     ...(rollback ? { rollbackCommit: beta.first, rollbackInstallerPath } : {}),
+    ...requestOverrides,
   };
   writeFileSync(request.requestPath, JSON.stringify(request));
   writeFileSync(request.runnerPath, readFileSync(runnerSource));
+  writeFileSync(redactionPath, readFileSync(redactionSource));
   const run = spawnSync(
     process.execPath,
     [request.runnerPath, request.requestPath],
@@ -111,13 +128,19 @@ async function runUpdater({ forward, rollback = null, expectedHead = null }) {
   // The relaunch is detached and unref'd, so the fake Electron may still be
   // writing its marker when the runner exits; give it a moment.
   const readMarkers = () => (existsSync(markers) ? readFileSync(markers, "utf8") : "");
-  const deadline = Date.now() + 3_000;
+  const deadline = Date.now() + relaunchWaitMs;
   while (!readMarkers().includes("electron") && Date.now() < deadline) {
     await new Promise((resolve) => setTimeout(resolve, 50));
   }
   const markerText = readMarkers();
   const head = git(beta.dir, ["rev-parse", "HEAD"]);
-  const leftovers = [installerPath, rollbackInstallerPath, request.requestPath, request.runnerPath]
+  const leftovers = [
+    installerPath,
+    rollbackInstallerPath,
+    redactionPath,
+    request.requestPath,
+    request.runnerPath,
+  ]
     .filter((file) => existsSync(file));
   rmSync(root, { recursive: true, force: true });
   return { run, result, log, markers: markerText, head, beta, leftovers };
@@ -184,6 +207,21 @@ test("a successful update never runs the rollback installer", { skip: !posix }, 
   assert.equal(head, beta.second);
 });
 
+test("installer output is redacted before update.log persists it", { skip: !posix }, async () => {
+  const secret = "ghp_updateRunnerSecret123456789";
+  const { result, log } = await runUpdater({
+    forward: ({ beta }) => (
+      `echo "Authorization: Bearer ${secret}"\n`
+      + `git -C "${beta.dir}" checkout -q ${beta.second}\n`
+      + "exit 0"
+    ),
+  });
+
+  assert.equal(result.success, true);
+  assert.doesNotMatch(log, new RegExp(secret));
+  assert.match(log, /\[redacted:authorization\]/);
+});
+
 test("a pre-flight refusal changes nothing and does not roll back", { skip: !posix }, async () => {
   const { result, markers, head, beta } = await runUpdater({
     forward: failingForward,
@@ -204,4 +242,31 @@ test("an update request without a staged rollback reports that honestly", { skip
   assert.equal(result.rollback.attempted, false);
   assert.match(result.rollback.error, /No rollback installer was staged/);
   assert.equal(head, beta.second);
+});
+
+test("the updater does not relaunch while the parent app is still alive", { skip: !posix }, async () => {
+  const keeper = spawn("sh", ["-c", "sleep 2 & echo $!; wait"], {
+    stdio: ["ignore", "pipe", "ignore"],
+  });
+  const [pidChunk] = await once(keeper.stdout, "data");
+  const livePid = Number(String(pidChunk).trim());
+  assert.ok(Number.isInteger(livePid) && livePid > 0);
+  const outcome = await runUpdater({
+    forward: ({ beta }) => (
+      `git -C "${beta.dir}" checkout -q ${beta.second}\nexit 0`
+    ),
+    relaunchWaitMs: 500,
+    requestOverrides: {
+      parentExitTimeoutMs: 25,
+      parentPid: livePid,
+    },
+  });
+  if (keeper.exitCode === null && keeper.signalCode === null) {
+    await once(keeper, "close");
+  }
+
+  assert.equal(outcome.result.success, false);
+  assert.match(outcome.result.error, /did not exit before the update timeout/);
+  assert.doesNotMatch(outcome.markers, /electron/);
+  assert.equal(outcome.head, outcome.beta.first);
 });

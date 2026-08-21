@@ -9,6 +9,7 @@ import {
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
+import vm from "node:vm";
 
 import {
   startUiDriverServer,
@@ -181,6 +182,70 @@ test("visible UI driver rejects unknown and unbounded commands", () => {
   assert.throws(
     () => uiDriverInternals.validateCommand({ action: "inspect", limit: 81 }),
     /between 1 and 80/,
+  );
+});
+
+test("visible UI driver bounds frame sleeps and typed input work", () => {
+  for (const command of [
+    { action: "announce", durationMs: 5_001 },
+    { action: "click", selector: "#send", settleMs: 5_001 },
+    { action: "press", key: "Enter", settleMs: 5_001 },
+    { action: "type", selector: "#input", typingDelayMs: 101, value: "x" },
+    {
+      action: "type",
+      selector: "#input",
+      typingDelayMs: 100,
+      value: "x".repeat(601),
+    },
+    {
+      action: "type",
+      selector: "#input",
+      typingDelayMs: 0,
+      value: "x".repeat((64 * 1024) + 1),
+    },
+    { action: "wait", selector: "#send", timeoutMs: 120_001 },
+    { action: "click", selector: "#send", until: {
+      handle: "@brainstem.send",
+      state: "enabled",
+      timeoutMs: 120_001,
+    } },
+    { action: "announce", frameTimeoutMs: 65 * 60 * 1000 + 1 },
+    { action: "wait", selector: "#send", timeoutMs: 10_000, frameTimeoutMs: 1000 },
+    {
+      action: "run",
+      steps: Array.from(
+        { length: 40 },
+        () => ({ action: "wait", selector: "#send", timeoutMs: 120_000 }),
+      ),
+    },
+  ]) {
+    assert.throws(
+      () => uiDriverInternals.validateCommand(command),
+      /must be|exceeds/,
+    );
+  }
+
+  const instantType = uiDriverInternals.validateCommand({
+    action: "type",
+    selector: "#input",
+    typingDelayMs: 0,
+    value: "x".repeat(64 * 1024),
+  });
+  assert.equal(instantType.typingDelayMs, 0);
+  assert.ok(
+    instantType.frameTimeoutMs >= 20_000
+      && instantType.frameTimeoutMs <= 65 * 60 * 1000,
+  );
+  assert.equal(
+    uiDriverInternals.boundedFrameTimeout(1e15),
+    65 * 60 * 1000,
+  );
+  const browserSource = uiDriverInternals.browserDriverCommand.toString();
+  assert.match(browserSource, /frameBudget - 250/);
+  assert.match(browserSource, /exceeded its frame time budget/);
+  assert.match(
+    browserSource,
+    /if \(!delayMs\) \{[\s\S]*setControlValue\(element, nextValue\)/,
   );
 });
 
@@ -485,6 +550,105 @@ test("a control inside its own overlay is actionable: an ancestor hit is not an 
   assert.match(source, /occluded by \$\{selectorFor\(top\)/);
 });
 
+test("click scrolls an offscreen control before testing for occlusion", async () => {
+  const ids = new Map();
+  const classList = () => {
+    const names = new Set();
+    return {
+      add: (...values) => values.forEach((value) => names.add(value)),
+      contains: (value) => names.has(value),
+      remove: (...values) => values.forEach((value) => names.delete(value)),
+    };
+  };
+  const uiElement = (tag) => ({
+    classList: classList(),
+    dataset: {},
+    id: "",
+    localName: tag,
+    offsetWidth: 0,
+    style: {},
+    textContent: "",
+  });
+  let rect = { height: 32, left: 120, top: 2400, width: 180 };
+  let clicks = 0;
+  let scrolls = 0;
+  const target = {
+    classList: classList(),
+    click() {
+      clicks += 1;
+    },
+    contains: (element) => element === target,
+    dataset: { drive: "list.below" },
+    disabled: false,
+    focus() {},
+    getAttribute: () => null,
+    getBoundingClientRect: () => rect,
+    innerText: "Below the fold",
+    localName: "button",
+    scrollIntoView() {
+      scrolls += 1;
+      rect = { ...rect, top: 280 };
+    },
+  };
+  const footer = {
+    contains: () => false,
+    localName: "footer",
+  };
+  const append = (element) => {
+    if (element.id) ids.set(element.id, element);
+  };
+  const document = {
+    activeElement: target,
+    body: { appendChild: append },
+    createElement: uiElement,
+    elementFromPoint: () => (rect.top > 700 ? footer : target),
+    getElementById: (id) => ids.get(id) || null,
+    head: { appendChild: append },
+    querySelectorAll: () => [],
+  };
+  const helpers = {
+    buildOutline: () => ({ rows: [], snapshot: "steady" }),
+    caps: { inspectDefault: 60 },
+    diffOutlines: () => ({ added: [], changed: [], removed: [] }),
+    resolveSelector: () => target,
+    selectorFor: (element) => (
+      element === target ? "@list.below" : element?.localName || null
+    ),
+  };
+  const context = vm.createContext({
+    CSS: { escape: (value) => value },
+    clearTimeout() {},
+    document,
+    getComputedStyle: () => ({
+      display: "block",
+      opacity: "1",
+      pointerEvents: "auto",
+      visibility: "visible",
+    }),
+    innerHeight: 700,
+    innerWidth: 1000,
+    location: { href: "http://127.0.0.1:7071/" },
+    setTimeout(callback) {
+      callback();
+      return 1;
+    },
+    window: {},
+  });
+  const command = vm.runInContext(
+    `(${uiDriverInternals.browserDriverCommand.toString()})`,
+    context,
+  );
+
+  const result = await command(
+    { action: "click", selector: "#below" },
+    () => helpers,
+  );
+
+  assert.equal(result.ok, true);
+  assert.equal(clicks, 1);
+  assert.equal(scrolls, 1);
+});
+
 test("a frame script is abandoned when its frame navigates, and the queue moves on", async () => {
   const { executeInFrame, FrameGoneError } = uiDriverInternals;
   const navigating = {
@@ -572,6 +736,46 @@ test("a wedged frame command does not block the next command on the same frame",
   }
 });
 
+test("persisted UI driver trace errors cap caller-controlled text", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "ui-driver-trace-cap-"));
+  const betaHome = path.join(root, "beta-launcher");
+  t.after(() => rmSync(root, { force: true, recursive: true }));
+  const oversized = "x".repeat(100 * 1024);
+  const brainstem = {
+    executeJavaScript: async () => {
+      throw new Error(`UI target not found: ${oversized}`);
+    },
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = {
+    executeJavaScript: async () => null,
+    frames: [brainstem],
+    url: "file:///frontier/index.html",
+  };
+  const driver = await startUiDriverServer({
+    brainstemHome: root,
+    env: { BRAINSTEM_BETA_HOME: betaHome },
+    loopbackUrl: (url) => url.startsWith("http://127.0.0.1:707"),
+    window: { webContents: { mainFrame } },
+  });
+  t.after(() => driver.stop());
+  const metadata = JSON.parse(readFileSync(driver.metadataPath, "utf8"));
+
+  const response = await postCommand(metadata, {
+    action: "read",
+    selector: oversized,
+  });
+
+  assert.equal(response.payload.ok, false);
+  const [trace] = readFileSync(metadata.tracePath, "utf8")
+    .trim()
+    .split("\n")
+    .map((line) => JSON.parse(line));
+  assert.ok(trace.effect.error.length <= 2000);
+  assert.ok(readFileSync(metadata.tracePath).byteLength < 5000);
+});
+
 test("the chat lease's aria-disabled marker does not make the send button unactionable for the driver", () => {
   const source = uiDriverInternals.browserDriverCommand.toString();
   assert.match(source, /rappChatLease === "locked"/);
@@ -607,7 +811,7 @@ test("a frame script abandoned by the watchdog stops at its next tick when a lat
   assert.match(source, /UiDriverSupersededError/);
   // the id rides beside the command, not inside it (traces stay identical pass to pass)
   const server = readFileSync(new URL("../electron/ui-driver-server.mjs", import.meta.url), "utf8");
-  assert.match(server, /createUiDriverHelpers\.toString\(\)\}, \$\{JSON\.stringify\(commandId\)\}\)/);
+  assert.match(server, /createUiDriverHelpers\.toString\(\)\}, \$\{JSON\.stringify\(commandId\)\}, \$\{/);
   assert.match(server, /timeoutMs: frameBudgetMs\(command\)/);
 });
 
@@ -648,4 +852,98 @@ test("a trace that cannot be written does not turn a finished command into a fai
     await driver.stop();
     rmSync(root, { force: true, recursive: true });
   }
+});
+
+test("outline state treats the driver-owned leased send button as enabled", () => {
+  const helpers = uiDriverInternals.createUiDriverHelpers();
+  const send = {
+    dataset: { rappChatLease: "locked" },
+    disabled: false,
+    getAttribute: (name) => (name === "aria-disabled" ? "true" : null),
+    localName: "button",
+  };
+
+  assert.equal(helpers.stateFor(send), "enabled");
+  delete send.dataset.rappChatLease;
+  assert.equal(helpers.stateFor(send), "disabled");
+});
+
+test("the chat lease blocks trusted starter-prompt clicks", async () => {
+  const elements = new Map();
+  const eventTarget = (id) => {
+    const listeners = new Map();
+    const element = {
+      addEventListener(type, listener) {
+        listeners.set(type, listener);
+      },
+      dataset: {},
+      id,
+      listeners,
+      setAttribute() {},
+    };
+    elements.set(id, element);
+    return element;
+  };
+  eventTarget("input");
+  eventTarget("send");
+  const starters = eventTarget("starter-prompts");
+  const document = {
+    activeElement: null,
+    body: {
+      appendChild(element) {
+        elements.set(element.id, element);
+      },
+    },
+    createElement: () => ({
+      dataset: {},
+      hidden: false,
+      id: "",
+      style: {},
+      textContent: "",
+    }),
+    getElementById: (id) => elements.get(id) || null,
+    querySelectorAll: () => [],
+  };
+  const helpers = {
+    buildOutline: () => ({ rows: [], snapshot: "steady" }),
+    caps: { inspectDefault: 60 },
+    diffOutlines: () => ({ added: [], changed: [], removed: [] }),
+    selectorFor: () => null,
+  };
+  const context = vm.createContext({
+    document,
+    setTimeout,
+    window: {},
+  });
+  const command = vm.runInContext(
+    `(${uiDriverInternals.browserDriverCommand.toString()})`,
+    context,
+  );
+  await command(
+    { action: "set_chat_lease", locked: true, token: "delegate" },
+    () => helpers,
+  );
+  const trustedClick = {
+    isTrusted: true,
+    preventDefaultCalled: false,
+    stopImmediatePropagationCalled: false,
+    preventDefault() {
+      this.preventDefaultCalled = true;
+    },
+    stopImmediatePropagation() {
+      this.stopImmediatePropagationCalled = true;
+    },
+  };
+
+  starters.listeners.get("click")(trustedClick);
+
+  assert.equal(trustedClick.preventDefaultCalled, true);
+  assert.equal(trustedClick.stopImmediatePropagationCalled, true);
+
+  trustedClick.isTrusted = false;
+  trustedClick.preventDefaultCalled = false;
+  trustedClick.stopImmediatePropagationCalled = false;
+  starters.listeners.get("click")(trustedClick);
+  assert.equal(trustedClick.preventDefaultCalled, false);
+  assert.equal(trustedClick.stopImmediatePropagationCalled, false);
 });

@@ -131,6 +131,23 @@ test("safe-word interceptor matches only the exact trimmed word", async () => {
   assert.deepEqual(calls, ["baseline", "materialize"]);
 });
 
+test("ordinary promote and drift messages fail open to chat", async () => {
+  const { calls, manager } = managerFixture();
+  for (const message of [
+    "promote",
+    "drift",
+    "promote this agent",
+    "promote default behavior",
+    "drift report",
+  ]) {
+    assert.deepEqual(
+      await executeLineageCommand({ message, routeManager: manager }),
+      { intercepted: false, message },
+    );
+  }
+  assert.doesNotMatch(calls.join(","), /promote:|drift:|materialize/);
+});
+
 test("safe-word interceptor honors custom baseline and restore words", async () => {
   const env = {
     RAPP_BASELINE_SAFEWORD: "factory settings",
@@ -170,8 +187,8 @@ test("ALM chat words parse exactly and honor configured command words", () => {
   assert.equal(parseLineageCommand("talk about environments"), null);
   assert.equal(parseLineageCommand("promoted default prod"), null);
   assert.equal(parseLineageCommand("environments").action, "environments");
-  assert.equal(parseLineageCommand("promote").invalid, true);
-  assert.equal(parseLineageCommand("drift prod extra").invalid, true);
+  assert.equal(parseLineageCommand("promote"), null);
+  assert.equal(parseLineageCommand("drift prod extra"), null);
 
   const env = {
     RAPP_ENVIRONMENTS_WORD: "show rings",

@@ -25,6 +25,7 @@ const HEAD_FILE = "HEAD";
 const PRIOR_FILE = "PRIOR_HEAD";
 const DEFAULT_ENV = "default";
 const ENVIRONMENT_NAME = /^[a-z0-9][a-z0-9._-]{0,31}$/;
+const ATOMIC_WRITE_TEMP_SUFFIX = /(?:^|\.)\d+\.\d+\.tmp$/;
 const LOCUS_FILE = "locus.json";
 const RING_SOURCE_FILE = "source.py";
 const RING_META_FILE = "meta.json";
@@ -34,6 +35,7 @@ const JOURNAL_WRITE_REASON =
   "promotion journal could not record the attempt — refusing to move HEAD";
 
 export const MAX_AGENT_BYTES = 512 * 1024;
+export const MAX_PROMOTION_JOURNAL_BYTES = 512 * 1024;
 
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true, mode: 0o700 });
@@ -729,6 +731,7 @@ export class LineageStore {
         if (
           requested !== DEFAULT_ENV
           && ENVIRONMENT_NAME.test(requested)
+          && !ATOMIC_WRITE_TEMP_SUFFIX.test(requested)
           && normalizeEnvironment(requested) === requested
         ) {
           names.add(requested);
@@ -1091,7 +1094,12 @@ export class LineageStore {
         prev_entry_sha256: previous,
       };
       record.entry_sha256 = sha256Hex(JSON.stringify(record));
-      atomicWriteJson(file, [...log, record]);
+      const serialized = `${JSON.stringify([...log, record], null, 2)}\n`;
+      if (
+        Buffer.byteLength(serialized, "utf8")
+        > MAX_PROMOTION_JOURNAL_BYTES
+      ) return null;
+      atomicWrite(file, serialized);
       return record;
     } catch {
       return null;

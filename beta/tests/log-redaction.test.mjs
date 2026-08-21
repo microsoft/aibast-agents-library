@@ -3,13 +3,17 @@ import { spawnSync } from "node:child_process";
 import { once } from "node:events";
 import {
   chmodSync,
+  closeSync,
   createWriteStream,
   existsSync,
+  fstatSync,
   mkdirSync,
   mkdtempSync,
+  readdirSync,
   readFileSync,
   rmSync,
   statSync,
+  writeSync,
   writeFileSync,
 } from "node:fs";
 import net from "node:net";
@@ -23,6 +27,7 @@ import vm from "node:vm";
 import { BrainstemProcess } from "../electron/brainstem-process.mjs";
 import {
   createExportRedactionScript,
+  installProcessOutputRedaction,
   openPrivateAppendFile,
   redactCredentialText,
   RedactingLineTransform,
@@ -232,6 +237,36 @@ test("line transform preserves ordinary bytes and joins partial sensitive lines"
     ),
   ]);
   assert.deepEqual(output, expected);
+});
+
+test("launcher process output is redacted across split writes", () => {
+  const stdout = new PassThrough();
+  const stderr = new PassThrough();
+  const output = [];
+  stdout.on("data", (chunk) => output.push(Buffer.from(chunk)));
+  stderr.on("data", (chunk) => output.push(Buffer.from(chunk)));
+  const installed = installProcessOutputRedaction({ stdout, stderr });
+
+  stdout.write("partial api_");
+  stdout.write("key=launcherSecretValue tail\n");
+  stderr.write("final enter LAST-CODE");
+  installed.flush();
+  installed.restore();
+
+  const text = Buffer.concat(output).toString("utf8");
+  assert.doesNotMatch(text, /launcherSecretValue|LAST-CODE/);
+  assert.match(text, /\[redacted:api-key\]/);
+  assert.match(text, /\[redacted:device-code\]/);
+  const manifest = JSON.parse(
+    readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+  );
+  const bootstrap = readFileSync(
+    new URL("../electron/bootstrap.mjs", import.meta.url),
+    "utf8",
+  );
+  assert.equal(manifest.main, "electron/bootstrap.mjs");
+  assert.match(bootstrap, /installProcessOutputRedaction\(\)/);
+  assert.match(bootstrap, /await import\("\.\/main\.mjs"\)/);
 });
 
 test("diagnostic scrub mirrors report privacy protections recursively", () => {
@@ -482,7 +517,7 @@ test("BrainstemProcess redacts both fake-kernel streams without burst loss", asy
   if (artifactRoot) console.log(`LOG_REDACTION_TEST_FILE=${logFile}`);
 });
 
-test("a log that outgrew its limit is rotated before reopening, keeping one predecessor", () => {
+test("a log that outgrew its limit rotates into free predecessor slots", () => {
   const root = mkdtempSync(path.join(tmpdir(), "rapp-log-rotate-"));
   try {
     const file = path.join(root, "worker.log");
@@ -491,17 +526,66 @@ test("a log that outgrew its limit is rotated before reopening, keeping one pred
     assert.equal(readFileSync(file, "utf8").length, 2048);
 
     writeFileSync(file, "y".repeat(8192));
-    assert.equal(rotateLogIfLarge(file, { maxBytes: 4096 }), true);
+    assert.equal(rotateLogIfLarge(file, { keep: 2, maxBytes: 4096 }), true);
     assert.ok(!existsSync(file), "the live log is rotated away");
     assert.equal(readFileSync(`${file}.1`, "utf8").length, 8192);
 
     writeFileSync(file, "z".repeat(8192));
-    assert.equal(rotateLogIfLarge(file, { maxBytes: 4096 }), true);
-    assert.equal(readFileSync(`${file}.1`, "utf8")[0], "z", "the newest predecessor wins");
-    assert.ok(!existsSync(`${file}.2`), "only `keep` predecessors are retained");
+    assert.equal(rotateLogIfLarge(file, { keep: 2, maxBytes: 4096 }), true);
+    assert.equal(readFileSync(`${file}.1`, "utf8")[0], "y");
+    assert.equal(readFileSync(`${file}.2`, "utf8")[0], "z");
 
     assert.equal(rotateLogIfLarge(path.join(root, "absent.log")), false, "a missing log is not an error");
   } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("rotation preserves live writer inodes and reports refusal", () => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-log-live-rotate-"));
+  let firstFd = null;
+  let secondFd = null;
+  try {
+    const file = path.join(root, "shared.log");
+    writeFileSync(file, "first\n");
+    firstFd = openPrivateAppendFile(file);
+    assert.equal(rotateLogIfLarge(file, { maxBytes: 1 }), true);
+
+    writeFileSync(file, "second\n");
+    secondFd = openPrivateAppendFile(file);
+    assert.equal(
+      rotateLogIfLarge(file, { maxBytes: 1 }),
+      false,
+      "a full archive set must refuse instead of unlinking a live predecessor",
+    );
+    writeSync(firstFd, "first-after-second-rotation\n");
+    writeSync(secondFd, "second-after-refusal\n");
+    if (process.platform !== "win32") {
+      assert.ok(fstatSync(firstFd).nlink > 0);
+      assert.ok(fstatSync(secondFd).nlink > 0);
+    }
+
+    const archives = readdirSync(root)
+      .filter((name) => name.startsWith("shared.log."));
+    assert.deepEqual(archives, ["shared.log.1"]);
+    assert.match(readFileSync(`${file}.1`, "utf8"), /first-after-second-rotation/);
+    assert.match(readFileSync(file, "utf8"), /second-after-refusal/);
+
+    const failed = path.join(root, "failed.log");
+    writeFileSync(failed, "too large");
+    assert.equal(
+      rotateLogIfLarge(failed, {
+        link: () => {
+          throw new Error("simulated link failure");
+        },
+        maxBytes: 1,
+      }),
+      false,
+    );
+    assert.ok(existsSync(failed));
+  } finally {
+    if (firstFd !== null) closeSync(firstFd);
+    if (secondFd !== null) closeSync(secondFd);
     rmSync(root, { recursive: true, force: true });
   }
 });

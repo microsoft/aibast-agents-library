@@ -17,6 +17,12 @@ boundaries, honors Node stream back-pressure, and flushes an unterminated final
 line when the child exits. A line without a sensitive match is written using
 its original bytes.
 
+The Electron bootstrap installs that pipeline before loading the main process,
+so output redirected by a fresh install into `launcher.log` is scrubbed across
+split writes. The detached update runner stages the same redaction module,
+captures forward and rollback installer output, and scrubs it before appending
+to the private `update.log`.
+
 Sensitive values are replaced in place with a typed marker:
 
 | Shape | Marker |

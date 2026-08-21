@@ -139,7 +139,7 @@ test("temporary agent filenames are normalized safely", () => {
   );
 });
 
-test("failed delegation leaves ephemeral cleanup to the beta route manager", async () => {
+test("fresh delegation waits for its frame before reapplying the chat lease", async () => {
   const commands = [];
   const routeRequests = [];
   const surgeon = new BrainSurgeon({
@@ -183,14 +183,14 @@ test("failed delegation leaves ephemeral cleanup to the beta route manager", asy
       token,
     },
     {
-      action: "set_chat_lease",
-      locked: true,
-      token,
-    },
-    {
       action: "wait",
       selector: "#input",
       timeoutMs: 1000,
+    },
+    {
+      action: "set_chat_lease",
+      locked: true,
+      token,
     },
     {
       action: "chat",

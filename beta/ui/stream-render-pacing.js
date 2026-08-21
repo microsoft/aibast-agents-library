@@ -15,6 +15,8 @@
     now = () => performance.now(),
     requestFrame = (callback) => requestAnimationFrame(callback),
     cancelFrame = (frame) => cancelAnimationFrame(frame),
+    setTimer = (callback, delay) => setTimeout(callback, delay),
+    clearTimer = (timer) => clearTimeout(timer),
   } = {}) {
     const frameInterval = Math.max(1, Number(frameIntervalMs) || 24);
     const lagLimit = Math.max(frameInterval, Number(maxLagMs) || 1000);
@@ -37,6 +39,7 @@
     let maxObservedLagMs = 0;
     let drainPromise = null;
     let resolveDrain = null;
+    let terminalTimer = null;
 
     function updateArrival(arrivedAt) {
       if (firstArrivalAt === null) firstArrivalAt = arrivedAt;
@@ -78,6 +81,8 @@
     function completeDrain() {
       if (!terminalDeadline || queue.length) return;
       terminalDeadline = null;
+      if (terminalTimer !== null) clearTimer(terminalTimer);
+      terminalTimer = null;
       const resolve = resolveDrain;
       resolveDrain = null;
       drainPromise = null;
@@ -138,6 +143,14 @@
         drainPromise = new Promise((resolve) => {
           resolveDrain = resolve;
         });
+        terminalTimer = setTimer(() => {
+          terminalTimer = null;
+          if (!active) return;
+          if (frame !== null) cancelFrame(frame);
+          frame = null;
+          renderBatch(queue.length, "terminal-timeout");
+          completeDrain();
+        }, terminalLimit);
       }
       schedule();
       return drainPromise;
@@ -148,6 +161,8 @@
       active = false;
       if (frame !== null) cancelFrame(frame);
       frame = null;
+      if (terminalTimer !== null) clearTimer(terminalTimer);
+      terminalTimer = null;
       queue.length = 0;
       terminalDeadline = null;
       const resolve = resolveDrain;

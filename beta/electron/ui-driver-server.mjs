@@ -84,7 +84,32 @@ function twinFrame(window, twinUrls) {
 // command — with the queue it would block every later command on that frame.
 // So every frame script is raced against the frame going away and a deadline.
 const FRAME_SCRIPT_TIMEOUT_MS = 20000;
+const MAX_FRAME_SCRIPT_TIMEOUT_MS = 65 * 60 * 1000;
 const FRAME_SCRIPT_POLL_MS = 100;
+const UI_DRIVER_LIMITS = Object.freeze({
+  announceDurationMs: 5000,
+  settleMs: 5000,
+  typedCharacters: 64 * 1024,
+  typingDelayMs: 100,
+  typingDurationMs: 60_000,
+});
+
+function boundedNumber(value, minimum, maximum, fallback) {
+  const number = Number(value);
+  return Math.max(
+    minimum,
+    Math.min(maximum, Number.isFinite(number) ? number : fallback),
+  );
+}
+
+function boundedFrameTimeout(timeoutMs) {
+  return boundedNumber(
+    timeoutMs,
+    250,
+    MAX_FRAME_SCRIPT_TIMEOUT_MS,
+    FRAME_SCRIPT_TIMEOUT_MS,
+  );
+}
 
 class FrameGoneError extends Error {
   constructor(reason) {
@@ -157,7 +182,8 @@ function frameBudgetMs(command) {
 async function executeInFrame(frame, source, { window = null, timeoutMs = FRAME_SCRIPT_TIMEOUT_MS } = {}) {
   if (!frame) throw new Error("The live Brainstem frontend is not loaded yet.");
   const startUrl = String(frame.url || "");
-  const deadline = Date.now() + Math.max(250, Number(timeoutMs) || FRAME_SCRIPT_TIMEOUT_MS);
+  const effectiveTimeoutMs = boundedFrameTimeout(timeoutMs);
+  const deadline = Date.now() + effectiveTimeoutMs;
   let timer = null;
   let settled = false;
   const watchdog = new Promise((resolve, reject) => {
@@ -169,7 +195,7 @@ async function executeInFrame(frame, source, { window = null, timeoutMs = FRAME_
         return;
       }
       if (Date.now() >= deadline) {
-        reject(new Error(`The frame command did not finish within ${Math.round(Number(timeoutMs) / 1000)}s; the frame may be unresponsive.`));
+        reject(new Error(`The frame command did not finish within ${Math.round(effectiveTimeoutMs / 1000)}s; the frame may be unresponsive.`));
         return;
       }
       timer = setTimeout(check, FRAME_SCRIPT_POLL_MS);
@@ -187,22 +213,58 @@ async function executeInFrame(frame, source, { window = null, timeoutMs = FRAME_
   }
 }
 
-async function browserDriverCommand(command, createHelpers, commandId = null) {
+async function browserDriverCommand(command, createHelpers, commandId = null, limits = {
+  announceDurationMs: 5000,
+  frameBudgetMs: 20_000,
+  settleMs: 5000,
+  typedCharacters: 64 * 1024,
+  typingDelayMs: 100,
+  typingDurationMs: 60_000,
+}) {
+  const bounded = (value, minimum, maximum, fallback) => {
+    const number = Number(value);
+    return Math.max(
+      minimum,
+      Math.min(maximum, Number.isFinite(number) ? number : fallback),
+    );
+  };
+  // The frame's own deadline is the SAME budget the bus watchdog was given
+  // (derived from the command's steps; 20 s is only the floor), so in-frame
+  // work and the watchdog agree instead of racing each other.
+  const frameBudget = bounded(
+    limits.frameBudgetMs ?? command.frameTimeoutMs,
+    250,
+    65 * 60 * 1000,
+    20_000,
+  );
+  const commandDeadline = Date.now() + Math.max(1, frameBudget - 250);
   const state = window.__brainstemAiDriver ||= {};
   // One command per frame: if the bus abandoned this script (watchdog) and a
   // later command took the frame, every loop here stops at its next tick
   // instead of driving the frame alongside the newcomer.
   const myCommandId = commandId || String(Date.now()) + Math.random().toString(16).slice(2);
   state.activeCommandId = myCommandId;
-  const sleep = (ms) => new Promise((resolve, reject) => setTimeout(() => {
-    if (state.activeCommandId !== myCommandId) {
-      const error = new Error("This command was superseded by a later command on the same frame.");
-      error.name = "UiDriverSupersededError";
-      reject(error);
-      return;
+  const sleep = (ms) => {
+    const requestedMs = Math.max(0, Number(ms) || 0);
+    const remainingMs = commandDeadline - Date.now();
+    if (remainingMs <= 0) {
+      return Promise.reject(new Error("UI driver command exceeded its frame time budget."));
     }
-    resolve();
-  }, ms));
+    const waitMs = Math.min(requestedMs, remainingMs);
+    return new Promise((resolve, reject) => setTimeout(() => {
+      if (state.activeCommandId !== myCommandId) {
+        const error = new Error("This command was superseded by a later command on the same frame.");
+        error.name = "UiDriverSupersededError";
+        reject(error);
+        return;
+      }
+      if (waitMs < requestedMs || Date.now() >= commandDeadline) {
+        reject(new Error("UI driver command exceeded its frame time budget."));
+        return;
+      }
+      resolve();
+    }, waitMs));
+  };
   const helpers = createHelpers({
     cssEscape: (value) => CSS.escape(value),
     document,
@@ -379,8 +441,9 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
       return "pointer-events is none";
     }
     const rect = element.getBoundingClientRect();
-    const x = Math.max(0, Math.min(innerWidth - 1, rect.left + rect.width / 2));
-    const y = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    if (x < 0 || x >= innerWidth || y < 0 || y >= innerHeight) return null;
     const top = document.elementFromPoint?.(x, y);
     // Occluded means something ELSE is on top. A hit on the element, on one
     // of its descendants, or on one of its own ancestors (a button inside the
@@ -521,10 +584,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
 
   async function waitUntil(condition, beforeSnapshot) {
     if (!condition) return null;
-    const timeoutMs = Math.max(
-      100,
-      Math.min(120000, Number(condition.timeoutMs) || 10000),
-    );
+    const timeoutMs = bounded(condition.timeoutMs, 100, 120000, 10000);
     const deadline = Date.now() + timeoutMs;
     let result = conditionResult(condition, beforeSnapshot);
     while (!result.matched && Date.now() < deadline) {
@@ -553,7 +613,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
     label.style.top = "18px";
     label.style.transform = "translate(-50%, 4px)";
     label.classList.add("show");
-    await sleep(Math.max(120, Number(durationMs) || 900));
+    await sleep(bounded(durationMs, 120, limits.announceDurationMs, 900));
     hideLabel(label);
   }
 
@@ -561,6 +621,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
     const { cursor, label } = ensureUi();
     element.scrollIntoView({ block: "center", inline: "center", behavior: "smooth" });
     await sleep(220);
+    requireActionable(element);
     const rect = element.getBoundingClientRect();
     const x = Math.max(8, Math.min(innerWidth - 12, rect.left + rect.width / 2));
     const y = Math.max(8, Math.min(innerHeight - 12, rect.top + rect.height / 2));
@@ -597,7 +658,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
     pulse.classList.add("go");
     element.focus({ preventScroll: true });
     element.click();
-    await sleep(Math.max(260, Number(step.settleMs) || 520));
+    await sleep(bounded(step.settleMs, 260, limits.settleMs, 520));
     await waitUntil(step.until, before.snapshot);
     const after = currentOutline();
     const routeAfter = location.href;
@@ -706,15 +767,31 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
       ? String(element.value || element.textContent || "")
       : "";
     setControlValue(element, startingValue);
-    const delayMs = Math.max(0, Math.min(100, Number(step.typingDelayMs) || 18));
+    const requestedDelayMs = bounded(
+      step.typingDelayMs,
+      0,
+      limits.typingDelayMs,
+      18,
+    );
+    const delayMs = value.length
+      ? Math.min(
+          requestedDelayMs,
+          Math.floor(limits.typingDurationMs / value.length),
+        )
+      : requestedDelayMs;
     let nextValue = startingValue;
-    for (const character of value) {
-      nextValue += character;
+    if (!delayMs) {
+      nextValue += value;
       setControlValue(element, nextValue);
-      if (delayMs) await sleep(delayMs);
+    } else {
+      for (const character of value) {
+        nextValue += character;
+        setControlValue(element, nextValue);
+        await sleep(delayMs);
+      }
     }
     element.dispatchEvent(new Event("change", { bubbles: true }));
-    await sleep(Math.max(160, Number(step.settleMs) || 300));
+    await sleep(bounded(step.settleMs, 160, limits.settleMs, 300));
     await waitUntil(step.until, before.snapshot);
     const after = currentOutline();
     const routeAfter = location.href;
@@ -730,7 +807,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
   }
 
   async function waitFor(step) {
-    const timeoutMs = Math.max(100, Math.min(120000, Number(step.timeoutMs) || 10000));
+    const timeoutMs = bounded(step.timeoutMs, 100, 120000, 10000);
     const deadline = Date.now() + timeoutMs;
     const wantedText = String(step.text || "").replace(/\s+/g, " ").trim();
     while (Date.now() < deadline) {
@@ -822,7 +899,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
       }
     }
     element.dispatchEvent(new KeyboardEvent("keyup", init));
-    await sleep(Math.max(120, Number(step.settleMs) || 280));
+    await sleep(bounded(step.settleMs, 120, limits.settleMs, 280));
     await waitUntil(step.until, before.snapshot);
     const after = currentOutline();
     const routeAfter = location.href;
@@ -859,6 +936,11 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
           }
         };
         send.addEventListener("click", block, true);
+        document.getElementById("starter-prompts")?.addEventListener(
+          "click",
+          block,
+          true,
+        );
         input.addEventListener("keydown", (event) => {
           if (event.key === "Enter" && !event.shiftKey) block(event);
         }, true);
@@ -943,9 +1025,11 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
         settleMs: 200,
       });
 
-      const timeoutMs = Math.max(
+      const timeoutMs = bounded(
+        step.timeoutMs,
         1000,
-        Math.min(60 * 60 * 1000, Number(step.timeoutMs) || 60 * 60 * 1000),
+        60 * 60 * 1000,
+        60 * 60 * 1000,
       );
       const deadline = Date.now() + timeoutMs;
       while (Date.now() < deadline) {
@@ -1021,9 +1105,11 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
         throw new Error("The visible Brainstem request ID was not created.");
       }
 
-      const timeoutMs = Math.max(
+      const timeoutMs = bounded(
+        step.timeoutMs,
         1000,
-        Math.min(60 * 60 * 1000, Number(step.timeoutMs) || 180000),
+        60 * 60 * 1000,
+        180000,
       );
       const deadline = Date.now() + timeoutMs;
       while (Date.now() < deadline) {
@@ -1846,10 +1932,112 @@ function validateCondition(condition, label) {
   if (hasState === hasText) {
     throw new Error(`UI driver ${label} requires exactly one of state or text.`);
   }
+  validateNumberField(
+    condition.timeoutMs,
+    `${label} timeoutMs`,
+    100,
+    120000,
+  );
   return condition;
 }
 
-function validateCommand(command) {
+function validateNumberField(value, label, minimum, maximum) {
+  if (value === undefined) return;
+  if (
+    typeof value !== "number"
+    || !Number.isFinite(value)
+    || value < minimum
+    || value > maximum
+  ) {
+    throw new Error(
+      `UI driver ${label} must be between ${minimum} and ${maximum}.`,
+    );
+  }
+}
+
+function commandInput(command, action) {
+  return String(
+    action === "type"
+      ? command.value ?? ""
+      : command.value || command.text || "",
+  );
+}
+
+function commandTypingDelay(command, action) {
+  return boundedNumber(
+    command.typingDelayMs,
+    0,
+    UI_DRIVER_LIMITS.typingDelayMs,
+    action === "type" ? 18 : 5,
+  );
+}
+
+function estimatedCommandDuration(command) {
+  const action = String(command.action || "").toLowerCase();
+  const untilMs = command.until
+    ? boundedNumber(command.until.timeoutMs, 100, 120000, 10000)
+    : 0;
+  const pointerMs = 220 + 650;
+  if (action === "announce") {
+    return boundedNumber(
+      command.durationMs,
+      120,
+      UI_DRIVER_LIMITS.announceDurationMs,
+      900,
+    );
+  }
+  if (action === "click") {
+    return pointerMs
+      + boundedNumber(command.settleMs, 260, UI_DRIVER_LIMITS.settleMs, 520)
+      + untilMs;
+  }
+  if (action === "type") {
+    return pointerMs
+      + (commandInput(command, action).length * commandTypingDelay(command, action))
+      + boundedNumber(command.settleMs, 160, UI_DRIVER_LIMITS.settleMs, 300)
+      + untilMs;
+  }
+  if (action === "press") {
+    return (command.handle || command.selector ? pointerMs : 0)
+      + boundedNumber(command.settleMs, 120, UI_DRIVER_LIMITS.settleMs, 280)
+      + untilMs;
+  }
+  if (action === "wait") {
+    return boundedNumber(command.timeoutMs, 100, 120000, 10000);
+  }
+  if (action === "chat" || action === "surgeon_chat") {
+    const replyTimeoutMs = boundedNumber(
+      command.timeoutMs,
+      1000,
+      60 * 60 * 1000,
+      action === "chat" ? 180000 : 60 * 60 * 1000,
+    );
+    const typingMs = commandInput(command, action).length
+      * commandTypingDelay(command, action);
+    const openPanelMs = action === "surgeon_chat" ? pointerMs + 350 : 0;
+    const requestIdMs = action === "chat" ? 2000 : 0;
+    return openPanelMs
+      + pointerMs
+      + typingMs
+      + 300
+      + pointerMs
+      + 260
+      + requestIdMs
+      + replyTimeoutMs;
+  }
+  if (action === "run") {
+    return command.steps.reduce(
+      (total, step) => total + estimatedCommandDuration(step),
+      0,
+    );
+  }
+  return 0;
+}
+
+function validateCommand(command, { nested = false } = {}) {
+  if (!command || typeof command !== "object" || Array.isArray(command)) {
+    throw new Error("UI driver command must be an object.");
+  }
   const action = String(command.action || "").toLowerCase();
   const allowed = new Set([
     "announce",
@@ -1877,6 +2065,51 @@ function validateCommand(command) {
   if (!allowed.has(action)) {
     throw new Error(`Unsupported UI driver action: ${action || "(empty)"}`);
   }
+  const normalized = { ...command, action };
+  validateNumberField(
+    command.durationMs,
+    "durationMs",
+    0,
+    UI_DRIVER_LIMITS.announceDurationMs,
+  );
+  validateNumberField(
+    command.settleMs,
+    "settleMs",
+    0,
+    UI_DRIVER_LIMITS.settleMs,
+  );
+  validateNumberField(
+    command.typingDelayMs,
+    "typingDelayMs",
+    0,
+    UI_DRIVER_LIMITS.typingDelayMs,
+  );
+  validateNumberField(
+    command.frameTimeoutMs,
+    "frameTimeoutMs",
+    1000,
+    MAX_FRAME_SCRIPT_TIMEOUT_MS,
+  );
+  if (["type", "chat", "surgeon_chat"].includes(action)) {
+    const input = commandInput(command, action);
+    if (input.length > UI_DRIVER_LIMITS.typedCharacters) {
+      throw new Error(
+        `UI driver ${action} input must be at most ${
+          UI_DRIVER_LIMITS.typedCharacters
+        } characters.`,
+      );
+    }
+    if (
+      input.length * commandTypingDelay(command, action)
+      > UI_DRIVER_LIMITS.typingDurationMs
+    ) {
+      throw new Error(
+        `UI driver ${action} typing animation exceeds ${
+          UI_DRIVER_LIMITS.typingDurationMs
+        }ms.`,
+      );
+    }
+  }
   if (action === "inspect") {
     if (
       command.limit !== undefined
@@ -1888,25 +2121,61 @@ function validateCommand(command) {
       throw new Error("UI driver inspect since must be a snapshot string.");
     }
   }
+  if (action === "wait") {
+    validateNumberField(command.timeoutMs, "wait timeoutMs", 100, 120000);
+  }
+  if (action === "chat" || action === "surgeon_chat") {
+    validateNumberField(
+      command.timeoutMs,
+      `${action} timeoutMs`,
+      1000,
+      60 * 60 * 1000,
+    );
+  }
   if (command.until !== undefined) {
     if (!["click", "press", "type"].includes(action)) {
       throw new Error("UI driver until is supported only for click, press, and type.");
     }
-    validateCondition(command.until, "until");
+    normalized.until = validateCondition(command.until, "until");
   }
   if (action === "expect") validateCondition(command, "expect");
   if (action === "run") {
     if (!Array.isArray(command.steps) || command.steps.length < 1 || command.steps.length > 40) {
       throw new Error("UI driver runs require between 1 and 40 steps.");
     }
-    for (const step of command.steps) {
-      const nested = validateCommand(step);
-      if (nested.action === "tour" || nested.action === "force_mode") {
-        throw new Error(`Use ${nested.action} as a top-level UI driver command, not inside run.`);
+    normalized.steps = command.steps.map((step) => {
+      const nestedCommand = validateCommand(step, { nested: true });
+      if (
+        nestedCommand.action === "tour"
+        || nestedCommand.action === "force_mode"
+      ) {
+        throw new Error(`Use ${nestedCommand.action} as a top-level UI driver command, not inside run.`);
       }
-    }
+      return nestedCommand;
+    });
   }
-  return { ...command, action };
+  if (nested) return normalized;
+
+  const requiredFrameTimeoutMs = Math.ceil(
+    estimatedCommandDuration(normalized) + 1000,
+  );
+  if (requiredFrameTimeoutMs > MAX_FRAME_SCRIPT_TIMEOUT_MS) {
+    throw new Error(
+      `UI driver ${action} estimated duration exceeds the frame time limit.`,
+    );
+  }
+  if (
+    command.frameTimeoutMs !== undefined
+    && Number(command.frameTimeoutMs) < requiredFrameTimeoutMs
+  ) {
+    throw new Error(
+      `UI driver frameTimeoutMs must be at least ${requiredFrameTimeoutMs} for this command.`,
+    );
+  }
+  normalized.frameTimeoutMs = command.frameTimeoutMs === undefined
+    ? Math.max(FRAME_SCRIPT_TIMEOUT_MS, requiredFrameTimeoutMs)
+    : Number(command.frameTimeoutMs);
+  return normalized;
 }
 
 function twinTarget(command) {
@@ -2196,14 +2465,25 @@ export async function startUiDriverServer({
     const items = traceItems(result);
     const traces = items.map((item) => item?.__trace).filter(Boolean);
     const handles = items.map((item) => item?.h).filter(Boolean);
+    const traceText = (value) => (
+      value == null ? null : nodeHelpers.capText(value, 2000)
+    );
     const entry = {
       action: String(command?.action || ""),
-      handle: command?.handle || handles[handles.length - 1] || null,
-      effect: error ? { error: errorMessage(error) } : mergedEffect(items),
-      snapshot_before: traces[0]?.snapshot_before || command?.since || null,
-      snapshot_after: traces[traces.length - 1]?.snapshot_after
-        || result?.snapshot
-        || null,
+      handle: traceText(
+        command?.handle || handles[handles.length - 1] || null,
+      ),
+      effect: error
+        ? { error: traceText(errorMessage(error)) }
+        : mergedEffect(items),
+      snapshot_before: traceText(
+        traces[0]?.snapshot_before || command?.since || null,
+      ),
+      snapshot_after: traceText(
+        traces[traces.length - 1]?.snapshot_after
+          || result?.snapshot
+          || null,
+      ),
       // Lease transitions are the one fact about concurrency that polling a
       // banner cannot observe reliably (a "(2)" can last milliseconds); the
       // trace records the count the lock or unlock saw, so a test can assert
@@ -2646,7 +2926,9 @@ export async function startUiDriverServer({
       const commandId = randomBytes(6).toString("hex");
       const source = `(${browserDriverCommand.toString()})(${
         JSON.stringify(command)
-      }, ${createUiDriverHelpers.toString()}, ${JSON.stringify(commandId)})`;
+      }, ${createUiDriverHelpers.toString()}, ${JSON.stringify(commandId)}, ${
+        JSON.stringify({ ...UI_DRIVER_LIMITS, frameBudgetMs: frameBudgetMs(command) })
+      })`;
       const result = await executeInFrame(target, source, {
         timeoutMs: frameBudgetMs(command),
         window,
@@ -2718,7 +3000,9 @@ export async function startUiDriverServer({
 }
 
 export const uiDriverInternals = {
+  boundedFrameTimeout,
   browserDriverCommand,
+  commandLimits: UI_DRIVER_LIMITS,
   createFrameQueue,
   createUiDriverHelpers,
   frameKeyForCommand,
