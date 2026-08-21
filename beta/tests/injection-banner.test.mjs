@@ -23,8 +23,12 @@ test("the twin ledger bridge declares itself in its delivered bytes", () => {
 });
 
 test("host injections into a frame declare themselves", () => {
+  // Anchoring on a blank line means anchoring on \n\n, which does not exist in a
+  // CRLF checkout — this test passed on macOS and Linux and failed on Windows for
+  // exactly that reason. Match to the end of the statement instead, and tolerate
+  // either line ending everywhere.
   const constants = [
-    ["FORCE_MODE_BOOTSTRAP", /const FORCE_MODE_BOOTSTRAP = ([\s\S]*?);\n\n/],
+    ["FORCE_MODE_BOOTSTRAP", /const FORCE_MODE_BOOTSTRAP = ([\s\S]*?);\r?\n\r?\n/],
     ["VIEW_TOGGLE", /const VIEW_TOGGLE = \(startMobile\) => `([\s\S]{0,600})/],
   ];
   for (const [name, pattern] of constants) {
