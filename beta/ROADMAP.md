@@ -3,17 +3,20 @@
 Written so the thread survives a lost conversation. If you are picking this up cold, read
 [`CONSTITUTION.md`](CONSTITUTION.md), then [`GOLDEN_PATH.md`](GOLDEN_PATH.md), then this.
 
-## 1. Built and verified
+## 1. Built
+
+"Evidence" is what was actually exercised. Where a row says *source-shaped* or *implementer-verified*,
+that is the honest limit of the check — not a claim that it was proven live.
 
 | | Evidence |
 |---|---|
 | Tiles: herd, arena, binder; drag and drop; the drop that hot-loads; swap-versus-load; bunching; fold with undo | unit + e2e suites |
 | `rapp-autopilot/1.0` — `rapp()`, 21 verbs, both calling shapes, real drag gestures through the renderer's own drop handler, yields a contested tile | `beta/tests/autopilot.test.mjs`; removing the drop handler makes `tile.move` fail |
 | The chat lease is a witness, not a blocker — a trusted interaction reclaims the composer and nothing is ever prevented | no `preventDefault` remains in `ui-driver-server.mjs` |
-| Driver request-slot correlation — a person's reply can no longer be serialised into the model's tool result | lease suite |
+| Driver request-slot correlation — a person's reply can no longer be serialised into the model's tool result | lease suite — **implementer-verified**: the fail-without-fix evidence came from the implementer's report, and I ran the suite but did not re-revert each fix myself |
 | Attribution — a driver's change stamps the tile instead of toasting, decided by `event.isTrusted` | `beta/tests/tile-attribution.test.mjs` |
 | Driver steps are out of the chat transcript, on a click-through strip, off by default | `beta/tests/activity-view.test.mjs` |
-| Driven runs do not steal focus (`showInactive`, accessory policy) | `beta/tests/driven-focus.test.mjs` |
+| Driven runs do not steal focus (`showInactive`, accessory policy) | `beta/tests/driven-focus.test.mjs` — **source-shaped, live-unverified**: the test asserts the code takes the non-activating path and fails if a direct `show()`/`focus()` returns, but no run has been observed not stealing focus. Verify when Kody is away from the machine. |
 | Injected bytes declare themselves | `beta/tests/injection-banner.test.mjs` |
 | The generated agentic app checks its embedder's origin and correlates command ids | `beta/tests/agentic-bus-conformance.test.mjs` |
 | The media organ is probed before recording spawns | `beta/tests/media-organ.test.mjs` |
