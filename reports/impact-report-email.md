@@ -1,8 +1,8 @@
-**Subject:** AIBAST weekly and monthly impact report - August 22, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 23, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-22T05:32:57Z`
+**Snapshot:** `2026-08-23T05:33:20Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -25,11 +25,11 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 6 | +2 (+50.0%) | Baseline pending |
+| GitHub stars | 6 | +1 (+20.0%) | Baseline pending |
 | GitHub forks | 5 | +3 (+150.0%) | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
-| Open GitHub issues | 10 | +3 (+42.9%) | Baseline pending |
-| Agent upvotes | 4 | +2 (+100.0%) | Baseline pending |
+| Open GitHub issues | 11 | +2 (+22.2%) | Baseline pending |
+| Agent upvotes | 4 | +1 (+33.3%) | Baseline pending |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop usage events | 0 | -8 (-100.0%) - partial | Baseline pending |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
@@ -72,7 +72,6 @@
 - Field Service Dispatch Agent: +1 (current 1)
 
 **Agent upvotes**
-- Building Permit Processing Agent: +1 (current 1)
 - Care Gap Closure Agent: +1 (current 1)
 
 ## Top monthly movers
