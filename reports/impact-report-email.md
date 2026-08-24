@@ -1,8 +1,8 @@
-**Subject:** AIBAST weekly and monthly impact report - August 23, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 24, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-23T05:33:20Z`
+**Snapshot:** `2026-08-24T05:34:41Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -14,8 +14,8 @@
 | Clones excluding CI estimate | 2,127 | +430 (+25.3%) - partial | Baseline pending |
 | AIBAST repository and Pages views | 379 | +188 (+98.4%) - partial | Baseline pending |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
-| Release asset downloads | 3 | +1 (+50.0%) | Baseline pending |
-| AIBAST direct agent file downloads | 3 | +1 (+50.0%) | Baseline pending |
+| Release asset downloads | 3 | +0 (+0.0%) | Baseline pending |
+| AIBAST direct agent file downloads | 3 | +0 (+0.0%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | AIBAST installer file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | Unique cloners (14-day window) | 275 | +138 (+100.7%) snapshot change - partial | Baseline pending |
@@ -67,9 +67,6 @@
 
 **Workshop usage**
 - Account Intelligence Agent: -8 (current 0)
-
-**Agent downloads**
-- Field Service Dispatch Agent: +1 (current 1)
 
 **Agent upvotes**
 - Care Gap Closure Agent: +1 (current 1)
