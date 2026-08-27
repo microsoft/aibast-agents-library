@@ -9,19 +9,19 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-08-26T05:33:57Z",
+      "as_of": "2026-08-27T08:03:02Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-08-26T05:33:57Z",
+      "as_of": "2026-08-27T08:03:02Z",
       "status": "available"
     },
     "agent_upvotes": {
-      "as_of": "2026-08-26T05:33:57Z",
+      "as_of": "2026-08-27T08:03:02Z",
       "status": "available"
     },
     "file_downloads": {
-      "as_of": "2026-08-26T05:33:57Z",
+      "as_of": "2026-08-27T08:03:02Z",
       "status": "complete"
     },
     "traffic": {
@@ -30,7 +30,7 @@
       "status": "carried_forward"
     },
     "workshops": {
-      "as_of": "2026-08-26T05:33:57Z",
+      "as_of": "2026-08-27T08:03:02Z",
       "status": "partial"
     }
   },
@@ -93,7 +93,7 @@
       "@aibast-agents-library/building-permit-processing": {
         "acquisitions": 0,
         "display_name": "Building Permit Processing Agent",
-        "downloads": 0,
+        "downloads": 1,
         "upvotes": 1
       },
       "@aibast-agents-library/care-gap-closure": {
@@ -486,7 +486,7 @@
         "source": "downloads",
         "status": "partial",
         "unit": "count",
-        "value": 2518
+        "value": 2519
       },
       {
         "daily_fields": [
@@ -565,7 +565,7 @@
         "source": "releases",
         "status": "available",
         "unit": "count",
-        "value": 3
+        "value": 4
       },
       {
         "id": "agent_file_downloads",
@@ -579,7 +579,7 @@
         "source": "file_metrics",
         "status": "available",
         "unit": "count",
-        "value": 3
+        "value": 4
       },
       {
         "id": "skill_downloads",
@@ -1702,7 +1702,7 @@
       }
     }
   },
-  "generated_at": "2026-08-26T05:33:57Z",
+  "generated_at": "2026-08-27T08:03:02Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -1794,7 +1794,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 3
+          "value": 4
         },
         "agent_upvotes": {
           "baseline": null,
@@ -1890,7 +1890,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 3
+          "value": 4
         },
         "skill_downloads": {
           "baseline": null,
@@ -1930,7 +1930,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 2518
+          "value": 2519
         },
         "tracked_files": {
           "baseline": null,
@@ -2033,7 +2033,7 @@
       "status": "baseline_pending"
     },
     "week": {
-      "baseline_at": "2026-08-18T21:59:49Z",
+      "baseline_at": "2026-08-20T05:33:26Z",
       "days": 7,
       "metrics": {
         "achievement_achievement_rate": {
@@ -2111,16 +2111,16 @@
         "agent_file_downloads": {
           "baseline": 3,
           "calculation": "snapshot_change",
-          "change": 0,
-          "change_percent": 0.0,
-          "status": "available",
-          "value": 3
-        },
-        "agent_upvotes": {
-          "baseline": 3,
-          "calculation": "snapshot_change",
           "change": 1,
           "change_percent": 33.3,
+          "status": "available",
+          "value": 4
+        },
+        "agent_upvotes": {
+          "baseline": 4,
+          "calculation": "snapshot_change",
+          "change": 0,
+          "change_percent": 0.0,
           "status": "available",
           "value": 4
         },
@@ -2157,10 +2157,10 @@
           "value": 2127
         },
         "forks": {
-          "baseline": 4,
+          "baseline": 5,
           "calculation": "snapshot_change",
-          "change": 2,
-          "change_percent": 50.0,
+          "change": 1,
+          "change_percent": 20.0,
           "status": "available",
           "value": 6
         },
@@ -2181,18 +2181,18 @@
           "value": 0
         },
         "observed_files": {
-          "baseline": 5506,
+          "baseline": 5507,
           "calculation": "snapshot_change",
-          "change": 1,
+          "change": 0,
           "change_percent": 0.0,
           "status": "available",
           "value": 5507
         },
         "open_issues": {
-          "baseline": 10,
+          "baseline": 12,
           "calculation": "snapshot_change",
-          "change": 2,
-          "change_percent": 20.0,
+          "change": 0,
+          "change_percent": 0.0,
           "status": "available",
           "value": 12
         },
@@ -2207,10 +2207,10 @@
         "release_downloads": {
           "baseline": 3,
           "calculation": "snapshot_change",
-          "change": 0,
-          "change_percent": 0.0,
+          "change": 1,
+          "change_percent": 33.3,
           "status": "available",
-          "value": 3
+          "value": 4
         },
         "skill_downloads": {
           "baseline": 0,
@@ -2253,9 +2253,9 @@
           "value": 0
         },
         "tracked_files": {
-          "baseline": 5506,
+          "baseline": 5507,
           "calculation": "snapshot_change",
-          "change": 1,
+          "change": 0,
           "change_percent": 0.0,
           "status": "available",
           "value": 5507
@@ -2343,25 +2343,25 @@
       },
       "movers": {
         "agent_acquisitions": [],
-        "agent_downloads": [],
-        "agent_upvotes": [
+        "agent_downloads": [
           {
             "change": 1,
             "current": 1,
-            "id": "@aibast-agents-library/care-gap-closure",
-            "label": "Care Gap Closure Agent"
+            "id": "@aibast-agents-library/building-permit-processing",
+            "label": "Building Permit Processing Agent"
           }
         ],
+        "agent_upvotes": [],
         "workshop_achievement_points": [],
         "workshop_usage": []
       },
       "name": "Weekly",
-      "observed_days": 7.3,
+      "observed_days": 7.1,
       "status": "complete"
     }
   },
   "repo": {
-    "as_of": "2026-08-26T05:33:57Z",
+    "as_of": "2026-08-27T08:03:02Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
@@ -2370,13 +2370,13 @@
     "name": "aibast-agents-library",
     "open_issues": 12,
     "owner": "microsoft",
-    "pushed_at": "2026-08-25T05:33:52Z",
+    "pushed_at": "2026-08-27T06:57:27Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
-    "size_kb": 2260654,
+    "size_kb": 2260665,
     "stars": 6,
     "url": "https://github.com/microsoft/aibast-agents-library",
     "watchers": 0
   },
   "schema": "aibast-impact-report/1.0",
-  "subject": "AIBAST weekly and monthly impact report - August 26, 2026"
+  "subject": "AIBAST weekly and monthly impact report - August 27, 2026"
 }

@@ -1,17 +1,17 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-08-26T05:33:57Z",
+ "generated_at": "2026-08-27T08:03:02Z",
  "repo": {
   "stars": 6,
   "forks": 6,
   "watchers": 0,
   "open_issues": 12,
-  "size_kb": 2260654,
+  "size_kb": 2260665,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-08-25T05:33:52Z",
+  "pushed_at": "2026-08-27T06:57:27Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,11 +19,11 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 2518,
+  "downloads": 2519,
   "clones": 2127,
   "cdn_hits": 388,
-  "release_downloads": 3,
-  "agent_file_downloads": 3,
+  "release_downloads": 4,
+  "agent_file_downloads": 4,
   "installer_downloads": 0,
   "skill_downloads": 0,
   "agent_upvotes": 4,
@@ -37,7 +37,7 @@
   "view_uniques_daily_sum": 72,
   "days_tracked": 23,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 3,
+  "global_agent_distribution_fetch_events": 4,
   "agents": 72,
   "stacks": 52,
   "verticals": 12,
@@ -320,15 +320,15 @@
   "total_hits": 0,
   "bandwidth": 0,
   "rank": null,
-  "agent_hits": 3,
+  "agent_hits": 4,
   "installer_hits": 0,
   "files": [],
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 3,
+  "total_downloads": 4,
   "count": 4,
   "releases": [
    {
@@ -349,7 +349,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 3,
+    "downloads": 4,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -398,7 +398,7 @@
      },
      {
       "name": "building_permit_processing__55a5cfa3e015_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 27943
      },
      {
@@ -721,7 +721,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -744,6 +744,26 @@
     "description": "Automate account research and strategy planning to help sellers prepare faster, win more, and elevate deal quality.",
     "stack": "account_intelligence",
     "vertical": "b2b_sales",
+    "catalog_kind": "solution"
+   },
+   {
+    "name": "@aibast-agents-library/building-permit-processing",
+    "display_name": "Building Permit Processing Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "slg_government",
+    "tier": "verified",
+    "downloads": 1,
+    "upvotes": 1,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/37",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/38",
+    "lines": 601,
+    "size_kb": 27.3,
+    "added_at": "2026-08-12T15:38:09-04:00",
+    "file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+    "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
+    "stack": "building_permit_processing",
+    "vertical": "slg_government",
     "catalog_kind": "solution"
    },
    {
@@ -809,6 +829,26 @@
     "catalog_kind": "solution"
    },
    {
+    "name": "@aibast-agents-library/building-permit-processing",
+    "display_name": "Building Permit Processing Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "slg_government",
+    "tier": "verified",
+    "downloads": 1,
+    "upvotes": 1,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/37",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/38",
+    "lines": 601,
+    "size_kb": 27.3,
+    "added_at": "2026-08-12T15:38:09-04:00",
+    "file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+    "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
+    "stack": "building_permit_processing",
+    "vertical": "slg_government",
+    "catalog_kind": "solution"
+   },
+   {
     "name": "@aibast-agents-library/underwriting-support",
     "display_name": "Underwriting Support Agent",
     "publisher": "@aibast-agents-library",
@@ -826,26 +866,6 @@
     "description": "Automate commercial underwriting analysis to accelerate evaluations, improve pricing accuracy, and maintain full compliance.",
     "stack": "underwriting_support",
     "vertical": "financial_services",
-    "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/building-permit-processing",
-    "display_name": "Building Permit Processing Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "slg_government",
-    "tier": "verified",
-    "downloads": 0,
-    "upvotes": 1,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/37",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/38",
-    "lines": 601,
-    "size_kb": 27.3,
-    "added_at": "2026-08-12T15:38:09-04:00",
-    "file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
-    "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
-    "stack": "building_permit_processing",
-    "vertical": "slg_government",
     "catalog_kind": "solution"
    },
    {
@@ -1017,7 +1037,7 @@
     "publisher": "@aibast-agents-library",
     "category": "slg_government",
     "tier": "verified",
-    "downloads": 0,
+    "downloads": 1,
     "upvotes": 1,
     "acquisitions": 0,
     "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/37",
@@ -1485,6 +1505,15 @@
     "downloads": 1
    },
    {
+    "name": "building_permit_processing",
+    "display_name": "Building Permit Processing",
+    "vertical": "slg_government",
+    "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack",
+    "agents": 1,
+    "lines": 601,
+    "downloads": 1
+   },
+   {
     "name": "field_service_dispatch",
     "display_name": "Field Service Dispatch",
     "vertical": "energy",
@@ -1536,15 +1565,6 @@
     "path": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack",
     "agents": 1,
     "lines": 350,
-    "downloads": 0
-   },
-   {
-    "name": "building_permit_processing",
-    "display_name": "Building Permit Processing",
-    "vertical": "slg_government",
-    "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack",
-    "agents": 1,
-    "lines": 601,
     "downloads": 0
    },
    {
@@ -1714,7 +1734,7 @@
    {
     "name": "slg_government",
     "agents": 2,
-    "downloads": 0,
+    "downloads": 1,
     "lines": 1039
    },
    {
@@ -1788,7 +1808,7 @@
    {
     "name": "slg_government",
     "agents": 2,
-    "downloads": 0,
+    "downloads": 1,
     "stacks": 2
    },
    {
@@ -1930,7 +1950,7 @@
   {
    "name": "@aibast-agents-library/building-permit-processing",
    "display_name": "Building Permit Processing Agent",
-   "downloads": 0,
+   "downloads": 1,
    "upvotes": 1,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/37",
@@ -2749,7 +2769,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "available",
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -2776,7 +2796,7 @@
  },
  "agent_upvote_coverage": {
   "status": "available",
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -2793,7 +2813,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "available",
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -2811,7 +2831,7 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "carried_forward": false,
   "totals": {
    "files": 5507,
@@ -47840,7 +47860,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-08-26T05:33:57Z",
+    "as_of": "2026-08-27T08:03:02Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -47853,7 +47873,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-08-26T05:33:57Z",
+    "as_of": "2026-08-27T08:03:02Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -47865,7 +47885,7 @@
    },
    "agent_upvotes": {
     "status": "available",
-    "as_of": "2026-08-26T05:33:57Z",
+    "as_of": "2026-08-27T08:03:02Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -47896,13 +47916,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -49135,7 +49155,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -49680,7 +49700,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-08-26T05:33:57Z",
+  "as_of": "2026-08-27T08:03:02Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -49692,8 +49712,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 3,
-   "combined_agent_distribution_fetch_events": 3,
+   "aibast_direct_agent_fetches": 4,
+   "combined_agent_distribution_fetch_events": 4,
    "distribution_entries": 72,
    "logical_agents": 72,
    "overlap_agents": 0
@@ -49702,6 +49722,16 @@
    {
     "logical_name": "@aibast-agents-library/account-intelligence",
     "display_name": "Account Intelligence Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 1,
+    "combined_distribution_fetch_events": 1
+   },
+   {
+    "logical_name": "@aibast-agents-library/building-permit-processing",
+    "display_name": "Building Permit Processing Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -49802,16 +49832,6 @@
    {
     "logical_name": "@aibast-agents-library/asset-maintenance-forecast",
     "display_name": "Asset Maintenance Forecast Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 0,
-    "combined_distribution_fetch_events": 0
-   },
-   {
-    "logical_name": "@aibast-agents-library/building-permit-processing",
-    "display_name": "Building Permit Processing Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"

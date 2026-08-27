@@ -1,21 +1,21 @@
-**Subject:** AIBAST weekly and monthly impact report - August 26, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 27, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-26T05:33:57Z`
+**Snapshot:** `2026-08-27T08:03:02Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 2,518 | +0 observed - partial | Baseline pending |
+| AIBAST observed repository downloads | 2,519 | +0 observed - partial | Baseline pending |
 | Git clones | 2,127 | +0 (+0.0%) - partial | Baseline pending |
 | Clones excluding CI estimate | 2,127 | +0 (+0.0%) - partial | Baseline pending |
 | AIBAST repository and Pages views | 379 | +0 (+0.0%) - partial | Baseline pending |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
-| Release asset downloads | 3 | +0 (+0.0%) | Baseline pending |
-| AIBAST direct agent file downloads | 3 | +0 (+0.0%) | Baseline pending |
+| Release asset downloads | 4 | +1 (+33.3%) | Baseline pending |
+| AIBAST direct agent file downloads | 4 | +1 (+33.3%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | AIBAST installer file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | Unique cloners (14-day window) | 275 | +0 (+0.0%) snapshot change - partial | Baseline pending |
@@ -26,10 +26,10 @@
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
 | GitHub stars | 6 | +1 (+20.0%) | Baseline pending |
-| GitHub forks | 6 | +2 (+50.0%) | Baseline pending |
+| GitHub forks | 6 | +1 (+20.0%) | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
-| Open GitHub issues | 12 | +2 (+20.0%) | Baseline pending |
-| Agent upvotes | 4 | +1 (+33.3%) | Baseline pending |
+| Open GitHub issues | 12 | +0 (+0.0%) | Baseline pending |
+| Agent upvotes | 4 | +0 (+0.0%) | Baseline pending |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,507 | +1 (+0.0%) | Baseline pending |
-| Files covered by download observations | 5,507 | +1 (+0.0%) | Baseline pending |
+| Tracked repository files | 5,507 | +0 (+0.0%) | Baseline pending |
+| Files covered by download observations | 5,507 | +0 (+0.0%) | Baseline pending |
 | Catalog agents | 72 | +0 (+0.0%) | Baseline pending |
 | Tracked SKILL.md files | 234 | +0 (+0.0%) | Baseline pending |
 | Canonical workshops | 51 | +0 (+0.0%) | Baseline pending |
@@ -65,8 +65,8 @@
 
 ## Top weekly movers
 
-**Agent upvotes**
-- Care Gap Closure Agent: +1 (current 1)
+**Agent downloads**
+- Building Permit Processing Agent: +1 (current 1)
 
 ## Top monthly movers
 
