@@ -9,19 +9,19 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-08-28T08:05:00Z",
+      "as_of": "2026-08-29T05:28:43Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-08-28T08:05:00Z",
+      "as_of": "2026-08-29T05:28:43Z",
       "status": "available"
     },
     "agent_upvotes": {
-      "as_of": "2026-08-28T08:05:00Z",
+      "as_of": "2026-08-29T05:28:43Z",
       "status": "available"
     },
     "file_downloads": {
-      "as_of": "2026-08-28T08:05:00Z",
+      "as_of": "2026-08-29T05:28:43Z",
       "status": "complete"
     },
     "traffic": {
@@ -30,7 +30,7 @@
       "status": "carried_forward"
     },
     "workshops": {
-      "as_of": "2026-08-28T08:05:00Z",
+      "as_of": "2026-08-29T05:28:43Z",
       "status": "partial"
     }
   },
@@ -69,7 +69,7 @@
       "@aibast-agents-library/activity-gap": {
         "acquisitions": 0,
         "display_name": "Activity Gap Analyzer",
-        "downloads": 0,
+        "downloads": 1,
         "upvotes": 0
       },
       "@aibast-agents-library/ai-customer-assistant": {
@@ -87,7 +87,7 @@
       "@aibast-agents-library/asset-maintenance-forecast": {
         "acquisitions": 0,
         "display_name": "Asset Maintenance Forecast Agent",
-        "downloads": 0,
+        "downloads": 1,
         "upvotes": 0
       },
       "@aibast-agents-library/building-permit-processing": {
@@ -486,7 +486,7 @@
         "source": "downloads",
         "status": "partial",
         "unit": "count",
-        "value": 2520
+        "value": 2522
       },
       {
         "daily_fields": [
@@ -565,7 +565,7 @@
         "source": "releases",
         "status": "available",
         "unit": "count",
-        "value": 5
+        "value": 7
       },
       {
         "id": "agent_file_downloads",
@@ -579,7 +579,7 @@
         "source": "file_metrics",
         "status": "available",
         "unit": "count",
-        "value": 5
+        "value": 7
       },
       {
         "id": "skill_downloads",
@@ -691,7 +691,7 @@
         "source": "repo",
         "status": "available",
         "unit": "count",
-        "value": 13
+        "value": 14
       },
       {
         "id": "agent_upvotes",
@@ -1702,7 +1702,7 @@
       }
     }
   },
-  "generated_at": "2026-08-28T08:05:00Z",
+  "generated_at": "2026-08-29T05:28:43Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -1794,7 +1794,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 5
+          "value": 7
         },
         "agent_upvotes": {
           "baseline": null,
@@ -1874,7 +1874,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 13
+          "value": 14
         },
         "page_views": {
           "baseline": null,
@@ -1890,7 +1890,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 5
+          "value": 7
         },
         "skill_downloads": {
           "baseline": null,
@@ -1930,7 +1930,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 2520
+          "value": 2522
         },
         "tracked_files": {
           "baseline": null,
@@ -2111,10 +2111,10 @@
         "agent_file_downloads": {
           "baseline": 3,
           "calculation": "snapshot_change",
-          "change": 2,
-          "change_percent": 66.7,
+          "change": 4,
+          "change_percent": 133.3,
           "status": "available",
-          "value": 5
+          "value": 7
         },
         "agent_upvotes": {
           "baseline": 4,
@@ -2191,10 +2191,10 @@
         "open_issues": {
           "baseline": 12,
           "calculation": "snapshot_change",
-          "change": 1,
-          "change_percent": 8.3,
+          "change": 2,
+          "change_percent": 16.7,
           "status": "available",
-          "value": 13
+          "value": 14
         },
         "page_views": {
           "baseline": 379,
@@ -2207,10 +2207,10 @@
         "release_downloads": {
           "baseline": 3,
           "calculation": "snapshot_change",
-          "change": 2,
-          "change_percent": 66.7,
+          "change": 4,
+          "change_percent": 133.3,
           "status": "available",
-          "value": 5
+          "value": 7
         },
         "skill_downloads": {
           "baseline": 0,
@@ -2353,6 +2353,18 @@
           {
             "change": 1,
             "current": 1,
+            "id": "@aibast-agents-library/activity-gap",
+            "label": "Activity Gap Analyzer"
+          },
+          {
+            "change": 1,
+            "current": 1,
+            "id": "@aibast-agents-library/asset-maintenance-forecast",
+            "label": "Asset Maintenance Forecast Agent"
+          },
+          {
+            "change": 1,
+            "current": 1,
             "id": "@aibast-agents-library/building-permit-processing",
             "label": "Building Permit Processing Agent"
           }
@@ -2362,27 +2374,27 @@
         "workshop_usage": []
       },
       "name": "Weekly",
-      "observed_days": 7.1,
+      "observed_days": 8.0,
       "status": "complete"
     }
   },
   "repo": {
-    "as_of": "2026-08-28T08:05:00Z",
+    "as_of": "2026-08-29T05:28:43Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
     "forks": 6,
     "homepage": null,
     "name": "aibast-agents-library",
-    "open_issues": 13,
+    "open_issues": 14,
     "owner": "microsoft",
-    "pushed_at": "2026-08-27T08:03:14Z",
+    "pushed_at": "2026-08-28T08:05:15Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
-    "size_kb": 2260673,
+    "size_kb": 2260683,
     "stars": 7,
     "url": "https://github.com/microsoft/aibast-agents-library",
     "watchers": 0
   },
   "schema": "aibast-impact-report/1.0",
-  "subject": "AIBAST weekly and monthly impact report - August 28, 2026"
+  "subject": "AIBAST weekly and monthly impact report - August 29, 2026"
 }
