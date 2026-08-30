@@ -1,21 +1,21 @@
-**Subject:** AIBAST weekly and monthly impact report - August 29, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 30, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-29T05:28:43Z`
+**Snapshot:** `2026-08-30T05:27:41Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 2,522 | +0 observed - partial | Baseline pending |
+| AIBAST observed repository downloads | 2,524 | +0 observed - partial | Baseline pending |
 | Git clones | 2,127 | +0 (+0.0%) - partial | Baseline pending |
 | Clones excluding CI estimate | 2,127 | +0 (+0.0%) - partial | Baseline pending |
 | AIBAST repository and Pages views | 379 | +0 (+0.0%) - partial | Baseline pending |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
-| Release asset downloads | 7 | +4 (+133.3%) | Baseline pending |
-| AIBAST direct agent file downloads | 7 | +4 (+133.3%) | Baseline pending |
+| Release asset downloads | 9 | +6 (+200.0%) | Baseline pending |
+| AIBAST direct agent file downloads | 9 | +6 (+200.0%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | AIBAST installer file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | Unique cloners (14-day window) | 275 | +0 (+0.0%) snapshot change - partial | Baseline pending |
@@ -25,10 +25,10 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 7 | +2 (+40.0%) | Baseline pending |
+| GitHub stars | 7 | +1 (+16.7%) | Baseline pending |
 | GitHub forks | 6 | +1 (+20.0%) | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
-| Open GitHub issues | 14 | +2 (+16.7%) | Baseline pending |
+| Open GitHub issues | 14 | +4 (+40.0%) | Baseline pending |
 | Agent upvotes | 4 | +0 (+0.0%) | Baseline pending |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
@@ -66,10 +66,11 @@
 ## Top weekly movers
 
 **Agent downloads**
+- Account Messaging: +1 (current 1)
 - Account Risk Assessment: +1 (current 1)
 - Activity Gap Analyzer: +1 (current 1)
+- Ask HR Agent: +1 (current 1)
 - Asset Maintenance Forecast Agent: +1 (current 1)
-- Building Permit Processing Agent: +1 (current 1)
 
 ## Top monthly movers
 
