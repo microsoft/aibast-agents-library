@@ -108,7 +108,7 @@ function Install-WithWinget {
     param([string]$PackageId, [string]$Name)
     Write-Host "  [..] Installing $Name via winget..." -ForegroundColor Yellow
     Write-Host "       This can take several minutes; winget progress will appear below." -ForegroundColor Gray
-    winget install --id $PackageId --source winget --accept-source-agreements --accept-package-agreements --disable-interactivity --silent 2>&1 |
+    winget install --id $PackageId --exact --source winget --accept-source-agreements --accept-package-agreements --disable-interactivity --silent 2>&1 |
         ForEach-Object { Write-Host "       $_" }
     # Refresh PATH for this session
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")

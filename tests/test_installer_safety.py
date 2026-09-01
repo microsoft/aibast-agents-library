@@ -352,6 +352,7 @@ def test_windows_bootstrap_avoids_optional_and_hidden_network_work():
         "function Check-Prerequisites"
     )]
 
+    assert '--exact' in text
     assert '--source winget' in text
     assert '--disable-interactivity' in text
     assert 'Install-WithWinget "GitHub.cli"' not in prereqs
