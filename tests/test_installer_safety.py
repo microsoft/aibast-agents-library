@@ -329,3 +329,31 @@ def test_windows_launch_does_not_repeat_source_update():
 
     assert "git pull" not in launch
     assert "git fetch" not in launch
+
+
+def test_windows_launch_defers_auth_to_running_browser_ui():
+    text = WINDOWS_INSTALLER.read_text(encoding="utf-8")
+    launch = text[text.index("function Launch-Brainstem"):text.index("function Main")]
+
+    assert "login/device/code" not in launch
+    assert "login/oauth/access_token" not in launch
+    assert "Waiting for authorization" not in launch
+    assert "Keep this terminal open while Brainstem is running." in launch
+    assert "The browser will handle GitHub sign-in if it is needed." in launch
+    assert launch.index("Starting RAPP Brainstem") < launch.index("& $py brainstem.py")
+
+
+def test_windows_bootstrap_avoids_optional_and_hidden_network_work():
+    text = WINDOWS_INSTALLER.read_text(encoding="utf-8")
+    prereqs = text[text.index("function Check-Prerequisites"):text.index(
+        "# ── soul refresh"
+    )]
+    venv = text[text.index("function Setup-Venv"):text.index(
+        "function Check-Prerequisites"
+    )]
+
+    assert '--source winget' in text
+    assert '--disable-interactivity' in text
+    assert 'Install-WithWinget "GitHub.cli"' not in prereqs
+    assert "browser sign-in will be used" in prereqs
+    assert "pip install --upgrade pip" not in venv

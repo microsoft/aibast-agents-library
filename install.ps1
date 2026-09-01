@@ -1,7 +1,7 @@
 # RAPP Brainstem Installer for Windows
 # Usage: irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex
 #
-# Works on a factory Windows 11 install — auto-installs Python, Git, and GitHub CLI via winget.
+# Works on a factory Windows 11 install — auto-installs Python and Git via winget.
 
 $ErrorActionPreference = "Stop"
 
@@ -108,7 +108,7 @@ function Install-WithWinget {
     param([string]$PackageId, [string]$Name)
     Write-Host "  [..] Installing $Name via winget..." -ForegroundColor Yellow
     Write-Host "       This can take several minutes; winget progress will appear below." -ForegroundColor Gray
-    winget install --id $PackageId --accept-source-agreements --accept-package-agreements --silent 2>&1 |
+    winget install --id $PackageId --source winget --accept-source-agreements --accept-package-agreements --disable-interactivity --silent 2>&1 |
         ForEach-Object { Write-Host "       $_" }
     # Refresh PATH for this session
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
@@ -251,11 +251,6 @@ function Setup-Venv {
         throw "venv creation failed"
     }
 
-    # Upgrade pip inside the venv (best-effort; venv already ships pip).
-    $prev = $ErrorActionPreference
-    $ErrorActionPreference = 'Continue'
-    & (Get-VenvPython) -m pip install --upgrade pip 2>&1 | Out-Null
-    $ErrorActionPreference = $prev
     Write-Host "  [OK] Virtual environment ready" -ForegroundColor Green
 }
 
@@ -375,19 +370,13 @@ function Check-Prerequisites {
     # Store the working python command for later use
     $script:PythonExe = $pythonCmd
 
-    # GitHub CLI (optional but recommended)
+    # GitHub CLI is optional. Do not add another winget/UAC wait to the critical
+    # path: Brainstem has its own browser device-code flow and can start without gh.
     try {
         gh --version 2>&1 | Out-Null
-        Write-Host "  [OK] GitHub CLI installed" -ForegroundColor Green
+        Write-Host "  [OK] GitHub CLI available" -ForegroundColor Green
     } catch {
-        Write-Host "  [..] Installing GitHub CLI..." -ForegroundColor Yellow
-        Install-WithWinget "GitHub.cli" "GitHub CLI"
-        try {
-            gh --version 2>&1 | Out-Null
-            Write-Host "  [OK] GitHub CLI installed" -ForegroundColor Green
-        } catch {
-            Write-Host "  [!] GitHub CLI not installed (optional - you can authenticate later)" -ForegroundColor Yellow
-        }
+        Write-Host "  [..] GitHub CLI not found (optional - browser sign-in will be used)" -ForegroundColor Gray
     }
 }
 
@@ -1005,8 +994,8 @@ function Launch-Brainstem {
     # legacy full checkouts can download unrelated library changes indefinitely even
     # after the version check established that the Brainstem runtime is current.
 
-    # Dependencies BEFORE auth: if they cannot be installed, fail now — not after
-    # walking the user through a GitHub device-code authorization they can't use.
+    # Dependencies before launch: if they cannot be installed, fail now rather than
+    # opening a browser against a server that never bound port 7071.
     Push-Location "$BRAINSTEM_HOME\src\rapp_brainstem"
     if (-not (Check-PythonDeps)) {
         Write-Host "  [..] Installing missing dependencies..." -ForegroundColor Yellow
@@ -1020,126 +1009,14 @@ function Launch-Brainstem {
     }
     Pop-Location
 
-    $tokenFile = "$BRAINSTEM_HOME\src\rapp_brainstem\.copilot_token"
-    $clientId = "Iv1.b507a08c87ecfe98"
-
-    # Check if already authenticated
-    $needsAuth = $true
-    if (Test-Path $tokenFile) {
-        try {
-            $tokenData = Get-Content $tokenFile -Raw | ConvertFrom-Json
-            $savedToken = $tokenData.access_token
-            if ($savedToken) {
-                $authPrefix = if ($savedToken.StartsWith("ghu_")) { "token" } else { "Bearer" }
-                $headers = @{
-                    "Authorization" = "$authPrefix $savedToken"
-                    "Accept" = "application/json"
-                    "Editor-Version" = "vscode/1.95.0"
-                    "Editor-Plugin-Version" = "copilot/1.0.0"
-                }
-                try {
-                    $checkResp = Invoke-WebRequest -Uri "https://api.github.com/copilot_internal/v2/token" -Headers $headers -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
-                    if ($checkResp.StatusCode -eq 200) {
-                        Write-Host "  [OK] Already authenticated with GitHub Copilot" -ForegroundColor Green
-                        $needsAuth = $false
-                    }
-                } catch {
-                    Write-Host "  [..] Saved token expired - re-authenticating..." -ForegroundColor Yellow
-                    Remove-Item $tokenFile -Force -ErrorAction SilentlyContinue
-                }
-            }
-        } catch {
-            Remove-Item $tokenFile -Force -ErrorAction SilentlyContinue
-        }
-    }
-
-    if ($needsAuth) {
-        Write-Host ""
-        Write-Host "  Authenticating with GitHub Copilot..." -ForegroundColor Cyan
-        Write-Host ""
-
-        try {
-            $deviceResp = Invoke-RestMethod -Uri "https://github.com/login/device/code" -Method Post -ContentType "application/x-www-form-urlencoded" -Body "client_id=$clientId" -Headers @{"Accept"="application/json"} -TimeoutSec 10
-
-            $userCode = $deviceResp.user_code
-            $deviceCode = $deviceResp.device_code
-            $interval = if ($deviceResp.interval) { $deviceResp.interval } else { 5 }
-            $verifyUri = $deviceResp.verification_uri
-
-            if (-not $userCode -or -not $deviceCode) {
-                Write-Host "  [!] Could not start auth - sign in at http://localhost:7071/login" -ForegroundColor Yellow
-            } else {
-                Write-Host "  +-----------------------------------------+"
-                Write-Host "  |  Your code: " -NoNewline; Write-Host $userCode -ForegroundColor Cyan -NoNewline; Write-Host "                  |"
-                Write-Host "  +-----------------------------------------+"
-                Write-Host ""
-                Write-Host "  Opening browser to authorize..."
-
-                Start-Process $verifyUri
-                Write-Host "  Waiting for authorization..."
-                Write-Host ""
-
-                for ($i = 0; $i -lt 60; $i++) {
-                    Start-Sleep -Seconds $interval
-                    try {
-                        $pollResp = Invoke-RestMethod -Uri "https://github.com/login/oauth/access_token" -Method Post -ContentType "application/x-www-form-urlencoded" -Body "client_id=$clientId&device_code=$deviceCode&grant_type=urn:ietf:params:oauth:grant-type:device_code" -Headers @{"Accept"="application/json"} -TimeoutSec 10
-
-                        if ($pollResp.access_token) {
-                            $tokenJson = @{ access_token = $pollResp.access_token }
-                            if ($pollResp.refresh_token) { $tokenJson.refresh_token = $pollResp.refresh_token }
-                            $tokenJson | ConvertTo-Json | Set-Content $tokenFile
-
-                            # Validate Copilot access
-                            $authPrefix = if ($pollResp.access_token.StartsWith("ghu_")) { "token" } else { "Bearer" }
-                            $headers = @{
-                                "Authorization" = "$authPrefix $($pollResp.access_token)"
-                                "Accept" = "application/json"
-                                "Editor-Version" = "vscode/1.95.0"
-                                "Editor-Plugin-Version" = "copilot/1.0.0"
-                            }
-                            try {
-                                $copilotCheck = Invoke-WebRequest -Uri "https://api.github.com/copilot_internal/v2/token" -Headers $headers -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
-                                if ($copilotCheck.StatusCode -eq 200) {
-                                    Write-Host "  [OK] Authenticated - Copilot access confirmed" -ForegroundColor Green
-                                }
-                            } catch {
-                                $statusCode = $_.Exception.Response.StatusCode.value__
-                                if ($statusCode -eq 403) {
-                                    Write-Host ""
-                                    Write-Host "  [X] This GitHub account does NOT have Copilot access." -ForegroundColor Red
-                                    Write-Host ""
-                                    Write-Host "  Either:"
-                                    Write-Host "    1. Sign up for Copilot: " -NoNewline; Write-Host "https://github.com/github-copilot/signup" -ForegroundColor Cyan
-                                    Write-Host "    2. Re-run this installer and sign in with a different account"
-                                    Write-Host ""
-                                    Remove-Item $tokenFile -Force -ErrorAction SilentlyContinue
-                                } else {
-                                    Write-Host "  [OK] Authenticated with GitHub" -ForegroundColor Green
-                                }
-                            }
-                            break
-                        }
-
-                        $error_code = $pollResp.error
-                        if ($error_code -eq "expired_token") {
-                            Write-Host "  [!] Auth timed out - sign in at http://localhost:7071/login" -ForegroundColor Yellow
-                            break
-                        }
-                        if ($error_code -ne "authorization_pending" -and $error_code -ne "slow_down" -and $error_code) {
-                            Write-Host "  [!] Auth error: $error_code" -ForegroundColor Yellow
-                            break
-                        }
-                    } catch {}
-                }
-            }
-        } catch {
-            Write-Host "  [!] Could not start auth - sign in at http://localhost:7071/login" -ForegroundColor Yellow
-        }
-    }
-
-    # Launch the server
+    # Authentication belongs to the running server and browser UI. Performing the
+    # device-code flow here kept port 7071 unavailable for up to five silent minutes
+    # when GitHub was blocked or the browser step was missed.
     Write-Host ""
     Write-Host "  Starting RAPP Brainstem..." -ForegroundColor Cyan
+    Write-Host "  Setup is complete. Keep this terminal open while Brainstem is running." -ForegroundColor Green
+    Write-Host "  The browser will handle GitHub sign-in if it is needed." -ForegroundColor Gray
+    Write-Host "  Press Ctrl+C to stop the server." -ForegroundColor Gray
     Write-Host ""
 
     Push-Location "$BRAINSTEM_HOME\src\rapp_brainstem"
