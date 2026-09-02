@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-02T01:52:23Z`
+**Snapshot:** `2026-09-02T05:15:44Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 4,872 | +670 observed - partial | +4,387 observed - partial |
+| AIBAST observed repository downloads | 4,875 | +670 observed - partial | +4,387 observed - partial |
 | Git clones | 4,471 | +670 observed | +4,387 observed |
 | Clones excluding CI estimate | 4,471 | +2,344 (+110.2%) - partial | Baseline pending |
 | AIBAST repository and Pages views | 686 | +35 observed | +629 observed |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
-| Release asset downloads | 13 | +10 (+333.3%) | Baseline pending |
+| Release asset downloads | 16 | +13 (+433.3%) | Baseline pending |
 | AIBAST direct agent file downloads | 9 | +6 (+200.0%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
-| AIBAST installer file downloads | 4 | +4 | Baseline pending |
+| AIBAST installer file downloads | 7 | +7 | Baseline pending |
 | Unique cloners (14-day window) | 176 | -99 (-36.0%) snapshot change - partial | Baseline pending |
 | Unique visitors (14-day window) | 41 | +4 (+10.8%) snapshot change - partial | Baseline pending |
 
@@ -28,7 +28,7 @@
 | GitHub stars | 7 | +1 (+16.7%) | Baseline pending |
 | GitHub forks | 7 | +1 (+16.7%) | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
-| Open GitHub issues | 15 | +3 (+25.0%) | Baseline pending |
+| Open GitHub issues | 16 | +4 (+33.3%) | Baseline pending |
 | Agent upvotes | 4 | +0 (+0.0%) | Baseline pending |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop usage events | 4 | +4 - partial | Baseline pending |
