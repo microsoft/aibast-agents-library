@@ -46,8 +46,23 @@ jobs:
           cp install.ps1                 dist/installers/install.ps1
           cp community_rapp/install.sh   dist/installers/community_rapp-install.sh
           cp community_rapp/install.ps1  dist/installers/community_rapp-install.ps1
-          gh release upload "$tag" dist/installers/* --clobber
-          echo "Published $(ls dist/installers | wc -l) installer assets to $tag"
+          # Upload only what changed. Replacing an asset gives it a fresh
+          # download counter, so an unconditional --clobber would zero the
+          # counts on every run.
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/$tag"
+          uploaded=0
+          for path in dist/installers/*; do
+            name="$(basename "$path")"
+            if curl -fsSL --retry 3 "$base/$name" -o "$RUNNER_TEMP/current-$name" 2>/dev/null \
+               && cmp -s "$RUNNER_TEMP/current-$name" "$path"; then
+              echo "unchanged $name"
+              continue
+            fi
+            gh release upload "$tag" "$path" --clobber
+            echo "uploaded  $name"
+            uploaded=$((uploaded + 1))
+          done
+          echo "Published $uploaded changed installer asset(s) to $tag"
 
       - name: Verify the published assets are byte-identical to main
         run: |
