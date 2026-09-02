@@ -14,7 +14,7 @@ curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
 
 **Windows (PowerShell — works on factory Windows 11):**
 ```powershell
-irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex
+irm https://github.com/microsoft/aibast-agents-library/releases/download/installers/install.ps1 | iex
 ```
 Auto-installs Python 3.11, Git, and GitHub CLI via winget if missing.
 
@@ -33,12 +33,12 @@ Want persistent memory, Azure Functions, and a path to Copilot Studio? Skip the 
 
 **Mac / Linux:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/community_rapp/install.sh | bash
+curl -fsSL https://github.com/microsoft/aibast-agents-library/releases/download/installers/community_rapp-install.sh | bash
 ```
 
 **Windows:**
 ```powershell
-irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/community_rapp/install.ps1 | iex
+irm https://github.com/microsoft/aibast-agents-library/releases/download/installers/community_rapp-install.ps1 | iex
 ```
 
 Creates `~/rapp-projects/my-project/` — isolated project with its own venv, agents, and local storage. Auth happens through the chat UI (GitHub device code flow). No API keys needed to start.
