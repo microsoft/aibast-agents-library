@@ -2,7 +2,7 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-02T00:26:30Z`
+**Snapshot:** `2026-09-02T01:31:23Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,507 | +0 (+0.0%) | Baseline pending |
-| Files covered by download observations | 5,507 | +0 (+0.0%) | Baseline pending |
+| Tracked repository files | 5,509 | +2 (+0.0%) | Baseline pending |
+| Files covered by download observations | 5,509 | +2 (+0.0%) | Baseline pending |
 | Catalog agents | 72 | +0 (+0.0%) | Baseline pending |
 | Tracked SKILL.md files | 234 | +0 (+0.0%) | Baseline pending |
 | Canonical workshops | 51 | +0 (+0.0%) | Baseline pending |
