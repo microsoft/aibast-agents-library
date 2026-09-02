@@ -1,3 +1,4 @@
+import json
 import re
 from pathlib import Path
 
@@ -34,12 +35,47 @@ def test_every_release_installer_asset_maps_to_a_tracked_installer_path():
         assert (ROOT / path.lstrip("/")).is_file(), path
 
 
+def test_accumulate_installer_assets_survives_counter_resets():
+    store = {}
+    build_metrics.accumulate_installer_assets(store, {"install.ps1": 5})
+    build_metrics.accumulate_installer_assets(store, {"install.ps1": 7})
+    assert store["install.ps1"] == {"last": 7, "all_time": 7}
+    # asset replaced on a real installer change: counter restarts at 2
+    build_metrics.accumulate_installer_assets(store, {"install.ps1": 2})
+    assert store["install.ps1"] == {"last": 2, "all_time": 9}
+    build_metrics.accumulate_installer_assets(store, {"install.ps1": 2})
+    assert store["install.ps1"]["all_time"] == 9
+    assert build_metrics.installer_release_all_time({"installer_assets": store}) == 9
+    assert build_metrics.installer_release_all_time({}) == 0
+
+
+def test_with_release_installer_downloads_prefers_accumulated_history():
+    live = {"available": True, "releases": [{"tag": "installers", "assets": [
+        {"name": "install.ps1", "downloads": 1}]}]}
+    hist = {"installer_assets": {"install.ps1": {"last": 1, "all_time": 40}}}
+    assert build_metrics.with_release_installer_downloads(2, live, hist) == 42
+    assert build_metrics.with_release_installer_downloads(2, live, {}) == 3
+    assert build_metrics.with_release_installer_downloads(None, live, hist) == 40
+
+
+def test_merge_history_accumulates_installer_assets(tmp_path):
+    history = tmp_path / "metrics_history.json"
+    for counters in ({"install.ps1": 3}, {"install.ps1": 4}, {"install.ps1": 1}):
+        totals, _daily, _last = build_metrics.merge_history(
+            {}, {}, history, run_at="2026-09-02T00:00:00Z", installer_assets=counters
+        )
+    assert totals["installer_release_downloads_all_time"] == 5
+    saved = json.loads(history.read_text())
+    assert saved["installer_assets"]["install.ps1"] == {"last": 1, "all_time": 5}
+
+
 def test_workflow_publishes_exactly_the_mapped_assets():
     text = WORKFLOW.read_text(encoding="utf-8")
     published = set(re.findall(r"dist/installers/([A-Za-z0-9_.-]+)\s*$", text, re.M))
     assert published == set(build_metrics.RELEASE_INSTALLER_ASSETS)
     assert 'tag="installers"' in text
     assert "--clobber" in text
+    assert "unchanged $name" in text  # no unconditional re-upload (resets counters)
 
 
 def test_public_one_liners_point_at_the_release_assets():

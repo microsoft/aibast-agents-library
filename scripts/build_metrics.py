@@ -153,11 +153,58 @@ def release_installer_downloads(releases):
     return total
 
 
-def with_release_installer_downloads(base, releases):
+def installer_release_assets(releases):
+    """Current GitHub download counters for the rolling installer assets."""
+    out = {}
+    if not isinstance(releases, dict):
+        return out
+    for release in releases.get("releases") or []:
+        if not isinstance(release, dict):
+            continue
+        for asset in release.get("assets") or []:
+            if not isinstance(asset, dict):
+                continue
+            name = asset.get("name")
+            if name in RELEASE_INSTALLER_ASSETS:
+                count = _nonnegative_int(asset.get("downloads"))
+                if count is not None:
+                    out[name] = count
+    return out
+
+
+def accumulate_installer_assets(store, current):
+    """Fold current per-asset counters into an all-time store that survives
+    counter resets. GitHub gives a *replaced* asset a fresh counter, so a drop
+    below the last seen value is a reset: add the whole new value, not the
+    negative delta. ``store`` is mutated and returned."""
+    for name, count in (current or {}).items():
+        row = store.setdefault(name, {"last": 0, "all_time": 0})
+        last = _nonnegative_int(row.get("last")) or 0
+        delta = count - last if count >= last else count
+        row["all_time"] = (_nonnegative_int(row.get("all_time")) or 0) + delta
+        row["last"] = count
+    return store
+
+
+def installer_release_all_time(hist):
+    """Sum of accumulated installer asset downloads from a history document."""
+    store = (hist or {}).get("installer_assets") or {}
+    return sum(
+        _nonnegative_int(row.get("all_time")) or 0
+        for row in store.values()
+        if isinstance(row, dict)
+    )
+
+
+def with_release_installer_downloads(base, releases, hist=None):
     """Add GitHub-recorded installer asset downloads to a CDN-derived installer
-    count. A ``None`` base means the CDN scope was not observed; it stays ``None``
-    unless releases contribute a real count."""
-    extra = release_installer_downloads(releases)
+    count. Uses the accumulated all-time history when available (survives asset
+    replacement), else the live counters. A ``None`` base means the CDN scope
+    was not observed; it stays ``None`` unless releases contribute a real count."""
+    if hist is not None and (hist.get("installer_assets") or {}):
+        extra = installer_release_all_time(hist)
+    else:
+        extra = release_installer_downloads(releases)
     if base is None:
         return extra or None
     return base + extra
@@ -3315,7 +3362,7 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
 
 # ------------------------------------------------------------------ history
 
-def merge_history(traffic, jsd, history=HISTORY, run_at=None):
+def merge_history(traffic, jsd, history=HISTORY, run_at=None, installer_assets=None):
     """Accumulate rolling-window daily rows so totals survive the 14-day cutoff.
 
     Also remembers the last successful traffic read. The Actions GITHUB_TOKEN is
@@ -3357,6 +3404,11 @@ def merge_history(traffic, jsd, history=HISTORY, run_at=None):
         tracking.setdefault("cdn_since", min(cdn) if cdn else run_day)
         tracking["cdn_last"] = run_day
 
+    if installer_assets:
+        accumulate_installer_assets(
+            hist.setdefault("installer_assets", {}), installer_assets
+        )
+
     last = hist.setdefault("last_known", {})
     if traffic.get("clones"):
         last["clone_uniques_14d"] = traffic["clones"].get("uniques_14d", 0)
@@ -3377,6 +3429,7 @@ def merge_history(traffic, jsd, history=HISTORY, run_at=None):
         "views_all_time": sum(v["count"] for v in hist["views"].values()),
         "view_uniques_all_time": sum(v["uniques"] for v in hist["views"].values()),
         "cdn_all_time": sum(hist["cdn"].values()),
+        "installer_release_downloads_all_time": installer_release_all_time(hist),
         "days_tracked": len(hist["clones"]),
         "first_day": min(hist["clones"]) if hist["clones"] else None,
     }
@@ -3963,7 +4016,8 @@ def main():
         file_kind_totals = file_metrics["totals"]["by_kind"]
         remote_totals["agent_file_downloads"] = file_kind_totals["agent"]["downloads"]
         remote_totals["installer_downloads"] = with_release_installer_downloads(
-            file_kind_totals["installer"]["downloads"], releases
+            file_kind_totals["installer"]["downloads"], releases,
+            load_json(out_path.parent / HISTORY.name, {}),
         )
         remote_totals["skill_downloads"] = file_kind_totals["skill"]["downloads"]
         cdn["agent_hits"] = remote_totals["agent_file_downloads"]
@@ -4118,6 +4172,7 @@ def main():
             jsd,
             history,
             run_at=generated_at,
+            installer_assets=installer_release_assets(releases),
         )
         traffic_live = bool(traffic_raw.get("clones"))
         traffic_error = traffic_raw.get("_error")
@@ -4259,7 +4314,8 @@ def main():
             else file_kind_totals["agent"]["downloads"]
         )
         installer_hits = with_release_installer_downloads(
-            file_kind_totals["installer"]["downloads"], releases
+            file_kind_totals["installer"]["downloads"], releases,
+            load_json(history, {}),
         )
         skill_hits = file_kind_totals["skill"]["downloads"]
         daily_clones = sorted(
