@@ -13,6 +13,8 @@ on:
       - 'community_rapp/install.ps1'
       - '.github/workflows/installer-assets.yml'
   workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * *'  # daily, before the 05:20 UTC metrics snapshot: republish + verify (self-heals drift)
 
 permissions:
   contents: write
@@ -45,8 +47,22 @@ jobs:
           cp community_rapp/install.sh   dist/installers/community_rapp-install.sh
           cp community_rapp/install.ps1  dist/installers/community_rapp-install.ps1
           gh release upload "$tag" dist/installers/* --clobber
-          gh release edit "$tag" --target "$(git rev-parse HEAD)"
           echo "Published $(ls dist/installers | wc -l) installer assets to $tag"
+
+      - name: Verify the published assets are byte-identical to main
+        run: |
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/installers"
+          fail=0
+          for name in $(ls dist/installers); do
+            curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/$name"
+            if cmp -s "$RUNNER_TEMP/$name" "dist/installers/$name"; then
+              echo "OK   $name"
+            else
+              echo "DRIFT $name — published asset differs from main" >&2
+              fail=1
+            fi
+          done
+          test "$fail" = 0
 
       - name: Refresh static metrics JSON
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
