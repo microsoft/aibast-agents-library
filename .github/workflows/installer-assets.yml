@@ -1,0 +1,60 @@
+name: Installer Assets
+
+# Publishes the one-liner installers as assets on the rolling "installers"
+# release so every install is a GitHub-recorded download (raw.githubusercontent
+# fetches are untracked). The bytes stay on GitHub; nothing third-party.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'install.ps1'
+      - 'community_rapp/install.sh'
+      - 'community_rapp/install.ps1'
+      - '.github/workflows/installer-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: installer-assets-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Publish installers to the rolling release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="installers"
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            gh release create "$tag" \
+              --target "$(git rev-parse HEAD)" \
+              --latest=false \
+              --title "AIBAST Installers" \
+              --notes "Rolling one-liner installers. GitHub records each asset download. Replaced on every change to the installer files on main."
+          fi
+          mkdir -p dist/installers
+          cp install.ps1                 dist/installers/install.ps1
+          cp community_rapp/install.sh   dist/installers/community_rapp-install.sh
+          cp community_rapp/install.ps1  dist/installers/community_rapp-install.ps1
+          gh release upload "$tag" dist/installers/* --clobber
+          gh release edit "$tag" --target "$(git rev-parse HEAD)"
+          echo "Published $(ls dist/installers | wc -l) installer assets to $tag"
+
+      - name: Refresh static metrics JSON
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "metrics.yml",
+              ref: context.ref.replace("refs/heads/", "")
+            });

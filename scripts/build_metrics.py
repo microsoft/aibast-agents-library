@@ -127,6 +127,42 @@ INSTALLER_FILES = {
     "/docs/install.sh", "/docs/install.ps1", "/docs/install.cmd", "/docs/install.command",
     "/community_rapp/install.sh", "/community_rapp/install.ps1",
 }
+# Installer assets on the rolling "installers" release (see
+# .github/workflows/installer-assets.yml). Asset name -> tracked repository path.
+# GitHub records each asset download, so these are the trustworthy install counts.
+RELEASE_INSTALLER_ASSETS = {
+    "install.ps1": "/install.ps1",
+    "community_rapp-install.sh": "/community_rapp/install.sh",
+    "community_rapp-install.ps1": "/community_rapp/install.ps1",
+}
+
+
+def release_installer_downloads(releases):
+    """Sum GitHub-recorded downloads of the rolling installer release assets."""
+    if not isinstance(releases, dict):
+        return 0
+    total = 0
+    for release in releases.get("releases") or []:
+        if not isinstance(release, dict):
+            continue
+        for asset in release.get("assets") or []:
+            if not isinstance(asset, dict):
+                continue
+            if asset.get("name") in RELEASE_INSTALLER_ASSETS:
+                total += _nonnegative_int(asset.get("downloads")) or 0
+    return total
+
+
+def with_release_installer_downloads(base, releases):
+    """Add GitHub-recorded installer asset downloads to a CDN-derived installer
+    count. A ``None`` base means the CDN scope was not observed; it stays ``None``
+    unless releases contribute a real count."""
+    extra = release_installer_downloads(releases)
+    if base is None:
+        return extra or None
+    return base + extra
+
+
 # Catalog and deployment infrastructure — not an installable agent.
 CATALOG_FILES = {"/registry.json", "/skill.md", "/azuredeploy.json", "/deploy.sh", "/deploy.ps1"}
 FILE_KINDS = (
@@ -3926,7 +3962,9 @@ def main():
         )
         file_kind_totals = file_metrics["totals"]["by_kind"]
         remote_totals["agent_file_downloads"] = file_kind_totals["agent"]["downloads"]
-        remote_totals["installer_downloads"] = file_kind_totals["installer"]["downloads"]
+        remote_totals["installer_downloads"] = with_release_installer_downloads(
+            file_kind_totals["installer"]["downloads"], releases
+        )
         remote_totals["skill_downloads"] = file_kind_totals["skill"]["downloads"]
         cdn["agent_hits"] = remote_totals["agent_file_downloads"]
         cdn["installer_hits"] = remote_totals["installer_downloads"]
@@ -4220,7 +4258,9 @@ def main():
             if releases.get("available")
             else file_kind_totals["agent"]["downloads"]
         )
-        installer_hits = file_kind_totals["installer"]["downloads"]
+        installer_hits = with_release_installer_downloads(
+            file_kind_totals["installer"]["downloads"], releases
+        )
         skill_hits = file_kind_totals["skill"]["downloads"]
         daily_clones = sorted(
             value["count"]
