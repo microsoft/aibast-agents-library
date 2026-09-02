@@ -491,5 +491,20 @@ jobs:
             echo "No metrics change"
           else
             git commit -m "chore: metrics snapshot $(date -u +%Y-%m-%d)"
-            git push
+            # Another push (a merge, or a sibling workflow's dispatch) can land
+            # while this run is in flight; a plain push then fails with
+            # "fetch first". Rebase onto the branch and retry. On the snapshot
+            # files, the run that finishes last carries the newer read, so the
+            # replayed commit (-X theirs) wins any overlap.
+            pushed=false
+            for attempt in 1 2 3; do
+              git fetch origin "$GITHUB_REF_NAME"
+              git rebase -X theirs "origin/$GITHUB_REF_NAME"
+              if git push origin "HEAD:$GITHUB_REF_NAME"; then
+                pushed=true
+                break
+              fi
+              echo "Snapshot push attempt $attempt failed; retrying"
+            done
+            test "$pushed" = true
           fi
