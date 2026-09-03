@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - September 2, 2026
+**Subject:** AIBAST weekly and monthly impact report - September 3, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-02T05:33:41Z`
+**Snapshot:** `2026-09-03T05:45:01Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 4,878 | +670 observed - partial | +4,387 observed - partial |
-| Git clones | 4,471 | +670 observed | +4,387 observed |
-| Clones excluding CI estimate | 4,471 | +2,344 (+110.2%) - partial | Baseline pending |
-| AIBAST repository and Pages views | 686 | +35 observed | +629 observed |
+| AIBAST observed repository downloads | 4,935 | +599 observed - partial | +4,349 observed - partial |
+| Git clones | 4,525 | +599 observed | +4,349 observed |
+| Clones excluding CI estimate | 4,525 | +2,398 (+112.7%) - partial | Baseline pending |
+| AIBAST repository and Pages views | 701 | +48 observed | +628 observed |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
-| Release asset downloads | 19 | +16 (+533.3%) | Baseline pending |
+| Release asset downloads | 22 | +19 (+633.3%) | Baseline pending |
 | AIBAST direct agent file downloads | 9 | +6 (+200.0%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
-| AIBAST installer file downloads | 10 | +10 | Baseline pending |
-| Unique cloners (14-day window) | 176 | -99 (-36.0%) snapshot change - partial | Baseline pending |
-| Unique visitors (14-day window) | 41 | +4 (+10.8%) snapshot change - partial | Baseline pending |
+| AIBAST installer file downloads | 13 | +13 | Baseline pending |
+| Unique cloners (14-day window) | 173 | -102 (-37.1%) snapshot change - partial | Baseline pending |
+| Unique visitors (14-day window) | 40 | +3 (+8.1%) snapshot change - partial | Baseline pending |
 
 ## Community engagement
 
@@ -28,11 +28,11 @@
 | GitHub stars | 7 | +1 (+16.7%) | Baseline pending |
 | GitHub forks | 7 | +1 (+16.7%) | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
-| Open GitHub issues | 16 | +4 (+33.3%) | Baseline pending |
+| Open GitHub issues | 17 | +5 (+41.7%) | Baseline pending |
 | Agent upvotes | 4 | +0 (+0.0%) | Baseline pending |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
-| Workshop usage events | 4 | +4 - partial | Baseline pending |
-| Workshop views (14-day top paths) | 4 | Baseline unavailable | Baseline pending |
+| Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
+| Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop feedback reports | 0 | +0 (+0.0%) | Baseline pending |
@@ -64,9 +64,6 @@
 | Industry verticals | 12 | +0 (+0.0%) | Baseline pending |
 
 ## Top weekly movers
-
-**Workshop usage**
-- Customer Escalations Agent: +4 (current 4)
 
 **Agent downloads**
 - Account Messaging: +1 (current 1)
