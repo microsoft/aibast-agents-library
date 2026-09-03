@@ -110,7 +110,7 @@ Returns server status, loaded agents, model, and auth state.
 ```json
 {
   "status": "ok",
-  "version": "0.1.0",
+  "version": "0.6.17",
   "model": "gpt-4o",
   "soul": "./soul.md",
   "agents": ["HelloAgent", "HackerNewsAgent"],
@@ -124,7 +124,7 @@ Returns `"status": "unauthenticated"` (still 200) if the Copilot token is missin
 ### `GET /version`
 
 ```json
-{ "version": "0.1.0" }
+{ "version": "0.6.17" }
 ```
 
 ### `GET /models`
