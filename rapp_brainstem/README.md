@@ -44,6 +44,27 @@ open http://localhost:7071
 
 If `gh` is not installed, the web UI at `localhost:7071` walks you through GitHub device-code login automatically.
 
+### Microsoft Scout workspace
+
+Scout can keep this repository's static `index.html` visible in the center
+workspace pane while a hidden local Brainstem process serves the API.
+
+```powershell
+.\agents\experimental\scout\brainstem-workspace.ps1 start
+.\agents\experimental\scout\brainstem-workspace.ps1 status
+```
+
+Then preview `index.html` in Scout. The controller writes an ignored
+`agents/experimental/scout/preview-config.js` containing the selected localhost
+port and per-install secret. The static page must show `connected`; secrets and
+tokens must never be committed.
+
+For a fresh Scout, give it
+[`agents/experimental/scout/SKILL.md`](agents/experimental/scout/SKILL.md).
+The adjacent Agent Rosetta/1 first-contact draft and experimental
+`rapp-exchange/1` binding map Brainstem agents, portable skills, Scout squads,
+and unknown AI hosts without changing the RAPP/1 wire.
+
 ---
 
 ## API Reference

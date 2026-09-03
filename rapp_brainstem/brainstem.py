@@ -78,13 +78,14 @@ _ALLOWED_HOSTS.update(
 # the network at /<dirname>/<file>. index.html is served explicitly by the / route.
 app = Flask(__name__, static_folder=None)
 
-# CORS: allow only localhost origins (any port), not "*". The bundled local UI is
-# same-origin with its own fetches; this stops other websites from scripting the
-# brainstem inside a victim's browser.
+# CORS: allow localhost origins plus authenticated opaque origins used by Scout's
+# sandboxed workspace preview. Requests from an opaque ("null") origin are rejected
+# below unless they carry this install's secret.
 _LOCALHOST_ORIGIN_RE = re.compile(
     r"^https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$", re.IGNORECASE
 )
-CORS(app, origins=_LOCALHOST_ORIGIN_RE)
+_LOCAL_PREVIEW_ORIGINS = {"null", "file://"}
+CORS(app, origins=[_LOCALHOST_ORIGIN_RE, *_LOCAL_PREVIEW_ORIGINS])
 _TRUSTED_LIBRARY_ORIGINS = (
     "https://microsoft.github.io",
     "https://kody-w.github.io",
@@ -344,6 +345,31 @@ def _has_valid_secret():
     return bool(expected and supplied and hmac.compare_digest(supplied, expected))
 
 
+def _reject_unauthenticated_opaque_origin():
+    """Allow Scout's sandboxed preview without opening Brainstem to arbitrary files.
+
+    Electron's workspace HTML preview intentionally omits allow-same-origin, so the
+    browser serializes its Origin as "null". Preflight may prove only that the client
+    intends to send our secret header; every real request must carry the valid value.
+    """
+    if request.headers.get("Origin") not in _LOCAL_PREVIEW_ORIGINS:
+        return None
+    if not _is_loopback(request.remote_addr):
+        return jsonify({"error": "Forbidden: opaque origins are loopback-only."}), 403
+    if request.method == "OPTIONS":
+        requested_headers = (
+            request.headers.get("Access-Control-Request-Headers") or ""
+        ).lower().split(",")
+        if "x-brainstem-secret" in {item.strip() for item in requested_headers}:
+            return None
+    elif _has_valid_secret():
+        return None
+    return jsonify({
+        "error": "Forbidden: Scout workspace requests require a valid "
+                 "X-Brainstem-Secret header."
+    }), 403
+
+
 def _is_foreign_browser_request():
     """Detect an unsafe request initiated by a page from another origin.
 
@@ -383,6 +409,9 @@ def _reject_untrusted_host():
         "error": "Invalid Host header. Use localhost, a loopback address, or an "
                  "explicitly configured LAN host.",
     }), 400
+
+
+app.before_request(_reject_unauthenticated_opaque_origin)
 
 
 @app.before_request
