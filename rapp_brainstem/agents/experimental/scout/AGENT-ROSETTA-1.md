@@ -83,4 +83,3 @@ host's native protocol.
 
 Agent Rosetta/1 is deliberately small. A new host adds a binding, not a fork of
 the first-contact model.
-

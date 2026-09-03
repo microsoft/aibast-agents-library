@@ -90,4 +90,3 @@ def test_squad_restore_refuses_parent_traversal(tmp_path):
 
     with pytest.raises(exchange.ExchangeError):
         exchange.skill_to_squad(skill, tmp_path / "output")
-
