@@ -32,6 +32,10 @@ concurrency:
   group: ring-smoke-${{ github.event.workflow_run.head_branch || github.ref_name }}
   cancel-in-progress: true
 
+env:
+  BASE_URL: ${{ inputs.base_url || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
+  RING_BRANCH: ${{ inputs.ring_branch || github.event.repository.default_branch }}
+
 jobs:
   smoke:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
@@ -41,9 +45,6 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
-    env:
-      BASE_URL: ${{ inputs.base_url || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
-      RING_BRANCH: ${{ inputs.ring_branch || github.event.repository.default_branch }}
     steps:
       - name: Check out the ring branch (expected tree and species tools)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -86,7 +87,7 @@ jobs:
           python scripts/grail_species.py diff rapp/GRAIL-SPECIES.json "$RUNNER_TEMP/installed-shape.json"
 
           port="$(python -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1",0)); print(s.getsockname()[1]); s.close()')"
-          ( cd "$HOME/.brainstem/src/rapp_brainstem" && PORT="$port" GITHUB_TOKEN="ring-smoke-placeholder" \
+          ( cd "$HOME/.brainstem/src/rapp_brainstem" && PORT="$port" \
               "$HOME/.brainstem/venv/bin/python" brainstem.py > "$RUNNER_TEMP/server.log" 2>&1 ) &
           server_pid=$!
           healthy=false
@@ -137,7 +138,6 @@ jobs:
 
           $port = Get-Random -Minimum 20000 -Maximum 40000
           $env:PORT = "$port"
-          $env:GITHUB_TOKEN = 'ring-smoke-placeholder'
           $server = Start-Process -FilePath $venvPython -ArgumentList 'brainstem.py' -WorkingDirectory (Join-Path $src 'rapp_brainstem') -PassThru -RedirectStandardOutput (Join-Path $env:RUNNER_TEMP 'server.log') -RedirectStandardError (Join-Path $env:RUNNER_TEMP 'server.err')
           $healthy = $false
           foreach ($i in 1..60) {

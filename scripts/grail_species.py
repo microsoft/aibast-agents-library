@@ -206,7 +206,7 @@ def _headers() -> dict:
     """GitHub API headers; an optional token lifts the anonymous rate limit."""
     headers = {"User-Agent": "grail-species"}
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
-    if token and token != "ring-smoke-placeholder":
+    if token:
         headers["Authorization"] = f"Bearer {token}"
     return headers
 
@@ -388,7 +388,8 @@ def render_table(result: dict) -> str:
 
 
 def _load(path: str) -> dict:
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    # utf-8-sig: PowerShell redirection on Windows runners writes a byte-order mark.
+    return json.loads(Path(path).read_text(encoding="utf-8-sig"))
 
 
 def main(argv: list[str] | None = None) -> int:
