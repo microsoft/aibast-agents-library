@@ -9,28 +9,28 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-09-04T05:16:56Z",
+      "as_of": "2026-09-04T05:30:01Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-09-04T05:16:56Z",
+      "as_of": "2026-09-04T05:30:01Z",
       "status": "available"
     },
     "agent_upvotes": {
-      "as_of": "2026-09-04T05:16:56Z",
+      "as_of": "2026-09-04T05:30:01Z",
       "status": "available"
     },
     "file_downloads": {
-      "as_of": "2026-09-04T05:16:56Z",
+      "as_of": "2026-09-04T05:30:01Z",
       "status": "complete"
     },
     "traffic": {
-      "as_of": "2026-09-03T05:51:07Z",
-      "reason": "GitHub returned 500: Internal Server Error",
-      "status": "carried_forward"
+      "as_of": "2026-09-04T05:30:01Z",
+      "reason": null,
+      "status": "live"
     },
     "workshops": {
-      "as_of": "2026-09-04T05:16:56Z",
+      "as_of": "2026-09-04T05:30:01Z",
       "status": "partial"
     }
   },
@@ -484,9 +484,9 @@
         ],
         "section": "Reach and consumption",
         "source": "downloads",
-        "status": "partial",
+        "status": "available",
         "unit": "count",
-        "value": 4968
+        "value": 5123
       },
       {
         "daily_fields": [
@@ -501,9 +501,9 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "partial",
+        "status": "available",
         "unit": "count",
-        "value": 4525
+        "value": 4677
       },
       {
         "id": "clones_excluding_ci",
@@ -515,9 +515,9 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "partial",
+        "status": "available",
         "unit": "count",
-        "value": 4525
+        "value": 4677
       },
       {
         "daily_fields": [
@@ -532,9 +532,9 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "partial",
+        "status": "available",
         "unit": "count",
-        "value": 701
+        "value": 714
       },
       {
         "daily_fields": [
@@ -565,7 +565,7 @@
         "source": "releases",
         "status": "available",
         "unit": "count",
-        "value": 29
+        "value": 32
       },
       {
         "id": "agent_file_downloads",
@@ -607,7 +607,7 @@
         "source": "file_metrics",
         "status": "available",
         "unit": "count",
-        "value": 27
+        "value": 30
       },
       {
         "id": "clone_uniques_14d",
@@ -619,9 +619,9 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "partial",
+        "status": "available",
         "unit": "count",
-        "value": 173
+        "value": 164
       },
       {
         "id": "view_uniques_14d",
@@ -633,9 +633,9 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "partial",
+        "status": "available",
         "unit": "count",
-        "value": 40
+        "value": 37
       },
       {
         "id": "stars",
@@ -1702,7 +1702,7 @@
       }
     }
   },
-  "generated_at": "2026-09-04T05:16:56Z",
+  "generated_at": "2026-09-04T05:30:01Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -1826,7 +1826,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 173
+          "value": 164
         },
         "clones_excluding_ci": {
           "baseline": null,
@@ -1834,7 +1834,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 4525
+          "value": 4677
         },
         "forks": {
           "baseline": null,
@@ -1846,11 +1846,11 @@
         },
         "git_clones": {
           "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
+          "calculation": "period_activity",
+          "change": 4274,
           "change_percent": null,
-          "status": "baseline_pending",
-          "value": 4525
+          "status": "available",
+          "value": 4274
         },
         "installer_downloads": {
           "baseline": null,
@@ -1858,7 +1858,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 27
+          "value": 30
         },
         "observed_files": {
           "baseline": null,
@@ -1878,11 +1878,11 @@
         },
         "page_views": {
           "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
+          "calculation": "period_activity",
+          "change": 629,
           "change_percent": null,
-          "status": "baseline_pending",
-          "value": 701
+          "status": "available",
+          "value": 629
         },
         "release_downloads": {
           "baseline": null,
@@ -1890,7 +1890,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 29
+          "value": 32
         },
         "skill_downloads": {
           "baseline": null,
@@ -1927,10 +1927,10 @@
         "total_downloads": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 414,
+          "change": 4688,
           "change_percent": null,
           "status": "partial",
-          "value": 414
+          "value": 4688
         },
         "tracked_files": {
           "baseline": null,
@@ -1962,7 +1962,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 40
+          "value": 37
         },
         "watchers": {
           "baseline": null,
@@ -2143,18 +2143,18 @@
         "clone_uniques_14d": {
           "baseline": 275,
           "calculation": "snapshot_change",
-          "change": -102,
-          "change_percent": -37.1,
+          "change": -111,
+          "change_percent": -40.4,
           "status": "partial",
-          "value": 173
+          "value": 164
         },
         "clones_excluding_ci": {
           "baseline": 2127,
           "calculation": "snapshot_change",
-          "change": 2398,
-          "change_percent": 112.7,
+          "change": 2550,
+          "change_percent": 119.9,
           "status": "partial",
-          "value": 4525
+          "value": 4677
         },
         "forks": {
           "baseline": 6,
@@ -2165,20 +2165,20 @@
           "value": 7
         },
         "git_clones": {
-          "baseline": 2127,
-          "calculation": "snapshot_change",
-          "change": 2398,
-          "change_percent": 112.7,
-          "status": "partial",
-          "value": 4525
+          "baseline": null,
+          "calculation": "period_activity",
+          "change": 365,
+          "change_percent": null,
+          "status": "available",
+          "value": 365
         },
         "installer_downloads": {
           "baseline": 0,
           "calculation": "snapshot_change",
-          "change": 27,
+          "change": 30,
           "change_percent": null,
           "status": "available",
-          "value": 27
+          "value": 30
         },
         "observed_files": {
           "baseline": 5507,
@@ -2197,20 +2197,20 @@
           "value": 20
         },
         "page_views": {
-          "baseline": 379,
-          "calculation": "snapshot_change",
-          "change": 322,
-          "change_percent": 85.0,
-          "status": "partial",
-          "value": 701
+          "baseline": null,
+          "calculation": "period_activity",
+          "change": 54,
+          "change_percent": null,
+          "status": "available",
+          "value": 54
         },
         "release_downloads": {
           "baseline": 4,
           "calculation": "snapshot_change",
-          "change": 25,
-          "change_percent": 625.0,
+          "change": 28,
+          "change_percent": 700.0,
           "status": "available",
-          "value": 29
+          "value": 32
         },
         "skill_downloads": {
           "baseline": 0,
@@ -2247,10 +2247,10 @@
         "total_downloads": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 26,
+          "change": 391,
           "change_percent": null,
           "status": "partial",
-          "value": 26
+          "value": 391
         },
         "tracked_files": {
           "baseline": 5507,
@@ -2279,10 +2279,10 @@
         "view_uniques_14d": {
           "baseline": 37,
           "calculation": "snapshot_change",
-          "change": 3,
-          "change_percent": 8.1,
+          "change": 0,
+          "change_percent": 0.0,
           "status": "partial",
-          "value": 40
+          "value": 37
         },
         "watchers": {
           "baseline": 0,
@@ -2392,7 +2392,7 @@
     }
   },
   "repo": {
-    "as_of": "2026-09-04T05:16:56Z",
+    "as_of": "2026-09-04T05:30:01Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
@@ -2401,7 +2401,7 @@
     "name": "aibast-agents-library",
     "open_issues": 20,
     "owner": "microsoft",
-    "pushed_at": "2026-09-03T21:49:01Z",
+    "pushed_at": "2026-09-04T05:17:13Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
     "size_kb": 2566255,
     "stars": 7,
