@@ -202,14 +202,23 @@ def compute_shape(kernel: Path, installer: Path | None = None) -> dict:
 # --------------------------------------------------------------------------- fetch
 
 
+def _headers() -> dict:
+    """GitHub API headers; an optional token lifts the anonymous rate limit."""
+    headers = {"User-Agent": "grail-species"}
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if token and token != "ring-smoke-placeholder":
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
+
+
 def _http_json(url: str):
-    req = urllib.request.Request(url, headers={"User-Agent": "grail-species"})
+    req = urllib.request.Request(url, headers=_headers())
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 
 def _http_bytes(url: str) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": "grail-species"})
+    req = urllib.request.Request(url, headers=_headers())
     with urllib.request.urlopen(req, timeout=30) as resp:
         return resp.read()
 
@@ -244,6 +253,51 @@ def fetch_grail(outdir: Path, ref: str = "main", repo: str = GRAIL_REPO) -> dict
     }
     (outdir / "SOURCE.json").write_text(json.dumps(source, indent=2) + "\n", encoding="utf-8")
     return source
+
+
+# --------------------------------------------------------------------------- drift
+
+
+def _diverged_line_count(a: Path, b: Path) -> int:
+    import difflib
+    la = a.read_text(encoding="utf-8", errors="replace").splitlines()
+    lb = b.read_text(encoding="utf-8", errors="replace").splitlines()
+    return sum(1 for line in difflib.unified_diff(la, lb, lineterm="", n=0)
+               if line[:1] in "+-" and not line.startswith(("+++", "---")))
+
+
+def file_drift(grail_dir: Path, repo_root: Path) -> list[dict]:
+    """Per-file divergence between the fetched Grail and the vendored copy."""
+    def walk(base: Path) -> set[str]:
+        out = set()
+        for path in base.rglob("*"):
+            rel = path.relative_to(base).as_posix()
+            if path.is_file() and "__pycache__" not in rel and rel != "SOURCE.json":
+                out.add(rel)
+        return out
+    grail_files = {f for f in walk(grail_dir) if f.startswith(KERNEL_DIR + "/") or f == INSTALLER}
+    vendored_files = {f"{KERNEL_DIR}/{f}" for f in walk(repo_root / KERNEL_DIR)
+                      if f not in {".env", ".copilot_token"}} | ({INSTALLER} if (repo_root / INSTALLER).is_file() else set())
+    rows = []
+    for rel in sorted(grail_files | vendored_files):
+        g, v = grail_dir / rel, repo_root / rel
+        if rel in grail_files and rel in vendored_files:
+            if g.read_bytes() == v.read_bytes():
+                status, lines = "identical", 0
+            else:
+                status, lines = "modified", _diverged_line_count(g, v)
+        elif rel in vendored_files:
+            status, lines = "only-vendored", 0
+        else:
+            status, lines = "only-grail", 0
+        rows.append({"path": rel, "status": status, "lines": lines})
+    return rows
+
+
+def ledger_gaps(rows: list[dict], ledger: Path) -> list[str]:
+    """Diverged paths that the drift ledger does not mention."""
+    text = ledger.read_text(encoding="utf-8") if ledger.is_file() else ""
+    return [r["path"] for r in rows if r["status"] != "identical" and f"`{r['path']}`" not in text]
 
 
 # ---------------------------------------------------------------------------- diff
@@ -356,7 +410,31 @@ def main(argv: list[str] | None = None) -> int:
     p_diff.add_argument("grail")
     p_diff.add_argument("vendored")
 
+    p_drift = sub.add_parser("drift", help="list vendored files that diverge from a fetched Grail")
+    p_drift.add_argument("grail_dir", help="directory written by fetch-grail")
+    p_drift.add_argument("--root", default=".", help="repository root (default: .)")
+    p_drift.add_argument("--ledger", default=None, help="KERNEL-DRIFT.md that must mention every diverged path")
+    p_drift.add_argument("--json", action="store_true")
+
     args = parser.parse_args(argv)
+
+    if args.cmd == "drift":
+        rows = file_drift(Path(args.grail_dir), Path(args.root))
+        if args.json:
+            print(json.dumps(rows, indent=2))
+        else:
+            for r in rows:
+                if r["status"] != "identical":
+                    print(f"{r['status']:<14} {r['lines']:>5}  {r['path']}")
+            print(f"{sum(r['status'] != 'identical' for r in rows)} diverged of {len(rows)} files")
+        if args.ledger:
+            gaps = ledger_gaps(rows, Path(args.ledger))
+            if gaps:
+                print("not in ledger " + args.ledger + ":")
+                for g in gaps:
+                    print(f"  - {g}")
+                return 1
+        return 0
 
     if args.cmd == "shape":
         kernel = Path(args.kernel)

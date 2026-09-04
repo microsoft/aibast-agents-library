@@ -133,3 +133,12 @@ This validates your manifest and ensures the registry builds cleanly.
 - [ ] `python build_registry.py` passes with no errors
 - [ ] No secrets, API keys, or customer data in code
 - [ ] `requires_env` lists all needed environment variables
+
+## Release Process
+
+Changes reach production through the staging ring: pull request into
+`staging` on the staging fork, automated gates, then one human-merged promotion
+pull request to `main`. Kernel files under `rapp_brainstem/` and the installers
+are vendored from the Grail and are not edited here. See
+[docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md) and the release ledger in
+[docs/RELEASES.md](docs/RELEASES.md).

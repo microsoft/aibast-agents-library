@@ -108,14 +108,17 @@ Each tier is self-contained. Users advance when they choose to.
 
 **`main` is production.** The install one-liners (`curl ... install.sh | bash`) pull from `main`. Users get whatever is on `main`.
 
-**Development happens on feature/fix branches.** Commits accumulate on the working branch (e.g., `3-device-code-auth-gets-stuck-...`). Multiple fixes and features can stack up before merging.
+**Staging is the fork.** `kody-w/aibast-agents-library` is the staging ring: its `staging` branch serves https://kody-w.github.io/aibast-agents-library with installers rendered to install the staging kernel, and its `main` is a fast-forward mirror of production kept by `.github/workflows/sync-upstream.yml`. Feature work lands in `staging` by pull request and is gated by preflight, the Pages deploy, and the clean-runner one-liner smoke (`ring-smoke.yml`).
 
 **Promotion path:**
-1. Commit to feature branch (where active development happens)
-2. When ready to release, merge to `main` with a `release: vX.Y.Z` commit
-3. Bump `rapp_brainstem/VERSION` as part of the release commit
+1. Merge to `staging` on the fork; let the gates run.
+2. `tools/promotion_check.sh` must report GREEN.
+3. One pull request from `kody-w:staging` to `microsoft:main`, opened and merged by a human.
+4. Add the release to `docs/RELEASES.md` and keep adding its post-release issues.
 
-**Do not push directly to `main`** except via a merge at release time. The one-liner install is sacred — `main` must always be in a working state.
+**Kernel updates** come from the Grail (`kody-w/rapp-installer`) only, through a kernel-sync pull request that refreshes `rapp/GRAIL-SPECIES.json` and `rapp/KERNEL-DRIFT.md` in the same commit. Never edit `rapp_brainstem/` or the installers for a fix that belongs to every Brainstem user; send it to the Grail first.
+
+**Do not push directly to either `main`.** Full process: `docs/RELEASE-PROCESS.md`.
 
 ## Grail Downstream Boundary
 

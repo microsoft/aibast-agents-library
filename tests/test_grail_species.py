@@ -29,6 +29,7 @@ import grail_species  # noqa: E402
 PIN = REPO_ROOT / "rapp" / "GRAIL-SPECIES.json"
 KERNEL = REPO_ROOT / "rapp_brainstem"
 INSTALLER = REPO_ROOT / "install.sh"
+LEDGER = REPO_ROOT / "rapp" / "KERNEL-DRIFT.md"
 
 
 def _vendored_shape() -> dict:
@@ -66,6 +67,15 @@ class PinnedShapeIsWellFormed(unittest.TestCase):
         self.assertIn("fetched_at", source)
 
 
+class DriftLedgerIsPresent(unittest.TestCase):
+    def test_ledger_names_the_pinned_grail_commit(self):
+        self.assertTrue(LEDGER.is_file(), f"missing {LEDGER}")
+        pinned = json.loads(PIN.read_text(encoding="utf-8"))
+        short = pinned["source"]["commit"][:8]
+        self.assertIn(short, LEDGER.read_text(encoding="utf-8"),
+                      f"rapp/KERNEL-DRIFT.md must reference the pinned Grail commit {short}")
+
+
 class VendoredKernelIsSameSpecies(unittest.TestCase):
     def test_vendored_matches_pinned_grail_shape(self):
         grail = json.loads(PIN.read_text(encoding="utf-8"))
@@ -101,8 +111,17 @@ class LiveGrailComparison(unittest.TestCase):
             live = grail_species.compute_shape(
                 outdir / grail_species.KERNEL_DIR, outdir / grail_species.INSTALLER
             )
+            drift = grail_species.file_drift(outdir, REPO_ROOT)
+            gaps = grail_species.ledger_gaps(drift, LEDGER)
         live["source"] = source
         vendored = _vendored_shape()
+        diverged = [r for r in drift if r["status"] != "identical"]
+        print(f"\nkernel drift vs live Grail: {len(diverged)} of {len(drift)} files differ")
+        self.assertFalse(
+            gaps,
+            "vendored files diverge from the Grail but are not explained in rapp/KERNEL-DRIFT.md:\n  "
+            + "\n  ".join(gaps),
+        )
         result = grail_species.diff_shapes(live, vendored)
         table = grail_species.render_table(result)
         print(f"\nLive Grail {source['repo']}@{source['commit'][:12]}\n{table}")
