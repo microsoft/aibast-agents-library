@@ -44,6 +44,24 @@ open http://localhost:7071
 
 If `gh` is not installed, the web UI at `localhost:7071` walks you through GitHub device-code login automatically.
 
+### Microsoft Scout workspace overlay
+
+Scout can run an experimental RAPP/1 sidecar over the unchanged Brainstem
+kernel. Scout-specific lifecycle, UI, gateway, and exchange files stay under
+`agents/experimental/scout/`; `brainstem.py` and the Grail `index.html` remain
+untouched.
+
+```powershell
+.\agents\experimental\scout\brainstem-workspace.ps1 start
+.\agents\experimental\scout\brainstem-workspace.ps1 status
+```
+
+Open `agents/experimental/scout/workspace.html` in Scout, or use the
+`gateway_url` returned by `status`. The controller starts Brainstem on an
+internal loopback port and a capability-gated Scout gateway on a separate
+loopback port. Private runtime state is generated under
+`.brainstem_data/scout/` and must not be committed.
+
 ---
 
 ## API Reference
@@ -89,7 +107,7 @@ Returns server status, loaded agents, model, and auth state.
 ```json
 {
   "status": "ok",
-  "version": "0.1.0",
+  "version": "0.6.17",
   "model": "gpt-4o",
   "soul": "./soul.md",
   "agents": ["HelloAgent", "HackerNewsAgent"],
@@ -103,7 +121,7 @@ Returns `"status": "unauthenticated"` (still 200) if the Copilot token is missin
 ### `GET /version`
 
 ```json
-{ "version": "0.1.0" }
+{ "version": "0.6.17" }
 ```
 
 ### `GET /models`

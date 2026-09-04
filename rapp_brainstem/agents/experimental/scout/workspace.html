@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scout + RAPP Brainstem</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d1117;
+    --panel: #161b22;
+    --line: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --ok: #3fb950;
+    --warn: #d29922;
+    --danger: #f85149;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .app {
+    width: min(920px, 100%);
+    min-height: 100vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    border-inline: 1px solid var(--line);
+  }
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--panel) 92%, transparent);
+  }
+  .mark {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 1px solid #1f6feb;
+    border-radius: 10px;
+    color: var(--accent);
+    font-size: 20px;
+  }
+  h1 { margin: 0; font-size: 15px; }
+  .subtitle { color: var(--muted); font-size: 12px; }
+  .status {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--warn);
+  }
+  .dot.ok { background: var(--ok); }
+  .dot.error { background: var(--danger); }
+  main {
+    min-height: 0;
+    overflow: auto;
+    padding: 22px 18px 120px;
+  }
+  .empty {
+    max-width: 540px;
+    margin: 12vh auto 0;
+    text-align: center;
+    color: var(--muted);
+  }
+  .empty strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text);
+    font-size: 20px;
+  }
+  .message {
+    max-width: 760px;
+    margin: 0 auto 16px;
+    padding: 13px 15px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--panel);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .message.user {
+    border-color: #1f6feb;
+    background: #0d2847;
+  }
+  .message.system {
+    color: var(--muted);
+    border-style: dashed;
+  }
+  .role {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  footer {
+    position: sticky;
+    bottom: 0;
+    padding: 12px 18px 18px;
+    border-top: 1px solid var(--line);
+    background: linear-gradient(transparent, var(--bg) 20%);
+  }
+  .auth {
+    display: none;
+    max-width: 760px;
+    margin: 0 auto 10px;
+    padding: 10px 12px;
+    border: 1px solid #9e6a03;
+    border-radius: 10px;
+    background: #2d2206;
+    color: #e3b341;
+  }
+  .auth.visible { display: flex; align-items: center; gap: 10px; }
+  .auth span { flex: 1; }
+  .composer {
+    max-width: 760px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--panel);
+  }
+  textarea {
+    width: 100%;
+    min-height: 52px;
+    max-height: 180px;
+    resize: vertical;
+    border: 0;
+    outline: 0;
+    padding: 8px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+  }
+  button, select {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #21262d;
+    color: var(--text);
+    font: inherit;
+  }
+  button {
+    align-self: end;
+    min-width: 76px;
+    height: 38px;
+    padding: 0 14px;
+    cursor: pointer;
+  }
+  button.primary { border-color: #1f6feb; background: #1f6feb; }
+  button:disabled { cursor: wait; opacity: .55; }
+  select { max-width: 210px; height: 32px; padding: 0 8px; }
+  a { color: var(--accent); }
+  code {
+    padding: 2px 5px;
+    border-radius: 5px;
+    background: #21262d;
+  }
+  @media (max-width: 640px) {
+    .app { border: 0; }
+    .subtitle { display: none; }
+    select { max-width: 130px; }
+  }
+</style>
+<script>
+/*__SCOUT_RUNTIME_CONFIG__*/
+</script>
+<script>
+if (!window.__SCOUT_BRAINSTEM__ &&
+    (location.protocol === "file:" || location.protocol === "local-preview:")) {
+  document.write('<script src="../../../.brainstem_data/scout/runtime-config.js"><\/script>');
+}
+</script>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="mark" aria-hidden="true">&#129504;</div>
+    <div>
+      <h1>RAPP Brainstem</h1>
+      <div class="subtitle">Scout workspace overlay - Grail kernel unchanged</div>
+    </div>
+    <select id="models" aria-label="Model" hidden></select>
+    <div class="status" role="status" aria-live="polite">
+      <span class="dot" id="dot"></span>
+      <span id="status">starting</span>
+    </div>
+  </header>
+
+  <main id="messages">
+    <div class="empty" id="empty">
+      <strong>Your local Brainstem, through Scout</strong>
+      Scout owns this view and its capability gateway. Brainstem continues to
+      serve the standard <code>POST /chat</code> contract unchanged.
+    </div>
+  </main>
+
+  <footer>
+    <div class="auth" id="auth">
+      <span id="auth-text">Sign in with GitHub to use Copilot.</span>
+      <button id="auth-button">Sign in</button>
+    </div>
+    <div class="composer">
+      <textarea id="input" placeholder="Message Brainstem..." aria-label="Message"></textarea>
+      <button class="primary" id="send">Send</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+
+const config = window.__SCOUT_BRAINSTEM__;
+const messages = document.getElementById("messages");
+const empty = document.getElementById("empty");
+const input = document.getElementById("input");
+const sendButton = document.getElementById("send");
+const auth = document.getElementById("auth");
+const authText = document.getElementById("auth-text");
+const authButton = document.getElementById("auth-button");
+const modelSelect = document.getElementById("models");
+const statusText = document.getElementById("status");
+const dot = document.getElementById("dot");
+let history = [];
+let pollTimer = null;
+
+function setStatus(text, kind = "") {
+  statusText.textContent = text;
+  dot.className = `dot ${kind}`.trim();
+}
+
+function addMessage(role, text) {
+  empty.hidden = true;
+  const node = document.createElement("div");
+  node.className = `message ${role}`;
+  const label = document.createElement("span");
+  label.className = "role";
+  label.textContent = role === "assistant" ? "Brainstem" : role;
+  const content = document.createElement("span");
+  content.textContent = text;
+  node.append(label, content);
+  messages.appendChild(node);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function gatewayFetch(path, options = {}) {
+  if (!config || !config.url || !config.secret) {
+    throw new Error("Run brainstem-workspace.ps1 start before opening this page.");
+  }
+  const headers = new Headers(options.headers || {});
+  headers.set("X-Scout-Gateway-Secret", config.secret);
+  const response = await fetch(`${config.url.replace(/\/$/, "")}${path}`, {
+    ...options,
+    headers,
+  });
+  const text = await response.text();
+  let payload = {};
+  if (text) {
+    try {
+      payload = JSON.parse(text);
+    } catch {
+      throw new Error(`Gateway returned HTTP ${response.status}.`);
+    }
+  }
+  if (!response.ok) {
+    throw new Error(payload.error || `Gateway returned HTTP ${response.status}.`);
+  }
+  return payload;
+}
+
+async function loadModels() {
+  try {
+    const data = await gatewayFetch("/models");
+    const models = (data.models || []).filter(model => model.available !== false);
+    modelSelect.replaceChildren();
+    for (const model of models) {
+      const option = document.createElement("option");
+      option.value = model.id;
+      option.textContent = model.name || model.id;
+      option.selected = model.id === data.current;
+      modelSelect.appendChild(option);
+    }
+    modelSelect.hidden = models.length === 0;
+  } catch {
+    modelSelect.hidden = true;
+  }
+}
+
+async function checkHealth() {
+  try {
+    const health = await gatewayFetch("/health");
+    if (health.status === "ok") {
+      setStatus(`connected - v${health.version}`, "ok");
+      auth.classList.remove("visible");
+      sendButton.disabled = false;
+      loadModels();
+    } else {
+      setStatus(`sign in - v${health.version}`, "error");
+      auth.classList.add("visible");
+      sendButton.disabled = true;
+    }
+  } catch (error) {
+    setStatus("offline", "error");
+    sendButton.disabled = true;
+    authText.textContent = error.message;
+    auth.classList.add("visible");
+  }
+}
+
+async function beginLogin() {
+  authButton.disabled = true;
+  try {
+    const login = await gatewayFetch("/login", { method: "POST" });
+    authText.replaceChildren(
+      document.createTextNode("Enter code "),
+      Object.assign(document.createElement("strong"), { textContent: login.user_code }),
+      document.createTextNode(" at "),
+      Object.assign(document.createElement("a"), {
+        href: login.verification_uri,
+        target: "_blank",
+        rel: "noopener",
+        textContent: "GitHub device login",
+      }),
+      document.createTextNode("."),
+    );
+    authButton.textContent = "Waiting";
+    pollTimer = setInterval(pollLogin, 2000);
+  } catch (error) {
+    authText.textContent = error.message;
+    authButton.disabled = false;
+  }
+}
+
+async function pollLogin() {
+  try {
+    const result = await gatewayFetch("/login/poll", { method: "POST" });
+    if (result.status === "pending") return;
+    clearInterval(pollTimer);
+    pollTimer = null;
+    authButton.disabled = false;
+    authButton.textContent = "Sign in";
+    if (result.status === "ok") {
+      await checkHealth();
+    } else {
+      authText.textContent = result.error || "GitHub sign-in did not complete.";
+    }
+  } catch (error) {
+    clearInterval(pollTimer);
+    pollTimer = null;
+    authButton.disabled = false;
+    authButton.textContent = "Sign in";
+    authText.textContent = error.message;
+  }
+}
+
+async function sendMessage() {
+  const text = input.value.trim();
+  if (!text || sendButton.disabled) return;
+  input.value = "";
+  addMessage("user", text);
+  sendButton.disabled = true;
+  setStatus("thinking");
+  try {
+    const result = await gatewayFetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_input: text,
+        conversation_history: history,
+      }),
+    });
+    if (result.error) throw new Error(result.error);
+    addMessage("assistant", result.response || "");
+    history.push(
+      { role: "user", content: text },
+      { role: "assistant", content: result.response || "" },
+    );
+    setStatus("connected", "ok");
+  } catch (error) {
+    addMessage("system", error.message);
+    await checkHealth();
+  } finally {
+    if (!auth.classList.contains("visible")) sendButton.disabled = false;
+    input.focus();
+  }
+}
+
+modelSelect.addEventListener("change", async () => {
+  try {
+    await gatewayFetch("/models/set", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: modelSelect.value }),
+    });
+  } catch (error) {
+    addMessage("system", error.message);
+  }
+});
+authButton.addEventListener("click", beginLogin);
+sendButton.addEventListener("click", sendMessage);
+input.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+checkHealth();
+</script>
+</body>
+</html>
