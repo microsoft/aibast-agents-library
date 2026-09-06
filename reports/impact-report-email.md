@@ -1,24 +1,24 @@
-**Subject:** AIBAST weekly and monthly impact report - September 5, 2026
+**Subject:** AIBAST weekly and monthly impact report - September 6, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-05T05:28:20Z`
+**Snapshot:** `2026-09-06T05:16:26Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 5,532 | +776 observed - partial | +4,569 observed - partial |
-| Git clones | 5,078 | +750 observed | +4,543 observed |
-| Clones excluding CI estimate | 5,078 | +2,951 (+138.7%) - partial | Baseline pending |
-| AIBAST repository and Pages views | 731 | +54 observed | +637 observed |
+| AIBAST observed repository downloads | 5,667 | +792 observed - partial | +4,195 observed - partial |
+| Git clones | 5,213 | +766 observed | +4,169 observed |
+| Clones excluding CI estimate | 5,213 | +3,086 (+145.1%) - partial | Baseline pending |
+| AIBAST repository and Pages views | 744 | +62 observed | +630 observed |
 | jsDelivr file hits | 414 | +26 observed | +26 observed |
-| Release asset downloads | 40 | +35 (+700.0%) | Baseline pending |
-| AIBAST direct agent file downloads | 11 | +6 (+120.0%) | Baseline pending |
+| Release asset downloads | 40 | +33 (+471.4%) | Baseline pending |
+| AIBAST direct agent file downloads | 11 | +4 (+57.1%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | AIBAST installer file downloads | 38 | +38 | Baseline pending |
-| Unique cloners (14-day window) | 202 | -73 (-26.5%) snapshot change - partial | Baseline pending |
+| Unique cloners (14-day window) | 214 | -61 (-22.2%) snapshot change - partial | Baseline pending |
 | Unique visitors (14-day window) | 38 | +1 (+2.7%) snapshot change - partial | Baseline pending |
 
 ## Community engagement
@@ -28,7 +28,7 @@
 | GitHub stars | 7 | +0 (+0.0%) | Baseline pending |
 | GitHub forks | 7 | +1 (+16.7%) | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
-| Open GitHub issues | 21 | +8 (+61.5%) | Baseline pending |
+| Open GitHub issues | 21 | +7 (+50.0%) | Baseline pending |
 | Agent upvotes | 4 | +0 (+0.0%) | Baseline pending |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
@@ -69,7 +69,6 @@
 - Account Intelligence Agent: +1 (current 2)
 - Account Intelligence Orchestrator: +1 (current 1)
 - Account Messaging: +1 (current 1)
-- Activity Gap Analyzer: +1 (current 1)
 - Ask HR Agent: +1 (current 1)
 
 ## Top monthly movers
