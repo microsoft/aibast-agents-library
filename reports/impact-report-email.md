@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-06T05:16:26Z`
+**Snapshot:** `2026-09-06T05:29:01Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 5,667 | +792 observed - partial | +4,195 observed - partial |
+| AIBAST observed repository downloads | 5,670 | +792 observed - partial | +4,195 observed - partial |
 | Git clones | 5,213 | +766 observed | +4,169 observed |
 | Clones excluding CI estimate | 5,213 | +3,086 (+145.1%) - partial | Baseline pending |
 | AIBAST repository and Pages views | 744 | +62 observed | +630 observed |
 | jsDelivr file hits | 414 | +26 observed | +26 observed |
-| Release asset downloads | 40 | +33 (+471.4%) | Baseline pending |
-| AIBAST direct agent file downloads | 11 | +4 (+57.1%) | Baseline pending |
+| Release asset downloads | 43 | +34 (+377.8%) | Baseline pending |
+| AIBAST direct agent file downloads | 11 | +2 (+22.2%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
-| AIBAST installer file downloads | 38 | +38 | Baseline pending |
+| AIBAST installer file downloads | 41 | +41 | Baseline pending |
 | Unique cloners (14-day window) | 214 | -61 (-22.2%) snapshot change - partial | Baseline pending |
 | Unique visitors (14-day window) | 38 | +1 (+2.7%) snapshot change - partial | Baseline pending |
 
@@ -68,8 +68,6 @@
 **Agent downloads**
 - Account Intelligence Agent: +1 (current 2)
 - Account Intelligence Orchestrator: +1 (current 1)
-- Account Messaging: +1 (current 1)
-- Ask HR Agent: +1 (current 1)
 
 ## Top monthly movers
 
