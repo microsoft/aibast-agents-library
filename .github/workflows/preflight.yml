@@ -369,12 +369,17 @@ jobs:
         run: |
           set -uo pipefail
           BRANCH_VERSION="$(tr -d '[:space:]' < rapp_brainstem/VERSION)"
-          for attempt in $(seq 1 120); do
+          max_attempts=120
+          # Windows used to block before server startup for roughly five minutes
+          # while the installer performed device-code auth. Browser auth must never
+          # delay localhost readiness again.
+          if [ "$RUNNER_OS" = 'Windows' ]; then max_attempts=24; fi
+          for attempt in $(seq 1 "$max_attempts"); do
             sleep 5
             if curl -sf http://localhost:7071/health -o "$RUNNER_TEMP/health.json"; then
               break
             fi
-            if [ "$attempt" = 120 ]; then
+            if [ "$attempt" = "$max_attempts" ]; then
               tail -60 "$RUNNER_TEMP/server.log" 2>/dev/null || true
               tail -60 "$RUNNER_TEMP/server-error.log" 2>/dev/null || true
               tail -60 "$RUNNER_TEMP/install.log" 2>/dev/null || true
@@ -396,6 +401,10 @@ jobs:
             -H 'Content-Type: application/json' -d '{}' \
             | python -c 'import json,sys; assert "error" in json.load(sys.stdin)'
           test ! -e "$HOME/.brainstem/src/solutions"
+          if [ "$RUNNER_OS" = 'Windows' ]; then
+            ! grep -q "Authenticating with GitHub Copilot" "$RUNNER_TEMP/install.log"
+            grep -q "Keep this terminal open while Brainstem is running." "$RUNNER_TEMP/install.log"
+          fi
 
       - name: Assert user files survived upgrade
         if: matrix.scenario == 'upgrade'
