@@ -1267,7 +1267,7 @@ body:not(.js-enabled) .quiz-option input {
     w.clarity = w.clarity || function () { (w.clarity.q = w.clarity.q || []).push(arguments); };
     var t = d.createElement("script"); t.async = 1; t.src = "https://www.clarity.ms/tag/" + id;
     var y = d.getElementsByTagName("script")[0]; y.parentNode.insertBefore(t, y);
-    w.clarity("consent");
+    w.clarity("consentv2", { ad_Storage: "denied", analytics_Storage: "granted" });
   }
   function el(tag, css, text) { var e = d.createElement(tag); e.style.cssText = css; if (text) e.textContent = text; return e; }
   function banner() {

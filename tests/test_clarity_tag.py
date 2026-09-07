@@ -146,6 +146,7 @@ function run(hostname, nav, stored, opts) {
     bodyChildren: body.children.length, buttons: buttons.map((b) => b.textContent),
     click(label) { buttons.find((b) => b.textContent === label).onclick(); return this; },
     get clarityQueue() { return window.clarity && window.clarity.q ? window.clarity.q.map((a) => a[0]) : null; },
+    get consentArgs() { return window.clarity && window.clarity.q ? window.clarity.q.map((a) => a[1]) : null; },
     get barRemoved() { return !!bar && bar.removed; },
     fire() { document.listeners.DOMContentLoaded(); return this; },
   };
@@ -173,7 +174,7 @@ def test_loader_waits_for_consent_and_remembers_the_choice():
 const fresh = run("microsoft.github.io", {}, null);
 out.fresh = { inserted: fresh.inserted, barShown: fresh.barShown, buttons: fresh.buttons, bodyChildren: fresh.bodyChildren };
 const accepted = run("microsoft.github.io", {}, null).click("Accept");
-out.accepted = { inserted: accepted.inserted, store: accepted.store, barRemoved: accepted.barRemoved, queue: accepted.clarityQueue };
+out.accepted = { inserted: accepted.inserted, store: accepted.store, barRemoved: accepted.barRemoved, queue: accepted.clarityQueue, consent: accepted.consentArgs };
 const declined = run("microsoft.github.io", {}, null).click("Decline");
 out.declined = { inserted: declined.inserted, store: declined.store, barRemoved: declined.barRemoved };
 const returning = run("kody-w.github.io", {}, "granted");
@@ -188,7 +189,8 @@ out.early = { deferred: early.deferred, barShown: early.barShown };
         "inserted": [TAG_URL],
         "store": {clarity.CONSENT_STORAGE_KEY: "granted"},
         "barRemoved": True,
-        "queue": ["consent"],
+        "queue": ["consentv2"],
+        "consent": [{"ad_Storage": "denied", "analytics_Storage": "granted"}],
     }
     assert out["declined"] == {"inserted": [], "store": {clarity.CONSENT_STORAGE_KEY: "denied"}, "barRemoved": True}
     assert out["returning"] == {"inserted": [TAG_URL], "barShown": False}

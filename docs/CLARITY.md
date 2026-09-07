@@ -57,8 +57,9 @@ The stamped block is a consent-gated Clarity loader:
   offers Accept / Decline. Clarity is not loaded, and sets no cookie, until the
   visitor accepts. The choice is stored per browser under
   `localStorage["aibast-clarity-consent"]` ("granted" or "denied") and the bar
-  never returns once answered. Accepting also sends Clarity's `consent` signal,
-  so the project's **Cookie consent: Required** setting can stay on.
+  never returns once answered. Accepting also sends Clarity's `consentv2` signal
+  (analytics storage granted, ad storage denied), which is what Clarity's
+  Consent Mode expects; the older `consent` call is being deprecated.
 - It only loads on `*.github.io` hosts. Local previews, `file://` opens, and
   forks served elsewhere never report sessions.
 - It stays silent, with no bar, when the browser sends Global Privacy Control
@@ -67,8 +68,10 @@ The stamped block is a consent-gated Clarity loader:
   so it follows the visitor's light or dark scheme on every page without
   touching any page's theme tokens.
 
-Clarity masks text input by default. Keep **Masking: Strict** and **Cookie
-consent: Required** in the project settings.
+Clarity masks text input by default. Keep **Masking: Strict**, and on
+**Settings > Setup** turn the cookies toggle **off** so Clarity never sets a
+cookie before the `consentv2` signal (Clarity already enforces this for EEA,
+UK and Swiss visitors).
 
 ## Bundles and gates
 
