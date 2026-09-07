@@ -43,6 +43,21 @@ Environment (all optional):
   HOST_COMPAT_INDEX_BUDGET    seconds of indexing a search call may spend (default 15)
 """
 
+__manifest__ = {
+    "schema": "rapp-agent/1.0",
+    "name": "@kody-w/host_compat_agent",
+    "version": "1.0.0",
+    "display_name": "Host Compat",
+    "description": "Makes a Brainstem speak every agent-host dialect from one file: Claude Code, GitHub Copilot CLI and open Agent Skills — skills, plugins, slash commands/prompts, subagent personas, hooks, MCP servers, instruction files — plus cross-host search of your local Claude Code and Copilot CLI session transcripts.",
+    "author": "kody-w",
+    "tags": ["skills", "plugins", "claude-code", "copilot-cli", "agent-skills", "mcp", "hooks", "transcripts", "interop", "compat"],
+    "category": "devtools",
+    "quality_tier": "community",
+    "requires_env": [],
+    "dependencies": ["@rapp/basic_agent"],
+}
+
+import ast
 import glob
 import hashlib
 import json
@@ -57,7 +72,27 @@ import threading
 import time
 import urllib.request
 
-from agents.basic_agent import BasicAgent
+try:
+    from agents.basic_agent import BasicAgent
+except ImportError:  # pragma: no cover - standalone / registry contract use
+    try:
+        from basic_agent import BasicAgent
+    except ImportError:
+        class BasicAgent:
+            def __init__(self, name=None, metadata=None):
+                self.name = getattr(self, "name", name or "BasicAgent")
+                self.metadata = getattr(self, "metadata", metadata or {})
+
+            def perform(self, **kwargs):
+                return "Not implemented."
+
+            def system_context(self):
+                return None
+
+            def to_tool(self):
+                return {"type": "function", "function": {"name": self.name,
+                        "description": self.metadata.get("description", ""),
+                        "parameters": self.metadata.get("parameters", {"type": "object", "properties": {}})}}
 
 # ── configuration ───────────────────────────────────────────────────────────
 
@@ -1082,7 +1117,8 @@ class HostCompatAgent(BasicAgent):
         return head + "\n".join(out) + "\n" + tail
 
     # -- dispatch ------------------------------------------------------------
-    def perform(self, action="list", **kw):
+    def perform(self, action="list", operation=None, **kw):
+        action = operation or action or "list"  # RAR convention is `operation`; both work
         handler = getattr(self, f"_do_{action}", None)
         if handler is None:
             return f"Unknown action {action!r}. Valid: {', '.join(_ACTIONS)}."
@@ -1379,7 +1415,7 @@ class HostCompatAgent(BasicAgent):
             class_name=class_name, skill_name=item["short"], sha=sha, skill_dir=item["dir"], body=body.strip(),
             meta={k: v for k, v in meta.items() if isinstance(v, (str, int, float, bool, list, dict))},
             tool_name=tool_name, description=desc)
-        compile(code, out_path, "exec")  # never write an agent that cannot load
+        ast.parse(code, filename=out_path)  # never write an agent that cannot parse
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(code)
         return f"Promoted skill {item['name']!r} ({item['host']}) to native agent {tool_name} at {out_path}. It is live on the next /chat."
@@ -1570,3 +1606,11 @@ class HostCompatAgent(BasicAgent):
         cat = _get_catalog(force=True)
         return (f"Catalog rebuilt: skills={len(cat.skills)} commands={len(cat.commands)} personas={len(cat.agents)} "
                 f"plugins={len(cat.plugins)} hooks={len(cat.hooks)} mcp={len(cat.mcp)} instruction files={len(cat.instructions)}")
+
+
+if __name__ == "__main__":
+    # Standalone use: python host_compat_agent.py [action] [key=value ...]
+    _argv = sys.argv[1:]
+    _action = _argv[0] if _argv and "=" not in _argv[0] else "doctor"
+    _kw = dict(a.split("=", 1) for a in _argv if "=" in a)
+    print(HostCompatAgent().perform(action=_action, **_kw))
