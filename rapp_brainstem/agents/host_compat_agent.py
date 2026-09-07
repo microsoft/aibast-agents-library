@@ -46,7 +46,7 @@ Environment (all optional):
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@kody-w/host_compat_agent",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "display_name": "Host Compat",
     "description": "Makes a Brainstem speak every agent-host dialect from one file: Claude Code, GitHub Copilot CLI and open Agent Skills — skills, plugins, slash commands/prompts, subagent personas, hooks, MCP servers, instruction files — plus cross-host search of your local Claude Code and Copilot CLI session transcripts.",
     "author": "kody-w",
@@ -958,7 +958,7 @@ class {class_name}(BasicAgent):
                 "required": []
             }}
         }}
-        super().__init__()
+        super().__init__(self.name, self.metadata)  # works with both BasicAgent signatures
 
     def _confine(self, rel):
         base = os.path.realpath(SKILL_DIR)
@@ -1055,7 +1055,7 @@ class HostCompatAgent(BasicAgent):
                 "required": ["action"],
             },
         }
-        super().__init__()
+        super().__init__(self.name, self.metadata)  # works with both BasicAgent signatures
 
     # -- system prompt catalog (progressive disclosure, capped, degrades gracefully)
     def system_context(self):
