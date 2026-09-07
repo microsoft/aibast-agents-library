@@ -54,6 +54,7 @@ class CopilotResearchAgent(BasicAgent):
             "-p", query,
             "--allow-tool=web_search",
             "--allow-tool=web_fetch",
+            "--silent",  # answer only: no tool trace, no credits/tokens footer
             "--output-format", "text",
         ]
 
