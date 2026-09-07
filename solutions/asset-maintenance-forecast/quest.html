@@ -338,6 +338,46 @@
     @media (max-width: 760px) { .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .achievements-panel { grid-template-columns: 1fr; } .achievements-claims { padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; } }
     @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } .instruction-grid { grid-template-columns: 1fr; } .step header { grid-template-columns: 36px 1fr; } .step header .report-button { grid-column: 1 / -1; } }
   </style>
+<!-- clarity:start -->
+<script data-clarity-project="yeqkj55zbc">
+(function (w, d, id) {
+  if (!id || !/\.github\.io$/i.test(d.location.hostname)) return;
+  var n = w.navigator || {};
+  if (n.globalPrivacyControl || n.doNotTrack === "1" || w.doNotTrack === "1") return;
+  var KEY = "aibast-clarity-consent";
+  function read() { try { return w.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { w.localStorage.setItem(KEY, v); } catch (e) {} }
+  function load() {
+    w.clarity = w.clarity || function () { (w.clarity.q = w.clarity.q || []).push(arguments); };
+    var t = d.createElement("script"); t.async = 1; t.src = "https://www.clarity.ms/tag/" + id;
+    var y = d.getElementsByTagName("script")[0]; y.parentNode.insertBefore(t, y);
+    w.clarity("consent");
+  }
+  function el(tag, css, text) { var e = d.createElement(tag); e.style.cssText = css; if (text) e.textContent = text; return e; }
+  function banner() {
+    if (d.getElementById(KEY)) return;
+    var bar = el("div", "position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;padding:12px 16px;background:Canvas;color:CanvasText;border-top:1px solid GrayText;font:14px/1.45 system-ui,-apple-system,'Segoe UI',sans-serif");
+    bar.id = KEY; bar.setAttribute("role", "region"); bar.setAttribute("aria-label", "Cookie consent");
+    var text = el("span", "max-width:62ch", "This site uses Microsoft Clarity to understand how visitors use it. Typed text is masked. ");
+    var link = el("a", "color:LinkText;text-decoration:underline", "Microsoft Privacy Statement");
+    link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
+    text.appendChild(link);
+    var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
+    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
+    accept.type = "button"; decline.type = "button";
+    accept.onclick = function () { write("granted"); bar.remove(); load(); };
+    decline.onclick = function () { write("denied"); bar.remove(); };
+    bar.appendChild(text); bar.appendChild(accept); bar.appendChild(decline);
+    d.body.appendChild(bar);
+  }
+  var choice = read();
+  if (choice === "granted") { load(); return; }
+  if (choice === "denied") return;
+  if (d.body) banner(); else d.addEventListener("DOMContentLoaded", banner);
+})(window, document, "yeqkj55zbc");
+</script>
+<!-- clarity:end -->
 </head>
 <body data-workshop-slug="asset-maintenance-forecast">
   <header class="topbar">

@@ -21,6 +21,10 @@ try:
     from tools import scaffold_solution_journey as scaffold
 except ModuleNotFoundError:
     import scaffold_solution_journey as scaffold
+try:
+    from tools.clarity_tag import strip_tag_bytes
+except ModuleNotFoundError:
+    from clarity_tag import strip_tag_bytes
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -1125,7 +1129,11 @@ def check_manifest_and_zip(
                         f"{label}: source ZIP missing ready manifest file {entry}"
                     )
                     continue
-                if archive.read(entry_names[entry]) != path.read_bytes():
+                # The Clarity block is stamped on published pages only (see
+                # tools/clarity_tag.py); bundles and pages are compared without it.
+                if strip_tag_bytes(archive.read(entry_names[entry])) != strip_tag_bytes(
+                    path.read_bytes()
+                ):
                     failures.add(
                         f"{label}: source ZIP has stale bytes for ready manifest "
                         f"file {entry}"
