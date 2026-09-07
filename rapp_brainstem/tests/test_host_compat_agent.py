@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hermetic tests for agents/claude_compat_agent.py.
+"""Hermetic tests for agents/host_compat_agent.py.
 
 Builds a fake Claude home (skills, plugins with commands/agents/hooks/MCP, a
 project .claude/) in a temp dir and exercises every action, including a real
@@ -21,7 +21,7 @@ BRAINSTEM_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if BRAINSTEM_DIR not in sys.path:
     sys.path.insert(0, BRAINSTEM_DIR)
 
-AGENT_PATH = os.path.join(BRAINSTEM_DIR, "agents", "claude_compat_agent.py")
+AGENT_PATH = os.path.join(BRAINSTEM_DIR, "agents", "host_compat_agent.py")
 
 FAKE_MCP_SERVER = textwrap.dedent('''
     import json, sys
@@ -56,10 +56,10 @@ def _w(path, text):
         f.write(text)
 
 
-class TestClaudeCompat(unittest.TestCase):
+class TestHostCompat(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.tmp = tempfile.mkdtemp(prefix="claude_compat_")
+        cls.tmp = tempfile.mkdtemp(prefix="host_compat_")
         cls.home = os.path.join(cls.tmp, "claude_home")
         cls.proj = os.path.join(cls.tmp, "proj")
         cls.store = os.path.join(cls.tmp, "store")
@@ -118,24 +118,79 @@ class TestClaudeCompat(unittest.TestCase):
             "command": sys.executable, "args": [os.path.join(pdir, "fake_mcp.py")]}}}))
         _w(os.path.join(cls.home, "plugins", "cache", "mkt", "broken", "0.1", "plugin.json"), "{not json")
 
-        os.environ["CLAUDE_COMPAT_HOME"] = cls.home
-        os.environ["CLAUDE_COMPAT_PROJECT"] = cls.proj
-        os.environ["CLAUDE_COMPAT_STORE"] = cls.store
-        os.environ["CLAUDE_COMPAT_TIMEOUT"] = "20"
-        os.environ.pop("CLAUDE_COMPAT_ROOTS", None)
-        os.environ.pop("CLAUDE_COMPAT_CONTEXT_CHARS", None)
+        # ── GitHub Copilot CLI home: skills, installed plugin, mcp-config with type "local", hooks
+        cls.cop = os.path.join(cls.tmp, "copilot_home")
+        _w(os.path.join(cls.cop, "skills", "ledger", "SKILL.md"),
+           "---\nname: ledger\ndescription: Balance the books. Use when the user says \"ledger this\".\n---\nledger body\n")
+        _w(os.path.join(cls.cop, "installed-plugins", "mkt", "cop-tools", "plugin.json"),
+           json.dumps({"name": "cop-tools", "version": "3.1", "description": "Copilot plugin"}))
+        _w(os.path.join(cls.cop, "installed-plugins", "mkt", "cop-tools", "skills", "saw", "SKILL.md"),
+           "---\nname: saw\ndescription: Cut wood.\n---\ncut\n")
+        _w(os.path.join(cls.cop, "installed-plugins", "_direct", "solo", "plugin.json"), json.dumps({"name": "solo", "version": "0.1"}))
+        _w(os.path.join(cls.cop, "installed-plugins", "_direct", "solo", "agents", "helper.agent.md"),
+           "---\nname: helper\ndescription: Copilot helper persona\n---\nYou help.\n")
+        _w(os.path.join(cls.cop, "mcp-config.json"), json.dumps({"mcpServers": {"copfake": {
+            "type": "local", "tools": ["*"], "command": sys.executable, "args": [os.path.join(pdir, "fake_mcp.py")]}}}))
+        _w(os.path.join(cls.cop, "hooks", "audit.json"), json.dumps({"hooks": {"sessionStart": [
+            {"type": "command", "command": "echo copilot-session-start"}]}}))
+        # project-level copilot conventions
+        _w(os.path.join(cls.proj, ".github", "skills", "ghskill", "SKILL.md"), "---\nname: ghskill\ndescription: Repo skill for Copilot.\n---\ngh body\n")
+        _w(os.path.join(cls.proj, ".github", "agents", "planner.agent.md"), "---\nname: planner\ndescription: Plans work\nmodel: gpt-5\n---\nYou plan.\n")
+        _w(os.path.join(cls.proj, ".github", "prompts", "release.prompt.md"),
+           "---\ndescription: Cut a release\nmode: agent\n---\nRelease version ${input:version} now. Args: $ARGUMENTS\n")
+        _w(os.path.join(cls.proj, ".github", "copilot-instructions.md"), "Always be terse.\n")
+        _w(os.path.join(cls.proj, "AGENTS.md"), "# Agents\nRepo agent rules.\n")
+        _w(os.path.join(cls.proj, "CLAUDE.md"), "# Claude\nClaude rules.\n")
+        # the same skill folder reachable from two hosts must collapse to one entry
+        os.symlink(os.path.join(cls.home, "skills", "blueprint"), os.path.join(cls.proj, ".agents", "skills", "blueprint") if os.makedirs(os.path.join(cls.proj, ".agents", "skills"), exist_ok=True) is None else "")
+        # ── transcripts: one Claude Code session, two Copilot CLI sessions (one old, outside the window)
+        def jl(rows):
+            return "\n".join(json.dumps(r) for r in rows) + "\n"
+        _w(os.path.join(cls.home, "projects", "-proj", "aaaa1111-0000-0000-0000-000000000001.jsonl"), jl([
+            {"type": "summary", "summary": "Zebra migration plan"},
+            {"type": "user", "cwd": "/work/zebra", "timestamp": "2026-09-01T10:00:00Z", "sessionId": "aaaa1111",
+             "message": {"role": "user", "content": "Plan the zebra database migration with pelican rollback"}},
+            {"type": "assistant", "cwd": "/work/zebra", "timestamp": "2026-09-01T10:00:05Z",
+             "message": {"role": "assistant", "content": [{"type": "thinking", "thinking": "secret"},
+                                                          {"type": "text", "text": "Zebra migration: three phases, pelican rollback last."},
+                                                          {"type": "tool_use", "name": "Bash", "input": {}}]}},
+            {"type": "user", "isMeta": True, "message": {"role": "user", "content": "pelican meta noise"}},
+        ]))
+        sdir = os.path.join(cls.cop, "session-state", "bbbb2222-0000-0000-0000-000000000002")
+        _w(os.path.join(sdir, "workspace.yaml"), "id: bbbb2222\ncwd: /work/zebra-cli\nname: Zebra CLI fixes\n")
+        _w(os.path.join(sdir, "events.jsonl"), jl([
+            {"type": "session.start", "timestamp": "2026-09-02T09:00:00Z", "data": {"context": {"cwd": "/work/zebra-cli"}}},
+            {"type": "user.message", "timestamp": "2026-09-02T09:00:01Z", "data": {"content": "copilot please fix the zebra CLI flag parsing"}},
+            {"type": "tool.execution_start", "timestamp": "2026-09-02T09:00:02Z", "data": {"content": "zebra should not be indexed from tools"}},
+            {"type": "assistant.message", "timestamp": "2026-09-02T09:00:03Z", "data": {"content": "", "toolRequests": [{"name": "bash"}]}},
+            {"type": "assistant.message", "timestamp": "2026-09-02T09:00:09Z", "data": {"content": "Fixed the zebra flag parser; pelican untouched."}},
+        ]))
+        old_dir = os.path.join(cls.cop, "session-state", "cccc3333-0000-0000-0000-000000000003")
+        _w(os.path.join(old_dir, "events.jsonl"), jl([
+            {"type": "user.message", "timestamp": "2025-01-01T00:00:00Z", "data": {"content": "ancient zebra talk"}}]))
+        old_t = 1735689600  # 2025-01-01
+        os.utime(os.path.join(old_dir, "events.jsonl"), (old_t, old_t))
+
+        os.environ["HOST_COMPAT_COPILOT_HOME"] = cls.cop
+        os.environ["HOST_COMPAT_AGENTS_HOME"] = os.path.join(cls.tmp, "no_agents_home")
+        os.environ["HOST_COMPAT_CLAUDE_HOME"] = cls.home
+        os.environ["HOST_COMPAT_PROJECT"] = cls.proj
+        os.environ["HOST_COMPAT_STORE"] = cls.store
+        os.environ["HOST_COMPAT_TIMEOUT"] = "20"
+        os.environ.pop("HOST_COMPAT_ROOTS", None)
+        os.environ.pop("HOST_COMPAT_CONTEXT_CHARS", None)
 
         import importlib.util
-        spec = importlib.util.spec_from_file_location("claude_compat_agent_under_test", AGENT_PATH)
+        spec = importlib.util.spec_from_file_location("host_compat_agent_under_test", AGENT_PATH)
         cls.mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cls.mod)
-        cls.agent = cls.mod.ClaudeCompatAgent()
+        cls.agent = cls.mod.HostCompatAgent()
         cls.mod._get_catalog(force=True)
 
     @classmethod
     def tearDownClass(cls):
-        for k in ("CLAUDE_COMPAT_HOME", "CLAUDE_COMPAT_PROJECT", "CLAUDE_COMPAT_STORE", "CLAUDE_COMPAT_TIMEOUT",
-                  "CLAUDE_COMPAT_CONTEXT_CHARS"):
+        for k in ("HOST_COMPAT_CLAUDE_HOME", "HOST_COMPAT_COPILOT_HOME", "HOST_COMPAT_AGENTS_HOME", "HOST_COMPAT_PROJECT",
+                  "HOST_COMPAT_STORE", "HOST_COMPAT_TIMEOUT", "HOST_COMPAT_CONTEXT_CHARS"):
             os.environ.pop(k, None)
         shutil.rmtree(cls.tmp, ignore_errors=True)
         # remove any promoted agent we wrote into the real agents dir
@@ -158,11 +213,11 @@ class TestClaudeCompat(unittest.TestCase):
     def test_list_all_sections(self):
         out = self.agent.perform(action="list")
         for needle in ("## Skills (", "blueprint", "folded", "projskill", "toolbox:hammer",
-                       "## Slash commands (2)", "/greet", "/toolbox:nail",
-                       "## Subagent personas (2)", "reviewer", "toolbox:carpenter",
+                       "## Slash commands / prompts (", "/greet", "/toolbox:nail",
+                       "## Subagent personas (", "reviewer", "toolbox:carpenter",
                        "## Plugins (", "toolbox v1.0.0", "skills=1 commands=1 agents=1 hooks=2 mcp=1", "- broken v?",
-                       "## Hooks (2)", "PreToolUse[Bash]",
-                       "## MCP servers (", "fake [plugin:toolbox]", "projfake [project]",
+                       "## Hooks (", "PreToolUse[Bash]",
+                       "## MCP servers (", "fake [claude-code/plugin:toolbox]", "projfake [claude-code/project]",
                        "## Parse errors", "invalid JSON"):
             self.assertIn(needle, out, needle)
 
@@ -174,27 +229,28 @@ class TestClaudeCompat(unittest.TestCase):
 
     def test_system_context_catalog_and_cap(self):
         ctx = self.agent.system_context()
-        self.assertTrue(ctx.startswith("<claude_compat>") and ctx.rstrip().endswith("</claude_compat>"))
+        self.assertTrue(ctx.startswith("<host_compat>") and ctx.rstrip().endswith("</host_compat>"))
         self.assertIn("- blueprint: Draw a blueprint of a system", ctx)
         self.assertIn("MCP servers (", ctx)
         self.assertIn("fake, projfake", ctx)
-        os.environ["CLAUDE_COMPAT_CONTEXT_CHARS"] = "700"
+        base = ctx.index("Skills (")  # fixed header length; budgets below are relative to it
+        os.environ["HOST_COMPAT_CONTEXT_CHARS"] = str(base + 420)
         try:
             # tight budget: every entry survives in names-only form before anything is dropped
             small = self.agent.system_context()
-            self.assertLessEqual(len(small), 700)
+            self.assertLessEqual(len(small), base + 420)
             self.assertNotIn("more entries", small)
             self.assertIn("Skills (", small)
             for name in ("blueprint", "folded", "projskill", "toolbox:hammer", "toolbox:carpenter"):
                 self.assertIn(name, small)
-            os.environ["CLAUDE_COMPAT_CONTEXT_CHARS"] = "520"
+            os.environ["HOST_COMPAT_CONTEXT_CHARS"] = str(base + 150)
             tiny = self.agent.system_context()
-            self.assertLessEqual(len(tiny), 520)
+            self.assertLessEqual(len(tiny), base + 150)
             self.assertIn("more entries", tiny)
-            os.environ["CLAUDE_COMPAT_CONTEXT_CHARS"] = "0"
+            os.environ["HOST_COMPAT_CONTEXT_CHARS"] = "0"
             self.assertIsNone(self.agent.system_context())
         finally:
-            os.environ.pop("CLAUDE_COMPAT_CONTEXT_CHARS")
+            os.environ.pop("HOST_COMPAT_CONTEXT_CHARS")
 
     # -- load / read / run ---------------------------------------------------
     def test_load_skill_with_resources(self):
@@ -344,21 +400,120 @@ class TestClaudeCompat(unittest.TestCase):
         self.assertTrue(p.stdout.strip())
         self.assertIn("Removed plugin", self.agent.perform(action="uninstall", name=sdir))
 
+    # -- copilot cli host ----------------------------------------------------
+    def test_copilot_catalog_discovered_and_host_filter(self):
+        out = self.agent.perform(action="list", host="copilot-cli")
+        for needle in ("- ledger [copilot-cli/user]", "- ghskill [copilot-cli/project]", "cop-tools:saw [copilot-cli/plugin:cache]",
+                       "- /release [copilot-cli/project] — Cut a release", "- planner [copilot-cli/project]",
+                       "solo:helper [copilot-cli/plugin:cache]", "cop-tools v3.1 [copilot-cli/cache]",
+                       "- sessionStart (copilot-cli/", "- copfake [copilot-cli/user:copilot-cli] local:",
+                       "copilot-instructions.md [copilot-cli]", "AGENTS.md [copilot-cli]"):
+            self.assertIn(needle, out, needle)
+        self.assertNotIn("blueprint", out)          # claude-only skill filtered out
+        self.assertNotIn("CLAUDE.md", out)
+        both = self.agent.perform(action="list", kind="skills")
+        self.assertIn("blueprint", both)
+        self.assertIn("ledger", both)
+        # symlinked duplicate reachable via .agents/skills collapses to one entry
+        self.assertEqual(both.count("- blueprint ["), 1)
+
+    def test_copilot_prompt_input_substitution_and_persona(self):
+        out = self.agent.perform(action="load", name="release", args="1.2.3 --dry")
+        self.assertIn("Release version 1.2.3 --dry now.", out)
+        self.assertIn("Args: 1.2.3 --dry", out)
+        self.assertIn("mode: agent", out)
+        out = self.agent.perform(action="load", name="planner")
+        self.assertIn("Host: copilot-cli", out)
+        self.assertIn("model: gpt-5", out)
+        self.assertIn("Use this as a persona", out)
+
+    def test_copilot_mcp_local_type_is_stdio(self):
+        self.assertEqual(self.agent.perform(action="mcp_call", name="copfake", tool="echo", arguments={"text": "cop"}), "echo:cop")
+
+    def test_copilot_hook_and_instructions(self):
+        out = json.loads(self.agent.perform(action="hook", name="sessionStart"))
+        self.assertEqual(out[0]["host"], "copilot-cli")
+        self.assertIn("copilot-session-start", out[0]["stdout"])
+        out = self.agent.perform(action="instructions")
+        self.assertIn("Always be terse.", out)
+        self.assertIn("Repo agent rules.", out)
+        self.assertIn("Claude rules.", out)
+        only = self.agent.perform(action="instructions", host="copilot-cli")
+        self.assertNotIn("Claude rules.", only)
+
+    def test_promote_copilot_skill(self):
+        out = self.agent.perform(action="promote", name="ledger")
+        self.assertIn("(copilot-cli)", out)
+        path = os.path.join(BRAINSTEM_DIR, "agents", "skill_ledger_agent.py")
+        try:
+            import brainstem
+            loaded = brainstem._load_agent_from_file(path)
+            self.assertIn("ledger body", loaded["SkillLedger"].perform(task="go"))
+        finally:
+            os.remove(path)
+
+    # -- transcripts (both hosts) --------------------------------------------
+    def test_transcripts_search_across_both_hosts(self):
+        out = self.agent.perform(action="transcripts", query="zebra")
+        self.assertIn("[claude-code]", out)
+        self.assertIn("[copilot-cli]", out)
+        self.assertIn("session=aaaa1111", out)
+        self.assertIn("session=bbbb2222", out)
+        self.assertIn("title='Zebra CLI fixes'", out)
+        self.assertNotIn("ancient", out)             # outside the 30-day window
+        self.assertNotIn("indexed from tools", out)  # tool events are not messages
+        self.assertNotIn("secret", out)              # thinking blocks never indexed
+        self.assertNotIn("pelican meta noise", out)  # isMeta rows skipped
+        self.assertIn("Zebra migration plan", out)   # claude summary becomes the title
+        # AND semantics + role + host + cwd filters
+        both = self.agent.perform(action="transcripts", query="zebra rollback")
+        self.assertIn("2 hit(s)", both)                # both aaaa1111 messages carry both words
+        self.assertNotIn("[copilot-cli]", both)        # the copilot session never says "rollback"
+        self.assertIn("0 hit(s)", self.agent.perform(action="transcripts", query="zebra pelican untouched rollback"))
+        self.assertIn("0 hit(s)", self.agent.perform(action="transcripts", query="zebra", host="copilot-cli", role="user", cwd="nomatch"))
+        one = self.agent.perform(action="transcripts", query="zebra", host="copilot-cli", role="user")
+        self.assertIn("1 hit(s)", one)
+        self.assertIn("CLI flag parsing", one)
+        self.assertIn("Pass query=", self.agent.perform(action="transcripts"))
+
+    def test_transcript_read_and_index_is_incremental(self):
+        out = self.agent.perform(action="transcript", name="bbbb2222")
+        self.assertIn("cwd=/work/zebra-cli", out)
+        self.assertIn("USER: copilot please fix", out)
+        self.assertIn("ASSISTANT: Fixed the zebra flag parser", out)
+        self.assertNotIn("toolRequests", out)
+        out = self.agent.perform(action="transcript", name="aaaa1111")
+        self.assertIn("ASSISTANT: Zebra migration: three phases", out)
+        self.assertNotIn("secret", out)
+        self.assertIn("No indexed session", self.agent.perform(action="transcript", name="zzzz"))
+        first = self.agent.perform(action="index")
+        self.assertIn("indexed 0 session file(s)", first)   # already indexed by the searches above
+        self.assertIn("Index is complete", first)
+        # a new session shows up on the next search without a manual index
+        sdir = os.path.join(self.cop, "session-state", "dddd4444-0000-0000-0000-000000000004")
+        _w(os.path.join(sdir, "events.jsonl"), json.dumps({"type": "user.message", "timestamp": "2026-09-05T00:00:00Z",
+                                                            "data": {"content": "brand new okapi question"}}) + "\n")
+        self.assertIn("session=dddd4444", self.agent.perform(action="transcripts", query="okapi"))
+        wide = self.agent.perform(action="transcripts", query="ancient", days=2000)
+        self.assertIn("session=cccc3333", wide)
+
     # -- misc ----------------------------------------------------------------
     def test_doctor_and_unknown_action(self):
         out = self.agent.perform(action="doctor")
-        self.assertIn("ClaudeCompat doctor", out)
+        self.assertIn("HostCompat doctor", out)
         self.assertIn(self.home, out)
+        self.assertIn("[copilot-cli]: home=" + self.cop, out)
+        self.assertIn("transcript index: FTS5", out)
         self.assertIn("Unknown action", self.agent.perform(action="explode"))
         self.assertIn("Catalog rebuilt", self.agent.perform(action="refresh"))
 
     def test_agent_passes_brainstem_loader(self):
         import brainstem
         loaded = brainstem._load_agent_from_file(AGENT_PATH)
-        self.assertEqual(list(loaded), ["ClaudeCompat"])
-        self.assertIsNone(brainstem._validate_agent_instance(loaded["ClaudeCompat"]))
-        tool = loaded["ClaudeCompat"].to_tool()
-        self.assertEqual(tool["function"]["name"], "ClaudeCompat")
+        self.assertEqual(list(loaded), ["HostCompat"])
+        self.assertIsNone(brainstem._validate_agent_instance(loaded["HostCompat"]))
+        tool = loaded["HostCompat"].to_tool()
+        self.assertEqual(tool["function"]["name"], "HostCompat")
 
 
 if __name__ == "__main__":
