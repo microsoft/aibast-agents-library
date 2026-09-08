@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-08T05:18:33Z`
+**Snapshot:** `2026-09-08T05:31:36Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 5,839 | +878 observed - partial | +3,927 observed - partial |
+| AIBAST observed repository downloads | 5,843 | +878 observed - partial | +3,927 observed - partial |
 | Git clones | 5,377 | +852 observed | +3,901 observed |
 | Clones excluding CI estimate | 5,377 | +3,250 (+152.8%) - partial | Baseline pending |
 | AIBAST repository and Pages views | 785 | +84 observed | +631 observed |
 | jsDelivr file hits | 414 | +26 observed | +26 observed |
-| Release asset downloads | 48 | +39 (+433.3%) | Baseline pending |
-| AIBAST direct agent file downloads | 13 | +4 (+44.4%) | Baseline pending |
+| Release asset downloads | 52 | +43 (+477.8%) | Baseline pending |
+| AIBAST direct agent file downloads | 14 | +5 (+55.6%) | Baseline pending |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
-| AIBAST installer file downloads | 44 | +44 | Baseline pending |
+| AIBAST installer file downloads | 47 | +47 | Baseline pending |
 | Unique cloners (14-day window) | 225 | -50 (-18.2%) snapshot change - partial | Baseline pending |
 | Unique visitors (14-day window) | 50 | +13 (+35.1%) snapshot change - partial | Baseline pending |
 
@@ -26,7 +26,7 @@
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
 | GitHub stars | 7 | +0 (+0.0%) | Baseline pending |
-| GitHub forks | 7 | +1 (+16.7%) | Baseline pending |
+| GitHub forks | 7 | +0 (+0.0%) | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
 | Open GitHub issues | 22 | +8 (+57.1%) | Baseline pending |
 | Agent upvotes | 4 | +0 (+0.0%) | Baseline pending |
@@ -68,6 +68,7 @@
 **Agent downloads**
 - Account Intelligence Agent: +2 (current 3)
 - Account Intelligence Orchestrator: +1 (current 1)
+- Inventory Visibility Agent: +1 (current 1)
 - Patient Intake and Scheduling Agent: +1 (current 1)
 
 ## Top monthly movers

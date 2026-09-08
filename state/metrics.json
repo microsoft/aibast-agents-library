@@ -1,6 +1,6 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-09-08T05:18:33Z",
+ "generated_at": "2026-09-08T05:31:36Z",
  "repo": {
   "stars": 7,
   "forks": 7,
@@ -8,10 +8,10 @@
   "open_issues": 22,
   "size_kb": 1780929,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-09-07T05:32:05Z",
+  "pushed_at": "2026-09-08T05:18:44Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,12 +19,12 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 5839,
+  "downloads": 5843,
   "clones": 5377,
   "cdn_hits": 414,
-  "release_downloads": 48,
-  "agent_file_downloads": 13,
-  "installer_downloads": 44,
+  "release_downloads": 52,
+  "agent_file_downloads": 14,
+  "installer_downloads": 47,
   "skill_downloads": 0,
   "agent_upvotes": 4,
   "agent_acquisitions": 0,
@@ -37,7 +37,7 @@
   "view_uniques_daily_sum": 169,
   "days_tracked": 44,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 13,
+  "global_agent_distribution_fetch_events": 14,
   "agents": 72,
   "stacks": 52,
   "verticals": 12,
@@ -439,7 +439,7 @@
   "clones_14d": 1637,
   "views_14d": 199,
   "live": true,
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -447,8 +447,8 @@
   "total_hits": 26,
   "bandwidth": 151462,
   "rank": null,
-  "agent_hits": 13,
-  "installer_hits": 44,
+  "agent_hits": 14,
+  "installer_hits": 47,
   "files": [
    {
     "file": "/community_rapp/install.ps1",
@@ -479,33 +479,33 @@
     "kind": "installer"
    }
   ],
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 48,
+  "total_downloads": 52,
   "count": 5,
   "releases": [
    {
     "tag": "installers",
     "name": "AIBAST Installers",
     "published_at": "2026-09-02T01:31:52Z",
-    "downloads": 35,
+    "downloads": 38,
     "assets": [
      {
       "name": "community_rapp-install.ps1",
-      "downloads": 10,
+      "downloads": 11,
       "size": 10289
      },
      {
       "name": "community_rapp-install.sh",
-      "downloads": 9,
+      "downloads": 10,
       "size": 8627
      },
      {
       "name": "install.ps1",
-      "downloads": 16,
+      "downloads": 17,
       "size": 59817
      }
     ]
@@ -528,7 +528,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 13,
+    "downloads": 14,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -712,7 +712,7 @@
      },
      {
       "name": "inventory_visibility__1a304f4a9ca1_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 17968
      },
      {
@@ -900,7 +900,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1083,6 +1083,26 @@
     "description": "Provide read-only field-service decision support from a synthetic request and technician snapshot: priority dashboards, zone capacity, skill matching, and emergency response drafts. The agent never dispatches or reroutes a crew, changes a job, contacts a customer, stages inventory, or authorizes field action; a human dispatcher must approve work through future authenticated tools.",
     "stack": "field_service_dispatch",
     "vertical": "energy",
+    "catalog_kind": "solution"
+   },
+   {
+    "name": "@aibast-agents-library/inventory-visibility",
+    "display_name": "Inventory Visibility Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "retail_cpg",
+    "tier": "verified",
+    "downloads": 1,
+    "upvotes": 0,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/91",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/92",
+    "lines": 410,
+    "size_kb": 17.5,
+    "added_at": "2026-08-12T15:38:09-04:00",
+    "file": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack/inventory_visibility_agent.py",
+    "description": "Provide synthetic cross-channel inventory visibility and draft replenishment, transfer, and allocation recommendations for authorized review.",
+    "stack": "inventory_visibility",
+    "vertical": "retail_cpg",
     "catalog_kind": "solution"
    },
    {
@@ -1869,6 +1889,15 @@
     "downloads": 1
    },
    {
+    "name": "inventory_visibility",
+    "display_name": "Inventory Visibility",
+    "vertical": "retail_cpg",
+    "path": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack",
+    "agents": 1,
+    "lines": 410,
+    "downloads": 1
+   },
+   {
     "name": "patient_intake",
     "display_name": "Patient Intake",
     "vertical": "healthcare",
@@ -1984,15 +2013,6 @@
     "agents": 1,
     "lines": 365,
     "downloads": 0
-   },
-   {
-    "name": "emission_tracking",
-    "display_name": "Emission Tracking",
-    "vertical": "energy",
-    "path": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack",
-    "agents": 1,
-    "lines": 347,
-    "downloads": 0
    }
   ],
   "categories": [
@@ -2029,7 +2049,7 @@
    {
     "name": "retail_cpg",
     "agents": 5,
-    "downloads": 0,
+    "downloads": 1,
     "lines": 2657
    },
    {
@@ -2097,7 +2117,7 @@
    {
     "name": "retail_cpg",
     "agents": 5,
-    "downloads": 0,
+    "downloads": 1,
     "stacks": 5
    },
    {
@@ -2620,7 +2640,7 @@
   {
    "name": "@aibast-agents-library/inventory-visibility",
    "display_name": "Inventory Visibility Agent",
-   "downloads": 0,
+   "downloads": 1,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/91",
@@ -3088,7 +3108,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "available",
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -3115,7 +3135,7 @@
  },
  "agent_upvote_coverage": {
   "status": "available",
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3132,7 +3152,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "available",
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3150,7 +3170,7 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "carried_forward": false,
   "totals": {
    "files": 5509,
@@ -48181,7 +48201,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-09-08T05:18:33Z",
+    "as_of": "2026-09-08T05:31:36Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -48195,7 +48215,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-09-08T05:18:33Z",
+    "as_of": "2026-09-08T05:31:36Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -48208,7 +48228,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-09-08T05:18:33Z",
+    "as_of": "2026-09-08T05:31:36Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -48220,7 +48240,7 @@
    },
    "agent_upvotes": {
     "status": "available",
-    "as_of": "2026-09-08T05:18:33Z",
+    "as_of": "2026-09-08T05:31:36Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -48251,13 +48271,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -49490,7 +49510,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -50035,7 +50055,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-09-08T05:18:33Z",
+  "as_of": "2026-09-08T05:31:36Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -50047,8 +50067,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 13,
-   "combined_agent_distribution_fetch_events": 13,
+   "aibast_direct_agent_fetches": 14,
+   "combined_agent_distribution_fetch_events": 14,
    "distribution_entries": 72,
    "logical_agents": 72,
    "overlap_agents": 0
@@ -50137,6 +50157,16 @@
    {
     "logical_name": "@aibast-agents-library/field-service-dispatch",
     "display_name": "Field Service Dispatch Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 1,
+    "combined_distribution_fetch_events": 1
+   },
+   {
+    "logical_name": "@aibast-agents-library/inventory-visibility",
+    "display_name": "Inventory Visibility Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -50427,16 +50457,6 @@
    {
     "logical_name": "@aibast-agents-library/inventory-rebalancing",
     "display_name": "Inventory Rebalancing Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 0,
-    "combined_distribution_fetch_events": 0
-   },
-   {
-    "logical_name": "@aibast-agents-library/inventory-visibility",
-    "display_name": "Inventory Visibility Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
