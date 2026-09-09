@@ -1,79 +1,88 @@
-**Subject:** AIBAST weekly and monthly impact report - September 8, 2026
+**Subject:** AIBAST weekly and monthly impact report - September 9, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-08T05:31:36Z`
+**Snapshot:** `2026-09-09T05:18:24Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 5,843 | +878 observed - partial | +3,927 observed - partial |
-| Git clones | 5,377 | +852 observed | +3,901 observed |
-| Clones excluding CI estimate | 5,377 | +3,250 (+152.8%) - partial | Baseline pending |
-| AIBAST repository and Pages views | 785 | +84 observed | +631 observed |
-| jsDelivr file hits | 414 | +26 observed | +26 observed |
-| Release asset downloads | 52 | +43 (+477.8%) | Baseline pending |
-| AIBAST direct agent file downloads | 14 | +5 (+55.6%) | Baseline pending |
-| AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
-| AIBAST installer file downloads | 47 | +47 | Baseline pending |
-| Unique cloners (14-day window) | 225 | -50 (-18.2%) snapshot change - partial | Baseline pending |
-| Unique visitors (14-day window) | 50 | +13 (+35.1%) snapshot change - partial | Baseline pending |
+| AIBAST observed repository downloads | 5,970 | +818 observed - partial | +3,878 observed - partial |
+| Git clones | 5,495 | +818 observed | +3,852 observed |
+| Clones excluding CI estimate | 5,495 | +3,368 (+158.3%) - partial | +4,378 (+391.9%) - partial |
+| AIBAST repository and Pages views | 841 | +127 observed | +659 observed |
+| jsDelivr file hits | 414 | +0 observed | +26 observed |
+| Release asset downloads | 61 | +52 (+577.8%) | +61 |
+| AIBAST direct agent file downloads | 23 | +14 (+155.6%) | +23 |
+| AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| AIBAST installer file downloads | 47 | +47 | +47 |
+| Unique cloners (14-day window) | 217 | -58 (-21.1%) snapshot change - partial | +82 (+60.7%) snapshot change - partial |
+| Unique visitors (14-day window) | 52 | +15 (+40.5%) snapshot change - partial | +49 (+1633.3%) snapshot change - partial |
 
 ## Community engagement
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 7 | +0 (+0.0%) | Baseline pending |
-| GitHub forks | 7 | +0 (+0.0%) | Baseline pending |
-| GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
-| Open GitHub issues | 22 | +8 (+57.1%) | Baseline pending |
-| Agent upvotes | 4 | +0 (+0.0%) | Baseline pending |
-| Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
-| Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
+| GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) |
+| GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) |
+| GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Open GitHub issues | 22 | +8 (+57.1%) | +17 (+340.0%) |
+| Agent upvotes | 4 | +0 (+0.0%) | Baseline unavailable |
+| Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline unavailable |
+| Workshop usage events | 0 | +0 (+0.0%) - partial | +0 (+0.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
-| Workshop file downloads | 0 | +0 (+0.0%) | Baseline pending |
-| Workshop bundle downloads | 0 | +0 (+0.0%) | Baseline pending |
-| Workshop feedback reports | 0 | +0 (+0.0%) | Baseline pending |
+| Workshop file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Workshop bundle downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Verified achievement participants | 1 | +0 (+0.0%) | Baseline pending |
-| Verified achievement points | 5 | +0 (+0.0%) | Baseline pending |
-| Verified achievements | 1 | +0 (+0.0%) | Baseline pending |
-| Workshop starts | 1 | +0 (+0.0%) | Baseline pending |
-| Workshop completions | 0 | +0 (+0.0%) | Baseline pending |
-| Manual-mode completions | 0 | +0 (+0.0%) | Baseline pending |
-| Workshop completion rate | 0.0% | +0.0 pp | Baseline pending |
-| Manual-mode completion rate | 0.0% | +0.0 pp | Baseline pending |
-| Achievement completion rate | 16.7% | +0.0 pp | Baseline pending |
+| Verified achievement participants | 1 | +0 (+0.0%) | +1 |
+| Verified achievement points | 5 | +0 (+0.0%) | +5 |
+| Verified achievements | 1 | +0 (+0.0%) | +1 |
+| Workshop starts | 1 | +0 (+0.0%) | +1 |
+| Workshop completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Manual-mode completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Workshop completion rate | 0.0% | +0.0 pp | +0.0 pp |
+| Manual-mode completion rate | 0.0% | +0.0 pp | +0.0 pp |
+| Achievement completion rate | 16.7% | +0.0 pp | +16.7 pp |
 
 ## Library footprint
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,509 | +2 (+0.0%) | Baseline pending |
-| Files covered by download observations | 5,509 | +2 (+0.0%) | Baseline pending |
-| Catalog agents | 72 | +0 (+0.0%) | Baseline pending |
-| Tracked SKILL.md files | 234 | +0 (+0.0%) | Baseline pending |
-| Canonical workshops | 51 | +0 (+0.0%) | Baseline pending |
-| Deployable stacks | 52 | +0 (+0.0%) | Baseline pending |
-| Industry verticals | 12 | +0 (+0.0%) | Baseline pending |
+| Tracked repository files | 5,509 | +2 (+0.0%) | +1,505 (+37.6%) |
+| Files covered by download observations | 5,509 | +2 (+0.0%) | +1,505 (+37.6%) |
+| Catalog agents | 72 | +0 (+0.0%) | +0 (+0.0%) |
+| Tracked SKILL.md files | 234 | +0 (+0.0%) | +0 (+0.0%) |
+| Canonical workshops | 51 | +0 (+0.0%) | +0 (+0.0%) |
+| Deployable stacks | 52 | +0 (+0.0%) | +0 (+0.0%) |
+| Industry verticals | 12 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Top weekly movers
 
 **Agent downloads**
 - Account Intelligence Agent: +2 (current 3)
 - Account Intelligence Orchestrator: +1 (current 1)
-- Inventory Visibility Agent: +1 (current 1)
-- Patient Intake and Scheduling Agent: +1 (current 1)
+- Activity Gap Analyzer: +1 (current 2)
+- Asset Maintenance Forecast Agent: +1 (current 2)
+- Client Health Score Agent: +1 (current 1)
 
 ## Top monthly movers
 
-No complete dated baseline or non-zero movers yet.
+**Workshop achievement points**
+- Account Intelligence Agent: +5 (current 5)
+
+**Agent downloads**
+- Account Intelligence Agent: +3 (current 3)
+- Activity Gap Analyzer: +2 (current 2)
+- Asset Maintenance Forecast Agent: +2 (current 2)
+- Field Service Dispatch Agent: +2 (current 2)
+- Account Intelligence Orchestrator: +1 (current 1)
 
 ## Measurement notes
 
