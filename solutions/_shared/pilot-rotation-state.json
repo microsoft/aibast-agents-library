@@ -17,12 +17,14 @@
     },
     {
       "solution": "ai-customer-assistant",
-      "reshoot_required_count": 5,
-      "status": "pending",
-      "last_piloted": null,
-      "environment_agent_name": null,
-      "issues_filed": [],
-      "notes": ""
+      "reshoot_required_count": 2,
+      "status": "piloted",
+      "last_piloted": "2026-09-10",
+      "environment_agent_name": "Customer Escalations Manual",
+      "issues_filed": [
+        "microsoft/aibast-agents-library#218"
+      ],
+      "notes": "Full live pilot done (PR #219). 3 of 5 reshoots fixed with real screenshots + JSON updates. 2 remaining reshoots (easy-draft-configuration, easy-draft) belong to the separate assisted/easy-mode pipeline (local Brainstem + Copilot chat), out of scope for the manual-mode pilot skill as currently written."
     },
     {
       "solution": "ask-hr",
