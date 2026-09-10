@@ -48,12 +48,14 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `AI-01` / `account_overview`: `Account Overview`, `Account Health Score`, `Evidence boundary`
-- `AI-02` / `stakeholder_map`: `Stakeholder Map`, `Relationship Gaps`, `Evidence boundary`
-- `AI-03` / `competitive_intel`: `Competitive Intelligence`, `Competitor Activity`, `Evidence boundary`
-- `AI-04` / `value_messaging`: `Draft Meeting Talking Points`, `Objection Handling`, `Evidence boundary`
-- `AI-05` / `risk_assessment`: `Deal Risk Assessment`, `Immediate Actions`, `Evidence boundary`
-- `AI-06` / `executive_briefing`: `Account Intelligence Briefing`, `Pre-Meeting Checklist`, `Evidence boundary`
+- `AI-01` / `account-intelligence-account-overview`: `Account Overview`, `Account Health Score`, `Evidence boundary`
+- `AI-02` / `account-intelligence-stakeholder-map`: `Stakeholder Map`, `Relationship Gaps`, `Evidence boundary`
+- `AI-03` / `account-intelligence-competitive-intel`: `Competitive Intelligence`, `Competitor Activity`, `Evidence boundary`
+- `AI-04` / `account-intelligence-value-messaging`: `Draft Meeting Talking Points`, `Objection Handling`, `Evidence boundary`
+- `AI-05` / `account-intelligence-risk-assessment`: `Deal Risk Assessment`, `Immediate Actions`, `Evidence boundary`
+- `AI-06` / `account-intelligence-executive-briefing`: `Account Intelligence Briefing`, `Pre-Meeting Checklist`, `Evidence boundary`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

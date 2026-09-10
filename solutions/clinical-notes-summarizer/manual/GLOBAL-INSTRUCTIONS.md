@@ -44,10 +44,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `CN-01` / `encounter_summary`: `SYN-ENC-001`, `Clinical interpretation: not performed`
-- `CN-02` / `medication_inventory`: `Metformin 1000 mg twice daily`, `clinician/pharmacist review`
-- `CN-03` / `problem_list_extract`: `source-coded type 2 diabetes`, `No diagnosis was added`
-- `CN-04` / `referral_context`: `Orthopedics referral draft`, `No referral was placed`
+- `CN-01` / `clinical-notes-summarizer-encounter-summary`: `SYN-ENC-001`, `Clinical interpretation: not performed`
+- `CN-02` / `clinical-notes-summarizer-medication-inventory`: `Metformin 1000 mg twice daily`, `clinician/pharmacist review`
+- `CN-03` / `clinical-notes-summarizer-problem-list-extract`: `source-coded type 2 diabetes`, `No diagnosis was added`
+- `CN-04` / `clinical-notes-summarizer-referral-context`: `Orthopedics referral draft`, `No referral was placed`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

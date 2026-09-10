@@ -47,10 +47,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `CSC-01` / `sentiment_dashboard`: `CUST-8002`, `Negative`
-- `CSC-02` / `churn_prediction`: `CUST-8004`, `prioritize review`
-- `CSC-03` / `retention_actions`: `Marcus Johnson`, `No customer was contacted`
-- `CSC-04` / `segment_analysis`: `Mass Market`, `benchmark`
+- `CSC-01` / `sentiment-dashboard`: `CUST-8002`, `Negative`
+- `CSC-02` / `churn-prediction`: `CUST-8004`, `prioritize review`
+- `CSC-03` / `retention-actions`: `Marcus Johnson`, `No customer was contacted`
+- `CSC-04` / `segment-analysis`: `Mass Market`, `benchmark`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

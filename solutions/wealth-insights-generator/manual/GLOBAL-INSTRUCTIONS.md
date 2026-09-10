@@ -51,11 +51,13 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `WIG-01` / `market_brief`: `NASDAQ Composite`, `Fixed Synthetic`
-- `WIG-02` / `client_insights`: `WM-003`, `Held Away`
-- `WIG-03` / `opportunity_alerts`: `Harrison Family Trust`, `Dr. Anita Rao`
-- `WIG-04` / `performance_attribution`: `Tidewater Ventures`, `Underperformance`
-- `WIG-05` / `meeting_brief`: `George & Martha Kensington`, `preparation material`
+- `WIG-01` / `market-brief`: `NASDAQ Composite`, `Fixed Synthetic`
+- `WIG-02` / `client-insights`: `WM-003`, `Held Away`
+- `WIG-03` / `opportunity-alerts`: `Harrison Family Trust`, `Dr. Anita Rao`
+- `WIG-04` / `performance-attribution`: `Tidewater Ventures`, `Underperformance`
+- `WIG-05` / `meeting-brief`: `George & Martha Kensington`, `preparation material`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

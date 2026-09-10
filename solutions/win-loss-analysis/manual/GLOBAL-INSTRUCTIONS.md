@@ -48,12 +48,14 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `WL-01` / `win_loss_overview`: `Q3 Win/Loss Overview`, `Loss Analysis by Competitor`, `Evidence boundary`
-- `WL-02` / `root_cause_analysis`: `Root Cause Analysis`, `Deep Dive`, `Evidence boundary`
-- `WL-03` / `counter_strategies`: `Counter-Strategies`, `Updated Talk Track`, `Evidence boundary`
-- `WL-04` / `revenue_impact`: `Synthetic Revenue Scenario Model`, `Illustrative scenario value`, `Evidence boundary`
-- `WL-05` / `board_presentation`: `Board Presentation`, `Decision for authorized leaders`, `Evidence boundary`
-- `WL-06` / `action_summary`: `Complete Summary`, `Draft Next-Step Options`, `Evidence boundary`
+- `WL-01` / `win-loss-analysis-win-loss-overview`: `Q3 Win/Loss Overview`, `Loss Analysis by Competitor`, `Evidence boundary`
+- `WL-02` / `win-loss-analysis-root-cause-analysis`: `Root Cause Analysis`, `Deep Dive`, `Evidence boundary`
+- `WL-03` / `win-loss-analysis-counter-strategies`: `Counter-Strategies`, `Updated Talk Track`, `Evidence boundary`
+- `WL-04` / `win-loss-analysis-revenue-impact`: `Synthetic Revenue Scenario Model`, `Illustrative scenario value`, `Evidence boundary`
+- `WL-05` / `win-loss-analysis-board-presentation`: `Board Presentation`, `Decision for authorized leaders`, `Evidence boundary`
+- `WL-06` / `win-loss-analysis-action-summary`: `Complete Summary`, `Draft Next-Step Options`, `Evidence boundary`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

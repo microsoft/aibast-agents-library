@@ -60,10 +60,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `DISC-01` / `savings_scan`: `DISC-101`, `DISC-102`, `not realized savings`
-- `DISC-02` / `time_sensitive_deals`: `2026-08-31`, `2026-09-30`, `approved procurement process`
-- `DISC-03` / `consolidation_analysis`: `Clinical consumables`, `4`, `does not recommend a supplier award`
-- `DISC-04` / `purchase_timing`: `Northstar Imaging`, `MedSupply Cooperative`, `No supplier is selected`
+- `DISC-01` / `savings-scan`: `DISC-101`, `DISC-102`, `not realized savings`
+- `DISC-02` / `time-sensitive-deals`: `2026-08-31`, `2026-09-30`, `approved procurement process`
+- `DISC-03` / `consolidation-analysis`: `Clinical consumables`, `4`, `does not recommend a supplier award`
+- `DISC-04` / `purchase-timing`: `Northstar Imaging`, `MedSupply Cooperative`, `No supplier is selected`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

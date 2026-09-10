@@ -17,10 +17,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `PM-01` / `customer_segmentation`: `Prepared for:** Marketing Director`, `Total Addressable Customers`, `no audience is profiled with sensitive attributes`
-- `PM-02` / `campaign_design`: `Prepared for:** Campaign Manager`, `Draft Campaign Design Portfolio`, `Win-Back Journey`
-- `PM-03` / `content_personalization`: `Draft Content Personalization Matrix`, `New Explorers`, `Draft Hero Copy`
-- `PM-04` / `performance_analysis`: `Marketing Performance Analysis`, `A/B Test Results`, `Synthetic aggregate planning data`
+- `PM-01` / `privacy-safe-customer-segmentation`: `Prepared for:** Marketing Director`, `Total Addressable Customers`, `no audience is profiled with sensitive attributes`
+- `PM-02` / `review-only-campaign-design`: `Prepared for:** Campaign Manager`, `Draft Campaign Design Portfolio`, `Win-Back Journey`
+- `PM-03` / `consent-aware-content-personalization`: `Draft Content Personalization Matrix`, `New Explorers`, `Draft Hero Copy`
+- `PM-04` / `synthetic-marketing-performance-analysis`: `Marketing Performance Analysis`, `A/B Test Results`, `Synthetic aggregate planning data`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

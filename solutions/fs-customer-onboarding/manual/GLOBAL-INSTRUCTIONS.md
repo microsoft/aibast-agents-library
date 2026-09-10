@@ -51,10 +51,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `FCO-01` / `kyc_verification`: `APP-6003`, `PEP`
-- `FCO-02` / `account_setup`: `APP-6004`, `Basic Savings`
-- `FCO-03` / `document_checklist`: `APP-6002`, `Beneficial ownership`
-- `FCO-04` / `onboarding_status`: `APP-6001`, `APP-6003`
+- `FCO-01` / `kyc-verification`: `APP-6003`, `PEP`
+- `FCO-02` / `account-setup`: `APP-6004`, `Basic Savings`
+- `FCO-03` / `document-checklist`: `APP-6002`, `Beneficial ownership`
+- `FCO-04` / `onboarding-status`: `APP-6001`, `APP-6003`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

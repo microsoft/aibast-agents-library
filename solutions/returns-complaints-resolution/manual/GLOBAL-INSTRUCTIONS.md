@@ -17,10 +17,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `RCR-01` / `return_processing`: `Prepared for:** Customer Service Agent`, `Draft Return Review Queue`, `Synthetic size-mismatch case`
-- `RCR-02` / `complaint_classification`: `Draft Complaint Classification`, `Product Quality`, `no return, refund`
-- `RCR-03` / `resolution_recommendation`: `Draft Resolution Options`, `Option for authorized review`, `no return`
-- `RCR-04` / `trend_analysis`: `Prepared for:** Quality Team`, `Synthetic Returns & Complaints Trend Analysis`, `Key Insights`
+- `RCR-01` / `anonymous-return-review-queue`: `Prepared for:** Customer Service Agent`, `Draft Return Review Queue`, `Synthetic size-mismatch case`
+- `RCR-02` / `privacy-safe-complaint-classification`: `Draft Complaint Classification`, `Product Quality`, `no return, refund`
+- `RCR-03` / `human-approved-resolution-options`: `Draft Resolution Options`, `Option for authorized review`, `no return`
+- `RCR-04` / `aggregate-returns-quality-trends`: `Prepared for:** Quality Team`, `Synthetic Returns & Complaints Trend Analysis`, `Key Insights`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

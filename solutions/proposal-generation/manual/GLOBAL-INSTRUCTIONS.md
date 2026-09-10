@@ -48,12 +48,14 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `PG-01` / `analyze_rfp`: `RFP Analysis`, `Requirements Analysis`, `Evidence boundary`
-- `PG-02` / `executive_summary`: `Executive Summary`, `Personalization Applied`, `Evidence boundary`
-- `PG-03` / `solution_pricing`: `Solution & Pricing`, `Budget Analysis`, `Evidence boundary`
-- `PG-04` / `references_positioning`: `References & Competitive Positioning`, `Win Theme`, `Evidence boundary`
-- `PG-05` / `compile_proposal`: `Proposal Package`, `Required Human Review Before Delivery`, `Evidence boundary`
-- `PG-06` / `delivery_summary`: `Delivery Summary`, `Human-Governed Next-Step Options`, `Evidence boundary`
+- `PG-01` / `proposal-generation-analyze-rfp`: `RFP Analysis`, `Requirements Analysis`, `Evidence boundary`
+- `PG-02` / `proposal-generation-executive-summary`: `Executive Summary`, `Personalization Applied`, `Evidence boundary`
+- `PG-03` / `proposal-generation-solution-pricing`: `Solution & Pricing`, `Budget Analysis`, `Evidence boundary`
+- `PG-04` / `proposal-generation-references-positioning`: `References & Competitive Positioning`, `Win Theme`, `Evidence boundary`
+- `PG-05` / `proposal-generation-compile-proposal`: `Proposal Package`, `Required Human Review Before Delivery`, `Evidence boundary`
+- `PG-06` / `proposal-generation-delivery-summary`: `Delivery Summary`, `Human-Governed Next-Step Options`, `Evidence boundary`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

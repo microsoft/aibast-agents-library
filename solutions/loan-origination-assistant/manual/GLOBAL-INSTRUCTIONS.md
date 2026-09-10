@@ -51,11 +51,13 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `LOA-01` / `application_review`: `LA-2025-4002`, `Document Review`
-- `LOA-02` / `credit_analysis`: `LA-2025-4002`, `DTI`
-- `LOA-03` / `document_verification`: `LA-2025-4004`, `Certificate of Eligibility`
-- `LOA-04` / `decision_recommendation`: `LA-2025-4001`, `No lending decision`
-- `LOA-05` / `condition_tracking`: `LA-2025-4003`, `Environmental Phase I`
+- `LOA-01` / `application-review`: `LA-2025-4002`, `Document Review`
+- `LOA-02` / `credit-analysis`: `LA-2025-4002`, `DTI`
+- `LOA-03` / `document-verification`: `LA-2025-4004`, `Certificate of Eligibility`
+- `LOA-04` / `decision-recommendation`: `LA-2025-4001`, `No lending decision`
+- `LOA-05` / `condition-tracking`: `LA-2025-4003`, `Environmental Phase I`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

@@ -20,10 +20,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `OS-01` / `order_lookup`: `ORD-7813`, `DELAYED`
-- `OS-02` / `shipment_tracking`: `ORD-7812`, `XPO-884291047`
-- `OS-03` / `delay_notification`: `ORD-7813`, `Recorded synthetic recovery options`
-- `OS-04` / `customer_update`: `Customer Update Drafts`, `No email, EDI message`
+- `OS-01` / `order-lookup`: `ORD-7813`, `DELAYED`
+- `OS-02` / `shipment-tracking`: `ORD-7812`, `XPO-884291047`
+- `OS-03` / `delay-notification`: `ORD-7813`, `Recorded synthetic recovery options`
+- `OS-04` / `customer-update`: `Customer Update Drafts`, `No email, EDI message`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

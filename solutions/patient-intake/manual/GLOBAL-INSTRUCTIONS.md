@@ -44,10 +44,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `PI-01` / `intake_readiness`: `SYN-PT-001`, `emergency contact confirmation`
-- `PI-02` / `coverage_evidence`: `Synthetic Health Plan`, `source record received`
-- `PI-03` / `appointment_availability`: `Clinician A`, `nothing has been reserved or booked`
-- `PI-04` / `pre_visit_summary`: `SYN-PT-001`, `Required reviewer`
+- `PI-01` / `patient-intake-intake-readiness`: `SYN-PT-001`, `emergency contact confirmation`
+- `PI-02` / `patient-intake-coverage-evidence`: `Synthetic Health Plan`, `source record received`
+- `PI-03` / `patient-intake-appointment-availability`: `Clinician A`, `nothing has been reserved or booked`
+- `PI-04` / `patient-intake-pre-visit-summary`: `SYN-PT-001`, `Required reviewer`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

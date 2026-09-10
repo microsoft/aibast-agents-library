@@ -16,10 +16,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `IV-01` / `inventory_dashboard`: `Prepared for:** Inventory Planner`, `Inventory Visibility Snapshot`, `no stock is reserved`
-- `IV-02` / `stock_alerts`: `Prepared for:** Store Manager`, `Draft Stock Review`, `Review transfer candidate`
-- `IV-03` / `replenishment_plan`: `Draft Replenishment Plan`, `14-day supply`, `Estimated Total Replenishment Cost`
-- `IV-04` / `channel_allocation`: `Prepared for:** Category Manager`, `Channel Allocation Scenario`, `do not reserve units`
+- `IV-01` / `read-only-inventory-visibility`: `Prepared for:** Inventory Planner`, `Inventory Visibility Snapshot`, `no stock is reserved`
+- `IV-02` / `store-stock-review-candidates`: `Prepared for:** Store Manager`, `Draft Stock Review`, `Review transfer candidate`
+- `IV-03` / `draft-replenishment-scenario`: `Draft Replenishment Plan`, `14-day supply`, `Estimated Total Replenishment Cost`
+- `IV-04` / `category-channel-allocation-scenario`: `Prepared for:** Category Manager`, `Channel Allocation Scenario`, `do not reserve units`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

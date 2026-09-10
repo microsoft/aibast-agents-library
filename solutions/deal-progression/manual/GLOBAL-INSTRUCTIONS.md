@@ -48,12 +48,14 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `DP-01` / `pipeline_health`: `Pipeline Health Summary`, `Evidence boundary`, `Evidence boundary`
-- `DP-02` / `stalled_deals`: `Stalled Deal Deep-Dive`, `Diagnosis`, `Evidence boundary`
-- `DP-03` / `action_plans`: `Action Plans`, `Planning Objective`, `Evidence boundary`
-- `DP-04` / `acceleration`: `Pipeline Acceleration Strategy`, `Synthetic Scenario`, `Evidence boundary`
-- `DP-05` / `assign_tasks`: `Draft Task Assignment Plan`, `candidate tasks`, `Evidence boundary`
-- `DP-06` / `executive_summary`: `Executive Summary`, `Synthetic Planning Targets`, `Evidence boundary`
+- `DP-01` / `deal-progression-pipeline-health`: `Pipeline Health Summary`, `Evidence boundary`, `Evidence boundary`
+- `DP-02` / `deal-progression-stalled-deals`: `Stalled Deal Deep-Dive`, `Diagnosis`, `Evidence boundary`
+- `DP-03` / `deal-progression-action-plans`: `Action Plans`, `Planning Objective`, `Evidence boundary`
+- `DP-04` / `deal-progression-acceleration`: `Pipeline Acceleration Strategy`, `Synthetic Scenario`, `Evidence boundary`
+- `DP-05` / `deal-progression-assign-tasks`: `Draft Task Assignment Plan`, `candidate tasks`, `Evidence boundary`
+- `DP-06` / `deal-progression-executive-summary`: `Executive Summary`, `Synthetic Planning Targets`, `Evidence boundary`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

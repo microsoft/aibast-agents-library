@@ -54,11 +54,13 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `RU-01` / `utilization_dashboard`: `Firm utilization`, `Bench`, `Utilization by Level`
-- `RU-02` / `capacity_forecast`: `Upcoming Project Endings`, `Pipeline Demand`, `Total roles in pipeline`
-- `RU-03` / `bench_analysis`: `David Okafor`, `Robert Garcia`, `Skill Inventory on Bench`
-- `RU-04` / `staffing_recommendation`: `Bench-to-Pipeline Matches`, `Unmatched Bench Resources`, `Robert Garcia`
-- `RU-05` / `workforce_plan`: `D365 integration accelerator`, `Synthetic payback scenario`, `Innovation and Capability-Building Options`
+- `RU-01` / `workforce-utilization-dashboard`: `Firm utilization`, `Bench`, `Utilization by Level`
+- `RU-02` / `workforce-capacity-forecast`: `Upcoming Project Endings`, `Pipeline Demand`, `Total roles in pipeline`
+- `RU-03` / `professional-services-bench-analysis`: `David Okafor`, `Robert Garcia`, `Skill Inventory on Bench`
+- `RU-04` / `pipeline-staffing-recommendation`: `Bench-to-Pipeline Matches`, `Unmatched Bench Resources`, `Robert Garcia`
+- `RU-05` / `strategic-workforce-plan`: `D365 integration accelerator`, `Synthetic payback scenario`, `Innovation and Capability-Building Options`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

@@ -44,10 +44,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `PA-01` / `request_evidence`: `SYN-AUTH-001`, `additional evidence requested`
-- `PA-02` / `criteria_evidence`: `Synthetic Imaging Evidence Checklist`, `Checklist only`
-- `PA-03` / `status_summary`: `SYN-AUTH-001`, `not an agent determination`
-- `PA-04` / `appeal_evidence_packet`: `minimum-necessary evidence`, `reviewer must confirm`
+- `PA-01` / `prior-authorization-request-evidence`: `SYN-AUTH-001`, `additional evidence requested`
+- `PA-02` / `prior-authorization-criteria-evidence`: `Synthetic Imaging Evidence Checklist`, `Checklist only`
+- `PA-03` / `prior-authorization-status-summary`: `SYN-AUTH-001`, `not an agent determination`
+- `PA-04` / `prior-authorization-appeal-evidence-packet`: `minimum-necessary evidence`, `reviewer must confirm`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

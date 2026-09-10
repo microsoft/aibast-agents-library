@@ -18,10 +18,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `PSA-01` / `product_recommendations`: `Prepared for:** Personal Shopper`, `Draft Product Recommendations`, `no sensitive traits are inferred`
-- `PSA-02` / `style_profile`: `Prepared for:** Clienteling Specialist`, `Opt-In Style Profile`, `Synthetic Shopper B`
-- `PSA-03` / `inventory_check`: `Prepared for:** Retail Manager`, `Inventory Snapshot`, `inventory is not reserved`
-- `PSA-04` / `outfit_builder`: `Draft Outfit Builder`, `Business Casual`, `no return, refund, order, or purchase`
+- `PSA-01` / `transparent-product-recommendations`: `Prepared for:** Personal Shopper`, `Draft Product Recommendations`, `no sensitive traits are inferred`
+- `PSA-02` / `opt-in-style-profile-summary`: `Prepared for:** Clienteling Specialist`, `Opt-In Style Profile`, `Synthetic Shopper B`
+- `PSA-03` / `read-only-shopping-inventory-check`: `Prepared for:** Retail Manager`, `Inventory Snapshot`, `inventory is not reserved`
+- `PSA-04` / `review-only-outfit-builder`: `Draft Outfit Builder`, `Business Casual`, `no return, refund, order, or purchase`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

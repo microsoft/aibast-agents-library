@@ -49,12 +49,14 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `PRB-01` / `portfolio_analysis`: `PORT-5001`, `VTI`
-- `PRB-02` / `rebalance_recommendation`: `VTI`, `candidate`
-- `PRB-03` / `tax_impact`: `Illustrative Tax Estimate`, `VTI`
-- `PRB-04` / `tax_loss_harvest`: `VEA`, `wash-sale`
-- `PRB-05` / `retirement_scenario`: `25 years`, `No success probability`
-- `PRB-06` / `execution_plan`: `VTI`, `No order`
+- `PRB-01` / `portfolio-analysis`: `PORT-5001`, `VTI`
+- `PRB-02` / `rebalance-recommendation`: `VTI`, `candidate`
+- `PRB-03` / `tax-impact`: `Illustrative Tax Estimate`, `VTI`
+- `PRB-04` / `tax-loss-harvest`: `VEA`, `wash-sale`
+- `PRB-05` / `retirement-scenario`: `25 years`, `No success probability`
+- `PRB-06` / `execution-plan`: `VTI`, `No order`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

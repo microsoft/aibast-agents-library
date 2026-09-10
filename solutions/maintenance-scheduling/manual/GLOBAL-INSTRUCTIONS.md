@@ -21,10 +21,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `MS-01` / `schedule_overview`: `EQ-INJ-01`, `Technician Availability`
-- `MS-02` / `predictive_alerts`: `EQ-INJ-01`, `Barrel heater band failure`
-- `MS-03` / `work_order_plan`: `EQ-INJ-01`, `No work order is created or dispatched`
-- `MS-04` / `downtime_analysis`: `Modeled avoided-cost opportunity`, `synthetic planning estimates`
+- `MS-01` / `schedule-overview`: `EQ-INJ-01`, `Technician Availability`
+- `MS-02` / `predictive-alerts`: `EQ-INJ-01`, `Barrel heater band failure`
+- `MS-03` / `work-order-plan`: `EQ-INJ-01`, `No work order is created or dispatched`
+- `MS-04` / `downtime-analysis`: `Modeled avoided-cost opportunity`, `synthetic planning estimates`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

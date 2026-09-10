@@ -59,10 +59,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `PFS-01` / `feedback_summary`: `Total Feedback Entries`, `6`, `No roadmap commitment`
-- `PFS-02` / `feature_requests`: `Workflow Automation Builder`, `candidate_for_review`, `No roadmap commitment`
-- `PFS-03` / `sentiment_analysis`: `Positive`, `Negative`, `fictional pilot data`
-- `PFS-04` / `roadmap_impact`: `Review Candidates`, `RBAC`, `No roadmap commitment`
+- `PFS-01` / `feedback-summary`: `Total Feedback Entries`, `6`, `No roadmap commitment`
+- `PFS-02` / `feature-requests`: `Workflow Automation Builder`, `candidate_for_review`, `No roadmap commitment`
+- `PFS-03` / `sentiment-analysis`: `Positive`, `Negative`, `fictional pilot data`
+- `PFS-04` / `roadmap-impact`: `Review Candidates`, `RBAC`, `No roadmap commitment`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

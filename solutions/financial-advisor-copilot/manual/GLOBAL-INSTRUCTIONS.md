@@ -52,12 +52,14 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `FAC-01` / `service_intake`: `CLI-3001`, `No identity`
-- `FAC-02` / `client_review`: `CLI-3003`, `Retired`
-- `FAC-03` / `portfolio_summary`: `Robert & Susan Whitfield`, `Cash & Equivalents`
-- `FAC-04` / `recommendation_engine`: `Angela Martinez`, `not recommendations`
-- `FAC-05` / `compliance_check`: `CLI-3003`, `Senior investor`
-- `FAC-06` / `advisor_handoff`: `Robert & Susan Whitfield`, `no case transfer`
+- `FAC-01` / `service-intake`: `CLI-3001`, `No identity`
+- `FAC-02` / `client-review`: `CLI-3003`, `Retired`
+- `FAC-03` / `portfolio-summary`: `Robert & Susan Whitfield`, `Cash & Equivalents`
+- `FAC-04` / `recommendation-engine`: `Angela Martinez`, `not recommendations`
+- `FAC-05` / `compliance-check`: `CLI-3003`, `Senior investor`
+- `FAC-06` / `advisor-handoff`: `Robert & Susan Whitfield`, `no case transfer`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

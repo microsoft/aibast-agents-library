@@ -49,10 +49,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `CS-01` / `opportunity_scan`: `Cross-Sell Opportunity Scan`, `Synthetic Usage Signals`, `Evidence boundary`
-- `CS-02` / `product_affinity`: `Product Affinity Matrix`, `Response Assumption`, `Evidence boundary`
-- `CS-03` / `recommendation_engine`: `Prioritized Recommendations`, `Draft Engagement Plan`, `Evidence boundary`
-- `CS-04` / `revenue_impact`: `Synthetic Cross-Sell Value Scenario`, `Portfolio Totals`, `Evidence boundary`
+- `CS-01` / `cross-selling-opportunity-scan`: `Cross-Sell Opportunity Scan`, `Synthetic Usage Signals`, `Evidence boundary`
+- `CS-02` / `cross-selling-product-affinity`: `Product Affinity Matrix`, `Response Assumption`, `Evidence boundary`
+- `CS-03` / `cross-selling-recommendation-engine`: `Prioritized Recommendations`, `Draft Engagement Plan`, `Evidence boundary`
+- `CS-04` / `cross-selling-revenue-impact`: `Synthetic Cross-Sell Value Scenario`, `Portfolio Totals`, `Evidence boundary`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

@@ -53,11 +53,13 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `TEB-01` / `unbilled_report`: `TE-9004`, `TE-9011`, `Needs approval`
-- `TEB-02` / `billing_summary`: `By Project`, `By Consultant`, `not posted revenue`
-- `TEB-03` / `time_entry_audit`: `Missing description`, `Exceeds 10-hour daily limit`, `Budget Alert`
-- `TEB-04` / `invoice_preparation`: `Invoices Ready to Generate`, `Fixed-fee hold`, `no invoice was generated`
-- `TEB-05` / `dispute_resolution`: `DSP-301`, `DSP-302`, `authorized review`
+- `TEB-01` / `month-end-billing-blockers`: `TE-9004`, `TE-9011`, `Needs approval`
+- `TEB-02` / `billing-close-summary`: `By Project`, `By Consultant`, `not posted revenue`
+- `TEB-03` / `time-entry-audit`: `Missing description`, `Exceeds 10-hour daily limit`, `Budget Alert`
+- `TEB-04` / `approval-gated-invoice-support`: `Invoices Ready to Generate`, `Fixed-fee hold`, `no invoice was generated`
+- `TEB-05` / `disputed-hours-evidence-brief`: `DSP-301`, `DSP-302`, `authorized review`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

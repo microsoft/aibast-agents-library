@@ -49,10 +49,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `UWS-01` / `risk_evaluation`: `UW-2025-103`, `Substandard`
-- `UWS-02` / `pricing_recommendation`: `UW-2025-101`, `Indicated Premium`
-- `UWS-03` / `guideline_check`: `UW-2025-103`, `High-Risk Specialty`
-- `UWS-04` / `exception_review`: `UW-2025-103`, `No approval`
+- `UWS-01` / `risk-evaluation`: `UW-2025-103`, `Substandard`
+- `UWS-02` / `pricing-recommendation`: `UW-2025-101`, `Indicated Premium`
+- `UWS-03` / `guideline-check`: `UW-2025-103`, `High-Risk Specialty`
+- `UWS-04` / `exception-review`: `UW-2025-103`, `No approval`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

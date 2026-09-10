@@ -59,11 +59,13 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `CHS-01` / `health_dashboard`: `TechCorp Industries`, `Churn Indicator`, `CRITICAL`
-- `CHS-02` / `engagement_analysis`: `No executive contact in 90 days`, `Declining billing trend`, `TechCorp Industries`
-- `CHS-03` / `satisfaction_trend`: `Declining Accounts Requiring Attention`, `TechCorp Industries`, `Global Finance Corp`
-- `CHS-04` / `at_risk_clients`: `TechCorp Industries`, `Global Finance Corp`, `Healthcare Solutions Inc`
-- `CHS-05` / `retention_plan`: `Morgan Lee`, `Value realization workshop`, `Approval gate`
+- `CHS-01` / `client-portfolio-health-dashboard`: `TechCorp Industries`, `Churn Indicator`, `CRITICAL`
+- `CHS-02` / `client-engagement-analysis`: `No executive contact in 90 days`, `Declining billing trend`, `TechCorp Industries`
+- `CHS-03` / `client-satisfaction-trend`: `Declining Accounts Requiring Attention`, `TechCorp Industries`, `Global Finance Corp`
+- `CHS-04` / `at-risk-client-prioritization`: `TechCorp Industries`, `Global Finance Corp`, `Healthcare Solutions Inc`
+- `CHS-05` / `client-retention-playbook`: `Morgan Lee`, `Value realization workshop`, `Approval gate`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

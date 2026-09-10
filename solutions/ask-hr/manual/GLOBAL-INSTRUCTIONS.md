@@ -60,12 +60,14 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `HR-01` / `leave_balance`: `15.5 days`, `Upcoming Company Holidays`, `Synthetic HRIS`
-- `HR-02` / `submit_time_off`: `Not Submitted`, `Draft for employee review`, `No notification was sent`
-- `HR-03` / `parental_leave`: `Eligibility Rule`, `Verify tenure`, `does not determine eligibility`
-- `HR-04` / `health_insurance`: `Enrollment window`, `Verify plan rules`, `does not determine eligibility`
-- `HR-05` / `remote_work`: `Standard Allowance`, `Requires role, location`, `Do not infer caregiver`
-- `HR-06` / `benefits_summary`: `No salary`, `total-compensation value is inferred`, `Synthetic Profile`
+- `HR-01` / `leave-balance`: `15.5 days`, `Upcoming Company Holidays`, `Synthetic HRIS`
+- `HR-02` / `submit-time-off`: `Not Submitted`, `Draft for employee review`, `No notification was sent`
+- `HR-03` / `parental-leave`: `Eligibility Rule`, `Verify tenure`, `does not determine eligibility`
+- `HR-04` / `health-insurance`: `Enrollment window`, `Verify plan rules`, `does not determine eligibility`
+- `HR-05` / `remote-work`: `Standard Allowance`, `Requires role, location`, `Do not infer caregiver`
+- `HR-06` / `benefits-summary`: `No salary`, `total-compensation value is inferred`, `Synthetic Profile`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

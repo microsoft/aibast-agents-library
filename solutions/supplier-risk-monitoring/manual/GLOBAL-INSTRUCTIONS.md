@@ -20,10 +20,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `SR-01` / `risk_dashboard`: `TechnoCore Semiconductor`, `CRITICAL`
-- `SR-02` / `supplier_scorecard`: `SUP-101`, `Geopolitical`
-- `SR-03` / `disruption_alerts`: `SUP-104`, `force majeure`
-- `SR-04` / `alternative_sourcing`: `Murata Electronics`, `No supplier was contacted`
+- `SR-01` / `risk-dashboard`: `TechnoCore Semiconductor`, `CRITICAL`
+- `SR-02` / `supplier-scorecard`: `SUP-101`, `Geopolitical`
+- `SR-03` / `disruption-alerts`: `SUP-104`, `force majeure`
+- `SR-04` / `alternative-sourcing`: `Murata Electronics`, `No supplier was contacted`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->

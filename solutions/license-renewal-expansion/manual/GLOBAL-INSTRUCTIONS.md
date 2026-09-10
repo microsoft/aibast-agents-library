@@ -46,10 +46,12 @@ Route from the user's natural-language intent. For the matching operation, prese
 
 Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-- `LRE-01` / `renewal_pipeline`: `Renewal Pipeline`, `Draft Renewal Preparation Checklist`, `Evidence boundary`
-- `LRE-02` / `expansion_opportunities`: `Expansion Opportunities`, `Draft Packaging Options`, `Evidence boundary`
-- `LRE-03` / `churn_risk`: `Churn Risk Assessment`, `Synthetic Switching-Cost Review`, `Evidence boundary`
-- `LRE-04` / `revenue_impact`: `Synthetic Revenue Scenario`, `Illustrative midpoint assumption`, `Evidence boundary`
+- `LRE-01` / `license-renewal-expansion-renewal-pipeline`: `Renewal Pipeline`, `Draft Renewal Preparation Checklist`, `Evidence boundary`
+- `LRE-02` / `license-renewal-expansion-expansion-opportunities`: `Expansion Opportunities`, `Draft Packaging Options`, `Evidence boundary`
+- `LRE-03` / `license-renewal-expansion-churn-risk`: `Churn Risk Assessment`, `Synthetic Switching-Cost Review`, `Evidence boundary`
+- `LRE-04` / `license-renewal-expansion-revenue-impact`: `Synthetic Revenue Scenario`, `Illustrative midpoint assumption`, `Evidence boundary`
+
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 <!-- locked-preview-anchors:end -->
