@@ -9,8 +9,8 @@
   },
   "summary": {
     "total_existing_captures": 24,
-    "reusable": 19,
-    "reshoot_required": 5
+    "reusable": 22,
+    "reshoot_required": 2
   },
   "captures": [
     {
@@ -218,8 +218,21 @@
       "mode": "hard",
       "step": 4,
       "source": "solutions/ai-customer-assistant/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows the configured Build page but no save confirmation, tooltip, or other visible saved-state anchor, so it cannot prove step 4."
+      "status": "reusable",
+      "boxes": [
+        {
+          "x": 131,
+          "y": 241,
+          "width": 570,
+          "height": 29,
+          "label": "Instructions persisted after save"
+        }
+      ],
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/04-save-instructions.png",
+      "visible_anchors": [
+        "Customer Escalations Agent \u2014 Manual Global Instructions"
+      ],
+      "note": "Re-piloted live 2026-09-10: captured the persisted instructions heading (distinct from any pre-save draft) as save-confirmation evidence, matching the account-intelligence hard-step-04 fix pattern. Reason for prior reshoot_required (no visible saved-state anchor) resolved."
     },
     {
       "id": "hard-step-05",
@@ -246,16 +259,42 @@
       "mode": "hard",
       "step": 6,
       "source": "solutions/ai-customer-assistant/screenshots/manual/06-add-aibast-ai-customer-assistant-rules-and-guardrails.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-05."
+      "status": "reusable",
+      "boxes": [
+        {
+          "x": 1163,
+          "y": 458,
+          "width": 325,
+          "height": 31,
+          "label": "rules-and-guardrails.md added (1st knowledge file)"
+        }
+      ],
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/06-add-aibast-ai-customer-assistant-rules-and-guardrails.png",
+      "visible_anchors": [
+        "aibast_ai-customer-assistant-rules-and-guardrails.md"
+      ],
+      "note": "Re-piloted live 2026-09-10: re-captured with only the first knowledge file attached (removed and re-added both files one at a time to get a genuine distinct before/after state), replacing the prior duplicate-evidence reshoot."
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/ai-customer-assistant/screenshots/manual/07-add-aibast-ai-customer-assistant-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-05."
+      "status": "reusable",
+      "boxes": [
+        {
+          "x": 1163,
+          "y": 458,
+          "width": 325,
+          "height": 31,
+          "label": "synthetic-records.md added (2nd knowledge file)"
+        }
+      ],
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/07-add-aibast-ai-customer-assistant-synthetic-records.png",
+      "visible_anchors": [
+        "aibast_ai-customer-assistant-synthetic-records.md"
+      ],
+      "note": "Re-piloted live 2026-09-10: re-captured showing the second knowledge file added on top of the first (2 total), giving genuinely distinct evidence from hard-step-06, replacing the prior duplicate-evidence reshoot."
     },
     {
       "id": "hard-step-08",
@@ -564,6 +603,6 @@
     "reviewer": "workshop-builder:ai-customer-assistant",
     "reviewed_at": "2026-08-10T00:27:58.125479+00:00",
     "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages. Live pilot re-run 2026-09-10 (see solutions/_shared/workshop-nightly-pilot-skill.md): hard-step-04/06/07 rebuilt live in Copilot Studio and re-verified (now reusable). easy-draft-configuration and easy-draft remain reshoot_required -- both require the separate assisted/easy-mode build pipeline (local Brainstem + GitHub Copilot chat producing a 'Customer Escalations Pilot' agent), which is out of scope for this pass and was not attempted."
   }
 }
