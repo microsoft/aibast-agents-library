@@ -1,0 +1,479 @@
+{
+  "schema": "aibast-nightly-pilot-rotation/1.0",
+  "description": "Rotation tracker for the nightly live workshop pilot skill. Each night, the skill picks the next N entries with status=='pending' (ordered by reshoot_required_count descending, then solution name), pilots them live in Copilot Studio, and updates their entry here.",
+  "environment_id": "4d056638-8d62-e0b7-aa17-c549d01f711b",
+  "default_batch_size_per_run": 2,
+  "solutions": [
+    {
+      "solution": "account-intelligence",
+      "reshoot_required_count": 0,
+      "status": "piloted",
+      "last_piloted": "2026-09-09",
+      "environment_agent_name": "Account Intelligence Manual",
+      "issues_filed": [
+        "microsoft/aibast-agents-library#204"
+      ],
+      "notes": "First full pilot; established the methodology. AI-02/AI-06 intermittent first-turn knowledge-skip bug filed as #204."
+    },
+    {
+      "solution": "ai-customer-assistant",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "ask-hr",
+      "reshoot_required_count": 8,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "asset-maintenance-forecast",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "building-permit-processing",
+      "reshoot_required_count": 7,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "care-gap-closure",
+      "reshoot_required_count": 1,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "cart-abandonment-recovery",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "claims-processing",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "client-health-score",
+      "reshoot_required_count": 7,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "clinical-notes-summarizer",
+      "reshoot_required_count": 8,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "contract-risk-review",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "cross-selling",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "customer-loyalty-rewards",
+      "reshoot_required_count": 9,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "customer-sentiment-churn",
+      "reshoot_required_count": 1,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "deal-progression",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "emission-tracking",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "energy-regulatory-reporting",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "field-service-dispatch",
+      "reshoot_required_count": 8,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "financial-advisor-copilot",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "fraud-detection-alert",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "fs-customer-onboarding",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "fs-regulatory-compliance",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "grid-outage-response",
+      "reshoot_required_count": 0,
+      "status": "no_checkpoints_file",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "solutions/grid-outage-response/evals/visual-checkpoints.json does not exist -- needs to be created before piloting."
+    },
+    {
+      "solution": "inventory-rebalancing",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "inventory-visibility",
+      "reshoot_required_count": 9,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "license-renewal-expansion",
+      "reshoot_required_count": 1,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "loan-origination-assistant",
+      "reshoot_required_count": 7,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "maintenance-scheduling",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "omnichannel-engagement",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "order-status-communication",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "patient-intake",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "permit-license-management",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "personalized-marketing",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "personalized-shopping-assistant",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "portfolio-rebalancing",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "prior-authorization",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "procurement-agent",
+      "reshoot_required_count": 9,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "procurement-support",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "product-feedback-synthesizer",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "product-line-optimization",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "proposal-generation",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "resource-utilization",
+      "reshoot_required_count": 16,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "returns-complaints-resolution",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "sales-qualification",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "store-associate-copilot",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "supplier-risk-monitoring",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "supply-chain-disruption-alert",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "time-entry-billing",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "underwriting-support",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "utility-billing-assistance",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "wealth-insights-generator",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "win-loss-analysis",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    }
+  ],
+  "full_cycles_completed": 0
+}
