@@ -285,14 +285,14 @@
       ],
       "boxes": [
         {
-          "x": 71,
-          "y": 14,
-          "width": 195,
-          "height": 28,
-          "label": "Account Intelligence Manual"
+          "x": 131,
+          "y": 242,
+          "width": 486,
+          "height": 31,
+          "label": "Instructions persisted after save"
         }
       ],
-      "note": "Distinct from steps 5-7: this frame is captured immediately after clicking Save, before knowledge/skills are added. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
+      "note": "Distinct from steps 5-7: this frame is captured immediately after clicking Save, before knowledge/skills are added. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG. Box re-targeted 2026-09-10 from the header breadcrumb (present in every screenshot, not evidence of a save) to the persisted instructions heading itself, which differs from the pre-save draft in step 03 and is real evidence the save took effect."
     },
     {
       "id": "hard-step-05",
