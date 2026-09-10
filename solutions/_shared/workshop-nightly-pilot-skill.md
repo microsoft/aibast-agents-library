@@ -49,6 +49,27 @@ option. Do not skip this or guess a browser. If no user is available to answer (
 running unattended overnight), stop here, leave the current solution's state entry unchanged, and
 end the run -- do not proceed with browser automation without an explicit selection.
 
+### Step 1.5: Check for the skill-anchor-name mismatch bug before building
+
+Before typing instructions into the agent, check whether the solution already has this fixed:
+run this against `solutions/<name>/manual/GLOBAL-INSTRUCTIONS.md` and
+`solutions/<name>/manual/skills/*/SKILL.md`:
+
+```
+grep -oE '`[A-Za-z]+-[0-9]+` */ *`[a-zA-Z0-9_-]+`' solutions/<name>/manual/GLOBAL-INSTRUCTIONS.md
+grep '^name:' solutions/<name>/manual/skills/*/SKILL.md
+```
+
+If any slug after the `/` in the first command does not exactly match a `name:` value from the
+second command, this solution still has the bug fixed in PR #222 (root cause of issues #204,
+#218, #220: the "Locked Preview evidence anchors" section referenced short internal slugs that
+don't match the real registered skill name, which can make a fresh conversation's first-turn
+routing hallucinate a nonexistent skill and falsely report grounding files unavailable). Fix it
+the same way PR #222 did before building: replace each mismatched slug with the real skill name,
+and add the guardrail sentence ("These skill names above are the ONLY valid skill identifiers...
+silently retry once...") right after the anchor list, before building the agent. Do not skip this
+-- building on top of the bug wastes an entire pilot run rediscovering it.
+
 ### Step 2: Build or resume the agent in Copilot Studio
 
 Target environment: `4d056638-8d62-e0b7-aa17-c549d01f711b` (same one used for

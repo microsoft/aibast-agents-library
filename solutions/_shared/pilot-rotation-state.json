@@ -1,6 +1,6 @@
 {
   "schema": "aibast-nightly-pilot-rotation/1.0",
-  "description": "Rotation tracker for the nightly live workshop pilot skill. Each night, the skill picks the next N entries with status=='pending' (ordered by reshoot_required_count descending, then solution name), pilots them live in Copilot Studio, and updates their entry here.",
+  "description": "Rotation tracker for the nightly live workshop pilot skill. Each night, the skill picks the next N entries with status=='pending' (ordered by reshoot_required_count descending, then solution name), pilots them live in Copilot Studio, and updates their entry here. PR #222 fixed a repo-wide root-cause bug (skill-anchor-name mismatch in GLOBAL-INSTRUCTIONS.md, 40 solutions) that was the likely cause of the intermittent skill-hallucination bug seen in issues #204/#218/#220; future pilots should verify it's already fixed per Step 1.5 of the skill doc before building.",
   "environment_id": "4d056638-8d62-e0b7-aa17-c549d01f711b",
   "default_batch_size_per_run": 2,
   "solutions": [
@@ -13,7 +13,8 @@
       "issues_filed": [
         "microsoft/aibast-agents-library#204"
       ],
-      "notes": "First full pilot; established the methodology. AI-02/AI-06 intermittent first-turn knowledge-skip bug filed as #204."
+      "notes": "First full pilot; established the methodology. AI-02/AI-06 intermittent first-turn knowledge-skip bug filed as #204. Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "ai-customer-assistant",
@@ -24,7 +25,8 @@
       "issues_filed": [
         "microsoft/aibast-agents-library#218"
       ],
-      "notes": "Full live pilot done (PR #219). 3 of 5 reshoots fixed with real screenshots + JSON updates. 2 remaining reshoots (easy-draft-configuration, easy-draft) belong to the separate assisted/easy-mode pipeline (local Brainstem + Copilot chat), out of scope for the manual-mode pilot skill as currently written."
+      "notes": "Full live pilot done (PR #219). 3 of 5 reshoots fixed with real screenshots + JSON updates. 2 remaining reshoots (easy-draft-configuration, easy-draft) belong to the separate assisted/easy-mode pipeline (local Brainstem + Copilot chat), out of scope for the manual-mode pilot skill as currently written. Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "ask-hr",
@@ -33,7 +35,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "asset-maintenance-forecast",
@@ -60,7 +63,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "cart-abandonment-recovery",
@@ -69,7 +73,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "claims-processing",
@@ -78,7 +83,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "client-health-score",
@@ -87,7 +93,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "clinical-notes-summarizer",
@@ -96,7 +103,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "contract-risk-review",
@@ -105,7 +113,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "cross-selling",
@@ -114,7 +123,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "customer-loyalty-rewards",
@@ -123,7 +133,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "customer-sentiment-churn",
@@ -132,7 +143,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "deal-progression",
@@ -141,7 +153,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "emission-tracking",
@@ -177,7 +190,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "fraud-detection-alert",
@@ -186,7 +200,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "fs-customer-onboarding",
@@ -195,7 +210,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "fs-regulatory-compliance",
@@ -231,7 +247,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "license-renewal-expansion",
@@ -240,7 +257,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "loan-origination-assistant",
@@ -249,7 +267,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "maintenance-scheduling",
@@ -258,7 +277,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "omnichannel-engagement",
@@ -267,7 +287,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "order-status-communication",
@@ -276,7 +297,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "patient-intake",
@@ -285,7 +307,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "permit-license-management",
@@ -303,7 +326,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "personalized-shopping-assistant",
@@ -312,7 +336,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "portfolio-rebalancing",
@@ -321,7 +346,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "prior-authorization",
@@ -330,7 +356,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "procurement-agent",
@@ -339,7 +366,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "procurement-support",
@@ -348,7 +376,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "product-feedback-synthesizer",
@@ -357,7 +386,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "product-line-optimization",
@@ -375,7 +405,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "resource-utilization",
@@ -386,7 +417,8 @@
       "issues_filed": [
         "microsoft/aibast-agents-library#220"
       ],
-      "notes": "Full live pilot done (PR #221). 15 of 16 reshoots fixed with real screenshots + JSON updates (25/26 total captures now reusable). RU-01 and RU-03 each intermittently hallucinated a non-existent skill on first fresh-chat attempt then self-corrected on retry - same bug class as #204/#218, filed as #220. Remaining reshoot (easy-draft) belongs to the separate assisted/easy-mode pipeline, out of scope for the manual-mode pilot skill as currently written."
+      "notes": "Full live pilot done (PR #221). 15 of 16 reshoots fixed with real screenshots + JSON updates (25/26 total captures now reusable). RU-01 and RU-03 each intermittently hallucinated a non-existent skill on first fresh-chat attempt then self-corrected on retry - same bug class as #204/#218, filed as #220. Remaining reshoot (easy-draft) belongs to the separate assisted/easy-mode pipeline, out of scope for the manual-mode pilot skill as currently written. Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "returns-complaints-resolution",
@@ -395,7 +427,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "sales-qualification",
@@ -404,7 +437,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "store-associate-copilot",
@@ -413,7 +447,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "supplier-risk-monitoring",
@@ -422,7 +457,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "supply-chain-disruption-alert",
@@ -440,7 +476,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "underwriting-support",
@@ -449,7 +486,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "utility-billing-assistance",
@@ -467,7 +505,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     },
     {
       "solution": "win-loss-analysis",
@@ -476,7 +515,8 @@
       "last_piloted": null,
       "environment_agent_name": null,
       "issues_filed": [],
-      "notes": ""
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
     }
   ],
   "full_cycles_completed": 0
