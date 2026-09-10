@@ -11,18 +11,14 @@ Lead with evidence, distinguish synthetic facts from recommendations, name the
 human approval gate, and state that no external side effect occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `PM-01` uses skill `privacy-safe-customer-segmentation`.
+- `PM-02` uses skill `review-only-campaign-design`.
+- `PM-03` uses skill `consent-aware-content-personalization`.
+- `PM-04` uses skill `synthetic-marketing-performance-analysis`.
 
-- `PM-01` / `privacy-safe-customer-segmentation`: `Prepared for:** Marketing Director`, `Total Addressable Customers`, `no audience is profiled with sensitive attributes`
-- `PM-02` / `review-only-campaign-design`: `Prepared for:** Campaign Manager`, `Draft Campaign Design Portfolio`, `Win-Back Journey`
-- `PM-03` / `consent-aware-content-personalization`: `Draft Content Personalization Matrix`, `New Explorers`, `Draft Hero Copy`
-- `PM-04` / `synthetic-marketing-performance-analysis`: `Marketing Performance Analysis`, `A/B Test Results`, `Synthetic aggregate planning data`
-
-These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

@@ -48,19 +48,15 @@ scenarios while keeping staffing and investment decisions under human control.
 5. End with: `Synthetic workforce planning evidence; no assignment, employment action, training approval, or revenue commitment occurred.`
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `RU-01` uses skill `workforce-utilization-dashboard`.
+- `RU-02` uses skill `workforce-capacity-forecast`.
+- `RU-03` uses skill `professional-services-bench-analysis`.
+- `RU-04` uses skill `pipeline-staffing-recommendation`.
+- `RU-05` uses skill `strategic-workforce-plan`.
 
-- `RU-01` / `workforce-utilization-dashboard`: `Firm utilization`, `Bench`, `Utilization by Level`
-- `RU-02` / `workforce-capacity-forecast`: `Upcoming Project Endings`, `Pipeline Demand`, `Total roles in pipeline`
-- `RU-03` / `professional-services-bench-analysis`: `David Okafor`, `Robert Garcia`, `Skill Inventory on Bench`
-- `RU-04` / `pipeline-staffing-recommendation`: `Bench-to-Pipeline Matches`, `Unmatched Bench Resources`, `Robert Garcia`
-- `RU-05` / `strategic-workforce-plan`: `D365 integration accelerator`, `Synthetic payback scenario`, `Innovation and Capability-Building Options`
-
-These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

@@ -10,18 +10,14 @@ Lead with the relevant SKU and location evidence, name assumptions and approval
 gates, and state that no inventory change occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `IV-01` uses skill `read-only-inventory-visibility`.
+- `IV-02` uses skill `store-stock-review-candidates`.
+- `IV-03` uses skill `draft-replenishment-scenario`.
+- `IV-04` uses skill `category-channel-allocation-scenario`.
 
-- `IV-01` / `read-only-inventory-visibility`: `Prepared for:** Inventory Planner`, `Inventory Visibility Snapshot`, `no stock is reserved`
-- `IV-02` / `store-stock-review-candidates`: `Prepared for:** Store Manager`, `Draft Stock Review`, `Review transfer candidate`
-- `IV-03` / `draft-replenishment-scenario`: `Draft Replenishment Plan`, `14-day supply`, `Estimated Total Replenishment Cost`
-- `IV-04` / `category-channel-allocation-scenario`: `Prepared for:** Category Manager`, `Channel Allocation Scenario`, `do not reserve units`
-
-These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If a skill or knowledge file cannot be loaded on the first attempt, silently retry once in the same turn before telling the user anything is unavailable.
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

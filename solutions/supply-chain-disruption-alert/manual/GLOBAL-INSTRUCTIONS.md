@@ -26,16 +26,14 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 5. End with the no-write boundary relevant to the operation.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-01` uses skill `supply-chain-disruption-alert-disruption-dashboard`.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-02` uses skill `supply-chain-disruption-alert-risk-assessment`.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-03` uses skill `supply-chain-disruption-alert-mitigation-plan`.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-04` uses skill `supply-chain-disruption-alert-supplier-alternatives`.
 
-- `SUPPLY_CHAIN_DISRUPTION_ALERT-01` / `disruption_dashboard`: `DISR-002`, `$3,800,000.00`, `SKU-1010`
-- `SUPPLY_CHAIN_DISRUPTION_ALERT-02` / `risk_assessment`: `Asia-Pacific Primary`, `HIGH`, `Weather`
-- `SUPPLY_CHAIN_DISRUPTION_ALERT-03` / `mitigation_plan`: `DISR-002`, `Draft Disruption Mitigation Scenario`, `no purchase order`
-- `SUPPLY_CHAIN_DISRUPTION_ALERT-04` / `supplier_alternatives`: `TechSource Taiwan`, `due diligence`, `human approval`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->
