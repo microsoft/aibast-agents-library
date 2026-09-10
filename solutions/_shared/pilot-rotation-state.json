@@ -380,11 +380,13 @@
     {
       "solution": "resource-utilization",
       "reshoot_required_count": 16,
-      "status": "pending",
-      "last_piloted": null,
-      "environment_agent_name": null,
-      "issues_filed": [],
-      "notes": ""
+      "status": "piloted",
+      "last_piloted": "2026-09-10",
+      "environment_agent_name": "Resource Utilization Manual",
+      "issues_filed": [
+        "microsoft/aibast-agents-library#220"
+      ],
+      "notes": "Full live pilot done (PR #221). 15 of 16 reshoots fixed with real screenshots + JSON updates (25/26 total captures now reusable). RU-01 and RU-03 each intermittently hallucinated a non-existent skill on first fresh-chat attempt then self-corrected on retry - same bug class as #204/#218, filed as #220. Remaining reshoot (easy-draft) belongs to the separate assisted/easy-mode pipeline, out of scope for the manual-mode pilot skill as currently written."
     },
     {
       "solution": "returns-complaints-resolution",
