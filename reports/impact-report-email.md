@@ -1,37 +1,37 @@
-**Subject:** AIBAST weekly and monthly impact report - September 9, 2026
+**Subject:** AIBAST weekly and monthly impact report - September 10, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-09T05:31:44Z`
+**Snapshot:** `2026-09-10T05:19:23Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 5,973 | +818 observed - partial | +3,878 observed - partial |
-| Git clones | 5,495 | +818 observed | +3,852 observed |
-| Clones excluding CI estimate | 5,495 | +3,368 (+158.3%) - partial | +4,378 (+391.9%) - partial |
-| AIBAST repository and Pages views | 841 | +127 observed | +659 observed |
+| AIBAST observed repository downloads | 5,992 | +417 observed - partial | +3,824 observed - partial |
+| Git clones | 5,495 | +417 observed | +3,798 observed |
+| Clones excluding CI estimate | 5,495 | +1,024 (+22.9%) | +4,097 (+293.1%) - partial |
+| AIBAST repository and Pages views | 841 | +110 observed | +650 observed |
 | jsDelivr file hits | 414 | +0 observed | +26 observed |
-| Release asset downloads | 64 | +55 (+611.1%) | +64 |
-| AIBAST direct agent file downloads | 23 | +14 (+155.6%) | +23 |
-| AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| AIBAST installer file downloads | 50 | +50 | +50 |
-| Unique cloners (14-day window) | 217 | -58 (-21.1%) snapshot change - partial | +82 (+60.7%) snapshot change - partial |
-| Unique visitors (14-day window) | 52 | +15 (+40.5%) snapshot change - partial | +49 (+1633.3%) snapshot change - partial |
+| Release asset downloads | 83 | +64 (+336.8%) | +83 - partial |
+| AIBAST direct agent file downloads | 39 | +30 (+333.3%) | +39 - partial |
+| AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
+| AIBAST installer file downloads | 53 | +43 (+430.0%) | +53 - partial |
+| Unique cloners (14-day window) | 217 | +41 (+23.3%) snapshot change | +47 (+27.6%) snapshot change - partial |
+| Unique visitors (14-day window) | 52 | +11 (+26.8%) snapshot change | +48 (+1200.0%) snapshot change - partial |
 
 ## Community engagement
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) |
-| GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) |
-| GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 22 | +8 (+57.1%) | +17 (+340.0%) |
+| GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) - partial |
+| GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) - partial |
+| GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
+| Open GitHub issues | 24 | +8 (+50.0%) | +19 (+380.0%) - partial |
 | Agent upvotes | 4 | +0 (+0.0%) | Baseline unavailable |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline unavailable |
-| Workshop usage events | 0 | +0 (+0.0%) - partial | +0 (+0.0%) - partial |
+| Workshop usage events | 0 | -4 (-100.0%) - partial | +0 (+0.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
@@ -41,22 +41,22 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Verified achievement participants | 1 | +0 (+0.0%) | +1 |
-| Verified achievement points | 5 | +0 (+0.0%) | +5 |
-| Verified achievements | 1 | +0 (+0.0%) | +1 |
-| Workshop starts | 1 | +0 (+0.0%) | +1 |
-| Workshop completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Manual-mode completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Workshop completion rate | 0.0% | +0.0 pp | +0.0 pp |
-| Manual-mode completion rate | 0.0% | +0.0 pp | +0.0 pp |
-| Achievement completion rate | 16.7% | +0.0 pp | +16.7 pp |
+| Verified achievement participants | 1 | +0 (+0.0%) | +1 - partial |
+| Verified achievement points | 5 | +0 (+0.0%) | +5 - partial |
+| Verified achievements | 1 | +0 (+0.0%) | +1 - partial |
+| Workshop starts | 1 | +0 (+0.0%) | +1 - partial |
+| Workshop completions | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
+| Manual-mode completions | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
+| Workshop completion rate | 0.0% | +0.0 pp | +0.0 pp - partial |
+| Manual-mode completion rate | 0.0% | +0.0 pp | +0.0 pp - partial |
+| Achievement completion rate | 16.7% | +0.0 pp | +16.7 pp - partial |
 
 ## Library footprint
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,509 | +2 (+0.0%) | +1,505 (+37.6%) |
-| Files covered by download observations | 5,509 | +2 (+0.0%) | +1,505 (+37.6%) |
+| Tracked repository files | 5,509 | +0 (+0.0%) | +199 (+3.7%) |
+| Files covered by download observations | 5,509 | +0 (+0.0%) | +202 (+3.8%) - partial |
 | Catalog agents | 72 | +0 (+0.0%) | +0 (+0.0%) |
 | Tracked SKILL.md files | 234 | +0 (+0.0%) | +0 (+0.0%) |
 | Canonical workshops | 51 | +0 (+0.0%) | +0 (+0.0%) |
@@ -65,12 +65,15 @@
 
 ## Top weekly movers
 
+**Workshop usage**
+- Customer Escalations Agent: -4 (current 0)
+
 **Agent downloads**
 - Account Intelligence Agent: +2 (current 3)
 - Account Intelligence Orchestrator: +1 (current 1)
+- Account Messaging: +1 (current 2)
 - Activity Gap Analyzer: +1 (current 2)
 - Asset Maintenance Forecast Agent: +1 (current 2)
-- Client Health Score Agent: +1 (current 1)
 
 ## Top monthly movers
 
@@ -79,10 +82,10 @@
 
 **Agent downloads**
 - Account Intelligence Agent: +3 (current 3)
+- Account Messaging: +2 (current 2)
 - Activity Gap Analyzer: +2 (current 2)
 - Asset Maintenance Forecast Agent: +2 (current 2)
-- Field Service Dispatch Agent: +2 (current 2)
-- Account Intelligence Orchestrator: +1 (current 1)
+- Building Permit Processing Agent: +2 (current 2)
 
 ## Measurement notes
 
