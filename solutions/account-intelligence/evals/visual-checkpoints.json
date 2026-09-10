@@ -431,13 +431,13 @@
       "boxes": [
         {
           "x": 1165,
-          "y": 152,
+          "y": 158,
           "width": 280,
-          "height": 48,
+          "height": 42,
           "label": "value-messaging skill (6th, expanded)"
         }
       ],
-      "note": "The Skills panel still collapses the 6th skill behind a '+1' badge by default (confirmed still true on 2026-09-09); this frame captures the panel after expanding it so the sixth skill name is visible."
+      "note": "The Skills panel still collapses the 6th skill behind a '+1' badge by default (confirmed still true on 2026-09-09); this frame captures the panel after expanding it so the sixth skill name is visible. Box/label repositioned 2026-09-10 so the pill no longer overlaps the boxed skill name."
     },
     {
       "id": "hard-step-14",
@@ -518,14 +518,14 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 247,
-          "width": 306,
-          "height": 22,
+          "x": 304,
+          "y": 258,
+          "width": 326,
+          "height": 26,
           "label": "AI-01 \u00b7 Evidence that deserves seller attention"
         }
       ],
-      "note": "Passed on the first attempt with exact synthetic data (Account Health Score 73/100)."
+      "note": "Passed on the first attempt with exact synthetic data (Account Health Score 73/100). Box repositioned 2026-09-10 to wrap the heading text itself rather than striking through it."
     },
     {
       "id": "hard-step-17",
@@ -542,14 +542,14 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 195,
-          "width": 275,
-          "height": 20,
+          "x": 382,
+          "y": 376,
+          "width": 153,
+          "height": 28,
           "label": "AI-02 \u00b7 Relationship Gaps"
         }
       ],
-      "note": "BUG FOUND (filed as microsoft/aibast-agents-library#204): the first attempt in a fresh chat skipped knowledge retrieval and returned a data-less, schema-only response, visibly reasoning that the synthetic snapshot 'must only exist as anchors in my instructions rather than actual environment files.' An identical prompt in a new chat immediately after passed cleanly with the full 8-stakeholder table. This screenshot is from the passing retry."
+      "note": "BUG FOUND (filed as microsoft/aibast-agents-library#204): the first attempt in a fresh chat skipped knowledge retrieval and returned a data-less, schema-only response, visibly reasoning that the synthetic snapshot 'must only exist as anchors in my instructions rather than actual environment files.' An identical prompt in a new chat immediately after passed cleanly with the full 8-stakeholder table. Re-shot 2026-09-10: the previous frame's box was positioned over an unrelated 'Draft preparation' bullet rather than the actual 'Relationship Gaps' heading; this frame and box were recaptured directly on the passing-retry response with the heading scrolled precisely into view."
     },
     {
       "id": "hard-step-18",
@@ -566,14 +566,14 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 205,
-          "width": 178,
-          "height": 22,
+          "x": 382,
+          "y": 376,
+          "width": 168,
+          "height": 28,
           "label": "AI-03 \u00b7 Competitor Activity"
         }
       ],
-      "note": "Passed on the first attempt with exact synthetic data."
+      "note": "Passed on the first attempt with exact synthetic data. Re-shot 2026-09-10: the previous frame was scrolled to a position that never showed the 'Competitor Activity' heading at all (box sat over blank whitespace); recaptured with the heading scrolled precisely into view via its DOM element."
     },
     {
       "id": "hard-step-19",
@@ -590,14 +590,14 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 597,
-          "width": 425,
-          "height": 25,
+          "x": 300,
+          "y": 586,
+          "width": 487,
+          "height": 26,
           "label": "AI-04 \u00b7 Draft Meeting Talking Points"
         }
       ],
-      "note": "Passed on the first attempt with exact synthetic data."
+      "note": "Passed on the first attempt with exact synthetic data. Box repositioned 2026-09-10 to wrap the heading text itself rather than striking through it."
     },
     {
       "id": "hard-step-20",
@@ -615,14 +615,14 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 179,
-          "width": 330,
-          "height": 25,
+          "x": 382,
+          "y": 622,
+          "width": 335,
+          "height": 28,
           "label": "AI-05 \u00b7 Deal Risk Assessment"
         }
       ],
-      "note": "Passed on the first attempt; win-probability indicator (61%) recomputed exactly per the documented formula."
+      "note": "Passed on the first attempt; win-probability indicator (61%) recomputed exactly per the documented formula. Re-shot 2026-09-10: the previous frame was scrolled past the 'Deal Risk Assessment: Acme Corporation' heading (box sat over blank whitespace); recaptured with the heading scrolled precisely into view."
     },
     {
       "id": "hard-step-21",
