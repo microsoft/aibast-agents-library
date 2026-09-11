@@ -45,6 +45,29 @@ statements that churn will occur.
 
 No other client produces an engagement red flag in the packaged rules.
 
+## CHS-02 Locked Response
+
+For the exact prompt `What engagement signals are weakening across the
+portfolio, especially executive contact and escalations?`, reproduce only the
+following reviewed response:
+
+### Engagement Analysis
+
+- **TechCorp Industries:** No executive contact in 90 days; 4 escalations in
+  90 days; Declining billing trend.
+- **Global Finance Corp:** Low utilization (45%) -- may not see value.
+- **Healthcare Solutions Inc:** 3 escalations in 90 days.
+- No other client produces an engagement red flag in the packaged rules.
+
+These are source-recorded historical signals from the synthetic portfolio, not
+a conclusion about current relationship condition.
+
+Next account-owner-approved internal review: review the three packaged
+engagement red flags before any outreach or client-facing action.
+
+Synthetic client-health evidence; no prediction is certain and no meeting,
+message, concession, renewal, or CRM change occurred.
+
 ## Client Satisfaction Trends
 
 Trend is improving when Q4 is more than 0.3 above Q1, declining when Q4 is

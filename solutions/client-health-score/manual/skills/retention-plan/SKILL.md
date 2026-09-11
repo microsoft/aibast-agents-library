@@ -26,6 +26,9 @@ For the locked Preview prompt, answer only with:
    playbook bullets, and `Approval gate`.
 3. The required global no-action footer.
 
+Search for `CHS-05 Locked Response` and reproduce that reviewed response
+verbatim. Do not rewrite, expand, summarize, or supplement it.
+
 Do not add a snapshot date, current date, invented deadline, or timeline. Do not
 convert 90-day escalation counts into open, active, unresolved, or closed
 issues. Do not invent issue counts for preparation, causal links, commitments,
