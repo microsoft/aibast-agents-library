@@ -18,8 +18,17 @@ preparation, applicable packaged recovery or trust steps, and `Approval gate`.
 Describe engagements and actions as proposals for internal review, never as
 started work.
 
+For the locked Preview prompt, answer only with:
+
+1. `Account Retention Playbooks`.
+2. One section per packaged turnaround account containing the three stakeholder
+   roles, exact next engagement, exact common preparation, applicable packaged
+   playbook bullets, and `Approval gate`.
+3. The required global no-action footer.
+
 Do not add a snapshot date, current date, invented deadline, or timeline. Do not
 convert 90-day escalation counts into open, active, unresolved, or closed
 issues. Do not invent issue counts for preparation, causal links, commitments,
-templates, checklists, or additional deliverables. Never create or claim
-outreach, concessions, renewals, meetings, messages, or CRM changes.
+templates, checklists, additional deliverables, account metrics, value totals,
+cross-account summaries, or urgency rankings. Never create or claim outreach,
+concessions, renewals, meetings, messages, or CRM changes.
