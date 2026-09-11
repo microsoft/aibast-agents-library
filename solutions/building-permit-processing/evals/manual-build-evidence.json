@@ -12,6 +12,22 @@
     "skills": 7,
     "tools": 0
   },
+  "skill_validation": {
+    "skill": "inspector-board-and-coverage",
+    "source": "solutions/building-permit-processing/manual/skills/aibast_inspector-assignment_bp06/SKILL.md",
+    "steps": [16, 17],
+    "contract": "solutions/building-permit-processing/screenshots/manual/browserfilm.json",
+    "step_16_outcomes": ["accepted_upload", "authentic_validation_error"],
+    "retry_policy": "Fix and retry only after capturing an authentic validation error. An accepted initial upload requires neither an edit nor a retry. Never corrupt a valid skill or manufacture an error.",
+    "completion_gate": "Step 17 completes only when inspector-board-and-coverage is accepted and visible in the Skills inventory; record whether a retry actually occurred.",
+    "current_evidence_status": "reshoot_required",
+    "current_outcome": null,
+    "historical_captures": [
+      "solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg",
+      "solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg"
+    ],
+    "note": "The current source has valid name and description frontmatter. The old failure and retry are historical observations, not required outcomes or proof of a new live upload. Existing Preview evidence below is preserved; no new live validation is claimed."
+  },
   "canonical_preview": {
     "case_id": "BPP-01",
     "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
