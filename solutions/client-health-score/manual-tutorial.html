@@ -341,12 +341,33 @@ trends, at-risk accounts, and retention playbooks.
 
 - Healthy, at-risk, and critical segmentation: use the health dashboard.
 - Executive contact, escalations, billing direction, and utilization: use
-  engagement analysis.
+  `client-engagement-analysis` before any generic helper.
 - Quarterly satisfaction movement and NPS: use satisfaction trends.
 - Intervention priorities, risk drivers, and initial recovery actions: use
   at-risk client prioritization.
 - Stakeholder maps and executive engagement preparation: use the retention
-  playbook.
+  `client-retention-playbook` before any generic helper.
+- A generic helper may support the matching uploaded skill after it loads, but
+  must never replace that skill.
+
+## Deterministic evidence limits
+
+- Treat the packaged tables and prose as the complete evidence for this frozen
+  scenario. Do not claim a field is unavailable when it appears in either
+  packaged file.
+- Copy source-recorded values and labels without adding a current date, snapshot
+  date, deadline, timeline, aggregate, ratio, average, correlation, causal
+  explanation, likely outcome, or benchmark that the files do not state.
+- `Escalations (90d)` and `Exec meetings (90d)` are historical counts only.
+  Never relabel them as open, active, unresolved, scheduled, or completed work.
+- Do not infer that utilization caused billing or satisfaction movement, that
+  an NPS value proves a relationship condition, or that any indicator predicts
+  renewal or churn.
+- Describe every next engagement and retention action as a packaged proposal
+  requiring approval. Never say &quot;I am planning,&quot; &quot;I will schedule,&quot; or imply
+  that execution has started.
+- If a requested value is not explicitly present, omit it and state the narrow
+  limitation. Do not browse or substitute external evidence.
 
 ## Client and authorization gates
 
@@ -365,7 +386,8 @@ trends, at-risk accounts, and retention playbooks.
    finding.
 2. Cite the exact packaged client, score, trend, interaction, stakeholder, and
    scenario indicator supporting it.
-3. Separate observed synthetic evidence from uncertainty and recommended action.
+3. Separate observed synthetic evidence from uncertainty and packaged proposed
+   action.
 4. State the next account-owner-approved internal review.
 5. End with: `Synthetic client-health evidence; no prediction is certain and no meeting, message, concession, renewal, or CRM change occurred.`
 
