@@ -2,24 +2,24 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-11T05:18:16Z`
+**Snapshot:** `2026-09-11T05:30:48Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 6,119 | +374 observed - partial | +3,765 observed - partial |
+| AIBAST observed repository downloads | 6,123 | +374 observed - partial | +3,765 observed - partial |
 | Git clones | 5,587 | +374 observed | +3,739 observed |
-| Clones excluding CI estimate | 5,587 | +1,062 (+23.5%) | +4,189 (+299.6%) - partial |
+| Clones excluding CI estimate | 5,587 | +910 (+19.5%) | +4,189 (+299.6%) - partial |
 | AIBAST repository and Pages views | 889 | +145 observed | +642 observed |
 | jsDelivr file hits | 414 | +0 observed | +26 observed |
-| Release asset downloads | 118 | +96 (+436.4%) | +118 - partial |
-| AIBAST direct agent file downloads | 70 | +61 (+677.8%) | +70 - partial |
+| Release asset downloads | 122 | +90 (+281.2%) | +122 - partial |
+| AIBAST direct agent file downloads | 71 | +60 (+545.5%) | +71 - partial |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
-| AIBAST installer file downloads | 57 | +44 (+338.5%) | +57 - partial |
-| Unique cloners (14-day window) | 205 | +32 (+18.5%) snapshot change | +35 (+20.6%) snapshot change - partial |
-| Unique visitors (14-day window) | 45 | +5 (+12.5%) snapshot change | +41 (+1025.0%) snapshot change - partial |
+| AIBAST installer file downloads | 60 | +30 (+100.0%) | +60 - partial |
+| Unique cloners (14-day window) | 205 | +41 (+25.0%) snapshot change | +35 (+20.6%) snapshot change - partial |
+| Unique visitors (14-day window) | 45 | +8 (+21.6%) snapshot change | +41 (+1025.0%) snapshot change - partial |
 
 ## Community engagement
 
@@ -28,10 +28,10 @@
 | GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) - partial |
 | GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) - partial |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
-| Open GitHub issues | 41 | +24 (+141.2%) | +36 (+720.0%) - partial |
+| Open GitHub issues | 41 | +21 (+105.0%) | +36 (+720.0%) - partial |
 | Agent upvotes | 4 | +0 (+0.0%) | Baseline unavailable |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline unavailable |
-| Workshop usage events | 0 | +0 (+0.0%) - partial | +0 (+0.0%) - partial |
+| Workshop usage events | 0 | -3 (-100.0%) - partial | +0 (+0.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
@@ -65,12 +65,15 @@
 
 ## Top weekly movers
 
+**Workshop usage**
+- Fraud Detection and Alert Agent: -3 (current 0)
+
 **Agent downloads**
-- Account Intelligence Agent: +3 (current 4)
+- Account Intelligence Agent: +2 (current 4)
 - Asset Maintenance Forecast Agent: +2 (current 3)
 - Care Gap Closure Agent: +2 (current 2)
 - Client Health Score Agent: +2 (current 2)
-- Inventory Visibility Agent: +2 (current 2)
+- Cross Selling Opportunities Agent: +2 (current 2)
 
 ## Top monthly movers
 

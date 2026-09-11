@@ -1,6 +1,6 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-09-11T05:18:16Z",
+ "generated_at": "2026-09-11T05:30:48Z",
  "repo": {
   "stars": 7,
   "forks": 7,
@@ -8,10 +8,10 @@
   "open_issues": 41,
   "size_kb": 1837715,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-09-10T18:49:30Z",
+  "pushed_at": "2026-09-11T05:18:29Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,12 +19,12 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 6119,
+  "downloads": 6123,
   "clones": 5587,
   "cdn_hits": 414,
-  "release_downloads": 118,
-  "agent_file_downloads": 70,
-  "installer_downloads": 57,
+  "release_downloads": 122,
+  "agent_file_downloads": 71,
+  "installer_downloads": 60,
   "skill_downloads": 0,
   "agent_upvotes": 4,
   "agent_acquisitions": 0,
@@ -37,7 +37,7 @@
   "view_uniques_daily_sum": 178,
   "days_tracked": 46,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 70,
+  "global_agent_distribution_fetch_events": 71,
   "agents": 72,
   "stacks": 52,
   "verticals": 12,
@@ -453,7 +453,7 @@
   "clones_14d": 1786,
   "views_14d": 238,
   "live": true,
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -461,8 +461,8 @@
   "total_hits": 26,
   "bandwidth": 151462,
   "rank": null,
-  "agent_hits": 70,
-  "installer_hits": 57,
+  "agent_hits": 71,
+  "installer_hits": 60,
   "files": [
    {
     "file": "/community_rapp/install.ps1",
@@ -493,33 +493,33 @@
     "kind": "installer"
    }
   ],
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 118,
+  "total_downloads": 122,
   "count": 5,
   "releases": [
    {
     "tag": "installers",
     "name": "AIBAST Installers",
     "published_at": "2026-09-02T01:31:52Z",
-    "downloads": 48,
+    "downloads": 51,
     "assets": [
      {
       "name": "community_rapp-install.ps1",
-      "downloads": 14,
+      "downloads": 15,
       "size": 10289
      },
      {
       "name": "community_rapp-install.sh",
-      "downloads": 13,
+      "downloads": 14,
       "size": 8627
      },
      {
       "name": "install.ps1",
-      "downloads": 21,
+      "downloads": 22,
       "size": 59817
      }
     ]
@@ -542,7 +542,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 70,
+    "downloads": 71,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -631,7 +631,7 @@
      },
      {
       "name": "cross_selling__f0bd1003f572_agent.py",
-      "downloads": 1,
+      "downloads": 2,
       "size": 19919
      },
      {
@@ -914,7 +914,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1080,6 +1080,26 @@
     "catalog_kind": "solution"
    },
    {
+    "name": "@aibast-agents-library/cross-selling",
+    "display_name": "Cross Selling Opportunities Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "general",
+    "tier": "verified",
+    "downloads": 2,
+    "upvotes": 0,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/53",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/54",
+    "lines": 361,
+    "size_kb": 19.5,
+    "added_at": "2026-08-12T15:38:09-04:00",
+    "file": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
+    "description": "Identify and prioritize expansion opportunities to drive revenue growth and strengthen customer relationships.",
+    "stack": "cross_selling_opportunities",
+    "vertical": "general",
+    "catalog_kind": "solution"
+   },
+   {
     "name": "@aibast-agents-library/deal-stakeholder-engagement",
     "display_name": "Stakeholder Engagement",
     "publisher": "@aibast-agents-library",
@@ -1197,26 +1217,6 @@
     "description": "Draft opt-in product, style, availability, and outfit recommendations using synthetic non-sensitive preferences for human review.",
     "stack": "personalized_shopping_assistant",
     "vertical": "b2c_sales",
-    "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/product-feedback-synthesizer",
-    "display_name": "Product Feedback Synthesizer Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "software_digital_products",
-    "tier": "verified",
-    "downloads": 2,
-    "upvotes": 0,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/125",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/126",
-    "lines": 377,
-    "size_kb": 14.0,
-    "added_at": "2026-08-12T15:38:09-04:00",
-    "file": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
-    "description": "Turn fragmented feedback into actionable insights that accelerate product improvements, prevent churn, and optimize engineering priorities.",
-    "stack": "product_feedback_synthesizer",
-    "vertical": "software_digital_products",
     "catalog_kind": "solution"
    }
   ],
@@ -1963,6 +1963,15 @@
     "downloads": 2
    },
    {
+    "name": "cross_selling_opportunities",
+    "display_name": "Cross Selling Opportunities",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack",
+    "agents": 1,
+    "lines": 361,
+    "downloads": 2
+   },
+   {
     "name": "field_service_dispatch",
     "display_name": "Field Service Dispatch",
     "vertical": "energy",
@@ -2062,15 +2071,6 @@
     "downloads": 1
    },
    {
-    "name": "cross_selling_opportunities",
-    "display_name": "Cross Selling Opportunities",
-    "vertical": "general",
-    "path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack",
-    "agents": 1,
-    "lines": 361,
-    "downloads": 1
-   },
-   {
     "name": "customer_loyalty_rewards",
     "display_name": "Customer Loyalty Rewards",
     "vertical": "b2c_sales",
@@ -2105,7 +2105,7 @@
    {
     "name": "general",
     "agents": 6,
-    "downloads": 5,
+    "downloads": 6,
     "lines": 3040
    },
    {
@@ -2203,7 +2203,7 @@
    {
     "name": "general",
     "agents": 4,
-    "downloads": 4,
+    "downloads": 5,
     "stacks": 4
    },
    {
@@ -2467,7 +2467,7 @@
   {
    "name": "@aibast-agents-library/cross-selling",
    "display_name": "Cross Selling Opportunities Agent",
-   "downloads": 1,
+   "downloads": 2,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/53",
@@ -3182,7 +3182,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "available",
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -3209,7 +3209,7 @@
  },
  "agent_upvote_coverage": {
   "status": "available",
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3226,7 +3226,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "available",
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3244,7 +3244,7 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "carried_forward": false,
   "totals": {
    "files": 5509,
@@ -48275,7 +48275,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-09-11T05:18:16Z",
+    "as_of": "2026-09-11T05:30:48Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -48289,7 +48289,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-09-11T05:18:16Z",
+    "as_of": "2026-09-11T05:30:48Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -48302,7 +48302,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-09-11T05:18:16Z",
+    "as_of": "2026-09-11T05:30:48Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -48314,7 +48314,7 @@
    },
    "agent_upvotes": {
     "status": "available",
-    "as_of": "2026-09-11T05:18:16Z",
+    "as_of": "2026-09-11T05:30:48Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -48345,13 +48345,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -49584,7 +49584,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -50129,7 +50129,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-09-11T05:18:16Z",
+  "as_of": "2026-09-11T05:30:48Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -50141,8 +50141,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 70,
-   "combined_agent_distribution_fetch_events": 70,
+   "aibast_direct_agent_fetches": 71,
+   "combined_agent_distribution_fetch_events": 71,
    "distribution_entries": 72,
    "logical_agents": 72,
    "overlap_agents": 0
@@ -50221,6 +50221,16 @@
    {
     "logical_name": "@aibast-agents-library/client-health-score",
     "display_name": "Client Health Score Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 2,
+    "combined_distribution_fetch_events": 2
+   },
+   {
+    "logical_name": "@aibast-agents-library/cross-selling",
+    "display_name": "Cross Selling Opportunities Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -50361,16 +50371,6 @@
    {
     "logical_name": "@aibast-agents-library/contract-risk-review",
     "display_name": "Contract Risk Review Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 1,
-    "combined_distribution_fetch_events": 1
-   },
-   {
-    "logical_name": "@aibast-agents-library/cross-selling",
-    "display_name": "Cross Selling Opportunities Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
