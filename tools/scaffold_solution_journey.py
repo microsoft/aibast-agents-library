@@ -17,6 +17,16 @@ from typing import Any, Iterable
 
 
 ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.clarity_tag import current_tag as _clarity_current_tag  # noqa: E402
+
+
+def clarity_head_tag() -> str:
+    """Microsoft Clarity block shared with scripts/apply_clarity_tag.py."""
+    return _clarity_current_tag(ROOT).rstrip()
+
 DEFAULT_RAW_BASE = (
     "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
 )
@@ -2314,6 +2324,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
     @media (max-width: 760px) {{ .grid {{ grid-template-columns: 1fr; }} }}
     @media (max-width: 760px) {{ .certification-grid {{ grid-template-columns: 1fr; }} }}
   </style>
+{clarity_head_tag()}
 </head>
 <body>
   <header class="topbar">
@@ -2465,6 +2476,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
     .downloads {{ display: flex; flex-wrap: wrap; gap: 8px; }}
     @media (max-width: 760px) {{ .summary-grid {{ grid-template-columns: 1fr; }} }}
   </style>
+{clarity_head_tag()}
 </head>
 <body>
   <header class="topbar">
@@ -2774,6 +2786,7 @@ def render_manual_tutorial(
     @media (max-width: 900px) {{ .layout {{ grid-template-columns: 1fr; }} .sidebar {{ position: static; max-height: none; }} }}
     @media (max-width: 620px) {{ .instruction-grid {{ grid-template-columns: 1fr; }} }}
   </style>
+{clarity_head_tag()}
 </head>
 <body>
   <header class="topbar">
@@ -3477,6 +3490,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .achievements-panel {{ grid-template-columns: 1fr; }} .achievements-claims {{ padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; }} }}
     @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .instruction-grid {{ grid-template-columns: 1fr; }} .step header {{ grid-template-columns: 36px 1fr; }} .step header .report-button {{ grid-column: 1 / -1; }} }}
   </style>
+{clarity_head_tag()}
 </head>
 <body data-workshop-slug="{html.escape(ctx.slug)}">
   <header class="topbar">
