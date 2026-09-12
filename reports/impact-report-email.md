@@ -1,37 +1,37 @@
-**Subject:** AIBAST weekly and monthly impact report - September 11, 2026
+**Subject:** AIBAST weekly and monthly impact report - September 12, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-11T05:30:48Z`
+**Snapshot:** `2026-09-12T05:17:00Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 6,123 | +374 observed - partial | +3,765 observed - partial |
-| Git clones | 5,587 | +374 observed | +3,739 observed |
-| Clones excluding CI estimate | 5,587 | +910 (+19.5%) | +4,189 (+299.6%) - partial |
-| AIBAST repository and Pages views | 889 | +145 observed | +642 observed |
+| AIBAST observed repository downloads | 7,200 | +1,364 observed - partial | +4,765 observed - partial |
+| Git clones | 6,631 | +1,364 observed | +4,739 observed |
+| Clones excluding CI estimate | 6,631 | +1,954 (+41.8%) | +4,934 (+290.7%) |
+| AIBAST repository and Pages views | 905 | +145 observed | +648 observed |
 | jsDelivr file hits | 414 | +0 observed | +26 observed |
-| Release asset downloads | 122 | +90 (+281.2%) | +122 - partial |
-| AIBAST direct agent file downloads | 71 | +60 (+545.5%) | +71 - partial |
-| AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
-| AIBAST installer file downloads | 60 | +30 (+100.0%) | +60 - partial |
-| Unique cloners (14-day window) | 205 | +41 (+25.0%) snapshot change | +35 (+20.6%) snapshot change - partial |
-| Unique visitors (14-day window) | 45 | +8 (+21.6%) snapshot change | +41 (+1025.0%) snapshot change - partial |
+| Release asset downloads | 155 | +123 (+384.4%) | +155 |
+| AIBAST direct agent file downloads | 103 | +92 (+836.4%) | +103 |
+| AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| AIBAST installer file downloads | 61 | +31 (+103.3%) | +61 |
+| Unique cloners (14-day window) | 327 | +163 (+99.4%) snapshot change | +190 (+138.7%) snapshot change |
+| Unique visitors (14-day window) | 47 | +10 (+27.0%) snapshot change | +30 (+176.5%) snapshot change |
 
 ## Community engagement
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) - partial |
-| GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) - partial |
-| GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
-| Open GitHub issues | 41 | +21 (+105.0%) | +36 (+720.0%) - partial |
-| Agent upvotes | 4 | +0 (+0.0%) | Baseline unavailable |
-| Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline unavailable |
-| Workshop usage events | 0 | -3 (-100.0%) - partial | +0 (+0.0%) - partial |
+| GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) |
+| GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) |
+| GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Open GitHub issues | 41 | +21 (+105.0%) | +35 (+583.3%) |
+| Agent upvotes | 4 | +0 (+0.0%) | +4 |
+| Signed-in agent acquisitions | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Workshop usage events | 0 | -3 (-100.0%) - partial | -8 (-100.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
@@ -41,22 +41,22 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Verified achievement participants | 1 | +0 (+0.0%) | +1 - partial |
-| Verified achievement points | 5 | +0 (+0.0%) | +5 - partial |
-| Verified achievements | 1 | +0 (+0.0%) | +1 - partial |
-| Workshop starts | 1 | +0 (+0.0%) | +1 - partial |
-| Workshop completions | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
-| Manual-mode completions | 0 | +0 (+0.0%) | +0 (+0.0%) - partial |
-| Workshop completion rate | 0.0% | +0.0 pp | +0.0 pp - partial |
-| Manual-mode completion rate | 0.0% | +0.0 pp | +0.0 pp - partial |
-| Achievement completion rate | 16.7% | +0.0 pp | +16.7 pp - partial |
+| Verified achievement participants | 1 | +0 (+0.0%) | +1 |
+| Verified achievement points | 5 | +0 (+0.0%) | +5 |
+| Verified achievements | 1 | +0 (+0.0%) | +1 |
+| Workshop starts | 1 | +0 (+0.0%) | +1 |
+| Workshop completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Manual-mode completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
+| Workshop completion rate | 0.0% | +0.0 pp | +0.0 pp |
+| Manual-mode completion rate | 0.0% | +0.0 pp | +0.0 pp |
+| Achievement completion rate | 16.7% | +0.0 pp | +16.7 pp |
 
 ## Library footprint
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,509 | +0 (+0.0%) | +199 (+3.7%) |
-| Files covered by download observations | 5,509 | +0 (+0.0%) | +202 (+3.8%) - partial |
+| Tracked repository files | 5,509 | +0 (+0.0%) | +64 (+1.2%) |
+| Files covered by download observations | 5,509 | +0 (+0.0%) | +64 (+1.2%) |
 | Catalog agents | 72 | +0 (+0.0%) | +0 (+0.0%) |
 | Tracked SKILL.md files | 234 | +0 (+0.0%) | +0 (+0.0%) |
 | Canonical workshops | 51 | +0 (+0.0%) | +0 (+0.0%) |
@@ -69,23 +69,32 @@
 - Fraud Detection and Alert Agent: -3 (current 0)
 
 **Agent downloads**
-- Account Intelligence Agent: +2 (current 4)
+- Account Intelligence Agent: +5 (current 7)
+- Account Risk Assessment: +2 (current 3)
+- AIBAST Workshop Engine: +2 (current 2)
+- Ask HR Agent: +2 (current 3)
 - Asset Maintenance Forecast Agent: +2 (current 3)
-- Care Gap Closure Agent: +2 (current 2)
-- Client Health Score Agent: +2 (current 2)
-- Cross Selling Opportunities Agent: +2 (current 2)
 
 ## Top monthly movers
+
+**Workshop usage**
+- Account Intelligence Agent: -8 (current 0)
 
 **Workshop achievement points**
 - Account Intelligence Agent: +5 (current 5)
 
 **Agent downloads**
-- Account Intelligence Agent: +4 (current 4)
+- Account Intelligence Agent: +7 (current 7)
+- Account Risk Assessment: +3 (current 3)
+- Ask HR Agent: +3 (current 3)
 - Asset Maintenance Forecast Agent: +3 (current 3)
 - Account Messaging: +2 (current 2)
-- Account Risk Assessment: +2 (current 2)
-- Activity Gap Analyzer: +2 (current 2)
+
+**Agent upvotes**
+- Account Intelligence Agent: +1 (current 1)
+- Building Permit Processing Agent: +1 (current 1)
+- Care Gap Closure Agent: +1 (current 1)
+- Underwriting Support Agent: +1 (current 1)
 
 ## Measurement notes
 
