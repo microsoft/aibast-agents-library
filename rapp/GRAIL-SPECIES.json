@@ -1,0 +1,126 @@
+{
+  "shape_version": 1,
+  "kernel_version": "0.6.16",
+  "routes": [
+    "DELETE /agents/<filename>",
+    "GET /",
+    "GET /agents",
+    "GET /agents/export/<filename>",
+    "GET /debug/auth",
+    "GET /diagnostics",
+    "GET /diagnostics/book.json",
+    "GET /health",
+    "GET /login/status",
+    "GET /models",
+    "GET /version",
+    "GET /voice",
+    "GET /voice/config",
+    "POST /agents/import",
+    "POST /chat",
+    "POST /chat/stream",
+    "POST /diagnostics/clear",
+    "POST /diagnostics/report",
+    "POST /login",
+    "POST /login/poll",
+    "POST /login/retry",
+    "POST /login/switch",
+    "POST /models/set",
+    "POST /voice/config",
+    "POST /voice/export",
+    "POST /voice/import",
+    "POST /voice/toggle"
+  ],
+  "basic_agent": {
+    "file": "agents/basic_agent.py",
+    "class": "BasicAgent",
+    "methods": {
+      "__init__": [
+        "self",
+        "name",
+        "metadata"
+      ],
+      "perform": [
+        "self",
+        "**kwargs"
+      ],
+      "system_context": [
+        "self"
+      ],
+      "to_tool": [
+        "self"
+      ]
+    },
+    "has_metadata": true,
+    "has_perform": true
+  },
+  "discovery": {
+    "glob": "*_agent.py",
+    "flat": true,
+    "subdirectories_excluded": true,
+    "listing_globs": [
+      "*.py",
+      "*_agent.py"
+    ]
+  },
+  "env_keys": [
+    "AGENTS_PATH",
+    "BRAINSTEM_ALLOWED_HOSTS",
+    "BRAINSTEM_LAN_MODE",
+    "GITHUB_MODEL",
+    "GITHUB_TOKEN",
+    "PATH",
+    "PORT",
+    "Path",
+    "SOUL_PATH",
+    "VOICE_MODE",
+    "VOICE_ZIP_PASSWORD"
+  ],
+  "default_port": 7071,
+  "chat_response_field": "response",
+  "shims": [
+    "agents",
+    "agents.basic_agent",
+    "openrappter",
+    "openrappter.agents",
+    "openrappter.agents.basic_agent",
+    "utils",
+    "utils.azure_file_storage",
+    "utils.dynamics_storage",
+    "utils.storage_factory"
+  ],
+  "inventory": [
+    ".gitignore",
+    ".vscode/settings.json",
+    "CLAUDE.md",
+    "CONSTITUTION.md",
+    "README.md",
+    "VERSION",
+    "agents/basic_agent.py",
+    "agents/context_memory_agent.py",
+    "agents/experimental/copilot_research_agent.py",
+    "agents/hacker_news_agent.py",
+    "agents/manage_memory_agent.py",
+    "brainstem.py",
+    "index.html",
+    "local_storage.py",
+    "requirements-dev.txt",
+    "requirements.txt",
+    "soul.md",
+    "start.ps1",
+    "start.sh"
+  ],
+  "install_layout": {
+    "BRAINSTEM_HOME": "$HOME/.brainstem",
+    "VENV_DIR": "$BRAINSTEM_HOME/venv",
+    "SRC_DIR": "$BRAINSTEM_HOME/src/rapp_brainstem",
+    "AGENTS_DIR": "$BRAINSTEM_HOME/src/rapp_brainstem/agents",
+    "overrides": []
+  },
+  "source": {
+    "repo": "kody-w/rapp-installer",
+    "ref": "main",
+    "commit": "49db80c8c6b6caa7647369beaf477d374a8f293c",
+    "fetched_at": "2026-09-04T12:57:59+00:00",
+    "files": 31
+  }
+}
