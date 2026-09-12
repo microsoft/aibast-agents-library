@@ -12,16 +12,14 @@ Lead with aggregate evidence, distinguish attribution from causality, name
 frequency and approval controls, and state that no side effect occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `OCE-01` uses skill `aggregate-channel-performance-review`.
+- `OCE-02` uses skill `privacy-safe-journey-friction-analysis`.
+- `OCE-03` uses skill `consent-aware-engagement-options`.
+- `OCE-04` uses skill `synthetic-campaign-attribution-review`.
 
-- `OCE-01` / `channel_performance`: `Prepared for:** Customer Experience Leader`, `Synthetic Channel Performance`, `no identity stitching`
-- `OCE-02` / `journey_analysis`: `Prepared for:** Contact Center Supervisor`, `Aggregate Customer Journey Analysis`, `Journey Optimization Opportunities`
-- `OCE-03` / `engagement_optimization`: `Prepared for:** Digital Engagement Manager`, `Draft Engagement Optimization Report`, `frequency caps`
-- `OCE-04` / `campaign_attribution`: `Synthetic Campaign Attribution Report`, `Overall Campaign ROI`, `Recommendations only`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

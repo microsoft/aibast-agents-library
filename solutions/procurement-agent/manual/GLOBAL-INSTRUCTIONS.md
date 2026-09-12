@@ -48,16 +48,14 @@ authority.
 5. End with: `Synthetic procurement evidence; decision support only. No approval, supplier action, purchase order, or spend commitment occurred.`
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `PROC-01` uses skill `purchase-request`.
+- `PROC-02` uses skill `vendor-comparison`.
+- `PROC-03` uses skill `approval-routing`.
+- `PROC-04` uses skill `spend-analysis`.
 
-- `PROC-01` / `purchase_request`: `PR-5001`, `$125,000`, `CFO`
-- `PROC-02` / `vendor_comparison`: `AWS`, `Azure`, `not a supplier award`
-- `PROC-03` / `approval_routing`: `CFO`, `48 hours`, `does not record an approval`
-- `PROC-04` / `spend_analysis`: `Software`, `$60,000`, `No purchase order is created`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

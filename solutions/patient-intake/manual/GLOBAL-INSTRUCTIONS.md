@@ -38,16 +38,14 @@ Lead with the read-only finding, cite the synthetic identifier and source limita
 Potential Microsoft connection seams are Dynamics 365 patient-access workflow, SharePoint governed intake documents. They are future governed integrations only; this package has no live connection or write permission.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `PI-01` uses skill `patient-intake-intake-readiness`.
+- `PI-02` uses skill `patient-intake-coverage-evidence`.
+- `PI-03` uses skill `patient-intake-appointment-availability`.
+- `PI-04` uses skill `patient-intake-pre-visit-summary`.
 
-- `PI-01` / `intake_readiness`: `SYN-PT-001`, `emergency contact confirmation`
-- `PI-02` / `coverage_evidence`: `Synthetic Health Plan`, `source record received`
-- `PI-03` / `appointment_availability`: `Clinician A`, `nothing has been reserved or booked`
-- `PI-04` / `pre_visit_summary`: `SYN-PT-001`, `Required reviewer`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

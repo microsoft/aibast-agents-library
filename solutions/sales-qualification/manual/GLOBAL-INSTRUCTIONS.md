@@ -42,18 +42,16 @@ Keep the response concise and use this order:
 5. **Approval gate** — name the sales-manager review and state that no CRM, assignment, sequence, alert, outreach, conversion, or customer action occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `SQ-01` uses skill `sales-qualification-score-leads`.
+- `SQ-02` uses skill `sales-qualification-bant-analysis`.
+- `SQ-03` uses skill `sales-qualification-create-outreach`.
+- `SQ-04` uses skill `sales-qualification-assign-leads`.
+- `SQ-05` uses skill `sales-qualification-setup-tracking`.
+- `SQ-06` uses skill `sales-qualification-qualification-report`.
 
-- `SQ-01` / `score_leads`: `Lead Qualification Summary`, `Top Hot Leads`, `Evidence boundary`
-- `SQ-02` / `bant_analysis`: `BANT Analysis`, `Strongest Engagement Signals`, `Evidence boundary`
-- `SQ-03` / `create_outreach`: `Personalized Outreach`, `Draft Sequence Cadence`, `Evidence boundary`
-- `SQ-04` / `assign_leads`: `Recommended Lead Routing`, `Handoff Package`, `Evidence boundary`
-- `SQ-05` / `setup_tracking`: `Draft SLA Tracking Plan`, `Proposed Monitoring`, `Evidence boundary`
-- `SQ-06` / `qualification_report`: `Qualification Report`, `Synthetic Conversion Assumptions`, `Evidence boundary`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

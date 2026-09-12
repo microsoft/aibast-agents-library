@@ -42,16 +42,14 @@ knowledge and operation skills.
 5. End substantive answers with: `Synthetic claims evidence only; no fraud, coverage, approval, denial, reserve, settlement, payment, outreach, referral, or record change occurred. Authorized human review required.`
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `CLP-01` uses skill `claim-intake`.
+- `CLP-02` uses skill `adjudication-review`.
+- `CLP-03` uses skill `fraud-flag`.
+- `CLP-04` uses skill `settlement-recommendation`.
 
-- `CLP-01` / `claim_intake`: `CLM-2025-7003`, `Investigation`
-- `CLP-02` / `adjudication_review`: `CLM-2025-7004`, `Receipts or appraisals`
-- `CLP-03` / `fraud_flag`: `CLM-2025-7003`, `SIU Referrals`
-- `CLP-04` / `settlement_recommendation`: `CLM-2025-7002`, `No approval`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->
