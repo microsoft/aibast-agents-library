@@ -10,14 +10,14 @@
   "release_review": {
     "status": "approved",
     "reviewer": "workshop-builder:account-intelligence",
-    "reviewed_at": "2026-08-09T21:08:34Z",
-    "method": "Opened every assisted and manual JPEG and GIF with image viewing, cross-checked each real frame against its browserfilm label and locked case, and inspected the annotated evidence boxes.",
-    "notes": "Approved six assisted locked-case frames, one assisted build review, the visible Account Intelligence Manual Draft row, and seven distinct hard-mode states. Fifteen frames remain reshoot-only for screenshot-specific cropped anchors, duplicate setup images, a hidden skill name, an incorrect step state, or an unresolved loading screen; the Pilot Draft JSON is not treated as visual proof."
+    "reviewed_at": "2026-09-09T22:15:00Z",
+    "method": "2026-09-09: rebuilt the Manual-mode agent from scratch in a live Copilot Studio tenant end-to-end (all 22 quest.html steps) as a student would, ran all six locked cases fresh in Preview, and captured/annotated real screenshots to replace 11 of the 15 previously reshoot_required frames. Prior review method (2026-08-09) retained for the remaining four: opened every assisted and manual JPEG and GIF with image viewing, cross-checked each real frame against its browserfilm label and locked case, and inspected the annotated evidence boxes.",
+    "notes": "26 frames now reusable. Four frames (hard-step-05, 06, 07, and hard-step-02, see below) remain reshoot-only: hard-step-02 has no isolated name-only capture; hard-step-05/06/07 need a dedicated single-action capture and, for hard-step-05 specifically, a product-level check on whether the original web-search-removal premise is still accurate on the current build. A genuine product bug was found during this pass and filed as microsoft/aibast-agents-library#204: an intermittent first-turn knowledge-retrieval skip on AI-02 and AI-06 that self-corrects on retry."
   },
   "summary": {
     "total_existing_captures": 30,
-    "reusable": 15,
-    "reshoot_required": 15
+    "reusable": 26,
+    "reshoot_required": 4
   },
   "captures": [
     {
@@ -72,7 +72,7 @@
           "y": 504,
           "width": 936,
           "height": 70,
-          "label": "AI-01 · Evidence boundary"
+          "label": "AI-01 \u00b7 Evidence boundary"
         }
       ]
     },
@@ -92,7 +92,7 @@
           "y": 434,
           "width": 936,
           "height": 145,
-          "label": "AI-02 · Evidence boundary"
+          "label": "AI-02 \u00b7 Evidence boundary"
         }
       ]
     },
@@ -112,7 +112,7 @@
           "y": 478,
           "width": 936,
           "height": 98,
-          "label": "AI-03 · Evidence boundary"
+          "label": "AI-03 \u00b7 Evidence boundary"
         }
       ]
     },
@@ -188,7 +188,7 @@
           "y": 409,
           "width": 935,
           "height": 167,
-          "label": "AI-06 · Evidence boundary"
+          "label": "AI-06 \u00b7 Evidence boundary"
         }
       ]
     },
@@ -225,8 +225,21 @@
       "mode": "hard",
       "step": 1,
       "source": "solutions/account-intelligence/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame already contains Account Intelligence Manual in the name field, so it does not show the claimed blank-agent creation state."
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 244,
+          "y": 105,
+          "width": 813,
+          "height": 47,
+          "label": "Blank agent \u2014 Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
@@ -241,16 +254,45 @@
       "mode": "hard",
       "step": 3,
       "source": "solutions/account-intelligence/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows an Untitled Agent with placeholder instructions, not the reviewed global instructions being entered."
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "visible_anchors": [
+        "Account Intelligence Manual",
+        "Evidence-first response contract"
+      ],
+      "boxes": [
+        {
+          "x": 131,
+          "y": 260,
+          "width": 882,
+          "height": 242,
+          "label": "Global Instructions entered"
+        }
+      ],
+      "note": "Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
       "step": 4,
       "source": "solutions/account-intelligence/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The final configuration is visible, but there is no save confirmation or unique saved-state indicator for this step; the image is also byte-identical to steps 5 through 7."
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "visible_anchors": [
+        "Account Intelligence Manual"
+      ],
+      "boxes": [
+        {
+          "x": 131,
+          "y": 242,
+          "width": 486,
+          "height": 31,
+          "label": "Instructions persisted after save"
+        }
+      ],
+      "note": "Distinct from steps 5-7: this frame is captured immediately after clicking Save, before knowledge/skills are added. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG. Box re-targeted 2026-09-10 from the header breadcrumb (present in every screenshot, not evidence of a save) to the persisted instructions heading itself, which differs from the pre-save draft in step 03 and is real evidence the save took effect."
     },
     {
       "id": "hard-step-05",
@@ -258,7 +300,7 @@
       "step": 5,
       "source": "solutions/account-intelligence/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "The final configuration does not visibly show the web-search source being removed, and this file is byte-identical to steps 4, 6, and 7."
+      "reason": "Re-verified 2026-09-09: on the current Copilot Studio build, a freshly created blank agent has no default 'Search all websites' knowledge source to remove, so this step's original premise may be stale rather than just needing a reshoot. Needs a product-level check before re-capturing."
     },
     {
       "id": "hard-step-06",
@@ -266,7 +308,7 @@
       "step": 6,
       "source": "solutions/account-intelligence/screenshots/manual/06-add-aibast-account-intelligence-operating-rules.jpg",
       "status": "reshoot_required",
-      "reason": "Both knowledge files are already present, so the operating-rules upload action is not isolated; this file is byte-identical to steps 4, 5, and 7."
+      "reason": "Both knowledge files are already present, so the operating-rules upload action is not isolated; this file is byte-identical to steps 4, 5, and 7. Re-verified 2026-09-09: the upload flow itself works correctly (confirmed via a fresh build), a dedicated single-file-only capture was not taken in this pass."
     },
     {
       "id": "hard-step-07",
@@ -274,7 +316,7 @@
       "step": 7,
       "source": "solutions/account-intelligence/screenshots/manual/07-add-aibast-account-intelligence-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "Both knowledge files are already present, so the synthetic-records upload action is not isolated; this file is byte-identical to steps 4 through 6."
+      "reason": "Both knowledge files are already present, so the synthetic-records upload action is not isolated; this file is byte-identical to steps 4 through 6. Re-verified 2026-09-09: the upload flow itself works correctly (confirmed via a fresh build), a dedicated single-file-only capture was not taken in this pass."
     },
     {
       "id": "hard-step-08",
@@ -381,8 +423,22 @@
       "mode": "hard",
       "step": 13,
       "source": "solutions/account-intelligence/screenshots/manual/13-add-value-messaging.jpg",
-      "status": "reshoot_required",
-      "reason": "The sixth skill is collapsed behind a +1 badge, so the claimed value-messaging skill name is not visible."
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/13-add-value-messaging.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "visible_anchors": [
+        "account-intelligence-value-messaging"
+      ],
+      "boxes": [
+        {
+          "x": 1165,
+          "y": 158,
+          "width": 280,
+          "height": 42,
+          "label": "value-messaging skill (6th, expanded)"
+        }
+      ],
+      "note": "The Skills panel still collapses the 6th skill behind a '+1' badge by default (confirmed still true on 2026-09-09); this frame captures the panel after expanding it so the sixth skill name is visible. Box/label repositioned 2026-09-10 so the pill no longer overlaps the boxed skill name."
     },
     {
       "id": "hard-step-14",
@@ -453,62 +509,174 @@
       "mode": "hard",
       "step": 16,
       "source": "solutions/account-intelligence/screenshots/manual/16-ai-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is scrolled to Draft Preparation Notes and Evidence boundary; the AI-01 Account Overview and Account Health Score headings are cropped out.",
-      "case_id": "AI-01"
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/16-ai-01.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "case_id": "AI-01",
+      "visible_anchors": [
+        "Account Health Score",
+        "Evidence that deserves seller attention"
+      ],
+      "boxes": [
+        {
+          "x": 379,
+          "y": 249,
+          "width": 320,
+          "height": 24,
+          "label": "AI-01 \u00b7 Evidence that deserves seller attention"
+        }
+      ],
+      "note": "Passed on the first attempt with exact synthetic data (Account Health Score 73/100). Box repositioned 2026-09-10 to wrap the heading text itself rather than striking through it. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
       "source": "solutions/account-intelligence/screenshots/manual/17-ai-02.jpg",
-      "status": "reshoot_required",
-      "reason": "Only a priority/action table and Evidence Boundary are visible; the AI-02 Stakeholder Map and Relationship Gaps headings are cropped out.",
-      "case_id": "AI-02"
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/17-ai-02.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "case_id": "AI-02",
+      "visible_anchors": [
+        "Relationship Gaps",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 379,
+          "y": 378,
+          "width": 155,
+          "height": 28,
+          "label": "AI-02 \u00b7 Relationship Gaps"
+        }
+      ],
+      "note": "BUG FOUND (filed as microsoft/aibast-agents-library#204): the first attempt in a fresh chat skipped knowledge retrieval and returned a data-less, schema-only response, visibly reasoning that the synthetic snapshot 'must only exist as anchors in my instructions rather than actual environment files.' An identical prompt in a new chat immediately after passed cleanly with the full 8-stakeholder table. Re-shot 2026-09-10: the previous frame's box was positioned over an unrelated 'Draft preparation' bullet rather than the actual 'Relationship Gaps' heading; this frame and box were recaptured directly on the passing-retry response with the heading scrolled precisely into view. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/account-intelligence/screenshots/manual/18-ai-03.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows positioning priorities and an evidence callout, but the AI-03 Competitive Intelligence and Competitor Activity headings are not visible.",
-      "case_id": "AI-03"
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/18-ai-03.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "case_id": "AI-03",
+      "visible_anchors": [
+        "Competitive Intelligence",
+        "Competitor Activity"
+      ],
+      "boxes": [
+        {
+          "x": 379,
+          "y": 378,
+          "width": 170,
+          "height": 25,
+          "label": "AI-03 \u00b7 Competitor Activity"
+        }
+      ],
+      "note": "Passed on the first attempt with exact synthetic data. Re-shot 2026-09-10: the previous frame was scrolled to a position that never showed the 'Competitor Activity' heading at all (box sat over blank whitespace); recaptured with the heading scrolled precisely into view via its DOM element. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
     },
     {
       "id": "hard-step-19",
       "mode": "hard",
       "step": 19,
       "source": "solutions/account-intelligence/screenshots/manual/19-ai-04.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot starts mid-table and shows Evidence Boundary, but the AI-04 Draft Meeting Talking Points and Objection Handling headings are cropped out.",
-      "case_id": "AI-04"
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/19-ai-04.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "case_id": "AI-04",
+      "visible_anchors": [
+        "Draft Meeting Talking Points",
+        "Objection Handling"
+      ],
+      "boxes": [
+        {
+          "x": 380,
+          "y": 582,
+          "width": 438,
+          "height": 25,
+          "label": "AI-04 \u00b7 Draft Meeting Talking Points"
+        }
+      ],
+      "note": "Passed on the first attempt with exact synthetic data. Box repositioned 2026-09-10 to wrap the heading text itself rather than striking through it. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
     },
     {
       "id": "hard-step-20",
       "mode": "hard",
       "step": 20,
       "source": "solutions/account-intelligence/screenshots/manual/20-ai-05.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows later action rows and Evidence Boundary, but the AI-05 Deal Risk Assessment and Immediate Actions headings are cropped out.",
-      "case_id": "AI-05"
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/20-ai-05.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "case_id": "AI-05",
+      "visible_anchors": [
+        "Deal Risk Assessment",
+        "Immediate Actions",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 380,
+          "y": 627,
+          "width": 338,
+          "height": 24,
+          "label": "AI-05 \u00b7 Deal Risk Assessment"
+        }
+      ],
+      "note": "Passed on the first attempt; win-probability indicator (61%) recomputed exactly per the documented formula. Re-shot 2026-09-10: the previous frame was scrolled past the 'Deal Risk Assessment: Acme Corporation' heading (box sat over blank whitespace); recaptured with the heading scrolled precisely into view. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
     },
     {
       "id": "hard-step-21",
       "mode": "hard",
       "step": 21,
       "source": "solutions/account-intelligence/screenshots/manual/21-ai-06.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows a competitor table and Top Risk Signals; none of the AI-06 Account Intelligence Briefing, Pre-Meeting Checklist, or Evidence boundary anchors are visible.",
-      "case_id": "AI-06"
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/21-ai-06.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "case_id": "AI-06",
+      "visible_anchors": [
+        "Account Intelligence Briefing",
+        "Pre-Meeting Checklist"
+      ],
+      "boxes": [
+        {
+          "x": 379,
+          "y": 582,
+          "width": 476,
+          "height": 31,
+          "label": "AI-06 \u00b7 Account Intelligence Briefing"
+        }
+      ],
+      "note": "BUG FOUND (filed as microsoft/aibast-agents-library#204): the same first-attempt retrieval skip seen in AI-02 also reproduced here \u2014 a fresh chat's first message produced a generic, data-less checklist template with an explicit 'if you can load or point me to the Acme snapshot file' caveat. An identical prompt in a new chat immediately after passed cleanly with the full grounded briefing. This screenshot is from the passing retry. Box repositioned 2026-09-10 to wrap the heading text itself rather than striking through it. Box coordinates re-measured pixel-by-pixel 2026-09-10 against the actual heading/text bounds after a prior pass still had a misaligned box; verified by direct visual inspection of the rendered PNG."
     },
     {
       "id": "hard-step-22",
       "mode": "hard",
       "step": 22,
       "source": "solutions/account-intelligence/screenshots/manual/22-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents page is still a 0-item loading skeleton, so neither Account Intelligence Manual nor a Draft status is visible."
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/22-confirm-draft.png",
+      "status": "reusable",
+      "reshot_at": "2026-09-09",
+      "visible_anchors": [
+        "Account Intelligence Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 150,
+          "y": 232,
+          "width": 330,
+          "height": 43,
+          "label": "Account Intelligence Manual"
+        },
+        {
+          "x": 798,
+          "y": 233,
+          "width": 65,
+          "height": 30,
+          "label": "Draft"
+        }
+      ]
     }
   ]
 }
