@@ -47,7 +47,11 @@ gh --version 2>/dev/null
 ```powershell
 irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex
 ```
-It auto-installs Python 3.11, Git, and GitHub CLI via winget on a factory Windows 11 PC. If the user is on Windows and runs this, skip to Step 2 after it completes.
+It auto-installs Python 3.11 and Git via winget on a factory Windows 11 PC,
+then starts Brainstem. When it prints `Starting RAPP Brainstem`, setup is
+complete even though PowerShell remains occupied by the running server. Keep
+that window open, do not rerun the installer, and continue to Step 2; the
+browser handles GitHub sign-in.
 
 **If Python 3.11+ is missing** (macOS/Linux):
 - macOS: `brew install python@3.11`
