@@ -6,8 +6,8 @@ umask 077
 # Usage: curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
 # Pin a version: curl ... install.sh | bash -s -- --version v0.6.0
 
-BRAINSTEM_HOME="$HOME/.brainstem"
-BRAINSTEM_BIN="$HOME/.local/bin"
+BRAINSTEM_HOME="${BRAINSTEM_HOME:-$HOME/.brainstem}"
+BRAINSTEM_BIN="${BRAINSTEM_BIN:-$HOME/.local/bin}"
 VENV_DIR="$BRAINSTEM_HOME/venv"
 SOURCE_OVERRIDE_REQUESTED=false
 if [[ -n "${BRAINSTEM_REPO_URL:-}" || -n "${BRAINSTEM_REPO_REF:-}" || -n "${BRAINSTEM_VERSION_URL:-}" ]]; then
@@ -761,9 +761,10 @@ install_cli() {
     echo "Installing CLI..."
     mkdir -p "$BRAINSTEM_BIN"
 
-    cat > "$BRAINSTEM_BIN/brainstem" << 'WRAPPER'
-#!/bin/bash
-BRAINSTEM_HOME="$HOME/.brainstem"
+    {
+        printf '#!/bin/bash\n'
+        printf 'BRAINSTEM_HOME=%q\n' "$BRAINSTEM_HOME"
+        cat <<'WRAPPER'
 VENV_PYTHON="$BRAINSTEM_HOME/venv/bin/python"
 cd "$BRAINSTEM_HOME/src/rapp_brainstem"
 
@@ -784,6 +785,7 @@ fi
 
 exec "$VENV_PYTHON" brainstem.py "$@"
 WRAPPER
+    } > "$BRAINSTEM_BIN/brainstem"
 
     chmod +x "$BRAINSTEM_BIN/brainstem"
 
@@ -791,10 +793,12 @@ WRAPPER
         local file="$1"
         # Create shell config if it doesn't exist (common on fresh macOS)
         touch "$file"
-        if ! grep -q '\.local/bin' "$file" 2>/dev/null; then
-            echo '' >> "$file"
-            echo '# RAPP Brainstem' >> "$file"
-            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$file"
+        if ! grep -Fq "$BRAINSTEM_BIN" "$file" 2>/dev/null; then
+            {
+                echo ''
+                echo '# RAPP Brainstem'
+                printf "export PATH=%q:\$PATH\n" "$BRAINSTEM_BIN"
+            } >> "$file"
         fi
     }
     add_to_path "$HOME/.bashrc"

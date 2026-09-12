@@ -14,8 +14,8 @@ try {
         [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 } catch {}
 
-$BRAINSTEM_HOME = "$env:USERPROFILE\.brainstem"
-$BRAINSTEM_BIN = "$env:USERPROFILE\.local\bin"
+$BRAINSTEM_HOME = if ($env:BRAINSTEM_HOME) { [IO.Path]::GetFullPath($env:BRAINSTEM_HOME) } else { "$env:USERPROFILE\.brainstem" }
+$BRAINSTEM_BIN = if ($env:BRAINSTEM_BIN) { [IO.Path]::GetFullPath($env:BRAINSTEM_BIN) } else { "$env:USERPROFILE\.local\bin" }
 $SOURCE_OVERRIDE_REQUESTED = [bool](
     $env:BRAINSTEM_REPO_URL -or
     $env:BRAINSTEM_REPO_REF -or
@@ -24,7 +24,7 @@ $SOURCE_OVERRIDE_REQUESTED = [bool](
 $REPO_URL = if ($env:BRAINSTEM_REPO_URL) { $env:BRAINSTEM_REPO_URL } else { "https://github.com/microsoft/aibast-agents-library.git" }
 $REPO_REF = if ($env:BRAINSTEM_REPO_REF) { $env:BRAINSTEM_REPO_REF } else { "main" }
 $REMOTE_VERSION_URL = if ($env:BRAINSTEM_VERSION_URL) { $env:BRAINSTEM_VERSION_URL } else { "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION" }
-$VENV_DIR = "$env:USERPROFILE\.brainstem\venv"
+$VENV_DIR = "$BRAINSTEM_HOME\venv"
 $NO_LAUNCH = $false
 
 # Optional version pin: `--version vX.Y.Z` (also accepts a bare 0.6.14 or the release
