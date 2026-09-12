@@ -2,24 +2,24 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-12T05:17:00Z`
+**Snapshot:** `2026-09-12T05:29:51Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 7,200 | +1,364 observed - partial | +4,765 observed - partial |
+| AIBAST observed repository downloads | 7,203 | +1,364 observed - partial | +4,765 observed - partial |
 | Git clones | 6,631 | +1,364 observed | +4,739 observed |
-| Clones excluding CI estimate | 6,631 | +1,954 (+41.8%) | +4,934 (+290.7%) |
+| Clones excluding CI estimate | 6,631 | +1,553 (+30.6%) | +4,934 (+290.7%) |
 | AIBAST repository and Pages views | 905 | +145 observed | +648 observed |
 | jsDelivr file hits | 414 | +0 observed | +26 observed |
-| Release asset downloads | 155 | +123 (+384.4%) | +155 |
+| Release asset downloads | 158 | +118 (+295.0%) | +158 |
 | AIBAST direct agent file downloads | 103 | +92 (+836.4%) | +103 |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| AIBAST installer file downloads | 61 | +31 (+103.3%) | +61 |
-| Unique cloners (14-day window) | 327 | +163 (+99.4%) snapshot change | +190 (+138.7%) snapshot change |
-| Unique visitors (14-day window) | 47 | +10 (+27.0%) snapshot change | +30 (+176.5%) snapshot change |
+| AIBAST installer file downloads | 64 | +26 (+68.4%) | +64 |
+| Unique cloners (14-day window) | 327 | +125 (+61.9%) snapshot change | +190 (+138.7%) snapshot change |
+| Unique visitors (14-day window) | 47 | +9 (+23.7%) snapshot change | +30 (+176.5%) snapshot change |
 
 ## Community engagement
 
@@ -28,10 +28,10 @@
 | GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) |
 | GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 41 | +21 (+105.0%) | +35 (+583.3%) |
+| Open GitHub issues | 41 | +20 (+95.2%) | +35 (+583.3%) |
 | Agent upvotes | 4 | +0 (+0.0%) | +4 |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Workshop usage events | 0 | -3 (-100.0%) - partial | -8 (-100.0%) - partial |
+| Workshop usage events | 0 | +0 (+0.0%) - partial | -8 (-100.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
@@ -64,9 +64,6 @@
 | Industry verticals | 12 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Top weekly movers
-
-**Workshop usage**
-- Fraud Detection and Alert Agent: -3 (current 0)
 
 **Agent downloads**
 - Account Intelligence Agent: +5 (current 7)
