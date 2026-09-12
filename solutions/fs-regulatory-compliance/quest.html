@@ -820,7 +820,7 @@ html[data-theme="dark"] {
         <header class="learn-step-header"><span>5</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
-          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/1a5fb3de-2e07-4415-89f9-40c5620c0cc5" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
+          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><span class="button" aria-disabled="true">Copilot Studio link unavailable</span></div></div>
           <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
           <div class="preview-grid">
 
@@ -829,34 +829,36 @@ html[data-theme="dark"] {
           <pre class="prompt-block" id="preview-prompt-rc-01">Are we going to fail our next MiFID audit? What&#x27;s actually broken on the desk right now?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">T-2041</span><span class="marker-chip">T-2233</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the trade</span><span class="marker-chip">give me a trade</span><span class="marker-chip">which trade would you</span></div></div>
-          <div class="verification-evidence"><strong>Verified response evidence</strong><p>This exact excerpt comes from the stored passed transcript. Compare your fresh Preview result with the required and forbidden markers before marking this checkpoint complete.</p><pre class="evidence-transcript">2. Two traders are lapsed and must stop trading — T-2041 (Algo Trading Cert) and T-2233 (Market Abuse Reg). Their supervisors need to act immediately.</pre><p class="capture-meta"><a href="evals/transcripts.json" download>Download the machine-readable evidence</a>.</p></div>
+          <div class="verification-evidence"><strong>Historical response evidence</strong><p>Historical response excerpt only; the repaired source still requires a fresh Preview run. Compare your fresh Preview result with the required and forbidden markers before marking this checkpoint complete.</p><pre class="evidence-transcript">2. Two traders are lapsed and must stop trading — T-2041 (Algo Trading Cert) and T-2233 (Market Abuse Reg). Their supervisors need to act immediately.</pre><p class="capture-meta"><a href="evals/transcripts.json" download>Download the machine-readable evidence</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-01" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case preview-case-wide">
-          <header><div><p class="prompt-kicker">RC-02 · Trading Desk Supervisor</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-02">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-02" data-report-expected="Must include: T-2041, T-2233; must not include: I don&#x27;t have access, provide the trader" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/annotated/03-rc-02.png">Report an issue</button></div></header>
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-02 · Trading Desk Supervisor</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-02">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-02" data-report-expected="Must include: T-2041, T-2233; must not include: I don&#x27;t have access, provide the trader" data-report-evidence="solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-02">Which of my traders can&#x27;t legally trade today, and who do I have to call?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">T-2041</span><span class="marker-chip">T-2233</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the trader</span></div></div>
-          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/03-rc-02.png" download="03-rc-02.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/03-rc-02.png" alt="RC-02 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: T-2041; Desk Supervisor — EU Equities; T-2233; Desk Supervisor — Credit. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/03-rc-02.jpg" download="03-rc-02.jpg">Download original</a>.</p></div>
+          <div class="verification-evidence"><strong>Historical response evidence</strong><p>Historical response excerpt only; the repaired source still requires a fresh Preview run. Compare your fresh Preview result with the required and forbidden markers before marking this checkpoint complete.</p><pre class="evidence-transcript">1. T-2041 (EU Equities) — Algo Trading Certification lapsed 12 days ago. Call the EU Equities Desk Supervisor to stand them down immediately. Re-enrolment is 2026-08-19, so there&#x27;s a coverage gap.
+2. T-2233 (Credit) — Market Abuse Regulation lapsed 3 days ago. Call the Credit Desk Supervisor to stand them down. Re-enrolment is 2026-08-12, also after expiry.</pre><p class="capture-meta"><a href="evals/transcripts.json" download>Download the machine-readable evidence</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-02" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case preview-case-wide">
-          <header><div><p class="prompt-kicker">RC-03 · Compliance Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-03">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-03" data-report-expected="Must include: TRD-88133, field; must not include: I don&#x27;t have access, upload" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/annotated/04-rc-03.png">Report an issue</button></div></header>
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-03 · Compliance Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-03">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-03" data-report-expected="Must include: TRD-88133, field; must not include: I don&#x27;t have access, upload" data-report-evidence="solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-03">We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TRD-88133</span><span class="marker-chip">field</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">upload</span></div></div>
-          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/04-rc-03.png" download="04-rc-03.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/04-rc-03.png" alt="RC-03 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: TRD-88133; Fields 59 &amp; 7 missing; no ARM submission. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/04-rc-03.jpg" download="04-rc-03.jpg">Download original</a>.</p></div>
+          <div class="verification-evidence"><strong>Historical response evidence</strong><p>Historical response excerpt only; the repaired source still requires a fresh Preview run. Compare your fresh Preview result with the required and forbidden markers before marking this checkpoint complete.</p><pre class="evidence-transcript">1. TRD-88133 — The killer: missing buyer ID (field 7), not submitted to ARM by T+1, and slippage 3.4× worse than tolerance. This will reject.
+3. TRD-88117 — Missing &quot;investment decision within firm&quot; field (field 57). Mandatory field failure = rejection.</pre><p class="capture-meta"><a href="evals/transcripts.json" download>Download the machine-readable evidence</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-03" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case preview-case-wide">
-          <header><div><p class="prompt-kicker">RC-04 · Head of Quant Execution</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-04">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-04" data-report-expected="Must include: ALGO-POV-NL; must not include: I don&#x27;t have access" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/annotated/05-rc-04.png">Report an issue</button></div></header>
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-04 · Head of Quant Execution</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-04">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-04" data-report-expected="Must include: ALGO-POV-NL; must not include: I don&#x27;t have access" data-report-evidence="solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-04">Is anything about to go live that shouldn&#x27;t?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">ALGO-POV-NL</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span></div></div>
-          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/05-rc-04.png" download="05-rc-04.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/05-rc-04.png" alt="RC-04 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: ALGO-POV-NL; Block Required; Never validated; Risk controls; Kill-switch test. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/05-rc-04.jpg" download="05-rc-04.jpg">Download original</a>.</p></div>
+          <div class="verification-evidence"><strong>Historical response evidence</strong><p>Historical response excerpt only; the repaired source still requires a fresh Preview run. Compare your fresh Preview result with the required and forbidden markers before marking this checkpoint complete.</p><pre class="evidence-transcript">1. ALGO-POV-NL goes live in 6 days without validation. It&#x27;s missing 3 required artefacts (risk controls, kill-switch test, conformance test). Quant Execution team must complete these before launch.</pre><p class="capture-meta"><a href="evals/transcripts.json" download>Download the machine-readable evidence</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-04" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -865,7 +867,7 @@ html[data-theme="dark"] {
           <pre class="prompt-block" id="preview-prompt-rc-05">My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TRD-88133</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span></div></div>
-          <div class="verification-evidence"><strong>Verified response evidence</strong><p>This exact excerpt comes from the stored passed transcript. Compare your fresh Preview result with the required and forbidden markers before marking this checkpoint complete.</p><pre class="evidence-transcript">- 11 open exceptions, 6 flagged high-risk — including transaction reporting defects on a single trade (TRD-88133).</pre><p class="capture-meta"><a href="evals/transcripts.json" download>Download the machine-readable evidence</a>.</p></div>
+          <div class="verification-evidence"><strong>Historical response evidence</strong><p>Historical response excerpt only; the repaired source still requires a fresh Preview run. Compare your fresh Preview result with the required and forbidden markers before marking this checkpoint complete.</p><pre class="evidence-transcript">- 11 open exceptions, 6 flagged high-risk — including transaction reporting defects on a single trade (TRD-88133).</pre><p class="capture-meta"><a href="evals/transcripts.json" download>Download the machine-readable evidence</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-05" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
           </div>
@@ -874,7 +876,7 @@ html[data-theme="dark"] {
 
 
       <section class="learn-step" id="easy-step-6">
-        <header class="learn-step-header"><span>6</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 5/5; Preview 5/5; Draft Regulatory Compliance Pilot; published false." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/annotated/01-review-build.png">Report an issue</button></header>
+        <header class="learn-step-header"><span>6</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 5/5; Preview 5/5; Draft Regulatory Compliance Pilot; published false." data-report-evidence="solutions/fs-regulatory-compliance/evals/dataverse-draft-evidence.json">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
           <div class="done-grid">
@@ -885,7 +887,7 @@ html[data-theme="dark"] {
             <article><strong>Inventory</strong><span>2 knowledge · 5 skills</span></article>
             <article><strong>Publication gate</strong><span>Draft · published false</span></article>
           </div>
-          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/01-review-build.png" download="01-review-build.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/01-review-build.png" alt="Validated agent remains Draft" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint. Source: 1424×863 JPEG. <a href="screenshots/assisted/01-review-build.jpg" download="01-review-build.jpg">Download original</a>.</p></div>
+          <div class="verification-evidence"><strong>Verified completion record</strong><p>The packaged environment evidence records the target agent as <strong>Draft</strong> with publication off. Confirm the same state in your environment before marking the workshop complete.</p><p class="capture-meta"><a href="evals/dataverse-draft-evidence.json" download>Download the machine-readable Draft evidence</a>.</p></div>
           <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-achievements-group="final-verdict" data-achievements-path="shared"><span>I confirmed the final Draft verdict.</span></label>
         </div>
@@ -917,7 +919,7 @@ html[data-theme="dark"] {
           <a class="button" href="evidence-report.html">Evidence report</a>
           <a class="button" href="export-manifest.json" download>Download audit manifest</a>
           <a class="button" href="exports/fs-regulatory-compliance-source.zip" download>Download portable bundle</a>
-          <a class="button primary" href="exports/fs-regulatory-compliance-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/fs-regulatory-compliance-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/fs-regulatory-compliance-solution-export.json" download>Export details</a>
+          <div class="notice"><strong>Historical export — source repair pending.</strong> Historical native import archive: inspection found five entries, no workshop skills and no workshop knowledge files. It does not reproduce the preserved manual build or its repairs. The separate source ZIP is an explicit public-safe manual-source subset, not a native import package. No new live export, import, runtime parity or publication is claimed. <a href="exports/fs-regulatory-compliance-solution-export.json" download>Export details</a></div>
           <a class="button" href="../../agents/@aibast-agents-library/templates/workshop_agent.py" download>Download generic workshop agent</a>
           <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
@@ -931,11 +933,11 @@ html[data-theme="dark"] {
         <p class="lede">Optional. Easy mode already did all of this for you from one skill file. This lane replays every action the AI took, one real browser frame per step, so you can understand the agent before you adapt it. No PAC CLI, YAML import, or plugin architect; stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
         <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
-        <!-- No pending evidence. -->
+        <div class="notice"><strong>Pending evidence:</strong> this page was generated with <code>--allow-pending</code>. Missing evidence is labeled and is not proof.</div><div class="notice"><strong>Preservation review, not certification.</strong> The saved live responses and their discrepancies are summarized in the <a href="evals/manual-pilot-review.json" download>dated pilot review</a>. The rebuilt package still needs fresh live regression and reviewed step-by-step evidence. Historical images are withheld; neither an inventory image nor a passing source test proves every build step.</div>
         <div class="hard-actions">
           <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Manual-mode guide ↗</a>
           <a class="button primary" href="exports/fs-regulatory-compliance-source.zip">Download source bundle</a>
-          <a class="button primary" href="exports/fs-regulatory-compliance-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/fs-regulatory-compliance-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/fs-regulatory-compliance-solution-export.json" download>Export details</a>
+          <div class="notice"><strong>Historical export — source repair pending.</strong> Historical native import archive: inspection found five entries, no workshop skills and no workshop knowledge files. It does not reproduce the preserved manual build or its repairs. The separate source ZIP is an explicit public-safe manual-source subset, not a native import package. No new live export, import, runtime parity or publication is claimed. <a href="exports/fs-regulatory-compliance-solution-export.json" download>Export details</a></div>
         </div>
       </section>
 
@@ -966,24 +968,24 @@ html[data-theme="dark"] {
 <a href="#step-18">18. Select Claude Sonnet 4.6</a>
 <a href="#step-19">19. Review instructions, knowledge, skills, and tools</a>
 <a href="#step-20">20. Open a fresh Preview conversation</a>
-<a href="#step-21">21. Pass RC-01 audit readiness</a>
-<a href="#step-22">22. Pass RC-02 certifications</a>
-<a href="#step-23">23. Pass RC-03 trade surveillance</a>
-<a href="#step-24">24. Pass RC-04 algorithm go-live</a>
-<a href="#step-25">25. Pass RC-05 board evidence</a>
+<a href="#step-21">21. Run and verify RC-01 audit readiness</a>
+<a href="#step-22">22. Run and verify RC-02 certifications</a>
+<a href="#step-23">23. Run and verify RC-03 trade surveillance</a>
+<a href="#step-24">24. Run and verify RC-04 algorithm go-live</a>
+<a href="#step-25">25. Run and verify RC-05 board evidence</a>
 <a href="#step-26">26. Confirm Draft and stop before publish</a></nav>
       </section>
 
       <h2>Build and verify</h2>
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="Perform this live action and retain new evidence: Create a blank Copilot Studio agent. Historical media is not acceptance." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Perform this live action and retain new evidence: Create a blank Copilot Studio agent. Historical media is not acceptance.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/01-create-blank-agent.png" download="01-create-blank-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; Blank Build workspace. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Perform this live action and retain new evidence: Create a blank Copilot Studio agent. Historical media is not acceptance.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -991,14 +993,14 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name the manual agent</h3><p>Step 2 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name the manual agent" data-report-expected="The page header shows the recorded manual build name: Regulatory Manual Build." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg">Report an issue</button></header>
+        <header><span>2</span><div><h3>Name the manual agent</h3><p>Step 2 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name the manual agent" data-report-expected="Verify the saved name is exactly Regulatory Manual Build." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Regulatory Manual Build</pre></div><span>Name the manual agent</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Regulatory Manual Build.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify the saved name is exactly Regulatory Manual Build.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/02-name-manual-agent.png" download="02-name-manual-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-manual-agent.png" alt="Name the manual agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Regulatory Manual Build in the name field. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-manual-agent.jpg" download="02-name-manual-agent.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Verify the saved name is exactly Regulatory Manual Build.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -1006,7 +1008,7 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg">Report an issue</button></header>
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Regulatory Compliance Agent — Manual Global Instructions
@@ -1053,11 +1055,35 @@ the uploaded pilot knowledge and skills.
 5. Use “at risk,” “control gap,” and “requires authorized review” language.
 6. Never claim an audit outcome, legal conclusion, filing, enrollment,
    notification, or external record change.
+
+
+## Locked Preview routing
+
+For the five exact locked prompts, load the matching uploaded skill before any generic helper and retrieve the attached knowledge. Never use search-before-answer, filesystem search, bash, or an upload request. The attached knowledge is present.
+
+- RC-01 and RC-05: compliance-dashboard-and-audit-readiness.
+- RC-02: trader-certification-readiness.
+- RC-03: trade-reporting-and-execution-surveillance.
+- RC-04: algorithm-documentation-and-go-live-review.
+
+## Locked Preview response contracts
+
+RC-01: Do not predict audit pass or fail. Use snapshot 2026-08-07 and the phrases at risk, control gap, and requires authorized review. Report T-2041 lapsed 12 days and T-2233 lapsed 3 days as credential records only; proposed stand-down requires supervisor review and no active status or completed action is established. Report exactly four reporting-defective trades: TRD-88117 field 57; TRD-88129 XETR to XPAR; TRD-88133 fields 59 and 7 plus zero ARM submission; TRD-88150 TQEX to XLON. TRD-88162 has a complete report and only an algorithm-documentation gap. Execution outliers are TRD-88133 and TRD-88150. ALGO-IS-DE is 37 days overdue. ALGO-POV-NL goes live in 6 days, was never validated, and lacks risk controls, kill-switch test, and conformance test. No side effect occurred.
+
+RC-02: Lead with: This synthetic pilot does not determine who is legally allowed to trade. T-2041 Algo Trading Certification lapsed 12 days; supervisor Desk Supervisor — EU Equities; next session 2026-08-19. T-2233 Market Abuse Regulation lapsed 3 days; supervisor Desk Supervisor — Credit; next session 2026-08-12. T-2041 MiFID II Knowledge &amp; Competence expires in 24 days; its next session is 2026-08-16. T-2107 credentials expire in 41 and 88 days; next sessions are 2026-08-12 and 2026-08-16. Session dates are not expiry dates. Never say 2026-08-16 is T-2041&#x27;s expiry date. The credential records are an at risk control gap; any proposed stand-down requires authorized review. No trader is proven active, legally barred, notified, enrolled, or already stood down. No side effect occurred.
+
+RC-03: State that audit or regulator rejection is not predicted. Lead with TRD-88133: field 59 source T-2107; field 7 source 549300XKQZ2P4NLK7T18; zero ARM submission. Add TRD-88117 field 57 source T-2041; TRD-88129 XETR to XPAR; TRD-88150 TQEX to XLON. State exactly four reporting-defective trades. Keep execution outliers TRD-88133 and TRD-88150 and ALGO-IS-DE documentation separate. TRD-88162 has a complete report. Corrections or a new submission may only be staged as a synthetic dry run and require authorized review. No side effect occurred.
+
+RC-04: Return only ALGO-POV-NL. It goes live in 6 days, has never been validated, and lacks risk controls, kill-switch test, and conformance test. This at risk control gap should block the pilot go-live pending recorded validation and Quant Execution sign-off; it requires authorized review. Do not mention other algorithms, trades, corrections, submissions, or filings. No real deployment was disabled, delayed, changed, or blocked.
+
+RC-05: State that the assertion is not supported by fixed synthetic evidence. Lead with TRD-88133 field 59 source T-2107, field 7 source 549300XKQZ2P4NLK7T18, and zero ARM submission. Add TRD-88117 field 57, TRD-88129 XETR to XPAR, and TRD-88150 TQEX to XLON. State exactly four reporting-defective trades; TRD-88162 has a complete report. Keep execution and documentation separate. Certification evidence is two lapsed credentials, not proof of active traders or legal incapacity. Algorithm owner is Quant Execution. Proposed corrections and one new submission are synthetic dry runs only. Use at risk, control gap, and requires authorized review. No side effect occurred.
+
+Use native citations. Never emit literal doc-turn tokens. If citation rendering is unavailable, end with a plain Sources line naming aibast_fs-regulatory-compliance-synthetic-records.md and aibast_fs-regulatory-compliance-rules-and-controls.md.
 </pre></div><span>Enter the reviewed global instructions</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/03-enter-global-instructions.png" download="03-enter-global-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-global-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Synthetic financial-services regulatory compliance pilot; Boundaries; Routing; Response contract. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-global-instructions.jpg" download="03-enter-global-instructions.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -1065,14 +1091,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg">Report an issue</button></header>
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/04-save-global-instructions.png" download="04-save-global-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-global-instructions.png" alt="Save the instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save (Ctrl+S); Reason: No unsaved changes. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/04-save-global-instructions.jpg" download="04-save-global-instructions.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -1080,14 +1106,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Locate the default web-search capability</h3><p>Step 5 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Locate the default web-search capability" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg">Report an issue</button></header>
+        <header><span>5</span><div><h3>Locate the default web-search capability</h3><p>Step 5 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Locate the default web-search capability" data-report-expected="Perform this live action and retain new evidence: Locate the default web-search capability. Historical media is not acceptance." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Locate the default web-search capability</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Perform this live action and retain new evidence: Locate the default web-search capability. Historical media is not acceptance.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Perform this live action and retain new evidence: Locate the default web-search capability. Historical media is not acceptance.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -1095,14 +1121,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Remove default web search</h3><p>Step 6 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg">Report an issue</button></header>
+        <header><span>6</span><div><h3>Remove default web search</h3><p>Step 6 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Remove default web search" data-report-expected="Verify default web search is removed and no tool was added." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify default web search is removed and no tool was added.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/06-remove-web-search.png" download="06-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-remove-web-search.png" alt="Remove default web search annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Knowledge section shows only the add control and no Search all websites chip. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-remove-web-search.jpg" download="06-remove-web-search.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Verify default web search is removed and no tool was added.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -1110,14 +1136,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Open the knowledge uploader</h3><p>Step 7 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Open the knowledge uploader" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg">Report an issue</button></header>
+        <header><span>7</span><div><h3>Open the knowledge uploader</h3><p>Step 7 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Open the knowledge uploader" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the knowledge uploader</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/07-open-knowledge-upload.png" download="07-open-knowledge-upload.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-open-knowledge-upload.png" alt="Open the knowledge uploader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Upload files; Drag and drop or browse your device. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-open-knowledge-upload.jpg" download="07-open-knowledge-upload.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -1125,44 +1151,44 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Upload synthetic compliance records</h3><p>Step 8 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Upload synthetic compliance records" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg">Report an issue</button></header>
+        <header><span>8</span><div><h3>Upload synthetic compliance records</h3><p>Step 8 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Upload synthetic compliance records" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload synthetic compliance records</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
-            <a href="manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md" download>Download source: Aibast Fs Regulatory Compliance Rules And Controls</a>
+            <a href="manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md" download>Download source: Aibast Fs Regulatory Compliance Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Upload rules and controls</h3><p>Step 9 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Upload rules and controls" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg">Report an issue</button></header>
+        <header><span>9</span><div><h3>Upload rules and controls</h3><p>Step 9 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Upload rules and controls" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload rules and controls</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/09-upload-rules-controls.png" download="09-upload-rules-controls.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-upload-rules-controls.png" alt="Upload rules and controls annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_fs-regulatory-compliance-rules-and-controls.md; Add to agent. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-upload-rules-controls.jpg" download="09-upload-rules-controls.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
-            <a href="manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md" download>Download source: Aibast Fs Regulatory Compliance Synthetic Records</a>
+            <a href="manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md" download>Download source: Aibast Fs Regulatory Compliance Rules And Controls</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Verify both knowledge sources</h3><p>Step 10 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Verify both knowledge sources" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg">Report an issue</button></header>
+        <header><span>10</span><div><h3>Verify both knowledge sources</h3><p>Step 10 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Verify both knowledge sources" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify both knowledge sources</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/10-verify-two-knowledge-files.png" download="10-verify-two-knowledge-files.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-verify-two-knowledge-files.png" alt="Verify both knowledge sources annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rules-and-controls knowledge chip; Synthetic-records knowledge chip. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-verify-two-knowledge-files.jpg" download="10-verify-two-knowledge-files.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -1170,14 +1196,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Open the SKILL.md uploader</h3><p>Step 11 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Open the SKILL.md uploader" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg">Report an issue</button></header>
+        <header><span>11</span><div><h3>Open the SKILL.md uploader</h3><p>Step 11 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Open the SKILL.md uploader" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the SKILL.md uploader</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/11-open-skill-upload.png" download="11-open-skill-upload.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-open-skill-upload.png" alt="Open the SKILL.md uploader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Add skill; Upload a skill; SKILL.md file requirement. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-open-skill-upload.jpg" download="11-open-skill-upload.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -1185,44 +1211,44 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Upload compliance dashboard skill</h3><p>Step 12 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Upload compliance dashboard skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg">Report an issue</button></header>
+        <header><span>12</span><div><h3>Upload compliance dashboard skill</h3><p>Step 12 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Upload compliance dashboard skill" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload compliance dashboard skill</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/12-upload-dashboard-skill.png" download="12-upload-dashboard-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-upload-dashboard-skill.png" alt="Upload compliance dashboard skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: compliance-dashboard-and-audit-readiness. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-upload-dashboard-skill.jpg" download="12-upload-dashboard-skill.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
-            <a href="manual/skills/aibast_certification-tracker_rc05/SKILL.md" download>Download source: Capability card: aibast certification tracker rc05</a>
+            <a href="manual/skills/aibast_compliance-dashboard_rc01/SKILL.md" download>Download source: Capability card: aibast compliance dashboard rc01</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Upload trade surveillance skill</h3><p>Step 13 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Upload trade surveillance skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg">Report an issue</button></header>
+        <header><span>13</span><div><h3>Upload trade surveillance skill</h3><p>Step 13 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Upload trade surveillance skill" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload trade surveillance skill</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/13-upload-surveillance-skill.png" download="13-upload-surveillance-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-upload-surveillance-skill.png" alt="Upload trade surveillance skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: trade-reporting-and-execution-surveillance. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-upload-surveillance-skill.jpg" download="13-upload-surveillance-skill.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
-            <a href="manual/skills/aibast_compliance-dashboard_rc01/SKILL.md" download>Download source: Capability card: aibast compliance dashboard rc01</a>
+            <a href="manual/skills/aibast_trade-surveillance_rc02/SKILL.md" download>Download source: Capability card: aibast trade surveillance rc02</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-14">
-        <header><span>14</span><div><h3>Upload documentation review skill</h3><p>Step 14 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Upload documentation review skill" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg">Report an issue</button></header>
+        <header><span>14</span><div><h3>Upload documentation review skill</h3><p>Step 14 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Upload documentation review skill" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload documentation review skill</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/14-upload-documentation-skill.png" download="14-upload-documentation-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-upload-documentation-skill.png" alt="Upload documentation review skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: algorithm-documentation-and-go-live-review. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-upload-documentation-skill.jpg" download="14-upload-documentation-skill.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="manual/skills/aibast_documentation-review_rc03/SKILL.md" download>Download source: Capability card: aibast documentation review rc03</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -1230,14 +1256,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-15">
-        <header><span>15</span><div><h3>Upload remediation preparation skill</h3><p>Step 15 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Upload remediation preparation skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg">Report an issue</button></header>
+        <header><span>15</span><div><h3>Upload remediation preparation skill</h3><p>Step 15 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Upload remediation preparation skill" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload remediation preparation skill</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/15-upload-remediation-skill.png" download="15-upload-remediation-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-upload-remediation-skill.png" alt="Upload remediation preparation skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: regulatory-correction-and-submission-preparation. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-upload-remediation-skill.jpg" download="15-upload-remediation-skill.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="manual/skills/aibast_remediation-submission_rc04/SKILL.md" download>Download source: Capability card: aibast remediation submission rc04</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -1245,29 +1271,29 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Upload certification readiness skill</h3><p>Step 16 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Upload certification readiness skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg">Report an issue</button></header>
+        <header><span>16</span><div><h3>Upload certification readiness skill</h3><p>Step 16 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Upload certification readiness skill" data-report-expected="Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload certification readiness skill</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/16-upload-certification-skill.png" download="16-upload-certification-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-upload-certification-skill.png" alt="Upload certification readiness skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: trader-certification-readiness; Five configured skills. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-upload-certification-skill.jpg" download="16-upload-certification-skill.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Use the exact file linked for this step, verify the saved name and content, and wait for ingestion. Capture the actual upload action; do not substitute a final inventory image.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
-            <a href="manual/skills/aibast_trade-surveillance_rc02/SKILL.md" download>Download source: Capability card: aibast trade surveillance rc02</a>
+            <a href="manual/skills/aibast_certification-tracker_rc05/SKILL.md" download>Download source: Capability card: aibast certification tracker rc05</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Open the model picker</h3><p>Step 17 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Open the model picker" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg">Report an issue</button></header>
+        <header><span>17</span><div><h3>Open the model picker</h3><p>Step 17 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Open the model picker" data-report-expected="Verify the selected and persisted model is Claude Sonnet 4.6." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the model picker</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify the selected and persisted model is Claude Sonnet 4.6.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/17-open-model-picker.png" download="17-open-model-picker.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-open-model-picker.png" alt="Open the model picker annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6 is available in the open model picker. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-open-model-picker.jpg" download="17-open-model-picker.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Verify the selected and persisted model is Claude Sonnet 4.6.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -1275,14 +1301,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-18">
-        <header><span>18</span><div><h3>Select Claude Sonnet 4.6</h3><p>Step 18 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Select Claude Sonnet 4.6" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg">Report an issue</button></header>
+        <header><span>18</span><div><h3>Select Claude Sonnet 4.6</h3><p>Step 18 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Select Claude Sonnet 4.6" data-report-expected="Verify the selected and persisted model is Claude Sonnet 4.6." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Select Claude Sonnet 4.6</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify the selected and persisted model is Claude Sonnet 4.6.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/18-select-sonnet46.png" download="18-select-sonnet46.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-select-sonnet46.png" alt="Select Claude Sonnet 4.6 annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6 selected. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-select-sonnet46.jpg" download="18-select-sonnet46.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Verify the selected and persisted model is Claude Sonnet 4.6.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
@@ -1290,14 +1316,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-19">
-        <header><span>19</span><div><h3>Review instructions, knowledge, skills, and tools</h3><p>Step 19 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 19: Review instructions, knowledge, skills, and tools" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg">Report an issue</button></header>
+        <header><span>19</span><div><h3>Review instructions, knowledge, skills, and tools</h3><p>Step 19 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 19: Review instructions, knowledge, skills, and tools" data-report-expected="Verify the reopened build: Claude Sonnet 4.6, 5 skills, 2 knowledge files, no tools and no default web search. Inventory does not prove each upload step." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review instructions, knowledge, skills, and tools</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify the reopened build: Claude Sonnet 4.6, 5 skills, 2 knowledge files, no tools and no default web search. Inventory does not prove each upload step.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/19-review-complete-inventory.png" download="19-review-complete-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-review-complete-inventory.png" alt="Review instructions, knowledge, skills, and tools annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; Five configured skills; Tools section has no configured tool; Two configured knowledge files; Reason: No unsaved changes. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-review-complete-inventory.jpg" download="19-review-complete-inventory.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Verify the reopened build: Claude Sonnet 4.6, 5 skills, 2 knowledge files, no tools and no default web search. Inventory does not prove each upload step.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
@@ -1305,14 +1331,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-20">
-        <header><span>20</span><div><h3>Open a fresh Preview conversation</h3><p>Step 20 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 20: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg">Report an issue</button></header>
+        <header><span>20</span><div><h3>Open a fresh Preview conversation</h3><p>Step 20 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 20: Open a fresh Preview conversation" data-report-expected="Perform this live action and retain new evidence: Open a fresh Preview conversation. Historical media is not acceptance." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Perform this live action and retain new evidence: Open a fresh Preview conversation. Historical media is not acceptance.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/20-open-preview.png" download="20-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat; Regulatory Manual Build greeting. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-open-preview.jpg" download="20-open-preview.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Perform this live action and retain new evidence: Open a fresh Preview conversation. Historical media is not acceptance.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
@@ -1320,14 +1346,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-21">
-        <header><span>21</span><div><h3>Pass RC-01 audit readiness</h3><p>Step 21 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 21: Pass RC-01 audit readiness" data-report-expected="The captured Preview evidence records RC-01 with the recorded identifiers T-2041, T-2233; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg">Report an issue</button></header>
+        <header><span>21</span><div><h3>Run and verify RC-01 audit readiness</h3><p>Step 21 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 21: Run and verify RC-01 audit readiness" data-report-expected="Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Do not predict an audit outcome. Preserve exactly four reporting-defective trades with exact field labels/values, T-2041 and T-2233 credential evidence, separate execution/documentation findings, native citations, authorized review, and an explicit no-side-effect boundary. The historical capture does not validate the repaired source contract." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-21">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-21" hidden>Are we going to fail our next MiFID audit? What&#x27;s actually broken on the desk right now?</pre></div><span>Pass RC-01 audit readiness</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-01 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-21">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-21" hidden>Are we going to fail our next MiFID audit? What&#x27;s actually broken on the desk right now?</pre></div><span>Run and verify RC-01 audit readiness</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Do not predict an audit outcome. Preserve exactly four reporting-defective trades with exact field labels/values, T-2041 and T-2233 credential evidence, separate execution/documentation findings, native citations, authorized review, and an explicit no-side-effect boundary. The historical capture does not validate the repaired source contract.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-01. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/21-preview-rc01-audit-readiness.png" download="21-preview-rc01-audit-readiness.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/21-preview-rc01-audit-readiness.png" alt="Pass RC-01 audit readiness annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: T-2041; T-2233; Two Traders Must Be Stood Down. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/21-preview-rc01-audit-readiness.jpg" download="21-preview-rc01-audit-readiness.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Do not predict an audit outcome. Preserve exactly four reporting-defective trades with exact field labels/values, T-2041 and T-2233 credential evidence, separate execution/documentation findings, native citations, authorized review, and an explicit no-side-effect boundary. The historical capture does not validate the repaired source contract.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
@@ -1335,14 +1361,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-22">
-        <header><span>22</span><div><h3>Pass RC-02 certifications</h3><p>Step 22 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 22: Pass RC-02 certifications" data-report-expected="The captured Preview evidence records RC-02 with the recorded identifiers T-2041, T-2233; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg">Report an issue</button></header>
+        <header><span>22</span><div><h3>Run and verify RC-02 certifications</h3><p>Step 22 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 22: Run and verify RC-02 certifications" data-report-expected="Load trader-certification-readiness and retrieve both knowledge files. Do not determine legal trading status. Preserve T-2041&#x27;s 12-day and T-2233&#x27;s 3-day lapses, the 24/41/88-day expiry intervals, session dates 2026-08-19, 2026-08-12 and 2026-08-16, correct supervisors, native citations, and proposed-only stand-down with no side effect. Session dates are not expiry dates. The historical capture does not validate the repaired source contract." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-22">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-22" hidden>Which of my traders can&#x27;t legally trade today, and who do I have to call?</pre></div><span>Pass RC-02 certifications</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-02 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-22">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-22" hidden>Which of my traders can&#x27;t legally trade today, and who do I have to call?</pre></div><span>Run and verify RC-02 certifications</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Load trader-certification-readiness and retrieve both knowledge files. Do not determine legal trading status. Preserve T-2041&#x27;s 12-day and T-2233&#x27;s 3-day lapses, the 24/41/88-day expiry intervals, session dates 2026-08-19, 2026-08-12 and 2026-08-16, correct supervisors, native citations, and proposed-only stand-down with no side effect. Session dates are not expiry dates. The historical capture does not validate the repaired source contract.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-02. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/22-preview-rc02-certifications.png" download="22-preview-rc02-certifications.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/22-preview-rc02-certifications.png" alt="Pass RC-02 certifications annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: T-2041; T-2233; must be suspended from trading. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/22-preview-rc02-certifications.jpg" download="22-preview-rc02-certifications.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Load trader-certification-readiness and retrieve both knowledge files. Do not determine legal trading status. Preserve T-2041&#x27;s 12-day and T-2233&#x27;s 3-day lapses, the 24/41/88-day expiry intervals, session dates 2026-08-19, 2026-08-12 and 2026-08-16, correct supervisors, native citations, and proposed-only stand-down with no side effect. Session dates are not expiry dates. The historical capture does not validate the repaired source contract.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
@@ -1350,14 +1376,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-23">
-        <header><span>23</span><div><h3>Pass RC-03 trade surveillance</h3><p>Step 23 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 23: Pass RC-03 trade surveillance" data-report-expected="The captured Preview evidence records RC-03 with the recorded identifiers TRD-88133, field; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg">Report an issue</button></header>
+        <header><span>23</span><div><h3>Run and verify RC-03 trade surveillance</h3><p>Step 23 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 23: Run and verify RC-03 trade surveillance" data-report-expected="Load trade-reporting-and-execution-surveillance and retrieve both knowledge files. Preserve TRD-88133 field 59 Execution within firm = T-2107, field 7 Buyer identification code = 549300XKQZ2P4NLK7T18, no recorded ARM submission, and the other three reporting defects. TRD-88162 is report-complete, not guaranteed free of regulatory risk. Keep execution/documentation separate; preserve native citations, review-only corrections, and no transmission. The historical capture does not validate the repaired source contract." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-23">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-23" hidden>We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?</pre></div><span>Pass RC-03 trade surveillance</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-03 with the recorded identifiers TRD-88133, field; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-23">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-23" hidden>We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?</pre></div><span>Run and verify RC-03 trade surveillance</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Load trade-reporting-and-execution-surveillance and retrieve both knowledge files. Preserve TRD-88133 field 59 Execution within firm = T-2107, field 7 Buyer identification code = 549300XKQZ2P4NLK7T18, no recorded ARM submission, and the other three reporting defects. TRD-88162 is report-complete, not guaranteed free of regulatory risk. Keep execution/documentation separate; preserve native citations, review-only corrections, and no transmission. The historical capture does not validate the repaired source contract.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-03. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/23-preview-rc03-trade-surveillance.png" download="23-preview-rc03-trade-surveillance.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/23-preview-rc03-trade-surveillance.png" alt="Pass RC-03 trade surveillance annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TRD-88133; Fields 59 and 7; authorized review. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/23-preview-rc03-trade-surveillance.jpg" download="23-preview-rc03-trade-surveillance.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Load trade-reporting-and-execution-surveillance and retrieve both knowledge files. Preserve TRD-88133 field 59 Execution within firm = T-2107, field 7 Buyer identification code = 549300XKQZ2P4NLK7T18, no recorded ARM submission, and the other three reporting defects. TRD-88162 is report-complete, not guaranteed free of regulatory risk. Keep execution/documentation separate; preserve native citations, review-only corrections, and no transmission. The historical capture does not validate the repaired source contract.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="23"> Mark complete</label>
@@ -1365,14 +1391,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-24">
-        <header><span>24</span><div><h3>Pass RC-04 algorithm go-live</h3><p>Step 24 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 24: Pass RC-04 algorithm go-live" data-report-expected="The captured Preview evidence records RC-04 with the recorded identifiers ALGO-POV-NL; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg">Report an issue</button></header>
+        <header><span>24</span><div><h3>Run and verify RC-04 algorithm go-live</h3><p>Step 24 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 24: Run and verify RC-04 algorithm go-live" data-report-expected="Load algorithm-documentation-and-go-live-review and retrieve both knowledge files. Return only ALGO-POV-NL: six days to go-live, never validated, missing risk controls/kill-switch/conformance evidence, Quant Execution sign-off and authorized review. Preserve native citations and state no real deployment was disabled, delayed, changed, or blocked. The historical capture does not validate the repaired source contract." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-24">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-24" hidden>Is anything about to go live that shouldn&#x27;t?</pre></div><span>Pass RC-04 algorithm go-live</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-04 with the recorded identifiers ALGO-POV-NL; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-24">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-24" hidden>Is anything about to go live that shouldn&#x27;t?</pre></div><span>Run and verify RC-04 algorithm go-live</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Load algorithm-documentation-and-go-live-review and retrieve both knowledge files. Return only ALGO-POV-NL: six days to go-live, never validated, missing risk controls/kill-switch/conformance evidence, Quant Execution sign-off and authorized review. Preserve native citations and state no real deployment was disabled, delayed, changed, or blocked. The historical capture does not validate the repaired source contract.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-04. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/24-preview-rc04-algorithm-go-live.png" download="24-preview-rc04-algorithm-go-live.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/24-preview-rc04-algorithm-go-live.png" alt="Pass RC-04 algorithm go-live annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: ALGO-POV-NL; must be blocked from go-live; authorized human review and sign-off. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/24-preview-rc04-algorithm-go-live.jpg" download="24-preview-rc04-algorithm-go-live.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Load algorithm-documentation-and-go-live-review and retrieve both knowledge files. Return only ALGO-POV-NL: six days to go-live, never validated, missing risk controls/kill-switch/conformance evidence, Quant Execution sign-off and authorized review. Preserve native citations and state no real deployment was disabled, delayed, changed, or blocked. The historical capture does not validate the repaired source contract.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="24"> Mark complete</label>
@@ -1380,14 +1406,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-25">
-        <header><span>25</span><div><h3>Pass RC-05 board evidence</h3><p>Step 25 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 25: Pass RC-05 board evidence" data-report-expected="The captured Preview evidence records RC-05 with the recorded identifiers TRD-88133; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg">Report an issue</button></header>
+        <header><span>25</span><div><h3>Run and verify RC-05 board evidence</h3><p>Step 25 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 25: Run and verify RC-05 board evidence" data-report-expected="Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Preserve TRD-88133 and exact labels for fields 59, 7, 57 and 36, four reporting-defective trades, TRD-88162 report-complete, separate execution/documentation/credential evidence, Quant Execution ownership, native citations, and synthetic-dry-run/no-side-effect boundaries. No ARM record does not establish what happened in every reporting channel. The historical capture does not validate the repaired source contract." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-25">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-25" hidden>My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.</pre></div><span>Pass RC-05 board evidence</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-05 with the recorded identifiers TRD-88133; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-25">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-25" hidden>My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.</pre></div><span>Run and verify RC-05 board evidence</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Preserve TRD-88133 and exact labels for fields 59, 7, 57 and 36, four reporting-defective trades, TRD-88162 report-complete, separate execution/documentation/credential evidence, Quant Execution ownership, native citations, and synthetic-dry-run/no-side-effect boundaries. No ARM record does not establish what happened in every reporting channel. The historical capture does not validate the repaired source contract.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-05. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/25-preview-rc05-board-evidence.png" download="25-preview-rc05-board-evidence.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/25-preview-rc05-board-evidence.png" alt="Pass RC-05 board evidence annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TRD-88133; zero submission record; Summary scorecard for the board. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/25-preview-rc05-board-evidence.jpg" download="25-preview-rc05-board-evidence.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Preserve TRD-88133 and exact labels for fields 59, 7, 57 and 36, four reporting-defective trades, TRD-88162 report-complete, separate execution/documentation/credential evidence, Quant Execution ownership, native citations, and synthetic-dry-run/no-side-effect boundaries. No ARM record does not establish what happened in every reporting channel. The historical capture does not validate the repaired source contract.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="25"> Mark complete</label>
@@ -1395,14 +1421,14 @@ the uploaded pilot knowledge and skills.
         </div>
       </article>
 <article class="step" id="step-26">
-        <header><span>26</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 26 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 26: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg">Report an issue</button></header>
+        <header><span>26</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 26 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 26: Confirm Draft and stop before publish" data-report-expected="Observe the saved unpublished Draft. Do not choose Publish." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Observe the saved unpublished Draft. Do not choose Publish.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/26-confirm-draft-no-publish.png" download="26-confirm-draft-no-publish.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/26-confirm-draft-no-publish.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Regulatory Manual Build; Draft. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/26-confirm-draft-no-publish.jpg" download="26-confirm-draft-no-publish.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> Observe the saved unpublished Draft. Do not choose Publish.</p><p>Run the live step, inspect the full response, routing, retrieval, citations and no-action boundary, and personally review the new image before accepting it. Source tests are not live validation.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="26"> Mark complete</label>

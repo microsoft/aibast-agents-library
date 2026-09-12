@@ -32,11 +32,24 @@ def test_completed_journeys_pass_every_rollout_gate():
     completed = {
         "@aibast-agents-library/building-permit-processing",
         "@aibast-agents-library/production-line-optimization",
-        "@aibast-agents-library/fs-regulatory-compliance",
         "@aibast-agents-library/inventory-rebalancing",
     }
     for name in completed:
         assert rows[name]["complete"] is True
+
+
+def test_preserved_manual_repairs_do_not_pass_the_rollout_completion_gate():
+    module = load_module()
+    rows = {row["slug"]: row for row in module.collect()}
+    for slug in ("fs-customer-onboarding", "fs-regulatory-compliance"):
+        assert rows[slug]["manual_evidence"] == "reshoot_required"
+        assert rows[slug]["complete"] is False
+        evidence = module.read_json(
+            ROOT / "solutions" / slug / "evals/manual-build-evidence.json"
+        )
+        assert evidence["captured_status"] == "passed"
+        assert all(case["passed"] is None for case in evidence["canonical_preview"])
+        assert all(case["captured_passed"] is True for case in evidence["canonical_preview"])
 
 
 def test_standard_manual_packages_include_global_instructions():
