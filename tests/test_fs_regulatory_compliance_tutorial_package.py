@@ -128,17 +128,21 @@ def test_export_manifest_contains_required_course_resources_and_zip_contract():
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
     assert not any("/." in name or "__pycache__" in name for name in names)
-    assert {item["path"] for item in manifest["files"]} <= names
+    assert names == set(manifest["bundle"]["include_paths"])
+    assert manifest["bundle"]["kind"] == "manual-review-source"
+    assert manifest["bundle"]["native_importable"] is False
     assert {
-        "solutions/fs-regulatory-compliance/quest.html",
+        item["path"] for item in manifest["files"] if item["included_in_bundle"]
+    } <= names
+    assert {
         "solutions/fs-regulatory-compliance/manual-tutorial.html",
-        "solutions/fs-regulatory-compliance/field-guide.html",
-        "solutions/fs-regulatory-compliance/evidence-report.html",
+        "solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
+        "solutions/fs-regulatory-compliance/evals/manual-pilot-review.json",
         "solutions/fs-regulatory-compliance/evals/visual-checkpoints.json",
         "solutions/fs-regulatory-compliance/export-manifest.json",
-        "skills/aibast-easy-mode-brainstem/SKILL.md",
-        "skills/aibast-easy-mode-copilot/SKILL.md",
     } <= names
+    assert not any(name.endswith((".jpg", ".png", ".gif", ".zip")) for name in names)
+    assert not any("/copilot-studio/" in name for name in names)
 
 
 def test_manual_tutorial_is_aibast_themed_and_matches_browserfilm_actions():
@@ -225,7 +229,10 @@ def test_manual_tutorial_covers_locked_cases_and_draft_gate_from_evidence():
     ]
     for case, item in zip(cases, preview):
         assert item["must_include"] == case["must_include"]
-        assert item["passed"] is True
+        assert item["passed"] is None
+        assert item["captured_passed"] is True
+        assert item["status"] == "reshoot_required"
+        assert item["review_criteria"] in plain_text(tutorial)
         assert item["expected_screenshot"] in frame_files
         assert case["id"] in tutorial
         for marker in case["must_include"]:
@@ -239,9 +246,10 @@ def test_manual_tutorial_covers_locked_cases_and_draft_gate_from_evidence():
     assert re.search(r"do not publish|stop before publish", tutorial, re.IGNORECASE)
 
 
-def test_browserfilm_and_manual_evidence_are_captured():
+def test_historical_captures_do_not_certify_the_preserved_source_revision():
     evidence = read_json(PACKAGE / "evals" / "manual-build-evidence.json")
-    assert evidence["status"] == "passed"
+    assert evidence["status"] == "reshoot_required"
+    assert evidence["captured_status"] == "passed"
     assert evidence["model_confirmed"] is True
     assert evidence["manual_components"]["knowledge_files"] == {
         "expected": 2,
@@ -251,9 +259,17 @@ def test_browserfilm_and_manual_evidence_are_captured():
         "expected": 5,
         "confirmed": 5,
     }
-    assert all(case["passed"] is True for case in evidence["canonical_preview"])
+    assert all(case["passed"] is None for case in evidence["canonical_preview"])
+    assert all(case["captured_passed"] is True for case in evidence["canonical_preview"])
+    assert evidence["manual_components"]["global_instructions"] == {
+        "expected": True,
+        "confirmed": False,
+        "captured_confirmed": True,
+    }
     assert evidence["publication_gate"]["published"] is False
-    assert evidence["manual_agent"]["bot_id"] == "ad9993c3-ea7a-4ecf-a86b-40a9d39a4fa3"
+    assert "bot_id" not in evidence["manual_agent"]
+    assert "environment" not in evidence
+    assert evidence["review_snapshot"] == "evals/manual-pilot-review.json"
 
 
 def test_quest_exposes_beta_course_shell_and_global_easy_lanes():

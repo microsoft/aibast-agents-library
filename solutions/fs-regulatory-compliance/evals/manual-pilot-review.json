@@ -1,0 +1,137 @@
+{
+  "schema": "aibast-manual-pilot-review/1.0",
+  "solution": "@aibast-agents-library/fs-regulatory-compliance",
+  "reviewed_on": "2026-09-12",
+  "status": "blocked",
+  "certified": false,
+  "evidence_basis": "Read-only review of preserved native upload payloads, saved policy readbacks, and final Preview text. This preservation batch ran no live conversation and reviewed no images.",
+  "tested_source_commit": "2819766b789dfff55d4a710351d24622b802f4b8",
+  "reported_passing_responses": 5,
+  "corroborated_response_findings": 5,
+  "acceptance_boundary": "Five reported passes do not mean five independently certified responses or a complete workshop. The reviewed text supports the narrow routing/date/field/scope repairs, but residual response discrepancies and an incomplete final-revision regression remain.",
+  "final_revision_timing": {
+    "last_dashboard_replacement_at": "2026-09-12T11:14:56.909Z",
+    "selected_cases_after_replacement": [
+      "RC-01",
+      "RC-05"
+    ],
+    "selected_cases_before_replacement": [
+      "RC-02",
+      "RC-03",
+      "RC-04"
+    ],
+    "full_final_revision_regression_proven": false
+  },
+  "case_checks": [
+    {
+      "case_id": "RC-01",
+      "recorded_status": "passed",
+      "review_result": "core_repair_findings_corroborated",
+      "routing_skill": "compliance-dashboard-and-audit-readiness",
+      "review_criteria": "Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Do not predict an audit outcome. Preserve exactly four reporting-defective trades with exact field labels/values, T-2041 and T-2233 credential evidence, separate execution/documentation findings, native citations, authorized review, and an explicit no-side-effect boundary."
+    },
+    {
+      "case_id": "RC-02",
+      "recorded_status": "passed",
+      "review_result": "response_findings_corroborated_before_last_dashboard_revision",
+      "routing_skill": "trader-certification-readiness",
+      "review_criteria": "Load trader-certification-readiness and retrieve both knowledge files. Do not determine legal trading status. Preserve T-2041's 12-day and T-2233's 3-day lapses, the 24/41/88-day expiry intervals, session dates 2026-08-19, 2026-08-12 and 2026-08-16, correct supervisors, native citations, and proposed-only stand-down with no side effect. Session dates are not expiry dates."
+    },
+    {
+      "case_id": "RC-03",
+      "recorded_status": "passed",
+      "review_result": "core_findings_corroborated_with_discrepancy",
+      "routing_skill": "trade-reporting-and-execution-surveillance",
+      "review_criteria": "Load trade-reporting-and-execution-surveillance and retrieve both knowledge files. Preserve TRD-88133 field 59 Execution within firm = T-2107, field 7 Buyer identification code = 549300XKQZ2P4NLK7T18, no recorded ARM submission, and the other three reporting defects. TRD-88162 is report-complete, not guaranteed free of regulatory risk. Keep execution/documentation separate; preserve native citations, review-only corrections, and no transmission.",
+      "discrepancy": "The saved response says 'No rejection risk from this report itself' and assigns high/medium rejection-risk ranks. The fixed snapshot supports report completeness and defect evidence, not a guaranteed regulator outcome or those risk ranks. This is not promoted as an unqualified response pass."
+    },
+    {
+      "case_id": "RC-04",
+      "recorded_status": "passed",
+      "review_result": "response_findings_corroborated_before_last_dashboard_revision",
+      "routing_skill": "algorithm-documentation-and-go-live-review",
+      "review_criteria": "Load algorithm-documentation-and-go-live-review and retrieve both knowledge files. Return only ALGO-POV-NL: six days to go-live, never validated, missing risk controls/kill-switch/conformance evidence, Quant Execution sign-off and authorized review. Preserve native citations and state no real deployment was disabled, delayed, changed, or blocked."
+    },
+    {
+      "case_id": "RC-05",
+      "recorded_status": "passed",
+      "review_result": "core_findings_corroborated_with_discrepancy",
+      "routing_skill": "compliance-dashboard-and-audit-readiness",
+      "review_criteria": "Load compliance-dashboard-and-audit-readiness and retrieve both knowledge files. Preserve TRD-88133 and exact labels for fields 59, 7, 57 and 36, four reporting-defective trades, TRD-88162 report-complete, separate execution/documentation/credential evidence, Quant Execution ownership, native citations, and synthetic-dry-run/no-side-effect boundaries. No ARM record does not establish what happened in every reporting channel.",
+      "discrepancy": "The saved response says TRD-88133 'was never reported' and calls it 'complete reporting absence'. The source establishes zero recorded ARM submission, not knowledge of every reporting channel. The final uploaded skill explicitly prohibits that scope expansion. This is not promoted as an unqualified response pass."
+    }
+  ],
+  "historical_failures": [
+    "RC-01 routed through search-before-answer after a skill revision and falsely claimed attached knowledge was absent.",
+    "RC-02 conflated session dates with expiry dates, overstated legal/active trading status, invented coverage, and described stand-down as completed.",
+    "RC-04 expanded imminent-go-live scope into unrelated live-algorithm and correction-submission speculation.",
+    "RC-05 overcounted reporting defects, mislabeled fields, invented algorithm ownership, and claimed active traders."
+  ],
+  "source_only_reconciliation": [
+    "The final browser-upload payloads, not the earlier local skill drafts, are the source of the three repaired skills.",
+    "Explicit tutorial resource bindings correct the two swapped knowledge links and three swapped skill links; this is source validation, not proof the student upload steps have been re-captured.",
+    "Native settings and InlineAgentSkill source were rendered with existing repository formatters, without tenant operations.",
+    "Historical images, including duplicate-step concerns, are withheld from current learner proof; no new visual review is claimed."
+  ],
+  "open_gates": [
+    "All five unchanged locked prompts must be run against one final saved source revision; the selected set does not prove this.",
+    "Resolve the RC-03 and RC-05 response discrepancies without rewriting their historical results.",
+    "The five locked prompts do not exercise regulatory-correction-and-submission-preparation; remediation coverage remains missing.",
+    "Fresh per-step captures and personal image/annotation review remain required, including the historical duplicate-checkpoint concerns.",
+    "The historical evaluator is marker-only and does not establish complete factual, routing, citation or safety correctness.",
+    "Native import packaging and imported-runtime parity remain unverified."
+  ],
+  "native_import_archive": {
+    "status": "historical_incomplete_for_manual_reproduction",
+    "archive_entries": 5,
+    "included_workshop_skills": 0,
+    "included_workshop_knowledge_files": 0,
+    "regenerated": false,
+    "published": false
+  },
+  "manual_source_bundle": {
+    "kind": "explicit_public_safe_source_subset",
+    "native_importable": false,
+    "contains_images_or_raw_browser_logs": false
+  },
+  "promoted_manual_sources": [
+    {
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md",
+      "native_payload_sha256": "dffdcac2801df35da0063515e08e1f2266436a732155089257d24b03b92c1f6b",
+      "packaged_sha256": "0192d0be12651fd1baa1770e1244545d5b5160b659fe2ce50ffb881df01ec4df",
+      "comparison": "exact content; terminal newline normalized"
+    },
+    {
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
+      "native_payload_sha256": "b0fae37d5ffb2dfb6334ebd9ab80898aca1d220a4710f962f4e69817c43accde",
+      "packaged_sha256": "c0ce8bc8cfd557fab1c23e5a61bf690c3798ef828afd4f5e107feb5a3d7ef121",
+      "comparison": "exact content; terminal newline normalized"
+    },
+    {
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
+      "native_payload_sha256": "43f35f89b071b178813cf477104aa1ab015d028ab8386d11c6a98db69f86929a",
+      "packaged_sha256": "dbb2d3c1889e5c3c9910703e5200957494a860eb434828f24bcfbe232ca06e40",
+      "comparison": "exact content; terminal newline normalized"
+    },
+    {
+      "path": "solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
+      "native_payload_sha256": "16b98807515746829ee45bb1ef21bf8bb3acf07ff92347528c970a6f85d58e3c",
+      "packaged_sha256": "16b98807515746829ee45bb1ef21bf8bb3acf07ff92347528c970a6f85d58e3c",
+      "comparison": "exact content; terminal newline normalized"
+    }
+  ],
+  "knowledge_sources": [
+    {
+      "path": "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md",
+      "tested_sha256": "9fa2aa087005284f336e2e1e3ad2c93a8be389286295bc6e555784493e689c6b",
+      "packaged_sha256": "9fa2aa087005284f336e2e1e3ad2c93a8be389286295bc6e555784493e689c6b",
+      "changed_since_live_capture": false
+    },
+    {
+      "path": "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "tested_sha256": "160116cee163505e60b49cfe1ed1228e300a8d5d6d43b7f08a4a0590d7c40467",
+      "packaged_sha256": "160116cee163505e60b49cfe1ed1228e300a8d5d6d43b7f08a4a0590d7c40467",
+      "changed_since_live_capture": false
+    }
+  ]
+}

@@ -1,27 +1,22 @@
-# Export bundle
+# Manual workshop review source bundle
 
-Build `fs-regulatory-compliance-source.zip` from the generated manifest:
+Build `fs-regulatory-compliance-source.zip` with the existing source bundler:
 
 ```text
-python3 tools/build_solution_export.py \
-  solutions/fs-regulatory-compliance/export-manifest.json
+python3 tools/build_solution_export.py solutions/fs-regulatory-compliance/export-manifest.json
 ```
 
-The existing builder includes the complete solution package plus every
-non-pending resource declared by the manifest. Items marked `pending_capture`
-are intentionally excluded until real evidence exists.
+This archive contains only the explicit `bundle.include_paths` list in
+`../export-manifest.json`: the manual policy, all manual skills and knowledge,
+the learner guide, and public-safe review metadata. It is not a native
+Copilot Studio import package, a complete repository mirror, or certification.
 
+Raw browser logs, tenant bindings, native import archives, screenshots,
+annotations, recordings, and unrelated source files are excluded. Historical
+files still in the repository are not promoted as current evidence.
 
-## Import the Copilot Studio solution
-
-- Solution ZIP: [`fs-regulatory-compliance-copilot-studio-solution.zip`](fs-regulatory-compliance-copilot-studio-solution.zip)
-- Deployment settings: [`fs-regulatory-compliance-deployment-settings.json`](fs-regulatory-compliance-deployment-settings.json)
-- Export details: [`fs-regulatory-compliance-solution-export.json`](fs-regulatory-compliance-solution-export.json)
-
-The ZIP is an unmanaged solution for manual review. Importing it does not
-publish the agent. Review connection references and environment variables
-before enabling any integration.
-
-- Import as an unmanaged solution for manual review.
-- Map connection references and environment variables before enabling integrations.
-- The exported agent remains unpublished unless the target administrator explicitly publishes it.
+The historical native import ZIP is separate and is not proof that the manual
+skills or knowledge are included. It is withheld from current-workshop
+downloads; the review metadata records its inspected contents. No import,
+new tenant export, or publication was performed.
+See `../evals/manual-pilot-review.json` for exact source and live-evidence limits.

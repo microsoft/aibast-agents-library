@@ -2,7 +2,6 @@
   "schema": "rapp-browserfilm/1.0",
   "title": "Customer Onboarding Manual — Manual Mode",
   "status": "captured",
-  "watermark": "rapp-browserfilm · fs-customer-onboarding · kodyv8",
   "raw_base_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/",
   "width": 1424,
   "height": 863,
@@ -41,37 +40,43 @@
       "file": "06-add-aibast-fs-customer-onboarding-controls-and-review.jpg",
       "label": "Add knowledge: aibast_fs-customer-onboarding-controls-and-review.md",
       "duration_ms": 1400,
-      "captured": true
+      "captured": true,
+      "source_path": "manual/knowledge/aibast_fs-customer-onboarding-controls-and-review.md"
     },
     {
       "file": "07-add-aibast-fs-customer-onboarding-synthetic-records.jpg",
       "label": "Add knowledge: aibast_fs-customer-onboarding-synthetic-records.md",
       "duration_ms": 1400,
-      "captured": true
+      "captured": true,
+      "source_path": "manual/knowledge/aibast_fs-customer-onboarding-synthetic-records.md"
     },
     {
       "file": "08-add-aibast-account-setup-02.jpg",
       "label": "Add skill: aibast_account-setup_02",
       "duration_ms": 1300,
-      "captured": true
+      "captured": true,
+      "source_path": "manual/skills/aibast_account-setup_02/SKILL.md"
     },
     {
       "file": "09-add-aibast-document-checklist-03.jpg",
       "label": "Add skill: aibast_document-checklist_03",
       "duration_ms": 1300,
-      "captured": true
+      "captured": true,
+      "source_path": "manual/skills/aibast_document-checklist_03/SKILL.md"
     },
     {
       "file": "10-add-aibast-kyc-verification-01.jpg",
       "label": "Add skill: aibast_kyc-verification_01",
       "duration_ms": 1300,
-      "captured": true
+      "captured": true,
+      "source_path": "manual/skills/aibast_kyc-verification_01/SKILL.md"
     },
     {
       "file": "11-add-aibast-onboarding-status-04.jpg",
       "label": "Add skill: aibast_onboarding-status_04",
       "duration_ms": 1300,
-      "captured": true
+      "captured": true,
+      "source_path": "manual/skills/aibast_onboarding-status_04/SKILL.md"
     },
     {
       "file": "12-review-inventory.jpg",
@@ -87,27 +92,31 @@
     },
     {
       "file": "14-fco-01.jpg",
-      "label": "Pass FCO-01: Compliance Officer",
+      "label": "Run and verify FCO-01: Compliance Officer",
       "duration_ms": 2200,
-      "captured": true
+      "captured": true,
+      "captured_label": "Pass FCO-01: Compliance Officer"
     },
     {
       "file": "15-fco-02.jpg",
-      "label": "Pass FCO-02: Onboarding Specialist",
+      "label": "Run and verify FCO-02: Onboarding Specialist",
       "duration_ms": 2200,
-      "captured": true
+      "captured": true,
+      "captured_label": "Pass FCO-02: Onboarding Specialist"
     },
     {
       "file": "16-fco-03.jpg",
-      "label": "Pass FCO-03: Relationship Manager",
+      "label": "Run and verify FCO-03: Relationship Manager",
       "duration_ms": 2200,
-      "captured": true
+      "captured": true,
+      "captured_label": "Pass FCO-03: Relationship Manager"
     },
     {
       "file": "17-fco-04.jpg",
-      "label": "Pass FCO-04: Head of Onboarding",
+      "label": "Run and verify FCO-04: Head of Onboarding",
       "duration_ms": 2200,
-      "captured": true
+      "captured": true,
+      "captured_label": "Pass FCO-04: Head of Onboarding"
     },
     {
       "file": "18-confirm-draft.jpg",
@@ -115,5 +124,6 @@
       "duration_ms": 1800,
       "captured": true
     }
-  ]
+  ],
+  "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
 }

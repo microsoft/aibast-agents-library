@@ -14,8 +14,11 @@ from tools.scaffold_solution_journey import (
     THEME_SCRIPT,
     THEME_VARIABLES,
     ScaffoldError,
+    choose_frame_resources,
+    load_context,
     scaffold,
 )
+from tools import build_solution_export
 
 
 class StructureParser(HTMLParser):
@@ -855,3 +858,77 @@ def test_scaffold_exposes_complete_copilot_studio_solution_export(tmp_path):
     assert "publish the agent" in exports_readme
     package_readme = (package / "README.md").read_text(encoding="utf-8")
     assert "Copilot Studio solution ZIP" in package_readme
+
+
+def test_explicit_frame_sources_override_filename_sort_order(tmp_path):
+    package, _ = build_fixture(tmp_path)
+    path = package / "screenshots/manual/browserfilm.json"
+    film = json.loads(path.read_text())
+    film["frames"][2]["source_path"] = "manual/knowledge/synthetic-records.md"
+    film["frames"][3]["source_path"] = "manual/skills/summary/SKILL.md"
+    write(path, json.dumps(film))
+    context = load_context(tmp_path, "demo-journey", allow_pending=False, raw_base="https://example.test/")
+    resources = choose_frame_resources(context)
+    assert resources[2] == package / "manual/knowledge/synthetic-records.md"
+    assert resources[3] == package / "manual/skills/summary/SKILL.md"
+
+
+@pytest.mark.parametrize("source", ["../README.md", "/outside.md", "manual/missing.md"])
+def test_explicit_frame_sources_must_exist_inside_package(tmp_path, source):
+    package, _ = build_fixture(tmp_path)
+    path = package / "screenshots/manual/browserfilm.json"
+    film = json.loads(path.read_text())
+    film["frames"][2]["source_path"] = source
+    write(path, json.dumps(film))
+    with pytest.raises(ScaffoldError, match="source_path"):
+        scaffold("demo-journey", root=tmp_path)
+
+
+def test_explicit_source_bundle_excludes_unselected_artifacts_and_is_reproducible(tmp_path, monkeypatch):
+    monkeypatch.setattr(build_solution_export, "ROOT", tmp_path)
+    package = tmp_path / "solutions/review"
+    selected = "solutions/review/manual/SKILL.md"
+    write(tmp_path / selected, "---\nname: review\n---\n")
+    write(package / "raw-browser.txt", "private fixture must not be packaged")
+    write(package / "screenshot.jpg", b"unreviewed fixture")
+    manifest = package / "export-manifest.json"
+    write(manifest, json.dumps({
+        "bundle": {
+            "path": "solutions/review/exports/review-source.zip",
+            "include_paths": [selected],
+        },
+        "files": [{"path": "solutions/review/raw-browser.txt", "status": "ready"}],
+    }))
+    bundle, count = build_solution_export.build(manifest)
+    first = bundle.read_bytes()
+    assert count == 1
+    with zipfile.ZipFile(bundle) as archive:
+        assert archive.namelist() == [selected]
+        assert archive.read(selected) == (tmp_path / selected).read_bytes()
+    write(package / "raw-browser.txt", "another private value")
+    build_solution_export.build(manifest)
+    assert bundle.read_bytes() == first
+    document = json.loads(manifest.read_text())
+    document["bundle"]["include_paths"] = ["solutions/review/missing.md"]
+    write(manifest, json.dumps(document))
+    with pytest.raises(FileNotFoundError):
+        build_solution_export.build(manifest)
+    assert bundle.read_bytes() == first
+
+
+@pytest.mark.parametrize("paths", [
+    [], "manual/SKILL.md", [None], ["../outside"], ["/outside"], [".private/secret"],
+    ["solutions/review/exports/review-source.zip"],
+])
+def test_explicit_source_bundle_rejects_unsafe_or_ambiguous_selection(tmp_path, monkeypatch, paths):
+    monkeypatch.setattr(build_solution_export, "ROOT", tmp_path)
+    manifest = tmp_path / "solutions/review/export-manifest.json"
+    write(manifest, json.dumps({
+        "bundle": {
+            "path": "solutions/review/exports/review-source.zip",
+            "include_paths": paths,
+        },
+        "files": [],
+    }))
+    with pytest.raises(ValueError):
+        build_solution_export.build(manifest)

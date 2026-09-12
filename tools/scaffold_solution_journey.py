@@ -1032,6 +1032,8 @@ def load_context(
         raise ScaffoldError("The standard deployment.json and evals/transcripts.json foundation is required")
     deployment = read_json(deployment_path)
     transcripts = read_json(transcripts_path)
+    if raw_base == DEFAULT_RAW_BASE:
+        raw_base = deployment.get("source_bundle", {}).get("raw_base", raw_base)
     missing = require_foundation(root, package, deployment, transcripts)
     if missing:
         raise ScaffoldError("Standard solution foundation is incomplete:\n- " + "\n- ".join(missing))
@@ -1157,12 +1159,48 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
         case_id = case.get("case_id", "recorded Preview case")
         identifiers = ", ".join(str(value) for value in case.get("must_include", []))
         if case.get("status") == "reshoot_required":
+            if case.get("review_criteria"):
+                return (
+                    str(case["review_criteria"])
+                    + " The historical capture does not validate the repaired source contract."
+                )
             return (
                 f"A fresh Preview response must include {identifiers} for {case_id}; "
                 "the historical capture does not validate the repaired source contract."
             )
         suffix = f" with the recorded identifiers {identifiers}" if identifiers else ""
         return f"The captured Preview evidence records {case_id}{suffix}; do not infer results beyond it."
+    if (ctx.manual_evidence or {}).get("review_snapshot"):
+        if "instruction" in lower and not (
+            "inventory" in lower or lower.startswith("review ")
+        ):
+            return (
+                "Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, "
+                "leave, reopen the same Draft, and compare the full persisted text. "
+                "A populated editor or Save click alone does not prove persistence."
+            )
+        if "inventory" in lower or lower.startswith("review "):
+            return (
+                f"Verify the reopened build: {model_name(ctx)}, "
+                f"{component_count(ctx.manual_evidence, 'skills')} skills, "
+                f"{component_count(ctx.manual_evidence, 'knowledge_files')} knowledge files, "
+                "no tools and no default web search. Inventory does not prove each upload step."
+            )
+        if "knowledge" in lower or "upload" in lower or "skill" in lower:
+            return (
+                "Use the exact file linked for this step, verify the saved name and "
+                "content, and wait for ingestion. Capture the actual upload action; "
+                "do not substitute a final inventory image."
+            )
+        if "name" in lower:
+            return f"Verify the saved name is exactly {manual_display_name(ctx)}."
+        if "web search" in lower:
+            return "Verify default web search is removed and no tool was added."
+        if "model" in lower or "sonnet" in lower:
+            return f"Verify the selected and persisted model is {model_name(ctx)}."
+        if "draft" in lower or "publish" in lower:
+            return "Observe the saved unpublished Draft. Do not choose Publish."
+        return f"Perform this live action and retain new evidence: {action}. Historical media is not acceptance."
     if contains_word(lower, "create") and contains_word(lower, "agent"):
         return "A blank Copilot Studio agent is visible in the captured Draft workspace."
     if contains_word(lower, "name"):
@@ -1214,7 +1252,19 @@ def choose_frame_resources(ctx: JourneyContext) -> list[Path]:
         action = clean_frame_label(str(frame.get("label", "")), f"Review frame {index}")
         lower = action.lower()
         case = case_for_frame(ctx, filename)
-        if case:
+        explicit_source = frame.get("source_path")
+        if explicit_source:
+            relative = Path(str(explicit_source))
+            source = ctx.package / relative
+            if (
+                relative.is_absolute()
+                or ".." in relative.parts
+                or not source.resolve().is_relative_to(ctx.package.resolve())
+                or not source.is_file()
+            ):
+                raise ScaffoldError(f"Invalid manual frame source_path: {explicit_source}")
+            selected.append(source)
+        elif case:
             selected.append(ctx.manual_evidence_path)
         elif "instruction" in lower:
             selected.append(ctx.package / "manual" / "GLOBAL-INSTRUCTIONS.md")
@@ -1453,6 +1503,8 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             identifier, label, use = "brainstem-transcripts", "Isolated Brainstem transcripts", "Canonical source-agent acceptance evidence"
         elif stem == "manual-build-evidence":
             identifier, label, use = "manual-evidence", "Manual build evidence", "Manual identity, inventory, Preview, and Draft-gate evidence"
+        elif stem == "manual-pilot-review":
+            identifier, label, use = "manual-pilot-review", "Dated manual pilot review", "Non-certifying response findings, discrepancies and open gates"
         elif "onepager" in stem or "map" in stem:
             identifier, label, use = "onepager-map", generic_label(path), "Advertised-promise mapping evidence"
         else:
@@ -1592,6 +1644,16 @@ def render_manifest(ctx: JourneyContext, resources: list[Resource]) -> str:
             for resource in resources
         ],
     }
+    bundle_config = ctx.deployment.get("source_bundle", {})
+    if bundle_config.get("include_paths") is not None:
+        manifest["github_folder"] = bundle_config.get("github_folder", manifest["github_folder"])
+        manifest["bundle"].update({
+            key: value for key, value in bundle_config.items()
+            if key not in {"raw_base", "github_folder"}
+        })
+        included = set(bundle_config["include_paths"])
+        for item in manifest["files"]:
+            item["included_in_bundle"] = item["path"] in included
     if solution_artifacts:
         metadata = solution_artifacts.metadata
         stale_export = metadata.get("source_contract_status") == "stale_source"
@@ -1624,6 +1686,8 @@ def render_manifest(ctx: JourneyContext, resources: list[Resource]) -> str:
             manifest["copilot_studio_solution"]["source_contract_note"] = (
                 metadata["source_contract_note"]
             )
+        if bundle_config.get("include_paths") is not None:
+            manifest["copilot_studio_solution"].pop("solution_unique_name", None)
     return json.dumps(manifest, indent=2) + "\n"
 
 
@@ -2835,13 +2899,20 @@ def render_manual_tutorial(
             step=index,
         )
         if checkpoint and checkpoint.get("status") == "reshoot_required":
+            verification_boundary = (
+                "Run the live step, inspect the full response, routing, retrieval, "
+                "citations and no-action boundary, and personally review the new "
+                "image before accepting it. Source tests are not live validation."
+                if (ctx.manual_evidence or {}).get("review_snapshot")
+                else "Use the current product state for this step. Mark it complete "
+                "only when what you see matches the expected result and the "
+                "deterministic gate agrees."
+            )
             screenshot_html = (
                 '<div class="look-for verification-checkpoint">'
                 "<strong>Live verification checkpoint</strong>"
                 f"<p><strong>Expected state:</strong> {html.escape(expected)}</p>"
-                "<p>Use the current product state for this step. Mark it complete "
-                "only when what you see matches the expected result and the "
-                "deterministic gate agrees.</p></div>"
+                f"<p>{verification_boundary}</p></div>"
             )
         elif checkpoint and checkpoint.get("status") == "reusable":
             annotated = checkpoint_asset(ctx, checkpoint, "annotated")
@@ -2906,6 +2977,16 @@ def render_manual_tutorial(
         if ctx.missing_evidence
         else "<!-- No pending evidence. -->"
     )
+    review_snapshot = (ctx.manual_evidence or {}).get("review_snapshot")
+    if review_snapshot:
+        pending_notice += (
+            '<div class="notice"><strong>Preservation review, not certification.</strong> '
+            'The saved live responses and their discrepancies are summarized in the '
+            f'<a href="{html.escape(str(review_snapshot))}" download>dated pilot review</a>. '
+            'The rebuilt package still needs fresh live regression and reviewed '
+            'step-by-step evidence. Historical images are withheld; neither an '
+            'inventory image nor a passing source test proves every build step.</div>'
+        )
     steps_markup = "\n".join(card.strip() for card in step_cards) or (
         '<div class="notice"><strong>No manual frames are available.</strong> '
         "Capture manual evidence before using this tutorial as proof.</div>"
@@ -4390,6 +4471,31 @@ no frame is a customer KPI, production result, or publication approval.
 
 
 def render_exports_readme(ctx: JourneyContext) -> str:
+    bundle_config = ctx.deployment.get("source_bundle", {})
+    if bundle_config.get("include_paths") is not None:
+        return f"""# Manual workshop review source bundle
+
+Build `{ctx.slug}-source.zip` with the existing source bundler:
+
+```text
+python3 tools/build_solution_export.py solutions/{ctx.slug}/export-manifest.json
+```
+
+This archive contains only the explicit `bundle.include_paths` list in
+`../export-manifest.json`: the manual policy, all manual skills and knowledge,
+the learner guide, and public-safe review metadata. It is not a native
+Copilot Studio import package, a complete repository mirror, or certification.
+
+Raw browser logs, tenant bindings, native import archives, screenshots,
+annotations, recordings, and unrelated source files are excluded. Historical
+files still in the repository are not promoted as current evidence.
+
+The historical native import ZIP is separate and is not proof that the manual
+skills or knowledge are included. It is withheld from current-workshop
+downloads; the review metadata records its inspected contents. No import,
+new tenant export, or publication was performed.
+See `../evals/manual-pilot-review.json` for exact source and live-evidence limits.
+"""
     artifacts = copilot_solution_artifacts(ctx)
     solution_section = ""
     if artifacts:

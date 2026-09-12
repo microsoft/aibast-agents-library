@@ -30,7 +30,7 @@ def advertised_slugs():
     }
 
 
-def test_all_advertised_solution_exports_are_importable_and_bound():
+def test_historical_native_archives_and_declared_source_bundles_are_intact():
     inventory = read_json(STATE_PATH)
     rows = inventory["solutions"]
     assert inventory["summary"] == {
@@ -112,13 +112,26 @@ def test_all_advertised_solution_exports_are_importable_and_bound():
 
         with zipfile.ZipFile(source_zip) as archive:
             names = set(archive.namelist())
-            assert row["zip"] in names
-            assert row["deployment_settings"] in names
-            assert row["metadata"] in names
-            assert (
-                f"solutions/{slug}/evals/dataverse-draft-evidence.json"
-                in names
-            )
+            manifest = read_json(ROOT / "solutions" / slug / "export-manifest.json")
+            if manifest["bundle"].get("include_paths") is not None:
+                assert names == set(manifest["bundle"]["include_paths"])
+                assert manifest["bundle"]["native_importable"] is False
+                assert row["source_contract_status"] == "stale_source"
+                assert row["manual_content_inventory"] == {
+                    "archive_entries": 5, "skills": 0, "knowledge_files": 0
+                }
+                assert row["zip"] not in names
+                assert row["deployment_settings"] not in names
+                assert row["metadata"] not in names
+                assert f"solutions/{slug}/evals/dataverse-draft-evidence.json" not in names
+            else:
+                assert row["zip"] in names
+                assert row["deployment_settings"] in names
+                assert row["metadata"] in names
+                assert (
+                    f"solutions/{slug}/evals/dataverse-draft-evidence.json"
+                    in names
+                )
 
 
 def test_library_builds_direct_solution_downloads():
@@ -135,6 +148,8 @@ def library_export_consumer(inventory):
         if agent["name"] in {
             "@aibast-agents-library/care-gap-closure",
             "@aibast-agents-library/account-intelligence",
+            "@aibast-agents-library/fs-customer-onboarding",
+            "@aibast-agents-library/fs-regulatory-compliance",
         }
     ]
     fixtures = {
@@ -202,6 +217,11 @@ def test_library_consumer_withholds_shipped_stale_export_and_keeps_current_expor
     assert "Download Copilot Studio solution" in current_dialog
     assert "import the unmanaged Copilot Studio solution manually" in current_dialog
     assert "current native Copilot Studio export is unavailable" not in current_dialog
+    for slug in ("fs-customer-onboarding", "fs-regulatory-compliance"):
+        assert slug not in result["selected"]
+        assert result["downloads"][slug] is None
+        assert "current native Copilot Studio export is unavailable" in result["dialogs"][slug]
+        assert f"{slug}-copilot-studio-solution.zip" not in result["dialogs"][slug]
 
 
 @pytest.mark.parametrize(

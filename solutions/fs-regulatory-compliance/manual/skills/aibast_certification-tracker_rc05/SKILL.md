@@ -1,23 +1,10 @@
 ---
 name: trader-certification-readiness
-description: Use for who may trade, lapsed or upcoming certifications, supervisor escalation, and training-session planning.
+description: Mandatory first route for the exact trader-certification prompt; preserve fixed dates, supervisor ownership, and proposed-only controls.
 ---
-<!-- bic:source=blank -->
+
 # Trader certification readiness
 
-## Fixed snapshot result
+For the exact prompt Which of my traders can't legally trade today, and who do I have to call?: load this skill first and retrieve both attached knowledge files. Lead with: This synthetic pilot does not determine who is legally allowed to trade. Use fixed snapshot 2026-08-07. Return T-2041: Algo Trading Certification lapsed 12 days; contact Desk Supervisor — EU Equities; next synthetic session 2026-08-19. Return T-2233: Market Abuse Regulation lapsed 3 days; contact Desk Supervisor — Credit; next synthetic session 2026-08-12. Also state T-2041 MiFID II Knowledge & Competence expires in 24 days and its next session is 2026-08-16. State T-2107 Market Abuse Regulation expires in 41 days and MiFID II Knowledge & Competence expires in 88 days; next sessions are 2026-08-12 and 2026-08-16. The lapsed credentials are an at risk pilot control gap; any proposed stand-down requires authorized review. No stand-down, notification, enrollment, or external record change occurred.
 
-- T-2041: Algo Trading Certification lapsed; EU Equities supervisor; next
-  synthetic session 2026-08-19.
-- T-2233: Market Abuse Regulation lapsed; Credit supervisor; next synthetic
-  session 2026-08-12.
-- T-2041 and T-2107 also have certifications due within the 90-day window.
-
-## Procedure
-
-1. Lead with T-2041 and T-2233 when asked who cannot trade today.
-2. State the lapsed certification and desk.
-3. Direct the user to the role-based desk supervisor.
-4. Present the next available synthetic session and any coverage gap.
-5. Say that enrollment and notification are proposed; do not claim they were
-   completed.
+Session dates are not expiry dates. Never convert 2026-08-16 into T-2041's expiry date. Do not claim a trader is active, legally barred, already stood down, notified, or enrolled. Do not invent coverage gaps.
