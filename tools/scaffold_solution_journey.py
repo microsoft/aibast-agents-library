@@ -727,7 +727,7 @@ def copilot_solution_download_links(ctx: JourneyContext) -> str:
         return ""
     if artifacts.metadata.get("source_contract_status") == "stale_source":
         return (
-            '<div class="notice"><strong>Historical export — source repair pending.</strong> '
+            '<div class="notice"><strong>Historical export — not current source.</strong> '
             f'{html.escape(str(artifacts.metadata["source_contract_note"]))} '
             f'<a href="exports/{html.escape(artifacts.metadata_path.name)}" '
             'download>Export details</a></div>'
@@ -745,6 +745,91 @@ def copilot_solution_download_links(ctx: JourneyContext) -> str:
 def visual_checkpoint_document(ctx: JourneyContext) -> dict[str, Any]:
     path = ctx.package / "evals" / "visual-checkpoints.json"
     return read_json(path) if path.exists() else {}
+
+
+def is_reviewed_reference_set(ctx: JourneyContext) -> bool:
+    return (ctx.manual_browserfilm or {}).get("kind") == "reviewed-reference-set"
+
+
+def review_notice(ctx: JourneyContext) -> str:
+    evidence = ctx.manual_evidence or {}
+    snapshot = evidence.get("review_snapshot")
+    if not snapshot:
+        return ""
+    title = evidence.get("review_title", "Preservation review, not certification.")
+    summary = evidence.get("review_summary", (
+        "The rebuilt package still needs fresh live regression and reviewed "
+        "step-by-step evidence. Historical images are withheld; neither an "
+        "inventory image nor a passing source test proves every build step."
+    ))
+    return (
+        f'<div class="notice"><strong>{html.escape(str(title))}</strong> '
+        f'{html.escape(str(summary))} '
+        f'<a href="{html.escape(str(snapshot))}" download>Read the dated pilot review</a>.'
+        "</div>"
+    )
+
+
+def manual_preparation(ctx: JourneyContext) -> str:
+    steps = (ctx.manual_evidence or {}).get("learner_preparation", [])
+    if not steps:
+        return ""
+    return (
+        '<section class="notice"><h2>Current Manual preparation and resume boundary</h2><ol>'
+        + "".join(f"<li>{html.escape(str(step))}</li>" for step in steps)
+        + "</ol></section>"
+    )
+
+
+def lane_evidence_markdown(ctx: JourneyContext) -> str:
+    note = (ctx.manual_evidence or {}).get("lane_evidence_note")
+    if not note:
+        return ""
+    return (
+        f"\n## Evidence lane boundary\n\n{note}\n\n"
+        "The steps below describe the Easy workflow, not a newly accepted run. "
+        "For the current Manual build and its open gates, use "
+        "[the Manual tutorial](manual-tutorial.html) and "
+        "[the dated review](evals/manual-pilot-review.json).\n"
+    )
+
+
+def reviewed_media_caption(
+    ctx: JourneyContext, checkpoint: dict[str, Any],
+) -> str | None:
+    media = checkpoint.get("media")
+    if media is None:
+        return None
+    if not isinstance(media, dict) or media.get("kind") not in {
+        "labeled_board", "cropped_capture",
+    }:
+        raise ScaffoldError("Reviewed media needs a labeled_board or cropped_capture kind")
+    for key in ("width", "height", "view_count", "capture_count"):
+        if type(media.get(key)) is not int or media[key] < 1:
+            raise ScaffoldError(f"Reviewed media needs a positive integer {key}")
+    if media.get("format") != "PNG":
+        raise ScaffoldError("Reviewed board/crop media must declare its PNG format")
+    if not isinstance(media.get("scope"), str) or not media["scope"].strip():
+        raise ScaffoldError("Reviewed media needs an explicit evidence scope")
+    if media["kind"] == "labeled_board":
+        description = (
+            f"Labeled board: {media['view_count']} cropped views from "
+            f"{media['capture_count']} actual native UI captures."
+        )
+    else:
+        description = "Privacy-cropped actual native UI capture."
+    caption = html.escape(
+        f"{media['width']}×{media['height']} PNG. {description} "
+        f"{media['scope']} Parent image review is recorded in the visual metadata."
+    )
+    if media.get("private_originals") is True:
+        return caption + " Private full-window originals are not distributed."
+    original = checkpoint_asset(ctx, checkpoint, "source")
+    return (
+        caption
+        + f' <a href="{html.escape(page_relative_path(ctx, original))}" '
+        f'download="{html.escape(original.name)}">Download original</a>.'
+    )
 
 
 def visual_checkpoint(
@@ -938,7 +1023,7 @@ def collect_referenced_screenshots(
         if isinstance(filename, str) and filename:
             referenced.append(
                 (
-                    ctx.package / "screenshots" / "manual" / filename,
+                    ctx.manual_browserfilm_path.parent / filename,
                     f"manual evidence screenshot {filename}",
                 )
             )
@@ -952,36 +1037,43 @@ def collect_referenced_screenshots(
         if isinstance(filename, str) and filename:
             referenced.append(
                 (
-                    ctx.package / "screenshots" / "manual" / filename,
+                    ctx.manual_browserfilm_path.parent / filename,
                     f"Draft-gate screenshot {filename}",
                 )
             )
-    referenced.extend(
-        [
-            (
-                referenced_media_path(
-                    ctx,
-                    "gif",
-                    ctx.package
-                    / "screenshots"
-                    / "manual"
-                    / "manual-build-walkthrough.gif",
+    if not is_reviewed_reference_set(ctx):
+        referenced.extend(
+            [
+                (
+                    referenced_media_path(
+                        ctx,
+                        "gif",
+                        ctx.package
+                        / "screenshots"
+                        / "manual"
+                        / "manual-build-walkthrough.gif",
+                    ),
+                    "manual browserfilm GIF",
                 ),
-                "manual browserfilm GIF",
-            ),
-            (
-                referenced_media_path(
-                    ctx,
-                    "contact_sheet",
-                    ctx.package
-                    / "screenshots"
-                    / "manual"
-                    / "manual-build-contact-sheet.jpg",
+                (
+                    referenced_media_path(
+                        ctx,
+                        "contact_sheet",
+                        ctx.package
+                        / "screenshots"
+                        / "manual"
+                        / "manual-build-contact-sheet.jpg",
+                    ),
+                    "manual browserfilm contact sheet",
                 ),
-                "manual browserfilm contact sheet",
-            ),
-        ]
-    )
+            ]
+        )
+    for checkpoint in visual_checkpoint_document(ctx).get("captures", []):
+        if checkpoint.get("status") == "reusable" and checkpoint.get("media"):
+            reviewed_media_caption(ctx, checkpoint)
+            referenced.append(
+                (checkpoint_asset(ctx, checkpoint, "annotated"), "reviewed PNG reference")
+            )
     if ctx.assisted_browserfilm:
         for frame in ctx.assisted_browserfilm.get("frames", []):
             if isinstance(frame, dict) and isinstance(frame.get("file"), str):
@@ -1158,6 +1250,8 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
     if case:
         case_id = case.get("case_id", "recorded Preview case")
         identifiers = ", ".join(str(value) for value in case.get("must_include", []))
+        if case.get("passed") is True and case.get("observed_result"):
+            return str(case["observed_result"])
         if case.get("status") == "reshoot_required":
             if case.get("review_criteria"):
                 return (
@@ -1170,8 +1264,25 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
             )
         suffix = f" with the recorded identifiers {identifiers}" if identifiers else ""
         return f"The captured Preview evidence records {case_id}{suffix}; do not infer results beyond it."
+    operation = lower.partition(":")[0]
+    if re.match(r"^(?:add|upload|replace)\b", operation):
+        resource_kind = re.search(r"\b(knowledge|skills?|records?|rules?)\b", operation)
+        if resource_kind:
+            if resource_kind.group(1).startswith("skill"):
+                return (
+                    "The linked SKILL.md appears with its frontmatter name and "
+                    "description. Open it and compare the complete instructions "
+                    "with the source file. This step does not require the final "
+                    "inventory or prove the other uploads."
+                )
+            return (
+                "The exact knowledge file linked for this step is attached under "
+                "its complete filename. Wait for processing to finish before "
+                "continuing. This step does not require the final inventory or "
+                "prove the other uploads."
+            )
     if (ctx.manual_evidence or {}).get("review_snapshot"):
-        if "instruction" in lower and not (
+        if ("instruction" in lower or "persistence" in lower or lower.startswith("save ")) and not (
             "inventory" in lower or lower.startswith("review ")
         ):
             return (
@@ -1184,7 +1295,8 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
                 f"Verify the reopened build: {model_name(ctx)}, "
                 f"{component_count(ctx.manual_evidence, 'skills')} skills, "
                 f"{component_count(ctx.manual_evidence, 'knowledge_files')} knowledge files, "
-                "no tools and no default web search. Inventory does not prove each upload step."
+                "zero configured Tools and no default web search. Native built-in "
+                "skill/knowledge activity is allowed. Inventory does not prove each upload step."
             )
         if "knowledge" in lower or "upload" in lower or "skill" in lower:
             return (
@@ -1200,6 +1312,11 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
             return f"Verify the selected and persisted model is {model_name(ctx)}."
         if "draft" in lower or "publish" in lower:
             return "Observe the saved unpublished Draft. Do not choose Publish."
+        if "preview" in lower:
+            return (
+                "Use New chat and verify a greeting-only Preview with an empty "
+                "composer. This pre-prompt state is not a case pass."
+            )
         return f"Perform this live action and retain new evidence: {action}. Historical media is not acceptance."
     if contains_word(lower, "create") and contains_word(lower, "agent"):
         return "A blank Copilot Studio agent is visible in the captured Draft workspace."
@@ -1361,7 +1478,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             seen,
             ctx,
             "copilot-studio-solution",
-            "Historical Copilot Studio solution — source repair pending"
+            "Historical Copilot Studio solution — not current source"
             if stale_export else "Importable Copilot Studio solution",
             solution_artifacts.zip_path,
             str(solution_artifacts.metadata["source_contract_note"])
@@ -1505,10 +1622,18 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             identifier, label, use = "manual-evidence", "Manual build evidence", "Manual identity, inventory, Preview, and Draft-gate evidence"
         elif stem == "manual-pilot-review":
             identifier, label, use = "manual-pilot-review", "Dated manual pilot review", "Non-certifying response findings, discrepancies and open gates"
+        elif stem.startswith("manual-inputs-"):
+            identifier, label, use = "manual-input-inventory", "Frozen manual input inventory", "Exact byte lengths and SHA256 hashes for the reviewed Manual build"
+        elif stem == "visual-checkpoints":
+            identifier, label, use = resource_id("easy-evidence", path), "Visual checkpoint contract", "Reviewed image scope, media format, provenance and open student steps"
         elif "onepager" in stem or "map" in stem:
             identifier, label, use = "onepager-map", generic_label(path), "Advertised-promise mapping evidence"
         else:
             identifier, label, use = resource_id("easy-evidence", path), generic_label(path), "Easy-mode deployment or Preview evidence"
+        if (ctx.manual_evidence or {}).get("lane_scope") == "native_manual_only" and stem in {
+            "transcripts", "copilot-studio-preview-evidence", "dataverse-draft-evidence",
+        }:
+            use = "Historical source/assisted evidence, not current native Manual acceptance"
         add_resource(resources, seen, ctx, identifier, label, path, use)
     visual_document = visual_checkpoint_document(ctx)
     for item in visual_document.get("captures", []):
@@ -1523,14 +1648,22 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             seen,
             ctx,
             resource_id("annotated-evidence", annotated_path),
-            f"Annotated visual checkpoint: {item.get('id', annotated_path.stem)}",
+            f"Reviewed visual reference: {item.get('id', annotated_path.stem)}"
+            if item.get("media") else f"Annotated visual checkpoint: {item.get('id', annotated_path.stem)}",
             annotated_path,
-            "Positive deterministic evidence highlighted for learner verification",
+            str(item["media"]["scope"]) if item.get("media")
+            else "Positive deterministic evidence highlighted for learner verification",
         )
     if not ctx.manual_evidence_path.exists():
         add_resource(resources, seen, ctx, "manual-evidence", "Manual build evidence", ctx.manual_evidence_path, "Required manual identity, Preview, and Draft-gate evidence")
 
-    add_resource(resources, seen, ctx, "manual-browserfilm-manifest", "Manual browserfilm manifest", ctx.manual_browserfilm_path, "Ordered literal-browser evidence frames")
+    add_resource(
+        resources, seen, ctx, "manual-browserfilm-manifest",
+        "Manual reviewed reference-set manifest" if is_reviewed_reference_set(ctx) else "Manual browserfilm manifest",
+        ctx.manual_browserfilm_path,
+        "Ordered student steps with explicit gaps; not a continuous film"
+        if is_reviewed_reference_set(ctx) else "Ordered literal-browser evidence frames",
+    )
     for index, frame in enumerate(ctx.manual_frames, 1):
         filename = frame.get("file")
         if isinstance(filename, str) and filename:
@@ -1541,7 +1674,8 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
                 f"manual-frame-{index:02d}",
                 clean_frame_label(str(frame.get("label", "")), f"Manual frame {index}"),
                 ctx.manual_browserfilm_path.parent / filename,
-                "Real manual browser evidence frame",
+                "Reviewed native PNG reference; scope is in visual-checkpoints.json"
+                if is_reviewed_reference_set(ctx) else "Real manual browser evidence frame",
             )
     manual_gif = referenced_media_path(
         ctx,
@@ -1553,8 +1687,9 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         "contact_sheet",
         ctx.package / "screenshots" / "manual" / "manual-build-contact-sheet.jpg",
     )
-    add_resource(resources, seen, ctx, "manual-browserfilm", "Manual browserfilm", manual_gif, "Animated manual walkthrough")
-    add_resource(resources, seen, ctx, "manual-contact-sheet", "Manual contact sheet", manual_contact, "Static manual evidence overview")
+    if not is_reviewed_reference_set(ctx):
+        add_resource(resources, seen, ctx, "manual-browserfilm", "Manual browserfilm", manual_gif, "Animated manual walkthrough")
+        add_resource(resources, seen, ctx, "manual-contact-sheet", "Manual contact sheet", manual_contact, "Static manual evidence overview")
 
     assisted_gif = (
         ctx.package
@@ -1592,7 +1727,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         ("workshop-settings", "Global workshop settings", ctx.root / "solutions" / "_shared" / "workshop-settings.html", "Site-wide persisted Easy-mode harness preference"),
         ("evidence-report", "Styled evidence report", ctx.package / "evidence-report.html", "Learner-safe HTML summary of deterministic and visual evidence"),
         ("quest", "Guided field quest", ctx.package / "quest.html", "Resumable Easy/Manual customer journey"),
-        ("manual-tutorial", "Manual browser tutorial", ctx.package / "manual-tutorial.html", "One action per real manual evidence frame"),
+        ("manual-tutorial", "Manual browser tutorial", ctx.package / "manual-tutorial.html", "Student actions, source downloads, reviewed references and explicit evidence gaps"),
         ("screenshots-readme", "Screenshot evidence README", ctx.package / "screenshots" / "README.md", "Evidence boundary and capture inventory"),
         ("manual-screenshots-readme", "Manual screenshot README", ctx.package / "screenshots" / "manual" / "README.md", "Manual frame and film inventory"),
         ("exports-readme", "Export README", ctx.package / "exports" / "README.md", "Bundle build instructions"),
@@ -1659,7 +1794,7 @@ def render_manifest(ctx: JourneyContext, resources: list[Resource]) -> str:
         stale_export = metadata.get("source_contract_status") == "stale_source"
         manifest["copilot_studio_solution"] = {
             "label": (
-                f"Historical {ctx.title} Copilot Studio solution — source repair pending"
+                f"Historical {ctx.title} Copilot Studio solution — not current source"
                 if stale_export else f"Importable {ctx.title} Copilot Studio solution"
             ),
             "status": "stale_source" if stale_export else metadata["status"],
@@ -1698,7 +1833,9 @@ def markdown_list(values: Iterable[str], fallback: str) -> str:
 
 def production_seams(ctx: JourneyContext) -> list[str]:
     copilot = ctx.deployment.get("copilot_studio", {})
-    values = copilot.get("required_connections", []) if isinstance(copilot, dict) else []
+    values = copilot.get(
+        "production_replacement_connections", copilot.get("required_connections", [])
+    ) if isinstance(copilot, dict) else []
     seams = [
         f"Replace packaged synthetic inputs with an approved {value} connection; preserve the reviewed input and output contract."
         for value in values
@@ -1813,6 +1950,14 @@ def easy_case_records(ctx: JourneyContext) -> list[dict[str, Any]]:
             }
         )
         seen.add(case_id)
+    lane_note = (ctx.manual_evidence or {}).get("lane_evidence_note")
+    if lane_note:
+        for case in possible:
+            case.update({
+                "passed": False,
+                "status": "reshoot_required",
+                "evidence_note": str(lane_note),
+            })
     return possible
 
 
@@ -1858,10 +2003,10 @@ def render_response_evidence(
     heading = "Verified response evidence"
     if case.get("status") == "reshoot_required":
         heading = "Historical response evidence"
-        status = (
+        status = str(case.get("evidence_note") or (
             "Historical response excerpt only; the repaired source still requires "
             "a fresh Preview run."
-        )
+        ))
     excerpt_html = (
         f'<pre class="evidence-transcript">{html.escape(excerpt)}</pre>'
         if excerpt
@@ -1987,7 +2132,7 @@ def render_personless_easy_markdown(ctx: JourneyContext) -> str:
         for title, prompt in personless_prompts(ctx)
     )
     return f"""# {ctx.title} — personless Easy mode
-
+{lane_evidence_markdown(ctx)}
 ## 1. Attach the Brainstem skill
 
 Download [{skill.name if skill else "SKILL.md"}]({skill_link}), open GitHub
@@ -2034,7 +2179,7 @@ def render_easy_copilot_chat_markdown(ctx: JourneyContext) -> str:
         for title, prompt in easy_copilot_chat_prompts(ctx)
     )
     return f"""# {ctx.title} — GitHub Copilot Easy mode
-
+{lane_evidence_markdown(ctx)}
 ## 1. Attach the Copilot-only skill
 
 Download [{skill.name if skill else "SKILL.md"}]({skill_link}), open GitHub
@@ -2409,6 +2554,25 @@ def brainstem_facilitator_html() -> str:
 
 
 def render_field_guide(ctx: JourneyContext) -> str:
+    evidence = ctx.manual_evidence or {}
+    current_review = ""
+    if evidence.get("review_snapshot"):
+        current_review = (
+            f"\n## {evidence.get('review_title', 'Preservation review, not certification')}\n\n"
+            f"{evidence.get('review_summary', evidence.get('source_contract_note', 'Review gates remain open.'))}\n\n"
+            f"See [{evidence['review_snapshot']}]({evidence['review_snapshot']}).\n"
+        )
+    preparation = ""
+    if evidence.get("learner_preparation"):
+        preparation = "\n".join(
+            f"{index}. {step}"
+            for index, step in enumerate(evidence["learner_preparation"], 1)
+        )
+        preparation = "\n### Current Manual preparation\n\n" + preparation + "\n"
+    lane_boundary = evidence.get("lane_evidence_note") or (
+        "Both lanes use the same immutable assets, locked cases, real Preview gate, "
+        "and `published: false` boundary."
+    )
     missing = (
         "\n## Pending evidence\n\n"
         + markdown_list(ctx.missing_evidence, "No pending evidence.")
@@ -2435,6 +2599,7 @@ blueprint, and decide what production integration would require.
 - A screenshot proves only the visible state in that frame.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
+{current_review}
 
 {facilitator_certification_markdown(ctx)}
 
@@ -2465,8 +2630,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+{lane_boundary}
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -2478,12 +2642,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+{preparation}
 
 ## Production replacement seams
 
@@ -2593,7 +2758,10 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
       <p class="lede">Use this guide to understand the workshop boundary, expected proof, production seams, and recovery paths before or during the hands-on module.</p>
       <div class="notice"><strong>Workshop mission:</strong> {html.escape(WORKSHOP_MISSION)}</div>
       <div class="notice"><strong>Evidence boundary:</strong> all packaged records and outcomes are synthetic qualitative evidence—not customer KPIs, measured production results, live connections, or publication approval.</div>
+      {review_notice(ctx)}
     </section>
+
+{manual_preparation(ctx)}
 
 {facilitator_certification_html(ctx)}
 
@@ -2617,7 +2785,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
 
     <h2>Locked Preview corpus</h2>
     <section class="card">
-      <p>Run every case in a fresh Copilot Studio Preview conversation. The deterministic validator—not phrasing similarity—defines the complete pass.</p>
+      <p>Run every case once in a fresh Copilot Studio Preview conversation. Source marker checks do not replace native final-answer review, source fidelity, citations or the no-action boundary.</p>
       <div class="table-scroll" role="region" aria-label="Locked Preview corpus table" tabindex="0">
         <table>
           <thead><tr><th>Case</th><th>Persona</th><th>Prompt</th></tr></thead>
@@ -2654,7 +2822,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
             <tr><td>A required source is missing</td><td>Stop. Restore the reviewed file; never substitute invented content.</td></tr>
             <tr><td>Knowledge is still processing</td><td>Wait for ingestion before Preview. A partial answer is not evidence.</td></tr>
             <tr><td>A case misses a marker</td><td>Keep the case failed and inspect the package. Never retry until it happens to pass.</td></tr>
-            <tr><td>The existing Draft is found</td><td>The harness should clone and reconnect automatically.</td></tr>
+            <tr><td>The existing Draft is found</td><td>In Manual mode, reopen the same owned Draft and compare its complete saved sources; do not create a duplicate or upload duplicate files. Easy-mode reconnection is a separate harness workflow.</td></tr>
             <tr><td>The agent appears Published</td><td>Stop immediately. This workshop ends at Draft.</td></tr>
           </tbody>
         </table>
@@ -2671,6 +2839,29 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
 def render_evidence_report_html(ctx: JourneyContext) -> str:
     document = visual_checkpoint_document(ctx)
     solution_downloads = copilot_solution_download_links(ctx)
+    evidence = ctx.manual_evidence or {}
+    native = evidence.get("native_regression", {})
+    native_table = ""
+    if native:
+        rows = "\n".join(
+            "<tr>"
+            f"<td>{html.escape(str(case['case_id']))}</td>"
+            f"<td>{html.escape(str(case.get('status', 'pending')))}</td>"
+            f"<td>{html.escape(str(case.get('submitted_at', 'not recorded')))}</td>"
+            f"<td>{html.escape(str(case.get('observed_result', '')))}</td>"
+            "</tr>"
+            for case in canonical_cases(evidence)
+        )
+        native_table = (
+            "<h2>Current native Manual regression</h2>"
+            '<section class="card"><p>Parent-recorded native acceptance, not a new source replay. '
+            "Each case was submitted once in its own fresh conversation on the same frozen build. "
+            "Debug reasoning was not graded. Student build/upload gates remain separate.</p>"
+            '<div class="table-scroll" role="region" aria-label="Native Manual regression" tabindex="0">'
+            "<table><thead><tr><th>Case</th><th>Result</th><th>Submitted (UTC)</th>"
+            f"<th>Reviewed final-answer scope</th></tr></thead><tbody>{rows}</tbody></table></div>"
+            f"<p>{html.escape(str(evidence.get('safety_footer', '')))}</p></section>"
+        )
     summary = document.get("summary", {})
     captures = [
         item
@@ -2750,17 +2941,21 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
     <section class="hero">
       <p class="eyebrow">Workshop evidence</p>
       <h1 id="course-title" tabindex="-1">{html.escape(ctx.title)}</h1>
-      <p class="lede">This report separates the deterministic machine gate from learner-facing visual checkpoints. A screenshot can support a positive observation; it never replaces the full locked-case validation.</p>
+      <p class="lede">This report separates source-only checks, native final-answer acceptance and learner-facing visual evidence. A screenshot supports only its reviewed visible scope; it does not certify every workshop step.</p>
+      {review_notice(ctx)}
     </section>
 
     <div class="summary-grid">
       <article><strong>{html.escape(str(summary.get("reusable", 0)))}</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>{html.escape(str(summary.get("reshoot_required", 0)))}</strong><span>Reference-only captures excluded from learner proof</span></article>
-      <article><strong>{html.escape(str(summary.get("new_learn_step_captures_recommended", 0)))}</strong><span>Optional future Learn-step captures</span></article>
+      <article><strong>{html.escape(str(summary.get("reshoot_required", 0)))}</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>{html.escape(str(summary.get("manual_build_steps_open", summary.get("new_learn_step_captures_recommended", 0))))}</strong><span>{"Required open build/upload steps" if "manual_build_steps_open" in summary else "Optional future Learn-step captures"}</span></article>
     </div>
+
+    {native_table}
 
     <h2>Deterministic case contract</h2>
     <section class="card" id="locked-cases">
+      <p>These source-only marker checks are not, by themselves, native final-answer passes.</p>
       <div class="table-scroll" role="region" aria-label="Deterministic case contract table" tabindex="0">
         <table>
           <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
@@ -2771,7 +2966,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 
     <h2>Displayed visual checkpoints</h2>
     <section class="card">
-      <p>Only approved positive checkpoints count as learner proof. Annotated paths are included for facilitator traceability.</p>
+      <p>Only reviewed checkpoints count within their stated scope. A labeled PNG board can combine multiple actual views; it is not an old JPEG or a continuous walkthrough. Asset paths are included for traceability.</p>
       <div class="table-scroll" role="region" aria-label="Displayed visual checkpoints table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
@@ -2782,7 +2977,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 
     <h2>Reference-only visual gaps</h2>
     <section class="card">
-      <p>These real source captures are inventoried for facilitators but withheld from learner pages until their review or reshoot requirement is resolved.</p>
+      <p>These checkpoints remain open or reference historical captures. No current image is implied by this table; review and reshoot requirements must be resolved before acceptance.</p>
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
@@ -2793,10 +2988,10 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 
     <h2>Downloads for audit</h2>
     <section class="card downloads">
-      <a class="button" href="evals/transcripts.json" download>Download locked transcripts</a>
+      <a class="button" href="evals/transcripts.json" download>Download source-only transcripts</a>
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
-      <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>Download portable bundle</a>
+      <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>{"Download manual inputs" if ctx.deployment.get("source_bundle", {}).get("kind") == "manual-inputs" else "Download portable bundle"}</a>
       {solution_downloads}
       {audit_download}
     </section>
@@ -2917,24 +3112,30 @@ def render_manual_tutorial(
         elif checkpoint and checkpoint.get("status") == "reusable":
             annotated = checkpoint_asset(ctx, checkpoint, "annotated")
             annotated_url = page_relative_path(ctx, annotated)
-            original = checkpoint_asset(ctx, checkpoint, "source")
-            original_url = page_relative_path(ctx, original)
             anchors = "; ".join(
                 str(value) for value in checkpoint.get("visible_anchors", [])
             )
+            caption = reviewed_media_caption(ctx, checkpoint)
+            if caption is None:
+                original = checkpoint_asset(ctx, checkpoint, "source")
+                original_url = page_relative_path(ctx, original)
+                caption = (
+                    f"Positive visual checkpoint: {html.escape(anchors)}. "
+                    f"Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. "
+                    "The full pass remains the deterministic machine gate. "
+                    f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.'
+                )
             screenshot_html = (
                 f'<a class="shot-link" href="{html.escape(annotated_url)}" download="{html.escape(annotated.name)}">'
                 f'<img class="shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" '
-                f'alt="{html.escape(action)} annotated evidence" loading="lazy"></a>'
-                f'<p class="capture-meta">Positive visual checkpoint: {html.escape(anchors)}. '
-                f"Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. "
-                "The full pass remains the deterministic machine gate. "
-                f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p>'
+                f'alt="{html.escape(action)} reviewed visual reference" loading="lazy"></a>'
+                f'<p class="capture-meta">{caption}</p>'
             )
         elif screenshot.exists():
+            screenshot_url = page_relative_path(ctx, screenshot)
             screenshot_html = (
-                f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
-                f'<img class="shot" src="screenshots/manual/{html.escape(filename)}" '
+                f'<a class="shot-link" href="{html.escape(screenshot_url)}" download="{html.escape(filename)}">'
+                f'<img class="shot" src="{html.escape(screenshot_url)}" '
                 f'alt="{html.escape(action)} evidence" loading="lazy"></a>'
                 f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>'
             )
@@ -2977,16 +3178,7 @@ def render_manual_tutorial(
         if ctx.missing_evidence
         else "<!-- No pending evidence. -->"
     )
-    review_snapshot = (ctx.manual_evidence or {}).get("review_snapshot")
-    if review_snapshot:
-        pending_notice += (
-            '<div class="notice"><strong>Preservation review, not certification.</strong> '
-            'The saved live responses and their discrepancies are summarized in the '
-            f'<a href="{html.escape(str(review_snapshot))}" download>dated pilot review</a>. '
-            'The rebuilt package still needs fresh live regression and reviewed '
-            'step-by-step evidence. Historical images are withheld; neither an '
-            'inventory image nor a passing source test proves every build step.</div>'
-        )
+    pending_notice += review_notice(ctx) + manual_preparation(ctx)
     steps_markup = "\n".join(card.strip() for card in step_cards) or (
         '<div class="notice"><strong>No manual frames are available.</strong> '
         "Capture manual evidence before using this tutorial as proof.</div>"
@@ -3004,7 +3196,8 @@ def render_manual_tutorial(
         if isinstance(item, dict) and item.get("mode") == "hard"
     ]
     manual_film_approved = (
-        manual_gif.exists()
+        not is_reviewed_reference_set(ctx)
+        and manual_gif.exists()
         and bool(hard_checkpoints)
         and all(item.get("status") == "reusable" for item in hard_checkpoints)
     )
@@ -3097,7 +3290,7 @@ def render_manual_tutorial(
       <section class="hero">
         <p class="eyebrow">Manual mode · literal browser construction</p>
         <h1 id="course-title" tabindex="-1">Build {html.escape(ctx.title)} manually.</h1>
-        <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
+        <p class="lede">No PAC CLI, YAML import, or plugin architect. Follow each action and its evidence boundary, compare only the reviewed references, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
         <div class="notice" data-storage-notice role="status" aria-live="polite" aria-atomic="true" hidden>Progress will remain available on this page, but it will not persist after you leave.</div>
         <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
@@ -3107,12 +3300,12 @@ def render_manual_tutorial(
       {steps_markup}
       <h2 id="troubleshooting">Troubleshooting</h2>
       <section class="card troubleshooting">
-        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
+        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Do not invent, recreate, or substitute an image. Keep the step open until its actual evidence is captured and reviewed. Remove <code>--allow-pending</code> only after all workshop evidence gates are met.</p></details>
         <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
         <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
         <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Manual use the same reviewed model.</p></details>
         <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
-        <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
+        <details><summary>Should I publish?</summary><p>No. Keep the same owned manual agent in Draft. Do not choose Publish as part of this tutorial.</p></details>
       </section>
     </main>
   </div>
@@ -3287,9 +3480,12 @@ def validated_pilot(ctx: JourneyContext) -> dict[str, Any]:
     studio = ctx.deployment.get("copilot_studio", {})
     if not isinstance(studio, dict):
         return {}
-    validated = studio.get("validated_manual") or studio.get(
-        "validated_pilot", {}
-    )
+    if (ctx.manual_evidence or {}).get("lane_scope") == "native_manual_only":
+        validated = studio.get("validated_pilot", {})
+    else:
+        validated = studio.get("validated_manual") or studio.get(
+            "validated_pilot", {}
+        )
     export_agent = studio.get("export_agent", {})
     result = dict(validated) if isinstance(validated, dict) else {}
     if isinstance(export_agent, dict):
@@ -3520,19 +3716,24 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
         elif checkpoint and checkpoint.get("status") == "reusable":
             annotated = checkpoint_asset(ctx, checkpoint, "annotated")
             annotated_url = page_relative_path(ctx, annotated)
-            original = checkpoint_asset(ctx, checkpoint, "source")
-            original_url = page_relative_path(ctx, original)
             anchors = "; ".join(
                 str(value) for value in checkpoint.get("visible_anchors", [])
             )
+            caption = reviewed_media_caption(ctx, checkpoint)
+            if caption is None:
+                original = checkpoint_asset(ctx, checkpoint, "source")
+                original_url = page_relative_path(ctx, original)
+                caption = (
+                    f"Visible positive anchors: {html.escape(anchors)}. "
+                    "The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. "
+                    f'Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
+                    f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.'
+                )
             screenshot_html = (
                 '<div class="preview-shot-wrap">'
                 f'<a href="{html.escape(annotated_url)}" download="{html.escape(annotated.name)}">'
                 f'<img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="{html.escape(case_id)} positive visual checkpoint" loading="lazy"></a>'
-                f'<p class="capture-meta">Visible positive anchors: {html.escape(anchors)}. '
-                "The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. "
-                f'Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
-                f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p></div>'
+                f'<p class="capture-meta">{caption}</p></div>'
             )
         elif screenshot:
             screenshot_html = (
@@ -3568,6 +3769,7 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
 
 def render_completion_state(ctx: JourneyContext) -> str:
     pilot = validated_pilot(ctx)
+    lane_note = (ctx.manual_evidence or {}).get("lane_evidence_note")
     case_total = len(easy_case_records(ctx))
     draft_frame = assisted_draft_frame(ctx)
     checkpoint = draft_visual_checkpoint(ctx, draft_frame) or visual_checkpoint(
@@ -3599,7 +3801,14 @@ def render_completion_state(ctx: JourneyContext) -> str:
         if draft_evidence_url
         else ""
     )
-    if checkpoint and checkpoint.get("status") == "reshoot_required":
+    if lane_note:
+        screenshot = (
+            '<div class="verification-evidence"><strong>Historical Easy completion record</strong>'
+            f"<p>{html.escape(str(lane_note))} The totals below are required learner "
+            "gates, not a current Easy-lane acceptance claim.</p>"
+            f"{draft_evidence_link}</div>"
+        )
+    elif checkpoint and checkpoint.get("status") == "reshoot_required":
         screenshot = (
             '<div class="verification-evidence">'
             "<strong>Verified completion record</strong>"
@@ -3611,14 +3820,19 @@ def render_completion_state(ctx: JourneyContext) -> str:
     elif checkpoint and checkpoint.get("status") == "reusable":
         annotated = checkpoint_asset(ctx, checkpoint, "annotated")
         annotated_url = page_relative_path(ctx, annotated)
-        original = checkpoint_asset(ctx, checkpoint, "source")
-        original_url = page_relative_path(ctx, original)
+        caption = reviewed_media_caption(ctx, checkpoint)
+        if caption is None:
+            original = checkpoint_asset(ctx, checkpoint, "source")
+            original_url = page_relative_path(ctx, original)
+            caption = (
+                f"Positive visual checkpoint. Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. "
+                f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.'
+            )
         screenshot = (
             '<div class="preview-shot-wrap">'
             f'<a href="{html.escape(annotated_url)}" download="{html.escape(annotated.name)}">'
             f'<img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="Validated agent remains Draft" loading="lazy"></a>'
-            f'<p class="capture-meta">Positive visual checkpoint. Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
-            f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p></div>'
+            f'<p class="capture-meta">{caption}</p></div>'
         )
     elif draft_frame:
         screenshot = (
@@ -3635,8 +3849,8 @@ def render_completion_state(ctx: JourneyContext) -> str:
         <div class="learn-step-body">
           <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
           <div class="done-grid">
-            <article><strong>Local proof</strong><span>{case_total}/{case_total} locked cases passed</span></article>
-            <article><strong>Preview proof</strong><span>{case_total}/{case_total} locked cases passed</span></article>
+            <article><strong>{"Required local proof" if lane_note else "Local proof"}</strong><span>{case_total}/{case_total} locked cases passed</span></article>
+            <article><strong>{"Required Easy Preview proof" if lane_note else "Preview proof"}</strong><span>{case_total}/{case_total} locked cases passed</span></article>
             <article><strong>Draft identity</strong><span>{html.escape(str(pilot.get("display_name") or ctx.title))}</span></article>
             <article><strong>Model</strong><span>{html.escape(model_name(ctx))}</span></article>
             <article><strong>Inventory</strong><span>{html.escape(str(pilot.get("knowledge_files", "reviewed")))} knowledge · {html.escape(str(pilot.get("skills", "reviewed")))} skills</span></article>
@@ -3681,6 +3895,15 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         '<a class="button" href="evidence-report.html">Evidence report</a>'
     )
     solution_downloads = copilot_solution_download_links(ctx)
+    manual_intro = (
+        "Follow the Manual actions and their explicit evidence boundaries to "
+        "understand the agent before adapting it. Reviewed references do not prove "
+        "open build/upload steps or a different Easy-mode run."
+        if (ctx.manual_evidence or {}).get("review_snapshot")
+        else "Optional. Easy mode already did all of this for you from one skill "
+        "file. This lane replays every action the AI took, one real browser frame "
+        "per step, so you can understand the agent before you adapt it."
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -3845,6 +4068,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Manual mode.</p>
       <div class="notice"><strong>Workshop mission:</strong> {html.escape(WORKSHOP_MISSION)}</div>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
+      {review_notice(ctx)}
       <div class="notice" data-storage-notice role="status" aria-live="polite" aria-atomic="true" hidden>Progress will remain available on this page, but it will not persist after you leave. Both Easy lanes remain available.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
@@ -3954,7 +4178,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           <a class="button" href="evidence-report.html#locked-cases">Locked evidence</a>
           {visual_audit_link}
           <a class="button" href="export-manifest.json" download>Download audit manifest</a>
-          <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>Download portable bundle</a>
+          <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>{"Download manual inputs" if ctx.deployment.get("source_bundle", {}).get("kind") == "manual-inputs" else "Download portable bundle"}</a>
           {solution_downloads}
           {workshop_agent_link}
           <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
@@ -3966,7 +4190,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       <section class="card hard-overview">
         <p class="eyebrow">Manual mode · see how it was built</p>
         <h2>See how {html.escape(ctx.title)} is built, one capability at a time.</h2>
-        <p class="lede">Optional. Easy mode already did all of this for you from one skill file. This lane replays every action the AI took, one real browser frame per step, so you can understand the agent before you adapt it. No PAC CLI, YAML import, or plugin architect; stop at Draft.</p>
+        <p class="lede">{html.escape(manual_intro)} No PAC CLI, YAML import, or plugin architect; stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
         <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
         {manual_content.pending_notice}
@@ -4435,9 +4659,44 @@ Opening this form does not sync anything. Submit the issue to sync these earned 
 """
 
 
+def reviewed_reference_coverage(ctx: JourneyContext) -> str:
+    reviewed = [frame for frame in ctx.manual_frames if frame.get("captured") is True]
+    for frame in reviewed:
+        if not isinstance(frame.get("file"), str) or not frame["file"].strip():
+            raise ScaffoldError("A captured reviewed reference needs an image filename")
+    reviewed_steps = ", ".join(str(frame["step"]) for frame in reviewed) or "none"
+    open_steps = ", ".join(
+        str(frame["step"]) for frame in ctx.manual_frames
+        if frame.get("captured") is not True
+    ) or "none"
+    assets = len({frame["file"] for frame in reviewed})
+    return (
+        f"Reviewed student steps: {reviewed_steps}.\n"
+        f"Distinct reviewed PNG assets: {assets}.\n"
+        f"Open student steps: {open_steps}."
+    )
+
+
 def render_screenshot_readme(ctx: JourneyContext) -> str:
     assisted = len((ctx.assisted_browserfilm or {}).get("frames", []))
     manual = len(ctx.manual_frames)
+    if is_reviewed_reference_set(ctx):
+        manifest = ctx.manual_browserfilm_path.relative_to(ctx.package / "screenshots").as_posix()
+        return f"""# Screenshot evidence
+
+Current Manual reference set: `{manifest}`. It maps {manual} student steps.
+{reviewed_reference_coverage(ctx)}
+
+Per-image dimensions, SHA256, review provenance and scope are recorded in
+`../evals/visual-checkpoints.json`. Labeled boards combine multiple actual native
+views; they are not single historical JPEGs or a continuous film.
+
+The {assisted} assisted frames and the old `manual/browserfilm.json`, GIF and
+contact sheet are historical only. They are not current Manual acceptance.
+Private full-window originals are not distributed. No new image review is
+claimed by this compilation. Step coverage is not whole-workshop certification;
+see the dated pilot review for the remaining gates.
+"""
     return f"""# Screenshot evidence
 
 Only real browser captures belong in this tree. Do not add mockups, generated
@@ -4459,6 +4718,32 @@ def render_film_readme(ctx: JourneyContext, mode: str) -> str:
     film = "manual-build-walkthrough.gif" if mode == "manual" else "copilot-assisted-walkthrough.gif"
     contact = "manual-build-contact-sheet.jpg" if mode == "manual" else "copilot-assisted-contact-sheet.jpg"
     label = "literal browser Manual-mode" if mode == "manual" else "Copilot-assisted Easy-mode"
+    if is_reviewed_reference_set(ctx) and mode == "manual":
+        manifest = ctx.manual_browserfilm_path.relative_to(ctx.package / "screenshots/manual").as_posix()
+        return f"""# Manual reviewed references and historical film
+
+The current authority is `{manifest}`, a reviewed reference set,
+not a continuous walkthrough.
+{reviewed_reference_coverage(ctx)}
+
+Each board labels its actual views. Per-image dimensions, capture counts,
+review provenance and evidence scope are recorded in the visual metadata.
+Step coverage is not whole-workshop certification.
+
+`browserfilm.json`, `{film}`, `{contact}`, the old JPEGs and their annotations
+are unchanged historical material. Do not relabel them as current regression
+or build-step proof, or link them as originals of the new PNG boards.
+Private full-window originals are not distributed.
+See `../../evals/manual-pilot-review.json` and `../../evals/visual-checkpoints.json`.
+"""
+    if mode == "assisted" and (ctx.manual_evidence or {}).get("lane_evidence_note"):
+        return f"""# Historical assisted Easy-mode evidence
+
+`browserfilm.json` records {count} historical frames; `{film}` and `{contact}`
+remain historical summaries. They are not the current native Manual reference set.
+
+{ctx.manual_evidence['lane_evidence_note']}
+"""
     return f"""# {label.capitalize()} evidence
 
 `browserfilm.json` is the ordered authority for {count} real browser frames.
@@ -4473,7 +4758,11 @@ no frame is a customer KPI, production result, or publication approval.
 def render_exports_readme(ctx: JourneyContext) -> str:
     bundle_config = ctx.deployment.get("source_bundle", {})
     if bundle_config.get("include_paths") is not None:
-        return f"""# Manual workshop review source bundle
+        description = bundle_config.get("description", (
+            "Manual policy, skills, knowledge, learner guide and public-safe review "
+            "metadata. Only files explicitly listed in the manifest are included."
+        ))
+        return f"""# {bundle_config.get("label", "Manual workshop review source bundle")}
 
 Build `{ctx.slug}-source.zip` with the existing source bundler:
 
@@ -4482,19 +4771,26 @@ python3 tools/build_solution_export.py solutions/{ctx.slug}/export-manifest.json
 ```
 
 This archive contains only the explicit `bundle.include_paths` list in
-`../export-manifest.json`: the manual policy, all manual skills and knowledge,
-the learner guide, and public-safe review metadata. It is not a native
+the separately published `export-manifest.json`.
+
+{description}
+
+It is not a native
 Copilot Studio import package, a complete repository mirror, or certification.
 
-Raw browser logs, tenant bindings, native import archives, screenshots,
-annotations, recordings, and unrelated source files are excluded. Historical
-files still in the repository are not promoted as current evidence.
+An advertised catalog resource is not necessarily a bundle member; the
+manifest's `included_in_bundle` flags distinguish them. Images or guides are
+included only when explicitly listed. Historical files still in the repository
+are not promoted as current evidence.
 
 The historical native import ZIP is separate and is not proof that the manual
 skills or knowledge are included. It is withheld from current-workshop
 downloads; the review metadata records its inspected contents. No import,
 new tenant export, or publication was performed.
-See `../evals/manual-pilot-review.json` for exact source and live-evidence limits.
+See the separately published `evals/manual-pilot-review.json` for the dated
+review findings and remaining gates. Public delivery is a separate gate:
+after push/deploy, fetch the published URLs and compare the manifest hashes.
+Local existence is not live URL verification.
 """
     artifacts = copilot_solution_artifacts(ctx)
     solution_section = ""
@@ -4520,7 +4816,7 @@ before enabling any integration.
         if artifacts.metadata.get("source_contract_status") == "stale_source":
             solution_section = f"""
 
-## Historical export — source repair pending
+## Historical export — not current source
 
 {artifacts.metadata["source_contract_note"]}
 
@@ -4585,14 +4881,17 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
         ("Raw export manifest", f"`solutions/{ctx.slug}/export-manifest.json`"),
         ("Source bundle", f"`solutions/{ctx.slug}/exports/{ctx.slug}-source.zip`"),
         ("Manual evidence", f"`solutions/{ctx.slug}/evals/manual-build-evidence.json`"),
-        ("Manual browserfilm", f"`solutions/{ctx.slug}/screenshots/manual/browserfilm.json`"),
+        (
+            "Manual reviewed reference set" if is_reviewed_reference_set(ctx) else "Manual browserfilm",
+            f"`{ctx.rel(ctx.manual_browserfilm_path)}`",
+        ),
     ]
     solution_artifacts = copilot_solution_artifacts(ctx)
     if solution_artifacts:
         rows.extend(
             [
                 (
-                    "Historical Copilot Studio solution ZIP — source repair pending"
+                    "Historical Copilot Studio solution ZIP — not current source"
                     if solution_artifacts.metadata.get("source_contract_status") == "stale_source"
                     else "Copilot Studio solution ZIP",
                     f"`{ctx.rel(solution_artifacts.zip_path)}`",
@@ -4624,7 +4923,9 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
             else "Manual evidence and referenced screenshots passed scaffold validation."
         )
     )
-    if ctx.missing_evidence:
+    if (ctx.manual_evidence or {}).get("review_summary"):
+        status += " Resource readiness means file availability, not workshop acceptance. " + str(ctx.manual_evidence["review_summary"])
+    elif ctx.missing_evidence:
         status += " Current manual Preview and saved-instruction verification remain pending."
     return f"""{README_START}
 ## Customer journey package map

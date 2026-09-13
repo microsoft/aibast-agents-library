@@ -94,7 +94,7 @@ reproduce this manual build.
 | Source bundle | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip` |
 | Manual evidence | `solutions/fs-regulatory-compliance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — source repair pending | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |
+| Historical Copilot Studio solution ZIP — not current source | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-solution-export.json` |
 

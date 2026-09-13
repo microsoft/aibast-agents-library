@@ -843,7 +843,14 @@
         "Map connection references and environment variables before enabling integrations.",
         "The exported agent remains unpublished unless the target administrator explicitly publishes it."
       ],
-      "settings_error": null
+      "settings_error": null,
+      "source_contract_status": "stale_source",
+      "source_contract_note": "Historical 2026-08-09 unmanaged export, preserved byte-for-byte. Its five entries contain settings/instructions but zero manual skills and zero knowledge files; it cannot reproduce the six-skill/two-file r5 Manual build. Withheld from current reproduction downloads. No new export, import or publication is claimed.",
+      "manual_content_inventory": {
+        "archive_entries": 5,
+        "skills": 0,
+        "knowledge_files": 0
+      }
     },
     {
       "slug": "prior-authorization",

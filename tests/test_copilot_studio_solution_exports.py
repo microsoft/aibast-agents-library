@@ -150,6 +150,7 @@ def library_export_consumer(inventory):
             "@aibast-agents-library/account-intelligence",
             "@aibast-agents-library/fs-customer-onboarding",
             "@aibast-agents-library/fs-regulatory-compliance",
+            "@aibast-agents-library/portfolio-rebalancing",
         }
     ]
     fixtures = {
@@ -217,7 +218,7 @@ def test_library_consumer_withholds_shipped_stale_export_and_keeps_current_expor
     assert "Download Copilot Studio solution" in current_dialog
     assert "import the unmanaged Copilot Studio solution manually" in current_dialog
     assert "current native Copilot Studio export is unavailable" not in current_dialog
-    for slug in ("fs-customer-onboarding", "fs-regulatory-compliance"):
+    for slug in ("fs-customer-onboarding", "fs-regulatory-compliance", "portfolio-rebalancing"):
         assert slug not in result["selected"]
         assert result["downloads"][slug] is None
         assert "current native Copilot Studio export is unavailable" in result["dialogs"][slug]

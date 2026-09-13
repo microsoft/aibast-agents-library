@@ -1,7 +1,9 @@
 import json
 import re
+import zipfile
 from pathlib import Path
 
+from tools.build_solution_export import bundle_bytes
 from tools import scaffold_solution_journey as scaffold
 
 
@@ -61,3 +63,15 @@ def test_all_advertised_workshops_match_the_authoritative_scaffold():
         )
         assert match, f"{slug}: generated README block is missing"
         assert match.group(0) == scaffold.readme_block(context, resources)
+
+
+def test_all_advertised_source_bundles_match_current_files_with_hosting_normalization():
+    for slug in advertised_slugs():
+        manifest = json.loads(
+            (ROOT / "solutions" / slug / "export-manifest.json").read_text(encoding="utf-8")
+        )
+        with zipfile.ZipFile(ROOT / manifest["bundle"]["path"]) as archive:
+            for name in archive.namelist():
+                source = ROOT / name
+                assert source.is_file(), f"{slug}: missing bundle source {name}"
+                assert archive.read(name) == bundle_bytes(source), f"{slug}: stale bundle member {name}"

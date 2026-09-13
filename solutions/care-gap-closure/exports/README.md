@@ -12,7 +12,7 @@ non-pending resource declared by the manifest. Items marked `pending_capture`
 are intentionally excluded until real evidence exists.
 
 
-## Historical export — source repair pending
+## Historical export — not current source
 
 Historical export predates the SYN-COL — 182 records repair. Do not use it as the repaired source; synchronize the reviewed native files, rerun Preview, and create a fresh unmanaged export before import.
 
