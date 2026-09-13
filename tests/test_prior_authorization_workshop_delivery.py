@@ -129,8 +129,8 @@ def test_prior_bundle_and_download_manifest_match_the_frozen_inputs_and_cases():
     inventory = read_json(PACKAGE / "evals/manual-inputs-r4.json")
     manifest = read_json(PACKAGE / "export-manifest.json")
     assert inventory["source_commit"] == "434dc32418d13317c2891a58d7cb5aa381a8c515"
-    assert len(inventory["files"]) == 7
-    for item in inventory["files"]:
+    assert len(inventory["inputs"]) == 7
+    for item in inventory["inputs"]:
         payload = (ROOT / item["path"]).read_bytes()
         assert len(payload) == item["bytes"]
         assert sha256(payload) == item["sha256"]
