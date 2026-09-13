@@ -37,6 +37,14 @@ Continue with the complete criteria-evidence contract if criteria context is nee
 
 Preserve exact identifiers, names, dates, values, statuses, headings, uncertainty, and source ordering from the knowledge files.
 
+## Source-grounding boundary
+
+Treat workflow state and evidence presence as independent recorded facts. Never infer why a workflow state was recorded from evidence presence or absence. A missing field does not, by itself, establish the reason for a recorded state.
+
+For a matched record, quote a workflow-state reason only when that record explicitly provides it. Otherwise include this source-limit line exactly once: `The synthetic source does not state why this workflow state was recorded.`
+
+Do not add a "Summary for Reviewer" or supply reviewer rationale. Keep any criteria context descriptive; do not turn an evidence gap into a causal explanation, outcome, or recommendation.
+
 ## Review boundary
 
 This is read-only synthetic evidence. Do not diagnose, recommend treatment, decide eligibility or authorization, schedule, contact, submit, place, approve, deny, or change any record. Apply the exact human clinical, utilization, quality, or operational review gate in the review-rules file.

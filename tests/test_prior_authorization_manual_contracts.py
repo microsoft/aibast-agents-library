@@ -43,6 +43,20 @@ def test_prior_manual_preserves_complete_output_line_templates(skill, required_l
     assert "Retain the global policy's exact terminal safety footer." in text
 
 
+def test_prior_request_does_not_infer_workflow_state_rationale():
+    text = (PACKAGE / "manual/skills/request-evidence/SKILL.md").read_text(encoding="utf-8")
+    for clause in (
+        "Treat workflow state and evidence presence as independent recorded facts.",
+        "Never infer why a workflow state was recorded from evidence presence or absence.",
+        "For a matched record, quote a workflow-state reason only when that record explicitly provides it.",
+        "Otherwise include this source-limit line exactly once:",
+        "The synthetic source does not state why this workflow state was recorded.",
+        'Do not add a "Summary for Reviewer" or supply reviewer rationale.',
+        "do not turn an evidence gap into a causal explanation, outcome, or recommendation.",
+    ):
+        assert clause in text
+
+
 def test_prior_manual_and_native_skill_sources_match():
     skills = sorted((PACKAGE / "manual/skills").glob("*/SKILL.md"))
     assert len(skills) == 4
