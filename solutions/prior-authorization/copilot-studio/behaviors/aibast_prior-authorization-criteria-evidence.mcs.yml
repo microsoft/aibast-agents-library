@@ -22,7 +22,22 @@ content: |
 
   ## Required output contract
 
-  `# Criteria-to-Evidence Crosswalk`; exact fictional policy title/date, checklist disclaimer, and all reviewer checks.
+  Use the following finding-body template with the exact request and its referenced fictional policy. Replace every placeholder from retrieved evidence; never emit placeholders or another policy's values.
+
+  Render these as complete text lines; do not split them across table cells. Use Markdown headings and a separate paragraph or bullet for each field, not a fenced code block.
+
+  ```text
+  # Criteria-to-Evidence Crosswalk
+  ## {request_id}: {policy_title}
+  Synthetic effective date: {effective_date}
+  Checklist only; presence does not establish medical necessity or authorization.
+  ## Reviewer checks
+  Reviewer check: {requirement}
+  ```
+
+  Repeat the final line once for every requirement in source order, preserving its exact wording. Keep `Reviewer check:` and the complete requirement together on each line. A shared table-column heading or checkmark is not a replacement for this repeated prefix.
+
+  Any supporting evidence association follows its complete reviewer-check line and preserves source missingness; it must not turn a requirement into a finding that it is satisfied. Append citations after complete lines. Retain the global policy's exact terminal safety footer.
 
   Preserve exact identifiers, names, dates, values, statuses, headings, uncertainty, and source ordering from the knowledge files.
 

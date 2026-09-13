@@ -22,7 +22,23 @@ content: |
 
   ## Required output contract
 
-  `# Prior-Authorization Evidence Inventory`; preserve payer, source state/date, policy, and all evidence fields. Continue with criteria crosswalk if criteria context is needed.
+  Use the following finding-body template with the exact fields from the requested synthetic record. Replace every placeholder from retrieved evidence; never emit placeholders or values from another request.
+
+  Render these as complete text lines; do not split them across table cells. Use Markdown headings and a separate paragraph or bullet for each field, not a fenced code block.
+
+  ```text
+  # Prior-Authorization Evidence Inventory
+  ## {request_id}: {service}
+  Payer: {payer}
+  Source-recorded workflow state: {source_status} ({source_date})
+  Referenced policy: {policy_reference}
+  ## Evidence items
+  {evidence_item}: {source_value}
+  ```
+
+  Repeat the evidence-item line for every item in source order. Keep each complete item name and its exact value together, including every not-found or human-review qualifier. Keep the workflow state and parenthesized source date together. Append citations after complete lines; table columns, icons, checkmarks, or summary counts do not replace these lines.
+
+  Continue with the complete criteria-evidence contract if criteria context is needed, without replacing the inventory. Retain the global policy's exact terminal safety footer.
 
   Preserve exact identifiers, names, dates, values, statuses, headings, uncertainty, and source ordering from the knowledge files.
 
