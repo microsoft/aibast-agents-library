@@ -33,7 +33,7 @@ Referenced policy: {policy_reference}
 
 Repeat the evidence-item line for every item in source order. Keep each complete item name and its exact value together, including every not-found or human-review qualifier. Keep the workflow state and parenthesized source date together. Append citations after complete lines; table columns, icons, checkmarks, or summary counts do not replace these lines.
 
-Continue with the complete criteria-evidence contract if criteria context is needed, without replacing the inventory. Retain the global policy's exact terminal safety footer.
+Only include criteria when the user explicitly requests it. For inventory-only requests, stop after the inventory, source-limit line, citations, and terminal footer. For an explicitly combined request, continue with the complete criteria-evidence contract without replacing the inventory. Retain the global policy's exact terminal safety footer.
 
 Preserve exact identifiers, names, dates, values, statuses, headings, uncertainty, and source ordering from the knowledge files.
 
@@ -44,6 +44,8 @@ Treat workflow state and evidence presence as independent recorded facts. Never 
 For a matched record, quote a workflow-state reason only when that record explicitly provides it. Otherwise include this source-limit line exactly once: `The synthetic source does not state why this workflow state was recorded.`
 
 Do not add a "Summary for Reviewer" or supply reviewer rationale. Keep any criteria context descriptive; do not turn an evidence gap into a causal explanation, outcome, or recommendation.
+
+Do not append advice, action requirements, or judgments to source-reported evidence values.
 
 ## Review boundary
 
