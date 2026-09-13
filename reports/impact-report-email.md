@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - September 12, 2026
+**Subject:** AIBAST weekly and monthly impact report - September 13, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-12T05:29:51Z`
+**Snapshot:** `2026-09-13T05:16:31Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 7,203 | +1,364 observed - partial | +4,765 observed - partial |
-| Git clones | 6,631 | +1,364 observed | +4,739 observed |
-| Clones excluding CI estimate | 6,631 | +1,553 (+30.6%) | +4,934 (+290.7%) |
-| AIBAST repository and Pages views | 905 | +145 observed | +648 observed |
-| jsDelivr file hits | 414 | +0 observed | +26 observed |
-| Release asset downloads | 158 | +118 (+295.0%) | +158 |
-| AIBAST direct agent file downloads | 103 | +92 (+836.4%) | +103 |
+| AIBAST observed repository downloads | 7,305 | +1,404 observed - partial | +4,776 observed - partial |
+| Git clones | 6,705 | +1,400 observed | +4,746 observed |
+| Clones excluding CI estimate | 6,705 | +1,627 (+32.0%) | +5,008 (+295.1%) - partial |
+| AIBAST repository and Pages views | 910 | +142 observed | +639 observed |
+| jsDelivr file hits | 418 | +4 observed | +30 observed |
+| Release asset downloads | 182 | +142 (+355.0%) | +180 (+9000.0%) |
+| AIBAST direct agent file downloads | 127 | +116 (+1054.5%) | +125 (+6250.0%) |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| AIBAST installer file downloads | 64 | +26 (+68.4%) | +64 |
-| Unique cloners (14-day window) | 327 | +125 (+61.9%) snapshot change | +190 (+138.7%) snapshot change |
-| Unique visitors (14-day window) | 47 | +9 (+23.7%) snapshot change | +30 (+176.5%) snapshot change |
+| AIBAST installer file downloads | 68 | +30 (+78.9%) | +68 |
+| Unique cloners (14-day window) | 338 | +136 (+67.3%) snapshot change | +201 (+146.7%) snapshot change - partial |
+| Unique visitors (14-day window) | 45 | +7 (+18.4%) snapshot change | +28 (+164.7%) snapshot change - partial |
 
 ## Community engagement
 
@@ -28,8 +28,8 @@
 | GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) |
 | GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 41 | +20 (+95.2%) | +35 (+583.3%) |
-| Agent upvotes | 4 | +0 (+0.0%) | +4 |
+| Open GitHub issues | 41 | +20 (+95.2%) | +34 (+485.7%) |
+| Agent upvotes | 4 | +0 (+0.0%) | +2 (+100.0%) |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop usage events | 0 | +0 (+0.0%) - partial | -8 (-100.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
@@ -41,15 +41,15 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Verified achievement participants | 1 | +0 (+0.0%) | +1 |
-| Verified achievement points | 5 | +0 (+0.0%) | +5 |
-| Verified achievements | 1 | +0 (+0.0%) | +1 |
-| Workshop starts | 1 | +0 (+0.0%) | +1 |
+| Verified achievement participants | 1 | +0 (+0.0%) | +0 (+0.0%) |
+| Verified achievement points | 5 | +0 (+0.0%) | +0 (+0.0%) |
+| Verified achievements | 1 | +0 (+0.0%) | +0 (+0.0%) |
+| Workshop starts | 1 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Manual-mode completions | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop completion rate | 0.0% | +0.0 pp | +0.0 pp |
 | Manual-mode completion rate | 0.0% | +0.0 pp | +0.0 pp |
-| Achievement completion rate | 16.7% | +0.0 pp | +16.7 pp |
+| Achievement completion rate | 16.7% | +0.0 pp | +0.0 pp |
 
 ## Library footprint
 
@@ -67,31 +67,26 @@
 
 **Agent downloads**
 - Account Intelligence Agent: +5 (current 7)
+- Contract Risk Review Agent: +3 (current 3)
+- Account Intelligence Orchestrator: +2 (current 3)
 - Account Risk Assessment: +2 (current 3)
 - AIBAST Workshop Engine: +2 (current 2)
-- Ask HR Agent: +2 (current 3)
-- Asset Maintenance Forecast Agent: +2 (current 3)
 
 ## Top monthly movers
 
 **Workshop usage**
 - Account Intelligence Agent: -8 (current 0)
 
-**Workshop achievement points**
-- Account Intelligence Agent: +5 (current 5)
-
 **Agent downloads**
-- Account Intelligence Agent: +7 (current 7)
+- Account Intelligence Agent: +6 (current 7)
+- Account Intelligence Orchestrator: +3 (current 3)
 - Account Risk Assessment: +3 (current 3)
 - Ask HR Agent: +3 (current 3)
 - Asset Maintenance Forecast Agent: +3 (current 3)
-- Account Messaging: +2 (current 2)
 
 **Agent upvotes**
-- Account Intelligence Agent: +1 (current 1)
 - Building Permit Processing Agent: +1 (current 1)
 - Care Gap Closure Agent: +1 (current 1)
-- Underwriting Support Agent: +1 (current 1)
 
 ## Measurement notes
 
