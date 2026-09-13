@@ -1597,6 +1597,17 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             "Registry-driven Brainstem engine shared by every packaged solution",
         )
     add_resource(resources, seen, ctx, "manual-instructions", "Manual global instructions", ctx.package / "manual" / "GLOBAL-INSTRUCTIONS.md", "Reviewed instructions for literal browser construction")
+    locked_cases = resolve_repo_path(
+        ctx.root,
+        ctx.package,
+        ctx.deployment.get("manual_package", {}).get("locked_demo_cases"),
+        ctx.root / "tests" / "demo_cases" / f"{ctx.slug}.json",
+    )
+    if ctx.rel(locked_cases) in ctx.deployment.get("source_bundle", {}).get("include_paths", []):
+        add_resource(
+            resources, seen, ctx, "locked-demo-cases", "Locked synthetic Preview cases",
+            locked_cases, "Exact prompts, operation mappings, required anchors and forbidden claims",
+        )
 
     settings = ctx.package / "copilot-studio" / "settings.mcs.yml"
     sync = ctx.package / "copilot-studio" / "agent.sync.yaml"

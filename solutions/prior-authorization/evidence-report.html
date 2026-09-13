@@ -457,16 +457,19 @@ html[data-theme="dark"] {
       <p class="eyebrow">Workshop evidence</p>
       <h1 id="course-title" tabindex="-1">Prior Authorization Agent</h1>
       <p class="lede">This report separates source-only checks, native final-answer acceptance and learner-facing visual evidence. A screenshot supports only its reviewed visible scope; it does not certify every workshop step.</p>
-
+      <div class="notice"><strong>Native r4 Manual pilot verified; historical import withheld</strong> On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed. <a href="evals/manual-pilot-review.json" download>Read the dated pilot review</a>.</div>
     </section>
 
     <div class="summary-grid">
-      <article><strong>21</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>2</strong><span>Open or historical checkpoints excluded from current proof</span></article>
-      <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
+      <article><strong>22</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>5</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>0</strong><span>Required open build/upload steps</span></article>
     </div>
 
-
+    <h2>Current native Manual regression</h2><section class="card"><p>Parent-recorded native acceptance, not a new source replay. Each case was submitted once in its own fresh conversation on the same frozen build. Debug reasoning was not graded. Student build/upload gates remain separate.</p><div class="table-scroll" role="region" aria-label="Native Manual regression" tabindex="0"><table><thead><tr><th>Case</th><th>Result</th><th>Submitted (UTC)</th><th>Reviewed final-answer scope</th></tr></thead><tbody><tr><td>PA-01</td><td>passed</td><td>2026-09-13T12:03:20.194Z</td><td>Passes the original literal anchors and factual/safety requirements, and the material r4 scope/grounding regression. It stays within the requested inventory, preserves payer/state/date/policy and all three ordered evidence values, explicitly reports the absent rationale once, and ends with the exact footer. The source service description and generic evidence-section heading are displayed in title case; record this cosmetic presentation difference rather than claiming literal casing parity. No required literal anchor, identifier, factual meaning or safety boundary changed.</td></tr>
+<tr><td>PA-02</td><td>passed</td><td>2026-09-13T12:22:57.818Z</td><td>The full crosswalk contract passes on this independent r4 conversation. Both required main headings, exact policy title/effective date/disclaimer, three complete Reviewer check lines in source order, evidence associations with preserved missingness, reviewer-owned interpretation, both citations and the terminal safety footer are present. It does not decide medical necessity or treat evidence presence as a satisfied requirement.</td></tr>
+<tr><td>PA-03</td><td>passed</td><td>2026-09-13T12:29:27.343Z</td><td>The status-summary contract passes in its own fresh r4 conversation. It preserves the exact source state/date and transcription disclaimer, explicitly reports the absent rationale once, and explains that the recorded state is not an approval/denial/eligibility/authorization or likely-outcome determination. It also keeps workflow state and evidence presence independent rather than inferring causation. Both citations and the complete terminal safety footer are present.</td></tr>
+<tr><td>PA-04</td><td>passed</td><td>2026-09-13T12:34:54.216Z</td><td>The repaired reconsideration contract passes on this independent r4 conversation. The response preserves the exact request/service, state/date, policy, required reviewer confirmation, minimum-necessary phrase and human ownership. All three evidence items retain their source values without the previous action qualification. It explicitly states that no workflow rationale is supplied by the source and does not invent a cause, recommend reconsideration, or claim any submission. Both source citations, the canonical read-only notice and the exact terminal safety footer are present.</td></tr></tbody></table></div><p>Synthetic healthcare evidence only; no diagnosis, treatment, eligibility, authorization, scheduling, outreach, submission, or record change. Human review required.</p></section>
 
     <h2>Deterministic case contract</h2>
     <section class="card" id="locked-cases">
@@ -505,130 +508,136 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
-          <td><code>easy-pa-01</code></td>
-          <td>easy</td>
-          <td>Checklist only; presence does not establish medical necessity or authorization; The missing conservative-care duration maps directly to reviewer check #3; Human review required</td>
-          <td>solutions/prior-authorization/screenshots/assisted/annotated/01-pa-01.png</td>
-        </tr>
-<tr>
-          <td><code>easy-pa-02</code></td>
-          <td>easy</td>
-          <td>Evidence Status in SYN-AUTH-001; Relevant encounter note and prior imaging evidence are Present; Documented duration fields are Not found in synthetic source</td>
-          <td>solutions/prior-authorization/screenshots/assisted/annotated/02-pa-02.png</td>
-        </tr>
-<tr>
-          <td><code>easy-pa-03</code></td>
-          <td>easy</td>
-          <td>This is a source transcription, not an agent determination; additional evidence requested; The recorded state is not an authorization approval, denial, or outcome</td>
-          <td>solutions/prior-authorization/screenshots/assisted/annotated/03-pa-03.png</td>
-        </tr>
-<tr>
-          <td><code>easy-pa-04</code></td>
-          <td>easy</td>
-          <td>SYN-POL-IMG-01 Reviewer Checks; Human utilization reviewer owns rationale, completeness, and submission; Reviewer must confirm reconsideration is appropriate</td>
-          <td>solutions/prior-authorization/screenshots/assisted/annotated/04-pa-04.png</td>
-        </tr>
-<tr>
-          <td><code>hard-step-01</code></td>
+          <td><code>manual-r4-step-01</code></td>
           <td>hard</td>
-          <td>Untitled Agent; Blank Build workspace</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/01-create-blank-agent.png</td>
+          <td>Create a blank Copilot Studio agent</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-01-blank.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-02</code></td>
+          <td><code>manual-r4-step-02</code></td>
           <td>hard</td>
-          <td>Prior Authorization Manual in the name field</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/02-name-agent.png</td>
+          <td>Name Prior Authorization Manual</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-02-name.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-03</code></td>
+          <td><code>manual-r4-step-03</code></td>
           <td>hard</td>
-          <td>Reviewed instruction policy; Locked Preview evidence anchors for PA-01 through PA-04</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/03-enter-instructions.png</td>
+          <td>Enter the complete current global instructions</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-replacement-board-clean.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-05</code></td>
+          <td><code>manual-r4-step-04</code></td>
           <td>hard</td>
-          <td>The visible Knowledge inventory contains no Search all websites source</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/05-remove-web-search.png</td>
+          <td>Save, leave, reopen, and verify the complete instruction policy</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-after-reopen-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-06</code></td>
+          <td><code>manual-r4-step-05</code></td>
           <td>hard</td>
-          <td>aibast_prior-authorization-review-rules.md is visible in Knowledge</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/06-add-aibast-prior-authorization-review-rules.png</td>
+          <td>Remove default web search</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-05-remove-web.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-07</code></td>
+          <td><code>manual-r4-step-06</code></td>
           <td>hard</td>
-          <td>aibast_prior-authorization-synthetic-records is visible in Knowledge; aibast_prior-authorization-review-rules.md remains visible</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/07-add-aibast-prior-authorization-synthetic-records.png</td>
+          <td>Add knowledge: aibast_prior-authorization-review-rules.md</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/rules-replacement-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-08</code></td>
+          <td><code>manual-r4-step-07</code></td>
           <td>hard</td>
-          <td>prior-authorization-appeal-evidence-packet is visible in Skills</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/08-add-appeal-evidence-packet.png</td>
+          <td>Add knowledge: aibast_prior-authorization-synthetic-records.md</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/records-replacement-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-09</code></td>
+          <td><code>manual-r4-step-08</code></td>
           <td>hard</td>
-          <td>prior-authorization-criteria-evidence is visible in Skills; prior-authorization-appeal-evidence-packet remains visible</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/09-add-criteria-evidence.png</td>
+          <td>Add skill: prior-authorization-appeal-evidence-packet</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/appeal-replacement-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-10</code></td>
+          <td><code>manual-r4-step-09</code></td>
           <td>hard</td>
-          <td>prior-authorization-request-evidence is visible in Skills; Three configured skills are visible</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/10-add-request-evidence.png</td>
+          <td>Add skill: prior-authorization-criteria-evidence</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/criteria-replacement-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-11</code></td>
+          <td><code>manual-r4-step-10</code></td>
           <td>hard</td>
-          <td>prior-authorization-status-summary is visible in Skills; Four configured skills are visible</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/11-add-status-summary.png</td>
+          <td>Add skill: prior-authorization-request-evidence</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/request-replacement-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-12</code></td>
+          <td><code>manual-r4-step-11</code></td>
           <td>hard</td>
-          <td>Claude Sonnet 4.6; Four configured skills; Two configured knowledge sources; Tools section contains no configured tool; Save tooltip states No unsaved changes</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/12-review-inventory.png</td>
+          <td>Add skill: prior-authorization-status-summary</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-11-status-upload-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-13</code></td>
+          <td><code>manual-r4-step-12</code></td>
           <td>hard</td>
-          <td>Preview tab; New chat; Prior Authorization Manual greeting</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/13-open-preview.png</td>
+          <td>Select Claude Sonnet 4.6, save, reopen, and verify the full inventory</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/inventory-after-reopen-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-pa-01</code></td>
+          <td><code>manual-r4-step-13</code></td>
           <td>hard</td>
-          <td>Documented conservative-care duration fields are Not found in synthetic source; additional evidence requested; Human review required</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/14-pa-01.png</td>
+          <td>Open a fresh greeting-only Preview conversation</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/fresh-preview-before-PA01.png</td>
         </tr>
 <tr>
-          <td><code>hard-pa-02</code></td>
+          <td><code>manual-r4-step-14</code></td>
           <td>hard</td>
-          <td>Relevant encounter note and prior imaging evidence are Present; Documented duration fields are Not found in synthetic source; The crosswalk does not decide policy criteria satisfaction</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/15-pa-02.png</td>
+          <td>SYN-AUTH-001; additional evidence requested</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-answer-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-pa-03</code></td>
+          <td><code>manual-r4-step-15</code></td>
           <td>hard</td>
-          <td>This is a source transcription, not an agent determination; additional evidence requested; The state does not mean an authorization decision has been made</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/16-pa-03.png</td>
+          <td>Synthetic Imaging Evidence Checklist; Checklist only</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-answer-board.png</td>
         </tr>
 <tr>
-          <td><code>hard-pa-04</code></td>
+          <td><code>manual-r4-step-16</code></td>
           <td>hard</td>
-          <td>SYN-POL-IMG-01 Reviewer Checks; Human utilization reviewer owns rationale, completeness, and submission; This outline does not constitute an appeal recommendation, filing, payer contact, or record change</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/17-pa-04.png</td>
+          <td>SYN-AUTH-001; not an agent determination</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-answer.png</td>
         </tr>
 <tr>
-          <td><code>hard-draft</code></td>
+          <td><code>manual-r4-step-17</code></td>
           <td>hard</td>
-          <td>Prior Authorization Manual; Draft</td>
-          <td>solutions/prior-authorization/screenshots/manual/annotated/18-confirm-draft.png</td>
+          <td>minimum-necessary evidence; reviewer must confirm</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-answer-board.png</td>
+        </tr>
+<tr>
+          <td><code>manual-r4-step-18</code></td>
+          <td>hard</td>
+          <td>Confirm the same Draft and stop before publish</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-18-final-draft.png</td>
+        </tr>
+<tr>
+          <td><code>manual-r4-pa-01-activity</code></td>
+          <td>activity</td>
+          <td>prior-authorization-request-evidence; Searched knowledge</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-activity-board.png</td>
+        </tr>
+<tr>
+          <td><code>manual-r4-pa-02-activity</code></td>
+          <td>activity</td>
+          <td>prior-authorization-criteria-evidence; Searched knowledge</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-activity-board.png</td>
+        </tr>
+<tr>
+          <td><code>manual-r4-pa-03-activity</code></td>
+          <td>activity</td>
+          <td>prior-authorization-status-summary; Searched knowledge</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-activity-board.png</td>
+        </tr>
+<tr>
+          <td><code>manual-r4-pa-04-activity</code></td>
+          <td>activity</td>
+          <td>prior-authorization-appeal-evidence-packet; Searched knowledge</td>
+          <td>solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-activity-board.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -641,16 +650,34 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
           <tbody><tr>
+          <td><code>easy-pa-01</code></td>
+          <td>easy</td>
+          <td>solutions/prior-authorization/screenshots/assisted/01-pa-01.jpg</td>
+          <td>Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.</td>
+        </tr>
+<tr>
+          <td><code>easy-pa-02</code></td>
+          <td>easy</td>
+          <td>solutions/prior-authorization/screenshots/assisted/02-pa-02.jpg</td>
+          <td>Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.</td>
+        </tr>
+<tr>
+          <td><code>easy-pa-03</code></td>
+          <td>easy</td>
+          <td>solutions/prior-authorization/screenshots/assisted/03-pa-03.jpg</td>
+          <td>Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.</td>
+        </tr>
+<tr>
+          <td><code>easy-pa-04</code></td>
+          <td>easy</td>
+          <td>solutions/prior-authorization/screenshots/assisted/04-pa-04.jpg</td>
+          <td>Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.</td>
+        </tr>
+<tr>
           <td><code>easy-draft</code></td>
           <td>easy</td>
           <td>solutions/prior-authorization/screenshots/assisted/05-confirm-draft.jpg</td>
-          <td>The Agents list does not show Prior Authorization Pilot. Unrelated agent rows and their Draft badges cannot prove the target Draft identity.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/prior-authorization/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The instructions are visible, but the screenshot does not show a saved-state indicator such as No unsaved changes. The action label alone is not visual proof that save completed.</td>
+          <td>Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.</td>
         </tr></tbody>
         </table>
       </div>
@@ -661,8 +688,8 @@ html[data-theme="dark"] {
       <a class="button" href="evals/transcripts.json" download>Download source-only transcripts</a>
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
-      <a class="button" href="exports/prior-authorization-source.zip" download>Download portable bundle</a>
-      <a class="button primary" href="exports/prior-authorization-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/prior-authorization-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/prior-authorization-solution-export.json" download>Export details</a>
+      <a class="button" href="exports/prior-authorization-source.zip" download>Download manual inputs</a>
+      <div class="notice"><strong>Historical export — not current source.</strong> Historical 2026-08-09 unmanaged export, preserved byte-for-byte. Its five entries contain settings and instructions but no manual skills or knowledge files, and identify Prior Authorization Pilot rather than the tested Manual Draft. It cannot reproduce the four-skill/two-file r4 build and is withheld from current reproduction downloads. No new export, import or native publication is claimed. <a href="exports/prior-authorization-solution-export.json" download>Export details</a></div>
 
     </section>
   </main>

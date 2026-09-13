@@ -7,20 +7,6 @@
     {
       "advertised_promise": "Pull payer-specific requirements and match them with EHR data",
       "operations": [
-        "criteria_evidence"
-      ],
-      "demo_cases": [
-        "PA-02"
-      ],
-      "disposition": "bounded",
-      "synthetic_evidence": [
-        "Presents synthetic checklist items for qualified utilization review.",
-        "Crosswalks fictional policy checklist items to synthetic evidence; authoritative policy and EHR review remain human tasks."
-      ]
-    },
-    {
-      "advertised_promise": "Compile the full clinical evidence packet needed for medical review",
-      "operations": [
         "request_evidence"
       ],
       "demo_cases": [
@@ -29,6 +15,20 @@
       "disposition": "bounded",
       "synthetic_evidence": [
         "Inventories synthetic request evidence without submitting or deciding the request.",
+        "Crosswalks fictional policy checklist items to synthetic evidence; authoritative policy and EHR review remain human tasks."
+      ]
+    },
+    {
+      "advertised_promise": "Compile the full clinical evidence packet needed for medical review",
+      "operations": [
+        "criteria_evidence"
+      ],
+      "demo_cases": [
+        "PA-02"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Presents synthetic checklist items for qualified utilization review.",
         "Drafts an inventory; completeness and minimum necessity require utilization review."
       ]
     },

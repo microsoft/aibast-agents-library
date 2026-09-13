@@ -26,25 +26,26 @@
   "manual_package": {
     "global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
     "knowledge_files": [
-      "manual/knowledge/aibast_prior-authorization-synthetic-records.md",
-      "manual/knowledge/aibast_prior-authorization-review-rules.md"
+      "manual/knowledge/aibast_prior-authorization-review-rules.md",
+      "manual/knowledge/aibast_prior-authorization-synthetic-records.md"
     ],
     "skill_count": 4,
     "skills": [
-      "manual/skills/request-evidence/SKILL.md",
+      "manual/skills/appeal-evidence-packet/SKILL.md",
       "manual/skills/criteria-evidence/SKILL.md",
-      "manual/skills/status-summary/SKILL.md",
-      "manual/skills/appeal-evidence-packet/SKILL.md"
+      "manual/skills/request-evidence/SKILL.md",
+      "manual/skills/status-summary/SKILL.md"
     ],
     "locked_demo_cases": "../../tests/demo_cases/prior-authorization.json",
     "onepager_map": "evals/onepager-map.json",
     "source_audit": "evals/source-audit.json"
   },
   "copilot_studio": {
-    "status": "package-ready-not-created",
+    "status": "manual-draft-verified",
     "publish": false,
     "publish_requires_confirmation": true,
-    "required_connections": [
+    "required_connections": [],
+    "production_replacement_connections": [
       "Approved read-only EHR or FHIR evidence source",
       "Approved payer policy source",
       "Microsoft Teams utilization-review coordination"
@@ -52,36 +53,62 @@
     "external_actions": "not-configured",
     "plugin": "mcs-assistant@copilot-studio-plugin",
     "minimum_pac_version": "2.9.3",
-    "authoring_mode": "cli-copilot",
+    "authoring_mode": "manual-upload",
+    "manual_runtime_boundary": "Zero configured Tools or production connections. Native built-in skill and knowledge activity is allowed; default web search is removed. Production replacements are future governed seams only.",
     "validated_manual": {
       "display_name": "Prior Authorization Manual",
-      "bot_id": "a07640ad-eab3-49b1-905d-172e8638bd35",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
-      "model": "Sonnet46",
+      "model": "Claude Sonnet 4.6",
       "skills": 4,
       "knowledge_files": 2,
+      "tools": 0,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
+      "build_revision": "shared-grounding-r4",
       "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_total": 4,
+      "verified_at": "2026-09-13T12:45:09.571Z",
+      "source_contract_status": "native_regression_passed",
+      "reviewed_student_steps": 18,
+      "open_student_steps": 0,
+      "source_contract_note": "Four unchanged locked prompts passed once each in fresh native conversations after complete same-Draft save/reopen verification. All 18 reference checkpoints are reviewed with their actual construction/replacement scopes. The same agent remained Draft. This is Manual pilot evidence, not a new Easy-lane run, import acceptance or production certification."
     },
     "validated_pilot": {
       "display_name": "Prior Authorization Pilot",
       "schema_name": "aibast_PriorAuthorizationPilot",
-      "bot_id": "6e991351-27ea-4605-a15b-7f5b15d9dc36",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
       "skills": 4,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": null,
+      "preview_cases_total": 4,
+      "captured_preview_cases_passed": 4,
+      "source_contract_status": "stale_source",
+      "source_contract_note": "Historical assisted identity and pass claims are retained separately. They do not establish current Manual r4 acceptance or a complete importable package."
     }
+  },
+  "source_bundle": {
+    "label": "Prior Authorization r4 manual inputs and locked cases",
+    "kind": "manual-inputs",
+    "native_importable": false,
+    "standalone_guide": false,
+    "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/",
+    "github_folder": "https://github.com/kody-w/aibast-agents-library/tree/staging/solutions/prior-authorization",
+    "description": "Seven frozen r4 native inputs, the unchanged canonical case file, their public SHA256 inventory and the export README. Use the separately published current guides and reviewed PNG references. No HTML guide, screenshot, runtime, tenant binding, raw browser log or historical native import archive is bundled.",
+    "include_paths": [
+      "solutions/prior-authorization/manual/GLOBAL-INSTRUCTIONS.md",
+      "solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md",
+      "solutions/prior-authorization/manual/skills/criteria-evidence/SKILL.md",
+      "solutions/prior-authorization/manual/skills/request-evidence/SKILL.md",
+      "solutions/prior-authorization/manual/skills/status-summary/SKILL.md",
+      "solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-review-rules.md",
+      "solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-synthetic-records.md",
+      "tests/demo_cases/prior-authorization.json",
+      "solutions/prior-authorization/evals/manual-inputs-r4.json",
+      "solutions/prior-authorization/exports/README.md"
+    ]
   },
   "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
   "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",

@@ -559,22 +559,22 @@ html[data-theme="dark"] {
       <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
       <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
 <a href="#step-2">2. Name Prior Authorization Manual</a>
-<a href="#step-3">3. Enter the reviewed global instructions</a>
-<a href="#step-4">4. Save the instruction policy</a>
+<a href="#step-3">3. Enter the complete current global instructions</a>
+<a href="#step-4">4. Save, leave, reopen, and verify the complete instruction policy</a>
 <a href="#step-5">5. Remove default web search</a>
 <a href="#step-6">6. Add knowledge: aibast_prior-authorization-review-rules.md</a>
 <a href="#step-7">7. Add knowledge: aibast_prior-authorization-synthetic-records.md</a>
-<a href="#step-8">8. Add skill: appeal-evidence-packet</a>
-<a href="#step-9">9. Add skill: criteria-evidence</a>
-<a href="#step-10">10. Add skill: request-evidence</a>
-<a href="#step-11">11. Add skill: status-summary</a>
-<a href="#step-12">12. Review model, skills, knowledge, and safety boundaries</a>
-<a href="#step-13">13. Open a fresh Preview conversation</a>
-<a href="#step-14">14. Pass PA-01: Utilization Management Coordinator</a>
-<a href="#step-15">15. Pass PA-02: Nurse Case Manager</a>
-<a href="#step-16">16. Pass PA-03: Radiology Scheduler</a>
-<a href="#step-17">17. Pass PA-04: Utilization Management Coordinator</a>
-<a href="#step-18">18. Confirm Draft and stop before publish</a></nav>
+<a href="#step-8">8. Add skill: prior-authorization-appeal-evidence-packet</a>
+<a href="#step-9">9. Add skill: prior-authorization-criteria-evidence</a>
+<a href="#step-10">10. Add skill: prior-authorization-request-evidence</a>
+<a href="#step-11">11. Add skill: prior-authorization-status-summary</a>
+<a href="#step-12">12. Select Claude Sonnet 4.6, save, reopen, and verify the full inventory</a>
+<a href="#step-13">13. Open a fresh greeting-only Preview conversation</a>
+<a href="#step-14">14. Run PA-01: Utilization Management Coordinator</a>
+<a href="#step-15">15. Run PA-02: Nurse Case Manager</a>
+<a href="#step-16">16. Run PA-03: Radiology Scheduler</a>
+<a href="#step-17">17. Run PA-04: Utilization Management Coordinator</a>
+<a href="#step-18">18. Confirm the same Draft and stop before publish</a></nav>
     </aside>
     <main id="course-content" tabindex="-1">
       <section class="hero">
@@ -584,18 +584,18 @@ html[data-theme="dark"] {
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
         <div class="notice" data-storage-notice role="status" aria-live="polite" aria-atomic="true" hidden>Progress will remain available on this page, but it will not persist after you leave.</div>
         <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
-        <!-- No pending evidence. -->
+        <!-- No pending evidence. --><div class="notice"><strong>Native r4 Manual pilot verified; historical import withheld</strong> On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed. <a href="evals/manual-pilot-review.json" download>Read the dated pilot review</a>.</div><section class="notice"><h2>Current Manual preparation and resume boundary</h2><ol><li>For a new build, follow the 18 steps in order. When resuming, use the existing owned Prior Authorization Manual Draft; do not create a duplicate or attach another copy of an unchanged file.</li><li>Use exactly the seven inputs in evals/manual-inputs-r4.json and the unchanged locked cases. Download links target the staging workshop that carries this repair, not an older Microsoft-main payload.</li><li>Use Claude Sonnet 4.6, four frontmatter-named skills, two knowledge sources, zero configured Tools and no default web search. Production connections are future seams only.</li><li>For an existing mismatched knowledge file, remove only its assignment from this Draft, then add the verified replacement through Add knowledge and wait for Ready. The details editor does not replace file contents.</li><li>For an existing mismatched skill, use its Replace action once. Replacement closes the old dialog; reopen the same skill and compare the full new name, description and body before assuming failure or uploading again.</li><li>Paste the entire policy with normal keyboard events, allow it to settle, blur, Save, leave through Agents and reopen the same Draft. Compare the full policy and all four definitions; a visible editor value or Save click alone is insufficient.</li><li>Reference steps 3, 6-10 document actual existing-Draft repairs. Step 9 retains its unchanged r2 capture; steps 1, 2, 5 and 11 retain their real initial-build provenance. Captions do not claim new first-time uploads.</li><li>Use New chat for each exact prompt, verify greeting-only history and an exact composer value, and submit once. Review the complete final answer, actual matching skill/search activity, citations and footer. Preserve failures; a material source change requires a separately labelled full regression.</li><li>Report only the requested operation. Recorded state, evidence presence and causal rationale are separate facts; absent rationale is not an invitation to invent a cause or append a corrective-action requirement.</li><li>Finish by confirming the same agent is Draft. Do not choose Publish. The input ZIP is not an importable solution or a standalone guide; use the separately published current tutorial and reviewed references.</li></ol></section>
       </section>
       <h2>Build and verify</h2>
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/prior-authorization/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="Perform this live action and retain new evidence: Create a blank Copilot Studio agent. Historical media is not acceptance." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-01-blank.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Perform this live action and retain new evidence: Create a blank Copilot Studio agent. Historical media is not acceptance.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/01-create-blank-agent.png" download="01-create-blank-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; Blank Build workspace. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/UI-step-01-blank.png" download="UI-step-01-blank.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/UI-step-01-blank.png" alt="Create a blank Copilot Studio agent reviewed visual reference" loading="lazy"></a><p class="capture-meta">1459×588 PNG. Privacy-cropped actual native UI capture. Actual settled new-agent builder before naming or entering policy. This is step 1, not a saved/reopened Draft or final-model confirmation. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -603,14 +603,14 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name Prior Authorization Manual</h3><p>Step 2 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name Prior Authorization Manual" data-report-expected="The page header shows the recorded manual build name: Prior Authorization Manual." data-report-evidence="solutions/prior-authorization/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <header><span>2</span><div><h3>Name Prior Authorization Manual</h3><p>Step 2 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name Prior Authorization Manual" data-report-expected="Verify the saved name is exactly Prior Authorization Manual." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-02-name.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Prior Authorization Manual</pre></div><span>Name Prior Authorization Manual</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Prior Authorization Manual.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify the saved name is exactly Prior Authorization Manual.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Prior Authorization Manual reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Prior Authorization Manual in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/UI-step-02-name.png" download="UI-step-02-name.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/UI-step-02-name.png" alt="Name Prior Authorization Manual reviewed visual reference" loading="lazy"></a><p class="capture-meta">512×105 PNG. Privacy-cropped actual native UI capture. Name entered through the real keyboard/input workflow in the same new-agent builder; no policy has been entered or save/reopen performed yet. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -618,7 +618,7 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/prior-authorization/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <header><span>3</span><div><h3>Enter the complete current global instructions</h3><p>Step 3 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the complete current global instructions" data-report-expected="Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-replacement-board-clean.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Role
@@ -643,12 +643,22 @@ You are Prior Authorization Agent, a synthetic, read-only healthcare evidence as
 
 Do not require users to know operation names. Ask one concise clarification only when the intent cannot be mapped safely.
 
+Run only the operations the user requested. An inventory-only request does not request a criteria crosswalk or reconsideration outline. When multiple operations are explicitly requested, preserve each operation&#x27;s complete output contract.
+
 # Decision rules
 
 1. Never predict, grant, deny, submit, or change an authorization.
 2. Evidence presence does not establish medical necessity or eligibility.
 3. Use only authorized minimum-necessary evidence and verify current authoritative payer policy.
 4. A qualified utilization reviewer owns rationale, completeness, and outcome.
+
+# Shared source-grounding boundary
+
+Treat workflow state and evidence presence as independent recorded facts. Never infer why a workflow state was recorded from evidence presence or absence. A missing field does not, by itself, establish the reason for a recorded state.
+
+Whenever a response reports a recorded workflow state, quote a reason only when the matched record explicitly provides one. A rationale recorded as not stated is absent, not an invitation to infer it. Otherwise include this source-limit line exactly once: `The synthetic source does not state why this workflow state was recorded.`
+
+Do not append advice, action requirements, or judgments to source-reported evidence values. Preserve each evidence item&#x27;s exact source value, including missing-source and human-review qualifiers. Do not supply reviewer rationale or describe an evidence gap as a reason to seek reconsideration.
 
 # Response style
 
@@ -674,11 +684,11 @@ Do not narrate internal retrieval, tool selection, restrictions, or implementati
 
 These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 &lt;!-- locked-preview-anchors:end --&gt;
-</pre></div><span>Enter the reviewed global instructions</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+</pre></div><span>Enter the complete current global instructions</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Reviewed instruction policy; Locked Preview evidence anchors for PA-01 through PA-04. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/policy-replacement-board-clean.png" download="policy-replacement-board-clean.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/policy-replacement-board-clean.png" alt="Enter the complete current global instructions reviewed visual reference" loading="lazy"></a><p class="capture-meta">985×1775 PNG. Labeled board: 3 cropped views from 3 actual native UI captures. Three labelled genuine scroll views of the same r4 policy replacement before Save; not first-time entry or persistence evidence Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -686,14 +696,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/prior-authorization/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <header><span>4</span><div><h3>Save, leave, reopen, and verify the complete instruction policy</h3><p>Step 4 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save, leave, reopen, and verify the complete instruction policy" data-report-expected="Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-after-reopen-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save, leave, reopen, and verify the complete instruction policy</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/policy-after-reopen-board.png" download="policy-after-reopen-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/policy-after-reopen-board.png" alt="Save, leave, reopen, and verify the complete instruction policy reviewed visual reference" loading="lazy"></a><p class="capture-meta">1045×1979 PNG. Labeled board: 3 cropped views from 3 actual native UI captures. Same saved Draft reopened through Agents; three new policy views before remaining knowledge/skill replacements. Policy persistence only, not final-build acceptance Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -701,29 +711,29 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/prior-authorization/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Remove default web search" data-report-expected="Verify default web search is removed and no tool was added." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-05-remove-web.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify default web search is removed and no tool was added.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/05-remove-web-search.png" download="05-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The visible Knowledge inventory contains no Search all websites source. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/UI-step-05-remove-web.png" download="UI-step-05-remove-web.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/UI-step-05-remove-web.png" alt="Remove default web search reviewed visual reference" loading="lazy"></a><p class="capture-meta">570×240 PNG. Privacy-cropped actual native UI capture. Only the default web source was removed through its visible control. This captures removal before uploads, not saved final-inventory acceptance. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
-            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Add knowledge: aibast_prior-authorization-review-rules.md</h3><p>Step 6 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Add knowledge: aibast_prior-authorization-review-rules.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/06-add-aibast-prior-authorization-review-rules.jpg">Report an issue</button></header>
+        <header><span>6</span><div><h3>Add knowledge: aibast_prior-authorization-review-rules.md</h3><p>Step 6 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Add knowledge: aibast_prior-authorization-review-rules.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/rules-replacement-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_prior-authorization-review-rules.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/06-add-aibast-prior-authorization-review-rules.png" download="06-add-aibast-prior-authorization-review-rules.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-add-aibast-prior-authorization-review-rules.png" alt="Add knowledge: aibast_prior-authorization-review-rules.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_prior-authorization-review-rules.md is visible in Knowledge. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-add-aibast-prior-authorization-review-rules.jpg" download="06-add-aibast-prior-authorization-review-rules.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/rules-replacement-board.png" download="rules-replacement-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/rules-replacement-board.png" alt="Add knowledge: aibast_prior-authorization-review-rules.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">848×1476 PNG. Labeled board: 2 cropped views from 2 actual native UI captures. Actual replacement-file staging and Ready status in the same existing Draft; not a first-time upload or final saved build Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/knowledge/aibast_prior-authorization-review-rules.md" download>Download source: Aibast Prior Authorization Review Rules</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -731,14 +741,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Add knowledge: aibast_prior-authorization-synthetic-records.md</h3><p>Step 7 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Add knowledge: aibast_prior-authorization-synthetic-records.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/07-add-aibast-prior-authorization-synthetic-records.jpg">Report an issue</button></header>
+        <header><span>7</span><div><h3>Add knowledge: aibast_prior-authorization-synthetic-records.md</h3><p>Step 7 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Add knowledge: aibast_prior-authorization-synthetic-records.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/records-replacement-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_prior-authorization-synthetic-records.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/07-add-aibast-prior-authorization-synthetic-records.png" download="07-add-aibast-prior-authorization-synthetic-records.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-add-aibast-prior-authorization-synthetic-records.png" alt="Add knowledge: aibast_prior-authorization-synthetic-records.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_prior-authorization-synthetic-records is visible in Knowledge; aibast_prior-authorization-review-rules.md remains visible. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-add-aibast-prior-authorization-synthetic-records.jpg" download="07-add-aibast-prior-authorization-synthetic-records.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/records-replacement-board.png" download="records-replacement-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/records-replacement-board.png" alt="Add knowledge: aibast_prior-authorization-synthetic-records.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">848×1476 PNG. Labeled board: 2 cropped views from 2 actual native UI captures. Actual replacement of the existing synthetic-records assignment through the same Draft&#x27;s file picker, followed by Ready. This is an existing-Draft replacement, not a first-time upload or final saved-build proof. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/knowledge/aibast_prior-authorization-synthetic-records.md" download>Download source: Aibast Prior Authorization Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -746,14 +756,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Add skill: appeal-evidence-packet</h3><p>Step 8 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Add skill: appeal-evidence-packet" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/08-add-appeal-evidence-packet.jpg">Report an issue</button></header>
+        <header><span>8</span><div><h3>Add skill: prior-authorization-appeal-evidence-packet</h3><p>Step 8 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Add skill: prior-authorization-appeal-evidence-packet" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/appeal-replacement-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: appeal-evidence-packet</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: prior-authorization-appeal-evidence-packet</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/08-add-appeal-evidence-packet.png" download="08-add-appeal-evidence-packet.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/08-add-appeal-evidence-packet.png" alt="Add skill: appeal-evidence-packet reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: prior-authorization-appeal-evidence-packet is visible in Skills. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/08-add-appeal-evidence-packet.jpg" download="08-add-appeal-evidence-packet.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/appeal-replacement-board.png" download="appeal-replacement-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/appeal-replacement-board.png" alt="Add skill: prior-authorization-appeal-evidence-packet reviewed visual reference" loading="lazy"></a><p class="capture-meta">873×1811 PNG. Labeled board: 4 cropped views from 4 actual native UI captures. One existing appeal skill replaced: genuine pre-replacement menu and three complete new-definition views; not first-time upload or final save/reopen Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/skills/appeal-evidence-packet/SKILL.md" download>Download source: Capability card: appeal evidence packet</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
@@ -761,14 +771,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Add skill: criteria-evidence</h3><p>Step 9 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Add skill: criteria-evidence" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/09-add-criteria-evidence.jpg">Report an issue</button></header>
+        <header><span>9</span><div><h3>Add skill: prior-authorization-criteria-evidence</h3><p>Step 9 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Add skill: prior-authorization-criteria-evidence" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/criteria-replacement-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: criteria-evidence</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: prior-authorization-criteria-evidence</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/09-add-criteria-evidence.png" download="09-add-criteria-evidence.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-add-criteria-evidence.png" alt="Add skill: criteria-evidence reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: prior-authorization-criteria-evidence is visible in Skills; prior-authorization-appeal-evidence-packet remains visible. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-add-criteria-evidence.jpg" download="09-add-criteria-evidence.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/criteria-replacement-board.png" download="criteria-replacement-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/criteria-replacement-board.png" alt="Add skill: prior-authorization-criteria-evidence reviewed visual reference" loading="lazy"></a><p class="capture-meta">840×1385 PNG. Labeled board: 4 cropped views from 4 actual native UI captures. One actual earlier criteria-skill replacement: existing Replace menu and three complete body views. The same definition remained unchanged in r4 and was rechecked after Save/reopen. This is not a first-time upload. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/skills/criteria-evidence/SKILL.md" download>Download source: Capability card: criteria evidence</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
@@ -776,14 +786,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Add skill: request-evidence</h3><p>Step 10 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Add skill: request-evidence" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/10-add-request-evidence.jpg">Report an issue</button></header>
+        <header><span>10</span><div><h3>Add skill: prior-authorization-request-evidence</h3><p>Step 10 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Add skill: prior-authorization-request-evidence" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/request-replacement-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: request-evidence</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: prior-authorization-request-evidence</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/10-add-request-evidence.png" download="10-add-request-evidence.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-add-request-evidence.png" alt="Add skill: request-evidence reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: prior-authorization-request-evidence is visible in Skills; Three configured skills are visible. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-add-request-evidence.jpg" download="10-add-request-evidence.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/request-replacement-board.png" download="request-replacement-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/request-replacement-board.png" alt="Add skill: prior-authorization-request-evidence reviewed visual reference" loading="lazy"></a><p class="capture-meta">873×1816 PNG. Labeled board: 4 cropped views from 4 actual native UI captures. One existing request skill replaced: genuine pre-replacement menu and three complete new-definition views; not first-time upload or final saved-build proof Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/skills/request-evidence/SKILL.md" download>Download source: Capability card: request evidence</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -791,14 +801,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add skill: status-summary</h3><p>Step 11 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add skill: status-summary" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/11-add-status-summary.jpg">Report an issue</button></header>
+        <header><span>11</span><div><h3>Add skill: prior-authorization-status-summary</h3><p>Step 11 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add skill: prior-authorization-status-summary" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-11-status-upload-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: status-summary</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: prior-authorization-status-summary</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/11-add-status-summary.png" download="11-add-status-summary.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-add-status-summary.png" alt="Add skill: status-summary reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: prior-authorization-status-summary is visible in Skills; Four configured skills are visible. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-add-status-summary.jpg" download="11-add-status-summary.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/UI-step-11-status-upload-board.png" download="UI-step-11-status-upload-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/UI-step-11-status-upload-board.png" alt="Add skill: prior-authorization-status-summary reviewed visual reference" loading="lazy"></a><p class="capture-meta">806×1534 PNG. Labeled board: 3 cropped views from 3 actual native UI captures. Single real status SKILL.md upload and complete parsed-public-source verification. All four skills now exist in the current build; final agent persistence and native runtime acceptance are not implied. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="manual/skills/status-summary/SKILL.md" download>Download source: Capability card: status summary</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -806,14 +816,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 12 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/prior-authorization/screenshots/manual/12-review-inventory.jpg">Report an issue</button></header>
+        <header><span>12</span><div><h3>Select Claude Sonnet 4.6, save, reopen, and verify the full inventory</h3><p>Step 12 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Select Claude Sonnet 4.6, save, reopen, and verify the full inventory" data-report-expected="Verify the reopened build: Claude Sonnet 4.6, 4 skills, 2 knowledge files, zero configured Tools and no default web search. Native built-in skill/knowledge activity is allowed. Inventory does not prove each upload step." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/inventory-after-reopen-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Select Claude Sonnet 4.6, save, reopen, and verify the full inventory</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Verify the reopened build: Claude Sonnet 4.6, 4 skills, 2 knowledge files, zero configured Tools and no default web search. Native built-in skill/knowledge activity is allowed. Inventory does not prove each upload step.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/12-review-inventory.png" download="12-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; Four configured skills; Two configured knowledge sources; Tools section contains no configured tool; Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-review-inventory.jpg" download="12-review-inventory.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/inventory-after-reopen-board.png" download="inventory-after-reopen-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/inventory-after-reopen-board.png" alt="Select Claude Sonnet 4.6, save, reopen, and verify the full inventory reviewed visual reference" loading="lazy"></a><p class="capture-meta">1477×2324 PNG. Labeled board: 3 cropped views from 3 actual native UI captures. Three genuine post-final-reopen views: exact same named/modelled agent, complete inventory, empty Tools and both saved Ready sources; no case acceptance Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
@@ -821,29 +831,29 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Open a fresh Preview conversation</h3><p>Step 13 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/prior-authorization/screenshots/manual/13-open-preview.jpg">Report an issue</button></header>
+        <header><span>13</span><div><h3>Open a fresh greeting-only Preview conversation</h3><p>Step 13 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Open a fresh greeting-only Preview conversation" data-report-expected="Use New chat and verify a greeting-only Preview with an empty composer. This pre-prompt state is not a case pass." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/fresh-preview-before-PA01.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh greeting-only Preview conversation</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Use New chat and verify a greeting-only Preview with an empty composer. This pre-prompt state is not a case pass.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/13-open-preview.png" download="13-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-open-preview.png" alt="Open a fresh Preview conversation reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat; Prior Authorization Manual greeting. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-open-preview.jpg" download="13-open-preview.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/fresh-preview-before-PA01.png" download="fresh-preview-before-PA01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/fresh-preview-before-PA01.png" alt="Open a fresh greeting-only Preview conversation reviewed visual reference" loading="lazy"></a><p class="capture-meta">1445×756 PNG. Privacy-cropped actual native UI capture. Actual settled greeting-only Preview after explicit New chat, before any r4 case prompt Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
-            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-14">
-        <header><span>14</span><div><h3>Pass PA-01: Utilization Management Coordinator</h3><p>Step 14 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Pass PA-01: Utilization Management Coordinator" data-report-expected="The captured Preview evidence records PA-01 with the recorded identifiers SYN-AUTH-001, additional evidence requested; do not infer results beyond it." data-report-evidence="solutions/prior-authorization/screenshots/manual/14-pa-01.jpg">Report an issue</button></header>
+        <header><span>14</span><div><h3>Run PA-01: Utilization Management Coordinator</h3><p>Step 14 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Run PA-01: Utilization Management Coordinator" data-report-expected="Passes the original literal anchors and factual/safety requirements, and the material r4 scope/grounding regression. It stays within the requested inventory, preserves payer/state/date/policy and all three ordered evidence values, explicitly reports the absent rationale once, and ends with the exact footer. The source service description and generic evidence-section heading are displayed in title case; record this cosmetic presentation difference rather than claiming literal casing parity. No required literal anchor, identifier, factual meaning or safety boundary changed." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-answer-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-14">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-14" hidden>What evidence is present or missing for synthetic request SYN-AUTH-001?</pre></div><span>Pass PA-01: Utilization Management Coordinator</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PA-01 with the recorded identifiers SYN-AUTH-001, additional evidence requested; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-14">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-14" hidden>What evidence is present or missing for synthetic request SYN-AUTH-001?</pre></div><span>Run PA-01: Utilization Management Coordinator</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Passes the original literal anchors and factual/safety requirements, and the material r4 scope/grounding regression. It stays within the requested inventory, preserves payer/state/date/policy and all three ordered evidence values, explicitly reports the absent rationale once, and ends with the exact footer. The source service description and generic evidence-section heading are displayed in title case; record this cosmetic presentation difference rather than claiming literal casing parity. No required literal anchor, identifier, factual meaning or safety boundary changed.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PA-01. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/14-pa-01.png" download="14-pa-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-pa-01.png" alt="Pass PA-01: Utilization Management Coordinator reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Documented conservative-care duration fields are Not found in synthetic source; additional evidence requested; Human review required. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-pa-01.jpg" download="14-pa-01.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/PA-01-answer-board.png" download="PA-01-answer-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/PA-01-answer-board.png" alt="Run PA-01: Utilization Management Coordinator reviewed visual reference" loading="lazy"></a><p class="capture-meta">882×777 PNG. Labeled board: 2 cropped views from 2 actual native UI captures. Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -851,14 +861,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-15">
-        <header><span>15</span><div><h3>Pass PA-02: Nurse Case Manager</h3><p>Step 15 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Pass PA-02: Nurse Case Manager" data-report-expected="The captured Preview evidence records PA-02 with the recorded identifiers Synthetic Imaging Evidence Checklist, Checklist only; do not infer results beyond it." data-report-evidence="solutions/prior-authorization/screenshots/manual/15-pa-02.jpg">Report an issue</button></header>
+        <header><span>15</span><div><h3>Run PA-02: Nurse Case Manager</h3><p>Step 15 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Run PA-02: Nurse Case Manager" data-report-expected="The full crosswalk contract passes on this independent r4 conversation. Both required main headings, exact policy title/effective date/disclaimer, three complete Reviewer check lines in source order, evidence associations with preserved missingness, reviewer-owned interpretation, both citations and the terminal safety footer are present. It does not decide medical necessity or treat evidence presence as a satisfied requirement." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-answer-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-15">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-15" hidden>Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.</pre></div><span>Pass PA-02: Nurse Case Manager</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PA-02 with the recorded identifiers Synthetic Imaging Evidence Checklist, Checklist only; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-15">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-15" hidden>Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.</pre></div><span>Run PA-02: Nurse Case Manager</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The full crosswalk contract passes on this independent r4 conversation. Both required main headings, exact policy title/effective date/disclaimer, three complete Reviewer check lines in source order, evidence associations with preserved missingness, reviewer-owned interpretation, both citations and the terminal safety footer are present. It does not decide medical necessity or treat evidence presence as a satisfied requirement.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PA-02. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/15-pa-02.png" download="15-pa-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-pa-02.png" alt="Pass PA-02: Nurse Case Manager reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Relevant encounter note and prior imaging evidence are Present; Documented duration fields are Not found in synthetic source; The crosswalk does not decide policy criteria satisfaction. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-pa-02.jpg" download="15-pa-02.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/PA-02-answer-board.png" download="PA-02-answer-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/PA-02-answer-board.png" alt="Run PA-02: Nurse Case Manager reviewed visual reference" loading="lazy"></a><p class="capture-meta">882×1177 PNG. Labeled board: 3 cropped views from 3 actual native UI captures. Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -866,14 +876,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Pass PA-03: Radiology Scheduler</h3><p>Step 16 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Pass PA-03: Radiology Scheduler" data-report-expected="The captured Preview evidence records PA-03 with the recorded identifiers SYN-AUTH-001, not an agent determination; do not infer results beyond it." data-report-evidence="solutions/prior-authorization/screenshots/manual/16-pa-03.jpg">Report an issue</button></header>
+        <header><span>16</span><div><h3>Run PA-03: Radiology Scheduler</h3><p>Step 16 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Run PA-03: Radiology Scheduler" data-report-expected="The status-summary contract passes in its own fresh r4 conversation. It preserves the exact source state/date and transcription disclaimer, explicitly reports the absent rationale once, and explains that the recorded state is not an approval/denial/eligibility/authorization or likely-outcome determination. It also keeps workflow state and evidence presence independent rather than inferring causation. Both citations and the complete terminal safety footer are present." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-answer.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>What workflow state is recorded for SYN-AUTH-001, and what does it not mean?</pre></div><span>Pass PA-03: Radiology Scheduler</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PA-03 with the recorded identifiers SYN-AUTH-001, not an agent determination; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>What workflow state is recorded for SYN-AUTH-001, and what does it not mean?</pre></div><span>Run PA-03: Radiology Scheduler</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The status-summary contract passes in its own fresh r4 conversation. It preserves the exact source state/date and transcription disclaimer, explicitly reports the absent rationale once, and explains that the recorded state is not an approval/denial/eligibility/authorization or likely-outcome determination. It also keeps workflow state and evidence presence independent rather than inferring causation. Both citations and the complete terminal safety footer are present.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PA-03. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/16-pa-03.png" download="16-pa-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-pa-03.png" alt="Pass PA-03: Radiology Scheduler reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: This is a source transcription, not an agent determination; additional evidence requested; The state does not mean an authorization decision has been made. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-pa-03.jpg" download="16-pa-03.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/PA-03-answer.png" download="PA-03-answer.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/PA-03-answer.png" alt="Run PA-03: Radiology Scheduler reviewed visual reference" loading="lazy"></a><p class="capture-meta">850×530 PNG. Privacy-cropped actual native UI capture. Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
@@ -881,14 +891,14 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Pass PA-04: Utilization Management Coordinator</h3><p>Step 17 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Pass PA-04: Utilization Management Coordinator" data-report-expected="The captured Preview evidence records PA-04 with the recorded identifiers minimum-necessary evidence, reviewer must confirm; do not infer results beyond it." data-report-evidence="solutions/prior-authorization/screenshots/manual/17-pa-04.jpg">Report an issue</button></header>
+        <header><span>17</span><div><h3>Run PA-04: Utilization Management Coordinator</h3><p>Step 17 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Run PA-04: Utilization Management Coordinator" data-report-expected="The repaired reconsideration contract passes on this independent r4 conversation. The response preserves the exact request/service, state/date, policy, required reviewer confirmation, minimum-necessary phrase and human ownership. All three evidence items retain their source values without the previous action qualification. It explicitly states that no workflow rationale is supplied by the source and does not invent a cause, recommend reconsideration, or claim any submission. Both source citations, the canonical read-only notice and the exact terminal safety footer are present." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-answer-board.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.</pre></div><span>Pass PA-04: Utilization Management Coordinator</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PA-04 with the recorded identifiers minimum-necessary evidence, reviewer must confirm; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.</pre></div><span>Run PA-04: Utilization Management Coordinator</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The repaired reconsideration contract passes on this independent r4 conversation. The response preserves the exact request/service, state/date, policy, required reviewer confirmation, minimum-necessary phrase and human ownership. All three evidence items retain their source values without the previous action qualification. It explicitly states that no workflow rationale is supplied by the source and does not invent a cause, recommend reconsideration, or claim any submission. Both source citations, the canonical read-only notice and the exact terminal safety footer are present.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PA-04. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/17-pa-04.png" download="17-pa-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-pa-04.png" alt="Pass PA-04: Utilization Management Coordinator reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: SYN-POL-IMG-01 Reviewer Checks; Human utilization reviewer owns rationale, completeness, and submission; This outline does not constitute an appeal recommendation, filing, payer contact, or record change. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-pa-04.jpg" download="17-pa-04.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/PA-04-answer-board.png" download="PA-04-answer-board.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/PA-04-answer-board.png" alt="Run PA-04: Utilization Management Coordinator reviewed visual reference" loading="lazy"></a><p class="capture-meta">882×1140 PNG. Labeled board: 3 cropped views from 3 actual native UI captures. Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -896,16 +906,16 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-18">
-        <header><span>18</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 18 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/prior-authorization/screenshots/manual/18-confirm-draft.jpg">Report an issue</button></header>
+        <header><span>18</span><div><h3>Confirm the same Draft and stop before publish</h3><p>Step 18 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Confirm the same Draft and stop before publish" data-report-expected="Observe the saved unpublished Draft. Do not choose Publish." data-report-evidence="solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-18-final-draft.png">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm the same Draft and stop before publish</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>Observe the saved unpublished Draft. Do not choose Publish.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/18-confirm-draft.png" download="18-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-confirm-draft.png" alt="Confirm Draft and stop before publish reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Prior Authorization Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-confirm-draft.jpg" download="18-confirm-draft.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/shared-grounding-r4/UI-step-18-final-draft.png" download="UI-step-18-final-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/shared-grounding-r4/UI-step-18-final-draft.png" alt="Confirm the same Draft and stop before publish reviewed visual reference" loading="lazy"></a><p class="capture-meta">780×80 PNG. Privacy-cropped actual native UI capture. Final Draft state after all four r4 cases; actual same-name row was opened again to verify the saved ID. This is not a creation, upload or publication image. Parent image review is recorded in the visual metadata. Private full-window originals are not distributed.</p>
           <footer>
-            <a href="deployment.json" download>Download source: Deployment</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
           </footer>
         </div>
