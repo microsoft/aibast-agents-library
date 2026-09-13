@@ -29,13 +29,7 @@
   },
   "copilot_studio": {
     "authoring_mode": "manual-upload",
-    "required_connections": [
-      "Dynamics 365 wealth-management client data",
-      "Approved portfolio accounting and tax-lot data",
-      "Financial planning or retirement-modeling system",
-      "Power BI",
-      "Microsoft Teams approvals"
-    ],
+    "required_connections": [],
     "operations": [
       "portfolio_analysis",
       "rebalance_recommendation",
@@ -55,33 +49,44 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Portfolio Rebalancing Manual",
-      "bot_id": "bb0af0f4-c88c-4a65-922b-1b26a498ed45",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
-      "model": "Sonnet46",
+      "model": "Claude Sonnet 4.6",
       "skills": 6,
       "knowledge_files": 2,
+      "tools": 0,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
+      "build_revision": "repaired-r5",
       "preview_cases_passed": 6,
-      "preview_cases_total": 6
+      "preview_cases_total": 6,
+      "verified_at": "2026-09-13T04:56:08.534Z",
+      "source_contract_status": "native_regression_passed",
+      "workshop_status": "partial",
+      "source_contract_note": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-5 and 14-22. Steps 2-5 are explicitly post-reopen name, policy and empty-Tools readbacks, not a new creation, paste, removal or upload recording. Blank-agent step 1 and upload steps 6-13 remain open. The workshop is partial, not certified."
     },
     "validated_pilot": {
       "display_name": "Portfolio Rebalancing Pilot",
       "schema_name": "aibast_PortfolioRebalancingPilot",
-      "bot_id": "9ded2624-1124-490e-98e3-999dd77da102",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
       "skills": 6,
       "knowledge_files": 2,
       "changes_pushed": 9,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 6,
-      "preview_cases_total": 6
-    }
+      "preview_cases_passed": null,
+      "preview_cases_total": 6,
+      "captured_preview_cases_passed": 6,
+      "source_contract_status": "stale_source",
+      "source_contract_note": "Historical assisted/Easy and deterministic Brainstem evidence is retained separately; it is not native Manual r5 final-answer acceptance. No current Easy-lane regression or fresh-from-empty Manual construction is certified."
+    },
+    "production_replacement_connections": [
+      "Dynamics 365 wealth-management client data",
+      "Approved portfolio accounting and tax-lot data",
+      "Financial planning or retirement-modeling system",
+      "Power BI",
+      "Microsoft Teams approvals"
+    ],
+    "manual_runtime_boundary": "Zero configured Tools or production connections. Native built-in skill/knowledge activity is allowed; default web search is removed. Production replacements are future seams only."
   },
   "demo_scenarios": [
     "portfolio-rebalancing-portfolio-analysis",
@@ -90,5 +95,25 @@
     "portfolio-rebalancing-tax-loss-harvest",
     "portfolio-rebalancing-retirement-scenario",
     "portfolio-rebalancing-execution-plan"
-  ]
+  ],
+  "source_bundle": {
+    "label": "Portfolio Rebalancing r5 manual inputs",
+    "kind": "manual-inputs",
+    "native_importable": false,
+    "standalone_guide": false,
+    "description": "Exactly nine frozen r5 manual inputs, their public SHA256 inventory and the export README. No HTML guide, screenshot, native import archive, runtime, tenant binding or raw browser log is included. Use the separately published guides and reviewed PNG reference set; this ZIP is deliberately not a standalone workshop.",
+    "include_paths": [
+      "solutions/portfolio-rebalancing/manual/GLOBAL-INSTRUCTIONS.md",
+      "solutions/portfolio-rebalancing/manual/skills/aibast_execution-plan_06/SKILL.md",
+      "solutions/portfolio-rebalancing/manual/skills/aibast_portfolio-analysis_01/SKILL.md",
+      "solutions/portfolio-rebalancing/manual/skills/aibast_rebalance-recommendation_02/SKILL.md",
+      "solutions/portfolio-rebalancing/manual/skills/aibast_retirement-scenario_05/SKILL.md",
+      "solutions/portfolio-rebalancing/manual/skills/aibast_tax-impact_03/SKILL.md",
+      "solutions/portfolio-rebalancing/manual/skills/aibast_tax-loss-harvest_04/SKILL.md",
+      "solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-controls-and-review.md",
+      "solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-synthetic-records.md",
+      "solutions/portfolio-rebalancing/evals/manual-inputs-r5.json",
+      "solutions/portfolio-rebalancing/exports/README.md"
+    ]
+  }
 }

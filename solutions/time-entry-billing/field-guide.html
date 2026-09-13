@@ -548,7 +548,10 @@ html[data-theme="dark"] {
       <p class="lede">Use this guide to understand the workshop boundary, expected proof, production seams, and recovery paths before or during the hands-on module.</p>
       <div class="notice"><strong>Workshop mission:</strong> Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.</div>
       <div class="notice"><strong>Evidence boundary:</strong> all packaged records and outcomes are synthetic qualitative evidence—not customer KPIs, measured production results, live connections, or publication approval.</div>
+
     </section>
+
+
 
 
     <!-- aibast-facilitator-certification:v1 -->
@@ -689,7 +692,7 @@ html[data-theme="dark"] {
 
     <h2>Locked Preview corpus</h2>
     <section class="card">
-      <p>Run every case in a fresh Copilot Studio Preview conversation. The deterministic validator—not phrasing similarity—defines the complete pass.</p>
+      <p>Run every case once in a fresh Copilot Studio Preview conversation. Source marker checks do not replace native final-answer review, source fidelity, citations or the no-action boundary.</p>
       <div class="table-scroll" role="region" aria-label="Locked Preview corpus table" tabindex="0">
         <table>
           <thead><tr><th>Case</th><th>Persona</th><th>Prompt</th></tr></thead>
@@ -752,7 +755,7 @@ html[data-theme="dark"] {
             <tr><td>A required source is missing</td><td>Stop. Restore the reviewed file; never substitute invented content.</td></tr>
             <tr><td>Knowledge is still processing</td><td>Wait for ingestion before Preview. A partial answer is not evidence.</td></tr>
             <tr><td>A case misses a marker</td><td>Keep the case failed and inspect the package. Never retry until it happens to pass.</td></tr>
-            <tr><td>The existing Draft is found</td><td>The harness should clone and reconnect automatically.</td></tr>
+            <tr><td>The existing Draft is found</td><td>In Manual mode, reopen the same owned Draft and compare its complete saved sources; do not create a duplicate or upload duplicate files. Easy-mode reconnection is a separate harness workflow.</td></tr>
             <tr><td>The agent appears Published</td><td>Stop immediately. This workshop ends at Draft.</td></tr>
           </tbody>
         </table>

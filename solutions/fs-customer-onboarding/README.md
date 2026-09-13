@@ -64,7 +64,7 @@ and knowledge and does not reproduce the manual build.
 | Source bundle | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip` |
 | Manual evidence | `solutions/fs-customer-onboarding/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — source repair pending | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip` |
+| Historical Copilot Studio solution ZIP — not current source | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-solution-export.json` |
 

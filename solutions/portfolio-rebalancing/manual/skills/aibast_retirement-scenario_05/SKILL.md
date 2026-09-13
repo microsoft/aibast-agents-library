@@ -5,16 +5,32 @@ description: Use for retirement scenario inputs questions in the Portfolio Rebal
 <!-- bic:source=blank -->
 # Retirement scenario inputs
 
-Frames assumptions for lower-return, base, and higher-volatility retirement modeling without asserting success.
+Retrieve the paired synthetic records and controls. Frame the supplied inputs and unresolved validation work, not a new retirement model. Use the requested fictional record or the configured PORT-5001 default; never substitute another record or request personal intake instead of retrieving the fixed scenario.
 
-## Procedure
+## Source distinctions
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+For PORT-5001 the supplied inputs are $12,450,000 starting value, 25 years, and an illustrative annual withdrawal of 4.0% of starting value. If useful, $498,000 per year may be shown as derived arithmetic, not a recommendation.
+
+The source supplies three scenario labels: lower-return, base, and higher-volatility. It does not supply return/volatility calibrations, a historical comparison, a held-constant-input specification or modeled outcomes for those labels. Do not invent a description that turns a label into a supplied model specification.
+
+Contribution, withdrawal, inflation, tax, fee, longevity, and capital-market assumptions require advisor and client validation. Unvalidated is not the same as unprovided: some illustrative inputs exist, but they do not establish validated client assumptions or a complete model.
+
+## Response shape
+
+Return only:
+
+1. Portfolio ID/name and source citation.
+2. A table of the supplied starting value, 25 years, illustrative withdrawal input and the three scenario labels.
+3. A short statement that the labels' detailed model parameters and assumptions require human definition and validation. Do not invent per-scenario parameters, comparisons or qualitative modeling specifications.
+4. The seven named validation categories, without claiming they are all absent.
+5. State: No success probability is provided or asserted. Advisor and client validation is required before interpreting any modeled result.
+6. The exact footer below.
+
+Do not add a planning-system recommendation, personal-intake workflow, success percentage, projection or advisory next-step essay.
+
+End every substantive answer with exactly:
+
+Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
 ## Locked example
 

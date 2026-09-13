@@ -15,6 +15,7 @@ from tools.scaffold_solution_journey import (
     THEME_VARIABLES,
     ScaffoldError,
     choose_frame_resources,
+    expected_result,
     load_context,
     scaffold,
 )
@@ -485,6 +486,43 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "Open a fresh Preview conversation",
         "unmatched.jpg",
     ).startswith("A fresh Preview surface")
+
+
+@pytest.mark.parametrize("review_snapshot", [False, True])
+@pytest.mark.parametrize(
+    ("action", "expected_file"),
+    [
+        ("Add knowledge: aibast_portfolio-controls-and-review.md", "knowledge file"),
+        ("Add knowledge: agent-skill-and-review-rules.md", "knowledge file"),
+        ("Upload synthetic records", "knowledge file"),
+        ("Upload knowledge: reviewed-instructions.md", "knowledge file"),
+        ("Add skill: aibast_rebalance-recommendation_02", "SKILL.md"),
+        ("Add review skill", "SKILL.md"),
+        ("Replace skill: knowledge-review", "SKILL.md"),
+    ],
+)
+def test_upload_checkpoints_do_not_require_the_final_inventory(
+    tmp_path, review_snapshot, action, expected_file
+):
+    build_fixture(tmp_path)
+    ctx = load_context(
+        tmp_path,
+        "demo-journey",
+        allow_pending=False,
+        raw_base="https://example.test/raw/",
+    )
+    if review_snapshot:
+        ctx.manual_evidence["review_snapshot"] = "evals/manual-pilot-review.json"
+
+    result = expected_result(ctx, action, "upload-checkpoint.jpg")
+
+    assert expected_file in result
+    assert "final inventory" in result
+    assert "rendered skills" not in result
+    assert "no tools" not in result
+    assert "skills" in expected_result(
+        ctx, "Review model, skills, knowledge, and safety boundaries", "inventory.jpg"
+    )
 
 
 def test_scaffolder_uses_reviewed_copilot_studio_knowledge_as_legacy_fallback(

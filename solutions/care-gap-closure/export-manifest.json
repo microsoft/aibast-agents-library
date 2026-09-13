@@ -28,7 +28,7 @@
     },
     {
       "id": "copilot-studio-solution",
-      "label": "Historical Copilot Studio solution \u2014 source repair pending",
+      "label": "Historical Copilot Studio solution \u2014 not current source",
       "path": "solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
       "use": "Historical export predates the SYN-COL \u2014 182 records repair. Do not use it as the repaired source; synchronize the reviewed native files, rerun Preview, and create a fresh unmanaged export before import.",
@@ -307,11 +307,11 @@
       "status": "ready"
     },
     {
-      "id": "easy-evidence-visual-checkpoints",
-      "label": "Visual Checkpoints",
+      "id": "visual-checkpoints",
+      "label": "Visual checkpoint contract",
       "path": "solutions/care-gap-closure/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/evals/visual-checkpoints.json",
-      "use": "Easy-mode deployment or Preview evidence",
+      "use": "Reviewed image scope, media format, provenance and open student steps",
       "status": "ready"
     },
     {
@@ -719,7 +719,7 @@
       "label": "Manual browser tutorial",
       "path": "solutions/care-gap-closure/manual-tutorial.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual-tutorial.html",
-      "use": "One action per real manual evidence frame",
+      "use": "Student actions, source downloads, reviewed references and explicit evidence gaps",
       "status": "ready"
     },
     {
@@ -756,7 +756,7 @@
     }
   ],
   "copilot_studio_solution": {
-    "label": "Historical Care Gap Closure Agent Copilot Studio solution \u2014 source repair pending",
+    "label": "Historical Care Gap Closure Agent Copilot Studio solution \u2014 not current source",
     "status": "stale_source",
     "solution_unique_name": "aibast_CareGapClosurePilot",
     "zip": {
