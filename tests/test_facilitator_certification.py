@@ -1,5 +1,6 @@
 """Facilitator-only enrollment, certification, and Brainstem guide contract."""
 
+import hashlib
 import html
 import json
 import re
@@ -191,10 +192,20 @@ def test_source_bundles_respect_full_or_manual_only_facilitator_scope():
                     if item["id"] == "manual-input-inventory"
                 )
                 inputs = json.loads((ROOT / inventory["path"]).read_text(encoding="utf-8"))
-                assert names == {item["path"] for item in inputs["inputs"]} | {
+                declared = {item["path"] for item in inputs["inputs"]} | {
                     inventory["path"],
                     (package / "exports/README.md").relative_to(ROOT).as_posix(),
                 }
+                if "locked_cases" in inputs:
+                    cases = inputs["locked_cases"]
+                    canonical = f"tests/demo_cases/{row['slug']}.json"
+                    assert cases["path"] == canonical
+                    assert canonical in manifest_paths
+                    payload = (ROOT / canonical).read_bytes()
+                    assert len(payload) == cases["bytes"]
+                    assert hashlib.sha256(payload).hexdigest() == cases["sha256"]
+                    declared.add(canonical)
+                assert names == declared
             for item in manifest["files"]:
                 if item["path"] in expected:
                     assert item["included_in_bundle"] is False

@@ -1,8 +1,14 @@
 # Prior Authorization Agent — GitHub Copilot Easy mode
 
+## Evidence lane boundary
+
+Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.
+
+The steps below describe the Easy workflow, not a newly accepted run. For the current Manual build and its open gates, use [the Manual tutorial](manual-tutorial.html) and [the dated review](evals/manual-pilot-review.json).
+
 ## 1. Attach the Copilot-only skill
 
-Download [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md), open GitHub
+Download [SKILL.md](https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/skills/aibast-easy-mode-copilot/SKILL.md), open GitHub
 Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
 chat.
 

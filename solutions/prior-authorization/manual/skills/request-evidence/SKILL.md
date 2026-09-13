@@ -17,9 +17,35 @@ Use both packaged knowledge files. Select only the exact synthetic identifier re
 
 ## Required output contract
 
-`# Prior-Authorization Evidence Inventory`; preserve payer, source state/date, policy, and all evidence fields. Continue with criteria crosswalk if criteria context is needed.
+Use the following finding-body template with the exact fields from the requested synthetic record. Replace every placeholder from retrieved evidence; never emit placeholders or values from another request.
+
+Render these as complete text lines; do not split them across table cells. Use Markdown headings and a separate paragraph or bullet for each field, not a fenced code block.
+
+```text
+# Prior-Authorization Evidence Inventory
+## {request_id}: {service}
+Payer: {payer}
+Source-recorded workflow state: {source_status} ({source_date})
+Referenced policy: {policy_reference}
+## Evidence items
+{evidence_item}: {source_value}
+```
+
+Repeat the evidence-item line for every item in source order. Keep each complete item name and its exact value together, including every not-found or human-review qualifier. Keep the workflow state and parenthesized source date together. Append citations after complete lines; table columns, icons, checkmarks, or summary counts do not replace these lines.
+
+Only include criteria when the user explicitly requests it. For inventory-only requests, stop after the inventory, source-limit line, citations, and terminal footer. For an explicitly combined request, continue with the complete criteria-evidence contract without replacing the inventory. Retain the global policy's exact terminal safety footer.
 
 Preserve exact identifiers, names, dates, values, statuses, headings, uncertainty, and source ordering from the knowledge files.
+
+## Source-grounding boundary
+
+Treat workflow state and evidence presence as independent recorded facts. Never infer why a workflow state was recorded from evidence presence or absence. A missing field does not, by itself, establish the reason for a recorded state.
+
+For a matched record, quote a workflow-state reason only when that record explicitly provides it. Otherwise include this source-limit line exactly once: `The synthetic source does not state why this workflow state was recorded.`
+
+Do not add a "Summary for Reviewer" or supply reviewer rationale. Keep any criteria context descriptive; do not turn an evidence gap into a causal explanation, outcome, or recommendation.
+
+Do not append advice, action requirements, or judgments to source-reported evidence values.
 
 ## Review boundary
 

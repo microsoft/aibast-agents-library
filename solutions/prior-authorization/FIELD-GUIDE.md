@@ -18,6 +18,12 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+## Native r4 Manual pilot verified; historical import withheld
+
+On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed.
+
+See [evals/manual-pilot-review.json](evals/manual-pilot-review.json).
+
 
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
@@ -208,7 +214,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
+Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -229,6 +235,19 @@ Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 4. Compare each action with its reviewed reference and expected-result boundary.
 5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
 6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
+### Current Manual preparation
+
+1. For a new build, follow the 18 steps in order. When resuming, use the existing owned Prior Authorization Manual Draft; do not create a duplicate or attach another copy of an unchanged file.
+2. Use exactly the seven inputs in evals/manual-inputs-r4.json and the unchanged locked cases. Download links target the staging workshop that carries this repair, not an older Microsoft-main payload.
+3. Use Claude Sonnet 4.6, four frontmatter-named skills, two knowledge sources, zero configured Tools and no default web search. Production connections are future seams only.
+4. For an existing mismatched knowledge file, remove only its assignment from this Draft, then add the verified replacement through Add knowledge and wait for Ready. The details editor does not replace file contents.
+5. For an existing mismatched skill, use its Replace action once. Replacement closes the old dialog; reopen the same skill and compare the full new name, description and body before assuming failure or uploading again.
+6. Paste the entire policy with normal keyboard events, allow it to settle, blur, Save, leave through Agents and reopen the same Draft. Compare the full policy and all four definitions; a visible editor value or Save click alone is insufficient.
+7. Reference steps 3, 6-10 document actual existing-Draft repairs. Step 9 retains its unchanged r2 capture; steps 1, 2, 5 and 11 retain their real initial-build provenance. Captions do not claim new first-time uploads.
+8. Use New chat for each exact prompt, verify greeting-only history and an exact composer value, and submit once. Review the complete final answer, actual matching skill/search activity, citations and footer. Preserve failures; a material source change requires a separately labelled full regression.
+9. Report only the requested operation. Recorded state, evidence presence and causal rationale are separate facts; absent rationale is not an invitation to invent a cause or append a corrective-action requirement.
+10. Finish by confirming the same agent is Draft. Do not choose Publish. The input ZIP is not an importable solution or a standalone guide; use the separately published current tutorial and reviewed references.
 
 
 ## Production replacement seams
