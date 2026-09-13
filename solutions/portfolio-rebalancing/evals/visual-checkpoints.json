@@ -2,11 +2,11 @@
   "schema": "aibast-visual-checkpoints/1.0",
   "solution": "@aibast-agents-library/portfolio-rebalancing",
   "build_revision": "repaired-r5",
-  "as_of": "2026-09-13T06:06:50.736766+00:00",
+  "as_of": "2026-09-13T06:31:10.040594+00:00",
   "policy": {
     "native_gate": "Only completed native final answers and the parent's recorded semantic review establish these six r5 passes. Debug reasoning and source-only deterministic checks are not native final-answer evidence.",
-    "visual_gate": "Use only the 12 distinct selected, personally reviewed privacy-cropped PNGs. The policy board supports two readback checkpoints. Boards label actual views; private full-window originals are not distributed.",
-    "workshop_gate": "Step 1 and upload steps 6-13 remain open. The saved-state readbacks for steps 2-5 and regression references for steps 14-22 do not certify fresh construction or the whole workshop. No Publish was used."
+    "visual_gate": "Use only the 13 distinct personally reviewed privacy-cropped PNGs. The policy board supports two readback checkpoints; the controls board pairs actual staging with later Ready status. Private full-window originals are not distributed.",
+    "workshop_gate": "Step 1 and upload steps 7-13 remain open. The reviewed evidence supports only its declared scopes, not fresh-from-empty construction or whole-workshop certification."
   },
   "release_review": {
     "status": "partial",
@@ -15,10 +15,10 @@
   },
   "summary": {
     "total_checkpoints": 29,
-    "reusable": 13,
-    "reshoot_required": 16,
-    "reviewed_manual_images": 12,
-    "manual_build_steps_open": 9,
+    "reusable": 14,
+    "reshoot_required": 15,
+    "reviewed_manual_images": 13,
+    "manual_build_steps_open": 8,
     "current_native_cases_passed": 6
   },
   "strict_coverage": {
@@ -37,6 +37,7 @@
       3,
       4,
       5,
+      6,
       14,
       15,
       16,
@@ -49,7 +50,6 @@
     ],
     "open_student_steps": [
       1,
-      6,
       7,
       8,
       9,
@@ -58,7 +58,7 @@
       12,
       13
     ],
-    "reason": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-5 and 14-22. Steps 2-5 are explicitly post-reopen name, policy and empty-Tools readbacks, not a new creation, paste, removal or upload recording. Blank-agent step 1 and upload steps 6-13 remain open. The workshop is partial, not certified."
+    "reason": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified."
   },
   "history": "evals/history/2026-08/index.json",
   "captures": [
@@ -248,8 +248,33 @@
       "id": "manual-r5-step-06",
       "mode": "hard",
       "step": 6,
-      "status": "reshoot_required",
-      "reason": "Current build/upload-step evidence is still open. Historical images and the r5 final inventory do not prove this action. Parent live capture and personal review are required; no fresh-from-empty construction is certified."
+      "status": "reusable",
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-controls-upload-ready-board.png",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-controls-upload-ready-board.png",
+      "build_revision": "repaired-r5",
+      "evidence_stage": "r5_upload_and_later_ready",
+      "reviewed_at": "2026-09-13T06:31:10.040594+00:00",
+      "review_provenance": "Parent personally inspected both complete native views, their labels, full filenames and Ready status.",
+      "visible_anchors": [
+        "Upload files",
+        "Files (1)",
+        "aibast_portfolio-rebalancing-controls-and-review.md",
+        "Add to agent",
+        "Edit knowledge source",
+        "Ready"
+      ],
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 796,
+        "height": 1012,
+        "view_count": 2,
+        "capture_count": 2,
+        "bytes": 165903,
+        "sha256": "55439e544814f3d9d743c6d88cea538a35a270a060a76000bdc777adb8aa1b45",
+        "private_originals": true,
+        "scope": "Two actual native captures: the r5 controls file staged before its single Add to agent action, and the same complete filename reporting Ready at 06:23:19.447Z after ingestion. This supports that controls upload only, not the other uploads; the later view did not re-upload or change the file."
+      }
     },
     {
       "id": "manual-r5-step-07",

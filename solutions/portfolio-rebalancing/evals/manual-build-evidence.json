@@ -4,7 +4,7 @@
   "status": "reshoot_required",
   "certified": false,
   "build_revision": "repaired-r5",
-  "as_of": "2026-09-13T06:06:50.736766+00:00",
+  "as_of": "2026-09-13T06:31:10.040594+00:00",
   "manual_agent": {
     "display_name": "Portfolio Rebalancing Manual",
     "identity_scope": "Same saved/reopened Draft throughout r5 regression and final confirmation. Tenant and bot identifiers are intentionally omitted; no fresh creation is claimed."
@@ -368,12 +368,13 @@
     "kind": "reviewed-reference-set",
     "status": "partial",
     "manifest": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/browserfilm.json",
-    "reviewed_assets": 12,
+    "reviewed_assets": 13,
     "reviewed_steps": [
       2,
       3,
       4,
       5,
+      6,
       14,
       15,
       16,
@@ -386,7 +387,6 @@
     ],
     "open_steps": [
       1,
-      6,
       7,
       8,
       9,
@@ -407,9 +407,9 @@
     "save_inactive": true,
     "boundary": "The image shows the name and Draft badge, not a GUID. Actual navigation correlated the same tested identity. No Publish was used."
   },
-  "source_contract_note": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-5 and 14-22. Steps 2-5 are explicitly post-reopen name, policy and empty-Tools readbacks, not a new creation, paste, removal or upload recording. Blank-agent step 1 and upload steps 6-13 remain open. The workshop is partial, not certified.",
+  "source_contract_note": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified.",
   "review_title": "Native r5 regression accepted; workshop still partial",
-  "review_summary": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-5 and 14-22. Steps 2-5 are explicitly post-reopen name, policy and empty-Tools readbacks, not a new creation, paste, removal or upload recording. Blank-agent step 1 and upload steps 6-13 remain open. The workshop is partial, not certified.",
+  "review_summary": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified.",
   "review_snapshot": "evals/manual-pilot-review.json",
   "lane_scope": "native_manual_only",
   "lane_evidence_note": "Historical assisted/Easy and deterministic Brainstem evidence is retained separately; it is not native Manual r5 final-answer acceptance. No current Easy-lane regression or fresh-from-empty Manual construction is certified.",
@@ -419,7 +419,7 @@
     "Use the exact nine files in evals/manual-inputs-r5.json. Match each SKILL.md frontmatter name and description, not its folder name. Compare its complete body, and verify each knowledge attachment by its complete filename after ingestion.",
     "Save, leave through Agents, reopen the same Draft, and compare the full global policy and all six skill bodies, names and descriptions. An editor value or Save click alone does not prove persistence.",
     "Use New chat for each unchanged locked prompt and submit it once. Review the completed final answer, native skill/knowledge activity, citations and full safety boundary, not debug reasoning. Preserve failures; do not reroll an unchanged case until it passes or carry passes across source revisions.",
-    "Readback references verify the saved name, policy and empty Tools but do not record fresh construction. Step 1 and upload steps 6-13 still need their actual live evidence and personal review before certification. The final inventory is not a substitute. Finish by confirming the same Draft. Do not choose Publish."
+    "Saved-state readbacks and the controls upload/Ready board have explicitly limited scope. Step 1 and upload steps 7-13 still need their actual live evidence and personal review before certification; final inventory is not a substitute. Finish by confirming the same Draft. Do not choose Publish."
   ],
   "history": "evals/history/2026-08/index.json"
 }

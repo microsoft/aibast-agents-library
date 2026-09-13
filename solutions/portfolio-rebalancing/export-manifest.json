@@ -415,7 +415,7 @@
       "included_in_bundle": false
     },
     {
-      "id": "visual-checkpoints",
+      "id": "easy-evidence-visual-checkpoints",
       "label": "Visual checkpoint contract",
       "path": "solutions/portfolio-rebalancing/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/visual-checkpoints.json",
@@ -447,6 +447,15 @@
       "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-empty-tools.png",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-empty-tools.png",
       "use": "The complete empty configured-Tools section on the same saved r5 Draft; default web search is absent. No new removal action is claimed.",
+      "status": "ready",
+      "included_in_bundle": false
+    },
+    {
+      "id": "annotated-evidence-ui-controls-upload-ready-board",
+      "label": "Reviewed visual reference: manual-r5-step-06",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-controls-upload-ready-board.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-controls-upload-ready-board.png",
+      "use": "Two actual native captures: the r5 controls file staged before its single Add to agent action, and the same complete filename reporting Ready at 06:23:19.447Z after ingestion. This supports that controls upload only, not the other uploads; the later view did not re-upload or change the file.",
       "status": "ready",
       "included_in_bundle": false
     },

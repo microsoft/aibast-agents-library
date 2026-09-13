@@ -1625,7 +1625,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         elif stem.startswith("manual-inputs-"):
             identifier, label, use = "manual-input-inventory", "Frozen manual input inventory", "Exact byte lengths and SHA256 hashes for the reviewed Manual build"
         elif stem == "visual-checkpoints":
-            identifier, label, use = "visual-checkpoints", "Visual checkpoint contract", "Reviewed image scope, media format, provenance and open student steps"
+            identifier, label, use = resource_id("easy-evidence", path), "Visual checkpoint contract", "Reviewed image scope, media format, provenance and open student steps"
         elif "onepager" in stem or "map" in stem:
             identifier, label, use = "onepager-map", generic_label(path), "Advertised-promise mapping evidence"
         else:

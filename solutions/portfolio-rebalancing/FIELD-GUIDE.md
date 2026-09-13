@@ -20,7 +20,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 
 ## Native r5 regression accepted; workshop still partial
 
-On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-5 and 14-22. Steps 2-5 are explicitly post-reopen name, policy and empty-Tools readbacks, not a new creation, paste, removal or upload recording. Blank-agent step 1 and upload steps 6-13 remain open. The workshop is partial, not certified.
+On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified.
 
 See [evals/manual-pilot-review.json](evals/manual-pilot-review.json).
 
@@ -245,7 +245,7 @@ Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 3. Use the exact nine files in evals/manual-inputs-r5.json. Match each SKILL.md frontmatter name and description, not its folder name. Compare its complete body, and verify each knowledge attachment by its complete filename after ingestion.
 4. Save, leave through Agents, reopen the same Draft, and compare the full global policy and all six skill bodies, names and descriptions. An editor value or Save click alone does not prove persistence.
 5. Use New chat for each unchanged locked prompt and submit it once. Review the completed final answer, native skill/knowledge activity, citations and full safety boundary, not debug reasoning. Preserve failures; do not reroll an unchanged case until it passes or carry passes across source revisions.
-6. Readback references verify the saved name, policy and empty Tools but do not record fresh construction. Step 1 and upload steps 6-13 still need their actual live evidence and personal review before certification. The final inventory is not a substitute. Finish by confirming the same Draft. Do not choose Publish.
+6. Saved-state readbacks and the controls upload/Ready board have explicitly limited scope. Step 1 and upload steps 7-13 still need their actual live evidence and personal review before certification; final inventory is not a substitute. Finish by confirming the same Draft. Do not choose Publish.
 
 
 ## Production replacement seams

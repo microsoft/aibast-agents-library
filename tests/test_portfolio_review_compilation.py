@@ -52,9 +52,10 @@ IMAGES = {
     "UI-name-readback.png": (512, 105, "e08172a5cd6db2bfbab41d3aae00cf8c607dc8a2b79efc0011fb98a088775873"),
     "UI-persisted-policy-board.png": (972, 1476, "2644d2e9b6f1c4d51f54644fb0ae87645e4de626568118cbbc2ae9a4a51749c0"),
     "UI-empty-tools.png": (366, 108, "533d1e42e3d8708bb67c2349f863a4899c05c6559d977e9f8b7e0466529800d0"),
+    "UI-controls-upload-ready-board.png": (796, 1012, "55439e544814f3d9d743c6d88cea538a35a270a060a76000bdc777adb8aa1b45"),
 }
-REVIEWED_STEPS = [2, 3, 4, 5, *range(14, 23)]
-OPEN_STEPS = [1, *range(6, 14)]
+REVIEWED_STEPS = [2, 3, 4, 5, 6, *range(14, 23)]
+OPEN_STEPS = [1, *range(7, 14)]
 PRIVATE = re.compile(
     r"/Users/|copilotstudio\.preview\.microsoft\.com/environments/"
     r"|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
@@ -132,7 +133,7 @@ def test_current_native_matrix_is_dated_single_build_acceptance_not_certificatio
     assert evidence["publication_gate"]["published"] is False
     assert review["accepted_student_steps"] == REVIEWED_STEPS
     assert review["open_student_steps"] == OPEN_STEPS
-    assert evidence["browserfilm"]["reviewed_assets"] == 12
+    assert evidence["browserfilm"]["reviewed_assets"] == 13
     assert evidence["browserfilm"]["reviewed_steps"] == REVIEWED_STEPS
     assert evidence["browserfilm"]["open_steps"] == OPEN_STEPS
     assert context().missing_evidence == [
@@ -167,9 +168,9 @@ def test_only_reviewed_pngs_are_current_and_creation_upload_steps_stay_open():
     visual = read("evals/visual-checkpoints.json")
     captures = visual["captures"]
     current = [item for item in captures if item["status"] == "reusable"]
-    assert len(current) == visual["summary"]["reusable"] == 13
-    assert visual["summary"]["reviewed_manual_images"] == len(IMAGES) == 12
-    assert visual["summary"]["manual_build_steps_open"] == len(OPEN_STEPS) == 9
+    assert len(current) == visual["summary"]["reusable"] == 14
+    assert visual["summary"]["reviewed_manual_images"] == len(IMAGES) == 13
+    assert visual["summary"]["manual_build_steps_open"] == len(OPEN_STEPS) == 8
     assert {Path(item["annotated"]).name for item in current} == set(IMAGES)
     directory = PACKAGE / "screenshots/manual/repaired-r5"
     assert {path.name for path in directory.iterdir()} == set(IMAGES) | {"browserfilm.json"}
@@ -192,11 +193,16 @@ def test_only_reviewed_pngs_are_current_and_creation_upload_steps_stay_open():
     assert manifest["kind"] == "reviewed-reference-set"
     assert "gif" not in manifest and "contact_sheet" not in manifest
     assert len(manifest["frames"]) == 22
-    assert sum(frame["captured"] for frame in manifest["frames"]) == 13
+    assert sum(frame["captured"] for frame in manifest["frames"]) == 14
     for item in current:
         if item["step"] in (2, 3, 4, 5):
             assert item["evidence_stage"] == "post_regression_readback"
             assert "not an upload-action recording" in item["review_provenance"]
+    controls = next(item for item in current if item["step"] == 6)
+    assert controls["evidence_stage"] == "r5_upload_and_later_ready"
+    assert "Ready" in controls["visible_anchors"]
+    assert controls["media"]["view_count"] == controls["media"]["capture_count"] == 2
+    assert "did not re-upload or change the file" in controls["media"]["scope"]
     assert visual["strict_coverage"]["reviewed_student_steps"] == REVIEWED_STEPS
     assert visual["strict_coverage"]["open_student_steps"] == OPEN_STEPS
 
@@ -219,6 +225,7 @@ def test_standalone_and_embedded_manual_guides_keep_all_steps_and_real_media_bou
                 "3": "UI-persisted-policy-board.png",
                 "4": "UI-persisted-policy-board.png",
                 "5": "UI-empty-tools.png",
+                "6": "UI-controls-upload-ready-board.png",
                 "14": "UI-saved-configuration-board.png",
                 "15": "UI-fresh-preview.png",
                 "22": "UI-final-draft.png",

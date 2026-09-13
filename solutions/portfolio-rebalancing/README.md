@@ -30,10 +30,12 @@ after leaving through Agents and reopening at 03:59:19.049Z. Final exact-name
 search found one Draft at 04:56:03.052Z; reopening at 04:56:08.534Z correlated
 the same tested identity, name/model and inactive Save. No Publish was used.
 
-The current personally reviewed references cover **steps 2–5 and 14–22**.
+The current personally reviewed references cover **steps 2–6 and 14–22**.
 Steps 2–5 show the saved name, complete policy and empty Tools after reopening;
-they do not record a new naming, paste or removal action. Blank-agent **step 1**
-and upload **steps 6–13 remain open**; final inventory and source tests cannot
+they do not record a new naming, paste or removal action. Step 6 pairs the
+actual earlier controls-file staging with that same source's later **Ready**
+status. No new upload occurred. Blank-agent **step 1** and upload **steps 7–13
+remain open**; final inventory and source tests cannot
 substitute for their live evidence and personal review. Fresh-from-empty
 construction is not claimed. See the [dated review](evals/manual-pilot-review.json),
 [accepted native matrix](evals/manual-build-evidence.json) and
@@ -88,7 +90,7 @@ unchanged prompts. Confirm the same Draft afterward. **Do not Publish.**
 The [r5 manual-input ZIP](exports/portfolio-rebalancing-source.zip) contains
 exactly the [nine frozen inputs and their hashes](evals/manual-inputs-r5.json),
 plus its export README. It is deliberately **not a standalone workshop, runtime
-or native import**: guides and the 12 distinct reviewed PNG references are separate
+or native import**: guides and the reviewed PNG references are separate
 site assets, not ZIP contents. The native source project, tutorials, evidence
 and historical captures do exist in this package.
 
@@ -121,7 +123,7 @@ local file availability alone is not public-delivery evidence.
 | Copilot Studio deployment settings | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-solution-export.json` |
 
-**Scaffold status:** 73 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Resource readiness means file availability, not workshop acceptance. On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-5 and 14-22. Steps 2-5 are explicitly post-reopen name, policy and empty-Tools readbacks, not a new creation, paste, removal or upload recording. Blank-agent step 1 and upload steps 6-13 remain open. The workshop is partial, not certified.
+**Scaffold status:** 74 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Resource readiness means file availability, not workshop acceptance. On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

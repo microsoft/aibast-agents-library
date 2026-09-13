@@ -180,10 +180,21 @@ def test_source_bundles_respect_full_or_manual_only_facilitator_scope():
         with zipfile.ZipFile(bundle) as archive:
             names = set(archive.namelist())
         if manifest["bundle"].get("include_paths") is not None:
-            assert manifest["bundle"]["kind"] == "manual-review-source"
+            assert manifest["bundle"]["kind"] in {"manual-review-source", "manual-inputs"}
             assert manifest["bundle"]["native_importable"] is False
             assert names == set(manifest["bundle"]["include_paths"])
             assert expected.isdisjoint(names)
+            if manifest["bundle"]["kind"] == "manual-inputs":
+                assert manifest["bundle"]["standalone_guide"] is False
+                inventory = next(
+                    item for item in manifest["files"]
+                    if item["id"] == "manual-input-inventory"
+                )
+                inputs = json.loads((ROOT / inventory["path"]).read_text(encoding="utf-8"))
+                assert names == {item["path"] for item in inputs["inputs"]} | {
+                    inventory["path"],
+                    (package / "exports/README.md").relative_to(ROOT).as_posix(),
+                }
             for item in manifest["files"]:
                 if item["path"] in expected:
                     assert item["included_in_bundle"] is False
