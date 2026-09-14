@@ -5,11 +5,12 @@
   "description": "Immutable browser certification for the 51 advertised AIBAST workshops.",
   "type": "module",
   "scripts": {
+    "test:downloads": "cd tests/downloads && node --test",
     "academy": "node academy-course-audit.mjs",
     "audit": "node audit.mjs",
     "mutations": "node mutation-suite.mjs",
     "attest": "node attest.mjs",
-    "certify": "npm run mutations && npm run audit && npm run academy && npm run attest"
+    "certify": "npm run mutations && npm run audit && npm run academy && npm run test:downloads && npm run attest"
   },
   "engines": {
     "node": ">=22"

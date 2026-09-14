@@ -343,7 +343,8 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
 
     assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
-    assert "Personless harness" in quest
+    assert "Personless harness" not in quest
+    assert "kodyw.com/the-personless-harness" not in quest
     assert "Skeptic comparison" in quest
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest

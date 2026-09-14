@@ -59,6 +59,7 @@ BETA_PUBLIC_FILES = frozenset(
         "beta/THIRD-PARTY-NOTICES.md",
         "beta/VERSION",
         "beta/build/icon.svg",
+        "beta/download-center.js",
         "beta/frontier.ps1",
         "beta/frontier.sh",
         "beta/index.html",
@@ -96,6 +97,7 @@ RING_SKILL_PATHS = frozenset(
         "skills/aibast-easy-mode-copilot/SKILL.md",
     }
 )
+FRONTIER_BOOTSTRAP_PATHS = frozenset({"beta/frontier.sh", "beta/frontier.ps1"})
 
 RAPP_BRAINSTEM_PUBLIC_FILES = frozenset(
     {"rapp_brainstem/README.md", "rapp_brainstem/VERSION"}
@@ -873,6 +875,18 @@ def rewrite_html(
     return rewritten, rewritten_count, broken
 
 
+def render_frontier_page(text: str, owner: str, repo: str, branch: str) -> str:
+    """Keep no-JavaScript source and release links in the serving ring."""
+    canonical = f"https://github.com/{CANONICAL_OWNER}/{CANONICAL_REPO}"
+    ring = f"https://github.com/{owner}/{repo}"
+    for kind in ("blob", "tree"):
+        text = text.replace(
+            f"{canonical}/{kind}/{CANONICAL_BRANCH}/",
+            f"{ring}/{kind}/{quote(branch, safe='')}/",
+        )
+    return text.replace(f"{canonical}/releases", f"{ring}/releases")
+
+
 def prepare_html(
     root: Path,
     included: frozenset[PurePosixPath],
@@ -880,6 +894,7 @@ def prepare_html(
     owner: str,
     repo: str,
     ref: str,
+    ring_branch: str = CANONICAL_BRANCH,
 ) -> tuple[dict[PurePosixPath, bytes], int]:
     prepared: dict[PurePosixPath, bytes] = {}
     rewritten_count = 0
@@ -892,6 +907,8 @@ def prepare_html(
             text = source.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError) as exc:
             raise BuildError(f"Could not read HTML file {path}: {exc}") from exc
+        if path == PurePosixPath("beta/index.html"):
+            text = render_frontier_page(text, owner, repo, ring_branch)
         rewritten, count, page_broken = rewrite_html(
             path, text, included, entries, owner, repo, ref
         )
@@ -963,12 +980,32 @@ def _skill_substitutions(
     ]
 
 
+def _frontier_bootstrap_substitutions(
+    suffix: str, owner: str, repo: str
+) -> list[tuple[str, str, bool]]:
+    canonical = f"{CANONICAL_OWNER}/{CANONICAL_REPO}"
+    ring = f"{owner}/{repo}"
+    if suffix == ".sh":
+        return [
+            (
+                "${RAPP_FRONTIER_REPO:-" + canonical + "}",
+                "${RAPP_FRONTIER_REPO:-" + ring + "}",
+                True,
+            )
+        ]
+    return [(f'"{canonical}"', f'"{ring}"', True)]
+
+
 def render_installer(
     path: PurePosixPath, text: str, owner: str, repo: str, branch: str
 ) -> str:
     """Point an installer's (or lane skill's) defaults at the ring being published."""
     if path.as_posix() in RING_SKILL_PATHS:
         substitutions = _skill_substitutions(owner, repo, branch)
+    elif path.as_posix() in FRONTIER_BOOTSTRAP_PATHS:
+        substitutions = _frontier_bootstrap_substitutions(
+            path.suffix.lower(), owner, repo
+        )
     else:
         substitutions = _installer_substitutions(path.suffix.lower(), owner, repo, branch)
     for canonical, ring, required in substitutions:
@@ -995,7 +1032,9 @@ def prepare_installers(
         return {}
     prepared: dict[PurePosixPath, bytes] = {}
     for path in sorted(included, key=lambda item: item.as_posix()):
-        if path.as_posix() not in INSTALLER_PATHS and path.as_posix() not in RING_SKILL_PATHS:
+        if path.as_posix() not in (
+            INSTALLER_PATHS | RING_SKILL_PATHS | FRONTIER_BOOTSTRAP_PATHS
+        ):
             continue
         source = _assert_regular_source(root, entries[path])
         try:
@@ -1299,7 +1338,7 @@ def build_site(
     included, excluded = plan_artifact(root, entries)
     validate_academy_source(root, included)
     prepared_html, rewritten_count = prepare_html(
-        root, included, entries, owner, repo, ref
+        root, included, entries, owner, repo, ref, ring_branch
     )
     prepared_installers = prepare_installers(
         root, included, entries, owner, repo, ring_branch

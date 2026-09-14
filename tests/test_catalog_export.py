@@ -19,7 +19,7 @@ document.getElementById = id => {
   if (!nodes.has(id)) nodes.set(id, {textContent: "", innerHTML: "", disabled: false});
   return nodes.get(id);
 };
-location.href = "https://kody-w.github.io/aibast-agents-library/index.html?view=partners";
+location.href = "https://example-fork.github.io/aibast-agents-library/index.html?view=partners";
 const downloads = [];
 const blobs = [];
 const revoked = [];
@@ -150,9 +150,9 @@ console.log(JSON.stringify({
     assert bundle["purpose"] == "catalog_snapshot"
     assert bundle["library"] == REGISTRY
     assert bundle["community_tools"] == COMMUNITY
-    assert bundle["source"] == "https://kody-w.github.io/aibast-agents-library/"
-    assert "kody-w.github.io/aibast-agents-library/install.sh" in bundle["install"]["brainstem"]
-    assert "kody-w.github.io/aibast-agents-library/install.ps1" in bundle["install"]["brainstem_windows"]
+    assert bundle["source"] == "https://example-fork.github.io/aibast-agents-library/"
+    assert "example-fork.github.io/aibast-agents-library/install.sh" in bundle["install"]["brainstem"]
+    assert "example-fork.github.io/aibast-agents-library/install.ps1" in bundle["install"]["brainstem_windows"]
     assert bundle["install"]["guide"].endswith("/docs/installer.html")
     assert "not loaded from AGENTS_PATH" in bundle["usage"]
     assert len(result["downloads"]) == 1

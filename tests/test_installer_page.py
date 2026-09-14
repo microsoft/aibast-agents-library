@@ -102,20 +102,37 @@ def test_installer_page_carries_only_the_brainstem_lanes():
 
 def test_staging_ring_uses_the_same_short_one_liner_as_production():
     staging = install_commands(
-        "kody-w.github.io",
-        "https://kody-w.github.io/aibast-agents-library/",
+        "example-fork.github.io",
+        "https://example-fork.github.io/aibast-agents-library/",
     )
     assert staging["bash"] == (
-        "curl -fsSL https://kody-w.github.io/aibast-agents-library/install.sh | bash"
+        "curl -fsSL https://example-fork.github.io/aibast-agents-library/install.sh | bash"
     )
     assert staging["windows"] == (
-        "irm https://kody-w.github.io/aibast-agents-library/install.ps1 | iex"
+        "irm https://example-fork.github.io/aibast-agents-library/install.ps1 | iex"
     )
     for command in (staging["macManual"], staging["windowsManual"]):
-        assert "--branch staging https://github.com/kody-w/aibast-agents-library.git" in command
+        assert "--branch staging https://github.com/example-fork/aibast-agents-library.git" in command
     for command in staging.values():
         assert "BRAINSTEM_" not in str(command)
         assert "easy-mode-copilot-chat-pilot" not in str(command)
+
+
+def test_install_identity_is_generic_and_rejects_lookalike_hosts():
+    fork = install_commands(
+        "ANOTHER-FORK.GITHUB.IO",
+        "https://another-fork.github.io/aibast-agents-library/",
+    )
+    assert fork["owner"] == "another-fork"
+    assert fork["staging"] is True
+    assert fork["ref"] == "staging"
+    for hostname in ("localhost", "microsoft.github.io.evil.test", "bad.name.github.io"):
+        commands = install_commands(
+            hostname, "https://microsoft.github.io/aibast-agents-library/"
+        )
+        assert commands["owner"] == "microsoft"
+        assert commands["staging"] is False
+        assert commands["ref"] == "main"
 
 
 def test_staging_download_wrappers_embed_the_short_ring_commands():
@@ -134,8 +151,8 @@ globalThis.Blob = class {
 };
 globalThis.URL = { createObjectURL(blob) { return blob.payload; } };
 const commands = buildInstallCommands(
-  "kody-w.github.io",
-  "https://kody-w.github.io/aibast-agents-library/"
+  "example-fork.github.io",
+  "https://example-fork.github.io/aibast-agents-library/"
 );
 console.log(JSON.stringify(buildInstallerDownloads(commands)));
 """
@@ -148,7 +165,7 @@ console.log(JSON.stringify(buildInstallerDownloads(commands)));
     )
     assert result.returncode == 0, result.stderr
     downloads = json.loads(result.stdout)
-    assert "https://kody-w.github.io/aibast-agents-library/install.sh | bash" in downloads["macOS/Linux"]["href"]
-    assert "irm https://kody-w.github.io/aibast-agents-library/install.ps1 | iex" in downloads["Windows"]["href"]
+    assert "https://example-fork.github.io/aibast-agents-library/install.sh | bash" in downloads["macOS/Linux"]["href"]
+    assert "irm https://example-fork.github.io/aibast-agents-library/install.ps1 | iex" in downloads["Windows"]["href"]
     for platform in ("macOS/Linux", "Windows"):
         assert "BRAINSTEM_" not in downloads[platform]["href"]

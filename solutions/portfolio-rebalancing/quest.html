@@ -695,7 +695,7 @@ html[data-theme="dark"] {
     <section class="learn-step" id="workshop-step-1">
       <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Open GitHub Copilot Chat</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: open GitHub Copilot Chat" data-report-expected="GitHub Copilot Chat is open in VS Code Agent mode, signed in with Copilot access." data-report-evidence="">Report an issue</button></header>
       <div class="learn-step-body">
-        <p>Every workshop currently runs through GitHub Copilot only. No separate app install is required.</p>
+        <p>Start in GitHub Copilot Chat. No Frontier desktop app is required; the selected lane's skill handles any additional setup.</p>
         <div class="action-panel">
           <strong>Get ready</strong>
           <ol>
@@ -922,7 +922,6 @@ Clear statement: No order was sent.</pre><p class="capture-meta"><a href="evals/
           <a class="button" href="exports/portfolio-rebalancing-source.zip" download>Download manual inputs</a>
           <div class="notice"><strong>Historical export — not current source.</strong> Historical 2026-08-09 unmanaged export, preserved byte-for-byte. Its five entries contain settings/instructions but zero manual skills and zero knowledge files; it cannot reproduce the six-skill/two-file r5 Manual build. Withheld from current reproduction downloads. No new export, import or publication is claimed. <a href="exports/portfolio-rebalancing-solution-export.json" download>Export details</a></div>
           <a class="button" href="../../agents/@aibast-agents-library/templates/workshop_agent.py" download>Download generic workshop agent</a>
-          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
       </details>
     </section>
@@ -1054,21 +1053,6 @@ Licensed-advisor, qualified-tax, compliance, client, and authorized-trading revi
 End every substantive answer with exactly:
 
 Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
-
-&lt;!-- locked-preview-anchors:start --&gt;
-## Skill routing map
-
-Route from the user&#x27;s natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
-
-- `PRB-01` uses skill `portfolio-analysis`.
-- `PRB-02` uses skill `rebalance-recommendation`.
-- `PRB-03` uses skill `tax-impact`.
-- `PRB-04` uses skill `tax-loss-harvest`.
-- `PRB-05` uses skill `retirement-scenario`.
-- `PRB-06` uses skill `execution-plan`.
-
-These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
-&lt;!-- locked-preview-anchors:end --&gt;
 </pre></div><span>Enter the reviewed global instructions</span></div>
             <div class="instruction expected"><strong>Expected result</strong>Use the exact current manual/GLOBAL-INSTRUCTIONS.md policy. Save, leave, reopen the same Draft, and compare the full persisted text. A populated editor or Save click alone does not prove persistence.</div>
           </div>

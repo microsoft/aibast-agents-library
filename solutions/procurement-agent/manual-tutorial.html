@@ -708,18 +708,18 @@ surrendering purchasing authority.
    and missing evidence.
 
 &lt;!-- locked-preview-anchors:start --&gt;
-## Skill routing map
+## Locked Preview evidence anchors
 
-Route from the user&#x27;s natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
+Route from the user&#x27;s natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
 
-- `PROC-01` uses skill `purchase-request`.
-- `PROC-02` uses skill `vendor-comparison`.
-- `PROC-03` uses skill `approval-routing`.
-- `PROC-04` uses skill `spend-analysis`.
+Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-These are the ONLY valid skill names. Never invent, guess, or reference another. If a skill or its knowledge cannot load after one retry, say so honestly and stop; never answer from memory without a real citation.
+- `PROC-01` / `purchase_request`: `PR-5001`, `$125,000`, `CFO`
+- `PROC-02` / `vendor_comparison`: `AWS`, `Azure`, `not a supplier award`
+- `PROC-03` / `approval_routing`: `CFO`, `48 hours`, `does not record an approval`
+- `PROC-04` / `spend_analysis`: `Software`, `$60,000`, `No purchase order is created`
 
-Preserve: `$125,000`, `CFO`, `not a supplier award`, `48 hours`, `Software`, `$60,000`, `No purchase order is created`.
+These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 &lt;!-- locked-preview-anchors:end --&gt;
 
 ## Mandatory human-review paragraph

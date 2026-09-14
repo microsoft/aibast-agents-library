@@ -1,6 +1,12 @@
 {
   "schema": "aibast-visual-checkpoints/1.0",
   "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "historical_annotation_reference": {
+    "status": "historical_only",
+    "annotation_date": "2026-09-10",
+    "index": "evals/history/2026-09-10-upstream/index.json",
+    "boundary": "Incoming annotation corrections are archived with their original metadata. They do not verify the repaired Manual source, replace the original captures, or change any current status or reshoot reason. No new native run or screenshot review occurred during the source merge."
+  },
   "policy": {
     "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
     "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",

@@ -1,10 +1,11 @@
 # Grail species regression
 
 The AIBAST Agents Library vendors the RAPP Brainstem kernel in
-`rapp_brainstem/`. Kernel updates flow down from the Grail
-(`kody-w/rapp-installer`) through sanctioned kernel-sync pull requests, but the
-vendored copy is allowed to grow on its own. The species test keeps the two
-compatible while they diverge.
+`rapp_brainstem/`. Kernel updates flow down from the
+[pinned Grail source](../rapp/GRAIL-SPECIES.json) through sanctioned kernel-sync
+pull requests. AIBAST grows its integrations around the vendored kernel.
+The species test checks compatibility; it does not authorize an independent
+runtime fork.
 
 ## What the test guarantees
 
@@ -20,8 +21,10 @@ kernel drops or changes any of:
 - an install-layout constant from `install.sh` (`~/.brainstem`, `venv/`,
   `src/rapp_brainstem`, `src/rapp_brainstem/agents`)
 
-Additions are allowed: new routes, environment keys, agent files, and
-installer overrides are how the business fork grows.
+The shape comparison permits additions, but that is only a compatibility
+check. Shared runtime and installer changes still follow the sanctioned
+upstream sync process; AIBAST-owned agents and host integrations remain
+separate from the kernel.
 
 Run it:
 

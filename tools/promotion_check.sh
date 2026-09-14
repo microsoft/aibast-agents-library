@@ -7,10 +7,31 @@
 # request is a human action and the command is printed at the end.
 #
 # Usage: tools/promotion_check.sh
-#   FORK=kody-w/aibast-agents-library UPSTREAM=microsoft/aibast-agents-library RING_BRANCH=staging
+#   FORK=OWNER/aibast-agents-library UPSTREAM=microsoft/aibast-agents-library RING_BRANCH=staging
+# FORK defaults to the GitHub repository configured as the origin remote.
 set -euo pipefail
 
-FORK="${FORK:-kody-w/aibast-agents-library}"
+if [ -z "${FORK:-}" ]; then
+  if ! origin_url="$(git remote get-url origin 2>/dev/null)"; then
+    printf '%s\n' "Cannot infer the staging repository; set FORK=OWNER/REPOSITORY." >&2
+    exit 2
+  fi
+  case "$origin_url" in
+    https://github.com/*) FORK="${origin_url#https://github.com/}" ;;
+    git@github.com:*) FORK="${origin_url#git@github.com:}" ;;
+    ssh://git@github.com/*) FORK="${origin_url#ssh://git@github.com/}" ;;
+    *)
+      printf '%s\n' "Origin is not a supported GitHub URL; set FORK=OWNER/REPOSITORY." >&2
+      exit 2
+      ;;
+  esac
+  FORK="${FORK%/}"
+  FORK="${FORK%.git}"
+fi
+if [[ ! "$FORK" =~ ^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+$ ]]; then
+  printf '%s\n' "FORK must be a GitHub OWNER/REPOSITORY." >&2
+  exit 2
+fi
 UPSTREAM="${UPSTREAM:-microsoft/aibast-agents-library}"
 RING_BRANCH="${RING_BRANCH:-staging}"
 PROD_BRANCH="${PROD_BRANCH:-main}"
@@ -49,7 +70,7 @@ check_run ring-smoke.yml "one-liner smoke"
 say
 if [ "$red" = "0" ]; then
   say "GREEN — promote with:"
-  say "  gh pr create -R $UPSTREAM --base $PROD_BRANCH --head $FORK_OWNER:$RING_BRANCH --title \"release: promote $RING_BRANCH\" --body-file <(git log --oneline $UPSTREAM/$PROD_BRANCH..$FORK/$RING_BRANCH)"
+  say "  gh pr create -R $UPSTREAM --base $PROD_BRANCH --head $FORK_OWNER:$RING_BRANCH --title \"release: promote $RING_BRANCH\" --body-file <(git log --oneline upstream/$PROD_BRANCH..origin/$RING_BRANCH)"
   exit 0
 fi
 say "RED — do not promote yet."

@@ -156,6 +156,7 @@ def test_browser_certification_includes_the_academy_gate():
         "npm run mutations",
         "npm run audit",
         "npm run academy",
+        "npm run test:downloads",
         "npm run attest",
     ]
 
@@ -178,3 +179,33 @@ def test_preflight_runs_the_academy_browser_contract_fail_closed():
     assert "npm run academy" in academy_step
     assert "continue-on-error" not in academy_step
     assert "|| true" not in academy_step
+
+
+def test_independent_static_gates_report_failures_without_masking_them():
+    workflow = PREFLIGHT_WORKFLOW.read_text(encoding="utf-8")
+    for name in (
+        "Academy browser contract",
+        "Download Center browser contract",
+        "AIBAST agent and registry contracts",
+        "AIBAST Azure tier tests",
+    ):
+        step = _step(workflow, name)
+        assert "if: ${{ !cancelled() }}" in step
+        assert "continue-on-error" not in step
+        assert "|| true" not in step
+    assert re.search(r"(?m)^  e2e:\n    needs: static$", workflow)
+
+
+def test_download_browser_gate_is_mandatory_without_entering_desktop_install_tests():
+    workflow = PREFLIGHT_WORKFLOW.read_text(encoding="utf-8")
+    package = json.loads(BROWSER_PACKAGE.read_text(encoding="utf-8"))
+    assert package["scripts"]["test:downloads"]
+    step = _step(workflow, "Download Center browser contract")
+    assert "working-directory: browser-audit" in step
+    assert "run: npm run test:downloads" in step
+    assert "AIBAST_CHROME_PATH: /usr/bin/google-chrome" in step
+    assert "timeout-minutes: 10" in step
+    assert "continue-on-error" not in step
+    assert workflow.index("Academy browser contract") < workflow.index(
+        "Download Center browser contract"
+    )

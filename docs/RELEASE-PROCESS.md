@@ -10,9 +10,9 @@ without that happening, and it is deliberately simple enough to copy.
 | Ring | Repository and branch | What it serves | Who moves it |
 |---|---|---|---|
 | Production | `microsoft/aibast-agents-library` `main` | https://microsoft.github.io/aibast-agents-library and the public one-liner | a human, by merging one promotion pull request |
-| Staging | `kody-w/aibast-agents-library` `staging` | https://kody-w.github.io/aibast-agents-library and a staging one-liner that installs the staging kernel | maintainers, by pull request into `staging` |
-| Mirror | `kody-w/aibast-agents-library` `main` | nothing; a fast-forward copy of production | the sync workflow only |
-| Kernel | `kody-w/rapp-installer` (the Grail) | the Brainstem runtime and installer this repository vendors | kernel-sync pull requests, one way, into staging |
+| Staging | A maintainer's fork, `staging` | The fork's Pages site and a staging one-liner that installs that fork's staging kernel | maintainers, by pull request into `staging` |
+| Mirror | The same fork, `main` | nothing; a fast-forward copy of production | the sync workflow only |
+| Kernel | The Grail source recorded in [`rapp/GRAIL-SPECIES.json`](../rapp/GRAIL-SPECIES.json) | the Brainstem runtime and installer this repository vendors | kernel-sync pull requests, one way, into staging |
 
 The kernel is vendored, never forked. Every divergence from the pinned Grail
 commit is listed in [`rapp/KERNEL-DRIFT.md`](../rapp/KERNEL-DRIFT.md) and the
@@ -30,7 +30,7 @@ Every push to `staging` runs:
 2. **Pages deploy** (`pages.yml`): builds the slim static site, runs the
    artifact tests, and publishes staging Pages. The staging build renders the
    installers so their defaults point at the staging repository and branch;
-   the source files stay byte-identical to production.
+   ring rendering does not modify the repository's installer sources.
 3. **Ring one-liner smoke** (`ring-smoke.yml`): after each Pages deploy, and
    every six hours, clean runners on all three operating systems run the
    published one-liner exactly as a user would, with no environment overrides.
@@ -42,6 +42,24 @@ The same smoke runs on production against the public Pages URL. A failure
 opens an issue labelled `incident` automatically and closes it on recovery, so
 a broken installer is known within hours instead of from a user report.
 
+Independent static test groups still report their results after a sibling
+failure, but stop on cancellation. No failure is ignored: the static job and
+the release remain blocked until every gate passes.
+Hosted-page browser assertions run in `browser-audit` CI rather than the
+desktop installer's Node test suite; they remain mandatory release gates.
+
+### Content scale
+
+Hosted content is expected to keep growing. Preflight checks out the complete
+candidate tree at depth one rather than downloading every branch's history.
+The two page-preservation audits fetch their exact pinned commits with blob
+filtering, retrieving historical file contents only as those audits need them.
+Upgrade scenarios explicitly fetch one production-baseline snapshot and import
+it into their local test origin; fresh scenarios need only the candidate.
+These bounds do not remove repository content or skip source, media, or
+installer checks. Pages remains a separate allowlisted artifact with its
+existing size and link-integrity gates.
+
 ## Sync
 
 `sync-upstream.yml` runs daily on the staging fork. It refuses to run if the
@@ -51,10 +69,12 @@ conflict fails the run and changes nothing; resolve it locally and push.
 
 ## Promotion
 
-1. Run `tools/promotion_check.sh`. It reports GREEN only when `staging`
+1. Run `tools/promotion_check.sh` from the fork checkout. It infers the fork
+   from `origin`; set `FORK=OWNER/REPOSITORY` to select it explicitly. It reports
+   GREEN only when `staging`
    contains production and the ring head has a successful preflight, Pages
    deploy, and smoke. It never opens the pull request.
-2. Open one pull request from `kody-w:staging` to `microsoft:main`. Production
+2. Open one pull request from `<fork-owner>:staging` to `microsoft:main`. Production
    preflight runs on it.
 3. Merge. The next sync brings the merge back to the mirror and `staging`.
 4. Add the release to [RELEASES.md](RELEASES.md) with the pull request, the
@@ -63,6 +83,34 @@ conflict fails the run and changes nothing; resolve it locally and push.
 
 Kernel updates follow the same path, with one extra step: refresh
 `rapp/GRAIL-SPECIES.json` and the drift ledger in the same pull request.
+
+## Microsoft release identity
+
+Current source downloads, support links, and production documentation target
+`microsoft/aibast-agents-library`. Do not publish personal promotion or hardcode
+a maintainer's fork into those surfaces. Staging derives its repository and
+Pages identity from the selected fork; tests use synthetic fork owners.
+
+Review external content dependencies separately. Do not rename a real upstream
+repository to a nonexistent Microsoft repository, remove required attribution,
+or rewrite a historical result as though it ran in production. An immutable
+input link may move to a verified Microsoft URL only when its commit, bytes,
+and SHA-256 remain unchanged.
+
+## Workshop source integrity
+
+Merge source improvements without transferring old native acceptance to new
+bytes. Keep hash-pinned and hand-reviewed policies unchanged unless an explicit
+new input revision is being prepared. Preserve incoming changes to those
+policies and their screenshots as dated references rather than silently
+replacing the source behind an existing result.
+
+`tools/normalize_manual_instructions.py` normalizes routing to names read from
+the packaged `SKILL.md` files. It must not copy `must_include` answers from
+evaluation cases into policy, invent a skill name, or bulk-rewrite protected
+input revisions. After a routing change, regenerate the native source mirror,
+learner pages, and source bundle. Passing source checks is not native
+Copilot Studio acceptance.
 
 ## What must never happen
 

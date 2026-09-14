@@ -128,7 +128,7 @@ def test_normalization_keeps_the_canonical_policy_and_generated_copies_in_parity
 def test_downloadable_bundle_contains_the_current_contract_and_unchanged_captures():
     deployment = read_json(PACKAGE / "deployment.json")
     assert deployment["source_bundle"]["raw_base"] == (
-        "https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/"
+        "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
     )
     bundle = PACKAGE / "exports/building-permit-processing-source.zip"
     paths = [

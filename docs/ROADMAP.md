@@ -1,17 +1,18 @@
 # Roadmap
 
-Tracked as GitHub milestones on the staging fork,
-https://github.com/kody-w/aibast-agents-library/milestones, where staging work
-happens. Production issues stay on the Microsoft repository. This page is the
-narrative; the milestones are the source of truth for status.
+Track issues and pull requests in the
+[Microsoft repository](https://github.com/microsoft/aibast-agents-library/issues).
+Forks provide staging environments, not a separate product roadmap. The table
+below describes release objectives, not a live completion-status snapshot;
+use the linked issues, pull requests, and release gates for current status.
 
-| Milestone | Outcome | Status |
-|---|---|---|
-| M1 Staging ring live | Fork `main` mirrors production automatically; `staging` serves the fork Pages; every staging push is preflighted, deployed, and smoked | in progress |
-| M2 Vendored one-liner on staging | The staging Pages one-liner installs this repository's own kernel at the staging ref on clean Linux, macOS, and Windows runners | in progress |
-| M3 Grail species regression | Species contract and drift ledger in CI; installer fixes that belong upstream returned to the Grail | in progress |
-| M4 Academy promotion | Microsoft AI Academy promoted from staging to production after soaking on the ring | queued |
-| M5 v1 GA blockers | Upstream licensing, Discussions and metrics token on the Microsoft repository, Microsoft-owned auth worker | queued |
+| Objective | Outcome |
+|---|---|
+| M1 Staging ring live | Fork `main` mirrors production automatically; `staging` serves the fork Pages; every staging push is preflighted, deployed, and smoked |
+| M2 Vendored one-liner on staging | The staging Pages one-liner installs this repository's own kernel at the staging ref on clean Linux, macOS, and Windows runners |
+| M3 Grail species regression | Species contract and drift ledger in CI; installer fixes that belong upstream returned to the Grail |
+| M4 Academy promotion | Microsoft AI Academy promoted from staging to production after soaking on the ring |
+| M5 v1 GA blockers | Upstream licensing, Discussions and metrics token on the Microsoft repository, Microsoft-owned auth worker |
 
 Principles that do not change between milestones:
 

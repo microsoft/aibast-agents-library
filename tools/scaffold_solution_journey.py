@@ -3717,7 +3717,7 @@ def render_brainstem_install_step(ctx: JourneyContext) -> str:
     <section class="learn-step" id="workshop-step-1">
       <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Open GitHub Copilot Chat</h3></div>{report_button(ctx, location="Workshop setup — step 1: open GitHub Copilot Chat", expected="GitHub Copilot Chat is open in VS Code Agent mode, signed in with Copilot access.")}</header>
       <div class="learn-step-body">
-        <p>Every workshop currently runs through GitHub Copilot only. No separate app install is required.</p>
+        <p>Start in GitHub Copilot Chat. No Frontier desktop app is required; the selected lane's skill handles any additional setup.</p>
         <div class="action-panel">
           <strong>Get ready</strong>
           <ol>
@@ -4215,7 +4215,6 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>{"Download manual inputs" if ctx.deployment.get("source_bundle", {}).get("kind") == "manual-inputs" else "Download portable bundle"}</a>
           {solution_downloads}
           {workshop_agent_link}
-          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
       </details>
     </section>

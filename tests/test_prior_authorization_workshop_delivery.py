@@ -137,7 +137,7 @@ def test_prior_bundle_and_download_manifest_match_the_frozen_inputs_and_cases():
     locked = inventory["locked_cases"]
     assert locked["path"] == "tests/demo_cases/prior-authorization.json"
     assert sha256((ROOT / locked["path"]).read_bytes()) == locked["sha256"]
-    assert manifest["raw_base"] == "https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/"
+    assert manifest["raw_base"] == "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
     assert manifest["bundle"]["native_importable"] is False
     assert manifest["bundle"]["standalone_guide"] is False
     assert locked["path"] in manifest["bundle"]["include_paths"]

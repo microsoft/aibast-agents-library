@@ -1624,7 +1624,7 @@ const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
 const DISTRIBUTION_OWNER = location.hostname.endsWith(".github.io")
   ? location.hostname.split(".")[0]
   : OWNER;
-const AGENT_RELEASE_TAG = DISTRIBUTION_OWNER === "kody-w"
+const AGENT_RELEASE_TAG = DISTRIBUTION_OWNER !== OWNER
   ? "agent-downloads-staging"
   : "agent-downloads";
 const AGENT_RELEASE = `https://github.com/${DISTRIBUTION_OWNER}/${REPO}/releases/download/${AGENT_RELEASE_TAG}`;

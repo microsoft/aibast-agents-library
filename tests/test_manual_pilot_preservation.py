@@ -110,8 +110,8 @@ def test_manual_bundles_are_explicit_public_safe_sources_not_native_imports():
     for slug in SLUGS:
         package = ROOT / "solutions" / slug
         manifest = read(package / "export-manifest.json")
-        assert manifest["raw_base"] == "https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/"
-        assert "/kody-w/aibast-agents-library/tree/staging/" in manifest["github_folder"]
+        assert manifest["raw_base"] == "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
+        assert "/microsoft/aibast-agents-library/tree/main/" in manifest["github_folder"]
         assert manifest["bundle"]["native_importable"] is False
         assert manifest["copilot_studio_solution"]["status"] == "stale_source"
         assert "solution_unique_name" not in manifest["copilot_studio_solution"]

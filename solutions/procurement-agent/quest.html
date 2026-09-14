@@ -695,7 +695,7 @@ html[data-theme="dark"] {
     <section class="learn-step" id="workshop-step-1">
       <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Open GitHub Copilot Chat</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: open GitHub Copilot Chat" data-report-expected="GitHub Copilot Chat is open in VS Code Agent mode, signed in with Copilot access." data-report-evidence="">Report an issue</button></header>
       <div class="learn-step-body">
-        <p>Every workshop currently runs through GitHub Copilot only. No separate app install is required.</p>
+        <p>Start in GitHub Copilot Chat. No Frontier desktop app is required; the selected lane's skill handles any additional setup.</p>
         <div class="action-panel">
           <strong>Get ready</strong>
           <ol>
@@ -904,7 +904,6 @@ Your $125,000 request sits in the $100K–$500K band, which means the CFO must r
           <a class="button" href="exports/procurement-agent-source.zip" download>Download manual inputs</a>
           <div class="notice"><strong>Historical export — not current source.</strong> Historical native export predates grounding-r3 and does not contain the current repaired input set. It is not offered as a current import. Use the manual inputs; native installation and regression remain pending. <a href="exports/procurement-agent-solution-export.json" download>Export details</a></div>
           <a class="button" href="../../agents/@aibast-agents-library/templates/workshop_agent.py" download>Download generic workshop agent</a>
-          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
       </details>
     </section>
@@ -1073,18 +1072,18 @@ surrendering purchasing authority.
    and missing evidence.
 
 &lt;!-- locked-preview-anchors:start --&gt;
-## Skill routing map
+## Locked Preview evidence anchors
 
-Route from the user&#x27;s natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
+Route from the user&#x27;s natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
 
-- `PROC-01` uses skill `purchase-request`.
-- `PROC-02` uses skill `vendor-comparison`.
-- `PROC-03` uses skill `approval-routing`.
-- `PROC-04` uses skill `spend-analysis`.
+Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-These are the ONLY valid skill names. Never invent, guess, or reference another. If a skill or its knowledge cannot load after one retry, say so honestly and stop; never answer from memory without a real citation.
+- `PROC-01` / `purchase_request`: `PR-5001`, `$125,000`, `CFO`
+- `PROC-02` / `vendor_comparison`: `AWS`, `Azure`, `not a supplier award`
+- `PROC-03` / `approval_routing`: `CFO`, `48 hours`, `does not record an approval`
+- `PROC-04` / `spend_analysis`: `Software`, `$60,000`, `No purchase order is created`
 
-Preserve: `$125,000`, `CFO`, `not a supplier award`, `48 hours`, `Software`, `$60,000`, `No purchase order is created`.
+These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
 &lt;!-- locked-preview-anchors:end --&gt;
 
 ## Mandatory human-review paragraph

@@ -29,7 +29,7 @@ def sha256(data):
 def context():
     return scaffold.load_context(
         ROOT, "procurement-agent", allow_pending=True,
-        raw_base="https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/",
+        raw_base="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
     )
 
 
@@ -78,7 +78,7 @@ def test_procurement_seven_inputs_and_locked_cases_are_pinned_to_exact_bytes():
         assert len(data) == item["bytes"]
         assert sha256(data) == item["sha256"]
         assert item["public_url"] == (
-            "https://raw.githubusercontent.com/kody-w/aibast-agents-library/"
+            "https://raw.githubusercontent.com/microsoft/aibast-agents-library/"
             f"{SOURCE_COMMIT}/{item['path']}"
         )
     locked = inventory["locked_cases"]
