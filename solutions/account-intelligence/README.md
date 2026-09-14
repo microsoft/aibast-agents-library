@@ -70,7 +70,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot Studio deployment settings | `solutions/account-intelligence/exports/account-intelligence-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/account-intelligence/exports/account-intelligence-solution-export.json` |
 
-**Scaffold status:** 99 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 110 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

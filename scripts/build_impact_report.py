@@ -15,6 +15,12 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.clarity_tag import current_tag as clarity_current_tag  # noqa: E402
+
+
 DEFAULT_METRICS = ROOT / "state" / "metrics.json"
 DEFAULT_HISTORY = ROOT / "state" / "impact_history.json"
 DEFAULT_METRICS_HISTORY = ROOT / "state" / "metrics_history.json"
@@ -1413,6 +1419,7 @@ def render_html(report: dict[str, Any]) -> str:
     @media (max-width: 760px) {{ .notes-grid, .movers {{ grid-template-columns: 1fr; }} .hero, .report-section, .notes {{ padding: 18px; }} }}
     @media print {{ body {{ background: var(--cp-surface); }} .page {{ width: 100%; padding: 0; }} .actions {{ display: none; }} .hero, .report-section, .notes {{ break-inside: avoid; box-shadow: none; }} }}
   </style>
+{clarity_current_tag(ROOT).rstrip()}
 </head>
 <body>
   <main class="page">
