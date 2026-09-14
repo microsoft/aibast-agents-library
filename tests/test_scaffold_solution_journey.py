@@ -323,19 +323,13 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 9
-    assert "Install RAPP Brainstem" in quest
+    assert quest.count("data-copy-target=") == 7
+    assert "Open GitHub Copilot Chat" in quest
+    assert "Install RAPP Brainstem" not in quest
     assert "Install RAPP Brainstem Frontier" not in quest
-    assert "Install with GitHub Copilot in VS Code" in quest
-    assert "Copy AI prompt" in quest
-    assert "any coding AI" in quest
-    assert "Download Windows install.cmd" in quest
-    assert "aibast-agents-library/install.sh | bash" in quest
-    assert "beta/install.sh | bash" not in quest
-    assert "Download onboarding skill" in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
-    assert quest.count('download="SKILL.md"') == 3
+    assert quest.count('download="SKILL.md"') == 2
     assert "Drag the downloaded file into the chat." in quest
     assert "Give me Demo Journey using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
