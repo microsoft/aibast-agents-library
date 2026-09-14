@@ -30,7 +30,7 @@ Every push to `staging` runs:
 2. **Pages deploy** (`pages.yml`): builds the slim static site, runs the
    artifact tests, and publishes staging Pages. The staging build renders the
    installers so their defaults point at the staging repository and branch;
-   the source files stay byte-identical to production.
+   ring rendering does not modify the repository's installer sources.
 3. **Ring one-liner smoke** (`ring-smoke.yml`): after each Pages deploy, and
    every six hours, clean runners on all three operating systems run the
    published one-liner exactly as a user would, with no environment overrides.
@@ -41,6 +41,18 @@ Every push to `staging` runs:
 The same smoke runs on production against the public Pages URL. A failure
 opens an issue labelled `incident` automatically and closes it on recovery, so
 a broken installer is known within hours instead of from a user report.
+
+### Content scale
+
+Hosted content is expected to keep growing. Preflight checks out the complete
+candidate tree at depth one rather than downloading every branch's history.
+The two page-preservation audits fetch their exact pinned commits with blob
+filtering, retrieving historical file contents only as those audits need them.
+Upgrade scenarios explicitly fetch one production-baseline snapshot and import
+it into their local test origin; fresh scenarios need only the candidate.
+These bounds do not remove repository content or skip source, media, or
+installer checks. Pages remains a separate allowlisted artifact with its
+existing size and link-integrity gates.
 
 ## Sync
 
