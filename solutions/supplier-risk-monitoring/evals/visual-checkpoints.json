@@ -19,7 +19,7 @@
       "case_id": "SR-01",
       "source": "solutions/supplier-risk-monitoring/screenshots/assisted/01-sr-01.jpg",
       "status": "reshoot_required",
-      "reason": "The learner frame exposes a Leadership Review Recommendations row whose recommended action is visibly truncated after “At”. The source capture cannot show a complete meaningful recommendation, so it is withheld pending a reshoot."
+      "reason": "The learner frame exposes a Leadership Review Recommendations row whose recommended action is visibly truncated after \u201cAt\u201d. The source capture cannot show a complete meaningful recommendation, so it is withheld pending a reshoot."
     },
     {
       "id": "easy-sr-02",
@@ -98,13 +98,14 @@
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 88,
-          "width": 820,
-          "height": 72,
-          "label": "Blank agent workspace"
+          "x": 168,
+          "y": 97,
+          "width": 230,
+          "height": 55,
+          "label": "Blank agent \u2014 Untitled Agent"
         }
-      ]
+      ],
+      "note": "Original box spanned most of the title input chrome; re-measured the visible Untitled Agent text and tightened the annotation to the exact anchor 2026-09-10."
     },
     {
       "id": "hard-step-02",
@@ -118,13 +119,14 @@
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 88,
-          "width": 820,
-          "height": 72,
-          "label": "Manual agent name entered"
+          "x": 170,
+          "y": 106,
+          "width": 467,
+          "height": 42,
+          "label": "Supply Risk Monitoring Manual"
         }
-      ]
+      ],
+      "note": "Original box spanned most of the title input chrome; re-measured the visible agent name text and tightened the annotation to the exact anchor 2026-09-10."
     },
     {
       "id": "hard-step-03",
@@ -439,6 +441,6 @@
     "reviewer": "workshop-builder:supplier-risk-monitoring",
     "reviewed_at": "2026-08-10T00:57:29.461000+00:00",
     "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Easy SR-01 is demoted because its visible recommendation ends at “At”; Draft publication remains machine-proven when no reusable Draft screenshot is available, and reshoot-required sources stay withheld from learner pages."
+    "notes": "Approved reusable captures are case-bound and annotated. Easy SR-01 is demoted because its visible recommendation ends at \u201cAt\u201d; Draft publication remains machine-proven when no reusable Draft screenshot is available, and reshoot-required sources stay withheld from learner pages."
   }
 }
