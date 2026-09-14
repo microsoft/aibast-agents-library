@@ -722,15 +722,23 @@ body.first-party-view .industry-blueprint,
 body.first-party-view .popular,
 body.first-party-view #readiness,
 body.first-party-view #sort,
-body.first-party-view .upvote-explainer {
+body.first-party-view .upvote-explainer,
+body.partners-view .industry-selector,
+body.partners-view .industry-blueprint,
+body.partners-view .popular,
+body.partners-view #readiness,
+body.partners-view #sort,
+body.partners-view .upvote-explainer {
   display: none;
 }
-body.first-party-view .persona {
+body.first-party-view .persona,
+body.partners-view .persona {
   overflow: visible;
   text-overflow: clip;
   white-space: normal;
 }
-body.first-party-view .agent-card h2 {
+body.first-party-view .agent-card h2,
+body.partners-view .agent-card h2 {
   font-size: 1.18rem;
 }
 .card-actions, .agent-upvote {
@@ -1328,6 +1336,7 @@ footer {
       <div class="tabs" role="tablist" aria-label="Library type">
         <button class="tab active" type="button" data-action="view" data-view="solutions">Industry solutions</button>
         <button class="tab" type="button" data-action="view" data-view="first-party">Microsoft first-party</button>
+        <button class="tab" type="button" data-action="view" data-view="partners">Partner solutions</button>
       </div>
       <div class="filters">
         <select class="field" id="industry" aria-label="Industry"><option value="">All industries</option></select>
@@ -1387,6 +1396,8 @@ const state = {
   agents: [],
   stacks: [],
   firstParty: [],
+  partnerAgents: [],
+  partners: [],
   stats: {},
   architectureLevel2: new Map(),
   agentSignals: new Map(),
@@ -1433,6 +1444,20 @@ const CATEGORY_ICONS = {
   general: "✦", healthcare: "✚", human_resources: "◇", manufacturing: "⚙",
   professional_services: "§", retail_cpg: "▦", slg_government: "⌂",
   software_digital_products: "⌘", customer_service: "☎"
+};
+const PARTNER_AGENT_ICONS = {
+  "congruentx-buyer-intent-enrichment": "◎",
+  "congruentx-hyper-targeted-market-segmentation": "⊞",
+  "congruentx-dynamic-journey-orchestration": "⇄",
+  "congruentx-event-webinar-persona-journeys": "⚑",
+  "congruentx-first-impact-claims-portal": "◑",
+  "congruentx-icp-targeting-by-line": "◈",
+  "congruentx-risk-loss-ratio-storytelling": "▲",
+  "congruentx-loyalty-tier-triggers": "★",
+  "congruentx-dormant-account-reactivation": "↻",
+  "congruentx-service-contracts-attach-rate": "⬡",
+  "congruentx-target-accounts-buying-committee": "⬢",
+  "congruentx-thought-leadership-orchestration": "☆"
 };
 
 const FIRST_PARTY_VERTICALS = {
@@ -1529,6 +1554,8 @@ async function init() {
   state.agents = registry.agents || [];
   state.stacks = registry.stacks || [];
   state.firstParty = registry.first_party || [];
+  state.partnerAgents = registry.partner_agents || [];
+  state.partners = registry.partners || [];
   state.stats = registry.stats || {};
   state.advertisedSolutions = new Set(Object.keys(catalog.solutions || {}));
   state.exportedSolutionSlugs = new Set(
@@ -1550,17 +1577,25 @@ async function init() {
   if (location.hash.startsWith("#agent/")) openAgent(dec(location.hash.slice(7)));
   if (location.hash.startsWith("#stack/")) openStack(dec(location.hash.slice(7)));
   if (location.hash.startsWith("#first-party/")) openFirstParty(dec(location.hash.slice(13)));
+  if (location.hash.startsWith("#partner/")) openPartnerAgent(dec(location.hash.slice(9)));
 }
 
 function restoreState() {
   const params = new URLSearchParams(location.search);
   state.query = params.get("q") || "";
-  state.view = ["solutions", "first-party"].includes(params.get("view"))
+  state.view = ["solutions", "first-party", "partners"].includes(params.get("view"))
     ? params.get("view") : "solutions";
   $("search").value = state.query;
 }
 
 function renderStats() {
+  if (state.view === "partners") {
+    $("stats").innerHTML = `
+      <span class="stat"><strong>${Number(state.stats.total_partner_agents || 0).toLocaleString()}</strong> partner agents</span>
+      <span class="stat"><strong>${Number((state.stats.partner_list || []).length).toLocaleString()}</strong> partners</span>
+      <span class="stat"><strong>${Number((state.stats.partner_agent_categories || []).length).toLocaleString()}</strong> categories</span>`;
+    return;
+  }
   if (state.view === "first-party") {
     $("stats").innerHTML = `
       <span class="stat"><strong>${Number(state.stats.total_first_party || 0).toLocaleString()}</strong> first-party agents</span>
@@ -1579,11 +1614,16 @@ function renderStats() {
 
 function buildFilters() {
   const firstPartyView = state.view === "first-party";
+  const partnersView = state.view === "partners";
   const solutions = solutionAgents();
 
   const industries = firstPartyView
     ? uniq(state.firstParty.map(agent => agent.vertical))
         .map(value => ({ value, label: firstPartyVerticalName(value) }))
+        .sort((a, b) => a.label.localeCompare(b.label))
+    : partnersView
+    ? uniq(state.partnerAgents.map(agent => agent.category))
+        .map(value => ({ value, label: CATEGORY_NAMES[value] || pretty(value) }))
         .sort((a, b) => a.label.localeCompare(b.label))
     : Object.entries(CATEGORY_NAMES)
         .filter(([key]) => solutions.some(agent => agent.category === key))
@@ -1591,21 +1631,25 @@ function buildFilters() {
 
   const personas = (firstPartyView
     ? uniq(state.firstParty.flatMap(agent => agent.personas || []))
+    : partnersView
+    ? []
     : uniq(solutions.flatMap(agent => solutionOf(agent).personas || []))
   ).sort().map(value => ({ value, label: value }));
 
   const systems = (firstPartyView
     ? uniq(state.firstParty.map(agent => agent.product))
+    : partnersView
+    ? uniq(state.partnerAgents.map(agent => partnerName(agent.partner_id)))
     : uniq(solutions.flatMap(agent => microsoftTools(agent)))
   ).sort().map(value => ({ value, label: value }));
 
   applyFilterOptions(
     "industry",
     industries,
-    firstPartyView ? "All solution areas" : "All industries"
+    firstPartyView || partnersView ? "All solution areas" : "All industries"
   );
   applyFilterOptions("persona", personas, "All personas");
-  applyFilterOptions("system", systems, "All Microsoft products");
+  applyFilterOptions("system", systems, partnersView ? "All partners" : "All Microsoft products");
 }
 
 function applyFilterOptions(id, values, placeholder) {
@@ -2005,23 +2049,102 @@ function firstPartyCard(agent) {
     </article>`;
 }
 
+function partnerName(partnerId) {
+  const partner = state.partners.find(item => item.id === partnerId);
+  return partner ? partner.name : pretty(partnerId);
+}
+
+function filteredPartnerAgents() {
+  const query = normalize(state.query);
+  const terms = query ? queryTerms(query) : [];
+  return state.partnerAgents
+    .map(agent => {
+      const text = normalize([
+        agent.name, agent.product, agent.description,
+        CATEGORY_NAMES[agent.category] || agent.category,
+        partnerName(agent.partner_id)
+      ].filter(Boolean).join(" "));
+      const score = !terms.length ? 1 : terms.reduce((total, term) => total + (text.includes(term) ? 5 : 0), 0);
+      return { agent, score };
+    })
+    .filter(row => !terms.length || row.score > 0)
+    .filter(row => !state.industry || row.agent.category === state.industry)
+    .filter(row => !state.system || partnerName(row.agent.partner_id) === state.system)
+    .sort((a, b) => b.score - a.score || a.agent.name.localeCompare(b.agent.name));
+}
+
+function partnerAgentCard(agent) {
+  const icon = PARTNER_AGENT_ICONS[agent.id] || CATEGORY_ICONS[agent.category] || "▣";
+  const persona = first(agent.who_it_helps, "Business user");
+  const productChips = agent.product.split("\u00b7").map(part => part.trim()).filter(Boolean);
+  const badges = [
+    `<span class="badge stage-badge">Partner: ${esc(partnerName(agent.partner_id))}</span>`
+  ];
+  const whyLabel = agent.partner_reported_outcome ? "Partner-reported outcome" : "Why it's worth knowing";
+  const whyText = agent.partner_reported_outcome
+    || first(agent.problem_it_solves, "")
+    || first(agent.what_it_does, "");
+  return `
+    <article class="agent-card" tabindex="0" data-action="open-partner-agent" data-id="${enc(agent.id)}">
+      <div class="card-head">
+        <span class="agent-icon">${esc(icon)}</span>
+        <div class="badges">${badges.join("")}</div>
+      </div>
+      <div class="card-body">
+        <div class="category">${esc(CATEGORY_NAMES[agent.category] || pretty(agent.category))}</div>
+        <h2>${esc(agent.name)}</h2>
+        <p class="what">${esc(agent.description)}</p>
+        ${whyText ? `
+        <div class="why" title="${agent.partner_reported_outcome ? "As stated by the partner; not independently verified by AIBAST" : ""}">
+          <strong>${esc(whyLabel)}</strong>
+          <span>${esc(whyText)}</span>
+        </div>` : ""}
+        <div class="microsoft-story">
+          <strong>Partner</strong>
+          <div class="tool-chips">
+            ${[partnerName(agent.partner_id), ...productChips].map(chip => `<span class="tool-chip">${esc(chip)}</span>`).join("")}
+          </div>
+        </div>
+        <div class="card-foot">
+          <span class="persona">For ${esc(persona)}</span>
+          <div class="card-actions">
+            <a class="button small" href="${esc(agent.source_url)}" target="_blank" rel="noopener" data-action="stop">Partner listing ↗</a>
+            <button class="button primary small" type="button" data-action="open-partner-agent" data-id="${enc(agent.id)}">View agent</button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+}
+
 function render() {
   const firstPartyView = state.view === "first-party";
+  const partnersView = state.view === "partners";
   document.body.classList.toggle("first-party-view", firstPartyView);
+  document.body.classList.toggle("partners-view", partnersView);
   document.querySelector(".intro .eyebrow").textContent = firstPartyView
     ? "Microsoft first-party catalog"
+    : partnersView
+    ? "Partner solutions"
     : "AI BAST Agent Library";
   document.querySelector(".intro h1").textContent = firstPartyView
     ? "Microsoft agents available today."
+    : partnersView
+    ? "Ideas from across the Microsoft partner ecosystem."
     : "Choose an industry. Build the AI journey.";
   document.querySelector(".intro p").textContent = firstPartyView
     ? "Browse current publicly documented Microsoft first-party agents across Dynamics 365, Microsoft 365 Copilot, and Agent 365. Lifecycle is shown only when Microsoft Learn states it explicitly."
+    : partnersView
+    ? "Microsoft partners are building and shipping their own Copilot Studio and Dynamics 365 agents in production. This is a curated set of those agents, each explained in plain terms \u2014 what it does, the problem it solves, and who it's for \u2014 as a source of ideas and patterns for your own AI roadmap. Every card links to the partner's own listing for the full picture."
     : "Start from proven solution patterns, run them safely with synthetic domain data, then connect customer systems and publish through Copilot Studio—or any downstream surface that can host the portable agent.";
   document.querySelector(".brand-copy small").textContent = firstPartyView
     ? "Microsoft First-Party"
+    : partnersView
+    ? "Partner Solutions"
     : "Industry Solutions";
   $("search").placeholder = firstPartyView
     ? "Search first-party agents, products, use cases, or personas..."
+    : partnersView
+    ? "Search partner agents, products, or categories..."
     : "Search: claims fraud, permit backlog, plant manager, Dynamics 365...";
   renderStats();
   document.querySelectorAll(".tab").forEach(tab => {
@@ -2050,6 +2173,17 @@ function render() {
       : "current publicly documented Microsoft capabilities";
     $("grid").classList.remove("journey-mode");
     $("grid").innerHTML = rows.length ? rows.map(row => firstPartyCard(row.agent)).join("") : emptyState();
+    return;
+  }
+
+  if (state.view === "partners") {
+    const rows = filteredPartnerAgents();
+    $("result-count").innerHTML = `<strong>${rows.length}</strong> partner agent${rows.length === 1 ? "" : "s"}`;
+    $("result-context").textContent = state.query
+      ? `matching "${state.query}"`
+      : "curated highlights from Microsoft partner agent libraries";
+    $("grid").classList.remove("journey-mode");
+    $("grid").innerHTML = rows.length ? rows.map(row => partnerAgentCard(row.agent)).join("") : emptyState();
     return;
   }
 
@@ -2707,6 +2841,11 @@ function openFirstParty(id) {
             <a class="button full" href="${esc(agent.overview_url)}" target="_blank" rel="noopener">Overview ↗</a>
             ${agent.configure_url ? `<a class="button full" href="${esc(agent.configure_url)}" target="_blank" rel="noopener">Configure ↗</a>` : ""}
           </section>
+          <section class="aside-block">
+            <h3>Estimate cost</h3>
+            <p>Model expected Copilot Studio consumption before you configure this agent.</p>
+            <a class="button full" href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener">Copilot Studio Estimator ↗</a>
+          </section>
           ${(agent.personas || []).length ? `
           <section class="aside-block">
             <h3>Personas</h3>
@@ -2717,6 +2856,65 @@ function openFirstParty(id) {
     </div>
   `);
   location.hash = `first-party/${enc(agent.id)}`;
+}
+
+function openPartnerAgent(id) {
+  const agent = state.partnerAgents.find(item => item.id === id);
+  if (!agent) return;
+  const partner = state.partners.find(item => item.id === agent.partner_id);
+  openModal(`
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="partner-agent-title">
+      <button class="icon-button modal-close" type="button" data-action="close-modal" aria-label="Close">×</button>
+      <header class="detail-head">
+        <span class="detail-icon">${esc(PARTNER_AGENT_ICONS[agent.id] || CATEGORY_ICONS[agent.category] || "▣")}</span>
+        <div>
+          <div class="category">${esc(agent.product)} · ${esc(CATEGORY_NAMES[agent.category] || pretty(agent.category))}</div>
+          <h2 id="partner-agent-title">${esc(agent.name)}</h2>
+          <p>${esc(agent.description)}</p>
+        </div>
+      </header>
+      <div class="detail-body">
+        <div>
+          ${(agent.what_it_does || []).length ? `
+          <section class="detail-section">
+            <h3>What it does</h3>
+            <ul>${agent.what_it_does.map(item => `<li>${esc(item)}</li>`).join("")}</ul>
+          </section>` : ""}
+          ${(agent.problem_it_solves || []).length ? `
+          <section class="detail-section">
+            <h3>Problem it solves</h3>
+            <ul>${agent.problem_it_solves.map(item => `<li>${esc(item)}</li>`).join("")}</ul>
+          </section>` : ""}
+          ${agent.partner_reported_outcome ? `
+          <section class="detail-section">
+            <h3>Partner-reported outcome</h3>
+            <p>${esc(agent.partner_reported_outcome)}</p>
+            <p style="color:var(--cp-text-muted); font-size:0.85em;">As stated on the partner's own site. AIBAST has not independently verified this figure.</p>
+          </section>` : ""}
+          <section class="detail-section">
+            <h3>About this listing</h3>
+            <p>This is a curated, paraphrased summary of a capability publicly listed by ${esc(partnerName(agent.partner_id))}. It is not an AIBAST-built or AIBAST-verified agent.</p>
+          </section>
+        </div>
+        <aside class="detail-aside">
+          <section class="aside-block microsoft-panel">
+            <h3>Partner</h3>
+            <p>${esc(partnerName(agent.partner_id))}${partner && partner.description ? ` — ${esc(partner.description)}` : ""}</p>
+          </section>
+          <section class="aside-block">
+            <h3>Source</h3>
+            <a class="button full" href="${esc(agent.source_url)}" target="_blank" rel="noopener">Partner listing ↗</a>
+          </section>
+          ${(agent.who_it_helps || []).length ? `
+          <section class="aside-block">
+            <h3>Who it helps</h3>
+            <div class="tool-chips">${agent.who_it_helps.map(p => `<span class="tool-chip">${esc(p)}</span>`).join("")}</div>
+          </section>` : ""}
+        </aside>
+      </div>
+    </div>
+  `);
+  location.hash = `partner/${enc(agent.id)}`;
 }
 
 function openModal(html) {
@@ -2731,7 +2929,7 @@ function closeModal() {
   $("modal-root").innerHTML = "";
   document.body.classList.remove("modal-open");
   if (location.hash.startsWith("#agent/") || location.hash.startsWith("#stack/")
-    || location.hash.startsWith("#first-party/")) {
+    || location.hash.startsWith("#first-party/") || location.hash.startsWith("#partner/")) {
     history.replaceState(null, "", location.pathname + location.search);
   }
 }
@@ -2811,7 +3009,7 @@ document.addEventListener("click", event => {
     render();
   } else if (action === "view") {
     state.view = target.dataset.view;
-    if (state.view === "first-party") {
+    if (state.view === "first-party" || state.view === "partners") {
       state.readiness = "";
       state.sort = "relevance";
     }
@@ -2841,6 +3039,8 @@ document.addEventListener("click", event => {
     openStack(dec(target.dataset.key));
   } else if (action === "open-first-party") {
     openFirstParty(dec(target.dataset.id));
+  } else if (action === "open-partner-agent") {
+    openPartnerAgent(dec(target.dataset.id));
   } else if (action === "stop") {
     event.stopPropagation();
   } else if (action === "copy") {

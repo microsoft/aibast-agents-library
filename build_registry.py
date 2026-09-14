@@ -46,6 +46,18 @@ FIRST_PARTY_DECK_STATUSES = {"GA", "Preview"}
 FIRST_PARTY_LIFECYCLES = {"Preview"}
 FIRST_PARTY_DOC_STATUSES = {"dedicated"}
 
+PARTNERS_FILE = Path("partners.json")
+PARTNERS_SCHEMA = "aibast-partners/1.0"
+REQUIRED_PARTNER_FIELDS = ["id", "name", "url"]
+REQUIRED_PARTNER_AGENT_FIELDS = [
+    "id", "partner_id", "name", "category", "product",
+    "description", "source_url"
+]
+
+COMMUNITY_TOOLS_FILE = Path("community_tools.json")
+COMMUNITY_TOOLS_SCHEMA = "aibast-community-tools/1.0"
+REQUIRED_COMMUNITY_TOOL_FIELDS = ["id", "name", "url", "author", "description"]
+
 
 def load_first_party(errors: list) -> list:
     """Microsoft first-party agents the field should evaluate before building custom.
@@ -158,6 +170,162 @@ def load_first_party(errors: list) -> list:
         rows.append(row)
 
     rows.sort(key=lambda r: (r["vertical"], r["name"]))
+    return rows
+
+
+def load_partners(errors: list) -> tuple:
+    """Curated highlights from Microsoft partner (ISV) agent libraries.
+
+    partners.json is authored, not derived: these agents ship from partner
+    ISVs (e.g. CongruentX) on their own Copilot Studio/Dynamics 365 builds and
+    have no .py file in this repo. They are surfaced alongside — never
+    merged into — the `agents` array so total_agents keeps counting only
+    code this repo owns. Descriptions are paraphrased summaries of what the
+    partner publicly states the agent does, not verbatim marketing copy, and
+    every entry links back to the partner's own listing via source_url.
+    """
+    if not PARTNERS_FILE.exists():
+        return [], []
+    try:
+        doc = json.loads(PARTNERS_FILE.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as e:
+        errors.append(f"{PARTNERS_FILE}: cannot read ({e})")
+        return [], []
+
+    if doc.get("schema") != PARTNERS_SCHEMA:
+        errors.append(f"{PARTNERS_FILE}: schema must be {PARTNERS_SCHEMA}")
+
+    partners = doc.get("partners", [])
+    if not isinstance(partners, list):
+        errors.append(f"{PARTNERS_FILE}: partners must be a list")
+        partners = []
+    partner_ids = set()
+    for partner in partners:
+        label = partner.get("id") or partner.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_PARTNER_FIELDS if not partner.get(f)]
+        if missing:
+            errors.append(f"{PARTNERS_FILE}:{label}: missing {', '.join(missing)}")
+            continue
+        if partner["id"] in partner_ids:
+            errors.append(f"{PARTNERS_FILE}:{label}: duplicate partner id")
+            continue
+        partner_ids.add(partner["id"])
+
+    entries = doc.get("agents", [])
+    if not isinstance(entries, list):
+        errors.append(f"{PARTNERS_FILE}: agents must be a list")
+        return partners, []
+    if doc.get("count") != len(entries):
+        errors.append(
+            f"{PARTNERS_FILE}: count {doc.get('count')} does not match "
+            f"{len(entries)} agents"
+        )
+
+    rows = []
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            errors.append(f"{PARTNERS_FILE}: every agent must be an object")
+            continue
+        label = entry.get("id") or entry.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_PARTNER_AGENT_FIELDS if not entry.get(f)]
+        if missing:
+            errors.append(f"{PARTNERS_FILE}:{label}: missing {', '.join(missing)}")
+            continue
+        if entry["id"] in seen:
+            errors.append(f"{PARTNERS_FILE}:{label}: duplicate id")
+            continue
+        seen.add(entry["id"])
+        if entry["partner_id"] not in partner_ids:
+            errors.append(
+                f"{PARTNERS_FILE}:{label}: partner_id "
+                f"'{entry['partner_id']}' is not declared in partners"
+            )
+            continue
+        if not entry["source_url"].startswith("http"):
+            errors.append(f"{PARTNERS_FILE}:{label}: source_url must be an http(s) URL")
+            continue
+        list_fields_ok = True
+        for field in ("what_it_does", "problem_it_solves", "who_it_helps"):
+            value = entry.get(field)
+            if value is None:
+                continue
+            if (
+                not isinstance(value, list)
+                or not value
+                or any(not isinstance(v, str) or not v.strip() for v in value)
+            ):
+                errors.append(
+                    f"{PARTNERS_FILE}:{label}: {field} must be a non-empty "
+                    "list of non-empty strings"
+                )
+                list_fields_ok = False
+        if not list_fields_ok:
+            continue
+
+        row = dict(entry)
+        row["_catalog_kind"] = "partner"
+        rows.append(row)
+
+    rows.sort(key=lambda r: (r["partner_id"], r["category"], r["name"]))
+    return partners, rows
+
+
+def load_community_tools(errors: list) -> list:
+    """Featured community tools — external links, not agents this repo owns.
+
+    community_tools.json is authored, not derived: official Microsoft
+    reference resources and independent community projects that AIBAST
+    surfaces on the front page as a "Featured community tools" section.
+    Inclusion is not an endorsement or verified benchmark; every entry
+    links to the resource's own home via url.
+    """
+    if not COMMUNITY_TOOLS_FILE.exists():
+        return []
+    try:
+        doc = json.loads(COMMUNITY_TOOLS_FILE.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as e:
+        errors.append(f"{COMMUNITY_TOOLS_FILE}: cannot read ({e})")
+        return []
+
+    if doc.get("schema") != COMMUNITY_TOOLS_SCHEMA:
+        errors.append(
+            f"{COMMUNITY_TOOLS_FILE}: schema must be {COMMUNITY_TOOLS_SCHEMA}"
+        )
+
+    entries = doc.get("tools", [])
+    if not isinstance(entries, list):
+        errors.append(f"{COMMUNITY_TOOLS_FILE}: tools must be a list")
+        return []
+    if doc.get("count") != len(entries):
+        errors.append(
+            f"{COMMUNITY_TOOLS_FILE}: count {doc.get('count')} does not "
+            f"match {len(entries)} tools"
+        )
+
+    rows = []
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            errors.append(f"{COMMUNITY_TOOLS_FILE}: every tool must be an object")
+            continue
+        label = entry.get("id") or entry.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_COMMUNITY_TOOL_FIELDS if not entry.get(f)]
+        if missing:
+            errors.append(
+                f"{COMMUNITY_TOOLS_FILE}:{label}: missing {', '.join(missing)}"
+            )
+            continue
+        if entry["id"] in seen:
+            errors.append(f"{COMMUNITY_TOOLS_FILE}:{label}: duplicate id")
+            continue
+        seen.add(entry["id"])
+        if not entry["url"].startswith("http"):
+            errors.append(f"{COMMUNITY_TOOLS_FILE}:{label}: url must be an http(s) URL")
+            continue
+        rows.append(dict(entry))
+
+    rows.sort(key=lambda r: r["name"])
     return rows
 
 
@@ -376,6 +544,8 @@ def build_registry():
     added_dates = git_added_dates()
     solutions = load_solutions()
     first_party = load_first_party(errors)
+    partners, partner_agents = load_partners(errors)
+    community_tools = load_community_tools(errors)
     onepager_content = load_onepager_content()
     solution_copy = load_solution_copy()
     demo_cases = load_demo_cases()
@@ -601,13 +771,19 @@ def build_registry():
                 a["_documented"] for a in first_party
             ),
             "first_party_products": sorted({a["product"] for a in first_party}),
+            "total_partner_agents": len(partner_agents),
+            "partner_list": sorted({p["name"] for p in partners}),
+            "partner_agent_categories": sorted({a["category"] for a in partner_agents}),
             "publisher_list": sorted(publishers),
             "category_list": sorted(categories),
             "tier_counts": dict(sorted(tiers.items(), key=lambda kv: -kv[1])),
         },
         "stacks": stack_rows,
         "agents": agents,
-        "first_party": first_party
+        "first_party": first_party,
+        "partners": partners,
+        "partner_agents": partner_agents,
+        "community_tools": community_tools
     }
 
     with open(REGISTRY_FILE, "w", encoding="utf-8") as f:
@@ -621,6 +797,11 @@ def build_registry():
         print(
             f"  First-party agents: {len(first_party)} "
             f"({preview} explicitly documented Preview)"
+        )
+    if partner_agents:
+        print(
+            f"  Partner agents: {len(partner_agents)} "
+            f"across {len(partners)} partner(s)"
         )
 
     if errors:

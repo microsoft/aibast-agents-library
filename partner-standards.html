@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIBAST Agent Library — Research &amp; Verification Standard</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --panel: #ffffff;
+    --border: #e7ded2;
+    --text: #1c1b1a;
+    --muted: #6b6259;
+    --accent: #9b1c31;
+    --accent-soft: #f7e9e9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  .eyebrow {
+    display: inline-block;
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 2.1rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+  }
+  .intro {
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin: 0 0 36px;
+  }
+  h2 {
+    font-size: 1.15rem;
+    margin: 40px 0 6px;
+    letter-spacing: -0.01em;
+  }
+  h2 .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    vertical-align: middle;
+  }
+  p, li { font-size: 0.94rem; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 10px 0 0;
+  }
+  .card p:first-child { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  code {
+    background: var(--accent-soft);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.85em;
+  }
+  .callout {
+    margin: 44px 0 0;
+    padding: 18px 20px;
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    background: var(--accent-soft);
+  }
+  .callout strong { display: block; margin-bottom: 4px; }
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow">AIBAST Agent Library</span>
+  <h1>How we research and verify every agent listing</h1>
+  <p class="intro">
+    This page documents the standard we hold ourselves to when adding an agent to the
+    AIBAST Agent Library — whether it's a Microsoft first-party agent or an agent from
+    a partner's own library. It exists so anyone reviewing our catalog, and any partner
+    considering being featured, can see exactly how an entry earns its place and what
+    it does and doesn't claim.
+  </p>
+
+  <h2><span class="num">1</span>Every entry has a single, dedicated source</h2>
+  <div class="card">
+    <p>
+      Each agent links to its own primary page — a dedicated Microsoft Learn article for
+      first-party agents, or the partner's own public listing for partner agents. We do
+      not attach a generic multi-agent overview page to a specific agent and call it
+      "dedicated" documentation. If a distinct agent doesn't have its own page, it is
+      left out of the catalog rather than forced in against a shared or mismatched page.
+    </p>
+  </div>
+
+  <h2><span class="num">2</span>Every source is fetched and read, not assumed</h2>
+  <div class="card">
+    <p>
+      Before an entry is published, we fetch the live source page directly (not just a
+      search-result snippet), confirm it resolves (HTTP 200), and read the actual content
+      to confirm it describes the agent being listed. Search summaries are used to find
+      candidates, never as the final source of truth.
+    </p>
+  </div>
+
+  <h2><span class="num">3</span>Descriptions are paraphrased, never copied</h2>
+  <div class="card">
+    <p>
+      Every description, "what it does," and "problem it solves" is written in our own
+      words, summarizing what the source page states. We do not reproduce a partner's
+      marketing headline or promotional copy verbatim.
+    </p>
+  </div>
+
+  <h2><span class="num">4</span>Quoted outcomes are explicit, verbatim, and labeled</h2>
+  <div class="card">
+    <p>
+      If we include a quantified benefit (for example, "10–20% higher win rate"), it is
+      because the source page states that number explicitly for that specific agent — quoted
+      as written, never estimated, rounded, or invented by us. Every such figure is labeled
+      as reported by its source and explicitly <em>not independently verified by AIBAST</em>.
+    </p>
+  </div>
+
+  <h2><span class="num">5</span>Lifecycle labels reflect the current page, not history</h2>
+  <div class="card">
+    <p>
+      "Preview" or "GA" labels are only applied when the current source page explicitly
+      states that status today. A feature's status in an older slide deck, roadmap
+      announcement, or blog post is not presented as its current lifecycle. Every catalog
+      records a <code>snapshot_date</code> so staleness is visible and re-verification is
+      expected on a regular cadence.
+    </p>
+  </div>
+
+  <h2><span class="num">6</span>Partner listings stand on their own — no competitive framing</h2>
+  <div class="card">
+    <p>
+      Partner agents are curated to show breadth and real ideas from across the Microsoft
+      ecosystem, not to duplicate or compete with AIBAST's own catalog under a different
+      label. We deliberately avoid picking partner agents that just restate something AIBAST
+      already has, and we never frame a partner's agent as "AIBAST vs. the partner." Each
+      entry is explained on its own merits: what it does, the problem it solves, and who
+      it's for.
+    </p>
+  </div>
+
+  <h2><span class="num">7</span>Attribution and partner review</h2>
+  <div class="card">
+    <p>
+      Every partner entry credits the partner by name and links directly back to their own
+      listing. Before a partner catalog is promoted to the production Microsoft-hosted
+      release, the partner is given the opportunity to review the selection, the
+      paraphrased descriptions, and the attribution, and to request changes.
+    </p>
+  </div>
+
+  <div class="callout">
+    <strong>Why this matters</strong>
+    A catalog is only useful if it can be trusted. These standards exist so that anyone —
+    a partner, a Microsoft field seller, or another contributor — can independently check
+    our work against the same primary sources we used, and expect the same answer every
+    time.
+  </div>
+
+  <footer>
+    AIBAST Agent Library · This page is intentionally not linked from the main site
+    navigation — share its direct URL with prospective partners or reviewers.
+  </footer>
+</div>
+</body>
+</html>

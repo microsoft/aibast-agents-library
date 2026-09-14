@@ -108,13 +108,14 @@ def test_catalog_selector_only_shows_solutions_and_first_party():
         )
     ]
 
-    assert tabs.count('data-action="view"') == 2
+    assert tabs.count('data-action="view"') == 3
     assert 'data-view="solutions">Industry solutions</button>' in tabs
     assert 'data-view="first-party">Microsoft first-party</button>' in tabs
+    assert 'data-view="partners">Partner solutions</button>' in tabs
     assert "Multi-agent stacks" not in tabs
     assert "Building blocks" not in tabs
     assert (
-        '["solutions", "first-party"].includes(params.get("view"))'
+        '["solutions", "first-party", "partners"].includes(params.get("view"))'
         in text
     )
 

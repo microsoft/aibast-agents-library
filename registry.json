@@ -1,7 +1,7 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-08-19T17:10:50.278007+00:00",
+  "generated_at": "2026-09-13T14:10:34.295482+00:00",
   "stats": {
     "total_agents": 72,
     "publishers": 1,
@@ -18,17 +18,31 @@
     "solution_demo_videos": 47,
     "total_lines": 30699,
     "total_kb": 1503.5,
-    "total_first_party": 14,
-    "first_party_available": 12,
-    "first_party_preview": 2,
-    "first_party_documented": 14,
+    "total_first_party": 22,
+    "first_party_available": 13,
+    "first_party_preview": 9,
+    "first_party_documented": 22,
     "first_party_products": [
+      "Dynamics 365 Business Central",
       "Dynamics 365 Contact Center",
       "Dynamics 365 Contact Center / Customer Service",
       "Dynamics 365 Customer Service",
+      "Dynamics 365 Finance",
+      "Dynamics 365 Project Operations",
       "Dynamics 365 Sales",
+      "Dynamics 365 Supply Chain Management",
       "Microsoft 365 Copilot",
       "Microsoft Agent 365"
+    ],
+    "total_partner_agents": 12,
+    "partner_list": [
+      "CongruentX"
+    ],
+    "partner_agent_categories": [
+      "b2b_sales",
+      "financial_services",
+      "professional_services",
+      "retail_cpg"
     ],
     "publisher_list": [
       "@aibast-agents-library"
@@ -14150,6 +14164,578 @@
       "_catalog_kind": "first_party",
       "_documented": true,
       "_availability_label": "Available"
+    },
+    {
+      "id": "account-reconciliation-agent",
+      "name": "Account Reconciliation Agent",
+      "product": "Dynamics 365 Finance",
+      "vertical": "general",
+      "deck_status": "Preview",
+      "description": "Continuously compares general ledger transactions against subsidiary ledgers, flags discrepancies, and recommends corrective actions to keep the books reconciled between close periods.",
+      "use_cases": [
+        "Continuously compare general ledger and subsidiary ledger transactions across the accounting period",
+        "Flag discrepancies such as unmatched entries or amount mismatches as soon as they occur",
+        "Review AI-suggested corrective actions before applying them to a reconciliation exception",
+        "See a dashboard of open and closed reconciliation exceptions instead of waiting for period-end"
+      ],
+      "personas": [
+        "Accountant",
+        "Controller",
+        "Finance Manager"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/acct-rec-agent",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/acct-rec-agent",
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "approvals-agent",
+      "name": "Approvals Agent",
+      "product": "Dynamics 365 Project Operations",
+      "vertical": "general",
+      "deck_status": "Preview",
+      "description": "Reviews submitted time, expense, and material entries against uploaded policy documents and classifies each as ready for approval or needing review.",
+      "use_cases": [
+        "Upload policy documents at the organization or project level for the agent to check entries against",
+        "Automatically classify incoming time, expense, and material entries as ready for approval or needing review",
+        "Optionally let the agent auto-approve entries that clearly match policy",
+        "Reduce the manual review load on project managers approving routine entries"
+      ],
+      "personas": [
+        "Project Manager",
+        "Approver",
+        "Project Operations Administrator"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/approvals/approvals-agent-intro",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/approvals/approvals-agent-policy",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/approvals/approvals-agent-intro",
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "expense-agent-project-operations",
+      "name": "Expense Agent",
+      "product": "Dynamics 365 Project Operations",
+      "vertical": "general",
+      "deck_status": "Preview",
+      "description": "Extracts data from submitted receipts and assembles expense lines and reports for approval, reducing manual expense entry for project teams.",
+      "use_cases": [
+        "Submit a receipt by uploading it in the app or forwarding it to a monitored mailbox",
+        "Let the agent extract merchant, amount, currency, and date from the receipt automatically",
+        "Group extracted expenses into a report by project or trip for review",
+        "Apply configured policy rules before an expense report reaches an approver"
+      ],
+      "personas": [
+        "Project Team Member",
+        "Project Manager",
+        "Finance Approver"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/expense/expense-agent-overview",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/expense/expense-agent-configuration",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/expense/expense-agent-overview",
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "expense-agent-business-central",
+      "name": "Expense Agent",
+      "product": "Dynamics 365 Business Central",
+      "vertical": "general",
+      "deck_status": "Preview",
+      "description": "Lets any employee submit a receipt by web app or email, then extracts, categorizes, and assembles the data into an expense report inside Business Central.",
+      "use_cases": [
+        "Submit a receipt through the dedicated expense web app or by forwarding it to a shared mailbox, with no Business Central license required",
+        "Let the agent extract and categorize receipt data automatically",
+        "Review and submit the resulting expense report for approval",
+        "Keep all financial data, audit trails, and posting logic inside Business Central's existing rules"
+      ],
+      "personas": [
+        "Employee",
+        "Expense Approver",
+        "Finance Team"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/business-central/expense-management/expense-agent",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/business-central/expense-management/expense-agent",
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "payables-agent",
+      "name": "Payables Agent",
+      "product": "Dynamics 365 Business Central",
+      "vertical": "general",
+      "deck_status": "Preview",
+      "description": "Monitors a mailbox for vendor invoices, extracts the data with AI, and prepares a draft purchase invoice for a supervisor to review before posting.",
+      "use_cases": [
+        "Monitor a designated mailbox for incoming vendor invoice emails with PDF attachments",
+        "Extract invoice details automatically using AI-based document analysis",
+        "Match the invoice to an existing vendor or flag it for supervisor input",
+        "Review the draft purchase invoice before it is finalized and posted"
+      ],
+      "personas": [
+        "Accounts Payable Clerk",
+        "Agent Supervisor",
+        "Finance Approver"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/business-central/payables-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/business-central/payables-agent-setup",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/business-central/payables-agent",
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "procurement-agent",
+      "name": "Procurement Agent",
+      "product": "Dynamics 365 Supply Chain Management",
+      "vertical": "general",
+      "deck_status": "Preview",
+      "description": "Automates supplier email communications and evaluates the downstream impact of supplier-driven changes to purchase orders and supply commitments.",
+      "use_cases": [
+        "Classify and analyze inbound supplier emails about purchase order confirmations and change requests",
+        "Draft or send outbound reminder and follow-up emails to suppliers on the purchaser's behalf",
+        "Evaluate how a supplier's requested change would affect inventory, production, and customer commitments",
+        "Let purchasers quickly confirm and apply supplier-driven changes instead of re-entering them manually"
+      ],
+      "personas": [
+        "Purchasing Agent",
+        "Procurement Manager",
+        "Supply Chain Planner"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-agent-overview",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-agent-overview",
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "sales-order-agent",
+      "name": "Sales Order Agent",
+      "product": "Dynamics 365 Business Central",
+      "vertical": "general",
+      "deck_status": "GA",
+      "description": "Reads customer sales requests from a monitored mailbox, checks inventory, and prepares a sales quote or order for review before it's sent.",
+      "use_cases": [
+        "Monitor a designated mailbox for incoming customer sales requests",
+        "Clarify missing order details with the customer through a multi-turn email conversation",
+        "Check inventory availability and prepare a sales quote or order as a PDF",
+        "Let an authorized user review and approve the draft before it is converted to an order"
+      ],
+      "personas": [
+        "Sales Order Processor",
+        "Customer Service Representative",
+        "Sales Administrator"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/business-central/sales-order-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/business-central/sales-order-agent-setup",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "time-entry-agent",
+      "name": "Time Entry Agent",
+      "product": "Dynamics 365 Project Operations",
+      "vertical": "general",
+      "deck_status": "Preview",
+      "description": "Drafts weekly time entries for project team members from assignments, booked capacity, or prior entries, then reminds them to review and submit.",
+      "use_cases": [
+        "Generate draft time entries at the start of each week from project assignments or booked capacity",
+        "Notify team members in Microsoft Teams about their draft entries",
+        "Review, modify, and submit draft entries from Teams or the Project Operations web app",
+        "Receive a reminder near week's end if any time entries are still missing"
+      ],
+      "personas": [
+        "Project Team Member",
+        "Resource Manager",
+        "Project Operations Administrator"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/time/enable-time-entry-agent",
+      "doc_status": "dedicated",
+      "source_slide": 3,
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/project-operations/time/enable-time-entry-agent",
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    }
+  ],
+  "partners": [
+    {
+      "id": "congruentx",
+      "name": "CongruentX",
+      "url": "https://congruentx.com/ai-agents-library/",
+      "description": "Microsoft Dynamics 365 and Power Platform partner publishing a public library of 40+ Copilot-based sales, insurance, distribution, and professional-services agents."
+    }
+  ],
+  "partner_agents": [
+    {
+      "id": "congruentx-buyer-intent-enrichment",
+      "partner_id": "congruentx",
+      "name": "Buyer Intent Enrichment (web + CRM)",
+      "category": "b2b_sales",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Sales",
+      "description": "Enriches anonymous web and CRM signals into scored buyer intent so marketing and sales can prioritize outreach to the accounts showing real interest.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Detects buying intent from web and CRM activity",
+        "Prioritizes outreach toward the accounts showing the strongest intent",
+        "Personalizes content and timing to match where each account is in its journey"
+      ],
+      "problem_it_solves": [
+        "Anonymous intent signals go uncaptured",
+        "Lead quality and volume are inconsistent",
+        "Generic content underperforms with in-market buyers"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "20\u201350% higher campaign ROI vs broad programs",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-dynamic-journey-orchestration",
+      "partner_id": "congruentx",
+      "name": "Dynamic Journey Orchestration (CI Journeys Copilot)",
+      "category": "b2b_sales",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Marketing",
+      "description": "Orchestrates multi-channel nurture journeys and next-best-action sequencing across email, web, and ads based on real-time engagement signals.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights",
+        "Aggregates research to equip early discovery conversations",
+        "Builds next-best-action sequences across email, web, and ads",
+        "Auto-enrolls segments into targeted journeys"
+      ],
+      "problem_it_solves": [
+        "ICP and message-market fit are fragmented across channels",
+        "Discovery quality is low and leads are poorly qualified",
+        "Manual journey-building slows down campaign cycles"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "10\u201315% lift in journey revenue",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-event-webinar-persona-journeys",
+      "partner_id": "congruentx",
+      "name": "Event/Webinar Persona Journeys",
+      "category": "b2b_sales",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Marketing",
+      "description": "Builds automated, persona-specific follow-up journeys for event and webinar attendees based on how engaged each attendee was.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Builds automated follow-up journeys segmented by persona and engagement level"
+      ],
+      "problem_it_solves": [
+        "Event and webinar follow-up is created manually and inconsistently"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success"
+      ],
+      "partner_reported_outcome": "+10\u201320% higher MQL\u2192SQL conversion on event leads",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-hyper-targeted-market-segmentation",
+      "partner_id": "congruentx",
+      "name": "Hyper-Targeted Market Segmentation",
+      "category": "b2b_sales",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Marketing",
+      "description": "Segments the addressable market at a granular level so campaigns can be targeted to the highest-propensity segments instead of broad, unfocused programs.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Detects intent and prioritizes outreach by market segment",
+        "Personalizes content and timing to each segment"
+      ],
+      "problem_it_solves": [
+        "Intent signals go uncaptured at the segment level",
+        "Marketing spend is spread across low-fit segments",
+        "Generic content underperforms across a broad audience"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "+5\u201315% marketing ROI, reduced spend on low-impact segments",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-first-impact-claims-portal",
+      "partner_id": "congruentx",
+      "name": "First-Impact: Claims Setup & Portal",
+      "category": "financial_services",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Customer Service",
+      "description": "Guides a policyholder through their first claim and first portal use so the initial experience builds trust instead of confusion.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Guides first claim and first portal use step by step"
+      ],
+      "problem_it_solves": [
+        "First-time claim and portal experiences lack visibility and guidance",
+        "Engagement and volume are inconsistent during early claim interactions"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "+5\u201310 NPS points post-claim, better retention",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-icp-targeting-by-line",
+      "partner_id": "congruentx",
+      "name": "ICP Targeting by Line (P&C/Life)",
+      "category": "financial_services",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Sales",
+      "description": "Targets prospects by ideal-customer-profile fit for a specific insurance line (P&C or Life), aggregating research to equip early discovery conversations.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights by insurance line",
+        "Aggregates research to equip early discovery conversations"
+      ],
+      "problem_it_solves": [
+        "ICP and message-market fit are fragmented across lines of business",
+        "Discovery quality is low and leads are poorly qualified",
+        "Manual research slows down the sales cycle"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Underwriter / Claims"
+      ],
+      "partner_reported_outcome": "10\u201315% higher win rate",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-risk-loss-ratio-storytelling",
+      "partner_id": "congruentx",
+      "name": "Risk & Loss Ratio Storytelling",
+      "category": "financial_services",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Customer Service",
+      "description": "Turns loss-ratio and risk data into a next-best-action narrative so underwriters and account teams can explain risk trends and engage the right stakeholders.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights from loss-ratio data",
+        "Aggregates research to equip risk conversations",
+        "Builds next-best-action sequences across channels"
+      ],
+      "problem_it_solves": [
+        "Loss-ratio and risk data is fragmented across systems",
+        "Risk conversations lack supporting research",
+        "Manual analysis slows down underwriting and account reviews"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-target-accounts-buying-committee",
+      "partner_id": "congruentx",
+      "name": "Target Accounts by Buying Committee",
+      "category": "professional_services",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Project Operations",
+      "description": "Maps the buying committee inside a target account and prioritizes outreach to the specific roles involved in the decision.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Detects buying-committee membership and prioritizes outreach",
+        "Personalizes content and timing per stakeholder role"
+      ],
+      "problem_it_solves": [
+        "Buying-committee signals go uncaptured",
+        "Lead quality and volume are inconsistent",
+        "Generic content underperforms with mixed-role buying committees"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Engagement Manager / PM",
+        "Practice Lead"
+      ],
+      "partner_reported_outcome": "Higher win rate, larger average deal size (5\u201315%)",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-thought-leadership-orchestration",
+      "partner_id": "congruentx",
+      "name": "Thought Leadership Orchestration",
+      "category": "professional_services",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Marketing",
+      "description": "Orchestrates thought-leadership content and next-best-action sequencing across channels to build pipeline influence over a longer sales cycle.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights for content targeting",
+        "Aggregates research to equip early discovery",
+        "Builds next-best-action sequences across email, web, and ads",
+        "Auto-enrolls segments into targeted content journeys"
+      ],
+      "problem_it_solves": [
+        "ICP and message-market fit are fragmented across content channels",
+        "Discovery quality is low without supporting research",
+        "Manual content sequencing slows down pipeline influence"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Engagement Manager / PM",
+        "Practice Lead"
+      ],
+      "partner_reported_outcome": "Strong influence on pipeline; higher engagement, 5\u201310% more opps sourced",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-dormant-account-reactivation",
+      "partner_id": "congruentx",
+      "name": "Dormant Account Reactivation (Leads)",
+      "category": "retail_cpg",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Marketing",
+      "description": "Finds inactive accounts and builds a re-engagement play with an updated offer and story to win them back.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Finds and re-engages inactive accounts",
+        "Builds a targeted, updated offer and story for reactivation"
+      ],
+      "problem_it_solves": [
+        "Dormant accounts go untouched without a systematic reactivation play",
+        "Offers and messaging go stale for lapsed accounts"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "10\u201320% of dormant accounts reactivated",
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-loyalty-tier-triggers",
+      "partner_id": "congruentx",
+      "name": "Loyalty Tier Triggers \u2192 Offers",
+      "category": "retail_cpg",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Customer Service",
+      "description": "Watches loyalty-tier signals and automatically triggers the next relevant offer or advocacy ask at the right moment in the customer relationship.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces cross-sell and upsell moments from loyalty-tier signals",
+        "Activates advocacy and reference requests at the right moment"
+      ],
+      "problem_it_solves": [
+        "No systematic trigger exists for cross-sell moments",
+        "Advocates and references are hard to find",
+        "Attach rates and loyalty stay flat without a structured trigger"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Branch / Inside Sales",
+        "Supply Chain"
+      ],
+      "_catalog_kind": "partner"
+    },
+    {
+      "id": "congruentx-service-contracts-attach-rate",
+      "partner_id": "congruentx",
+      "name": "Service Contracts & Attach Rate Signals",
+      "category": "retail_cpg",
+      "product": "Copilot Studio \u00b7 Dynamics 365 Sales",
+      "description": "Prompts the right warranty or service contract at the point of sale, using signal detection to raise attach rates without a manual upsell script.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Prompts warranties and service contracts at the point of sale"
+      ],
+      "problem_it_solves": [
+        "Visibility into attach-rate benchmarks is limited",
+        "Retention stays low without a point-of-sale service prompt"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "10\u201330% higher attach rate",
+      "_catalog_kind": "partner"
+    }
+  ],
+  "community_tools": [
+    {
+      "id": "business-process-catalog",
+      "name": "Business Process Catalog",
+      "url": "https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about",
+      "author": "Microsoft",
+      "description": "Official Microsoft Dynamics 365 reference catalog of standard business processes, importable into Azure DevOps, useful for mapping an implementation's process scope before deciding what to automate with an agent."
+    },
+    {
+      "id": "copilot-ramp-playbook",
+      "name": "Copilot Ramp Playbook",
+      "url": "https://github.com/mfm-copilot-ramp/copilot-ramp-playbook",
+      "author": "mfm-copilot-ramp",
+      "description": "Unofficial, community-built ramp from a first Microsoft Copilot chat to building production agents \u2014 7 stages, role/product paths, ready-to-ship solution templates, and credit/ROI estimators."
+    },
+    {
+      "id": "copilot-streaming-chat-playground",
+      "name": "Copilot Streaming Chat Playground",
+      "url": "https://github.com/jzh24516/copilot-streaming-chat-playground",
+      "author": "jzh24516",
+      "description": "Community playground project for experimenting with streaming chat responses against Copilot-style APIs."
+    },
+    {
+      "id": "cowork-cookbook-prospect-to-quote",
+      "name": "Cowork Cookbook \u2014 Prospect to Quote",
+      "url": "https://coworkcookbook.com/map/prospect-to-quote",
+      "author": "Cowork Cookbook",
+      "description": "Community recipe map walking through a prospect-to-quote workflow, useful as a reference pattern for structuring a similar sales agent flow."
     }
   ]
 }
