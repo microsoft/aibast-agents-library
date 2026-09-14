@@ -178,3 +178,17 @@ def test_preflight_runs_the_academy_browser_contract_fail_closed():
     assert "npm run academy" in academy_step
     assert "continue-on-error" not in academy_step
     assert "|| true" not in academy_step
+
+
+def test_independent_static_gates_report_failures_without_masking_them():
+    workflow = PREFLIGHT_WORKFLOW.read_text(encoding="utf-8")
+    for name in (
+        "Academy browser contract",
+        "AIBAST agent and registry contracts",
+        "AIBAST Azure tier tests",
+    ):
+        step = _step(workflow, name)
+        assert "if: ${{ !cancelled() }}" in step
+        assert "continue-on-error" not in step
+        assert "|| true" not in step
+    assert re.search(r"(?m)^  e2e:\n    needs: static$", workflow)

@@ -42,6 +42,10 @@ The same smoke runs on production against the public Pages URL. A failure
 opens an issue labelled `incident` automatically and closes it on recovery, so
 a broken installer is known within hours instead of from a user report.
 
+Independent static test groups still report their results after a sibling
+failure, but stop on cancellation. No failure is ignored: the static job and
+the release remain blocked until every gate passes.
+
 ### Content scale
 
 Hosted content is expected to keep growing. Preflight checks out the complete
