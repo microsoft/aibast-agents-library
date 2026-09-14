@@ -1,5 +1,7 @@
 import json
 import re
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -46,10 +48,54 @@ def probe(setup, action):
     )
 
 
+def run_community_tools_node(setup, action):
+    """Same node harness as `probe`, but running community-tools.html's own
+    script instead of index.html's — renderCommunityTools() lives there now."""
+    assert shutil.which("node"), "Node.js is required to validate community-tools scripts"
+    text = (ROOT / "community-tools.html").read_text(encoding="utf-8")
+    scripts = re.findall(r"<script\b[^>]*>(.*?)</script>", text, re.DOTALL)
+    assert scripts
+    script = scripts[-1]
+    script = re.sub(r"\nrenderCommunityTools\(\);\s*$", "\n", script)
+    base = """
+globalThis.document = {};
+globalThis.window = {};
+globalThis.location = {
+  hash: "",
+  search: "",
+  pathname: "/community-tools.html",
+  hostname: "kody-w.github.io"
+};
+globalThis.localStorage = { getItem() { return null; } };
+globalThis.navigator = {};
+"""
+    payload = (
+        base
+        + HARNESS
+        + f"\nconst community = {json.dumps(COMMUNITY)};"
+        + "\n"
+        + setup
+        + "\n"
+        + script
+        + "\n(async () => {\n"
+        + action
+        + "\n})().catch(error => { process.stderr.write(String(error)); process.exitCode = 1; });"
+    )
+    result = subprocess.run(
+        ["node"], input=payload, capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    return json.loads(result.stdout)
+
+
 def test_catalog_preserves_community_credits_and_honest_snapshot_controls():
     page = BeautifulSoup((ROOT / "index.html").read_text(encoding="utf-8"), "html.parser")
-    assert page.select_one("#community-tools #community-grid")
-    assert page.select_one("#community-note")
+    community_page = BeautifulSoup(
+        (ROOT / "community-tools.html").read_text(encoding="utf-8"), "html.parser"
+    )
+    assert community_page.select_one("#community-grid")
+    assert community_page.select_one("#community-note")
+    assert page.select_one('a[href="community-tools.html"]')
     assert page.select_one('[data-action="export-workspace"]')["type"] == "button"
     assert page.select_one("#export-status")["role"] == "status"
     text = page.select_one(".export-workspace").get_text(" ", strip=True)
@@ -58,7 +104,7 @@ def test_catalog_preserves_community_credits_and_honest_snapshot_controls():
 
 
 def test_community_cards_render_all_sources_and_escape_content():
-    result = probe(
+    result = run_community_tools_node(
         """
 community.tools[0].name = '<img src=x onerror="alert(1)">';
 globalThis.fetch = async () => ({ok: true, json: async () => community});
@@ -153,7 +199,7 @@ console.log(JSON.stringify({
 
 
 def test_community_fetch_failure_is_visible_without_crashing_the_catalog():
-    result = probe(
+    result = run_community_tools_node(
         'globalThis.fetch = async () => ({ok: false, status: 503});',
         """
 await renderCommunityTools();

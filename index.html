@@ -1375,39 +1375,21 @@ body.partners-view .agent-card h2 {
   opacity: 1;
   transform: translate(-50%, 0);
 }
-.community, .export-workspace {
+.export-workspace {
   margin-top: 28px;
   padding: 20px;
   border: 1px solid var(--cp-border);
   border-radius: var(--cp-radius);
   background: var(--cp-surface);
 }
-.community h2, .export-workspace h2 {
+.export-workspace h2 {
   margin: 0 0 8px;
   font-size: var(--cp-text-xl);
 }
-.community p, .export-workspace p {
+.export-workspace p {
   color: var(--cp-text-muted);
   font-size: var(--cp-text-sm);
 }
-.community-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 12px;
-  margin-top: 16px;
-}
-.community-card {
-  padding: 16px;
-  border: 1px solid var(--cp-border);
-  border-radius: var(--cp-radius);
-}
-.community-card .name { font-weight: 600; }
-.community-card .author {
-  margin: 4px 0 8px;
-  color: var(--cp-text-muted);
-  font-size: var(--cp-text-xs);
-}
-.community-card .desc { margin: 0; }
 .export-btn {
   padding: 10px 16px;
   border: 0;
@@ -1611,13 +1593,6 @@ footer {
     <div class="grid" id="grid"><div class="loading"><div class="spinner"></div>Loading agent library...</div></div>
   </section>
 
-  <section class="community" id="community-tools" aria-labelledby="community-heading">
-    <h2 id="community-heading">Featured community tools</h2>
-    <p>Official Microsoft references and independent community projects. Credit stays with each owner.</p>
-    <p id="community-note"></p>
-    <div class="community-grid" id="community-grid"><p>Loading community tools...</p></div>
-  </section>
-
   <section class="export-workspace" aria-labelledby="export-heading">
     <h2 id="export-heading">Export a RAPP catalog snapshot</h2>
     <p>Download the full library, community references and install links as one JSON file to share with a teammate or assistant. This is reference data, not an executable agent or an importable Brainstem workspace.</p>
@@ -1631,6 +1606,7 @@ footer {
     <a href="academy.html">Academy</a> ·
     <a href="front-page.html">Front Page</a> ·
           <a href="request-info.html">Request one-pagers &amp; videos</a> ·
+    <a href="community-tools.html">Community tools</a> ·
     <a href="achievements.html">Achievements</a> ·
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
   </footer>
@@ -1818,22 +1794,6 @@ async function getCommunityTools() {
   return doc;
 }
 
-async function renderCommunityTools() {
-  try {
-    const doc = await getCommunityTools();
-    $("community-note").textContent = doc.note;
-    $("community-grid").innerHTML = doc.tools.map(tool => `
-      <article class="community-card">
-        <a class="name" href="${esc(tool.url)}" target="_blank" rel="noopener noreferrer">${esc(tool.name)}</a>
-        <div class="author">${esc(tool.author)}</div>
-        <p class="desc">${esc(tool.description)}</p>
-      </article>`).join("");
-  } catch (error) {
-    console.error("Unable to load community tools", error);
-    $("community-grid").innerHTML = '<p role="alert">Community tools are unavailable. Please try again later.</p>';
-  }
-}
-
 async function exportRappWorkspace() {
   const button = $("export-workspace-btn");
   const status = $("export-status");
@@ -1885,7 +1845,6 @@ async function exportRappWorkspace() {
 }
 
 async function init() {
-  renderCommunityTools();
   const stamp = `?t=${Date.now()}`;
   const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all([
     getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
