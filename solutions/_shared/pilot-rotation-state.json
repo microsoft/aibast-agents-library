@@ -1,0 +1,523 @@
+{
+  "schema": "aibast-nightly-pilot-rotation/1.0",
+  "description": "Rotation tracker for the nightly live workshop pilot skill. Each night, the skill picks the next N entries with status=='pending' (ordered by reshoot_required_count descending, then solution name), pilots them live in Copilot Studio, and updates their entry here. PR #222 fixed a repo-wide root-cause bug (skill-anchor-name mismatch in GLOBAL-INSTRUCTIONS.md, 40 solutions) that was the likely cause of the intermittent skill-hallucination bug seen in issues #204/#218/#220; future pilots should verify it's already fixed per Step 1.5 of the skill doc before building.",
+  "environment_id": "4d056638-8d62-e0b7-aa17-c549d01f711b",
+  "default_batch_size_per_run": 2,
+  "solutions": [
+    {
+      "solution": "account-intelligence",
+      "reshoot_required_count": 0,
+      "status": "piloted",
+      "last_piloted": "2026-09-09",
+      "environment_agent_name": "Account Intelligence Manual",
+      "issues_filed": [
+        "microsoft/aibast-agents-library#204"
+      ],
+      "notes": "First full pilot; established the methodology. AI-02/AI-06 intermittent first-turn knowledge-skip bug filed as #204. Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "ai-customer-assistant",
+      "reshoot_required_count": 2,
+      "status": "piloted",
+      "last_piloted": "2026-09-10",
+      "environment_agent_name": "Customer Escalations Manual",
+      "issues_filed": [
+        "microsoft/aibast-agents-library#218"
+      ],
+      "notes": "Full live pilot done (PR #219). 3 of 5 reshoots fixed with real screenshots + JSON updates. 2 remaining reshoots (easy-draft-configuration, easy-draft) belong to the separate assisted/easy-mode pipeline (local Brainstem + Copilot chat), out of scope for the manual-mode pilot skill as currently written. Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "ask-hr",
+      "reshoot_required_count": 8,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "asset-maintenance-forecast",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "building-permit-processing",
+      "reshoot_required_count": 7,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "care-gap-closure",
+      "reshoot_required_count": 1,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "cart-abandonment-recovery",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "claims-processing",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "client-health-score",
+      "reshoot_required_count": 7,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "clinical-notes-summarizer",
+      "reshoot_required_count": 8,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "contract-risk-review",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "cross-selling",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "customer-loyalty-rewards",
+      "reshoot_required_count": 9,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "customer-sentiment-churn",
+      "reshoot_required_count": 1,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "deal-progression",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "emission-tracking",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "energy-regulatory-reporting",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "field-service-dispatch",
+      "reshoot_required_count": 8,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "financial-advisor-copilot",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "fraud-detection-alert",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "fs-customer-onboarding",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "fs-regulatory-compliance",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "grid-outage-response",
+      "reshoot_required_count": 0,
+      "status": "no_checkpoints_file",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "solutions/grid-outage-response/evals/visual-checkpoints.json does not exist -- needs to be created before piloting."
+    },
+    {
+      "solution": "inventory-rebalancing",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "inventory-visibility",
+      "reshoot_required_count": 9,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "license-renewal-expansion",
+      "reshoot_required_count": 1,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "loan-origination-assistant",
+      "reshoot_required_count": 7,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "maintenance-scheduling",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "omnichannel-engagement",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "order-status-communication",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "patient-intake",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "permit-license-management",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "personalized-marketing",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "personalized-shopping-assistant",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "portfolio-rebalancing",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "prior-authorization",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "procurement-agent",
+      "reshoot_required_count": 9,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "procurement-support",
+      "reshoot_required_count": 5,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "product-feedback-synthesizer",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "product-line-optimization",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "proposal-generation",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "resource-utilization",
+      "reshoot_required_count": 16,
+      "status": "piloted",
+      "last_piloted": "2026-09-10",
+      "environment_agent_name": "Resource Utilization Manual",
+      "issues_filed": [
+        "microsoft/aibast-agents-library#220"
+      ],
+      "notes": "Full live pilot done (PR #221). 15 of 16 reshoots fixed with real screenshots + JSON updates (25/26 total captures now reusable). RU-01 and RU-03 each intermittently hallucinated a non-existent skill on first fresh-chat attempt then self-corrected on retry - same bug class as #204/#218, filed as #220. Remaining reshoot (easy-draft) belongs to the separate assisted/easy-mode pipeline, out of scope for the manual-mode pilot skill as currently written. Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "returns-complaints-resolution",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "sales-qualification",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "store-associate-copilot",
+      "reshoot_required_count": 2,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "supplier-risk-monitoring",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "supply-chain-disruption-alert",
+      "reshoot_required_count": 4,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "time-entry-billing",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "underwriting-support",
+      "reshoot_required_count": 6,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "utility-billing-assistance",
+      "reshoot_required_count": 3,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": ""
+    },
+    {
+      "solution": "wealth-insights-generator",
+      "reshoot_required_count": 13,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    },
+    {
+      "solution": "win-loss-analysis",
+      "reshoot_required_count": 11,
+      "status": "pending",
+      "last_piloted": null,
+      "environment_agent_name": null,
+      "issues_filed": [],
+      "notes": "Root-cause skill-anchor-name mismatch fixed in PR #222 (see issue #220).",
+      "notes_extra": null
+    }
+  ],
+  "full_cycles_completed": 0
+}
