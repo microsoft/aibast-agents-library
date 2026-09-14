@@ -1,24 +1,25 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { once } from "node:events";
+import { EventEmitter, once } from "node:events";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import net from "node:net";
 import path from "node:path";
-import { PassThrough } from "node:stream";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { CdpConnection, closeResources, launchBrowser, startStaticServer } from "./helpers/download-center-browser.mjs";
+import { BROWSER_STARTUP_TIMEOUT_MS, CDP_COMMAND_TIMEOUT_MS, CdpConnection, closeResources, launchBrowser, startStaticServer } from "./helpers/download-center-browser.mjs";
 
-const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const fixture = path.join(betaRoot, "tests", "fixtures", "download-center-lifecycle.mjs");
-const cache = path.join(betaRoot, "node_modules", ".cache");
+const testDirectory = path.dirname(fileURLToPath(import.meta.url));
+const auditRoot = path.resolve(testDirectory, "../..");
+const betaRoot = path.resolve(auditRoot, "../beta");
+const fixture = path.join(testDirectory, "fixtures", "download-center-lifecycle.mjs");
+const cache = path.join(auditRoot, "node_modules", ".cache");
 
 function connection(t, options) {
-  const readable = new PassThrough();
-  const writable = new PassThrough();
-  const cdp = new CdpConnection(readable, writable, options);
+  const session = new EventEmitter();
+  session.send = () => new Promise(() => {});
+  const cdp = new CdpConnection(session, options);
   t.after(() => cdp.close());
-  return { readable, writable, cdp };
+  return { session, cdp };
 }
 
 function killOwnedProcess(pid, group = false) {
@@ -38,60 +39,59 @@ function assertExited(pid) {
   );
 }
 
-test("CDP pipes handle fragmented UTF-8, multiple frames and immediate replies", async (t) => {
-  const { cdp, readable, writable } = connection(t);
-  writable.once("data", (chunk) => {
-    const request = JSON.parse(chunk.toString().slice(0, -1));
-    const bytes = Buffer.from(JSON.stringify({ id: request.id, result: { text: "café" } }) + "\0");
-    const split = bytes.indexOf(Buffer.from("é")) + 1;
-    readable.write(bytes.subarray(0, split));
-    readable.write(bytes.subarray(split));
-  });
-  assert.deepEqual(await cdp.send("Browser.getVersion"), { text: "café" });
+test("cold browser startup has its own budget without relaxing command deadlines", async (t) => {
+  assert.equal(BROWSER_STARTUP_TIMEOUT_MS, 30000);
+  assert.equal(CDP_COMMAND_TIMEOUT_MS, 5000);
+  const { cdp } = connection(t);
+  assert.equal(cdp.timeoutMs, CDP_COMMAND_TIMEOUT_MS);
+});
+
+test("Playwright CDP results, protocol errors and events are forwarded without a custom wire", async (t) => {
+  const { cdp, session } = connection(t);
+  session.send = async (method, params) => {
+    if (method === "Invalid.command") throw new Error("Unknown protocol command");
+    return params;
+  };
+  assert.deepEqual(await cdp.send("Runtime.evaluate", { expression: "1" }), { expression: "1" });
+  await assert.rejects(cdp.send("Invalid.command"), /Unknown protocol command/);
   const events = [
-    cdp.waitFor("Page.loadEventFired", "one"),
-    cdp.waitFor("Page.loadEventFired", "two"),
+    cdp.waitFor("Page.loadEventFired"),
+    cdp.waitFor("Runtime.executionContextCreated"),
   ];
-  readable.write(
-    '{"method":"Page.loadEventFired","sessionId":"one","params":{"ready":1}}\0'
-    + '{"method":"Page.loadEventFired","sessionId":"two","params":{"ready":2}}\0',
-  );
+  session.emit("Page.loadEventFired", { ready: 1 });
+  session.emit("Runtime.executionContextCreated", { ready: 2 });
   assert.deepEqual(await Promise.all(events), [{ ready: 1 }, { ready: 2 }]);
   assert.equal(cdp.pending.size, 0);
-  assert.equal(cdp.waiters.size, 0);
+  assert.equal(session.eventNames().length, 0);
 });
 
 test("CDP command and event timeouts remove pending work", async (t) => {
-  const { cdp } = connection(t, { timeoutMs: 30 });
+  const { cdp, session } = connection(t, { timeoutMs: 30 });
   await Promise.all([
     assert.rejects(cdp.send("Runtime.evaluate"), /Timed out.*Runtime.evaluate/),
     assert.rejects(cdp.waitFor("Page.loadEventFired", "session", 30), /Timed out.*Page.loadEventFired/),
   ]);
   assert.equal(cdp.pending.size, 0);
-  assert.equal(cdp.waiters.size, 0);
+  assert.equal(session.eventNames().length, 0);
 });
 
-test("CDP disconnect, malformed responses and cancellation reject every pending wait", async (t) => {
-  for (const failure of ["disconnect", "malformed", "abort"]) {
+test("browser disconnect and cancellation reject every pending CDP wait", async (t) => {
+  for (const failure of ["disconnect", "abort"]) {
     const controller = new AbortController();
-    const { cdp, readable } = connection(t, { signal: controller.signal });
+    const { cdp, session } = connection(t, { signal: controller.signal });
     const pending = [
       cdp.send("Runtime.evaluate"),
       cdp.waitFor("Page.loadEventFired", "session"),
     ];
     const settled = Promise.allSettled(pending);
-    if (failure === "disconnect") readable.end();
-    if (failure === "malformed") readable.write("{invalid}\0");
+    if (failure === "disconnect") cdp.close(new Error("Playwright browser disconnected"));
     if (failure === "abort") controller.abort(new Error("Deliberate test cancellation"));
     const results = await settled;
     assert.ok(results.every((result) => result.status === "rejected"));
-    const expected = failure === "disconnect" ? /pipe ended/
-      : failure === "malformed" ? /invalid DevTools JSON/ : /Deliberate test cancellation/;
+    const expected = failure === "disconnect" ? /browser disconnected/ : /Deliberate test cancellation/;
     for (const result of results) assert.match(result.reason.message, expected);
     assert.equal(cdp.pending.size, 0);
-    assert.equal(cdp.waiters.size, 0);
-    assert.equal(cdp.readable.destroyed, true);
-    assert.equal(cdp.writable.destroyed, true);
+    assert.equal(session.eventNames().length, 0);
     await assert.rejects(cdp.send("Page.enable"), expected);
   }
 });
@@ -110,15 +110,10 @@ test("static server shutdown closes unfinished client requests and is idempotent
   assert.equal(socket.destroyed, true);
 });
 
-test("spawn failures remove the profile and report the executable error", async () => {
-  let profile;
+test("Playwright reports missing executables without selecting another browser", async () => {
   await assert.rejects(launchBrowser({
-    betaRoot,
-    executable: path.join(betaRoot, "node_modules", ".cache", "missing-chrome"),
-    onSpawn: (resource) => { profile = resource.profile; },
-  }), /ENOENT/);
-  assert.ok(profile);
-  assert.equal(existsSync(profile), false);
+    executable: path.join(cache, "missing-chrome"),
+  }), /[Ee]xecutable.*(?:exist|missing)|ENOENT/);
 });
 
 test("a failing closer cannot prevent another resource from being closed", async () => {
@@ -132,7 +127,7 @@ test("a failing closer cannot prevent another resource from being closed", async
 });
 
 test("failed browser startup, assertions and test deadlines exit without leaked resources", {
-  timeout: 40000,
+  timeout: BROWSER_STARTUP_TIMEOUT_MS + 40000,
 }, async (t) => {
   for (const mode of ["startup-failure", "ready-assertion", "test-timeout"]) {
     await t.test(mode, async () => {
@@ -143,6 +138,7 @@ test("failed browser startup, assertions and test deadlines exit without leaked 
       let output = "";
       let watchdog;
       const started = Date.now();
+      const watchdogMs = mode === "ready-assertion" ? BROWSER_STARTUP_TIMEOUT_MS + 10000 : 12000;
       const env = {
         ...process.env,
         DOWNLOAD_CENTER_FAILURE_CASE: mode,
@@ -151,7 +147,7 @@ test("failed browser startup, assertions and test deadlines exit without leaked 
       // This is an independent test runner, not another worker of the current runner.
       delete env.NODE_TEST_CONTEXT;
       const child = spawn(process.execPath, ["--test", "--test-reporter=tap", fixture], {
-        cwd: betaRoot,
+        cwd: testDirectory,
         detached: process.platform !== "win32",
         stdio: ["ignore", "pipe", "pipe"],
         env,
@@ -169,17 +165,16 @@ test("failed browser startup, assertions and test deadlines exit without leaked 
               killOwnedProcess(child.pid, true);
               child.stdout.destroy();
               child.stderr.destroy();
-              reject(new Error(`Failed ${mode} fixture did not exit within 12s:\n${output}`));
-            }, 12000);
+              reject(new Error(`Failed ${mode} fixture did not exit within ${watchdogMs}ms:\n${output}`));
+            }, watchdogMs);
           }),
         ]);
         assert.equal(result.code, 1, output);
         assert.equal(result.signal, null, output);
-        assert.ok(Date.now() - started < 12000, output);
+        assert.ok(Date.now() - started < watchdogMs, output);
         assert.ok(existsSync(resourceFile), output);
         resource = JSON.parse(readFileSync(resourceFile, "utf8"));
         assertExited(resource.pid);
-        assert.equal(existsSync(resource.profile), false, output);
         assert.match(output, mode === "ready-assertion"
           ? /Deliberate assertion after real Chrome startup/
           : mode === "test-timeout" ? /testTimeoutFailure/
@@ -191,9 +186,6 @@ test("failed browser startup, assertions and test deadlines exit without leaked 
         resource ||= existsSync(resourceFile) && JSON.parse(readFileSync(resourceFile, "utf8"));
         if (resource) {
           killOwnedProcess(resource.pid, true);
-          assert.equal(path.dirname(resource.profile), cache);
-          assert.ok(path.basename(resource.profile).startsWith("download-center-browser-"));
-          rmSync(resource.profile, { recursive: true, force: true, maxRetries: 2 });
         }
         child.stdout.destroy();
         child.stderr.destroy();

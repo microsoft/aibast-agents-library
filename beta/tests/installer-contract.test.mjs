@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -81,6 +81,16 @@ test("Frontier is the primary customer-facing launcher identity", () => {
 
 test("beta test gate uses Node discovery on every shell", () => {
   assert.equal(packageJson.scripts.test, "node --test");
+});
+
+test("beta installation does not require the hosted website's external browser tests", () => {
+  for (const name of ["download-center-browser.test.mjs", "download-center-lifecycle.test.mjs"]) {
+    assert.equal(existsSync(path.join(root, "tests", name)), false, name);
+  }
+  for (const name of ["playwright", "playwright-core", "@playwright/test", "puppeteer"]) {
+    assert.equal(packageJson.dependencies?.[name], undefined, name);
+    assert.equal(packageJson.devDependencies?.[name], undefined, name);
+  }
 });
 
 test("beta installers exclude the solution library", () => {

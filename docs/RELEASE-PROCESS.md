@@ -45,6 +45,8 @@ a broken installer is known within hours instead of from a user report.
 Independent static test groups still report their results after a sibling
 failure, but stop on cancellation. No failure is ignored: the static job and
 the release remain blocked until every gate passes.
+Hosted-page browser assertions run in `browser-audit` CI rather than the
+desktop installer's Node test suite; they remain mandatory release gates.
 
 ### Content scale
 

@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { closeResources, launchBrowser, startStaticServer } from "./helpers/download-center-browser.mjs";
+import { BROWSER_STARTUP_TIMEOUT_MS, closeResources, launchBrowser, startStaticServer } from "./helpers/download-center-browser.mjs";
 
-const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../beta");
 
 async function navigate(cdp, sessionId, url, { width, height, scripts }) {
   await cdp.send(
@@ -57,13 +57,14 @@ async function waitForPageState(cdp, sessionId, condition, label) {
 }
 
 test("Download Center works without JavaScript and stays narrow under stress", {
-  timeout: 30000,
+  timeout: BROWSER_STARTUP_TIMEOUT_MS + 30000,
 }, async (t) => {
   const site = await startStaticServer(betaRoot);
   let browser;
   t.after(() => closeResources([browser, site]));
   try {
-    browser = await launchBrowser({ betaRoot, signal: t.signal });
+    browser = await launchBrowser({ signal: t.signal });
+    t.diagnostic(`Download Center browser: ${browser.executablePath} (${browser.version}); ${process.platform}/${process.arch}`);
     for (const width of [320, 640]) {
       await navigate(browser.cdp, browser.sessionId, `${site.pageUrl}?no-js=${width}`, {
         width,

@@ -145,6 +145,14 @@ jobs:
           test -f academy-course-audit.mjs
           npm run academy
 
+      - name: Download Center browser contract
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        working-directory: browser-audit
+        env:
+          AIBAST_CHROME_PATH: /usr/bin/google-chrome
+        run: npm run test:downloads
+
       - name: AIBAST agent and registry contracts
         if: ${{ !cancelled() }}
         run: |
