@@ -12,7 +12,7 @@ Scans agents/@publisher/slug.py for __manifest__ dicts and builds:
 
 Each entry also carries the stack it belongs to (_stack / _stack_vertical), the
 SHA-256 of the exact file indexed, and the date it first landed in git. The
-library browse page (library.html) and the metrics snapshot
+library browse page (index.html) and the metrics snapshot
 (scripts/build_metrics.py) both read those fields.
 """
 
@@ -53,6 +53,10 @@ REQUIRED_PARTNER_AGENT_FIELDS = [
     "id", "partner_id", "name", "category", "product",
     "description", "source_url"
 ]
+
+COMMUNITY_TOOLS_FILE = Path("community_tools.json")
+COMMUNITY_TOOLS_SCHEMA = "aibast-community-tools/1.0"
+REQUIRED_COMMUNITY_TOOL_FIELDS = ["id", "name", "url", "author", "description"]
 
 
 def load_first_party(errors: list) -> list:
@@ -265,6 +269,64 @@ def load_partners(errors: list) -> tuple:
 
     rows.sort(key=lambda r: (r["partner_id"], r["category"], r["name"]))
     return partners, rows
+
+
+def load_community_tools(errors: list) -> list:
+    """Featured community tools — external links, not agents this repo owns.
+
+    community_tools.json is authored, not derived: official Microsoft
+    reference resources and independent community projects that AIBAST
+    surfaces on the front page as a "Featured community tools" section.
+    Inclusion is not an endorsement or verified benchmark; every entry
+    links to the resource's own home via url.
+    """
+    if not COMMUNITY_TOOLS_FILE.exists():
+        return []
+    try:
+        doc = json.loads(COMMUNITY_TOOLS_FILE.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as e:
+        errors.append(f"{COMMUNITY_TOOLS_FILE}: cannot read ({e})")
+        return []
+
+    if doc.get("schema") != COMMUNITY_TOOLS_SCHEMA:
+        errors.append(
+            f"{COMMUNITY_TOOLS_FILE}: schema must be {COMMUNITY_TOOLS_SCHEMA}"
+        )
+
+    entries = doc.get("tools", [])
+    if not isinstance(entries, list):
+        errors.append(f"{COMMUNITY_TOOLS_FILE}: tools must be a list")
+        return []
+    if doc.get("count") != len(entries):
+        errors.append(
+            f"{COMMUNITY_TOOLS_FILE}: count {doc.get('count')} does not "
+            f"match {len(entries)} tools"
+        )
+
+    rows = []
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            errors.append(f"{COMMUNITY_TOOLS_FILE}: every tool must be an object")
+            continue
+        label = entry.get("id") or entry.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_COMMUNITY_TOOL_FIELDS if not entry.get(f)]
+        if missing:
+            errors.append(
+                f"{COMMUNITY_TOOLS_FILE}:{label}: missing {', '.join(missing)}"
+            )
+            continue
+        if entry["id"] in seen:
+            errors.append(f"{COMMUNITY_TOOLS_FILE}:{label}: duplicate id")
+            continue
+        seen.add(entry["id"])
+        if not entry["url"].startswith("http"):
+            errors.append(f"{COMMUNITY_TOOLS_FILE}:{label}: url must be an http(s) URL")
+            continue
+        rows.append(dict(entry))
+
+    rows.sort(key=lambda r: r["name"])
+    return rows
 
 
 def load_solutions() -> dict:
@@ -483,6 +545,7 @@ def build_registry():
     solutions = load_solutions()
     first_party = load_first_party(errors)
     partners, partner_agents = load_partners(errors)
+    community_tools = load_community_tools(errors)
     onepager_content = load_onepager_content()
     solution_copy = load_solution_copy()
     demo_cases = load_demo_cases()
@@ -719,7 +782,8 @@ def build_registry():
         "agents": agents,
         "first_party": first_party,
         "partners": partners,
-        "partner_agents": partner_agents
+        "partner_agents": partner_agents,
+        "community_tools": community_tools
     }
 
     with open(REGISTRY_FILE, "w", encoding="utf-8") as f:

@@ -9,17 +9,75 @@ Use when a category buyer wants a neutral view of synthetic vendor ratings, term
 
 ## Procedure
 
-1. Use only the uploaded synthetic records and rules.
-2. Lead with the specific evidence that answers the persona's question.
-3. Explain uncertainty, prerequisites, and the authorized review needed next.
-4. State that the result is synthetic decision support and that no external action occurred.
+1. Use this uploaded `vendor-comparison` skill with
+   `aibast_procurement-agent-synthetic-records.md` and
+   `aibast_procurement-agent-rules-and-guardrails.md`. Retrieve and cite both.
+2. Compare only the user's requested scope, not unrelated catalog vendors.
+   For the cloud-vendor request, compare only the `Cloud Infrastructure` rows:
+   `AWS` and `Azure`.
+3. Keep ratings, tiers, contract status and contact roles as exact source labels.
+   The rating scale, methodology and statistical significance are not supplied.
+   Do not add a denominator, normalize ratings or claim a meaningful rating gap.
+   Do not claim normal variance or qualification outcomes.
+   `Strategic` does not prove passed qualification or enterprise approval.
+   The user's word "approved" does not change the recorded labels.
+4. Contact roles do not establish service focus or guarantees.
+   Annual spend is not commitment volume. Do not invent service entitlements,
+   contract assurances or a causal explanation for spend differences.
+5. Payment terms are supplied; do not describe all contract terms as absent.
+   Full agreements, detailed service commitments and pricing schedules are not
+   supplied. Distinguish those gaps from supplied payment terms, `Active`
+   contract-status labels, tier labels and contact roles.
+6. Do not pick a winner. Name missing evidence and preserve the unresolved
+   authorized human reviews in the common rules.
+   Do not invent an approver for unspecified spend.
+
+## Required response contract
+
+Use these headings in order, with exact wording and capitalization. Populate
+each section from the retrieved source.
+
+```text
+# Vendor Comparison
+## Vendor Tiers
+```
+
+- Under `Vendor Comparison`, use a side-by-side table for the in-scope vendors.
+  Include each vendor's name, ID, category, contract status, tier, rating,
+  annual spend, payment terms and contact role exactly as recorded.
+- Under `Vendor Tiers`, report the in-scope source tier labels and state that
+  qualification outcomes are not supplied. Identify rating and service
+  evidence limits without inferring a winner or reclassifying the vendors.
+- Before sending, check every missing-evidence claim against supplied fields.
+  `AWS` and `Azure` both have supplied `Net 30` payment terms.
+- Before the final footer, include exactly:
+  `Ratings and terms are comparison evidence only; this is not a supplier award.`
 
 ## Deterministic pilot evidence
 
 - `AWS`
 - `Azure`
 - `Ratings and terms are comparison evidence`
+- `not a supplier award`
 
 ## Safety gate
 
 Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+Retain the global policy's exact terminal safety footer verbatim.
+
+## Mandatory human-review paragraph
+
+Copy this paragraph verbatim once in every final answer, after all case-specific
+content and citations, immediately before the final safety footer. Never shorten,
+split, paraphrase or duplicate it. These controls are unresolved in this review,
+not a serial chain or a denial of recorded historical statuses.
+
+Required human reviews remain unresolved: Finance for budget validation and reconciliation; procurement for request and supplier review; legal, security, competition, supplier diversity, conflicts of interest, business-owner, delegated-authority and explicit publication review by the corresponding authorized owners.
+
+## Shared final footer
+
+End every response with this exact final standalone paragraph, once.
+Put case-specific boundaries and citations before this footer; append nothing
+after it.
+
+Synthetic procurement evidence; decision support only. No approval, supplier action, purchase order, or spend commitment occurred.

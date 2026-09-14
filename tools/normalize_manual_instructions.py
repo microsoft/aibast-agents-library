@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parent.parent
 START = "<!-- locked-preview-anchors:start -->"
 END = "<!-- locked-preview-anchors:end -->"
 PRESERVED_EVIDENCE_SLUGS = {
+    # This hand-authored pilot has a locked response policy, not rollout anchors.
+    "building-permit-processing",
     "fs-regulatory-compliance",
     "inventory-rebalancing",
     "product-line-optimization",

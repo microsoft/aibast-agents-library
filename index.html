@@ -1375,6 +1375,52 @@ body.partners-view .agent-card h2 {
   opacity: 1;
   transform: translate(-50%, 0);
 }
+.community, .export-workspace {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius);
+  background: var(--cp-surface);
+}
+.community h2, .export-workspace h2 {
+  margin: 0 0 8px;
+  font-size: var(--cp-text-xl);
+}
+.community p, .export-workspace p {
+  color: var(--cp-text-muted);
+  font-size: var(--cp-text-sm);
+}
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.community-card {
+  padding: 16px;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius);
+}
+.community-card .name { font-weight: 600; }
+.community-card .author {
+  margin: 4px 0 8px;
+  color: var(--cp-text-muted);
+  font-size: var(--cp-text-xs);
+}
+.community-card .desc { margin: 0; }
+.export-btn {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: var(--cp-radius-sm);
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.export-btn:hover { background: var(--cp-accent-hover); }
+.export-btn:disabled { opacity: 0.5; cursor: wait; }
+.export-status { min-height: 1.5em; margin-top: 10px; }
 footer {
   margin-top: 42px;
   padding-top: 20px;
@@ -1565,6 +1611,20 @@ footer {
     <div class="grid" id="grid"><div class="loading"><div class="spinner"></div>Loading agent library...</div></div>
   </section>
 
+  <section class="community" id="community-tools" aria-labelledby="community-heading">
+    <h2 id="community-heading">Featured community tools</h2>
+    <p>Official Microsoft references and independent community projects. Credit stays with each owner.</p>
+    <p id="community-note"></p>
+    <div class="community-grid" id="community-grid"><p>Loading community tools...</p></div>
+  </section>
+
+  <section class="export-workspace" aria-labelledby="export-heading">
+    <h2 id="export-heading">Export a RAPP catalog snapshot</h2>
+    <p>Download the full library, community references and install links as one JSON file to share with a teammate or assistant. This is reference data, not an executable agent or an importable Brainstem workspace.</p>
+    <button class="export-btn" id="export-workspace-btn" type="button" data-action="export-workspace">Export catalog snapshot</button>
+    <div class="export-status" id="export-status" role="status" aria-live="polite"></div>
+  </section>
+
   <footer>
     AI BAST Agent Library · <a href="registry.json">registry.json</a> ·
     <a href="docs/rapp-guide.html">Production guide</a> ·
@@ -1722,19 +1782,110 @@ const STACK_COPY = {
   }
 };
 
-async function getJSON(paths) {
+async function getJSON(paths, { required = false } = {}) {
+  const failures = [];
   for (const path of paths) {
     try {
       const response = await fetch(path, { cache: "no-store" });
       if (response.ok) return await response.json();
+      failures.push(`${path}: HTTP ${response.status}`);
     } catch (error) {
-      // Try the next source.
+      failures.push(`${path}: ${String(error)}`);
     }
   }
+  if (required) throw new Error(`Could not load JSON: ${failures.join("; ")}`);
   return null;
 }
 
+async function getCommunityTools() {
+  const doc = await getJSON(["community_tools.json"], { required: true });
+  if (!doc || doc.schema !== "aibast-community-tools/1.0"
+      || !Array.isArray(doc.tools) || doc.count !== doc.tools.length
+      || typeof doc.note !== "string") {
+    throw new Error("Invalid community tools manifest");
+  }
+  for (const tool of doc.tools) {
+    if (!tool || ["name", "author", "description", "url"].some(
+      key => typeof tool[key] !== "string" || !tool[key].trim()
+    )) {
+      throw new Error("Invalid community tool entry");
+    }
+    const url = new URL(tool.url);
+    if (url.protocol !== "https:" || url.username || url.password) {
+      throw new Error("Community tool links must be public HTTPS URLs");
+    }
+  }
+  return doc;
+}
+
+async function renderCommunityTools() {
+  try {
+    const doc = await getCommunityTools();
+    $("community-note").textContent = doc.note;
+    $("community-grid").innerHTML = doc.tools.map(tool => `
+      <article class="community-card">
+        <a class="name" href="${esc(tool.url)}" target="_blank" rel="noopener noreferrer">${esc(tool.name)}</a>
+        <div class="author">${esc(tool.author)}</div>
+        <p class="desc">${esc(tool.description)}</p>
+      </article>`).join("");
+  } catch (error) {
+    console.error("Unable to load community tools", error);
+    $("community-grid").innerHTML = '<p role="alert">Community tools are unavailable. Please try again later.</p>';
+  }
+}
+
+async function exportRappWorkspace() {
+  const button = $("export-workspace-btn");
+  const status = $("export-status");
+  button.disabled = true;
+  status.textContent = "Gathering library and community references...";
+  try {
+    const [registry, communityTools] = await Promise.all([
+      getJSON(["registry.json"], { required: true }),
+      getCommunityTools()
+    ]);
+    if (!registry || !Array.isArray(registry.agents) || !Array.isArray(registry.stacks)) {
+      throw new Error("Invalid agent registry");
+    }
+    const source = new URL("./", location.href).href;
+    const bundle = {
+      schema: "aibast-rapp-workspace-export/1.0",
+      purpose: "catalog_snapshot",
+      usage: "Reference data only. Follow the install links; this JSON is not an agent and is not loaded from AGENTS_PATH.",
+      exported_at: new Date().toISOString(),
+      source,
+      install: {
+        guide: new URL("docs/installer.html", source).href,
+        brainstem: `curl -fsSL ${new URL("install.sh", source).href} | bash`,
+        brainstem_windows: `irm ${new URL("install.ps1", source).href} | iex`
+      },
+      community_tools: communityTools,
+      library: registry
+    };
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(new Blob(
+      [JSON.stringify(bundle, null, 2)], { type: "application/json" }
+    ));
+    try {
+      link.href = url;
+      link.download = `rapp-catalog-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(link);
+      link.click();
+    } finally {
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    }
+    status.textContent = "Downloaded catalog snapshot. Use its install links to install agents; the JSON itself is reference data.";
+  } catch (error) {
+    console.error("Unable to export catalog snapshot", error);
+    status.textContent = "Export failed. Check your connection and try again.";
+  } finally {
+    button.disabled = false;
+  }
+}
+
 async function init() {
+  renderCommunityTools();
   const stamp = `?t=${Date.now()}`;
   const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all([
     getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
@@ -3204,6 +3355,8 @@ document.addEventListener("click", event => {
   if (action === "toggle-theme") {
     const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
+  } else if (action === "export-workspace") {
+    exportRappWorkspace();
   } else if (action === "query") {
     state.query = target.dataset.query;
     $("search").value = state.query;

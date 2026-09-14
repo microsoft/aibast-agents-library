@@ -4,7 +4,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 STANDARDS_PAGE = REPO_ROOT / "partner-standards.html"
-LIBRARY_PAGE = REPO_ROOT / "index.html"
+LIBRARY_PAGES = (REPO_ROOT / "index.html", REPO_ROOT / "library.html")
 
 
 def test_standards_page_exists_and_documents_the_standard():
@@ -29,5 +29,6 @@ def test_standards_page_is_isolated_not_linked_from_main_nav():
     page = STANDARDS_PAGE.read_text(encoding="utf-8")
     assert "not linked from the main site" in page
 
-    library = LIBRARY_PAGE.read_text(encoding="utf-8")
-    assert "partner-standards.html" not in library
+    for path in LIBRARY_PAGES:
+        library = path.read_text(encoding="utf-8")
+        assert "partner-standards.html" not in library

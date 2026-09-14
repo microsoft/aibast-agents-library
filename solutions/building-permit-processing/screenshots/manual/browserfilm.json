@@ -5,6 +5,7 @@
   "raw_base_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/",
   "width": 1280,
   "height": 780,
+  "capture_note": "Historical sequence: the step-16 failure and step-17 retry captures, their annotations, the GIF, and the contact sheet are preserved byte-for-byte. They do not require a validation error or prove the current upload outcome. Follow the frame tutorial contracts and record what Copilot Studio actually does. Never corrupt a valid skill or manufacture an error. Fresh outcome and inventory captures are required for steps 16 and 17.",
   "frames": [
     {"file": "01-create-blank-agent.jpg", "label": "1 · Create a blank Copilot Studio agent", "duration_ms": 1300},
     {"file": "02-name-agent.jpg", "label": "2 · Name the manual agent", "duration_ms": 1200},
@@ -21,8 +22,28 @@
     {"file": "13-add-applicant-updates-skill.jpg", "label": "13 · Add proactive applicant updates", "duration_ms": 1200},
     {"file": "14-add-permit-status-skill.jpg", "label": "14 · Add permit status and zoning detail", "duration_ms": 1200},
     {"file": "15-add-checklist-skill.jpg", "label": "15 · Add the review checklist", "duration_ms": 1200},
-    {"file": "16-inspector-skill-validation-error.jpg", "label": "16 · Diagnose a SKILL.md validation failure", "duration_ms": 1600},
-    {"file": "17-retry-inspector-skill.jpg", "label": "17 · Correct and add inspector coverage", "duration_ms": 1300},
+    {
+      "file": "16-inspector-skill-validation-error.jpg",
+      "label": "16 · Historical SKILL.md validation failure",
+      "duration_ms": 1600,
+      "tutorial": {
+        "title": "Upload inspector coverage and record validation",
+        "action": "Upload the complete reviewed inspector-board-and-coverage SKILL.md unchanged, including its name and description frontmatter. If validation succeeds, record the successful accepted upload and continue to step 17 without editing the skill. If Copilot Studio reports an authentic validation error, capture the exact message and use step 17 to fix the reported problem and retry. Never corrupt a valid skill or manufacture an error to match a historical screenshot.",
+        "expected_result": "The actual validation outcome is recorded: either a successful accepted upload of inspector-board-and-coverage or an authentic validation error captured for correction in step 17. A frontmatter failure is not required.",
+        "source": "manual/skills/aibast_inspector-assignment_bp06/SKILL.md"
+      }
+    },
+    {
+      "file": "17-retry-inspector-skill.jpg",
+      "label": "17 · Historical inspector skill retry",
+      "duration_ms": 1300,
+      "tutorial": {
+        "title": "Confirm inspector coverage; retry only after a real error",
+        "action": "Only if step 16 recorded an authentic validation error, fix the reported problem in the complete skill source, retry the upload visibly, and capture acceptance. If step 16 succeeded, do not edit or re-upload the skill. For either path, verify inspector-board-and-coverage in the Skills inventory, record whether a retry actually occurred, and continue to step 18.",
+        "expected_result": "inspector-board-and-coverage is accepted and visible in the Skills inventory, either after the unchanged initial upload or after a documented correction and retry. Do not claim a retry when the first upload succeeded, and do not mark this step complete while an unresolved error remains.",
+        "source": "manual/skills/aibast_inspector-assignment_bp06/SKILL.md"
+      }
+    },
     {"file": "18-add-fee-skill.jpg", "label": "18 · Add deterministic fee estimates", "duration_ms": 1300},
     {"file": "19-open-model-picker.jpg", "label": "19 · Review the available model choices", "duration_ms": 1500},
     {"file": "20-select-sonnet-model.jpg", "label": "20 · Match the Easy-mode model", "duration_ms": 1200},

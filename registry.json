@@ -1,7 +1,7 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-09-06T20:31:21.697320+00:00",
+  "generated_at": "2026-09-14T12:54:12.936541+00:00",
   "stats": {
     "total_agents": 72,
     "publishers": 1,
@@ -16,8 +16,8 @@
     "curated_copy_solutions": 51,
     "solution_onepagers": 51,
     "solution_demo_videos": 47,
-    "total_lines": 30699,
-    "total_kb": 1503.5,
+    "total_lines": 30690,
+    "total_kb": 1502.8,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -12766,11 +12766,11 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
-      "_size_kb": 27.3,
-      "_lines": 601,
-      "_sha256": "55a5cfa3e015b62579d0edf4171f080f22500eb89a5e7c25947dae93f0f79e7c",
+      "_size_kb": 26.6,
+      "_lines": 592,
+      "_sha256": "9f674001f6b1318fb9e3eb78d888d7a6e05b7a5549c106262b317e5716991192",
       "_install_prefix": "building_permit_processing__",
-      "_install_filename": "building_permit_processing__55a5cfa3e015_agent.py",
+      "_install_filename": "building_permit_processing__9f674001f6b1_agent.py",
       "_stack": "building_permit_processing",
       "_stack_vertical": "slg_government",
       "_synthetic_data": true,
@@ -14706,6 +14706,36 @@
       ],
       "partner_reported_outcome": "10\u201330% higher attach rate",
       "_catalog_kind": "partner"
+    }
+  ],
+  "community_tools": [
+    {
+      "id": "business-process-catalog",
+      "name": "Business Process Catalog",
+      "url": "https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about",
+      "author": "Microsoft",
+      "description": "Official Microsoft Dynamics 365 reference catalog of standard business processes, importable into Azure DevOps, useful for mapping an implementation's process scope before deciding what to automate with an agent."
+    },
+    {
+      "id": "copilot-ramp-playbook",
+      "name": "Copilot Ramp Playbook",
+      "url": "https://github.com/mfm-copilot-ramp/copilot-ramp-playbook",
+      "author": "mfm-copilot-ramp",
+      "description": "Community learning guide covering seven stages from Copilot chat through agent development, with role-based paths, solution examples, and cost/value planning tools. This is not an official Microsoft resource."
+    },
+    {
+      "id": "copilot-streaming-chat-playground",
+      "name": "Copilot Streaming Chat Playground",
+      "url": "https://github.com/jzh24516/copilot-streaming-chat-playground",
+      "author": "jzh24516",
+      "description": "Community playground project for experimenting with streaming chat responses against Copilot-style APIs."
+    },
+    {
+      "id": "cowork-cookbook-prospect-to-quote",
+      "name": "Cowork Cookbook \u2014 Prospect to Quote",
+      "url": "https://coworkcookbook.com/map/prospect-to-quote",
+      "author": "Cowork Cookbook",
+      "description": "Community recipe map walking through a prospect-to-quote workflow, useful as a reference pattern for structuring a similar sales agent flow."
     }
   ]
 }

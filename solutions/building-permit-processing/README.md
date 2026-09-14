@@ -55,13 +55,46 @@ again in the target environment.
 - Isolated source-agent cases: 5/5 passed
 - Packaged Copilot Studio Preview evidence: 5/5 synthetic cases passed
 - Current release boundary: Draft; `published: false`
-- Copilot-assisted walkthrough: 6 reusable frames and 1 blank reshoot
-- Manual AI-skeptic walkthrough: 23 reusable frames, 1 blocker reshoot, and
-  recorded Preview parity
+- Copilot-assisted walkthrough: 7 reference-only captures requiring reshoot,
+  including the historical published pilot and a blank frame
+- Manual AI-skeptic walkthrough: 22 reusable frames, 2 historical validation/
+  retry captures requiring fresh evidence, and preserved recorded Preview parity
 - Historical environment diagnostics are evidence artifacts, not publication
   approval, customer proof, or a current live-deployment claim
 - Public-main no-terminal recipe: must be rerun after these package paths and
   fixed agent source are merged
+
+## Manual steps 16–17: record the actual validation outcome
+
+Upload the complete reviewed `inspector-board-and-coverage` skill unchanged.
+If validation succeeds, record the accepted upload and verify the Skills
+inventory without editing or re-uploading. Only an authentic validation error
+requires capturing the message, fixing the reported problem, and retrying.
+Never corrupt a valid skill or manufacture an error to match old evidence.
+An unresolved error cannot complete step 17.
+
+The canonical inputs are the `tutorial` objects on frames 16 and 17 in
+`screenshots/manual/browserfilm.json`. Each defines `title`, `action`,
+`expected_result`, and an existing package-relative or repository-relative
+`source` file. These explicit instructions take precedence over the historical
+frame label and scaffold heuristics. Other frames retain their existing
+contract. Regenerate the tutorial, quest, report, and source bundle with:
+
+```text
+python3 tools/scaffold_solution_journey.py building-permit-processing --build-export
+```
+
+The historical failure/retry JPEGs, annotated PNGs, GIF, and contact sheet are
+unchanged. `evals/visual-checkpoints.json` marks the two steps `reshoot_required`
+and preserves the old approval under `historical_release_review`.
+`evals/manual-build-evidence.json` records the conditional validation contract,
+not a new live pass. Fresh validation-outcome and accepted-inventory captures
+remain required.
+
+`manual/GLOBAL-INSTRUCTIONS.md` is a hand-authored, locked pilot policy, not a
+rollout-generated anchor section. Instruction normalization preserves it, as
+Draft batch promotion already does, so normalization cannot rewrite the policy
+copied verbatim into the generated tutorial and quest.
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -84,7 +117,7 @@ again in the target environment.
 | Copilot Studio deployment settings | `solutions/building-permit-processing/exports/building-permit-processing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/building-permit-processing/exports/building-permit-processing-solution-export.json` |
 
-**Scaffold status:** 110 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 108 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

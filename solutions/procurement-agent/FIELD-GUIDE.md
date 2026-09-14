@@ -208,7 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
+Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -263,3 +263,9 @@ an approved production tool returns evidence that it succeeded.
   part of scaffolding.
 - **Customer gate:** replacement connections, governance, telemetry, support,
   and success measures are agreed before production.
+
+## Pending evidence
+
+- solutions/procurement-agent/evals/manual-build-evidence.json does not record passed manual Preview evidence
+
+Pending items are not proof and must not be described as captured.

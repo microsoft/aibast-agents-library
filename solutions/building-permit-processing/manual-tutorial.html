@@ -549,7 +549,7 @@ html[data-theme="dark"] {
       <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
       <a class="academy-breadcrumb" href="../../academy.html#course/building-permit-processing">Academy / Building Permit Processing Agent</a>
     </div>
-    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button" href="quest.html">Back to workshop</a><a class="button primary" href="exports/building-permit-processing-source.zip">Download source bundle</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button" href="quest.html">Back to workshop</a><a class="button primary" href="exports/building-permit-processing-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
@@ -572,8 +572,8 @@ html[data-theme="dark"] {
 <a href="#step-13">13. Add proactive applicant updates</a>
 <a href="#step-14">14. Add permit status and zoning detail</a>
 <a href="#step-15">15. Add the review checklist</a>
-<a href="#step-16">16. Diagnose a SKILL.md validation failure</a>
-<a href="#step-17">17. Correct and add inspector coverage</a>
+<a href="#step-16">16. Upload inspector coverage and record validation</a>
+<a href="#step-17">17. Confirm inspector coverage; retry only after a real error</a>
 <a href="#step-18">18. Add deterministic fee estimates</a>
 <a href="#step-19">19. Review the available model choices</a>
 <a href="#step-20">20. Match the Easy-mode model</a>
@@ -931,31 +931,31 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Diagnose a SKILL.md validation failure</h3><p>Step 16 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Diagnose a SKILL.md validation failure" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills." data-report-evidence="solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg">Report an issue</button></header>
+        <header><span>16</span><div><h3>Upload inspector coverage and record validation</h3><p>Step 16 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Upload inspector coverage and record validation" data-report-expected="The actual validation outcome is recorded: either a successful accepted upload of inspector-board-and-coverage or an authentic validation error captured for correction in step 17. A frontmatter failure is not required." data-report-evidence="solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Diagnose a SKILL.md validation failure</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload the complete reviewed inspector-board-and-coverage SKILL.md unchanged, including its name and description frontmatter. If validation succeeds, record the successful accepted upload and continue to step 17 without editing the skill. If Copilot Studio reports an authentic validation error, capture the exact message and use step 17 to fix the reported problem and retry. Never corrupt a valid skill or manufacture an error to match a historical screenshot.</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The actual validation outcome is recorded: either a successful accepted upload of inspector-board-and-coverage or an authentic validation error captured for correction in step 17. A frontmatter failure is not required.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/annotated/hard-step-16.png" download="hard-step-16.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-16.png" alt="Diagnose a SKILL.md validation failure reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The Frontmatter incomplete validation message is visible.; The message identifies the missing name and description fields.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-inspector-skill-validation-error.jpg" download="16-inspector-skill-validation-error.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The actual validation outcome is recorded: either a successful accepted upload of inspector-board-and-coverage or an authentic validation error captured for correction in step 17. A frontmatter failure is not required.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <a href="manual/skills/aibast_inspector-assignment_bp06/SKILL.md" download>Download source: Capability card: aibast inspector assignment bp06</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Correct and add inspector coverage</h3><p>Step 17 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Correct and add inspector coverage" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg">Report an issue</button></header>
+        <header><span>17</span><div><h3>Confirm inspector coverage; retry only after a real error</h3><p>Step 17 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Confirm inspector coverage; retry only after a real error" data-report-expected="inspector-board-and-coverage is accepted and visible in the Skills inventory, either after the unchanged initial upload or after a documented correction and retry. Do not claim a retry when the first upload succeeded, and do not mark this step complete while an unresolved error remains." data-report-evidence="solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Correct and add inspector coverage</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Only if step 16 recorded an authentic validation error, fix the reported problem in the complete skill source, retry the upload visibly, and capture acceptance. If step 16 succeeded, do not edit or re-upload the skill. For either path, verify inspector-board-and-coverage in the Skills inventory, record whether a retry actually occurred, and continue to step 18.</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>inspector-board-and-coverage is accepted and visible in the Skills inventory, either after the unchanged initial upload or after a documented correction and retry. Do not claim a retry when the first upload succeeded, and do not mark this step complete while an unresolved error remains.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/annotated/hard-step-17.png" download="hard-step-17.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-17.png" alt="Correct and add inspector coverage reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: inspector-board-and-coverage is visible in the Skills inventory after the retry.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-retry-inspector-skill.jpg" download="17-retry-inspector-skill.jpg">Download original</a>.</p>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> inspector-board-and-coverage is accepted and visible in the Skills inventory, either after the unchanged initial upload or after a documented correction and retry. Do not claim a retry when the first upload succeeded, and do not mark this step complete while an unresolved error remains.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <a href="manual/skills/aibast_inspector-assignment_bp06/SKILL.md" download>Download source: Capability card: aibast inspector assignment bp06</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
           </footer>
         </div>

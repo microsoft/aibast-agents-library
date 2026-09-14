@@ -147,6 +147,16 @@ def build_fixture(root: Path) -> tuple[Path, dict[str, object]]:
 
 
 class PagesBuilderFixtureTests(unittest.TestCase):
+    def test_community_manifest_is_served_for_catalog_rendering_and_export(self):
+        with fixture_root() as root:
+            document = '{"schema":"aibast-community-tools/1.0","tools":[],"count":0}\n'
+            write_text(root, "community_tools.json", document)
+            output, _manifest = build_fixture(root)
+            self.assertEqual(
+                (output / "community_tools.json").read_text(encoding="utf-8"),
+                document,
+            )
+
     def test_rewrites_zip_gif_and_repository_only_links(self):
         with fixture_root() as root:
             output, manifest = build_fixture(root)
