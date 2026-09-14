@@ -12,6 +12,8 @@ banner requirement of its own, but see "Privacy posture" below.
 - `scripts/apply_clarity_tag.py` renders the tag from that file and stamps it
   before `</head>` on every published page: root HTML, `docs/`, `reports/`,
   and every `solutions/**` page.
+- The workshop scaffold and `scripts/build_impact_report.py` use the shared
+  renderer in `tools/clarity_tag.py`, so regenerated pages retain the tag.
 - `tests/test_clarity_tag.py` fails when any page is missing the current tag,
   when two pages disagree, or when installed software is tagged.
 
