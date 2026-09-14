@@ -1,5 +1,6 @@
 """Regression tests for destructive and fail-open installer paths."""
 
+import os
 import subprocess
 from pathlib import Path
 
@@ -7,6 +8,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 INSTALLER = ROOT / "install.sh"
 WINDOWS_INSTALLER = ROOT / "install.ps1"
+DOCS_INSTALLER = ROOT / "docs/install.sh"
+DOCS_WINDOWS_INSTALLER = ROOT / "docs/install.ps1"
 LANDING_PAGE = ROOT / "index.html"
 
 
@@ -287,6 +290,58 @@ def test_staging_can_override_repository_and_ref_without_changing_defaults():
     assert 'REPO_REF="${BRAINSTEM_REPO_REF:-main}"' in text
     assert '--branch "$REPO_REF"' in text
     assert 'origin "$REPO_REF"' in text
+
+
+def test_installers_honor_explicit_estate_home_and_keep_mirrors(tmp_path):
+    custom_home = tmp_path / "estate brainstem"
+    custom_bin = tmp_path / "estate bin"
+    user_home = tmp_path / "user home"
+    user_home.mkdir()
+    env = {
+        **os.environ,
+        "HOME": str(user_home),
+        "BRAINSTEM_HOME": str(custom_home),
+        "BRAINSTEM_BIN": str(custom_bin),
+    }
+    result = subprocess.run(
+        ["bash"],
+        input=installer_functions() + """
+install_cli >/dev/null
+printf '%s\\n%s\\n%s\\n' "$BRAINSTEM_HOME" "$VENV_DIR" "$BRAINSTEM_BIN"
+""",
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.splitlines()[-3:] == [
+        str(custom_home),
+        str(custom_home / "venv"),
+        str(custom_bin),
+    ]
+    wrapper = custom_bin / "brainstem"
+    resolved = subprocess.run(
+        [
+            "bash",
+            "-c",
+            'eval "$(sed -n 2p "$1")"; printf %s "$BRAINSTEM_HOME"',
+            "bash",
+            str(wrapper),
+        ],
+        text=True,
+        capture_output=True,
+        check=True,
+    )
+    assert resolved.stdout == str(custom_home)
+
+    windows = WINDOWS_INSTALLER.read_text(encoding="utf-8")
+    assert "if ($env:BRAINSTEM_HOME)" in windows
+    assert "if ($env:BRAINSTEM_BIN)" in windows
+    assert '$VENV_DIR = "$BRAINSTEM_HOME\\venv"' in windows
+    assert INSTALLER.read_bytes() == DOCS_INSTALLER.read_bytes()
+    assert WINDOWS_INSTALLER.read_bytes() == DOCS_WINDOWS_INSTALLER.read_bytes()
 
 
 def test_static_landing_page_uses_minimal_public_readiness_probe():

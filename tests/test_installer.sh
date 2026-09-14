@@ -46,7 +46,9 @@ else
     fail "install.sh should target ~/.brainstem"
 fi
 
-if grep -q 'BRAINSTEM_BIN.*local/bin' "$REPO_ROOT/install.sh" && grep -q 'brainstem.*WRAPPER' "$REPO_ROOT/install.sh"; then
+if grep -q 'BRAINSTEM_BIN.*local/bin' "$REPO_ROOT/install.sh" \
+    && grep -Fq '} > "$BRAINSTEM_BIN/brainstem"' "$REPO_ROOT/install.sh" \
+    && grep -Fq 'chmod +x "$BRAINSTEM_BIN/brainstem"' "$REPO_ROOT/install.sh"; then
     pass "install.sh creates brainstem CLI"
 else
     fail "install.sh should create brainstem CLI wrapper"
