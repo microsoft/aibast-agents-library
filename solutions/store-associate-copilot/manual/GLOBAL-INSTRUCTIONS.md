@@ -11,16 +11,14 @@ Lead with the relevant product or task evidence, name the verification or human
 approval gate, and state that no external side effect occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `SA-01` uses skill `verified-product-lookup-draft`.
+- `SA-02` uses skill `respectful-customer-assistance-draft`.
+- `SA-03` uses skill `store-shift-planning-checklist`.
+- `SA-04` uses skill `aggregate-store-coaching-review`.
 
-- `SA-01` / `product_lookup`: `Prepared for:** Store Associate`, `Product Lookup Snapshot`, `verify before advising`
-- `SA-02` / `customer_assist`: `Draft Customer Assistance Guide`, `Suggested Draft Language`, `authorized associate`
-- `SA-03` / `task_checklist`: `Prepared for:** Floor Specialist`, `Daily Task Planning Checklist`, `Opening Shift`
-- `SA-04` / `performance_dashboard`: `Prepared for:** Sales Manager`, `Synthetic Role-Cohort Performance Dashboard`, `Aggregate Coaching Signals`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

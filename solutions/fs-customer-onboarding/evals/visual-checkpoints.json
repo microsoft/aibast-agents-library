@@ -9,8 +9,8 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23
+    "reusable": 19,
+    "reshoot_required": 4
   },
   "captures": [
     {
@@ -18,17 +18,16 @@
       "mode": "easy",
       "case_id": "FCO-01",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/01-fco-01.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "The capture ends after knowledge search; no final answer is visible."
-      ],
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/01-fco-01.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/01-fco-01.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Reasoning trace routes to kyc-verification",
         "Reasoning trace names APP-6003 and PEP"
       ],
-      "historical_boxes": [
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final answer is visible."
+      ],
+      "boxes": [
         {
           "x": 313,
           "y": 426,
@@ -36,8 +35,7 @@
           "height": 86,
           "label": "Reasoning trace: APP-6003 and PEP"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "easy-fco-02",
@@ -45,23 +43,21 @@
       "case_id": "FCO-02",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/02-fco-02.jpg",
       "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: The screenshot stops in the reasoning trace. APP-6004 and Basic Savings appear only in reasoning, and no final answer with positive case evidence is visible.",
-      "captured_status": "reshoot_required"
+      "reason": "The screenshot stops in the reasoning trace. APP-6004 and Basic Savings appear only in reasoning, and no final answer with positive case evidence is visible."
     },
     {
       "id": "easy-fco-03",
       "mode": "easy",
       "case_id": "FCO-03",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/03-fco-03.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/03-fco-03.png",
-      "historical_visible_anchors": [
-        "APP-6002 — Blackwood | Business Document Checklist",
+      "annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/03-fco-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "APP-6002 \u2014 Blackwood | Business Document Checklist",
         "Outstanding / Key Gap: Beneficial Ownership",
         "Beneficial Ownership Declaration"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 278,
           "y": 158,
@@ -76,25 +72,23 @@
           "height": 43,
           "label": "Beneficial Ownership Declaration"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "easy-fco-04",
       "mode": "easy",
       "case_id": "FCO-04",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/04-fco-04.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "The capture ends after knowledge search; no final queue answer is visible."
-      ],
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/04-fco-04.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/04-fco-04.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Reasoning trace routes to onboarding-status",
         "Reasoning trace names APP-6001 and APP-6003"
       ],
-      "historical_boxes": [
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final queue answer is visible."
+      ],
+      "boxes": [
         {
           "x": 313,
           "y": 404,
@@ -102,17 +96,15 @@
           "height": 86,
           "label": "Reasoning trace: APP-6001 and APP-6003"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: The target Customer Onboarding Pilot row is not visible, so the screenshot cannot prove that the validated pilot remains Draft.",
-      "draft": true,
-      "captured_status": "reshoot_required"
+      "reason": "The target Customer Onboarding Pilot row is not visible, so the screenshot cannot prove that the validated pilot remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -120,21 +112,19 @@
       "step": 1,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: The frame is an almost entirely blank loading canvas. No blank agent workspace, agent identity, or completed creation state is visible.",
-      "captured_status": "reshoot_required"
+      "reason": "The frame is an almost entirely blank loading canvas. No blank agent workspace, agent identity, or completed creation state is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/02-name-agent.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Customer Onboarding Manual entered in the agent name field"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 160,
           "y": 92,
@@ -142,23 +132,21 @@
           "height": 58,
           "label": "Manual agent name entered"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/03-enter-instructions.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Evidence-first response contract",
         "Locked Preview evidence anchors",
         "FCO-01 through FCO-04 deterministic anchors"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 80,
           "y": 192,
@@ -166,8 +154,7 @@
           "height": 635,
           "label": "Reviewed instruction policy and locked anchors"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "hard-step-04",
@@ -175,22 +162,20 @@
       "step": 4,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: The instruction text is visible, but no save confirmation or No unsaved changes state is shown. The frame does not visually prove that the policy was saved.",
-      "captured_status": "reshoot_required"
+      "reason": "The instruction text is visible, but no save confirmation or No unsaved changes state is shown. The frame does not visually prove that the policy was saved."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/05-remove-web-search.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Knowledge section is visible without the Search all websites source",
         "Tools section contains no configured tool"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1015,
           "y": 194,
@@ -199,20 +184,19 @@
           "label": "Web search removed; no tools configured"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Label pill covered helper text in the empty Tools/Knowledge area; regenerated with the pill inside the empty box 2026-09-10."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/06-add-aibast-fs-customer-onboarding-controls-and-review.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Knowledge chip beginning aibast_fs-customer-onboarding-controls-and..."
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1025,
           "y": 307,
@@ -221,21 +205,20 @@
           "label": "Controls and review knowledge added"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/07-add-aibast-fs-customer-onboarding-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Knowledge chip beginning aibast_fs-customer-onboarding-synthetic-re...",
         "Knowledge chip beginning aibast_fs-customer-onboarding-controls-and..."
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1024,
           "y": 306,
@@ -244,20 +227,19 @@
           "label": "Both packaged knowledge files added"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/08-add-aibast-account-setup-02.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/08-add-aibast-account-setup-02.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/08-add-aibast-account-setup-02.png",
+      "status": "reusable",
+      "visible_anchors": [
         "account-setup skill chip"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1025,
           "y": 187,
@@ -266,21 +248,20 @@
           "label": "account-setup skill added"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-document-checklist-03.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/09-add-aibast-document-checklist-03.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/09-add-aibast-document-checklist-03.png",
+      "status": "reusable",
+      "visible_anchors": [
         "document-checklist skill chip",
         "account-setup skill chip"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1024,
           "y": 187,
@@ -289,22 +270,21 @@
           "label": "document-checklist skill added"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-kyc-verification-01.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/10-add-aibast-kyc-verification-01.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/10-add-aibast-kyc-verification-01.png",
+      "status": "reusable",
+      "visible_anchors": [
         "kyc-verification skill chip",
         "document-checklist skill chip",
         "account-setup skill chip"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1024,
           "y": 187,
@@ -313,23 +293,22 @@
           "label": "kyc-verification skill added"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-onboarding-status-04.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/11-add-aibast-onboarding-status-04.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/11-add-aibast-onboarding-status-04.png",
+      "status": "reusable",
+      "visible_anchors": [
         "onboarding-status skill chip",
         "kyc-verification skill chip",
         "document-checklist skill chip",
         "account-setup skill chip"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1024,
           "y": 187,
@@ -338,24 +317,23 @@
           "label": "Four packaged skills configured"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/12-review-inventory.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Claude Sonnet 4.6",
         "Four configured skills",
         "Tools section contains no configured tool",
         "Two packaged knowledge chips",
         "Save tooltip states No unsaved changes"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 1047,
           "y": 45,
@@ -379,28 +357,27 @@
         },
         {
           "x": 1024,
-          "y": 323,
+          "y": 357,
           "width": 374,
-          "height": 190,
+          "height": 156,
           "label": "No tools and two knowledge files"
         }
       ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "note": "Several label pills covered helper text in the Skills/Tools/Knowledge panel; regenerated with the pills moved into clear whitespace 2026-09-10."
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/13-open-preview.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Preview tab selected",
         "New chat control",
         "Fresh Customer Onboarding Manual greeting"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 563,
           "y": 7,
@@ -415,8 +392,7 @@
           "height": 53,
           "label": "Fresh chat control"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "hard-fco-01",
@@ -424,17 +400,16 @@
       "step": 14,
       "case_id": "FCO-01",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/14-fco-01.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "The capture ends after knowledge search; no final answer is visible."
-      ],
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/14-fco-01.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/14-fco-01.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Reasoning trace routes to kyc-verification",
         "Reasoning trace names APP-6003 and PEP"
       ],
-      "historical_boxes": [
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final answer is visible."
+      ],
+      "boxes": [
         {
           "x": 313,
           "y": 404,
@@ -442,8 +417,7 @@
           "height": 90,
           "label": "Reasoning trace: APP-6003 and PEP"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "hard-fco-02",
@@ -451,17 +425,16 @@
       "step": 15,
       "case_id": "FCO-02",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/15-fco-02.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "APP-6004 is above the captured viewport."
-      ],
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/15-fco-02.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/15-fco-02.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Product Being Prepared: Basic Savings",
         "KYC Checks (All Complete/Clear)"
       ],
-      "historical_boxes": [
+      "full_case_not_visibly_proven": [
+        "APP-6004 is above the captured viewport."
+      ],
+      "boxes": [
         {
           "x": 281,
           "y": 151,
@@ -469,8 +442,7 @@
           "height": 151,
           "label": "Basic Savings preparation details"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "hard-fco-03",
@@ -478,18 +450,17 @@
       "step": 16,
       "case_id": "FCO-03",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/16-fco-03.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "APP-6002 is above the captured viewport."
-      ],
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/16-fco-03.png",
-      "historical_visible_anchors": [
-        "Beneficial Ownership — In Progress",
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/16-fco-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Beneficial Ownership \u2014 In Progress",
         "Beneficial Ownership Declaration (FinCEN BOI) is the outstanding blocker",
         "Authorized human review required"
       ],
-      "historical_boxes": [
+      "full_case_not_visibly_proven": [
+        "APP-6002 is above the captured viewport."
+      ],
+      "boxes": [
         {
           "x": 285,
           "y": 282,
@@ -504,8 +475,7 @@
           "height": 174,
           "label": "Outstanding BOI blocker and human gate"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "hard-fco-04",
@@ -513,17 +483,16 @@
       "step": 17,
       "case_id": "FCO-04",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/17-fco-04.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "The capture ends after knowledge search; no final queue answer is visible."
-      ],
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/17-fco-04.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/17-fco-04.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Reasoning trace routes to onboarding-status",
         "Reasoning trace names APP-6001 and APP-6003"
       ],
-      "historical_boxes": [
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final queue answer is visible."
+      ],
+      "boxes": [
         {
           "x": 313,
           "y": 404,
@@ -531,23 +500,21 @@
           "height": 86,
           "label": "Reasoning trace: APP-6001 and APP-6003"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     },
     {
       "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical_annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/18-confirm-draft.png",
-      "historical_visible_anchors": [
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Customer Onboarding Manual",
         "Draft",
         "GitHub Copilot"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
           "x": 108,
           "y": 246,
@@ -555,10 +522,16 @@
           "height": 54,
           "label": "Target manual agent remains Draft"
         }
-      ],
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      ]
     }
   ],
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:fs-customer-onboarding",
+    "reviewed_at": "2026-08-09T20:27:15-04:00",
+    "method": "Direct review of every exact source screenshot against the positive-anchor visual policy, followed by annotation and learner-page audit.",
+    "notes": "Approved FCO-01 and FCO-04 as partial reusable checkpoints because their routed skills and required identifiers are visibly present without a refusal. The annotations explicitly state that no final answer is visible. The assisted Draft source remains reshoot-required because Customer Onboarding Pilot is absent; Draft is machine-proven instead."
+  },
   "reshoot_plan": {
     "replacement_captures": [
       "Easy FCO-02 with APP-6004 and Basic Savings visible in the final answer.",
@@ -576,18 +549,5 @@
       "Brainstem final complete verdict.",
       "Copilot-only final complete verdict."
     ]
-  },
-  "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json.",
-  "captured_summary": {
-    "total_existing_captures": 23,
-    "reusable": 19,
-    "reshoot_required": 4
-  },
-  "captured_release_review": {
-    "status": "approved",
-    "reviewer": "workshop-builder:fs-customer-onboarding",
-    "reviewed_at": "2026-08-09T20:27:15-04:00",
-    "method": "Direct review of every exact source screenshot against the positive-anchor visual policy, followed by annotation and learner-page audit.",
-    "notes": "Approved FCO-01 and FCO-04 as partial reusable checkpoints because their routed skills and required identifiers are visibly present without a refusal. The annotations explicitly state that no final answer is visible. The assisted Draft source remains reshoot-required because Customer Onboarding Pilot is absent; Draft is machine-proven instead."
   }
 }

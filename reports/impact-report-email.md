@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-09-14T05:33:30Z`
+**Snapshot:** `2026-09-14T14:44:40Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 7,671 | +1,678 observed - partial | +5,066 observed - partial |
+| AIBAST observed repository downloads | 7,675 | +1,678 observed - partial | +5,066 observed - partial |
 | Git clones | 7,051 | +1,674 observed | +5,036 observed |
 | Clones excluding CI estimate | 7,051 | +1,784 (+33.9%) | +5,354 (+315.5%) - partial |
 | AIBAST repository and Pages views | 927 | +142 observed | +619 observed |
 | jsDelivr file hits | 418 | +4 observed | +30 observed |
-| Release asset downloads | 202 | +156 (+339.1%) | +200 (+10000.0%) |
-| AIBAST direct agent file downloads | 140 | +129 (+1172.7%) | +138 (+6900.0%) |
+| Release asset downloads | 206 | +160 (+347.8%) | +204 (+10200.0%) |
+| AIBAST direct agent file downloads | 143 | +132 (+1200.0%) | +141 (+7050.0%) |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| AIBAST installer file downloads | 75 | +31 (+70.5%) | +75 |
+| AIBAST installer file downloads | 76 | +32 (+72.7%) | +76 |
 | Unique cloners (14-day window) | 353 | +138 (+64.2%) snapshot change | +216 (+157.7%) snapshot change - partial |
 | Unique visitors (14-day window) | 44 | +5 (+12.8%) snapshot change | +27 (+158.8%) snapshot change - partial |
 
@@ -28,7 +28,7 @@
 | GitHub stars | 7 | +0 (+0.0%) | +3 (+75.0%) |
 | GitHub forks | 7 | +0 (+0.0%) | +5 (+250.0%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 42 | +21 (+100.0%) | +35 (+500.0%) |
+| Open GitHub issues | 41 | +20 (+95.2%) | +34 (+485.7%) |
 | Agent upvotes | 4 | +0 (+0.0%) | +2 (+100.0%) |
 | Signed-in agent acquisitions | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop usage events | 0 | +0 (+0.0%) - partial | -8 (-100.0%) - partial |
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,509 | +0 (+0.0%) | +64 (+1.2%) |
-| Files covered by download observations | 5,509 | +0 (+0.0%) | +64 (+1.2%) |
+| Tracked repository files | 5,514 | +5 (+0.1%) | +69 (+1.3%) |
+| Files covered by download observations | 5,514 | +5 (+0.1%) | +69 (+1.3%) |
 | Catalog agents | 72 | +0 (+0.0%) | +0 (+0.0%) |
 | Tracked SKILL.md files | 234 | +0 (+0.0%) | +0 (+0.0%) |
 | Canonical workshops | 51 | +0 (+0.0%) | +0 (+0.0%) |
