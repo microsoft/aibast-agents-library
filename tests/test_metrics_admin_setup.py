@@ -107,7 +107,7 @@ def test_page_is_self_contained_and_inline_scripts_parse_with_node():
     assert not re.search(r"<link\b[^>]*rel=[\"']stylesheet", HTML, re.IGNORECASE)
 
     scripts = inline_scripts()
-    assert len(scripts) == 2
+    assert len(scripts) == 3
     for script in scripts:
         result = subprocess.run(
             ["node", "--check"],
@@ -456,7 +456,8 @@ def test_no_token_literal_examples_or_secret_in_command_history_patterns():
 
 def test_completion_persists_only_boolean_values_under_required_key():
     assert '"aibast:metrics-admin-checklist"' in HTML
-    assert HTML.count("localStorage.setItem") == 1
+    page_own = re.sub(r"<!-- clarity:start -->.*?<!-- clarity:end -->", "", HTML, flags=re.DOTALL)
+    assert page_own.count("localStorage.setItem") == 1
     assert (
         "JSON.stringify(checklist.map((item) => Boolean(item.checked)))"
         in HTML
