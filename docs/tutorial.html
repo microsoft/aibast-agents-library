@@ -79,7 +79,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
                 <button class="copy" onclick="copyCode(this)">Copy</button>
                 irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex
             </div>
-            <div class="note">Works on factory Windows 11. Auto-installs Python, Git, and GitHub CLI if missing.</div>
+            <div class="note">Works on factory Windows 11. Auto-installs Python and Git if missing. When it says <code>Starting RAPP Brainstem</code>, setup is complete; keep PowerShell open while the server runs.</div>
         </div>
 
         <div id="mac" class="platform-content">
@@ -98,31 +98,31 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
             </div>
         </div>
 
-        <div class="time">⏱ 3 minutes (auto-installs dependencies)</div>
+        <div class="time">⏱ Usually 2-5 minutes on a fresh PC</div>
     </div>
 
     <!-- Step 2: Auth -->
     <div class="step">
         <span class="number">2</span>
         <h2>Sign In to GitHub</h2>
-        <p>Start the Brainstem and open <strong>localhost:7071</strong>. If no compatible credential is available, the chat UI displays a GitHub device code and walks you through sign-in.</p>
+        <p>The Windows one-liner starts Brainstem immediately after setup and opens <strong>localhost:7071</strong>. If no compatible credential is available, the chat UI displays a GitHub device code and walks you through sign-in.</p>
         <div class="code-block">
             <button class="copy" onclick="copyCode(this)">Copy</button>
-            brainstem
+            http://localhost:7071
         </div>
-        <div class="note">Authentication persists locally across restarts. You can also use an existing compatible <code>gh auth</code> session.</div>
+        <div class="note">Leave the original PowerShell window open. Authentication persists locally across restarts. You can also use an existing compatible <code>gh auth</code> session.</div>
         <div class="time">⏱ 1 minute</div>
     </div>
 
     <!-- Step 3: Start -->
     <div class="step">
         <span class="number">3</span>
-        <h2>Start the Brainstem</h2>
+        <h2>Start It Again Later</h2>
         <div class="code-block">
             <button class="copy" onclick="copyCode(this)">Copy</button>
             brainstem
         </div>
-        <p>Your AI agent server is now running at <strong>localhost:7071</strong>. Open a browser and go there to chat.</p>
+        <p>The command keeps the terminal open while your AI agent server runs at <strong>localhost:7071</strong>. Press <code>Ctrl+C</code> when you want to stop it.</p>
         <div class="time">⏱ Instant</div>
     </div>
 

@@ -16,14 +16,18 @@ curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
 ```powershell
 irm https://github.com/microsoft/aibast-agents-library/releases/download/installers/install.ps1 | iex
 ```
-Auto-installs Python 3.11, Git, and GitHub CLI via winget if missing.
+Auto-installs Python 3.11 and Git via winget if missing, then starts Brainstem.
+When PowerShell says `Starting RAPP Brainstem`, setup is complete: keep that
+window open while you use the server. GitHub sign-in happens in the browser
+after `localhost:7071` is ready.
 
-Then:
+To start Brainstem again later:
 ```bash
 brainstem       # start the server → localhost:7071
 ```
 
-The browser walks through GitHub device-code sign-in when no compatible credential is already available.
+The browser walks through GitHub device-code sign-in when no compatible
+credential is already available.
 
 ---
 
