@@ -419,7 +419,9 @@ def test_manual_tutorial_matches_browserfilm_and_visual_contract():
     assert set(hard_visuals) == set(range(1, len(frames) + 1))
 
     for index, (step, frame) in enumerate(zip(steps, frames), start=1):
-        action = re.sub(r"^\d+\s*·\s*", "", frame["label"])
+        action = frame.get("tutorial", {}).get("title") or re.sub(
+            r"^\d+\s*·\s*", "", frame["label"]
+        )
         assert step["number"] == index
         assert step["title"] == action
         assert step["reports"] == 1

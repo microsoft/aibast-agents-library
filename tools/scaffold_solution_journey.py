@@ -1358,6 +1358,41 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
     return "The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot."
 
 
+def manual_frame_tutorial(
+    ctx: JourneyContext, frame: dict[str, Any]
+) -> dict[str, str]:
+    """Keep current learner instructions separate from historical frame labels."""
+    if "tutorial" not in frame:
+        return {}
+    tutorial = frame["tutorial"]
+    fields = {"title", "action", "expected_result", "source"}
+    if (
+        not isinstance(tutorial, dict)
+        or set(tutorial) != fields
+        or any(
+            not isinstance(tutorial[key], str) or not tutorial[key].strip()
+            for key in fields
+        )
+    ):
+        raise ScaffoldError(
+            f"Frame {frame.get('file')} tutorial must define nonempty "
+            "title, action, expected_result, and source strings"
+        )
+    source = Path(tutorial["source"])
+    resolved = resolve_repo_path(ctx.root, ctx.package, str(source), ctx.package)
+    if (
+        source.is_absolute()
+        or ".." in source.parts
+        or not resolved.resolve().is_relative_to(ctx.root)
+        or not resolved.is_file()
+    ):
+        raise ScaffoldError(
+            f"Frame {frame.get('file')} tutorial source must be an existing "
+            "package-relative or repository-relative file"
+        )
+    return tutorial
+
+
 def choose_frame_resources(ctx: JourneyContext) -> list[Path]:
     knowledge = manual_knowledge_files(ctx.package)
     skills = sorted((ctx.package / "manual" / "skills").rglob("SKILL.md"))
@@ -1365,6 +1400,12 @@ def choose_frame_resources(ctx: JourneyContext) -> list[Path]:
     skill_index = 0
     selected: list[Path] = []
     for index, frame in enumerate(ctx.manual_frames, 1):
+        tutorial = manual_frame_tutorial(ctx, frame)
+        if tutorial:
+            selected.append(
+                resolve_repo_path(ctx.root, ctx.package, tutorial["source"], ctx.package)
+            )
+            continue
         filename = str(frame.get("file", ""))
         action = clean_frame_label(str(frame.get("label", "")), f"Review frame {index}")
         lower = action.lower()
@@ -3067,11 +3108,15 @@ def render_manual_tutorial(
     toc_links = []
     for index, frame in enumerate(ctx.manual_frames, 1):
         filename = str(frame.get("file", ""))
-        action = clean_frame_label(str(frame.get("label", "")), f"Review frame {index}")
-        expected = expected_result(ctx, action, filename)
+        tutorial = manual_frame_tutorial(ctx, frame)
+        title = tutorial.get("title") or clean_frame_label(
+            str(frame.get("label", "")), f"Review frame {index}"
+        )
+        action = tutorial.get("action", title)
+        expected = tutorial.get("expected_result") or expected_result(ctx, title, filename)
         copy_payload = manual_copy_payload(
             ctx,
-            action,
+            title,
             filename,
         )
         copy_id = f"hard-copy-{index}"
@@ -3162,12 +3207,12 @@ def render_manual_tutorial(
             else generic_label(source)
         )
         toc_links.append(
-            f'<a href="#step-{index}">{index}. {html.escape(action)}</a>'
+            f'<a href="#step-{index}">{index}. {html.escape(title)}</a>'
         )
         step_cards.append(
             f"""
       <article class="step" id="step-{index}">
-        <header><span>{index}</span><div><h3>{html.escape(action)}</h3><p>Step {index} of {len(ctx.manual_frames)}</p></div>{report_button(ctx, location=f"Manual mode — step {index}: {action}", expected=expected, evidence=ctx.rel(screenshot))}</header>
+        <header><span>{index}</span><div><h3>{html.escape(title)}</h3><p>Step {index} of {len(ctx.manual_frames)}</p></div>{report_button(ctx, location=f"Manual mode — step {index}: {title}", expected=expected, evidence=ctx.rel(screenshot))}</header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong>{copy_markup}</div><span>{html.escape(action)}</span></div>
@@ -4755,10 +4800,12 @@ remain historical summaries. They are not the current native Manual reference se
 
 {ctx.manual_evidence['lane_evidence_note']}
 """
+    capture_note = (browserfilm or {}).get("capture_note", "")
+    history = f"\n\n{capture_note}" if capture_note else ""
     return f"""# {label.capitalize()} evidence
 
 `browserfilm.json` is the ordered authority for {count} real browser frames.
-`{film}` and `{contact}` summarize those frames when the files are present.
+`{film}` and `{contact}` summarize those frames when the files are present.{history}
 
 Do not replace a missing capture with a generated image or describe a pending
 asset as evidence. The package uses synthetic inputs and qualitative language;

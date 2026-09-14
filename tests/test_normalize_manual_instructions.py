@@ -67,3 +67,21 @@ def test_normalize_is_idempotent(tmp_path):
     first = instructions.read_text(encoding="utf-8")
     assert module.normalize(tmp_path) == []
     assert instructions.read_text(encoding="utf-8") == first
+
+
+def test_normalization_preserves_the_hand_authored_building_permit_policy(tmp_path):
+    module = load_module()
+    slug = "building-permit-processing"
+    relative = Path("solutions") / slug / "manual/GLOBAL-INSTRUCTIONS.md"
+    original = (ROOT / relative).read_bytes()
+    instructions = tmp_path / relative
+    instructions.parent.mkdir(parents=True)
+    instructions.write_bytes(original)
+    cases = tmp_path / "tests/demo_cases" / f"{slug}.json"
+    cases.parent.mkdir(parents=True)
+    cases.write_bytes((ROOT / "tests/demo_cases" / f"{slug}.json").read_bytes())
+
+    assert b"## Locked backlog response contract" in original
+    assert module.normalize(tmp_path, check=True) == []
+    assert module.normalize(tmp_path) == []
+    assert instructions.read_bytes() == original
