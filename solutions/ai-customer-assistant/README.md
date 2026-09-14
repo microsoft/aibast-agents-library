@@ -55,7 +55,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/ai-customer-assistant/exports/ai-customer-assistant-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/ai-customer-assistant/exports/ai-customer-assistant-solution-export.json` |
 
-**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 96 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -112,9 +112,13 @@ def test_manual_and_native_sources_share_the_same_contract():
     manual = PACKAGE / "manual"
     native = PACKAGE / "copilot-studio"
     instructions = (manual / "GLOBAL-INSTRUCTIONS.md").read_text()
-    assert normalize_manual_instructions.render_section(
-        read_json(CASE_FILE)["cases"]
-    ) in instructions
+    cases = read_json(CASE_FILE)["cases"]
+    routes = normalize_manual_instructions.skill_routes(
+        cases, manual / "skills", instructions
+    )
+    assert normalize_manual_instructions.render_section(cases, routes) in instructions
+    assert "SYN-COL has 182 records, SYN-BCS has 108, and SYN-CDC has 53" in instructions
+    assert "## Locked Preview evidence anchors" not in instructions
     settings = (native / "settings.mcs.yml").read_text()
     native_instructions = settings.split("          value: |\n", 1)[1].split(
         "template:", 1
@@ -128,7 +132,6 @@ def test_manual_and_native_sources_share_the_same_contract():
         mirror = native / "behaviors" / f"aibast_care-gap-closure-{source.parent.name}.mcs.yml"
         assert textwrap.dedent(mirror.read_text().split("content: |\n", 1)[1]) == source.read_text()
     for source in [
-        manual / "GLOBAL-INSTRUCTIONS.md",
         manual / "skills/gap-analysis/SKILL.md",
         *sorted((manual / "knowledge").glob("*.md")),
     ]:

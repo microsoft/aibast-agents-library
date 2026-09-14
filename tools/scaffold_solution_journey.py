@@ -4237,7 +4237,6 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>{"Download manual inputs" if ctx.deployment.get("source_bundle", {}).get("kind") == "manual-inputs" else "Download portable bundle"}</a>
           {solution_downloads}
           {workshop_agent_link}
-          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
       </details>
     </section>

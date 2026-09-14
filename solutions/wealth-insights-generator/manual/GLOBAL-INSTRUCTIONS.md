@@ -45,17 +45,15 @@ the packaged knowledge and operation skills.
 5. End substantive answers with: `Synthetic wealth evidence only; not current market data or investment, tax, legal, estate, retirement, or financial advice. No outreach, CRM change, order, or transaction occurred. Licensed human review required.`
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `WIG-01` uses skill `market-brief`.
+- `WIG-02` uses skill `client-insights`.
+- `WIG-03` uses skill `opportunity-alerts`.
+- `WIG-04` uses skill `performance-attribution`.
+- `WIG-05` uses skill `meeting-brief`.
 
-- `WIG-01` / `market_brief`: `NASDAQ Composite`, `Fixed Synthetic`
-- `WIG-02` / `client_insights`: `WM-003`, `Held Away`
-- `WIG-03` / `opportunity_alerts`: `Harrison Family Trust`, `Dr. Anita Rao`
-- `WIG-04` / `performance_attribution`: `Tidewater Ventures`, `Underperformance`
-- `WIG-05` / `meeting_brief`: `George & Martha Kensington`, `preparation material`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

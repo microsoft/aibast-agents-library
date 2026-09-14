@@ -44,7 +44,7 @@ irm https://github.com/microsoft/aibast-agents-library/releases/download/install
 
 Creates `~/rapp-projects/my-project/` — isolated project with its own venv, agents, and local storage. Auth happens through the chat UI (GitHub device code flow). No API keys needed to start.
 
-[Onboarding guide](https://kody-w.github.io/CommunityRAPP/onboard.html) | [CommunityRAPP repo](https://github.com/kody-w/CommunityRAPP)
+[Hippocampus setup and API guide](https://github.com/microsoft/aibast-agents-library/blob/main/community_rapp/skill.md) | [Installer source](https://github.com/microsoft/aibast-agents-library/tree/main/community_rapp)
 
 ---
 

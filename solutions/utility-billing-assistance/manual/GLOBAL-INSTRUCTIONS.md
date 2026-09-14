@@ -26,16 +26,14 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 5. End with the no-write boundary relevant to the operation.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `UTILITY_BILLING_ASSISTANCE-01` uses skill `utility-billing-assistance-billing-inquiry`.
+- `UTILITY_BILLING_ASSISTANCE-02` uses skill `utility-billing-assistance-usage-analysis`.
+- `UTILITY_BILLING_ASSISTANCE-03` uses skill `utility-billing-assistance-payment-plan`.
+- `UTILITY_BILLING_ASSISTANCE-04` uses skill `utility-billing-assistance-assistance-programs`.
 
-- `UTILITY_BILLING_ASSISTANCE-01` / `billing_inquiry`: `ACCT-90003`, `$489.20`, `No balance`
-- `UTILITY_BILLING_ASSISTANCE-02` / `usage_analysis`: `REVIEW POSSIBLE LEAK`, `Draft policy estimate`, `not a leak diagnosis`
-- `UTILITY_BILLING_ASSISTANCE-03` / `payment_plan`: `12 months`, `No payment arrangement was created`
-- `UTILITY_BILLING_ASSISTANCE-04` / `assistance_programs`: `POTENTIALLY ELIGIBLE`, `No eligibility determination`, `enrollment`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

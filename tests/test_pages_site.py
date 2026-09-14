@@ -686,7 +686,7 @@ class PagesWorkflowTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", self.text)
         self.assertRegex(
             self.text,
-            r"kody-w/aibast-agents-library' &&\s+"
+            r"github\.event\.repository\.fork == true &&\s+"
             r"github\.ref == 'refs/heads/staging'",
         )
         self.assertRegex(
@@ -696,7 +696,7 @@ class PagesWorkflowTests(unittest.TestCase):
         )
         self.assertNotRegex(
             self.text,
-            r"kody-w/aibast-agents-library' &&\s+"
+            r"github\.event\.repository\.fork == true &&\s+"
             r"github\.ref == 'refs/heads/main'",
         )
 

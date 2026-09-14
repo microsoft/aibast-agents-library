@@ -19,7 +19,7 @@ concurrency:
 jobs:
   deploy:
     if: >-
-      (github.repository == 'kody-w/aibast-agents-library' &&
+      (github.event.repository.fork == true &&
        github.ref == 'refs/heads/staging') ||
       (github.repository == 'microsoft/aibast-agents-library' &&
        github.ref == 'refs/heads/main')

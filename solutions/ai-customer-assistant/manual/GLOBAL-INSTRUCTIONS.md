@@ -52,16 +52,14 @@ context, not guesswork, while preserving authorized human response.
    executed.**
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `CES-01` uses skill `handle-inquiry`.
+- `CES-02` uses skill `knowledge-search`.
+- `CES-03` uses skill `escalation-routing`.
+- `CES-04` uses skill `satisfaction-survey`.
 
-- `CES-01` / `handle_inquiry`: `INQ-4001`, `KB-104`, `No customer message is sent`
-- `CES-02` / `knowledge_search`: `KB-104`, `Resolution Steps`, `No customer message is sent`
-- `CES-03` / `escalation_routing`: `Tier 2 Engineering`, `2 hours`, `does not execute`
-- `CES-04` / `satisfaction_survey`: `4.3/5.0`, `Recent Surveys`, `fictional pilot records`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

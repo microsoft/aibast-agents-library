@@ -8,7 +8,7 @@ The steps below describe the Easy workflow, not a newly accepted run. For the cu
 
 ## 1. Attach the Copilot-only skill
 
-Download [SKILL.md](https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/skills/aibast-easy-mode-copilot/SKILL.md), open GitHub
+Download [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md), open GitHub
 Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
 chat.
 

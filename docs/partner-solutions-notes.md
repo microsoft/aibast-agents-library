@@ -58,14 +58,13 @@ First partner: **CongruentX** — https://congruentx.com/ai-agents-library/
   no verbatim marketing headlines, `aibast_equivalent` resolves and is
   unique per agent, `partner_reported_outcome` values locked to source
   wording, library.html exposes the required tokens/functions.
-- Deployed twice to `kody-w/aibast-agents-library:staging` (see workflow
-  note below). Live at:
-  https://kody-w.github.io/aibast-agents-library/library.html → "Partner solutions"
+- Deployed twice to the maintainer fork's `staging` branch (see workflow
+  note below). At that point the fork's `library.html` exposed "Partner solutions".
 
 ## Standing workflow rule (user-mandated)
 
-> Before pushing any update to kody-w's staging branch, always sync it with
-> `microsoft/aibast-agents-library` (upstream/main) first.
+Before pushing an update to the fork's staging branch, sync it with
+`microsoft/aibast-agents-library` (`upstream/main`) first.
 
 Process used: fetch `upstream/main` + `origin/staging`, create an isolated
 git worktree tracking `origin/staging`, merge `upstream/main` in, then layer
@@ -88,14 +87,14 @@ every future sync.
 Confirmed via `git ls-tree -r upstream/main --name-only | grep -i academy`
 → no results. Academy (`academy.html`, `academy.json`, `academy/catalog.json`,
 `Deploy Academy Pages` workflow, `tests/test_academy.py`, etc.) exists only
-on `kody-w`'s fork/staging branch, not in `microsoft/aibast-agents-library`.
+on the maintainer's fork/staging branch, not in `microsoft/aibast-agents-library`.
 It is unrelated to the Partner Solutions work — it must simply not be
 deleted as a side effect of unrelated edits (see mistake above), but it is
 out of scope and won't be part of what eventually promotes upstream.
 
 ## Partner review loop
 
-Before this promotes from `kody-w:staging` to `microsoft/aibast-agents-library`
+Before this promotes from the fork's `staging` branch to `microsoft/aibast-agents-library`
 main, CongruentX (contacts: **Chuck and Marty**) need to review and sign off
 on: which agents are featured, accuracy of our paraphrased descriptions, and
 attribution. A review-request email (HTML, with a copy-to-clipboard button)

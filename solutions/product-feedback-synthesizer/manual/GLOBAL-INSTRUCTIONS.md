@@ -53,16 +53,14 @@ trio can debate without converting evidence into a roadmap decision.
    customer action, account change, or roadmap commitment occurred.**
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `PFS-01` uses skill `feedback-summary`.
+- `PFS-02` uses skill `feature-requests`.
+- `PFS-03` uses skill `sentiment-analysis`.
+- `PFS-04` uses skill `roadmap-impact`.
 
-- `PFS-01` / `feedback_summary`: `Total Feedback Entries`, `6`, `No roadmap commitment`
-- `PFS-02` / `feature_requests`: `Workflow Automation Builder`, `candidate_for_review`, `No roadmap commitment`
-- `PFS-03` / `sentiment_analysis`: `Positive`, `Negative`, `fictional pilot data`
-- `PFS-04` / `roadmap_impact`: `Review Candidates`, `RBAC`, `No roadmap commitment`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

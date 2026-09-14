@@ -42,18 +42,16 @@ Keep the response concise and use this order:
 5. **Approval gate** — name the required reviewer and state that no CRM, task, forecast, alert, outreach, or customer action occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `DP-01` uses skill `deal-progression-pipeline-health`.
+- `DP-02` uses skill `deal-progression-stalled-deals`.
+- `DP-03` uses skill `deal-progression-action-plans`.
+- `DP-04` uses skill `deal-progression-acceleration`.
+- `DP-05` uses skill `deal-progression-assign-tasks`.
+- `DP-06` uses skill `deal-progression-executive-summary`.
 
-- `DP-01` / `pipeline_health`: `Pipeline Health Summary`, `Evidence boundary`, `Evidence boundary`
-- `DP-02` / `stalled_deals`: `Stalled Deal Deep-Dive`, `Diagnosis`, `Evidence boundary`
-- `DP-03` / `action_plans`: `Action Plans`, `Planning Objective`, `Evidence boundary`
-- `DP-04` / `acceleration`: `Pipeline Acceleration Strategy`, `Synthetic Scenario`, `Evidence boundary`
-- `DP-05` / `assign_tasks`: `Draft Task Assignment Plan`, `candidate tasks`, `Evidence boundary`
-- `DP-06` / `executive_summary`: `Executive Summary`, `Synthetic Planning Targets`, `Evidence boundary`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

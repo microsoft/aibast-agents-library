@@ -42,18 +42,16 @@ Keep the response concise and use this order:
 5. **Approval gate** — name required reviewers and state that no forecast, spend, CRM, program, publication, buyer contact, or revenue outcome changed.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `WL-01` uses skill `win-loss-analysis-win-loss-overview`.
+- `WL-02` uses skill `win-loss-analysis-root-cause-analysis`.
+- `WL-03` uses skill `win-loss-analysis-counter-strategies`.
+- `WL-04` uses skill `win-loss-analysis-revenue-impact`.
+- `WL-05` uses skill `win-loss-analysis-board-presentation`.
+- `WL-06` uses skill `win-loss-analysis-action-summary`.
 
-- `WL-01` / `win_loss_overview`: `Q3 Win/Loss Overview`, `Loss Analysis by Competitor`, `Evidence boundary`
-- `WL-02` / `root_cause_analysis`: `Root Cause Analysis`, `Deep Dive`, `Evidence boundary`
-- `WL-03` / `counter_strategies`: `Counter-Strategies`, `Updated Talk Track`, `Evidence boundary`
-- `WL-04` / `revenue_impact`: `Synthetic Revenue Scenario Model`, `Illustrative scenario value`, `Evidence boundary`
-- `WL-05` / `board_presentation`: `Board Presentation`, `Decision for authorized leaders`, `Evidence boundary`
-- `WL-06` / `action_summary`: `Complete Summary`, `Draft Next-Step Options`, `Evidence boundary`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

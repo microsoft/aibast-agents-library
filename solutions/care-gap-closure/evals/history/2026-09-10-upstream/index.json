@@ -1,0 +1,41 @@
+{
+  "schema": "aibast-source-merge-review/1.0",
+  "solution": "@aibast-agents-library/care-gap-closure",
+  "status": "source_only_native_pending",
+  "integrated_date": "2026-09-14",
+  "source_commits": {
+    "base": "2cc050754d237d7c13a9f66feff8da2b9deb2230",
+    "staging": "c2e2be939273e912aa63a8237f48776ba33ff73a",
+    "upstream": "0783cc219124b4a6dff1c41f0c5eb5c285ae9436"
+  },
+  "source_files": {
+    "staging": {
+      "path": "solutions/care-gap-closure/evals/history/2026-09-10-upstream/GLOBAL-INSTRUCTIONS.staging.md",
+      "bytes": 3738,
+      "sha256": "d37f68ac11251886bd825e1842724614b9f0d33a36f4e9cc3d333243bd59af8a"
+    },
+    "upstream": {
+      "path": "solutions/care-gap-closure/evals/history/2026-09-10-upstream/GLOBAL-INSTRUCTIONS.upstream.md",
+      "bytes": 3519,
+      "sha256": "f5b06e97bee7cc70b5203a6c953abcbb2446c95ed4e4b7d412215310f054e6a0"
+    },
+    "resolved": {
+      "path": "solutions/care-gap-closure/manual/GLOBAL-INSTRUCTIONS.md",
+      "bytes": 3753,
+      "sha256": "ff2e7ed77e15095914b647c96b43aebf92d839aa9342c3eb14692c419e46bfc3"
+    }
+  },
+  "decision": "Keep the staging role, privacy, clinical, human-review, source-arithmetic, response-footer and no-write controls byte-identically. In particular CG-01 compares all three measures: SYN-COL has 182 records, SYN-BCS 108 and SYN-CDC 53. Use upstream's exact four uploaded skill names and its retry/real-citation guard. Remove the old answer-anchor block rather than putting cached case answers into the routing map. The locked cases, knowledge and skills still carry the canonical source evidence.",
+  "native_payload_changed": true,
+  "accepted_current_native_cases": 0,
+  "older_passes_carried_forward": false,
+  "native_operations_performed": false,
+  "boundary": "This is source reconciliation, not a native saved-state or case review. Previously recorded outcomes and screenshot reviews remain historical to their tested payloads; none validates this revised global policy. The existing source-contract reshoot/native-pending boundary remains in force.",
+  "required_gates": [
+    "Regenerate the native source mirror and learner artifacts from this canonical policy.",
+    "Save/reopen and compare the complete revised policy in the real Draft.",
+    "Rerun all four locked cases with retrieved evidence and native citations.",
+    "Capture and personally review the affected steps and final answers.",
+    "Keep the historical native export withheld until a fresh verified export exists."
+  ]
+}

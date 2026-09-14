@@ -313,7 +313,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert "localStorage" in generated
     assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
-    assert "Personless harness" in quest
+    assert "Personless harness article" not in quest
+    assert "kodyw.com" not in quest
     assert "Download generic workshop agent" in quest
     assert "Skeptic comparison" in quest
     assert "aibast:workshop-engine" in quest

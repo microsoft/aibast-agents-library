@@ -26,16 +26,14 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 5. End with the no-write boundary relevant to the operation.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `FIELD_SERVICE_DISPATCH-01` uses skill `field-service-dispatch-dispatch-dashboard`.
+- `FIELD_SERVICE_DISPATCH-02` uses skill `field-service-dispatch-route-optimization`.
+- `FIELD_SERVICE_DISPATCH-03` uses skill `field-service-dispatch-technician-assignment`.
+- `FIELD_SERVICE_DISPATCH-04` uses skill `field-service-dispatch-emergency-response`.
 
-- `FIELD_SERVICE_DISPATCH-01` / `dispatch_dashboard`: `Emergency: SCADA communication failure`, `CRITICAL`, `No job`
-- `FIELD_SERVICE_DISPATCH-02` / `route_optimization`: `Central`, `3`, `dispatcher must validate`
-- `FIELD_SERVICE_DISPATCH-03` / `technician_assignment`: `Marcus Thompson`, `Candidate for dispatcher review`, `No technician has been assigned`
-- `FIELD_SERVICE_DISPATCH-04` / `emergency_response`: `Emergency Response Draft`, `Marcus Thompson`, `No field action`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->
