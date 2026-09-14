@@ -9,8 +9,8 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 14,
-    "reshoot_required": 9
+    "reusable": 0,
+    "reshoot_required": 23
   },
   "captures": [
     {
@@ -18,17 +18,19 @@
       "mode": "easy",
       "case_id": "PROC-01",
       "source": "solutions/procurement-agent/screenshots/assisted/01-proc-01.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "full_case_not_visibly_proven": [
+        "The $125,000 amount is above the captured viewport."
+      ],
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png",
+      "historical_visible_anchors": [
         "The CFO is the authorized approver for PR-5001",
         "The review is a recommendation only",
         "No approval, routing action, or spend commitment has occurred"
       ],
-      "full_case_not_visibly_proven": [
-        "The $125,000 amount is above the captured viewport."
-      ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 286,
           "y": 402,
@@ -43,24 +45,27 @@
           "height": 65,
           "label": "No approval or spend side effect"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "easy-proc-02",
       "mode": "easy",
       "case_id": "PROC-02",
       "source": "solutions/procurement-agent/screenshots/assisted/02-proc-02.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "A category buyer or sourcing manager must conduct the full side-by-side evaluation",
-        "No vendor has been selected or awarded"
-      ],
+      "status": "reshoot_required",
       "full_case_not_visibly_proven": [
         "AWS and Azure are above the captured viewport.",
         "The exact phrase not a supplier award is not visible."
       ],
-      "boxes": [
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png",
+      "historical_visible_anchors": [
+        "A category buyer or sourcing manager must conduct the full side-by-side evaluation",
+        "No vendor has been selected or awarded"
+      ],
+      "historical_boxes": [
         {
           "x": 286,
           "y": 530,
@@ -68,21 +73,24 @@
           "height": 82,
           "label": "Human selection gate; no vendor awarded"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "easy-proc-03",
       "mode": "easy",
       "case_id": "PROC-03",
       "source": "solutions/procurement-agent/screenshots/assisted/03-proc-03.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png",
+      "historical_visible_anchors": [
         "CFO Review",
         "48 hours",
         "This recommendation does not record an approval"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 286,
           "y": 186,
@@ -97,21 +105,24 @@
           "height": 92,
           "label": "Recommendation does not record approval"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "easy-proc-04",
       "mode": "easy",
       "case_id": "PROC-04",
       "source": "solutions/procurement-agent/screenshots/assisted/04-proc-04.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png",
+      "historical_visible_anchors": [
         "PR-5001 is $125,000 and requires CFO review",
         "The $60,000 Software budget gap must be surfaced",
         "No purchase order is created from this review"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 123,
@@ -126,15 +137,19 @@
           "height": 110,
           "label": "Software gap and no purchase order"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/procurement-agent/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "The target Procurement Pilot row is not visible; the frame shows unrelated Sales agents, so it cannot prove the pilot remains Draft.",
-      "draft": true
+      "draft": true,
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The target Procurement Pilot row is not visible; the frame shows unrelated Sales agents, so it cannot prove the pilot remains Draft.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-01",
@@ -142,19 +157,24 @@
       "step": 1,
       "source": "solutions/procurement-agent/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "The frame is an empty loading surface with a spinner; no blank agent name or Build workspace is visible."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The frame is an empty loading surface with a spinner; no blank agent name or Build workspace is visible.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/procurement-agent/screenshots/manual/02-name-agent.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/02-name-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/02-name-agent.png",
+      "historical_visible_anchors": [
         "Procurement Manual is entered in the agent name field"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 166,
           "y": 99,
@@ -162,21 +182,24 @@
           "height": 50,
           "label": "Manual agent name entered"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/procurement-agent/screenshots/manual/03-enter-instructions.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/03-enter-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/03-enter-instructions.png",
+      "historical_visible_anchors": [
         "Evidence-first response contract",
         "Locked Preview evidence anchors",
         "PROC-01 through PROC-04 acceptance anchors"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 83,
           "y": 207,
@@ -191,7 +214,8 @@
           "height": 300,
           "label": "Locked PROC-01 through PROC-04 anchors"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-04",
@@ -199,19 +223,24 @@
       "step": 4,
       "source": "solutions/procurement-agent/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "The instruction text is visible, but no saved-state confirmation or No unsaved changes indicator is shown."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The instruction text is visible, but no saved-state confirmation or No unsaved changes indicator is shown.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/procurement-agent/screenshots/manual/05-remove-web-search.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png",
+      "historical_visible_anchors": [
         "The Knowledge section is visibly empty and no Search all websites source is present"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1017,
           "y": 257,
@@ -219,7 +248,8 @@
           "height": 60,
           "label": "Knowledge has no web-search source"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-06",
@@ -227,7 +257,10 @@
       "step": 6,
       "source": "solutions/procurement-agent/screenshots/manual/06-add-aibast-procurement-agent-rules-and-guardrails.jpg",
       "status": "reshoot_required",
-      "reason": "The Knowledge section is collapsed and the aibast_procurement-agent-rules-and-guardrails.md filename is not visible."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The Knowledge section is collapsed and the aibast_procurement-agent-rules-and-guardrails.md filename is not visible.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-07",
@@ -235,19 +268,24 @@
       "step": 7,
       "source": "solutions/procurement-agent/screenshots/manual/07-add-aibast-procurement-agent-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to step 6; the Knowledge section is collapsed and the aibast_procurement-agent-synthetic-records.md filename is not visible."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The frame is pixel-identical to step 6; the Knowledge section is collapsed and the aibast_procurement-agent-synthetic-records.md filename is not visible.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/procurement-agent/screenshots/manual/08-add-aibast-approval-routing-03.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/08-add-aibast-approval-routing-03.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/08-add-aibast-approval-routing-03.png",
+      "historical_visible_anchors": [
         "approval-routing skill chip"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1027,
           "y": 181,
@@ -255,7 +293,8 @@
           "height": 52,
           "label": "Approval-routing skill added"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-09",
@@ -263,20 +302,25 @@
       "step": 9,
       "source": "solutions/procurement-agent/screenshots/manual/09-add-aibast-purchase-request-01.jpg",
       "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to step 8 and shows only approval-routing; no purchase-request skill is visible."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The frame is pixel-identical to step 8 and shows only approval-routing; no purchase-request skill is visible.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/procurement-agent/screenshots/manual/10-add-aibast-spend-analysis-04.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png",
+      "historical_visible_anchors": [
         "spend-analysis skill chip",
         "approval-routing skill chip"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1027,
           "y": 181,
@@ -284,21 +328,24 @@
           "height": 52,
           "label": "Spend-analysis skill added"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/procurement-agent/screenshots/manual/11-add-aibast-vendor-comparison-02.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png",
+      "historical_visible_anchors": [
         "vendor-comparison skill chip",
         "spend-analysis skill chip",
         "approval-routing skill chip"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1027,
           "y": 181,
@@ -306,7 +353,8 @@
           "height": 94,
           "label": "Vendor-comparison skill added"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-12",
@@ -314,21 +362,26 @@
       "step": 12,
       "source": "solutions/procurement-agent/screenshots/manual/12-review-inventory.jpg",
       "status": "reshoot_required",
-      "reason": "The reviewed model is visible, but the inventory shows only three skills and omits purchase-request; Knowledge is collapsed, so the required four-skill, two-file state is not proven."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The reviewed model is visible, but the inventory shows only three skills and omits purchase-request; Knowledge is collapsed, so the required four-skill, two-file state is not proven.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/procurement-agent/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png",
+      "historical_visible_anchors": [
         "Preview tab is selected",
         "New chat control",
         "Procurement Manual greeting"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 640,
           "y": 8,
@@ -343,7 +396,8 @@
           "height": 52,
           "label": "Fresh chat control"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-14",
@@ -352,7 +406,10 @@
       "case_id": "PROC-01",
       "source": "solutions/procurement-agent/screenshots/manual/14-proc-01.jpg",
       "status": "reshoot_required",
-      "reason": "Only internal reasoning and an incomplete final-answer fragment are visible. Reasoning text cannot prove PROC-01."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "Only internal reasoning and an incomplete final-answer fragment are visible. Reasoning text cannot prove PROC-01.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-15",
@@ -361,7 +418,10 @@
       "case_id": "PROC-02",
       "source": "solutions/procurement-agent/screenshots/manual/15-proc-02.jpg",
       "status": "reshoot_required",
-      "reason": "The answer says the synthetic-records file is currently absent and asks for an upload. That grounding blocker defeats the otherwise visible vendor anchors."
+      "captured_status": "reshoot_required",
+      "historical": true,
+      "historical_reason": "The answer says the synthetic-records file is currently absent and asks for an upload. That grounding blocker defeats the otherwise visible vendor anchors.",
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-16",
@@ -369,15 +429,17 @@
       "step": 16,
       "case_id": "PROC-03",
       "source": "solutions/procurement-agent/screenshots/manual/16-proc-03.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png",
+      "historical_visible_anchors": [
         "CFO Authorization",
         "$125,000",
         "48-hour review window",
         "This recommendation does not record an approval"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 286,
           "y": 207,
@@ -392,7 +454,8 @@
           "height": 95,
           "label": "Recommendation does not record approval"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-17",
@@ -400,18 +463,20 @@
       "step": 17,
       "case_id": "PROC-04",
       "source": "solutions/procurement-agent/screenshots/manual/17-proc-04.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "full_case_not_visibly_proven": [
+        "The no-purchase-order boundary is below the captured viewport."
+      ],
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png",
+      "historical_visible_anchors": [
         "Software spend",
         "$60,000 pressure figure",
         "PR-5001 at $125,000",
         "CFO authorization threshold requires a 48-hour review window"
       ],
-      "full_case_not_visibly_proven": [
-        "The no-purchase-order boundary is below the captured viewport."
-      ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 286,
           "y": 119,
@@ -426,20 +491,23 @@
           "height": 111,
           "label": "Open request and CFO threshold"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/procurement-agent/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical": true,
+      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png",
+      "historical_visible_anchors": [
         "Procurement Manual",
         "Draft"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 102,
           "y": 237,
@@ -447,7 +515,8 @@
           "height": 72,
           "label": "Target manual agent remains Draft"
         }
-      ]
+      ],
+      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
     }
   ],
   "reshoot_plan": {
@@ -462,11 +531,23 @@
       "Manual PROC-02 after the missing-grounding blocker is fixed."
     ]
   },
-  "release_review": {
+  "historical_summary": {
+    "total_existing_captures": 23,
+    "reusable": 14,
+    "reshoot_required": 9
+  },
+  "historical_release_review": {
     "status": "approved",
     "reviewer": "workshop-builder:procurement-agent",
     "reviewed_at": "2026-08-10T00:27:58.163419+00:00",
     "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
     "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  },
+  "source_contract_review": {
+    "status": "reshoot_required",
+    "revision": "grounding-r3",
+    "accepted_native_cases": 0,
+    "reviewed_current_images": 0,
+    "note": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
   }
 }

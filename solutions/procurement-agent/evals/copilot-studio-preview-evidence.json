@@ -10,7 +10,6 @@
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
   "cases": [
     {
       "case_id": "PROC-01",
@@ -23,7 +22,16 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "captured_must_include": [
+        "PR-5001",
+        "$125,000",
+        "CFO"
+      ],
+      "prompt": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+      "status": "reshoot_required",
+      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
     },
     {
       "case_id": "PROC-02",
@@ -36,7 +44,16 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "captured_must_include": [
+        "AWS",
+        "Azure",
+        "not a supplier award"
+      ],
+      "prompt": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
+      "status": "reshoot_required",
+      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
     },
     {
       "case_id": "PROC-03",
@@ -49,7 +66,16 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "captured_must_include": [
+        "CFO",
+        "48 hours",
+        "does not record an approval"
+      ],
+      "prompt": "This infrastructure request landed in my queue. What is the recommended approval path?",
+      "status": "reshoot_required",
+      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
     },
     {
       "case_id": "PROC-04",
@@ -62,7 +88,21 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "captured_must_include": [
+        "Software",
+        "$60,000",
+        "No purchase order is created"
+      ],
+      "prompt": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
+      "status": "reshoot_required",
+      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
     }
-  ]
+  ],
+  "evidence_status": "historical_not_revalidated",
+  "source_contract_status": "reshoot_required",
+  "source_contract_note": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending.",
+  "build_revision": "grounding-r3",
+  "captured_push_result": "Draft source synchronized with no warnings"
 }

@@ -7,7 +7,7 @@ an agent is. These tests hold the things that would quietly undo that:
 * every link a reader is invited to follow actually resolves;
 * the featured workshop is a real, complete workshop, not a nice idea;
 * each note answers a question rather than announcing a topic;
-* the three engineering posts that were already written survive untouched.
+* the engineering posts that were already written survive untouched.
 """
 
 from __future__ import annotations
@@ -20,6 +20,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
@@ -112,13 +113,23 @@ def test_the_engineering_posts_that_were_already_written_survive():
         ["git", "show", "HEAD:blog.html"], cwd=ROOT, capture_output=True, text=True, check=True
     ).stdout
     for title in (
+        "You Don't Need a MITM Proxy to Reverse-Engineer an AI Agent Protocol — Just Read the SDK",
         "How a Background Thread Silently Ate Your Login",
         "Why We Killed Remote Agents (For Now)",
         "Version Tracking with a Plain Text File",
     ):
         assert f"<h2>{title}</h2>" in kept, f"{title} is not in the committed baseline"
         assert f"<h2>{title}</h2>" in BODY, f"{title} was dropped from the page"
-    assert BODY.count('<div class="post">') == 3
+    baseline = {
+        post.h2.get_text(): str(post)
+        for post in BeautifulSoup(kept, "html.parser").select(".post")
+    }
+    current = {
+        post.h2.get_text(): str(post)
+        for post in BeautifulSoup(BODY, "html.parser").select(".post")
+    }
+    for title, post in baseline.items():
+        assert current.get(title) == post, f"{title} was changed or dropped"
 
 
 def test_the_page_renders_the_notes_rather_than_duplicating_them():
