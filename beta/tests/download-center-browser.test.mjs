@@ -1,238 +1,10 @@
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
-import { createReadStream, existsSync, mkdirSync, rmSync, statSync } from "node:fs";
-import { createServer } from "node:http";
-import net from "node:net";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { closeResources, launchBrowser, startStaticServer } from "./helpers/download-center-browser.mjs";
 
 const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-
-async function startStaticServer() {
-  const server = createServer((request, response) => {
-    const requestUrl = new URL(request.url || "/", "http://127.0.0.1");
-    const relative = decodeURIComponent(requestUrl.pathname).replace(/^\/+/, "") || "index.html";
-    const filePath = path.resolve(betaRoot, relative);
-    if (
-      !filePath.startsWith(`${betaRoot}${path.sep}`)
-      || !existsSync(filePath)
-      || !statSync(filePath).isFile()
-    ) {
-      response.writeHead(404).end("Not found");
-      return;
-    }
-    const contentTypes = {
-      ".html": "text/html; charset=utf-8",
-      ".js": "text/javascript; charset=utf-8",
-      ".svg": "image/svg+xml",
-      ".ps1": "text/plain; charset=utf-8",
-      ".sh": "text/plain; charset=utf-8",
-    };
-    response.setHeader("Content-Type", contentTypes[path.extname(filePath)] || "application/octet-stream");
-    createReadStream(filePath).pipe(response);
-  });
-  await new Promise((resolve, reject) => {
-    server.once("error", reject);
-    server.listen(0, "127.0.0.1", resolve);
-  });
-  const address = server.address();
-  return {
-    pageUrl: `http://127.0.0.1:${address.port}/index.html`,
-    close: () => new Promise((resolve) => server.close(resolve)),
-  };
-}
-
-function findChrome() {
-  const candidates = [
-    process.env.CHROME_PATH,
-    "/usr/bin/google-chrome",
-    "/usr/bin/google-chrome-stable",
-    "/usr/bin/chromium",
-    "/usr/bin/chromium-browser",
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    process.env.PROGRAMFILES &&
-      path.join(process.env.PROGRAMFILES, "Google", "Chrome", "Application", "chrome.exe"),
-    process.env["PROGRAMFILES(X86)"] &&
-      path.join(
-        process.env["PROGRAMFILES(X86)"],
-        "Google",
-        "Chrome",
-        "Application",
-        "chrome.exe",
-      ),
-    process.env.LOCALAPPDATA &&
-      path.join(
-        process.env.LOCALAPPDATA,
-        "Google",
-        "Chrome",
-        "Application",
-        "chrome.exe",
-      ),
-  ].filter(Boolean);
-  return candidates.find((candidate) => existsSync(candidate));
-}
-
-async function reservePort() {
-  const server = net.createServer();
-  await new Promise((resolve, reject) => {
-    server.once("error", reject);
-    server.listen(0, "127.0.0.1", resolve);
-  });
-  const address = server.address();
-  await new Promise((resolve) => server.close(resolve));
-  return address.port;
-}
-
-function delay(milliseconds) {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
-
-class CdpConnection {
-  constructor(socket) {
-    this.socket = socket;
-    this.nextId = 1;
-    this.pending = new Map();
-    this.waiters = new Map();
-    socket.addEventListener("message", (event) => {
-      const message = JSON.parse(event.data);
-      if (message.id) {
-        const pending = this.pending.get(message.id);
-        if (!pending) return;
-        this.pending.delete(message.id);
-        if (message.error) {
-          pending.reject(new Error(message.error.message));
-        } else {
-          pending.resolve(message.result);
-        }
-        return;
-      }
-
-      const key = `${message.sessionId || ""}:${message.method}`;
-      const waiters = this.waiters.get(key) || [];
-      this.waiters.delete(key);
-      for (const waiter of waiters) waiter.resolve(message.params);
-    });
-  }
-
-  static async connect(url) {
-    const socket = new WebSocket(url);
-    await new Promise((resolve, reject) => {
-      socket.addEventListener("open", resolve, { once: true });
-      socket.addEventListener("error", reject, { once: true });
-    });
-    return new CdpConnection(socket);
-  }
-
-  send(method, params = {}, sessionId) {
-    const id = this.nextId;
-    this.nextId += 1;
-    const payload = { id, method, params };
-    if (sessionId) payload.sessionId = sessionId;
-    this.socket.send(JSON.stringify(payload));
-    return new Promise((resolve, reject) => {
-      this.pending.set(id, { resolve, reject });
-    });
-  }
-
-  waitFor(method, sessionId, timeout = 10000) {
-    const key = `${sessionId || ""}:${method}`;
-    return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => {
-        reject(new Error(`Timed out waiting for ${method}`));
-      }, timeout);
-      const waiters = this.waiters.get(key) || [];
-      waiters.push({
-        resolve: (value) => {
-          clearTimeout(timer);
-          resolve(value);
-        },
-      });
-      this.waiters.set(key, waiters);
-    });
-  }
-
-  close() {
-    this.socket.close();
-  }
-}
-
-async function launchBrowser() {
-  const executable = findChrome();
-  assert.ok(executable, "Chrome or Chromium is required for Download Center browser tests");
-  const port = await reservePort();
-  const profile = path.join(
-    betaRoot,
-    "node_modules",
-    ".cache",
-    `download-center-browser-${process.pid}-${Date.now()}`,
-  );
-  mkdirSync(profile, { recursive: true });
-  const child = spawn(
-    executable,
-    [
-      "--headless=new",
-      "--disable-gpu",
-      "--disable-background-networking",
-      "--no-default-browser-check",
-      "--no-first-run",
-      "--no-sandbox",
-      `--remote-debugging-port=${port}`,
-      `--user-data-dir=${profile}`,
-      "about:blank",
-    ],
-    { stdio: ["ignore", "ignore", "pipe"] },
-  );
-  child.stderr.resume();
-
-  let browserMetadata;
-  for (let attempt = 0; attempt < 100; attempt += 1) {
-    if (child.exitCode !== null) break;
-    try {
-      const response = await fetch(`http://127.0.0.1:${port}/json/version`);
-      if (response.ok) {
-        browserMetadata = await response.json();
-        break;
-      }
-    } catch {
-      await delay(50);
-    }
-  }
-  assert.ok(browserMetadata?.webSocketDebuggerUrl, "Chrome DevTools endpoint did not start");
-
-  const cdp = await CdpConnection.connect(browserMetadata.webSocketDebuggerUrl);
-  const { targetId } = await cdp.send("Target.createTarget", { url: "about:blank" });
-  const { sessionId } = await cdp.send("Target.attachToTarget", {
-    targetId,
-    flatten: true,
-  });
-  await cdp.send("Page.enable", {}, sessionId);
-  await cdp.send("Runtime.enable", {}, sessionId);
-  await cdp.send("Network.enable", {}, sessionId);
-  await cdp.send(
-    "Network.setBlockedURLs",
-    { urls: ["https://api.github.com/*"] },
-    sessionId,
-  );
-
-  return {
-    cdp,
-    sessionId,
-    async close() {
-      cdp.close();
-      if (child.exitCode === null) {
-        child.kill("SIGTERM");
-        await Promise.race([
-          new Promise((resolve) => child.once("exit", resolve)),
-          delay(2000).then(() => {
-            if (child.exitCode === null) child.kill("SIGKILL");
-          }),
-        ]);
-      }
-      rmSync(profile, { recursive: true, force: true });
-    },
-  };
-}
 
 async function navigate(cdp, sessionId, url, { width, height, scripts }) {
   await cdp.send(
@@ -246,8 +18,7 @@ async function navigate(cdp, sessionId, url, { width, height, scripts }) {
     sessionId,
   );
   const loaded = cdp.waitFor("Page.loadEventFired", sessionId);
-  await cdp.send("Page.navigate", { url }, sessionId);
-  await loaded;
+  await Promise.all([loaded, cdp.send("Page.navigate", { url }, sessionId)]);
   if (!scripts) {
     await cdp.send(
       "Emulation.setScriptExecutionDisabled",
@@ -263,17 +34,36 @@ async function evaluate(cdp, sessionId, expression) {
     { expression, awaitPromise: true, returnByValue: true },
     sessionId,
   );
-  assert.equal(result.exceptionDetails, undefined, result.exceptionDetails?.text);
+  assert.equal(
+    result.exceptionDetails,
+    undefined,
+    result.exceptionDetails?.exception?.description || result.exceptionDetails?.text,
+  );
   return result.result.value;
+}
+
+async function waitForPageState(cdp, sessionId, condition, label) {
+  await evaluate(cdp, sessionId, `(async () => {
+    const deadline = performance.now() + 3000;
+    while (!(${condition})) {
+      if (performance.now() >= deadline) {
+        throw new Error("Timed out waiting for " + ${JSON.stringify(label)}
+          + ": " + document.querySelector("#release-status")?.textContent
+          + "; " + document.querySelector("#load-error")?.textContent);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 20));
+    }
+  })()`);
 }
 
 test("Download Center works without JavaScript and stays narrow under stress", {
   timeout: 30000,
-}, async () => {
-  const site = await startStaticServer();
+}, async (t) => {
+  const site = await startStaticServer(betaRoot);
   let browser;
+  t.after(() => closeResources([browser, site]));
   try {
-    browser = await launchBrowser();
+    browser = await launchBrowser({ betaRoot, signal: t.signal });
     for (const width of [320, 640]) {
       await navigate(browser.cdp, browser.sessionId, `${site.pageUrl}?no-js=${width}`, {
         width,
@@ -316,6 +106,22 @@ test("Download Center works without JavaScript and stays narrow under stress", {
       );
     }
 
+    await browser.cdp.send("Page.addScriptToEvaluateOnNewDocument", {
+      source: `(() => {
+        const original = navigator.userAgentData;
+        Object.defineProperty(navigator, "userAgentData", {
+          configurable: true,
+          value: {
+            platform: original?.platform || navigator.platform,
+            async getHighEntropyValues(hints) {
+              await new Promise((resolve) => setTimeout(resolve, 350));
+              return original?.getHighEntropyValues ? original.getHighEntropyValues(hints) : {};
+            },
+          },
+        });
+      })();`,
+    }, browser.sessionId);
+
     for (const width of [320, 640]) {
       await navigate(
         browser.cdp,
@@ -323,17 +129,20 @@ test("Download Center works without JavaScript and stays narrow under stress", {
         `${site.pageUrl}?scoutTheme=dark&scripts=${width}`,
         { width, height: 800, scripts: true },
       );
+      await waitForPageState(
+        browser.cdp, browser.sessionId,
+        'document.querySelector("#release-status").textContent === "Release check unavailable"',
+        "release recovery initialization",
+      );
       const enhanced = await evaluate(
         browser.cdp,
         browser.sessionId,
         `(async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
           document.querySelector("#expand-all").click();
           const notice = document.querySelector("#load-error");
           notice.hidden = false;
           notice.textContent =
             "GitHub returned 403 for https://api.github.com/repos/microsoft/aibast-agents-library/releases?per_page=100";
-          await new Promise((resolve) => setTimeout(resolve, 50));
           return {
             viewport: innerWidth,
             overflow: document.documentElement.scrollWidth - innerWidth,
@@ -387,14 +196,15 @@ test("Download Center works without JavaScript and stays narrow under stress", {
         height: 900,
         scripts: true,
       });
+      await waitForPageState(
+        browser.cdp, browser.sessionId,
+        'document.querySelector("#release-status").textContent.includes("unavailable")',
+        `release failure for ${query}`,
+      );
       const failedRelease = await evaluate(
         browser.cdp,
         browser.sessionId,
         `(async () => {
-          for (let attempt = 0; attempt < 100; attempt += 1) {
-            if (document.querySelector("#release-status").textContent.includes("unavailable")) break;
-            await new Promise((resolve) => setTimeout(resolve, 20));
-          }
           return {
             recoveryHidden: document.querySelector("#recovery-panel").hidden,
             scriptLinks: ["#windows-script", "#unix-script"].map(
@@ -440,10 +250,14 @@ test("Download Center works without JavaScript and stays narrow under stress", {
         source: `(() => {
           const originalFetch = window.fetch.bind(window);
           const release = ${JSON.stringify(sourceOnlyRelease)};
+          const releaseGate = new Promise((resolve) => {
+            window.resolveDownloadCenterFixture = resolve;
+          });
           window.fetch = async (input, init) => {
             const url = String(input);
             if (url.includes("api.github.com") && url.includes("/releases?")) {
-              await new Promise((resolve) => setTimeout(resolve, 250));
+              window.downloadCenterFixtureRequested = true;
+              await releaseGate;
               return new Response(JSON.stringify([release]), {
                 status: 200,
                 headers: { "content-type": "application/json" },
@@ -467,6 +281,11 @@ test("Download Center works without JavaScript and stays narrow under stress", {
       `${site.pageUrl}?source-only=beta.6`,
       { width: 640, height: 900, scripts: true },
     );
+    await waitForPageState(
+      browser.cdp, browser.sessionId,
+      "window.downloadCenterFixtureRequested === true",
+      "pending release request",
+    );
     const loading = await evaluate(
       browser.cdp,
       browser.sessionId,
@@ -482,16 +301,17 @@ test("Download Center works without JavaScript and stays narrow under stress", {
     assert.equal(loading.version, "Resolving");
     assert.match(loading.help, /Checking the release/);
 
+    await evaluate(browser.cdp, browser.sessionId, "window.resolveDownloadCenterFixture()");
+    await waitForPageState(
+      browser.cdp, browser.sessionId,
+      '!document.querySelector("#download-button").disabled',
+      "resolved source release",
+    );
     const sourceOnly = await evaluate(
       browser.cdp,
       browser.sessionId,
       `(async () => {
-        for (let attempt = 0; attempt < 100; attempt += 1) {
-          if (!document.querySelector("#download-button").disabled) break;
-          await new Promise((resolve) => setTimeout(resolve, 20));
-        }
         document.querySelector("#download-button").click();
-        await new Promise((resolve) => setTimeout(resolve, 20));
         const download = document.querySelector("#download-selected");
         return {
           status: document.querySelector("#release-status").textContent.trim(),
@@ -536,7 +356,7 @@ test("Download Center works without JavaScript and stays narrow under stress", {
     );
     assert.equal(reducedMotion, "auto");
   } finally {
-    await browser?.close();
-    await site.close();
+    // The test hook also runs on cancellation; both closers are idempotent.
+    await closeResources([browser, site]);
   }
 });
