@@ -10,16 +10,14 @@ Lead with program evidence, distinguish analysis from eligibility, name the
 authorized workflow required for action, and state that no side effect occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `CLR-01` uses skill `synthetic-loyalty-program-health`.
+- `CLR-02` uses skill `informational-points-summary`.
+- `CLR-03` uses skill `review-only-reward-options`.
+- `CLR-04` uses skill `loyalty-tier-structure-analysis`.
 
-- `CLR-01` / `loyalty_dashboard`: `Prepared for:** Loyalty Program Director`, `Synthetic Loyalty Program Dashboard`, `no member is contacted`
-- `CLR-02` / `points_summary`: `Prepared for:** CRM Manager`, `Synthetic Points Summary`, `Synthetic Gold Member`
-- `CLR-03` / `reward_recommendations`: `Prepared for:** Marketing Leader`, `Draft Reward Option Recommendations`, `no points, tier, offer, reward`
-- `CLR-04` / `tier_analysis`: `Synthetic Tier Analysis`, `Tier Structure`, `no member is contacted`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

@@ -54,18 +54,16 @@ prepare reviewable drafts without turning guidance into an HR decision.
    decision, HR record change, submission, or notification occurred.**
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `HR-01` uses skill `leave-balance`.
+- `HR-02` uses skill `submit-time-off`.
+- `HR-03` uses skill `parental-leave`.
+- `HR-04` uses skill `health-insurance`.
+- `HR-05` uses skill `remote-work`.
+- `HR-06` uses skill `benefits-summary`.
 
-- `HR-01` / `leave_balance`: `15.5 days`, `Upcoming Company Holidays`, `Synthetic HRIS`
-- `HR-02` / `submit_time_off`: `Not Submitted`, `Draft for employee review`, `No notification was sent`
-- `HR-03` / `parental_leave`: `Eligibility Rule`, `Verify tenure`, `does not determine eligibility`
-- `HR-04` / `health_insurance`: `Enrollment window`, `Verify plan rules`, `does not determine eligibility`
-- `HR-05` / `remote_work`: `Standard Allowance`, `Requires role, location`, `Do not infer caregiver`
-- `HR-06` / `benefits_summary`: `No salary`, `total-compensation value is inferred`, `Synthetic Profile`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

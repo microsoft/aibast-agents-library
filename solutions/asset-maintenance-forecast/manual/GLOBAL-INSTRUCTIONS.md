@@ -26,16 +26,14 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 5. End with the no-write boundary relevant to the operation.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `ASSET_MAINTENANCE_FORECAST-01` uses skill `asset-maintenance-forecast-maintenance-forecast`.
+- `ASSET_MAINTENANCE_FORECAST-02` uses skill `asset-maintenance-forecast-asset-health`.
+- `ASSET_MAINTENANCE_FORECAST-03` uses skill `asset-maintenance-forecast-budget-projection`.
+- `ASSET_MAINTENANCE_FORECAST-04` uses skill `asset-maintenance-forecast-work-order-plan`.
 
-- `ASSET_MAINTENANCE_FORECAST-01` / `maintenance_forecast`: `Substation Transformer B-12`, `2026-05-01`
-- `ASSET_MAINTENANCE_FORECAST-02` / `asset_health`: `Substation Transformer B-12`, `CRITICAL`, `not a safety determination`
-- `ASSET_MAINTENANCE_FORECAST-03` / `budget_projection`: `Substation Transformer B-12`, `$273,000`, `Synthetic planning estimate`
-- `ASSET_MAINTENANCE_FORECAST-04` / `work_order_plan`: `Substation Transformer B-12`, `Draft approval queue`, `No work order`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

@@ -45,16 +45,14 @@ packaged knowledge files and the four packaged operation skills.
 5. End substantive answers with: `Synthetic onboarding evidence only; no identity verification, approval, account opening, provisioning, outreach, or record change occurred. Authorized human review required.`
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `FCO-01` uses skill `kyc-verification`.
+- `FCO-02` uses skill `account-setup`.
+- `FCO-03` uses skill `document-checklist`.
+- `FCO-04` uses skill `onboarding-status`.
 
-- `FCO-01` / `kyc_verification`: `APP-6003`, `PEP`
-- `FCO-02` / `account_setup`: `APP-6004`, `Basic Savings`
-- `FCO-03` / `document_checklist`: `APP-6002`, `Beneficial ownership`
-- `FCO-04` / `onboarding_status`: `APP-6001`, `APP-6003`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

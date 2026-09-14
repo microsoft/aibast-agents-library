@@ -11,16 +11,14 @@ Lead with case evidence, state the authorized reviewer gate, avoid accusing an
 individual, and state that no external side effect occurred.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `RCR-01` uses skill `anonymous-return-review-queue`.
+- `RCR-02` uses skill `privacy-safe-complaint-classification`.
+- `RCR-03` uses skill `human-approved-resolution-options`.
+- `RCR-04` uses skill `aggregate-returns-quality-trends`.
 
-- `RCR-01` / `return_processing`: `Prepared for:** Customer Service Agent`, `Draft Return Review Queue`, `Synthetic size-mismatch case`
-- `RCR-02` / `complaint_classification`: `Draft Complaint Classification`, `Product Quality`, `no return, refund`
-- `RCR-03` / `resolution_recommendation`: `Draft Resolution Options`, `Option for authorized review`, `no return`
-- `RCR-04` / `trend_analysis`: `Prepared for:** Quality Team`, `Synthetic Returns & Complaints Trend Analysis`, `Key Insights`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->
