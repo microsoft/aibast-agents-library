@@ -238,11 +238,51 @@
     @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
     @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
   </style>
+<!-- clarity:start -->
+<script data-clarity-project="yeqkj55zbc">
+(function (w, d, id) {
+  if (!id || !/\.github\.io$/i.test(d.location.hostname)) return;
+  var n = w.navigator || {};
+  if (n.globalPrivacyControl || n.doNotTrack === "1" || w.doNotTrack === "1") return;
+  var KEY = "aibast-clarity-consent";
+  function read() { try { return w.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { w.localStorage.setItem(KEY, v); } catch (e) {} }
+  function load() {
+    w.clarity = w.clarity || function () { (w.clarity.q = w.clarity.q || []).push(arguments); };
+    var t = d.createElement("script"); t.async = 1; t.src = "https://www.clarity.ms/tag/" + id;
+    var y = d.getElementsByTagName("script")[0]; y.parentNode.insertBefore(t, y);
+    w.clarity("consentv2", { ad_Storage: "denied", analytics_Storage: "granted" });
+  }
+  function el(tag, css, text) { var e = d.createElement(tag); e.style.cssText = css; if (text) e.textContent = text; return e; }
+  function banner() {
+    if (d.getElementById(KEY)) return;
+    var bar = el("div", "position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;padding:12px 16px;background:Canvas;color:CanvasText;border-top:1px solid GrayText;font:14px/1.45 system-ui,-apple-system,'Segoe UI',sans-serif");
+    bar.id = KEY; bar.setAttribute("role", "region"); bar.setAttribute("aria-label", "Cookie consent");
+    var text = el("span", "max-width:62ch", "This site uses Microsoft Clarity to understand how visitors use it. Typed text is masked. ");
+    var link = el("a", "color:LinkText;text-decoration:underline", "Microsoft Privacy Statement");
+    link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
+    text.appendChild(link);
+    var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
+    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
+    accept.type = "button"; decline.type = "button";
+    accept.onclick = function () { write("granted"); bar.remove(); load(); };
+    decline.onclick = function () { write("denied"); bar.remove(); };
+    bar.appendChild(text); bar.appendChild(accept); bar.appendChild(decline);
+    d.body.appendChild(bar);
+  }
+  var choice = read();
+  if (choice === "granted") { load(); return; }
+  if (choice === "denied") return;
+  if (d.body) banner(); else d.addEventListener("DOMContentLoaded", banner);
+})(window, document, "yeqkj55zbc");
+</script>
+<!-- clarity:end -->
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
-    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button primary" href="exports/resource-utilization-source.zip">Download source bundle</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button primary" href="exports/resource-utilization-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
@@ -365,19 +405,17 @@ scenarios while keeping staffing and investment decisions under human control.
 5. End with: `Synthetic workforce planning evidence; no assignment, employment action, training approval, or revenue commitment occurred.`
 
 &lt;!-- locked-preview-anchors:start --&gt;
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user&#x27;s natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user&#x27;s natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `RU-01` uses skill `workforce-utilization-dashboard`.
+- `RU-02` uses skill `workforce-capacity-forecast`.
+- `RU-03` uses skill `professional-services-bench-analysis`.
+- `RU-04` uses skill `pipeline-staffing-recommendation`.
+- `RU-05` uses skill `strategic-workforce-plan`.
 
-- `RU-01` / `utilization_dashboard`: `Firm utilization`, `Bench`, `Utilization by Level`
-- `RU-02` / `capacity_forecast`: `Upcoming Project Endings`, `Pipeline Demand`, `Total roles in pipeline`
-- `RU-03` / `bench_analysis`: `David Okafor`, `Robert Garcia`, `Skill Inventory on Bench`
-- `RU-04` / `staffing_recommendation`: `Bench-to-Pipeline Matches`, `Unmatched Bench Resources`, `Robert Garcia`
-- `RU-05` / `workforce_plan`: `D365 integration accelerator`, `Synthetic payback scenario`, `Innovation and Capability-Building Options`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 &lt;!-- locked-preview-anchors:end --&gt;
 </pre></div><span>Enter the reviewed global instructions</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
@@ -398,7 +436,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/04-save-instructions.png" download="04-save-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-instructions.png" alt="Save the instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Instructions saved — Save control shows &#x27;No unsaved changes&#x27;. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -413,7 +451,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured inventory no longer lists the default web-search capability.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/05-remove-web-search.png" download="05-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Default &#x27;Search all websites&#x27; knowledge source removed. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg">Download original</a>.</p>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -428,7 +466,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/06-add-aibast-resource-pipeline-and-workforce-rules.png" download="06-add-aibast-resource-pipeline-and-workforce-rules.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-add-aibast-resource-pipeline-and-workforce-rules.png" alt="Add knowledge: aibast_resource-pipeline-and-workforce-rules.md annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_resource-pipeline-and-workforce-rules.md added alone. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-add-aibast-resource-pipeline-and-workforce-rules.jpg" download="06-add-aibast-resource-pipeline-and-workforce-rules.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/knowledge/aibast_resource-pipeline-and-workforce-rules.md" download>Download source: Aibast Resource Pipeline And Workforce Rules</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -443,7 +481,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/07-add-aibast-resource-synthetic-roster.png" download="07-add-aibast-resource-synthetic-roster.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-add-aibast-resource-synthetic-roster.png" alt="Add knowledge: aibast_resource-synthetic-roster.md annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Both knowledge files present: aibast_resource-synthetic-roster.md and aibast_resource-pipeline-and-workforce-rules.md. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-add-aibast-resource-synthetic-roster.jpg" download="07-add-aibast-resource-synthetic-roster.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/knowledge/aibast_resource-synthetic-roster.md" download>Download source: Aibast Resource Synthetic Roster</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -458,7 +496,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/08-add-bench-analysis.png" download="08-add-bench-analysis.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/08-add-bench-analysis.png" alt="Add skill: bench-analysis annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: professional-services-bench-analysis skill added alone. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/08-add-bench-analysis.jpg" download="08-add-bench-analysis.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/bench-analysis/SKILL.md" download>Download source: Manual skill: bench analysis</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
@@ -473,7 +511,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/09-add-capacity-forecast.png" download="09-add-capacity-forecast.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-add-capacity-forecast.png" alt="Add skill: capacity-forecast annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: workforce-capacity-forecast added alongside bench-analysis. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-add-capacity-forecast.jpg" download="09-add-capacity-forecast.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/capacity-forecast/SKILL.md" download>Download source: Manual skill: capacity forecast</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
@@ -488,7 +526,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/10-add-staffing-recommendation.png" download="10-add-staffing-recommendation.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-add-staffing-recommendation.png" alt="Add skill: staffing-recommendation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: pipeline-staffing-recommendation added (3 skills present). Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-add-staffing-recommendation.jpg" download="10-add-staffing-recommendation.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/staffing-recommendation/SKILL.md" download>Download source: Manual skill: staffing recommendation</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -503,7 +541,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/11-add-utilization-dashboard.png" download="11-add-utilization-dashboard.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-add-utilization-dashboard.png" alt="Add skill: utilization-dashboard annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: workforce-utilization-dashboard added (4 skills present). Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-add-utilization-dashboard.jpg" download="11-add-utilization-dashboard.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/utilization-dashboard/SKILL.md" download>Download source: Manual skill: utilization dashboard</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -518,7 +556,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/12-add-workforce-plan.png" download="12-add-workforce-plan.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-add-workforce-plan.png" alt="Add skill: workforce-plan annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: strategic-workforce-plan added (all 5 skills present). Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-add-workforce-plan.jpg" download="12-add-workforce-plan.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/workforce-plan/SKILL.md" download>Download source: Manual skill: workforce plan</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
@@ -563,7 +601,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RU-01 with the recorded identifiers Firm utilization, Bench, Utilization by Level; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RU-01. A previous response must not influence the evidence.</p></div>
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records RU-01 with the recorded identifiers Firm utilization, Bench, Utilization by Level; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/15-ru-01.png" download="15-ru-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-ru-01.png" alt="Pass RU-01: Operations Leader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Firm utilization: 43.8% against a firm target of 85%; 5 on bench; Utilization by Level. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-ru-01.jpg" download="15-ru-01.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -578,7 +616,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RU-02 with the recorded identifiers Upcoming Project Endings, Pipeline Demand, Total roles in pipeline; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RU-02. A previous response must not influence the evidence.</p></div>
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records RU-02 with the recorded identifiers Upcoming Project Endings, Pipeline Demand, Total roles in pipeline; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/16-ru-02.png" download="16-ru-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-ru-02.png" alt="Pass RU-02: Resource Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_resource-pipeline-and-workforce-rules.md and aibast_resource-synthetic-roster.md citations; Uncertainty and approval dependencies. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-ru-02.jpg" download="16-ru-02.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
@@ -593,7 +631,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RU-03 with the recorded identifiers David Okafor, Robert Garcia, Skill Inventory on Bench; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RU-03. A previous response must not influence the evidence.</p></div>
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records RU-03 with the recorded identifiers David Okafor, Robert Garcia, Skill Inventory on Bench; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/17-ru-03.png" download="17-ru-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-ru-03.png" alt="Pass RU-03: Finance Director annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: David Okafor; Robert Garcia; Skill Inventory on Bench. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-ru-03.jpg" download="17-ru-03.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -608,7 +646,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RU-04 with the recorded identifiers Bench-to-Pipeline Matches, Unmatched Bench Resources, Robert Garcia; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RU-04. A previous response must not influence the evidence.</p></div>
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records RU-04 with the recorded identifiers Bench-to-Pipeline Matches, Unmatched Bench Resources, Robert Garcia; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/18-ru-04.png" download="18-ru-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-ru-04.png" alt="Pass RU-04: Resource Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Bench-to-Pipeline Matches; Unmatched Bench Resources; Robert Garcia. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-ru-04.jpg" download="18-ru-04.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
@@ -623,7 +661,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RU-05 with the recorded identifiers D365 integration accelerator, Synthetic payback scenario, Innovation and Capability-Building Options; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RU-05. A previous response must not influence the evidence.</p></div>
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records RU-05 with the recorded identifiers D365 integration accelerator, Synthetic payback scenario, Innovation and Capability-Building Options; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/19-ru-05.png" download="19-ru-05.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-ru-05.png" alt="Pass RU-05: Operations Leader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: D365 integration accelerator; Synthetic payback scenario; Innovation and Capability-Building Options. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-ru-05.jpg" download="19-ru-05.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
@@ -638,7 +676,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The agent remains Draft and no Publish action is taken.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/20-confirm-draft.png" download="20-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-confirm-draft.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Resource Utilization Manual row with Draft status badge. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-confirm-draft.jpg" download="20-confirm-draft.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
