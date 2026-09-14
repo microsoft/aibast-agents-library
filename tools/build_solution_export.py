@@ -3,11 +3,26 @@
 
 import argparse
 import json
+import re
 import zipfile
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
+
+# The Microsoft Clarity block is a hosting artifact stamped on the published
+# site (see tools/clarity_tag.py); bundled pages ship without it so analytics
+# changes never rebuild a bundle. Kept inline so this file runs standalone.
+CLARITY_BLOCK_RE = re.compile(
+    rb"<!-- clarity:start -->.*?<!-- clarity:end -->\n?", re.DOTALL
+)
+
+
+def bundle_bytes(path):
+    data = path.read_bytes()
+    if path.suffix.lower() == ".html":
+        return CLARITY_BLOCK_RE.sub(b"", data)
+    return data
 
 
 def build(manifest_path):
@@ -35,7 +50,9 @@ def build(manifest_path):
 
     with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(files):
-            archive.write(path, path.relative_to(ROOT).as_posix())
+            info = zipfile.ZipInfo.from_file(path, path.relative_to(ROOT).as_posix())
+            info.compress_type = zipfile.ZIP_DEFLATED
+            archive.writestr(info, bundle_bytes(path))
     return bundle, len(files)
 
 
