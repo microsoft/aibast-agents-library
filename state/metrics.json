@@ -1,17 +1,17 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-09-14T05:33:30Z",
+ "generated_at": "2026-09-14T14:44:40Z",
  "repo": {
   "stars": 7,
   "forks": 7,
   "watchers": 0,
-  "open_issues": 42,
-  "size_kb": 1837790,
+  "open_issues": 41,
+  "size_kb": 1837968,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-09-14T05:19:46Z",
+  "pushed_at": "2026-09-14T14:41:15Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,12 +19,12 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 7671,
+  "downloads": 7675,
   "clones": 7051,
   "cdn_hits": 418,
-  "release_downloads": 202,
-  "agent_file_downloads": 140,
-  "installer_downloads": 75,
+  "release_downloads": 206,
+  "agent_file_downloads": 143,
+  "installer_downloads": 76,
   "skill_downloads": 0,
   "agent_upvotes": 4,
   "agent_acquisitions": 0,
@@ -37,7 +37,7 @@
   "view_uniques_daily_sum": 192,
   "days_tracked": 50,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 140,
+  "global_agent_distribution_fetch_events": 143,
   "agents": 72,
   "stacks": 52,
   "verticals": 12,
@@ -481,7 +481,7 @@
   "clones_14d": 2604,
   "views_14d": 245,
   "live": true,
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -489,8 +489,8 @@
   "total_hits": 30,
   "bandwidth": 228386,
   "rank": null,
-  "agent_hits": 140,
-  "installer_hits": 75,
+  "agent_hits": 143,
+  "installer_hits": 76,
   "files": [
    {
     "file": "/install.sh",
@@ -528,19 +528,19 @@
     "kind": "installer"
    }
   ],
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 202,
+  "total_downloads": 206,
   "count": 5,
   "releases": [
    {
     "tag": "installers",
     "name": "AIBAST Installers",
     "published_at": "2026-09-02T01:31:52Z",
-    "downloads": 62,
+    "downloads": 63,
     "assets": [
      {
       "name": "community_rapp-install.ps1",
@@ -549,7 +549,7 @@
      },
      {
       "name": "community_rapp-install.sh",
-      "downloads": 17,
+      "downloads": 18,
       "size": 8627
      },
      {
@@ -577,7 +577,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 140,
+    "downloads": 143,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -611,7 +611,7 @@
      },
      {
       "name": "ai_customer_assistant__1495e102d2ca_agent.py",
-      "downloads": 1,
+      "downloads": 2,
       "size": 20702
      },
      {
@@ -686,7 +686,7 @@
      },
      {
       "name": "deal_health_score__dc4353257490_agent.py",
-      "downloads": 1,
+      "downloads": 2,
       "size": 18072
      },
      {
@@ -856,7 +856,7 @@
      },
      {
       "name": "proposal_generation__9483c83dce99_agent.py",
-      "downloads": 1,
+      "downloads": 2,
       "size": 38361
      },
      {
@@ -949,7 +949,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1135,6 +1135,26 @@
     "catalog_kind": "component"
    },
    {
+    "name": "@aibast-agents-library/ai-customer-assistant",
+    "display_name": "Customer Escalations Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "general",
+    "tier": "verified",
+    "downloads": 2,
+    "upvotes": 0,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/31",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/32",
+    "lines": 403,
+    "size_kb": 20.2,
+    "added_at": "2026-08-12T15:38:09-04:00",
+    "file": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+    "description": "Automate back-office contact center escalation workflows to deliver better service outcomes and retention rates.",
+    "stack": "ai_customer_assistant",
+    "vertical": "general",
+    "catalog_kind": "solution"
+   },
+   {
     "name": "@aibast-agents-library/care-gap-closure",
     "display_name": "Care Gap Closure Agent",
     "publisher": "@aibast-agents-library",
@@ -1233,26 +1253,6 @@
     "stack": "clinical_notes_summarizer",
     "vertical": "healthcare",
     "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/competitive-intelligence",
-    "display_name": "Competitive Intelligence",
-    "publisher": "@aibast-agents-library",
-    "category": "b2b_sales",
-    "tier": "verified",
-    "downloads": 2,
-    "upvotes": 0,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/49",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/50",
-    "lines": 441,
-    "size_kb": 21.3,
-    "added_at": "2026-08-12T15:38:09-04:00",
-    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/competitive_intelligence_agent.py",
-    "description": "Analyzes competitive landscapes, win/loss patterns, and generates battlecards for enterprise deals.",
-    "stack": "account_intelligence",
-    "vertical": "b2b_sales",
-    "catalog_kind": "component"
    }
   ],
   "most_upvoted": [
@@ -1405,7 +1405,7 @@
     "publisher": "@aibast-agents-library",
     "category": "b2b_sales",
     "tier": "verified",
-    "downloads": 1,
+    "downloads": 2,
     "upvotes": 0,
     "acquisitions": 0,
     "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/129",
@@ -1867,7 +1867,7 @@
     "publisher": "@aibast-agents-library",
     "category": "b2b_sales",
     "tier": "verified",
-    "downloads": 1,
+    "downloads": 2,
     "upvotes": 0,
     "acquisitions": 0,
     "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/61",
@@ -1959,7 +1959,7 @@
     "path": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack",
     "agents": 11,
     "lines": 4630,
-    "downloads": 17
+    "downloads": 18
    },
    {
     "name": "ask_hr",
@@ -1996,6 +1996,15 @@
     "agents": 1,
     "lines": 360,
     "downloads": 3
+   },
+   {
+    "name": "ai_customer_assistant",
+    "display_name": "Ai Customer Assistant",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack",
+    "agents": 1,
+    "lines": 403,
+    "downloads": 2
    },
    {
     "name": "care_gap_closure",
@@ -2113,22 +2122,13 @@
     "agents": 1,
     "lines": 410,
     "downloads": 2
-   },
-   {
-    "name": "license_renewal_expansion",
-    "display_name": "License Renewal Expansion",
-    "vertical": "software_digital_products",
-    "path": "agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack",
-    "agents": 1,
-    "lines": 436,
-    "downloads": 2
    }
   ],
   "categories": [
    {
     "name": "b2b_sales",
     "agents": 23,
-    "downloads": 45,
+    "downloads": 47,
     "lines": 10988
    },
    {
@@ -2140,7 +2140,7 @@
    {
     "name": "general",
     "agents": 6,
-    "downloads": 11,
+    "downloads": 12,
     "lines": 3040
    },
    {
@@ -2202,7 +2202,7 @@
    {
     "name": "b2b_sales",
     "agents": 23,
-    "downloads": 45,
+    "downloads": 47,
     "stacks": 5
    },
    {
@@ -2238,7 +2238,7 @@
    {
     "name": "general",
     "agents": 4,
-    "downloads": 7,
+    "downloads": 8,
     "stacks": 4
    },
    {
@@ -2359,7 +2359,7 @@
   {
    "name": "@aibast-agents-library/ai-customer-assistant",
    "display_name": "Customer Escalations Agent",
-   "downloads": 1,
+   "downloads": 2,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/31",
@@ -2554,7 +2554,7 @@
   {
    "name": "@aibast-agents-library/deal-health-score",
    "display_name": "Deal Health Score",
-   "downloads": 1,
+   "downloads": 2,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/61",
@@ -2996,7 +2996,7 @@
   {
    "name": "@aibast-agents-library/proposal-generation",
    "display_name": "Proposal Generation Agent",
-   "downloads": 1,
+   "downloads": 2,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/129",
@@ -3217,7 +3217,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "available",
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -3244,7 +3244,7 @@
  },
  "agent_upvote_coverage": {
   "status": "available",
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3261,7 +3261,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "available",
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3279,11 +3279,11 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "carried_forward": false,
   "totals": {
-   "files": 5509,
-   "observed_files": 5509,
+   "files": 5514,
+   "observed_files": 5514,
    "downloads": 16,
    "by_kind": {
     "agent": {
@@ -3312,8 +3312,8 @@
      "downloads": 13
     },
     "documentation": {
-     "files": 78,
-     "observed_files": 78,
+     "files": 79,
+     "observed_files": 79,
      "downloads": 0
     },
     "catalog": {
@@ -3322,13 +3322,13 @@
      "downloads": 3
     },
     "code": {
-     "files": 228,
-     "observed_files": 228,
+     "files": 231,
+     "observed_files": 231,
      "downloads": 0
     },
     "asset": {
-     "files": 308,
-     "observed_files": 308,
+     "files": 309,
+     "observed_files": 309,
      "downloads": 0
     }
    }
@@ -6183,6 +6183,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "clarity.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "community_rapp/agent-repo-skill.md",
     "kind": "documentation",
     "agent_name": null,
@@ -6229,6 +6237,14 @@
     "workshop_slug": null,
     "downloads": 3,
     "status": "observed"
+   },
+   {
+    "path": "docs/CLARITY.md",
+    "kind": "documentation",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
    },
    {
     "path": "docs/index.html",
@@ -7217,6 +7233,14 @@
    {
     "path": "samples/fs-regulatory-compliance.json",
     "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "scripts/apply_clarity_tag.py",
+    "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
     "downloads": 0,
@@ -46759,6 +46783,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_clarity_tag.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_copilot_studio_solution_exports.py",
     "kind": "code",
     "agent_name": null,
@@ -47256,6 +47288,14 @@
    },
    {
     "path": "tools/capture_rollout_batch.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tools/clarity_tag.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -48310,7 +48350,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-09-14T05:33:30Z",
+    "as_of": "2026-09-14T14:44:40Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -48324,7 +48364,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-09-14T05:33:30Z",
+    "as_of": "2026-09-14T14:44:40Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -48337,7 +48377,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-09-14T05:33:30Z",
+    "as_of": "2026-09-14T14:44:40Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -48349,7 +48389,7 @@
    },
    "agent_upvotes": {
     "status": "available",
-    "as_of": "2026-09-14T05:33:30Z",
+    "as_of": "2026-09-14T14:44:40Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -48380,13 +48420,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -49619,7 +49659,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -50164,7 +50204,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-09-14T05:33:30Z",
+  "as_of": "2026-09-14T14:44:40Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -50176,8 +50216,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 140,
-   "combined_agent_distribution_fetch_events": 140,
+   "aibast_direct_agent_fetches": 143,
+   "combined_agent_distribution_fetch_events": 143,
    "distribution_entries": 72,
    "logical_agents": 72,
    "overlap_agents": 0
@@ -50274,6 +50314,16 @@
     "combined_distribution_fetch_events": 2
    },
    {
+    "logical_name": "@aibast-agents-library/ai-customer-assistant",
+    "display_name": "Customer Escalations Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 2,
+    "combined_distribution_fetch_events": 2
+   },
+   {
     "logical_name": "@aibast-agents-library/care-gap-closure",
     "display_name": "Care Gap Closure Agent",
     "publisher": "@aibast-agents-library",
@@ -50346,6 +50396,16 @@
    {
     "logical_name": "@aibast-agents-library/customer-loyalty-rewards",
     "display_name": "Customer Loyalty and Rewards Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 2,
+    "combined_distribution_fetch_events": 2
+   },
+   {
+    "logical_name": "@aibast-agents-library/deal-health-score",
+    "display_name": "Deal Health Score",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -50634,6 +50694,16 @@
     "combined_distribution_fetch_events": 2
    },
    {
+    "logical_name": "@aibast-agents-library/proposal-generation",
+    "display_name": "Proposal Generation Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 2,
+    "combined_distribution_fetch_events": 2
+   },
+   {
     "logical_name": "@aibast-agents-library/resource-utilization",
     "display_name": "Resource Utilization Agent",
     "publisher": "@aibast-agents-library",
@@ -50764,16 +50834,6 @@
     "combined_distribution_fetch_events": 1
    },
    {
-    "logical_name": "@aibast-agents-library/ai-customer-assistant",
-    "display_name": "Customer Escalations Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 1,
-    "combined_distribution_fetch_events": 1
-   },
-   {
     "logical_name": "@aibast-agents-library/customer-sentiment-churn",
     "display_name": "Customer Sentiment and Churn Prediction Agent",
     "publisher": "@aibast-agents-library",
@@ -50786,16 +50846,6 @@
    {
     "logical_name": "@aibast-agents-library/deal-competitor-intel",
     "display_name": "Deal Competitor Intelligence",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 1,
-    "combined_distribution_fetch_events": 1
-   },
-   {
-    "logical_name": "@aibast-agents-library/deal-health-score",
-    "display_name": "Deal Health Score",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -50846,16 +50896,6 @@
    {
     "logical_name": "@aibast-agents-library/pipeline-velocity",
     "display_name": "Pipeline Velocity",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 1,
-    "combined_distribution_fetch_events": 1
-   },
-   {
-    "logical_name": "@aibast-agents-library/proposal-generation",
-    "display_name": "Proposal Generation Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
