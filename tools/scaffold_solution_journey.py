@@ -2778,7 +2778,8 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
     .prompt {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; }}
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
-    th {{ background: var(--cp-surface-soft); }}
+    th {{ background: var(--cp-surface-soft); white-space: nowrap; }}
+    th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2) {{ white-space: nowrap; }}
     .gate-list li, .seam-list li {{ margin-bottom: 8px; }}
     .certification-gate {{ margin-top: 24px; }}
     .brainstem-crash-course {{ margin-top: 16px; }}
@@ -2973,7 +2974,8 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
     .summary-grid span {{ color: var(--cp-text-muted); }}
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
-    th {{ background: var(--cp-surface-soft); }}
+    th {{ background: var(--cp-surface-soft); white-space: nowrap; }}
+    th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2) {{ white-space: nowrap; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); color: var(--cp-text-muted); font-size: 12px; }}
     .downloads {{ display: flex; flex-wrap: wrap; gap: 8px; }}
     @media (max-width: 760px) {{ .summary-grid {{ grid-template-columns: 1fr; }} }}
