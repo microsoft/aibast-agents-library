@@ -147,6 +147,24 @@ def build_fixture(root: Path) -> tuple[Path, dict[str, object]]:
 
 
 class PagesBuilderFixtureTests(unittest.TestCase):
+    def test_download_center_module_is_served_with_its_page(self):
+        with fixture_root() as root:
+            module = "export const DEFAULT_REPOSITORY = 'microsoft/aibast-agents-library';\n"
+            write_text(root, "beta/download-center.js", module)
+            write_text(
+                root, "beta/index.html",
+                '<script type="module" src="download-center.js"></script>',
+            )
+            output, _manifest = build_fixture(root)
+            self.assertEqual(
+                (output / "beta/download-center.js").read_text(encoding="utf-8"),
+                module,
+            )
+            self.assertIn(
+                'src="download-center.js"',
+                (output / "beta/index.html").read_text(encoding="utf-8"),
+            )
+
     def test_community_manifest_is_served_for_catalog_rendering_and_export(self):
         with fixture_root() as root:
             document = '{"schema":"aibast-community-tools/1.0","tools":[],"count":0}\n'
@@ -554,6 +572,68 @@ class RingInstallerRenderTests(unittest.TestCase):
                 pages.build_site(root, root / "_site", "staging-owner", "staging-repo", REF, ring_branch="../evil")
 
 
+class FrontierPagesRingTests(unittest.TestCase):
+    def write_frontier(self, root):
+        paths = ("beta/frontier.sh", "beta/frontier.ps1", "beta/index.html",
+                 "beta/download-center.js", "beta/build/icon.svg")
+        for name in paths:
+            write_bytes(root, name, (ROOT / name).read_bytes())
+        return {name: (root / name).read_bytes() for name in paths}
+
+    def test_production_frontier_inputs_remain_byte_identical(self):
+        with fixture_root() as root:
+            originals = self.write_frontier(root)
+            output = root / "_site"
+            manifest = pages.build_site(
+                root, output, "microsoft", "aibast-agents-library", REF,
+            )
+            self.assertEqual(manifest["ring"]["rendered_installers"], [])
+            for name, contents in originals.items():
+                self.assertEqual((output / name).read_bytes(), contents, name)
+                self.assertEqual((root / name).read_bytes(), contents, name)
+
+    def test_fork_no_js_links_and_resolvers_use_the_serving_ring(self):
+        with fixture_root() as root:
+            originals = self.write_frontier(root)
+            output = root / "_site"
+            manifest = pages.build_site(
+                root, output, "example-owner", "frontier-fork", REF,
+                ring_branch="staging",
+            )
+            rendered_page = (output / "beta/index.html").read_text(encoding="utf-8")
+            self.assertIn(
+                'href="https://github.com/example-owner/frontier-fork/tree/staging/beta"',
+                rendered_page,
+            )
+            self.assertIn(
+                'href="https://github.com/example-owner/frontier-fork/releases"',
+                rendered_page,
+            )
+            self.assertNotIn("github.com/microsoft/aibast-agents-library", rendered_page)
+            for name in ("beta/frontier.sh", "beta/frontier.ps1"):
+                rendered = (output / name).read_text(encoding="utf-8")
+                self.assertIn("example-owner/frontier-fork", rendered)
+                self.assertNotIn("microsoft/aibast-agents-library", rendered)
+                self.assertIn("RAPP_FRONTIER_REPO", rendered)
+                self.assertIn(name, manifest["ring"]["rendered_installers"])
+            for name, contents in originals.items():
+                self.assertEqual((root / name).read_bytes(), contents, name)
+            self.assertEqual(
+                (output / "beta/download-center.js").read_bytes(),
+                originals["beta/download-center.js"],
+            )
+
+    def test_fork_resolver_default_refactor_fails_closed(self):
+        with fixture_root() as root:
+            self.write_frontier(root)
+            write_text(root, "beta/frontier.sh", "#!/bin/bash\nrepo=unrelated/project\n")
+            with self.assertRaisesRegex(pages.BuildError, "beta/frontier.sh no longer contains"):
+                pages.build_site(
+                    root, root / "_site", "example-owner", "frontier-fork", REF,
+                    ring_branch="staging",
+                )
+
+
 class FullRepositoryArtifactTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -593,6 +673,7 @@ class FullRepositoryArtifactTests(unittest.TestCase):
             "academy.html",
             "academy.json",
             "beta/index.html",
+            "beta/download-center.js",
             "rapp_brainstem/README.md",
             "rapp_brainstem/VERSION",
         ):
@@ -722,6 +803,7 @@ class PagesWorkflowTests(unittest.TestCase):
             "/academy/",
             "/skills/",
             "/beta/index.html",
+            "/beta/download-center.js",
         ):
             self.assertIn(required, self.text)
         self.assertNotRegex(self.text, r"(?m)^\s+/beta/\s*$")
