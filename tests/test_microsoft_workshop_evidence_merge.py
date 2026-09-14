@@ -45,6 +45,23 @@ def verify_file(record):
     return data
 
 
+@pytest.mark.parametrize("slug", [
+    "care-gap-closure", "portfolio-rebalancing", "procurement-agent",
+])
+def test_concurrent_sync_policy_variants_cannot_relabel_frozen_inputs(slug):
+    history = f"solutions/{slug}/evals/history/2026-09-14-staging-sync"
+    index = read(ROOT / history / "index.json")
+    assert index["schema"] == "aibast-historical-policy-reference/1.0"
+    assert index["status"] == "historical_only"
+    assert index["source_commit"] == "6fa0ebb494eec412121fbc8f465e3f81c604f3e1"
+    assert index["archived_policy"]["path"] == f"{history}/GLOBAL-INSTRUCTIONS.md"
+    assert index["retained_policy"]["path"] == f"solutions/{slug}/manual/GLOBAL-INSTRUCTIONS.md"
+    assert verify_file(index["archived_policy"]) != verify_file(index["retained_policy"])
+    assert index["new_native_acceptance"] == {
+        "accepted_components": 0, "accepted_cases": 0, "reviewed_images": 0,
+    }
+
+
 @pytest.mark.parametrize("slug", SNAPSHOTS)
 def test_upstream_annotations_cannot_change_current_acceptance(slug):
     package = ROOT / "solutions" / slug

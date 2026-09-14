@@ -922,26 +922,10 @@ def check_quest(
     ]
     if len(install_steps) != 1:
         failures.add(
-            f"{label}: expected exactly one workshop-step-1 Brainstem install tutorial"
+            f"{label}: expected exactly one workshop-step-1 setup tutorial"
         )
-    elif "Install RAPP Brainstem" not in install_steps[0].text:
-        failures.add(f"{label}: workshop-step-1 does not install RAPP Brainstem")
-    elif "Install with GitHub Copilot in VS Code" not in install_steps[0].text:
-        failures.add(f"{label}: workshop-step-1 is not Copilot-first")
-    elif "brainstem-ai-install-prompt" not in {
-        tag.attrs.get("data-copy-target") for tag in parser.tags
-    }:
-        failures.add(f"{label}: workshop-step-1 is missing the AI install prompt")
-    for required_href in (
-        "../../install.cmd",
-        "../../install.command",
-        "https://raw.githubusercontent.com/microsoft/"
-        "aibast-agents-library/main/skill.md",
-    ):
-        if not has_href(parser, required_href):
-            failures.add(
-                f"{label}: Brainstem install tutorial missing link {required_href}"
-            )
+    elif "Open GitHub Copilot Chat" not in install_steps[0].text:
+        failures.add(f"{label}: workshop-step-1 does not open GitHub Copilot Chat")
     if not has_href(parser, "manual-tutorial.html"):
         failures.add(f"{label}: missing standalone manual-tutorial.html link")
     if not has_href(parser, "field-guide.html"):

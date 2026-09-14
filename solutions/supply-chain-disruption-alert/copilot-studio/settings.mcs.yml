@@ -1,16 +1,15 @@
-displayName: Supply Chain Alert Pilot
-schemaName: aibast_SupplyChainDisruptionAlert
+displayName: "Supply Chain Alert Pilot"
+schemaName: "aibast_SupplyChainDisruptionAlert"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

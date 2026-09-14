@@ -1,16 +1,15 @@
-displayName: Omnichannel Engagement Pilot
-schemaName: aibast_OmnichannelEngagementPilot
+displayName: "Omnichannel Engagement Pilot"
+schemaName: "aibast_OmnichannelEngagementPilot"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

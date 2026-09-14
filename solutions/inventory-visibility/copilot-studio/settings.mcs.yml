@@ -1,16 +1,15 @@
-displayName: Inventory Visibility Pilot
-schemaName: aibast_InventoryVisibilityPilot
+displayName: "Inventory Visibility Pilot"
+schemaName: "aibast_InventoryVisibilityPilot"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

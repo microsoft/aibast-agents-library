@@ -1,16 +1,15 @@
-displayName: Asset Maintenance Pilot
-schemaName: aibast_AssetMaintenanceForecastPil
+displayName: "Asset Maintenance Pilot"
+schemaName: "aibast_AssetMaintenanceForecastPil"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

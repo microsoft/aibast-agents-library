@@ -1,16 +1,15 @@
-displayName: Retail Store Associate Pilot
-schemaName: aibast_RetailStoreAssociateCopilot
+displayName: "Retail Store Associate Pilot"
+schemaName: "aibast_RetailStoreAssociateCopilot"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

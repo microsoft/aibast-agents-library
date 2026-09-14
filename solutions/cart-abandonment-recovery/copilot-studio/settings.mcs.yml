@@ -1,16 +1,15 @@
-displayName: Cart Recovery Pilot
-schemaName: aibast_CartAbandonmentRecoveryPilo
+displayName: "Cart Recovery Pilot"
+schemaName: "aibast_CartAbandonmentRecoveryPilo"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

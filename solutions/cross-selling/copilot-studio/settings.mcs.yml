@@ -1,16 +1,15 @@
-displayName: Cross-Selling Pilot
-schemaName: aibast_CrossSellingOpportunitiesPi
+displayName: "Cross-Selling Pilot"
+schemaName: "aibast_CrossSellingOpportunitiesPi"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

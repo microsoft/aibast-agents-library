@@ -2778,7 +2778,8 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
     .prompt {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; }}
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
-    th {{ background: var(--cp-surface-soft); }}
+    th {{ background: var(--cp-surface-soft); white-space: nowrap; }}
+    th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2) {{ white-space: nowrap; }}
     .gate-list li, .seam-list li {{ margin-bottom: 8px; }}
     .certification-gate {{ margin-top: 24px; }}
     .brainstem-crash-course {{ margin-top: 16px; }}
@@ -2973,7 +2974,8 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
     .summary-grid span {{ color: var(--cp-text-muted); }}
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
-    th {{ background: var(--cp-surface-soft); }}
+    th {{ background: var(--cp-surface-soft); white-space: nowrap; }}
+    th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2) {{ white-space: nowrap; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); color: var(--cp-text-muted); font-size: 12px; }}
     .downloads {{ display: flex; flex-wrap: wrap; gap: 8px; }}
     @media (max-width: 760px) {{ .summary-grid {{ grid-template-columns: 1fr; }} }}
@@ -3711,45 +3713,21 @@ def render_lane_learning_steps(
 
 
 def render_brainstem_install_step(ctx: JourneyContext) -> str:
-    ai_install_prompt = (
-        "Read https://raw.githubusercontent.com/microsoft/"
-        "aibast-agents-library/main/skill.md and install and launch "
-        "RAPP Brainstem for me. Follow the canonical onboarding steps "
-        "autonomously, run the correct stable installer for my operating "
-        "system, pause only when GitHub authentication or another approval "
-        "is required, then verify http://localhost:7071/health and open the "
-        "chat UI."
-    )
-    install_command = (
-        "curl -fsSL "
-        "https://microsoft.github.io/"
-        "aibast-agents-library/install.sh | bash"
-    )
     return f"""
     <section class="learn-step" id="workshop-step-1">
-      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem</h3></div>{report_button(ctx, location="Workshop setup — step 1: install RAPP Brainstem", expected="RAPP Brainstem is running locally, its health endpoint responds, and the chat UI opens.")}</header>
+      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Open GitHub Copilot Chat</h3></div>{report_button(ctx, location="Workshop setup — step 1: open GitHub Copilot Chat", expected="GitHub Copilot Chat is open in VS Code Agent mode, signed in with Copilot access.")}</header>
       <div class="learn-step-body">
-        <p>Start every workshop in the stable RAPP Brainstem. The easiest path is to let GitHub Copilot in VS Code follow the canonical onboarding skill and do the local setup for you. The same prompt works in any coding AI that can read a URL and use your terminal.</p>
+        <p>Start in GitHub Copilot Chat. No Frontier desktop app is required; the selected lane's skill handles any additional setup.</p>
         <div class="action-panel">
-          <strong>Install with GitHub Copilot in VS Code</strong>
+          <strong>Get ready</strong>
           <ol>
-            <li>Open GitHub Copilot Chat in VS Code and select <strong>Agent mode</strong>.</li>
-            <li>Paste the prompt below and let Copilot inspect your operating system, install RAPP Brainstem, and launch it.</li>
-            <li>Approve commands when asked and complete GitHub device login if authentication is required.</li>
+            <li>Open VS Code with the GitHub Copilot Chat extension installed.</li>
+            <li>Sign in to GitHub with an account that has Copilot access.</li>
+            <li>Open the Copilot Chat panel and select <strong>Agent mode</strong>.</li>
           </ol>
-          <div class="prompt-heading"><strong>AI install prompt</strong><button class="button primary" type="button" data-copy-target="brainstem-ai-install-prompt">Copy AI prompt</button></div>
-          <pre class="prompt-block" id="brainstem-ai-install-prompt">{html.escape(ai_install_prompt)}</pre>
-          <p><small>Also works in GitHub Copilot CLI, ChatGPT desktop, Claude Code, or another coding assistant with local terminal access.</small></p>
-          <div class="prompt-heading"><strong>Manual fallback — macOS or Linux</strong><button class="button" type="button" data-copy-target="brainstem-install-command">Copy one-liner</button></div>
-          <pre class="prompt-block" id="brainstem-install-command">{html.escape(install_command)}</pre>
-          <div class="detail-actions">
-            <a class="button" href="../../install.cmd" download>Download Windows install.cmd</a>
-            <a class="button" href="../../install.command" download>Download macOS installer</a>
-            <a class="button" href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skill.md" download="SKILL.md">Download onboarding skill</a>
-          </div>
         </div>
-        <div class="expected-panel"><strong>Expected result</strong><p>RAPP Brainstem is running at <code>http://localhost:7071</code>, the <code>/health</code> endpoint responds, and the chat UI is open. Your AI confirms the installation path and authentication state.</p></div>
-        <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem.</span></label>
+        <div class="expected-panel"><strong>Expected result</strong><p>GitHub Copilot Chat is open in VS Code, signed in, and set to Agent mode.</p></div>
+        <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I opened GitHub Copilot Chat in Agent mode.</span></label>
       </div>
     </section>"""
 

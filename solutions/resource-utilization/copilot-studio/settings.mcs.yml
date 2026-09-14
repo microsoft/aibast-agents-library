@@ -1,16 +1,15 @@
-displayName: Resource Utilization Pilot
-schemaName: aibast_ResourceUtilizationPilot
+displayName: "Resource Utilization Pilot"
+schemaName: "aibast_ResourceUtilizationPilot"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

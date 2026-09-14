@@ -1,16 +1,15 @@
-displayName: Patient Intake Pilot
-schemaName: aibast_PatientIntakeandScheduling
+displayName: "Patient Intake Pilot"
+schemaName: "aibast_PatientIntakeandScheduling"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment

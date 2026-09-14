@@ -693,29 +693,19 @@ html[data-theme="dark"] {
 
 
     <section class="learn-step" id="workshop-step-1">
-      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: install RAPP Brainstem" data-report-expected="RAPP Brainstem is running locally, its health endpoint responds, and the chat UI opens." data-report-evidence="">Report an issue</button></header>
+      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Open GitHub Copilot Chat</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: open GitHub Copilot Chat" data-report-expected="GitHub Copilot Chat is open in VS Code Agent mode, signed in with Copilot access." data-report-evidence="">Report an issue</button></header>
       <div class="learn-step-body">
-        <p>Start every workshop in the stable RAPP Brainstem. The easiest path is to let GitHub Copilot in VS Code follow the canonical onboarding skill and do the local setup for you. The same prompt works in any coding AI that can read a URL and use your terminal.</p>
+        <p>Start in GitHub Copilot Chat. No Frontier desktop app is required; the selected lane's skill handles any additional setup.</p>
         <div class="action-panel">
-          <strong>Install with GitHub Copilot in VS Code</strong>
+          <strong>Get ready</strong>
           <ol>
-            <li>Open GitHub Copilot Chat in VS Code and select <strong>Agent mode</strong>.</li>
-            <li>Paste the prompt below and let Copilot inspect your operating system, install RAPP Brainstem, and launch it.</li>
-            <li>Approve commands when asked and complete GitHub device login if authentication is required.</li>
+            <li>Open VS Code with the GitHub Copilot Chat extension installed.</li>
+            <li>Sign in to GitHub with an account that has Copilot access.</li>
+            <li>Open the Copilot Chat panel and select <strong>Agent mode</strong>.</li>
           </ol>
-          <div class="prompt-heading"><strong>AI install prompt</strong><button class="button primary" type="button" data-copy-target="brainstem-ai-install-prompt">Copy AI prompt</button></div>
-          <pre class="prompt-block" id="brainstem-ai-install-prompt">Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skill.md and install and launch RAPP Brainstem for me. Follow the canonical onboarding steps autonomously, run the correct stable installer for my operating system, pause only when GitHub authentication or another approval is required, then verify http://localhost:7071/health and open the chat UI.</pre>
-          <p><small>Also works in GitHub Copilot CLI, ChatGPT desktop, Claude Code, or another coding assistant with local terminal access.</small></p>
-          <div class="prompt-heading"><strong>Manual fallback — macOS or Linux</strong><button class="button" type="button" data-copy-target="brainstem-install-command">Copy one-liner</button></div>
-          <pre class="prompt-block" id="brainstem-install-command">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</pre>
-          <div class="detail-actions">
-            <a class="button" href="../../install.cmd" download>Download Windows install.cmd</a>
-            <a class="button" href="../../install.command" download>Download macOS installer</a>
-            <a class="button" href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skill.md" download="SKILL.md">Download onboarding skill</a>
-          </div>
         </div>
-        <div class="expected-panel"><strong>Expected result</strong><p>RAPP Brainstem is running at <code>http://localhost:7071</code>, the <code>/health</code> endpoint responds, and the chat UI is open. Your AI confirms the installation path and authentication state.</p></div>
-        <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem.</span></label>
+        <div class="expected-panel"><strong>Expected result</strong><p>GitHub Copilot Chat is open in VS Code, signed in, and set to Agent mode.</p></div>
+        <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I opened GitHub Copilot Chat in Agent mode.</span></label>
       </div>
     </section>
 

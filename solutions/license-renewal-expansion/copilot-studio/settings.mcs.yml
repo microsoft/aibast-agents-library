@@ -1,16 +1,15 @@
-displayName: License Renewal Pilot
-schemaName: aibast_LicenseRenewalandExpansion
+displayName: "License Renewal Pilot"
+schemaName: "aibast_LicenseRenewalandExpansion"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment
