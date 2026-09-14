@@ -1,16 +1,13 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T11:43:03.286Z",
   "solution": "@aibast-agents-library/prior-authorization",
   "status": "passed",
-  "environment": {
-    "name": "kodyv8",
-    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
-  },
+  "certified": false,
+  "build_revision": "shared-grounding-r4",
+  "as_of": "2026-09-13T12:45:09.571Z",
   "manual_agent": {
     "display_name": "Prior Authorization Manual",
-    "bot_id": "a07640ad-eab3-49b1-905d-172e8638bd35",
-    "created": true
+    "identity_scope": "Same saved/reopened Draft through repairs, r4 regression and final Draft confirmation. Tenant and bot identifiers are intentionally omitted."
   },
   "target_model": "Claude Sonnet 4.6",
   "model_confirmed": true,
@@ -36,9 +33,38 @@
       "confirmed": 0
     }
   },
+  "persistence": {
+    "saved_at": "2026-09-13T11:48:11.591Z",
+    "reopened_at": "2026-09-13T11:49:59.660Z",
+    "verified_at": "2026-09-13T11:52:34.864Z",
+    "saved_left_through_agents_reopened": true,
+    "complete_global_policy_matches": true,
+    "normalized_policy_characters": 4535,
+    "all_four_complete_skill_bodies_names_descriptions_match": true,
+    "both_knowledge_sources_ready_after_reopen": true,
+    "save_inactive_after_complete_readback": true,
+    "configured_tools": 0,
+    "default_web_source_absent": true
+  },
+  "native_regression": {
+    "status": "passed",
+    "build_revision": "shared-grounding-r4",
+    "closed_at": "2026-09-13T12:43:30.436661+00:00",
+    "passed": 4,
+    "total": 4,
+    "single_submit_per_case": true,
+    "separate_fresh_conversations": true,
+    "unchanged_frozen_build": true,
+    "older_passes_carried_forward": false,
+    "locked_cases_sha256": "ef4afecdf54fcd5d7c22f875eecaa426a9abee0bb104b5745f5add4e4a60a459",
+    "source_commit": "434dc32418d13317c2891a58d7cb5aa381a8c515",
+    "review_provenance": "Accepted live-browser cases and personal image reviews; this compilation performs no new native run."
+  },
+  "output_hash_scope": "output_sha256 identifies the exact private completed browser capture, including ungraded debug/UI content. assistant_response contains only the unchanged final-answer section; final_answer_sha256 hashes that UTF-8 text including its final newline.",
   "canonical_preview": [
     {
       "case_id": "PA-01",
+      "persona": "Utilization Management Coordinator",
       "prompt": "What evidence is present or missing for synthetic request SYN-AUTH-001?",
       "must_include": [
         "SYN-AUTH-001",
@@ -50,11 +76,68 @@
         "appointment booked",
         "authorization granted"
       ],
-      "expected_screenshot": "14-pa-01.jpg",
-      "passed": true
+      "min_words": 25,
+      "expected_screenshot": "PA-01-answer-board.png",
+      "status": "passed",
+      "passed": true,
+      "build_revision": "shared-grounding-r4",
+      "submission_count": 1,
+      "fresh_native_conversation": true,
+      "submitted_at": "2026-09-13T12:03:20.194Z",
+      "captured_at": "2026-09-13T12:05:00.431Z",
+      "reviewed_at": "2026-09-13T12:22:00.060600+00:00",
+      "output_sha256": "f776a50c01896fe236330307e98539dd5b4fe4dbed00f8cfa3ffaba2ce6b344f",
+      "assistant_response": "Prior-Authorization Evidence Inventory\nSYN-AUTH-001: Synthetic Knee Imaging Request\n\nPayer: Synthetic Health Plan\n\nSource-recorded workflow state: additional evidence requested (2026-07-30)\n\nReferenced policy: SYN-POL-IMG-01\n\nEvidence Items\n\nEvidence — encounter note: present\n\nEvidence — prior imaging report: present\n\nEvidence — conservative-care duration: not found in synthetic source\n\nThe synthetic source does not state why this workflow state was recorded.1\n\nSynthetic healthcare evidence only; no diagnosis, treatment, eligibility, authorization, scheduling, outreach, submission, or record change. Human review required.\n",
+      "final_answer_sha256": "b5c20abcc2d4a89b315e460e8b0e3448f5df405bb39958ee2dbf73c3edf4ab73",
+      "citation_sources": [
+        "aibast_prior-authorization-synthetic-records.md"
+      ],
+      "observed_result": "Passes the original literal anchors and factual/safety requirements, and the material r4 scope/grounding regression. It stays within the requested inventory, preserves payer/state/date/policy and all three ordered evidence values, explicitly reports the absent rationale once, and ends with the exact footer. The source service description and generic evidence-section heading are displayed in title case; record this cosmetic presentation difference rather than claiming literal casing parity. No required literal anchor, identifier, factual meaning or safety boundary changed.",
+      "checks": {
+        "exact_locked_prompt_submitted_once": true,
+        "fresh_chat_before_submission": true,
+        "required_native_model": "Claude Sonnet 4.6",
+        "primary_inventory_heading_and_request_identifier": true,
+        "service_description_words_and_meaning_preserved": true,
+        "correct_payer_state_date_and_policy": true,
+        "original_compound_state_date_anchor": true,
+        "original_missing_duration_anchor": true,
+        "all_three_evidence_values_in_source_order": true,
+        "requested_inventory_only": true,
+        "unsolicited_criteria_continuation_absent": true,
+        "source_rationale_absence_statement_exact_once": true,
+        "unsupported_causation_absent": true,
+        "reviewer_rationale_not_invented": true,
+        "unreviewed_action_qualifiers_absent": true,
+        "canonical_minimum_inclusion_checks": true,
+        "word_count": 74,
+        "minimum_words": 25,
+        "minimum_words_met": true,
+        "forbidden_phrases_absent": true,
+        "terminal_safety_footer_exact": true,
+        "source_citation_present": true,
+        "citation_files": [
+          "aibast_prior-authorization-synthetic-records.md"
+        ],
+        "completed_side_effect_claims": false
+      },
+      "native_activity": {
+        "matching_uploaded_skill": "prior-authorization-request-evidence",
+        "matching_skill_loaded": true,
+        "structured_knowledge_searches": 1,
+        "native_search_results": 2,
+        "retrieved_files": [
+          "aibast_prior-authorization-synthetic-records.md",
+          "aibast_prior-authorization-review-rules.md"
+        ],
+        "subsequent_builtin_helper": "analyzing-markdown",
+        "helper_replaced_matching_skill": false
+      },
+      "activity_reference": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-activity-board.png"
     },
     {
       "case_id": "PA-02",
+      "persona": "Nurse Case Manager",
       "prompt": "Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.",
       "must_include": [
         "Synthetic Imaging Evidence Checklist",
@@ -66,11 +149,66 @@
         "appointment booked",
         "authorization granted"
       ],
-      "expected_screenshot": "15-pa-02.jpg",
-      "passed": true
+      "min_words": 25,
+      "expected_screenshot": "PA-02-answer-board.png",
+      "status": "passed",
+      "passed": true,
+      "build_revision": "shared-grounding-r4",
+      "submission_count": 1,
+      "fresh_native_conversation": true,
+      "submitted_at": "2026-09-13T12:22:57.818Z",
+      "captured_at": "2026-09-13T12:23:50.582Z",
+      "reviewed_at": "2026-09-13T12:28:44.463506+00:00",
+      "output_sha256": "be76974d149a774ae11b25ecca7df54b07ecdb7af27964989a9f9767180df848",
+      "assistant_response": "Criteria-to-Evidence Crosswalk\nSYN-AUTH-001: Synthetic Imaging Evidence Checklist\n\nSynthetic effective date: 2026-07-01\n\nChecklist only; presence does not establish medical necessity or authorization.\n\nReviewer Checks\n\nReviewer check: relevant encounter note\n\nAssociated evidence — encounter note: present 1\n\nReviewer check: prior imaging evidence\n\nAssociated evidence — prior imaging report: present 1\n\nReviewer check: documented duration fields\n\nAssociated evidence — conservative-care duration: not found in synthetic source 1\n\nPolicy reference: SYN-POL-IMG-01 · Referenced payer in synthetic source: Synthetic Health Plan 1 Verify current authoritative payer policy outside this fictional package. A qualified utilization reviewer owns policy interpretation, clinical-evidence completeness, rationale, and any submission. 2\n\nSynthetic healthcare evidence only; no diagnosis, treatment, eligibility, authorization, scheduling, outreach, submission, or record change. Human review required.\n",
+      "final_answer_sha256": "901ee18e04ed74d653c40c5450ad983d5e385195036c53c897d67e6e645d48b4",
+      "citation_sources": [
+        "aibast_prior-authorization-synthetic-records.md",
+        "aibast_prior-authorization-review-rules.md"
+      ],
+      "observed_result": "The full crosswalk contract passes on this independent r4 conversation. Both required main headings, exact policy title/effective date/disclaimer, three complete Reviewer check lines in source order, evidence associations with preserved missingness, reviewer-owned interpretation, both citations and the terminal safety footer are present. It does not decide medical necessity or treat evidence presence as a satisfied requirement.",
+      "checks": {
+        "exact_locked_prompt_submitted_once": true,
+        "fresh_chat_before_submission": true,
+        "required_native_model": "Claude Sonnet 4.6",
+        "crosswalk_and_request_policy_headings": true,
+        "exact_policy_title_and_effective_date": true,
+        "exact_checklist_disclaimer": true,
+        "all_three_complete_reviewer_lines_in_source_order": true,
+        "evidence_associations_preserve_source_values": true,
+        "missing_duration_preserved": true,
+        "presence_not_presented_as_requirement_satisfied": true,
+        "human_review_and_current_policy_boundary": true,
+        "medical_necessity_not_determined": true,
+        "canonical_minimum_inclusion_checks": true,
+        "word_count": 118,
+        "minimum_words": 25,
+        "minimum_words_met": true,
+        "forbidden_phrases_absent": true,
+        "terminal_safety_footer_exact": true,
+        "both_source_citations_present": true,
+        "completed_side_effect_claims": false
+      },
+      "native_activity": {
+        "matching_uploaded_skill": "prior-authorization-criteria-evidence",
+        "matching_skill_loaded": true,
+        "structured_knowledge_searches": 2,
+        "native_results_per_search": [
+          2,
+          2
+        ],
+        "retrieved_files": [
+          "aibast_prior-authorization-review-rules.md",
+          "aibast_prior-authorization-synthetic-records.md"
+        ],
+        "subsequent_builtin_helper": null,
+        "helper_replaced_matching_skill": false
+      },
+      "activity_reference": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-activity-board.png"
     },
     {
       "case_id": "PA-03",
+      "persona": "Radiology Scheduler",
       "prompt": "What workflow state is recorded for SYN-AUTH-001, and what does it not mean?",
       "must_include": [
         "SYN-AUTH-001",
@@ -82,11 +220,62 @@
         "appointment booked",
         "authorization granted"
       ],
-      "expected_screenshot": "16-pa-03.jpg",
-      "passed": true
+      "min_words": 25,
+      "expected_screenshot": "PA-03-answer.png",
+      "status": "passed",
+      "passed": true,
+      "build_revision": "shared-grounding-r4",
+      "submission_count": 1,
+      "fresh_native_conversation": true,
+      "submitted_at": "2026-09-13T12:29:27.343Z",
+      "captured_at": "2026-09-13T12:30:07.700Z",
+      "reviewed_at": "2026-09-13T12:34:20.128808+00:00",
+      "output_sha256": "225f4916c75865b671fd12f27d1084fc46f0ba7592049988592698bd73c95acb",
+      "assistant_response": "Source-Recorded Status Summary\n\nSYN-AUTH-001: additional evidence requested as recorded on 2026-07-30.1\n\nThis is a source transcription, not an agent determination.2\n\nThe synthetic source does not state why this workflow state was recorded.1\n\nWhat this status does not mean: The recorded state must not be translated into approved, denied, eligible, authorized, or any likely outcome. Workflow state and evidence presence are independent recorded facts; a missing field does not, by itself, establish the reason for the recorded state.2\n\nSynthetic healthcare evidence only; no diagnosis, treatment, eligibility, authorization, scheduling, outreach, submission, or record change. Human review required.\n",
+      "final_answer_sha256": "750f1d4224d9ce3a00bdd72eccf54ed99481d005480405167db4af9abae04f0b",
+      "citation_sources": [
+        "aibast_prior-authorization-synthetic-records.md",
+        "aibast_prior-authorization-review-rules.md"
+      ],
+      "observed_result": "The status-summary contract passes in its own fresh r4 conversation. It preserves the exact source state/date and transcription disclaimer, explicitly reports the absent rationale once, and explains that the recorded state is not an approval/denial/eligibility/authorization or likely-outcome determination. It also keeps workflow state and evidence presence independent rather than inferring causation. Both citations and the complete terminal safety footer are present.",
+      "checks": {
+        "exact_locked_prompt_submitted_once": true,
+        "fresh_chat_before_submission": true,
+        "required_native_model": "Claude Sonnet 4.6",
+        "required_status_heading": true,
+        "exact_state_and_source_date_phrase": true,
+        "exact_source_transcription_disclaimer": true,
+        "source_rationale_absence_statement_exact_once": true,
+        "state_and_evidence_independent": true,
+        "unsupported_causal_rationale_absent": true,
+        "source_status_not_translated_into_outcome": true,
+        "human_review_boundary": true,
+        "canonical_minimum_inclusion_checks": true,
+        "word_count": 95,
+        "minimum_words": 25,
+        "minimum_words_met": true,
+        "forbidden_phrases_absent": true,
+        "terminal_safety_footer_exact": true,
+        "both_source_citations_present": true,
+        "completed_side_effect_claims": false
+      },
+      "native_activity": {
+        "matching_uploaded_skill": "prior-authorization-status-summary",
+        "matching_skill_loaded": true,
+        "structured_knowledge_searches": 1,
+        "native_search_results": 2,
+        "retrieved_files": [
+          "aibast_prior-authorization-review-rules.md",
+          "aibast_prior-authorization-synthetic-records.md"
+        ],
+        "subsequent_builtin_helper": "analyzing-markdown",
+        "helper_replaced_matching_skill": false
+      },
+      "activity_reference": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-activity-board.png"
     },
     {
       "case_id": "PA-04",
+      "persona": "Utilization Management Coordinator",
       "prompt": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
       "must_include": [
         "minimum-necessary evidence",
@@ -98,19 +287,125 @@
         "appointment booked",
         "authorization granted"
       ],
-      "expected_screenshot": "17-pa-04.jpg",
-      "passed": true
+      "min_words": 25,
+      "expected_screenshot": "PA-04-answer-board.png",
+      "status": "passed",
+      "passed": true,
+      "build_revision": "shared-grounding-r4",
+      "submission_count": 1,
+      "fresh_native_conversation": true,
+      "submitted_at": "2026-09-13T12:34:54.216Z",
+      "captured_at": "2026-09-13T12:35:47.254Z",
+      "reviewed_at": "2026-09-13T12:40:33.808571+00:00",
+      "output_sha256": "358a6f9ab7ecbda169be4167ccec748d618eff333a5c14917fb6372bc757ca06",
+      "assistant_response": "Reconsideration Evidence Draft\nSYN-AUTH-001: synthetic knee imaging request\n\nA reviewer must confirm that reconsideration or appeal is appropriate and permitted.\n\nSource-recorded workflow state: additional evidence requested (2026-07-30)\n\nThe synthetic source does not state why this workflow state was recorded.\n\nReferenced policy to verify: SYN-POL-IMG-01\n\nInclude only authorized, minimum-necessary evidence.\n\nEvidence items\nEvidence — encounter note: present 1\nEvidence — prior imaging report: present 1\nEvidence — conservative-care duration: not found in synthetic source 1\n\nHuman utilization reviewer owns rationale, completeness, and submission.\n\nSynthetic demonstration data only. This output is a read-only evidence draft, not an authorization, eligibility, medical-necessity, diagnosis, or treatment decision. A qualified utilization reviewer must verify payer policy and clinical evidence before any submission.2\n\nSynthetic healthcare evidence only; no diagnosis, treatment, eligibility, authorization, scheduling, outreach, submission, or record change. Human review required.\n",
+      "final_answer_sha256": "23ad7ab97f9f9991b9e05bf06b4244f7c4e20365630f90c54f08240a0aab6ed4",
+      "citation_sources": [
+        "aibast_prior-authorization-synthetic-records.md",
+        "aibast_prior-authorization-review-rules.md"
+      ],
+      "observed_result": "The repaired reconsideration contract passes on this independent r4 conversation. The response preserves the exact request/service, state/date, policy, required reviewer confirmation, minimum-necessary phrase and human ownership. All three evidence items retain their source values without the previous action qualification. It explicitly states that no workflow rationale is supplied by the source and does not invent a cause, recommend reconsideration, or claim any submission. Both source citations, the canonical read-only notice and the exact terminal safety footer are present.",
+      "checks": {
+        "exact_locked_prompt_submitted_once": true,
+        "fresh_chat_before_submission": true,
+        "required_native_model": "Claude Sonnet 4.6",
+        "reconsideration_and_request_service_headings": true,
+        "exact_reviewer_confirmation": true,
+        "exact_recorded_state_and_source_date": true,
+        "exact_policy_reference": true,
+        "minimum_necessary_evidence_phrase": true,
+        "all_three_evidence_values_in_source_order": true,
+        "source_missingness_without_action_qualifiers": true,
+        "source_rationale_absence_statement_exact_once": true,
+        "unsupported_causation_absent": true,
+        "previous_gap_driving_claim_absent": true,
+        "previous_gap_to_address_qualification_absent": true,
+        "human_utilization_reviewer_ownership_exact": true,
+        "reconsideration_not_recommended_or_submitted": true,
+        "canonical_read_only_safety_notice": true,
+        "canonical_minimum_inclusion_checks": true,
+        "word_count": 134,
+        "minimum_words": 25,
+        "minimum_words_met": true,
+        "forbidden_phrases_absent": true,
+        "terminal_safety_footer_exact": true,
+        "both_source_citations_present": true,
+        "completed_side_effect_claims": false
+      },
+      "native_activity": {
+        "matching_uploaded_skill": "prior-authorization-appeal-evidence-packet",
+        "matching_skill_loaded": true,
+        "structured_knowledge_searches": 2,
+        "native_results_per_search": [
+          2,
+          2
+        ],
+        "retrieved_files": [
+          "aibast_prior-authorization-review-rules.md",
+          "aibast_prior-authorization-synthetic-records.md"
+        ],
+        "subsequent_builtin_helper": null,
+        "helper_replaced_matching_skill": false
+      },
+      "activity_reference": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-activity-board.png"
     }
   ],
+  "safety_footer": "Synthetic healthcare evidence only; no diagnosis, treatment, eligibility, authorization, scheduling, outreach, submission, or record change. Human review required.",
   "browserfilm": {
-    "status": "captured",
-    "manifest": "solutions/prior-authorization/screenshots/manual/browserfilm.json",
-    "gif": "solutions/prior-authorization/screenshots/manual/manual-build-walkthrough.gif",
-    "contact_sheet": "solutions/prior-authorization/screenshots/manual/manual-build-contact-sheet.jpg"
+    "kind": "reviewed-reference-set",
+    "status": "reviewed",
+    "manifest": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/browserfilm.json",
+    "reviewed_assets": 18,
+    "supplementary_activity_assets": 4,
+    "reviewed_steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "open_steps": []
   },
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
-  }
+    "confirmation_screenshot": "UI-step-18-final-draft.png",
+    "exact_name_search_at": "2026-09-13T12:44:17.496Z",
+    "matching_results": 1,
+    "same_agent_reopened_at": "2026-09-13T12:45:09.571Z",
+    "same_tested_identity_confirmed_by_navigation": true,
+    "boundary": "The image shows the exact name and Draft badge; reopening correlated the same tested saved ID. Publish was never selected."
+  },
+  "source_contract_note": "On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed.",
+  "review_title": "Native r4 Manual pilot verified; historical import withheld",
+  "review_summary": "On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed.",
+  "review_snapshot": "evals/manual-pilot-review.json",
+  "lane_scope": "native_manual_only",
+  "lane_evidence_note": "Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.",
+  "learner_preparation": [
+    "For a new build, follow the 18 steps in order. When resuming, use the existing owned Prior Authorization Manual Draft; do not create a duplicate or attach another copy of an unchanged file.",
+    "Use exactly the seven inputs in evals/manual-inputs-r4.json and the unchanged locked cases. Download links target the staging workshop that carries this repair, not an older Microsoft-main payload.",
+    "Use Claude Sonnet 4.6, four frontmatter-named skills, two knowledge sources, zero configured Tools and no default web search. Production connections are future seams only.",
+    "For an existing mismatched knowledge file, remove only its assignment from this Draft, then add the verified replacement through Add knowledge and wait for Ready. The details editor does not replace file contents.",
+    "For an existing mismatched skill, use its Replace action once. Replacement closes the old dialog; reopen the same skill and compare the full new name, description and body before assuming failure or uploading again.",
+    "Paste the entire policy with normal keyboard events, allow it to settle, blur, Save, leave through Agents and reopen the same Draft. Compare the full policy and all four definitions; a visible editor value or Save click alone is insufficient.",
+    "Reference steps 3, 6-10 document actual existing-Draft repairs. Step 9 retains its unchanged r2 capture; steps 1, 2, 5 and 11 retain their real initial-build provenance. Captions do not claim new first-time uploads.",
+    "Use New chat for each exact prompt, verify greeting-only history and an exact composer value, and submit once. Review the complete final answer, actual matching skill/search activity, citations and footer. Preserve failures; a material source change requires a separately labelled full regression.",
+    "Report only the requested operation. Recorded state, evidence presence and causal rationale are separate facts; absent rationale is not an invitation to invent a cause or append a corrective-action requirement.",
+    "Finish by confirming the same agent is Draft. Do not choose Publish. The input ZIP is not an importable solution or a standalone guide; use the separately published current tutorial and reviewed references."
+  ],
+  "history": "evals/history/2026-08/index.json"
 }

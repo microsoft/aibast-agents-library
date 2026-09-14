@@ -2,11 +2,11 @@
 
 > ⚠️ **IMPORTANT:** This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.
 
-> **👉 [Get Started at microsoft.github.io/aibast-agents-library](https://microsoft.github.io/aibast-agents-library/)**
+> **👉 [Browse the Agent Library at microsoft.github.io/aibast-agents-library](https://microsoft.github.io/aibast-agents-library/)** · [Install the Brainstem](https://microsoft.github.io/aibast-agents-library/docs/installer.html) · [Why a local learning and prototyping tool?](https://microsoft.github.io/aibast-agents-library/why.html)
 
-Industry agent templates, the RAPP production methodology, and a local-first AI agent server powered by GitHub Copilot. No provider API key or cloud setup is required for core chat beyond a GitHub account with Copilot access.
+Industry agent templates, the RAPP production methodology, and the RAPP Brainstem: a local frontier learning and rapid prototyping tool powered by GitHub Copilot. The Brainstem is where you learn the agent pattern and prove a prototype, not a product you ship; every skill built here is meant to graduate into GitHub Copilot, Copilot Studio, and Microsoft 365 Copilot. No provider API key or cloud setup is required for core chat beyond a GitHub account with Copilot access.
 
-[Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Agent Library](https://microsoft.github.io/aibast-agents-library/library.html) | [Library Metrics](https://microsoft.github.io/aibast-agents-library/metrics.html) | [Brainstem API and configuration](rapp_brainstem/README.md)
+[Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Microsoft AI Academy](academy.html) | [Agent Library](https://microsoft.github.io/aibast-agents-library/) | [Library Metrics](https://microsoft.github.io/aibast-agents-library/metrics.html) | [Brainstem API and configuration](rapp_brainstem/README.md)
 
 ```
 curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
@@ -24,6 +24,7 @@ brainstem       # start the server → localhost:7071
 ```
 
 The browser walks through GitHub device-code sign-in when no compatible credential is already available.
+
 
 ---
 
@@ -90,13 +91,15 @@ class WeatherAgent(BasicAgent):
 
 ### Browse the AIBAST Agent Library
 
-The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/library.html) is the browsable catalog: search across every industry template, filter by vertical, and copy the install command for one agent or a whole stack. It reads `registry.json`, which `build_registry.py` regenerates from the agent manifests on every push.
+The [**Microsoft AI Academy**](academy.html) is an experimental learning surface for **51 certified workshops** and their packaged, reusable skills. Progress stays private in local browser storage by default; learners may optionally publish GitHub-attributed proof. The workshop path starts in GitHub Copilot and the local RAPP Brainstem, then carries the same skills into Copilot Studio, Teams, and Microsoft 365 Copilot. Academy completion is not an official credential or certification, and the Academy is not a replacement for Microsoft Learn.
+
+The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/) is the browsable catalog: search across every industry template, filter by vertical, and copy the install command for one agent or a whole stack. It reads `registry.json`, which `build_registry.py` regenerates from the agent manifests on every push.
 
 The files themselves live under [`agents/@aibast-agents-library/`](agents/@aibast-agents-library/), grouped into `*_stacks/*_stack/` folders — a stack is the set of agents that solves one industry scenario end to end. Review a template, adapt it to your environment, then drag the trusted `*_agent.py` file into the Brainstem chat or place it in the configured agents directory. Agent files are Python code and execute locally, so review them before installation.
 
 [**Workshop achievements**](https://microsoft.github.io/aibast-agents-library/achievements.html) record self-paced milestones locally and let learners explicitly sync canonical badges to a public GitHub-attributed profile. The profile page shows the learner's achievement score.
 
-[**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes AIBAST-only public downloads, every-file observations, per-agent rating Discussion upvotes, signed-in acquisition Discussion signals, workshop adoption, and opt-in achievement rollups. Each run also generates a shareable weekly/monthly PDF plus email-ready text under `reports/`. `scripts/build_metrics.py` builds the snapshot, and `scripts/build_impact_report.py` turns its dated history into the exportable impact report without converting unavailable coverage to zero.
+[**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes AIBAST-only public downloads, every-file observations, per-agent rating Discussion upvotes, signed-in acquisition Discussion signals, workshop adoption, and opt-in achievement rollups. Each run also generates a shareable weekly/monthly PDF plus email-ready text under `reports/`. `scripts/build_metrics.py` builds the snapshot, and `scripts/build_impact_report.py` turns its dated history into the exportable impact report without converting unavailable coverage to zero. Visitor behavior on the published site (heatmaps, session recordings) comes from [Microsoft Clarity](https://clarity.microsoft.com/); the tag is stamped on every public page from `clarity.json` by `scripts/apply_clarity_tag.py` (setup in [docs/CLARITY.md](docs/CLARITY.md)).
 
 ---
 

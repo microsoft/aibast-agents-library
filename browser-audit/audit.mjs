@@ -631,8 +631,10 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
       await page.waitForTimeout(25);
     }
     let renderedScreenshot = "";
+    let controlScreenshot = "";
     let isolatedScreenshot = "";
     let sourceScreenshot = "";
+    let isolationMutation = null;
     if (visible) {
       const sourceSpec = await image.evaluate((element) => {
         const rect = element.getBoundingClientRect();
@@ -655,12 +657,88 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
       renderedScreenshot = (
         await image.screenshot({ animations: "disabled", caret: "hide" })
       ).toString("base64");
-      await image.evaluate((element) => {
+      await page.evaluate(() => new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      }));
+      controlScreenshot = (
+        await image.screenshot({ animations: "disabled", caret: "hide" })
+      ).toString("base64");
+      isolationMutation = await image.evaluate((element) => {
         const stateKey = "__aibastAuditVisualIsolation";
         if (window[stateKey]) throw new Error("Visual isolation state already exists");
         const styleRecords = [];
         const attributeRecords = [];
+        const attributedCandidates = new Set();
         const attribute = "data-aibast-audit-isolate";
+        const targetRect = element.getBoundingClientRect();
+        const intersectsTarget = (rect) => Boolean(
+          rect
+          && rect.width > 0
+          && rect.height > 0
+          && rect.right > targetRect.left
+          && rect.left < targetRect.right
+          && rect.bottom > targetRect.top
+          && rect.top < targetRect.bottom
+        );
+        const pixelValue = (value) => {
+          if (!value || value === "auto") return null;
+          const parsed = Number.parseFloat(value);
+          return Number.isFinite(parsed) ? parsed : null;
+        };
+        const fixedPseudoRect = (computed) => {
+          if (
+            computed.position !== "fixed"
+            || computed.display === "none"
+            || computed.visibility === "hidden"
+            || Number.parseFloat(computed.opacity || "1") <= 0.05
+            || ["", "none", "normal"].includes(String(computed.content || ""))
+          ) {
+            return null;
+          }
+          let left = pixelValue(computed.left);
+          const rightInset = pixelValue(computed.right);
+          let width = pixelValue(computed.width);
+          let top = pixelValue(computed.top);
+          const bottomInset = pixelValue(computed.bottom);
+          let height = pixelValue(computed.height);
+          if (width === null && left !== null && rightInset !== null) {
+            width = innerWidth - left - rightInset;
+          }
+          if (height === null && top !== null && bottomInset !== null) {
+            height = innerHeight - top - bottomInset;
+          }
+          if (left === null && width !== null && rightInset !== null) {
+            left = innerWidth - rightInset - width;
+          }
+          if (top === null && height !== null && bottomInset !== null) {
+            top = innerHeight - bottomInset - height;
+          }
+          if (
+            left === null
+            || top === null
+            || width === null
+            || height === null
+          ) {
+            return null;
+          }
+          return {
+            left,
+            top,
+            width,
+            height,
+            right: left + width,
+            bottom: top + height,
+          };
+        };
+        const markPseudoOwner = (candidate) => {
+          if (attributedCandidates.has(candidate)) return;
+          attributedCandidates.add(candidate);
+          attributeRecords.push({
+            candidate,
+            original: candidate.getAttribute(attribute),
+          });
+          candidate.setAttribute(attribute, "");
+        };
         const candidates = [
           document.documentElement,
           document.body,
@@ -671,13 +749,24 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
             || candidate.contains(element)
             || element.contains(candidate);
           if (related) {
-            attributeRecords.push({
-              candidate,
-              original: candidate.getAttribute(attribute),
-            });
-            candidate.setAttribute(attribute, "");
+            markPseudoOwner(candidate);
             continue;
           }
+          const computed = getComputedStyle(candidate);
+          const candidateRect = candidate.getBoundingClientRect();
+          const intersects = (
+            computed.display !== "none"
+            && computed.visibility !== "hidden"
+            && Number.parseFloat(computed.opacity || "1") > 0.05
+            && intersectsTarget(candidateRect)
+          );
+          const fixedPseudoIntersects = ["::before", "::after"].some(
+            (pseudo) => intersectsTarget(
+              fixedPseudoRect(getComputedStyle(candidate, pseudo)),
+            ),
+          );
+          if (fixedPseudoIntersects) markPseudoOwner(candidate);
+          if (!intersects) continue;
           styleRecords.push({
             candidate,
             value: candidate.style.getPropertyValue("opacity"),
@@ -705,6 +794,11 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
           attributeRecords,
           pseudoStyle,
           styleRecords,
+        };
+        return {
+          candidates: candidates.length,
+          hiddenIntersectingElements: styleRecords.length,
+          isolatedPseudoOwners: attributeRecords.length,
         };
       });
       try {
@@ -1323,11 +1417,17 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
         }
       })();
       const renderedPixelMatch = await (async () => {
-        if (!screenshots.rendered || !screenshots.isolated || !screenshots.source) {
+        if (
+          !screenshots.rendered
+          || !screenshots.control
+          || !screenshots.isolated
+          || !screenshots.source
+        ) {
           return {
             readable: false,
             matches: false,
-            error: "Rendered, isolated, or source screenshot unavailable",
+            controlEstablished: false,
+            error: "Rendered, control, isolated, or source screenshot unavailable",
           };
         }
         try {
@@ -1347,8 +1447,14 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
               screenshot.src = `data:image/png;base64,${base64}`;
             },
           );
-          const [renderedImage, isolatedImage, sourceImage] = await Promise.all([
+          const [
+            renderedImage,
+            controlImage,
+            isolatedImage,
+            sourceImage,
+          ] = await Promise.all([
             decodeScreenshot(screenshots.rendered, "Rendered"),
+            decodeScreenshot(screenshots.control, "Control"),
             decodeScreenshot(screenshots.isolated, "Isolated"),
             decodeScreenshot(screenshots.source, "Source"),
           ]);
@@ -1356,7 +1462,9 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
           const height = renderedImage.naturalHeight;
           if (!width || !height) throw new Error("Rendered screenshot is empty");
           if (
-            isolatedImage.naturalWidth !== width
+            controlImage.naturalWidth !== width
+            || controlImage.naturalHeight !== height
+            || isolatedImage.naturalWidth !== width
             || isolatedImage.naturalHeight !== height
             || sourceImage.naturalWidth !== width
             || sourceImage.naturalHeight !== height
@@ -1365,12 +1473,15 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
               readable: true,
               width,
               height,
+              controlWidth: controlImage.naturalWidth,
+              controlHeight: controlImage.naturalHeight,
               isolatedWidth: isolatedImage.naturalWidth,
               isolatedHeight: isolatedImage.naturalHeight,
               sourceWidth: sourceImage.naturalWidth,
               sourceHeight: sourceImage.naturalHeight,
               matches: false,
-              error: "Rendered, isolated, and source screenshot dimensions differ",
+              controlEstablished: false,
+              error: "Rendered, control, isolated, and source screenshot dimensions differ",
             };
           }
           const imagePixels = (image, targetWidth = width, targetHeight = height) => {
@@ -1417,6 +1528,8 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
               changedRatio,
               meanDelta,
               maximumDelta,
+              maximumChangedRatio,
+              maximumMeanDelta,
               matches: Boolean(
                 changedRatio <= maximumChangedRatio
                 && meanDelta <= maximumMeanDelta
@@ -1648,6 +1761,7 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
             ).size;
             const edgeRatio = edgePixels / totalPixels;
             return {
+              readable: true,
               sampleSize,
               opaqueRatio,
               quantizedColors: quantizedColors.size,
@@ -1696,7 +1810,28 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
               ),
             };
           };
-          const isolationComparison = compare(renderedImage, isolatedImage);
+          const controlComparison = compare(
+            renderedImage,
+            controlImage,
+            0.005,
+            0.25,
+          );
+          const controlEstablished = Boolean(
+            controlComparison.comparedPixels > 0
+            && controlComparison.matches
+          );
+          const isolationComparison = compare(
+            controlImage,
+            isolatedImage,
+            Math.max(
+              0.0001,
+              controlComparison.changedRatio + 0.00015,
+            ),
+            Math.max(
+              0.05,
+              controlComparison.meanDelta + 0.03,
+            ),
+          );
           const sourceComparison = compare(
             isolatedImage,
             sourceImage,
@@ -1712,19 +1847,24 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
             changedRatio: isolationComparison.changedRatio,
             meanDelta: isolationComparison.meanDelta,
             maximumDelta: isolationComparison.maximumDelta,
+            controlEstablished,
+            controlComparison,
             isolationComparison,
             sourceComparison,
+            isolationMutation: screenshots.isolationMutation,
             isolatedPixelEvidence,
             matches: Boolean(
-              isolationComparison.matches
+              controlEstablished
+              && isolationComparison.matches
               && sourceComparison.matches
-              && isolatedPixelEvidence.meaningful
+              && isolatedPixelEvidence.readable
             ),
           };
         } catch (error) {
           return {
             readable: false,
             matches: false,
+            controlEstablished: false,
             error: String(error),
           };
         }
@@ -1781,8 +1921,10 @@ async function inspectModeImages(page, sourcePage, mode, expectedRows) {
       };
     }, {
       rendered: renderedScreenshot,
+      control: controlScreenshot,
       isolated: isolatedScreenshot,
       source: sourceScreenshot,
+      isolationMutation,
     });
     rows.push({
       ...row,
@@ -1857,9 +1999,34 @@ async function modeSnapshot(page, mode, images) {
     const selectedTab = document.querySelector(
       `[role="tab"][data-mode="${expectedMode}"][aria-selected="true"]`,
     );
+    const idCounts = new Map();
+    document.querySelectorAll("[id]").forEach((element) => {
+      idCounts.set(element.id, (idCounts.get(element.id) || 0) + 1);
+    });
+    const duplicateIds = [...idCounts]
+      .filter(([, count]) => count > 1)
+      .map(([id, count]) => ({ id, count }));
+    const visibleLearnSteps = path
+      ? [...path.querySelectorAll(".learn-step")].filter(visible)
+      : [];
+    const previewSteps = path
+      ? [...path.querySelectorAll('[id="easy-step-5"]')]
+      : [];
+    const completionSteps = path
+      ? [...path.querySelectorAll('[id="easy-step-6"]')]
+      : [];
+    const easyStepSemantics = Boolean(
+      visibleLearnSteps.length > 0
+      && previewSteps.length === 1
+      && completionSteps.length === 1
+      && previewSteps[0].classList.contains("learn-step")
+      && completionSteps[0].classList.contains("learn-step")
+      && visible(previewSteps[0])
+      && visible(completionSteps[0])
+    );
     const semanticAnchor = expectedMode === "easy"
-      ? path?.querySelector("#easy-step-4")
-      : path?.querySelector(".hard-overview");
+      ? easyStepSemantics
+      : visible(path?.querySelector(".hard-overview"));
     return {
       activeMode: document.querySelector("[data-mode].active")?.getAttribute("data-mode"),
       selectedTabs: [...document.querySelectorAll('[role="tab"][aria-selected="true"]')]
@@ -1872,7 +2039,13 @@ async function modeSnapshot(page, mode, images) {
       oppositeComputedDisplay: opposite ? getComputedStyle(opposite).display : null,
       oppositeRenderedDescendants: oppositeRenderedDescendants.length,
       oppositeHitTargets: oppositeHitTargets.length,
-      semanticAnchor: visible(semanticAnchor),
+      semanticAnchor: semanticAnchor && duplicateIds.length === 0,
+      visibleLearnSteps: visibleLearnSteps.map((element) => element.id || null),
+      easyStepAnchors: {
+        preview: previewSteps.length,
+        completion: completionSteps.length,
+      },
+      duplicateIds,
       tabSemantics: Boolean(
         panels.length === 2
         && visiblePanels.length === 1
@@ -1984,7 +2157,22 @@ async function fileArtifact(relative) {
 async function buildContactSheet(context, mode, workshopSlugs) {
   const cards = await Promise.all(workshopSlugs.map(async (slug) => {
     const relative = `screenshots/${slug}-${mode}.png`;
-    const source = await fs.readFile(path.join(out, relative));
+    const absolute = path.join(out, relative);
+    let source;
+    try {
+      source = await fs.readFile(absolute);
+    } catch (error) {
+      throw new Error(
+        `Cannot assemble ${mode} contact sheet: screenshot for ${slug} `
+        + `was not written at ${relative} (${error.code || error.message})`,
+      );
+    }
+    if (!source.length) {
+      throw new Error(
+        `Cannot assemble ${mode} contact sheet: screenshot for ${slug} `
+        + `is empty at ${relative}`,
+      );
+    }
     return {
       slug,
       source: `data:image/png;base64,${source.toString("base64")}`,
@@ -2214,9 +2402,18 @@ for (const slug of slugs) {
     '[data-path="easy"] img[data-evidence-status="reusable"]',
   ).first();
   const easyFallback = page.locator(
-    '[data-path="easy"] .withheld-checkpoint',
+    '[data-path="easy"]:not([hidden]) .withheld-checkpoint:visible',
   ).first();
+  const easyTextEvidence = page.locator(
+    '[data-path="easy"]:not([hidden]) .verification-evidence:visible',
+  ).first();
+  const activeEasyPanel = page.locator(
+    '[data-path="easy"]:not([hidden])',
+  ).first();
+  const easyFallbackCount = await easyFallback.count();
+  const easyTextEvidenceCount = await easyTextEvidence.count();
   let easyCaptureArtifact = null;
+  let easyCaptureKind = null;
   if (easyImages.length) {
     await easyImage.scrollIntoViewIfNeeded();
     easyCaptureArtifact = await captureContext(
@@ -2224,16 +2421,51 @@ for (const slug of slugs) {
       path.join(out, easyScreenshotRelative),
       easyScreenshotRelative,
     );
-  } else if (await easyFallback.count()) {
+    easyCaptureKind = "reusable-image";
+  } else if (easyFallbackCount) {
     await easyFallback.scrollIntoViewIfNeeded();
     easyCaptureArtifact = await captureContext(
       easyFallback,
       path.join(out, easyScreenshotRelative),
       easyScreenshotRelative,
     );
+    easyCaptureKind = "withheld-checkpoint";
+  } else if (easyTextEvidenceCount) {
+    await easyTextEvidence.scrollIntoViewIfNeeded();
+    easyCaptureArtifact = await captureContext(
+      easyTextEvidence,
+      path.join(out, easyScreenshotRelative),
+      easyScreenshotRelative,
+    );
+    easyCaptureKind = "verification-evidence";
+  } else if (await activeEasyPanel.count()) {
+    await activeEasyPanel.scrollIntoViewIfNeeded();
+    easyCaptureArtifact = await captureContext(
+      activeEasyPanel,
+      path.join(out, easyScreenshotRelative),
+      easyScreenshotRelative,
+    );
+    easyCaptureKind = "active-easy-panel";
   }
+  const easyCaptureSemantics = Boolean(
+    easyImages.length
+      ? easyCaptureKind === "reusable-image"
+      : easyFallbackCount
+        ? easyCaptureKind === "withheld-checkpoint"
+        : easyTextEvidenceCount
+          ? easyCaptureKind === "verification-evidence"
+          : easyCaptureKind === "active-easy-panel"
+  );
 
-  const hardTab = page.getByRole("tab", { name: "Hard", exact: true });
+  const manualTab = page.getByRole("tab", { name: "Manual", exact: true });
+  const manualTabCount = await manualTab.count();
+  const hardTabIdentity = Boolean(
+    manualTabCount === 1
+    && await manualTab.getAttribute("data-mode") === "hard"
+  );
+  const hardTab = hardTabIdentity
+    ? manualTab
+    : page.locator('[role="tab"][data-mode="hard"]').first();
   await hardTab.click();
   await page.waitForFunction((mode) => {
     const selected = [...document.querySelectorAll('[role="tab"][aria-selected="true"]')]
@@ -2298,6 +2530,8 @@ for (const slug of slugs) {
     && hard.oppositeHidden
     && easy.semanticAnchor
     && hard.semanticAnchor
+    && easy.duplicateIds.length === 0
+    && hard.duplicateIds.length === 0
     && easy.tabSemantics
     && hard.tabSemantics
     && (easySources.length > 0 || expectedEasyRows.length === 0)
@@ -2437,6 +2671,7 @@ for (const slug of slugs) {
     && mission
     && completeImageInventory
     && referenceOnly === 0
+    && hardTabIdentity
     && distinctModes
     && mobileEasy.tabSemantics
     && mobileHard.tabSemantics
@@ -2451,6 +2686,7 @@ for (const slug of slugs) {
     && mobileEasy.horizontalOverflow <= 4
     && mobileHard.horizontalOverflow <= 4
     && serviceWorkerAttempts.length === 0
+    && easyCaptureSemantics
     && screenshotsBound
     && errors.length === 0
   );
@@ -2471,7 +2707,9 @@ for (const slug of slugs) {
     screenshotArtifacts,
     writtenScreenshotArtifacts,
     screenshotsBound,
+    easyCaptureSemantics,
     referenceOnly,
+    hardTabIdentity,
     easy,
     hard,
     mobileEasy,
@@ -2485,6 +2723,7 @@ for (const slug of slugs) {
     mobileImageFailures,
     errors,
     capturedEasy: Boolean(easyCaptureArtifact),
+    easyCaptureKind,
     capturedHard: Boolean(hardImages.length),
   });
   await page.close();

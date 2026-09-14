@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 INSTALLER = ROOT / "install.sh"
 WINDOWS_INSTALLER = ROOT / "install.ps1"
-LANDING_PAGE = ROOT / "index.html"
+LANDING_PAGE = ROOT / "docs" / "installer.html"
 
 
 def installer_functions():

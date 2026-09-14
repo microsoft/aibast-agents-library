@@ -1,5 +1,26 @@
 # Partner Solutions — Working Decision Log
 
+## Current release integration
+
+The decision log below preserves the earlier implementation history; its old
+branch, page-location and theme observations are not current release guidance.
+The catalog now lives at [`index.html`](../index.html?view=partners), while
+`library.html` preserves existing query and hash links through a redirect.
+Current releases follow [the staging-ring process](RELEASE-PROCESS.md): sync
+Microsoft upstream, integrate without replacing newer staging features, and
+merge through a pull request into the fork's `staging` branch.
+
+The homepage also renders the attributed resources in
+[`community_tools.json`](../community_tools.json). Its catalog export downloads
+the complete registry, that resource manifest and ring-specific install links
+as JSON. This is a reference snapshot for a teammate or assistant, **not** a
+native agent, an importable Brainstem workspace, or evidence that any workshop
+passed native validation. Follow the included install guide rather than putting
+the JSON in `AGENTS_PATH`; Brainstem discovers Python `*_agent.py` files there.
+Resource inclusion is not endorsement, partnership or independent validation.
+
+## Historical decision log
+
 Status: **RESOLVED / LIVE.** All open decisions below have been made and
 implemented. See "RESOLUTION" section for the final state.
 

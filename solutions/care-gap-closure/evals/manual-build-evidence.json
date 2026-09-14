@@ -2,7 +2,9 @@
   "schema": "aibast-manual-build-evidence/1.0",
   "captured_at": "2026-08-08T08:38:18.943Z",
   "solution": "@aibast-agents-library/care-gap-closure",
-  "status": "passed",
+  "status": "reshoot_required",
+  "captured_status": "passed",
+  "source_contract_note": "The recorded build predates the CG-01 source-contract repair. Current instructions require SYN-COL — 182 records; no live save or Preview run has verified this revision. Historical screenshots and capture dates are unchanged.",
   "environment": {
     "name": "kodyv8",
     "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
@@ -17,7 +19,8 @@
   "manual_components": {
     "global_instructions": {
       "expected": true,
-      "confirmed": true
+      "confirmed": false,
+      "captured_confirmed": true
     },
     "web_search_removed": {
       "expected": true,
@@ -41,7 +44,7 @@
       "case_id": "CG-01",
       "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
       "must_include": [
-        "SYN-BCS",
+        "SYN-COL — 182 records",
         "Records requiring evidence review"
       ],
       "must_not_include": [
@@ -51,7 +54,14 @@
         "authorization granted"
       ],
       "expected_screenshot": "14-cg-01.jpg",
-      "passed": true
+      "passed": null,
+      "status": "reshoot_required",
+      "captured_passed": true,
+      "captured_must_include": [
+        "SYN-BCS",
+        "Records requiring evidence review"
+      ],
+      "reason": "The old annotations highlight SYN-BCS. Save the repaired instructions and capture a fresh Preview proving SYN-COL — 182 records; do not relabel the historical image."
     },
     {
       "case_id": "CG-02",

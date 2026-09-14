@@ -1,0 +1,139 @@
+{
+  "schema": "aibast-manual-pilot-review/1.0",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "as_of": "2026-09-13T12:45:09.571Z",
+  "build_revision": "shared-grounding-r4",
+  "status": "native_manual_verified",
+  "certified": false,
+  "summary": "On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed.",
+  "evidence_method": "Public-safe compilation of the accepted live browser build, all four independent r4 cases and every selected personal image review. No case, upload, tenant write or native export is repeated by compilation.",
+  "current_evidence": "evals/manual-build-evidence.json",
+  "frozen_input_inventory": "evals/manual-inputs-r4.json",
+  "visual_reference_inventory": "evals/visual-checkpoints.json",
+  "accepted_native_cases": [
+    "PA-01",
+    "PA-02",
+    "PA-03",
+    "PA-04"
+  ],
+  "accepted_student_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "open_student_steps": [],
+  "historical_metadata": "evals/history/2026-08/index.json",
+  "historical_failures": [
+    {
+      "revision": "initial-r1",
+      "status": "completed_with_failures",
+      "passed": [
+        "PA-03",
+        "PA-04"
+      ],
+      "failed": [
+        "PA-01",
+        "PA-02"
+      ],
+      "findings": [
+        {
+          "case_id": "PA-01",
+          "assessment": "Failed the packaged exact-line contract, not the underlying source-fact checks. The state and date are correct but separate table rows instead of the prescribed 'additional evidence requested (2026-07-30)' anchor. The missing-duration value is also correctly associated in a table but does not preserve the required 'conservative-care duration: not found in synthetic source' line. Preserve this as a strict wording/presentation failure; do not portray the source facts as incorrect or reroll the unchanged case."
+        },
+        {
+          "case_id": "PA-02",
+          "assessment": "Failed the packaged reviewer-line contract. The correct three checks appear in source order under a table column, but none is emitted as the required 'Reviewer check: {requirement}' line. Request/policy identity, dates, evidence values, exact checklist disclaimer, citations and the terminal safety footer are correct. Preserve this as a wording/format mismatch rather than incorrect clinical evidence; no unchanged rerun."
+        }
+      ]
+    },
+    {
+      "revision": "line-templates-r2",
+      "status": "completed_with_failures",
+      "passed": [
+        "PA-02",
+        "PA-03",
+        "PA-04"
+      ],
+      "failed": [
+        "PA-01"
+      ],
+      "findings": [
+        {
+          "case_id": "PA-01",
+          "assessment": "Failed source grounding despite repairing the two original format defects. The answer says, 'This is the gap driving the source-recorded state of additional evidence requested.' The synthetic record supplies the missing-duration field and the workflow state but no causal reason linking them. The review rules assign rationale and interpretation to a qualified utilization reviewer. A later human-review caveat does not make that unsupported causal assertion source-backed. Preserve this single result; finish the other independent r2 cases before another material repair."
+        }
+      ]
+    },
+    {
+      "revision": "source-rationale-r3",
+      "status": "completed_with_failures",
+      "passed": [
+        "PA-02",
+        "PA-03"
+      ],
+      "failed": [
+        "PA-01",
+        "PA-04"
+      ],
+      "findings": [
+        {
+          "case_id": "PA-01",
+          "assessment": "The source-grounding repair succeeds: the required absent-rationale statement appears once, the old causal assertion is gone, and interpretation remains reviewer-owned. All primary inventory anchors, ordered facts and the terminal footer are correct. A separate conditional-format defect remains: the request skill requires the complete criteria-evidence contract when continuing into criteria context, but this response adds that continuation under 'Criteria context' and omits both the required crosswalk heading and the request-ID/policy-title heading. Preserve this as a format/integration failure, not incorrect healthcare facts or failed source grounding. Finish the remaining r3 matrix before materially constraining the unsolicited continuation."
+        },
+        {
+          "case_id": "PA-04",
+          "assessment": "Failed source grounding. The response states that the missing duration is the source-identified gap driving the recorded workflow state, but the source records no causal reason. The evidence table also appends 'gap to address for reconsideration' to the missing-source value, introducing an unreviewed action implication. Required reviewer-confirmation, minimum-necessary, human-ownership and terminal safety phrases are present; those caveats do not neutralize the unsupported assertions. This demonstrates that the rationale safeguard must cover the agent and appeal workflow, not only the request skill."
+        }
+      ]
+    }
+  ],
+  "history_boundary": "Exact earlier responses, failed captures and rejected selections remain preserved privately. No previous case pass is carried into r4. Unchanged-input build references explicitly retain their real initial/r2 provenance.",
+  "r4_changed_native_inputs": [
+    "solutions/prior-authorization/manual/GLOBAL-INSTRUCTIONS.md",
+    "solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md",
+    "solutions/prior-authorization/manual/skills/request-evidence/SKILL.md",
+    "solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-review-rules.md",
+    "solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-synthetic-records.md"
+  ],
+  "r4_repair": "Shared source-grounding and requested-only scope, explicit missing rationale in both synthetic records, unqualified source evidence values, and a complete reconsideration line template. Actual source facts and all locked prompts are unchanged.",
+  "presentation_observation": "PA-01's descriptive service/evidence headings are title-cased in the actual answer. Its required literal anchors, factual meaning, source values, scope and safety passed; exact casing parity is not claimed.",
+  "lane_boundary": "Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted.",
+  "historical_native_export": {
+    "exported_at": "2026-08-09T23:38:27.250528+00:00",
+    "sha256": "0b30d8c00b924aba88cd524d54136333b903eb90c10b1f108ee61ff871c4684d",
+    "bytes": 4139,
+    "entries": [
+      "customizations.xml",
+      "solution.xml",
+      "bots/aibast_PriorAuthorizationPilot/configuration.json",
+      "bots/aibast_PriorAuthorizationPilot/bot.xml",
+      "[Content_Types].xml"
+    ],
+    "manual_skills": 0,
+    "knowledge_files": 0,
+    "current_reproduction_supported": false,
+    "note": "Historical 2026-08-09 unmanaged export, preserved byte-for-byte. Its five entries contain settings and instructions but no manual skills or knowledge files, and identify Prior Authorization Pilot rather than the tested Manual Draft. It cannot reproduce the four-skill/two-file r4 build and is withheld from current reproduction downloads. No new export, import or native publication is claimed."
+  },
+  "open_gates": [],
+  "delivery_boundary": "This dated review accepts native Manual evidence, not a claim about when a host deployed these files. For a hosted or downloaded copy, verify its exact inputs against the public SHA256 inventory and current export manifest. Delivery confirmation is tracked separately by the workshop pilot.",
+  "publication": {
+    "published": false,
+    "native_publication_authorized": false
+  },
+  "safety_footer": "Synthetic healthcare evidence only; no diagnosis, treatment, eligibility, authorization, scheduling, outreach, submission, or record change. Human review required."
+}

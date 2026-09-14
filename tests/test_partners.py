@@ -9,7 +9,7 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PARTNERS_FILE = REPO_ROOT / "partners.json"
 REGISTRY_FILE = REPO_ROOT / "registry.json"
-LIBRARY_PAGE = REPO_ROOT / "library.html"
+LIBRARY_PAGE = REPO_ROOT / "index.html"
 
 REQUIRED_AGENT_FIELDS = {
     "id", "partner_id", "name", "category", "product",

@@ -348,11 +348,13 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest
-    assert quest.count("data-copy-target=") == 17
-    assert "Install RAPP Brainstem Frontier" in quest
+    assert quest.count("data-copy-target=") == 18
+    assert "Install RAPP Brainstem" in quest
+    assert "Install RAPP Brainstem Frontier" not in quest
+    assert "Install with GitHub Copilot in VS Code" in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
-    assert quest.count('download="SKILL.md"') == 2
+    assert quest.count('download="SKILL.md"') == 3
     assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest

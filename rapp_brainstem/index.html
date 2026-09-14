@@ -1061,8 +1061,8 @@
       <p class="login-success" style="font-size:16px;font-weight:600">Connected to GitHub Copilot</p>
     </div>
     <div style="margin-top:24px;padding-top:16px;border-top:1px solid #30363d">
-      <a href="#" onclick="switchAccount(); return false;" style="color:#58a6ff;font-size:13px;text-decoration:none;margin-right:16px">🔄 Switch account</a>
-      <a href="#" onclick="shareWithAdmin(); return false;" style="color:#f0883e;font-size:13px;text-decoration:none">🆘 Get help</a>
+      <a href="#" onclick="switchAccount(); return false;" style="color:#58a6ff;font-size:13px;text-decoration:none;margin-right:16px">Switch account</a>
+      <a href="#" onclick="shareWithAdmin(); return false;" style="color:#f0883e;font-size:13px;text-decoration:none">Get help</a>
     </div>
   </div>
 </div>
@@ -1241,8 +1241,8 @@
       <button class="toolbar-link" onclick="document.getElementById('chat-import').click()" title="Import transcript">Import</button>
       <input type="file" id="chat-import" accept=".json" style="display:none" onchange="importChat(event)">
       <button class="toolbar-link" onclick="clearChat()">Clear</button>
-      <a class="toolbar-link" href="https://blazingbeard.github.io/quests/rapp-brainstem.html" target="_blank" title="Guided training quest with checkpoints" onclick="showTourInvite()">📚 Tutorial</a>
-      <button class="toolbar-link" onclick="shareWithAdmin()" title="Share diagnostics with admin for help" style="color:#f0883e">🆘 Get Help</button>
+      <a class="toolbar-link" href="https://blazingbeard.github.io/quests/rapp-brainstem.html" target="_blank" title="Guided training quest with checkpoints" onclick="showTourInvite()">Tutorial</a>
+      <button class="toolbar-link" onclick="shareWithAdmin()" title="Share diagnostics with admin for help" style="color:#f0883e">Get Help</button>
       <button class="toolbar-link dev-only" onclick="toggleDevMode()" id="dev-toggle">Dev</button>
     </div>
   </div>
@@ -2731,7 +2731,7 @@
           const wrap = appendMsg('system', '', null, requestState.responseSlot);
           setChildren(wrap.querySelector('.bubble'), [
             d.error, el('br'),
-            actionLink('🔄 Switch to a different account', 'color:#58a6ff;font-size:12px', switchAccount)
+            actionLink('Switch to a different account', 'color:#58a6ff;font-size:12px', switchAccount)
           ]);
         } else if (d.error.includes('Not authenticated') || d.error.includes('Copilot') || d.error.includes('Sign in')) {
           const wrap = appendMsg('system', '', null, requestState.responseSlot);
@@ -2744,7 +2744,7 @@
           const wrap = appendMsg('system', '', null, requestState.responseSlot);
           setChildren(wrap.querySelector('.bubble'), [
             'Error: ' + d.error, el('br'),
-            actionLink('🆘 Share with admin for help', 'color:#f0883e;font-size:12px', shareWithAdmin)
+            actionLink('Share with admin for help', 'color:#f0883e;font-size:12px', shareWithAdmin)
           ]);
         }
       } else {
@@ -2782,7 +2782,7 @@
       const wrap = appendMsg('system', '', null, requestState.responseSlot);
       setChildren(wrap.querySelector('.bubble'), [
         'Could not reach brainstem: ' + err.message, el('br'),
-        actionLink('🆘 Share with admin for help', 'color:#f0883e;font-size:12px', shareWithAdmin)
+        actionLink('Share with admin for help', 'color:#f0883e;font-size:12px', shareWithAdmin)
       ]);
     }
   }
@@ -4247,7 +4247,7 @@
           const t = (wrapEl && wrapEl.textContent) || text || '';
           if (/sign in|not signed in|not authenticated|could not reach/i.test(t) && card) {
             const hint = card.querySelector('.tc-hint');
-            hint.innerHTML = '⚠️ Looks like the brainstem needs a sign-in or a restart (see the message above). The tour will wait — redo this step once it\'s back.';
+            hint.innerHTML = 'Looks like the brainstem needs a sign-in or a restart (see the message above). The tour will wait — redo this step once it\'s back.';
             hint.style.display = 'block'; waitingChat = true;
           }
         }, 80);

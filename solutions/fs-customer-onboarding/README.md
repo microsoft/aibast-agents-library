@@ -26,7 +26,26 @@ This package provides decision support only. It gives no legal, regulatory, insu
 
 ## Manual Copilot Studio preparation
 
-Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md` for each of the 4 operations in `manual/skills/`. Bind only approved least-privilege connections. Validate all locked cases and stop before publish. No Copilot Studio project, tutorial, screenshot, or bundle is included.
+Use `manual-tutorial.html` to upload the exact policy, both knowledge files and
+all four skills. This manual lane has no tools or production connections.
+Save, leave and reopen the Draft to verify persistence before running each
+unchanged locked prompt in a fresh Preview conversation. Stop before publish.
+
+## Preservation review — 2026-09-12
+
+The [pilot review](evals/manual-pilot-review.json) corroborates four saved
+repaired response findings, not whole-workshop acceptance. The final browser
+policy and two repaired skills are preserved in `manual/` and mirrored in
+native source. The controls knowledge file was reconciled afterward and needs
+fresh live regression. Portable application-scope and missing-ID defects,
+full evaluator coverage, and per-step visual gates remain open.
+
+The [as-of progress snapshot](../../state/manual_workshop_pilot_2026-09-12.json)
+preserves the captured status distribution without upgrading inherited reports.
+Historical failures remain failures; old screenshots are not proof of these
+repairs. The source ZIP is an explicit public-safe manual review subset, **not**
+a native import package. The historical native ZIP omits the workshop skills
+and knowledge and does not reproduce the manual build.
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -45,11 +64,11 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Source bundle | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip` |
 | Manual evidence | `solutions/fs-customer-onboarding/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json` |
-| Copilot Studio solution ZIP | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip` |
+| Historical Copilot Studio solution ZIP — not current source | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-solution-export.json` |
 
-**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 74 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Current manual Preview and saved-instruction verification remain pending.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

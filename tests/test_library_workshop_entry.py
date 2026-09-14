@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LIBRARY = ROOT / "library.html"
+LIBRARY = ROOT / "index.html"
 
 
 def test_library_routes_architecture_into_the_beta_workshop():
@@ -18,7 +18,7 @@ def test_library_routes_architecture_into_the_beta_workshop():
         "Open interactive demo",
         "Workshop settings",
         "Open field guide",
-        "Install RAPP Brainstem Frontier",
+        "Install RAPP Brainstem with Copilot",
         "function workshopPackageFor(",
         "function interactiveDemoUrl(",
         'localStorage.getItem("aibast:workshop-engine")',

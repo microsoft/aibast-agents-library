@@ -45,6 +45,7 @@ AGENTS = [
             "quality_dashboard",
         ],
         "filter": {"measure_id": "SYN-BCS"},
+        "case_filters": {"gap_analysis": {}, "quality_dashboard": {}},
         "legacy": [
             ("outreach_campaign", "No message is sent"),
             ("hedis_dashboard", "Synthetic"),
@@ -235,7 +236,10 @@ def test_locked_case_evidence_exists_in_source_and_manual_package(config):
         (REPO_ROOT / "tests" / "demo_cases" / f"{config['slug']}.json").read_text()
     )
     for case in case_doc["cases"]:
-        source_output = agent.perform(operation=case["operation"], **config["filter"])
+        case_filter = config.get("case_filters", {}).get(
+            case["operation"], config["filter"]
+        )
+        source_output = agent.perform(operation=case["operation"], **case_filter)
         for evidence in case["must_include"]:
             assert evidence in source_output
             assert evidence in manual_text

@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "state" / "architecture_level2.json"
-LIBRARY = ROOT / "library.html"
+LIBRARY = ROOT / "index.html"
 
 
 def expected_agents():

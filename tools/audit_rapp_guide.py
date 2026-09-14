@@ -17,6 +17,7 @@ from typing import Any, Iterable
 from urllib.parse import urlsplit
 
 from bs4 import BeautifulSoup, Comment, Tag
+from tools.design_tokens import strip_block as _strip_design_block
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -24,8 +25,8 @@ DEFAULT_GUIDE = ROOT / "docs" / "rapp-guide.html"
 DEFAULT_CONTRACT = ROOT / "state" / "rapp_guide_content_contract.json"
 AUDIT_SCHEMA = "aibast-rapp-guide-audit/1.0"
 CONTRACT_SCHEMA = "aibast-rapp-guide-content-contract/1.0"
-TRUSTED_SOURCE_COMMIT = "57685f2cabfe06a8c7df72ab8da58dfab70a838c"
-TRUSTED_SOURCE_BLOB_OID = "6ec2da0cfc01e819af22ce0dd01f6257a6789317"
+TRUSTED_SOURCE_COMMIT = "cfedf264b3bed8615cd85611e82da95e3cf45256"
+TRUSTED_SOURCE_BLOB_OID = "39ab53e13cfed23a9d5327b7e41dee1e3f3aefb3"
 TRUSTED_SOURCE_PATH = "docs/rapp-guide.html"
 CONTENT_SECTION_IDS = (
     "overview",
@@ -54,54 +55,54 @@ PRESERVED_FUNCTIONS = (
     "handleHashNavigation",
 )
 LIGHT_THEME_VARIABLES = {
-    "--cp-bg": "#f7f4ef",
-    "--cp-bg-elevated": "#fcfbf8",
+    "--cp-bg": "#f4f4f5",
+    "--cp-bg-elevated": "#fafafa",
     "--cp-surface": "#ffffff",
-    "--cp-surface-soft": "#f5f5f5",
-    "--cp-border": "#dedede",
-    "--cp-border-strong": "#919191",
-    "--cp-text": "#242424",
-    "--cp-text-muted": "#5c5c5c",
-    "--cp-text-soft": "#6f6f6f",
+    "--cp-surface-soft": "#eeeeef",
+    "--cp-border": "#dcdcde",
+    "--cp-border-strong": "#8e8e93",
+    "--cp-text": "#18181b",
+    "--cp-text-muted": "#52525b",
+    "--cp-text-soft": "#6b6b74",
     "--cp-accent": "#b11f4b",
     "--cp-accent-hover": "#9a1a41",
     "--cp-accent-soft": "rgba(177, 31, 75, 0.08)",
     "--cp-accent-fg": "#ffffff",
-    "--cp-success": "#16a34a",
-    "--cp-danger": "#dc2626",
-    "--cp-warning": "#f59e0b",
-    "--cp-link": "#0078d4",
-    "--cp-shadow": "0 18px 48px rgba(0, 0, 0, 0.12)",
-    "--cp-overlay": "rgba(255, 255, 255, 0.8)",
+    "--cp-success": "#15803d",
+    "--cp-danger": "#c81e1e",
+    "--cp-warning": "#b45309",
+    "--cp-link": "#0f6cbd",
+    "--cp-shadow": "0 16px 40px rgba(24, 24, 27, 0.10)",
+    "--cp-overlay": "rgba(24, 24, 27, 0.55)",
     "--cp-panel": "rgba(255, 255, 255, 0.86)",
     "--cp-panel-strong": "rgba(255, 255, 255, 0.96)",
-    "--cp-sheen": "rgba(255, 255, 255, 0.55)",
+    "--cp-sheen": "rgba(24, 24, 27, 0.04)",
     "--cp-highlight": "rgba(177, 31, 75, 0.12)",
 }
 DARK_THEME_VARIABLES = {
-    "--cp-bg": "#3d3b3a",
-    "--cp-bg-elevated": "#343231",
-    "--cp-surface": "#292929",
-    "--cp-surface-soft": "#2e2e2e",
-    "--cp-border": "#474747",
-    "--cp-border-strong": "#5f5f5f",
-    "--cp-text": "#dedede",
-    "--cp-text-muted": "#919191",
-    "--cp-text-soft": "#b0b0b0",
-    "--cp-accent": "#fd8ea1",
-    "--cp-accent-hover": "#fb7b91",
-    "--cp-accent-soft": "rgba(253, 142, 161, 0.14)",
-    "--cp-accent-fg": "#1a1a1a",
+    "--cp-bg": "#18181b",
+    "--cp-bg-elevated": "#232327",
+    "--cp-surface": "#1f1f23",
+    "--cp-surface-soft": "#27272b",
+    "--cp-border": "#34343a",
+    "--cp-border-strong": "#54545c",
+    "--cp-text": "#f4f4f5",
+    "--cp-text-muted": "#a9a9b2",
+    "--cp-text-soft": "#c4c4cc",
+    "--cp-accent": "#ff7a9c",
+    "--cp-accent-hover": "#ff96b0",
+    "--cp-accent-soft": "rgba(255, 122, 156, 0.14)",
+    "--cp-accent-fg": "#18181b",
     "--cp-success": "#4ade80",
-    "--cp-danger": "#f87171",
+    "--cp-danger": "#fb8a8a",
     "--cp-warning": "#fbbf24",
-    "--cp-link": "#4da6ff",
-    "--cp-shadow": "0 18px 48px rgba(0, 0, 0, 0.32)",
-    "--cp-overlay": "rgba(41, 41, 41, 0.88)",
-    "--cp-panel": "rgba(41, 41, 41, 0.72)",
-    "--cp-panel-strong": "rgba(41, 41, 41, 0.96)",
-    "--cp-sheen": "rgba(255, 255, 255, 0.04)",
-    "--cp-highlight": "rgba(253, 142, 161, 0.12)",
+    "--cp-link": "#66b3ff",
+    "--cp-shadow": "0 16px 40px rgba(0, 0, 0, 0.45)",
+    "--cp-overlay": "rgba(9, 9, 11, 0.7)",
+    "--cp-panel": "rgba(31, 31, 35, 0.78)",
+    "--cp-panel-strong": "rgba(31, 31, 35, 0.96)",
+    "--cp-sheen": "rgba(255, 255, 255, 0.05)",
+    "--cp-highlight": "rgba(255, 122, 156, 0.12)",
 }
 LEGACY_VARIABLES = {
     "--primary",
@@ -297,6 +298,7 @@ STORAGE_RE = re.compile(
 )
 SHELL_INTERNAL_LINK_ALLOWLIST = {
     ("Library", "../library.html"),
+    ("Academy", "../academy.html"),
     ("Workshop settings", "../solutions/_shared/workshop-settings.html"),
 }
 SHELL_GITHUB_ISSUES_PATHS = {
@@ -1128,8 +1130,8 @@ def _check_shell_links(
     if unexpected:
         failures.add(
             "content.shell_links",
-            "shell links are limited to guide fragments, Library, Workshop "
-            "settings, and GitHub issues feedback: "
+            "shell links are limited to guide fragments, Library, Academy, "
+            "Workshop settings, and GitHub issues feedback: "
             + "; ".join(unexpected[:4]),
         )
 
@@ -2630,6 +2632,145 @@ def _find_topbar(soup: BeautifulSoup) -> Tag | None:
     return None
 
 
+def _media_applies_at_width(context: str, width: int) -> bool:
+    lowered = context.lower()
+    if not lowered.lstrip().startswith("@media"):
+        return True
+    if "print" in lowered and "screen" not in lowered:
+        return False
+    conditions = re.findall(
+        r"\(\s*(min|max)-width\s*:\s*"
+        r"([0-9]+(?:\.[0-9]+)?)\s*(px|rem)\s*\)",
+        lowered,
+    )
+    for boundary, raw_value, unit in conditions:
+        pixels = float(raw_value) * (16 if unit == "rem" else 1)
+        if boundary == "max" and width > pixels:
+            return False
+        if boundary == "min" and width < pixels:
+            return False
+    return True
+
+
+def _declaration_selector(declaration: CssDeclaration) -> str | None:
+    selectors = [
+        context
+        for context in declaration.contexts
+        if not context.lstrip().startswith("@")
+    ]
+    return selectors[-1] if selectors else None
+
+
+def _matches_selector(
+    soup: BeautifulSoup,
+    node: Tag,
+    selector: str,
+) -> bool:
+    return any(candidate is node for candidate in soup.select(selector))
+
+
+def _academy_link_hidden_at_width(
+    soup: BeautifulSoup,
+    link: Tag,
+    topbar: Tag,
+    declarations: list[CssDeclaration],
+    width: int,
+) -> bool:
+    nodes = [link]
+    for parent in link.parents:
+        if not isinstance(parent, Tag):
+            continue
+        nodes.append(parent)
+        if parent is topbar:
+            break
+    for node in nodes:
+        if (
+            _is_initially_hidden(node)
+            or node.get("aria-hidden") == "true"
+            or re.search(
+                r"(?:^|;)\s*(?:visibility\s*:\s*(?:hidden|collapse)|"
+                r"opacity\s*:\s*0(?:\.0+)?)\s*(?:!important)?\s*(?:;|$)",
+                node.get("style", ""),
+                re.IGNORECASE,
+            )
+        ):
+            return True
+    for declaration in declarations:
+        value = _css_value_without_important(declaration.value).lower()
+        hides = (
+            (declaration.property == "display" and value == "none")
+            or (
+                declaration.property == "visibility"
+                and value in {"hidden", "collapse"}
+            )
+            or (
+                declaration.property == "opacity"
+                and value in {"0", "0.0"}
+            )
+        )
+        if not hides or not all(
+            _media_applies_at_width(context, width)
+            for context in declaration.contexts
+            if context.lstrip().startswith("@media")
+        ):
+            continue
+        selector = _declaration_selector(declaration)
+        if selector and any(
+            _matches_selector(soup, node, selector) for node in nodes
+        ):
+            return True
+    return False
+
+
+def _check_mobile_academy_reachability(
+    soup: BeautifulSoup,
+    declarations: list[CssDeclaration],
+    failures: FailureCollector,
+) -> list[int]:
+    widths = (700, 375)
+    topbar = _find_topbar(soup)
+    if topbar is None:
+        failures.add(
+            "behavior.mobile_academy",
+            "the topbar Academy link cannot be measured without a topbar",
+        )
+        return []
+    links = [
+        link
+        for link in topbar.select('a[href="../academy.html"]')
+        if normalized_visible_text(link) == "Academy"
+    ]
+    body = soup.body
+    original_classes = list(body.get("class", [])) if body else []
+    if body and "js-enabled" not in original_classes:
+        body["class"] = [*original_classes, "js-enabled"]
+    try:
+        visible_widths = [
+            width
+            for width in widths
+            if any(
+                not _academy_link_hidden_at_width(
+                    soup, link, topbar, declarations, width
+                )
+                for link in links
+            )
+        ]
+    finally:
+        if body:
+            if original_classes:
+                body["class"] = original_classes
+            else:
+                del body["class"]
+    if visible_widths != list(widths):
+        missing = sorted(set(widths) - set(visible_widths), reverse=True)
+        failures.add(
+            "behavior.mobile_academy",
+            "at least one topbar Academy link must remain visible at "
+            + " and ".join(f"{width}px" for width in missing),
+        )
+    return visible_widths
+
+
 def _check_topbar_feedback_accessibility(
     text: str,
     soup: BeautifulSoup,
@@ -2639,6 +2780,7 @@ def _check_topbar_feedback_accessibility(
     topbar = _find_topbar(soup)
     required_labels = (
         "Library",
+        "Academy",
         "Production Guide",
         "Workshop settings",
         "Report an issue",
@@ -2848,6 +2990,9 @@ def audit_text(
     node_path: str | None = None,
     baseline_text: str | None = None,
 ) -> dict[str, Any]:
+    # Generated by tools/design_tokens.py and pinned by its own test; the
+    # content contract covers the authored guide, not the stamped block.
+    text = _strip_design_block(text)
     failures = FailureCollector()
     validated_contract = _validate_contract(contract, failures) or {}
     _check_contract_against_baseline(
@@ -2873,6 +3018,9 @@ def audit_text(
     _check_topbar_feedback_accessibility(
         text, soup, declarations, failures
     )
+    academy_widths = _check_mobile_academy_reachability(
+        soup, declarations, failures
+    )
     _check_components_and_tracks(text, soup, declarations, failures)
     _check_post_migration_interactions(text, soup, failures)
     _check_static_behavior_semantics(text, soup, failures)
@@ -2880,6 +3028,7 @@ def audit_text(
         {
             "inline_scripts_checked": checked_scripts,
             "css_declarations_measured": len(declarations),
+            "academy_mobile_widths_checked": academy_widths,
         }
     )
     categories = sorted(

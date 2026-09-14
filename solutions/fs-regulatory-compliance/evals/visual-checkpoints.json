@@ -9,8 +9,8 @@
   },
   "summary": {
     "total_existing_captures": 33,
-    "reusable": 29,
-    "reshoot_required": 4
+    "reusable": 0,
+    "reshoot_required": 33
   },
   "captures": [
     {
@@ -18,16 +18,17 @@
       "mode": "easy",
       "draft": true,
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/01-review-build.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/01-review-build.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/01-review-build.png",
+      "historical_visible_anchors": [
         "Regulatory Compliance Pilot",
         "Claude Sonnet 4.6",
         "Five configured skills",
         "Two configured knowledge files",
         "Tools section has no configured tool"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 166,
           "y": 92,
@@ -42,7 +43,8 @@
           "height": 668,
           "label": "Model and package inventory"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "easy-rc-01",
@@ -50,22 +52,24 @@
       "case_id": "RC-01",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/02-rc-01.jpg",
       "status": "reshoot_required",
-      "reason": "The source visibly contains T-2041, T-2233, and the authorized-review gate, but its right-hand algorithm table and lower action strip are cut off. Withhold it rather than present a truncated learner checkpoint."
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: The source visibly contains T-2041, T-2233, and the authorized-review gate, but its right-hand algorithm table and lower action strip are cut off. Withhold it rather than present a truncated learner checkpoint.",
+      "captured_status": "reshoot_required"
     },
     {
       "id": "easy-rc-02",
       "mode": "easy",
       "case_id": "RC-02",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/03-rc-02.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/03-rc-02.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/03-rc-02.png",
+      "historical_visible_anchors": [
         "T-2041",
         "Desk Supervisor — EU Equities",
         "T-2233",
         "Desk Supervisor — Credit"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 132,
@@ -73,21 +77,23 @@
           "height": 132,
           "label": "Traders and supervisor calls"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "easy-rc-03",
       "mode": "easy",
       "case_id": "RC-03",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/04-rc-03.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/04-rc-03.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/04-rc-03.png",
+      "historical_visible_anchors": [
         "TRD-88133",
         "Fields 59 & 7 missing",
         "no ARM submission"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 556,
@@ -95,23 +101,25 @@
           "height": 91,
           "label": "Deterministic rejection evidence"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "easy-rc-04",
       "mode": "easy",
       "case_id": "RC-04",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/05-rc-04.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/05-rc-04.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/05-rc-04.png",
+      "historical_visible_anchors": [
         "ALGO-POV-NL",
         "Block Required",
         "Never validated",
         "Risk controls",
         "Kill-switch test"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 337,
@@ -126,7 +134,8 @@
           "height": 176,
           "label": "Missing artefacts"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "easy-rc-05",
@@ -134,20 +143,22 @@
       "case_id": "RC-05",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/06-rc-05.jpg",
       "status": "reshoot_required",
-      "reason": "The visible response shows TRD-88117, TRD-88129, TRD-88150, and an algorithm-documentation heading, but the required RC-05 anchor TRD-88133 is not visible."
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: The visible response shows TRD-88117, TRD-88129, TRD-88150, and an algorithm-documentation heading, but the required RC-05 anchor TRD-88133 is not visible.",
+      "captured_status": "reshoot_required"
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/07-confirm-draft.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/07-confirm-draft.png",
-      "status": "reusable",
+      "status": "reshoot_required",
       "draft": true,
-      "visible_anchors": [
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/07-confirm-draft.png",
+      "historical_visible_anchors": [
         "Regulatory Compliance Pilot",
         "Draft"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 104,
           "y": 631,
@@ -155,20 +166,22 @@
           "height": 49,
           "label": "Pilot remains Draft"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/01-create-blank-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/01-create-blank-agent.png",
+      "historical_visible_anchors": [
         "Untitled Agent",
         "Blank Build workspace"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 165,
           "y": 101,
@@ -176,19 +189,21 @@
           "height": 48,
           "label": "Blank agent name field"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/02-name-manual-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/02-name-manual-agent.png",
+      "historical_visible_anchors": [
         "Regulatory Manual Build in the name field"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 165,
           "y": 101,
@@ -196,22 +211,24 @@
           "height": 48,
           "label": "Manual agent name"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/03-enter-global-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/03-enter-global-instructions.png",
+      "historical_visible_anchors": [
         "Synthetic financial-services regulatory compliance pilot",
         "Boundaries",
         "Routing",
         "Response contract"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 85,
           "y": 217,
@@ -226,20 +243,22 @@
           "height": 129,
           "label": "Reviewed routing"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
       "step": 4,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/04-save-global-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/04-save-global-instructions.png",
+      "historical_visible_anchors": [
         "Save (Ctrl+S)",
         "Reason: No unsaved changes"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1048,
           "y": 48,
@@ -247,7 +266,8 @@
           "height": 51,
           "label": "Saved instruction policy"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-05",
@@ -255,19 +275,21 @@
       "step": 5,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg",
       "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: Duplicate visual evidence; retained capture hard-step-04.",
+      "captured_status": "reshoot_required"
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/06-remove-web-search.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/06-remove-web-search.png",
+      "historical_visible_anchors": [
         "Knowledge section shows only the add control and no Search all websites chip"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1024,
           "y": 257,
@@ -275,20 +297,22 @@
           "height": 63,
           "label": "Web search removed"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/07-open-knowledge-upload.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/07-open-knowledge-upload.png",
+      "historical_visible_anchors": [
         "Upload files",
         "Drag and drop or browse your device"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 314,
           "y": 103,
@@ -296,7 +320,8 @@
           "height": 316,
           "label": "Knowledge uploader"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-08",
@@ -304,20 +329,22 @@
       "step": 8,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-07."
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json. Earlier finding: Duplicate visual evidence; retained capture hard-step-07.",
+      "captured_status": "reshoot_required"
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/09-upload-rules-controls.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/09-upload-rules-controls.png",
+      "historical_visible_anchors": [
         "aibast_fs-regulatory-compliance-rules-and-controls.md",
         "Add to agent"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 338,
           "y": 471,
@@ -325,20 +352,22 @@
           "height": 46,
           "label": "Rules and controls selected"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/10-verify-two-knowledge-files.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/10-verify-two-knowledge-files.png",
+      "historical_visible_anchors": [
         "Rules-and-controls knowledge chip",
         "Synthetic-records knowledge chip"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1024,
           "y": 306,
@@ -346,21 +375,23 @@
           "height": 105,
           "label": "Two knowledge files"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/11-open-skill-upload.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/11-open-skill-upload.png",
+      "historical_visible_anchors": [
         "Add skill",
         "Upload a skill",
         "SKILL.md file requirement"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 274,
           "y": 65,
@@ -368,19 +399,21 @@
           "height": 558,
           "label": "SKILL.md uploader"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/12-upload-dashboard-skill.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/12-upload-dashboard-skill.png",
+      "historical_visible_anchors": [
         "compliance-dashboard-and-audit-readiness"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1028,
           "y": 184,
@@ -388,19 +421,21 @@
           "height": 44,
           "label": "Dashboard skill"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/13-upload-surveillance-skill.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/13-upload-surveillance-skill.png",
+      "historical_visible_anchors": [
         "trade-reporting-and-execution-surveillance"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1028,
           "y": 184,
@@ -408,19 +443,21 @@
           "height": 44,
           "label": "Surveillance skill"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/14-upload-documentation-skill.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/14-upload-documentation-skill.png",
+      "historical_visible_anchors": [
         "algorithm-documentation-and-go-live-review"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1028,
           "y": 184,
@@ -428,19 +465,21 @@
           "height": 44,
           "label": "Documentation skill"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/15-upload-remediation-skill.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/15-upload-remediation-skill.png",
+      "historical_visible_anchors": [
         "regulatory-correction-and-submission-preparation"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1028,
           "y": 184,
@@ -448,20 +487,22 @@
           "height": 44,
           "label": "Remediation skill"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
       "step": 16,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/16-upload-certification-skill.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/16-upload-certification-skill.png",
+      "historical_visible_anchors": [
         "trader-certification-readiness",
         "Five configured skills"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1028,
           "y": 184,
@@ -469,19 +510,21 @@
           "height": 44,
           "label": "Certification skill"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/17-open-model-picker.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/17-open-model-picker.png",
+      "historical_visible_anchors": [
         "Claude Sonnet 4.6 is available in the open model picker"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1028,
           "y": 376,
@@ -489,19 +532,21 @@
           "height": 65,
           "label": "Target model option"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/18-select-sonnet46.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/18-select-sonnet46.png",
+      "historical_visible_anchors": [
         "Claude Sonnet 4.6 selected"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1204,
           "y": 85,
@@ -509,23 +554,25 @@
           "height": 42,
           "label": "Claude Sonnet 4.6"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-19",
       "mode": "hard",
       "step": 19,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/19-review-complete-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/19-review-complete-inventory.png",
+      "historical_visible_anchors": [
         "Claude Sonnet 4.6",
         "Five configured skills",
         "Tools section has no configured tool",
         "Two configured knowledge files",
         "Reason: No unsaved changes"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 1204,
           "y": 85,
@@ -554,21 +601,23 @@
           "height": 93,
           "label": "Two knowledge files"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-20",
       "mode": "hard",
       "step": 20,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/20-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/20-open-preview.png",
+      "historical_visible_anchors": [
         "Preview tab",
         "New chat",
         "Regulatory Manual Build greeting"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 638,
           "y": 11,
@@ -583,7 +632,8 @@
           "height": 42,
           "label": "Fresh chat"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-21",
@@ -591,14 +641,15 @@
       "step": 21,
       "case_id": "RC-01",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/21-preview-rc01-audit-readiness.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/21-preview-rc01-audit-readiness.png",
+      "historical_visible_anchors": [
         "T-2041",
         "T-2233",
         "Two Traders Must Be Stood Down"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 421,
@@ -606,7 +657,8 @@
           "height": 132,
           "label": "RC-01 trader evidence"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-22",
@@ -614,14 +666,15 @@
       "step": 22,
       "case_id": "RC-02",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/22-preview-rc02-certifications.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/22-preview-rc02-certifications.png",
+      "historical_visible_anchors": [
         "T-2041",
         "T-2233",
         "must be suspended from trading"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 493,
@@ -629,7 +682,8 @@
           "height": 95,
           "label": "RC-02 suspension controls"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-23",
@@ -637,14 +691,15 @@
       "step": 23,
       "case_id": "RC-03",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/23-preview-rc03-trade-surveillance.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/23-preview-rc03-trade-surveillance.png",
+      "historical_visible_anchors": [
         "TRD-88133",
         "Fields 59 and 7",
         "authorized review"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 339,
@@ -652,7 +707,8 @@
           "height": 151,
           "label": "RC-03 correction evidence"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-24",
@@ -660,14 +716,15 @@
       "step": 24,
       "case_id": "RC-04",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/24-preview-rc04-algorithm-go-live.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/24-preview-rc04-algorithm-go-live.png",
+      "historical_visible_anchors": [
         "ALGO-POV-NL",
         "must be blocked from go-live",
         "authorized human review and sign-off"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 241,
@@ -675,7 +732,8 @@
           "height": 119,
           "label": "RC-04 go-live gate"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-25",
@@ -683,14 +741,15 @@
       "step": 25,
       "case_id": "RC-05",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/25-preview-rc05-board-evidence.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/25-preview-rc05-board-evidence.png",
+      "historical_visible_anchors": [
         "TRD-88133",
         "zero submission record",
         "Summary scorecard for the board"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 288,
           "y": 326,
@@ -698,20 +757,22 @@
           "height": 260,
           "label": "RC-05 board scorecard"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "id": "hard-step-26",
       "mode": "hard",
       "step": 26,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg",
-      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/26-confirm-draft-no-publish.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "status": "reshoot_required",
+      "captured_status": "reusable",
+      "historical_annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/26-confirm-draft-no-publish.png",
+      "historical_visible_anchors": [
         "Regulatory Manual Build",
         "Draft"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 104,
           "y": 270,
@@ -719,7 +780,8 @@
           "height": 50,
           "label": "Manual build remains Draft"
         }
-      ]
+      ],
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     }
   ],
   "reshoot_plan": {
@@ -738,7 +800,13 @@
       "Copilot-only final complete verdict."
     ]
   },
-  "release_review": {
+  "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json.",
+  "captured_summary": {
+    "total_existing_captures": 33,
+    "reusable": 29,
+    "reshoot_required": 4
+  },
+  "captured_release_review": {
     "status": "approved",
     "reviewer": "workshop-builder:fs-regulatory-compliance",
     "reviewed_at": "2026-08-10T00:57:29+00:00",

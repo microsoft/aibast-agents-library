@@ -42,28 +42,28 @@ THEME_SCRIPT = """(() => {
       document.documentElement.setAttribute("data-theme", theme);
     })();"""
 
-THEME_VARIABLES = """--cp-bg: #f7f4ef;
-      --cp-bg-elevated: #fcfbf8;
+THEME_VARIABLES = """--cp-bg: #f4f4f5;
+      --cp-bg-elevated: #fafafa;
       --cp-surface: #ffffff;
-      --cp-surface-soft: #f5f5f5;
-      --cp-border: #dedede;
-      --cp-border-strong: #919191;
-      --cp-text: #242424;
-      --cp-text-muted: #5c5c5c;
-      --cp-text-soft: #6f6f6f;
+      --cp-surface-soft: #eeeeef;
+      --cp-border: #dcdcde;
+      --cp-border-strong: #8e8e93;
+      --cp-text: #18181b;
+      --cp-text-muted: #52525b;
+      --cp-text-soft: #6b6b74;
       --cp-accent: #b11f4b;
       --cp-accent-hover: #9a1a41;
       --cp-accent-soft: rgba(177, 31, 75, 0.08);
       --cp-accent-fg: #ffffff;
-      --cp-success: #16a34a;
-      --cp-danger: #dc2626;
-      --cp-warning: #f59e0b;
-      --cp-link: #0078d4;
-      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
-      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-success: #15803d;
+      --cp-danger: #c81e1e;
+      --cp-warning: #b45309;
+      --cp-link: #0f6cbd;
+      --cp-shadow: 0 16px 40px rgba(24, 24, 27, 0.10);
+      --cp-overlay: rgba(24, 24, 27, 0.55);
       --cp-panel: rgba(255, 255, 255, 0.86);
       --cp-panel-strong: rgba(255, 255, 255, 0.96);
-      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-sheen: rgba(24, 24, 27, 0.04);
       --cp-highlight: rgba(177, 31, 75, 0.12);"""
 
 
@@ -296,7 +296,7 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert 'data-easy-lane="copilot"' in quest
     assert 'data-easy-lane="brainstem"' in quest
     assert 'localStorage.getItem("aibast:workshop-engine") === "copilot"' in quest
-    assert re.search(r'\?\s*"brainstem"\s*:\s*"copilot"', quest)
+    assert re.search(r'\?\s*"copilot"\s*:\s*"brainstem"', quest)
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (

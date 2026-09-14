@@ -137,6 +137,14 @@ def test_knowledge_files_are_complete_not_placeholder_summaries():
         assert "Canonical strict-isolation tool evidence" in controls
         assert "Evidence-first response contract" in controls
         combined = (records + controls).lower()
+        # The preserved native KYC rule forbids a placeholder; it is not a stub.
+        combined = combined.replace(
+            "do not add a status table, icons, applicant biography, account product, "
+            "risk rating, assets, dates, process sequence, evidence-receipt claim, "
+            "ranking, action request, placeholder link, escalation recommendation, "
+            "or proposed next step.",
+            "",
+        )
         for marker in forbidden:
             assert marker not in combined, (slug, marker)
 

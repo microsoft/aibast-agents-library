@@ -1,587 +1,725 @@
 {
   "schema": "aibast-visual-checkpoints/1.0",
   "solution": "@aibast-agents-library/prior-authorization",
+  "build_revision": "shared-grounding-r4",
+  "as_of": "2026-09-13T12:45:09.571Z",
   "policy": {
-    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
-    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
-    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
-    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+    "native_gate": "Completed native final answers and their recorded semantic reviews establish r4 passes; debug reasoning and source-only tests do not.",
+    "visual_gate": "Only exact personally reviewed PNG selections are current proof. Actual initial construction, replacements and readbacks retain their original scopes; private full-window originals are not distributed.",
+    "workshop_gate": "All 18 Manual checkpoints are covered, with four supplemental activity references. This is not a continuous fresh-build film or production certification."
+  },
+  "release_review": {
+    "status": "native_manual_verified",
+    "certified": false
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 21,
-    "reshoot_required": 2
+    "total_checkpoints": 27,
+    "reusable": 22,
+    "reshoot_required": 5,
+    "reviewed_manual_images": 22,
+    "manual_build_steps_open": 0,
+    "current_native_cases_passed": 4
   },
+  "strict_coverage": {
+    "status": "native_manual_verified",
+    "covered_locked_cases": [
+      "PA-01",
+      "PA-02",
+      "PA-03",
+      "PA-04"
+    ],
+    "missing_locked_cases": [],
+    "reviewed_student_steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "open_student_steps": [],
+    "reason": "On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed."
+  },
+  "history": "evals/history/2026-08/index.json",
   "captures": [
     {
       "id": "easy-pa-01",
       "mode": "easy",
-      "case_id": "PA-01",
       "source": "solutions/prior-authorization/screenshots/assisted/01-pa-01.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/01-pa-01.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Checklist only; presence does not establish medical necessity or authorization",
-        "The missing conservative-care duration maps directly to reviewer check #3",
-        "Human review required"
-      ],
-      "full_case_not_visibly_proven": [
-        "SYN-AUTH-001 and the exact additional evidence requested marker are outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 288,
-          "y": 143,
-          "width": 934,
-          "height": 45,
-          "label": "Checklist boundary"
-        },
-        {
-          "x": 288,
-          "y": 414,
-          "width": 936,
-          "height": 62,
-          "label": "Missing evidence gap"
-        }
-      ]
+      "case_id": "PA-01",
+      "status": "reshoot_required",
+      "reason": "Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted."
     },
     {
       "id": "easy-pa-02",
       "mode": "easy",
-      "case_id": "PA-02",
       "source": "solutions/prior-authorization/screenshots/assisted/02-pa-02.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/02-pa-02.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Evidence Status in SYN-AUTH-001",
-        "Relevant encounter note and prior imaging evidence are Present",
-        "Documented duration fields are Not found in synthetic source"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Synthetic Imaging Evidence Checklist and Checklist only markers are outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 289,
-          "y": 175,
-          "width": 834,
-          "height": 173,
-          "label": "Criteria-to-evidence status"
-        }
-      ]
+      "case_id": "PA-02",
+      "status": "reshoot_required",
+      "reason": "Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted."
     },
     {
       "id": "easy-pa-03",
       "mode": "easy",
-      "case_id": "PA-03",
       "source": "solutions/prior-authorization/screenshots/assisted/03-pa-03.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/03-pa-03.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "This is a source transcription, not an agent determination",
-        "additional evidence requested",
-        "The recorded state is not an authorization approval, denial, or outcome"
-      ],
-      "full_case_not_visibly_proven": [
-        "SYN-AUTH-001 is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 288,
-          "y": 189,
-          "width": 935,
-          "height": 280,
-          "label": "Source-state boundary"
-        }
-      ]
+      "case_id": "PA-03",
+      "status": "reshoot_required",
+      "reason": "Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted."
     },
     {
       "id": "easy-pa-04",
       "mode": "easy",
-      "case_id": "PA-04",
       "source": "solutions/prior-authorization/screenshots/assisted/04-pa-04.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/04-pa-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "SYN-POL-IMG-01 Reviewer Checks",
-        "Human utilization reviewer owns rationale, completeness, and submission",
-        "Reviewer must confirm reconsideration is appropriate"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact minimum-necessary evidence marker is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 288,
-          "y": 130,
-          "width": 936,
-          "height": 170,
-          "label": "Policy reviewer checks"
-        },
-        {
-          "x": 288,
-          "y": 315,
-          "width": 936,
-          "height": 155,
-          "label": "Human review ownership"
-        }
-      ]
+      "case_id": "PA-04",
+      "status": "reshoot_required",
+      "reason": "Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted."
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/prior-authorization/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "The Agents list does not show Prior Authorization Pilot. Unrelated agent rows and their Draft badges cannot prove the target Draft identity.",
-      "draft": true
+      "reason": "Historical assisted/Easy and source-agent transcripts remain separate from current native Manual r4 acceptance. Their old pass flags and the incomplete Prior Authorization Pilot import archive do not reproduce or certify this Manual build. No current Easy-lane regression or native import is accepted."
     },
     {
-      "id": "hard-step-01",
+      "id": "manual-r4-step-01",
       "mode": "hard",
       "step": 1,
-      "source": "solutions/prior-authorization/screenshots/manual/01-create-blank-agent.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "evidence_stage": "initial_build_action",
+      "capture_revision": "initial-r1",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-01-blank.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-01-blank.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T07:08:51.489744+00:00",
+      "review_provenance": "Personally inspected the complete selected image. Untitled Agent, empty instruction editor with explicitly labeled placeholder help, empty Skills/Tools, the actual initial model, and default web search are legible. No spinner, orange outline, clipped required state, unrelated owner or annotation over native text is present.",
+      "media": {
+        "kind": "cropped_capture",
+        "format": "PNG",
+        "width": 1459,
+        "height": 588,
+        "view_count": 1,
+        "capture_count": 1,
+        "bytes": 203535,
+        "sha256": "7267e02d75cc08153199b80b072f43c4d451e997e61c709672eba0be81cce2fd",
+        "private_originals": true,
+        "scope": "Actual settled new-agent builder before naming or entering policy. This is step 1, not a saved/reopened Draft or final-model confirmation."
+      },
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
-      ],
-      "boxes": [
-        {
-          "x": 165,
-          "y": 101,
-          "width": 815,
-          "height": 48,
-          "label": "Blank agent workspace"
-        }
+        "Create a blank Copilot Studio agent"
       ]
     },
     {
-      "id": "hard-step-02",
+      "id": "manual-r4-step-02",
       "mode": "hard",
       "step": 2,
-      "source": "solutions/prior-authorization/screenshots/manual/02-name-agent.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/02-name-agent.png",
+      "evidence_stage": "initial_build_action",
+      "capture_revision": "initial-r1",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-02-name.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-02-name.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T07:11:17.510918+00:00",
+      "review_provenance": "Personally inspected the image: the complete exact name is readable, with no clipping, spinner, automation outline or overlaid annotation. The caption correctly identifies this as name entry before policy, not a saved-state or final-inventory claim.",
+      "media": {
+        "kind": "cropped_capture",
+        "format": "PNG",
+        "width": 512,
+        "height": 105,
+        "view_count": 1,
+        "capture_count": 1,
+        "bytes": 18096,
+        "sha256": "273a549fc76fa1935e27cd80b6978a8291945f2a85f04bb1397e44c902b814b6",
+        "private_originals": true,
+        "scope": "Name entered through the real keyboard/input workflow in the same new-agent builder; no policy has been entered or save/reopen performed yet."
+      },
       "visible_anchors": [
-        "Prior Authorization Manual in the name field"
-      ],
-      "boxes": [
-        {
-          "x": 165,
-          "y": 101,
-          "width": 815,
-          "height": 48,
-          "label": "Manual agent name entered"
-        }
+        "Name Prior Authorization Manual"
       ]
     },
     {
-      "id": "hard-step-03",
+      "id": "manual-r4-step-03",
       "mode": "hard",
       "step": 3,
-      "source": "solutions/prior-authorization/screenshots/manual/03-enter-instructions.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/03-enter-instructions.png",
+      "evidence_stage": "existing_draft_replacement",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-replacement-board-clean.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-replacement-board-clean.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T11:24:04.898873+00:00",
+      "review_provenance": "Personally inspected the selected clean board and its actual scroll views. The complete role, privacy boundary, routing, requested-only scope, decision rules, shared no-causation/no-advice rules, footer, production seams and locked anchors are readable. Labels do not cover content and no orange outline is present. The initial alignment and clipped repeated-line board remain preserved but unselected.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 985,
+        "height": 1775,
+        "view_count": 3,
+        "capture_count": 3,
+        "bytes": 840053,
+        "sha256": "8792fb1464d45b6fdfc2323c0564b820301b67464c3cd012c7096fbdf223d3f1",
+        "private_originals": true,
+        "scope": "Three labelled genuine scroll views of the same r4 policy replacement before Save; not first-time entry or persistence evidence"
+      },
       "visible_anchors": [
-        "Reviewed instruction policy",
-        "Locked Preview evidence anchors for PA-01 through PA-04"
-      ],
-      "boxes": [
-        {
-          "x": 86,
-          "y": 213,
-          "width": 890,
-          "height": 620,
-          "label": "Reviewed instruction policy"
-        }
+        "Enter the complete current global instructions"
       ]
     },
     {
-      "id": "hard-step-04",
+      "id": "manual-r4-step-04",
       "mode": "hard",
       "step": 4,
-      "source": "solutions/prior-authorization/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instructions are visible, but the screenshot does not show a saved-state indicator such as No unsaved changes. The action label alone is not visual proof that save completed."
+      "evidence_stage": "policy_only_save_reopen",
+      "capture_revision": "shared-grounding-r4",
+      "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-after-reopen-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/policy-after-reopen-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T11:30:09.590606+00:00",
+      "review_provenance": "Personally reviewed the complete saved-policy board and actual scroll views. The agent name, role, boundaries, requested-only scope, shared grounding rules, full safety footer, production seams and exact locked anchors are readable. All 4,535 normalized characters matched after same-ID reopen. Panels are explicitly labelled and contain no obscuring annotations, clipped evidence or orange outline.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 1045,
+        "height": 1979,
+        "view_count": 3,
+        "capture_count": 3,
+        "bytes": 892133,
+        "sha256": "71db6615a5681f2aad2612d4e4d06a74f39c5be782b1de47c6e766096f961e5e",
+        "private_originals": true,
+        "scope": "Same saved Draft reopened through Agents; three new policy views before remaining knowledge/skill replacements. Policy persistence only, not final-build acceptance"
+      },
+      "visible_anchors": [
+        "Save, leave, reopen, and verify the complete instruction policy"
+      ]
     },
     {
-      "id": "hard-step-05",
+      "id": "manual-r4-step-05",
       "mode": "hard",
       "step": 5,
-      "source": "solutions/prior-authorization/screenshots/manual/05-remove-web-search.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/05-remove-web-search.png",
+      "evidence_stage": "initial_build_action",
+      "capture_revision": "initial-r1",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-05-remove-web.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-05-remove-web.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T07:24:08.122279+00:00",
+      "review_provenance": "Personally inspected the actual post-removal image: Skills, Tools and Knowledge are empty and fully readable. Search all websites is absent; no spinner, clipping or automation outline appears. The caption explicitly says no workshop upload has occurred yet.",
+      "media": {
+        "kind": "cropped_capture",
+        "format": "PNG",
+        "width": 570,
+        "height": 240,
+        "view_count": 1,
+        "capture_count": 1,
+        "bytes": 31634,
+        "sha256": "98ace75395fe053b7e3600688a1c59c7a568ee14f3edd88fb9f23778959496db",
+        "private_originals": true,
+        "scope": "Only the default web source was removed through its visible control. This captures removal before uploads, not saved final-inventory acceptance."
+      },
       "visible_anchors": [
-        "The visible Knowledge inventory contains no Search all websites source"
-      ],
-      "boxes": [
-        {
-          "x": 1018,
-          "y": 257,
-          "width": 380,
-          "height": 75,
-          "label": "No default web source"
-        }
+        "Remove default web search"
       ]
     },
     {
-      "id": "hard-step-06",
+      "id": "manual-r4-step-06",
       "mode": "hard",
       "step": 6,
-      "source": "solutions/prior-authorization/screenshots/manual/06-add-aibast-prior-authorization-review-rules.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/06-add-aibast-prior-authorization-review-rules.png",
+      "evidence_stage": "existing_draft_replacement",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/rules-replacement-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/rules-replacement-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T11:32:45.524504+00:00",
+      "review_provenance": "Personally opened and inspected both actual views and the labelled board. The exact staged review-rules filename, Add to agent control, Ready badge, complete Name/Description/File detail and unedited Cancel are visible and readable. No spinner, clipped foreground evidence, orange outline or obscuring annotation is present.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 848,
+        "height": 1476,
+        "view_count": 2,
+        "capture_count": 2,
+        "bytes": 230964,
+        "sha256": "7b2e0caf83223b0c8587d9c652624c1faaaa5b8bf4a62a1ece464be6c49f55a9",
+        "private_originals": true,
+        "scope": "Actual replacement-file staging and Ready status in the same existing Draft; not a first-time upload or final saved build"
+      },
       "visible_anchors": [
-        "aibast_prior-authorization-review-rules.md is visible in Knowledge"
-      ],
-      "boxes": [
-        {
-          "x": 1022,
-          "y": 305,
-          "width": 372,
-          "height": 48,
-          "label": "Review-rules knowledge"
-        }
+        "Add knowledge: aibast_prior-authorization-review-rules.md"
       ]
     },
     {
-      "id": "hard-step-07",
+      "id": "manual-r4-step-07",
       "mode": "hard",
       "step": 7,
-      "source": "solutions/prior-authorization/screenshots/manual/07-add-aibast-prior-authorization-synthetic-records.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/07-add-aibast-prior-authorization-synthetic-records.png",
+      "evidence_stage": "existing_draft_replacement",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/records-replacement-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/records-replacement-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T11:36:48.788625+00:00",
+      "review_provenance": "Personally inspected the actual staging and Ready views and the labelled board. The full synthetic-records filename, Add to agent control, complete Name/Description/File detail and Ready badge are readable. The native Close tooltip covers no evidence. There is no spinner, clipped foreground evidence, orange outline or obscuring annotation.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 848,
+        "height": 1476,
+        "view_count": 2,
+        "capture_count": 2,
+        "bytes": 237758,
+        "sha256": "2ac487b0bd4b1329fd0a5819f9f2155696f7947c2560639c9740af36d8bf9203",
+        "private_originals": true,
+        "scope": "Actual replacement of the existing synthetic-records assignment through the same Draft's file picker, followed by Ready. This is an existing-Draft replacement, not a first-time upload or final saved-build proof."
+      },
       "visible_anchors": [
-        "aibast_prior-authorization-synthetic-records is visible in Knowledge",
-        "aibast_prior-authorization-review-rules.md remains visible"
-      ],
-      "boxes": [
-        {
-          "x": 1020,
-          "y": 305,
-          "width": 378,
-          "height": 85,
-          "label": "Two knowledge sources"
-        }
+        "Add knowledge: aibast_prior-authorization-synthetic-records.md"
       ]
     },
     {
-      "id": "hard-step-08",
+      "id": "manual-r4-step-08",
       "mode": "hard",
       "step": 8,
-      "source": "solutions/prior-authorization/screenshots/manual/08-add-appeal-evidence-packet.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/08-add-appeal-evidence-packet.png",
+      "evidence_stage": "existing_draft_replacement",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/appeal-replacement-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/appeal-replacement-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T11:43:13.421352+00:00",
+      "review_provenance": "Personally inspected every selected view and the labelled board. The exact name/description, locked prompt, source rule, full line template, evidence-value rule, absent-rationale boundary, review boundary and fallback are readable and complete. The pre-replacement menu is explicitly distinguished from the three new-body views. No clipped evidence, orange outline or obscuring annotation is present.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 873,
+        "height": 1811,
+        "view_count": 4,
+        "capture_count": 4,
+        "bytes": 705896,
+        "sha256": "ce0a0dc1999d89c2b62a23a96fcfe535aa7810dde72b0fc079e9ae81e18cbec9",
+        "private_originals": true,
+        "scope": "One existing appeal skill replaced: genuine pre-replacement menu and three complete new-definition views; not first-time upload or final save/reopen"
+      },
       "visible_anchors": [
-        "prior-authorization-appeal-evidence-packet is visible in Skills"
-      ],
-      "boxes": [
-        {
-          "x": 1020,
-          "y": 185,
-          "width": 380,
-          "height": 58,
-          "label": "Appeal evidence skill"
-        }
+        "Add skill: prior-authorization-appeal-evidence-packet"
       ]
     },
     {
-      "id": "hard-step-09",
+      "id": "manual-r4-step-09",
       "mode": "hard",
       "step": 9,
-      "source": "solutions/prior-authorization/screenshots/manual/09-add-criteria-evidence.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/09-add-criteria-evidence.png",
+      "evidence_stage": "existing_draft_replacement",
+      "capture_revision": "line-templates-r2",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/criteria-replacement-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/criteria-replacement-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T09:34:07.914586+00:00",
+      "review_provenance": "Personally inspected every panel: the full actual Replace menu, exact target name/description, complete locked prompt/source boundary, all line-template text, repeated reviewer prefix, source missingness, safety-footer instruction, review boundary and fallback are readable and complete. This documents repair of the existing skill, not creation of a new agent or a first-time upload.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 840,
+        "height": 1385,
+        "view_count": 4,
+        "capture_count": 4,
+        "bytes": 510979,
+        "sha256": "5b79b8d7bbaa818697e9f244ede10eca1879bdf3ac76fc6ab4849866f3db4bc4",
+        "private_originals": true,
+        "scope": "One actual earlier criteria-skill replacement: existing Replace menu and three complete body views. The same definition remained unchanged in r4 and was rechecked after Save/reopen. This is not a first-time upload."
+      },
       "visible_anchors": [
-        "prior-authorization-criteria-evidence is visible in Skills",
-        "prior-authorization-appeal-evidence-packet remains visible"
-      ],
-      "boxes": [
-        {
-          "x": 1020,
-          "y": 184,
-          "width": 380,
-          "height": 85,
-          "label": "Criteria evidence skill"
-        }
+        "Add skill: prior-authorization-criteria-evidence"
       ]
     },
     {
-      "id": "hard-step-10",
+      "id": "manual-r4-step-10",
       "mode": "hard",
       "step": 10,
-      "source": "solutions/prior-authorization/screenshots/manual/10-add-request-evidence.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/10-add-request-evidence.png",
+      "evidence_stage": "existing_draft_replacement",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/request-replacement-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/request-replacement-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T11:47:30.403869+00:00",
+      "review_provenance": "Personally inspected all selected views and the labelled board. The complete name/description, locked prompt, source, full inventory template, explicit inventory-only stop rule, complete grounding/review boundaries and fallback are readable. The old menu view is explicitly distinguished from the new body. No clipped evidence, orange outline or obscuring annotation is present.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 873,
+        "height": 1816,
+        "view_count": 4,
+        "capture_count": 4,
+        "bytes": 703543,
+        "sha256": "4d660ec587c8ddba6cfb299aa18cbe15538868889d2a0a88ac3e208eddf099a4",
+        "private_originals": true,
+        "scope": "One existing request skill replaced: genuine pre-replacement menu and three complete new-definition views; not first-time upload or final saved-build proof"
+      },
       "visible_anchors": [
-        "prior-authorization-request-evidence is visible in Skills",
-        "Three configured skills are visible"
-      ],
-      "boxes": [
-        {
-          "x": 1020,
-          "y": 184,
-          "width": 380,
-          "height": 127,
-          "label": "Request evidence skill"
-        }
+        "Add skill: prior-authorization-request-evidence"
       ]
     },
     {
-      "id": "hard-step-11",
+      "id": "manual-r4-step-11",
       "mode": "hard",
       "step": 11,
-      "source": "solutions/prior-authorization/screenshots/manual/11-add-status-summary.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/11-add-status-summary.png",
+      "evidence_stage": "initial_build_action",
+      "capture_revision": "initial-r1",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-11-status-upload-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-11-status-upload-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T07:49:39.189663+00:00",
+      "review_provenance": "Personally inspected the real picker and both uploaded-body panels. The exact status skill name, complete description, locked prompt, source direction, full output contract, review boundary and fallback are legible. No required text is clipped or covered; no spinner or orange outline appears.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 806,
+        "height": 1534,
+        "view_count": 3,
+        "capture_count": 3,
+        "bytes": 358824,
+        "sha256": "49238b84c8208ee3db694d61ae2415d324236c04ba5b4b1ff950cb7f59202172",
+        "private_originals": true,
+        "scope": "Single real status SKILL.md upload and complete parsed-public-source verification. All four skills now exist in the current build; final agent persistence and native runtime acceptance are not implied."
+      },
       "visible_anchors": [
-        "prior-authorization-status-summary is visible in Skills",
-        "Four configured skills are visible"
-      ],
-      "boxes": [
-        {
-          "x": 1020,
-          "y": 184,
-          "width": 380,
-          "height": 170,
-          "label": "Four configured skills"
-        }
+        "Add skill: prior-authorization-status-summary"
       ]
     },
     {
-      "id": "hard-step-12",
+      "id": "manual-r4-step-12",
       "mode": "hard",
       "step": 12,
-      "source": "solutions/prior-authorization/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/12-review-inventory.png",
+      "evidence_stage": "final_save_reopen",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/inventory-after-reopen-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/inventory-after-reopen-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T11:56:44.655249+00:00",
+      "review_provenance": "Personally inspected all selected saved views and the board. The exact name, Sonnet 4.6, four distinct skill names, empty Tools, two exact knowledge names and both complete Ready dialogs are readable. The cursor-over-name original is retained but replaced by a genuine clean reshoot. Labels cover no evidence; no spinner, clipped foreground evidence or orange outline remains.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 1477,
+        "height": 2324,
+        "view_count": 3,
+        "capture_count": 3,
+        "bytes": 688985,
+        "sha256": "10e3a4f01d2a38e2d50eec1772e7f08a0f7e0e7d3a5a411f846a5ca6eabe506f",
+        "private_originals": true,
+        "scope": "Three genuine post-final-reopen views: exact same named/modelled agent, complete inventory, empty Tools and both saved Ready sources; no case acceptance"
+      },
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Two configured knowledge sources",
-        "Tools section contains no configured tool",
-        "Save tooltip states No unsaved changes"
-      ],
-      "boxes": [
-        {
-          "x": 1205,
-          "y": 84,
-          "width": 190,
-          "height": 45,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1020,
-          "y": 185,
-          "width": 380,
-          "height": 166,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1020,
-          "y": 360,
-          "width": 380,
-          "height": 60,
-          "label": "No configured tools"
-        },
-        {
-          "x": 1020,
-          "y": 455,
-          "width": 380,
-          "height": 95,
-          "label": "Two knowledge sources"
-        },
-        {
-          "x": 1048,
-          "y": 48,
-          "width": 198,
-          "height": 50,
-          "label": "Saved state"
-        }
+        "Select Claude Sonnet 4.6, save, reopen, and verify the full inventory"
       ]
     },
     {
-      "id": "hard-step-13",
+      "id": "manual-r4-step-13",
       "mode": "hard",
       "step": 13,
-      "source": "solutions/prior-authorization/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/13-open-preview.png",
+      "evidence_stage": "fresh_chat",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/fresh-preview-before-PA01.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/fresh-preview-before-PA01.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:02:36.626381+00:00",
+      "review_provenance": "Personally inspected the selected fresh Preview. The exact agent name, default greeting, empty composer, New chat control and Preview selection are readable. There is no previous case, spinner, partial response, clipped evidence or orange outline. Only surrounding navigation was cropped; conversation content was not edited.",
+      "media": {
+        "kind": "cropped_capture",
+        "format": "PNG",
+        "width": 1445,
+        "height": 756,
+        "view_count": 1,
+        "capture_count": 1,
+        "bytes": 81291,
+        "sha256": "a47b7a4841aa41fff7f8fb0d32ee6380e94b19a438fb77c4f3f94ecd80b9a4b9",
+        "private_originals": true,
+        "scope": "Actual settled greeting-only Preview after explicit New chat, before any r4 case prompt"
+      },
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Prior Authorization Manual greeting"
-      ],
-      "boxes": [
-        {
-          "x": 568,
-          "y": 2,
-          "width": 355,
-          "height": 56,
-          "label": "Preview selected"
-        },
-        {
-          "x": 835,
-          "y": 83,
-          "width": 105,
-          "height": 50,
-          "label": "Fresh chat control"
-        }
+        "Open a fresh greeting-only Preview conversation"
       ]
     },
     {
-      "id": "hard-pa-01",
+      "id": "manual-r4-step-14",
       "mode": "hard",
-      "case_id": "PA-01",
       "step": 14,
-      "source": "solutions/prior-authorization/screenshots/manual/14-pa-01.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/14-pa-01.png",
+      "evidence_stage": "native_completed_case",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-answer-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-answer-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:22:00.060600+00:00",
+      "review_provenance": "Personally inspected the actual prompt and complete answer views: ordered facts, explicit absent rationale, exact safety footer and source citation are fully readable. Title-case descriptive headings remain visible as returned. No answer content is clipped, obscured or edited.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 882,
+        "height": 777,
+        "view_count": 2,
+        "capture_count": 2,
+        "bytes": 188353,
+        "sha256": "4f232a4787854563fb661a531ecaa387e856ecb0cdda33bca79cee6c35d2ca58",
+        "private_originals": true,
+        "scope": "Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution."
+      },
       "visible_anchors": [
-        "Documented conservative-care duration fields are Not found in synthetic source",
-        "additional evidence requested",
-        "Human review required"
+        "SYN-AUTH-001",
+        "additional evidence requested"
       ],
-      "full_case_not_visibly_proven": [
-        "SYN-AUTH-001 is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 289,
-          "y": 173,
-          "width": 730,
-          "height": 177,
-          "label": "Evidence inventory"
-        },
-        {
-          "x": 287,
-          "y": 411,
-          "width": 936,
-          "height": 82,
-          "label": "Additional evidence gap"
-        }
-      ]
+      "case_id": "PA-01"
     },
     {
-      "id": "hard-pa-02",
+      "id": "manual-r4-step-15",
       "mode": "hard",
-      "case_id": "PA-02",
       "step": 15,
-      "source": "solutions/prior-authorization/screenshots/manual/15-pa-02.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/15-pa-02.png",
+      "evidence_stage": "native_completed_case",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-answer-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-answer-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:28:44.463506+00:00",
+      "review_provenance": "Personally inspected all three genuine views. The unchanged prompt, both main headings, all three reviewer lines and associations, missing duration, human-policy boundary, complete footer and both citations are readable without clipping or obscuring annotations.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 882,
+        "height": 1177,
+        "view_count": 3,
+        "capture_count": 3,
+        "bytes": 348613,
+        "sha256": "0067771090903b5b32349cd6fbb93bbc8d7b5c67971cdec2319843f1ace3d9f1",
+        "private_originals": true,
+        "scope": "Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution."
+      },
       "visible_anchors": [
-        "Relevant encounter note and prior imaging evidence are Present",
-        "Documented duration fields are Not found in synthetic source",
-        "The crosswalk does not decide policy criteria satisfaction"
+        "Synthetic Imaging Evidence Checklist",
+        "Checklist only"
       ],
-      "full_case_not_visibly_proven": [
-        "The exact Synthetic Imaging Evidence Checklist and Checklist only markers are above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 289,
-          "y": 124,
-          "width": 842,
-          "height": 142,
-          "label": "Criteria evidence rows"
-        },
-        {
-          "x": 289,
-          "y": 327,
-          "width": 935,
-          "height": 152,
-          "label": "Source limitation"
-        }
-      ]
+      "case_id": "PA-02"
     },
     {
-      "id": "hard-pa-03",
+      "id": "manual-r4-step-16",
       "mode": "hard",
-      "case_id": "PA-03",
       "step": 16,
-      "source": "solutions/prior-authorization/screenshots/manual/16-pa-03.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/16-pa-03.png",
+      "evidence_stage": "native_completed_case",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-answer.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-answer.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:34:20.128808+00:00",
+      "review_provenance": "Personally inspected this single genuine completed-response view. The exact prompt, correct 2026-07-30 date with separate citation marker, full transcription/rationale/meaning boundaries, entire footer and both citations are readable and unclipped. Native reasoning was collapsed through its actual control; answer text was not edited.",
+      "media": {
+        "kind": "cropped_capture",
+        "format": "PNG",
+        "width": 850,
+        "height": 530,
+        "view_count": 1,
+        "capture_count": 1,
+        "bytes": 190642,
+        "sha256": "0fd5982f82cb09331263dcb2c911df07096ef9f0a77b825a47336547f8767ba3",
+        "private_originals": true,
+        "scope": "Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution."
+      },
       "visible_anchors": [
-        "This is a source transcription, not an agent determination",
-        "additional evidence requested",
-        "The state does not mean an authorization decision has been made"
+        "SYN-AUTH-001",
+        "not an agent determination"
       ],
-      "full_case_not_visibly_proven": [
-        "SYN-AUTH-001 is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 287,
-          "y": 225,
-          "width": 935,
-          "height": 270,
-          "label": "Recorded-state boundary"
-        }
-      ]
+      "case_id": "PA-03"
     },
     {
-      "id": "hard-pa-04",
+      "id": "manual-r4-step-17",
       "mode": "hard",
-      "case_id": "PA-04",
       "step": 17,
-      "source": "solutions/prior-authorization/screenshots/manual/17-pa-04.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/17-pa-04.png",
+      "evidence_stage": "native_completed_case",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-answer-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-answer-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:40:33.808571+00:00",
+      "review_provenance": "Personally inspected every actual view and the labelled board. The exact prompt, complete required outline, explicit absent rationale, unqualified ordered evidence values, full human ownership and both safety notices/citations are readable and unclipped. No response text was changed or obscured.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 882,
+        "height": 1140,
+        "view_count": 3,
+        "capture_count": 3,
+        "bytes": 353209,
+        "sha256": "db05ad8d88e9a9cc6d780442e35845212146db5aaa7c29f415f057009543950e",
+        "private_originals": true,
+        "scope": "Actual completed r4 final answer and locked prompt, not debug reasoning. The response was not edited; the separate activity reference documents execution."
+      },
       "visible_anchors": [
-        "SYN-POL-IMG-01 Reviewer Checks",
-        "Human utilization reviewer owns rationale, completeness, and submission",
-        "This outline does not constitute an appeal recommendation, filing, payer contact, or record change"
+        "minimum-necessary evidence",
+        "reviewer must confirm"
       ],
-      "full_case_not_visibly_proven": [
-        "The exact minimum-necessary evidence and reviewer must confirm markers are outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 288,
-          "y": 197,
-          "width": 937,
-          "height": 170,
-          "label": "Policy reviewer checks"
-        },
-        {
-          "x": 288,
-          "y": 383,
-          "width": 935,
-          "height": 88,
-          "label": "Human ownership boundary"
-        }
-      ]
+      "case_id": "PA-04"
     },
     {
-      "id": "hard-draft",
+      "id": "manual-r4-step-18",
       "mode": "hard",
       "step": 18,
-      "source": "solutions/prior-authorization/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/18-confirm-draft.png",
+      "evidence_stage": "final_draft_confirmation",
+      "capture_revision": "shared-grounding-r4",
       "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-18-final-draft.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/UI-step-18-final-draft.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:47:00.774538+00:00",
+      "review_provenance": "Personally inspected the privacy-cropped actual Agents row. The complete exact name Prior Authorization Manual and its Draft status are readable beneath their column headings. No unrelated row, account identity, spinner, clipped name/status, orange outline or obscuring annotation is included.",
+      "media": {
+        "kind": "cropped_capture",
+        "format": "PNG",
+        "width": 780,
+        "height": 80,
+        "view_count": 1,
+        "capture_count": 1,
+        "bytes": 14896,
+        "sha256": "462ea542dbd4c5290514c4f4d254bbba21cd7eeacf34272a889419835a19bd5e",
+        "private_originals": true,
+        "scope": "Final Draft state after all four r4 cases; actual same-name row was opened again to verify the saved ID. This is not a creation, upload or publication image."
+      },
       "visible_anchors": [
-        "Prior Authorization Manual",
-        "Draft"
-      ],
-      "boxes": [
-        {
-          "x": 104,
-          "y": 245,
-          "width": 1281,
-          "height": 55,
-          "label": "Target agent remains Draft"
-        }
+        "Confirm the same Draft and stop before publish"
+      ]
+    },
+    {
+      "id": "manual-r4-pa-01-activity",
+      "mode": "activity",
+      "case_id": "PA-01",
+      "evidence_stage": "native_execution_activity",
+      "capture_revision": "shared-grounding-r4",
+      "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-activity-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-01-activity-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:22:00.060600+00:00",
+      "review_provenance": "Personally inspected every labelled crop: matching uploaded skill/input, real search/source inventory, exact query with both result identities, and subsequent native helper. Required activity evidence is readable and unaltered; no reasoning text, spinner or orange automation outline is reproduced.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 882,
+        "height": 1290,
+        "view_count": 4,
+        "capture_count": 4,
+        "bytes": 413932,
+        "sha256": "e8a87de6d42999d84c1c6d53cf54e012c698ecf755c306c153e9629b9d46cd16",
+        "private_originals": true,
+        "scope": "Actual matching uploaded-skill and native knowledge-search activity. Expanded inputs/results are retained privately; reasoning is not displayed."
+      },
+      "visible_anchors": [
+        "prior-authorization-request-evidence",
+        "Searched knowledge"
+      ]
+    },
+    {
+      "id": "manual-r4-pa-02-activity",
+      "mode": "activity",
+      "case_id": "PA-02",
+      "evidence_stage": "native_execution_activity",
+      "capture_revision": "shared-grounding-r4",
+      "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-activity-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-02-activity-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:28:44.463506+00:00",
+      "review_provenance": "Personally inspected both actual crops: matching uploaded criteria skill with native input, and both completed knowledge-search rows. Expanded inputs/results are separately preserved. No reasoning text, spinner, clipped activity evidence or orange outline is reproduced.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 882,
+        "height": 418,
+        "view_count": 2,
+        "capture_count": 2,
+        "bytes": 88942,
+        "sha256": "4fef0d54563c52b03cf6d8a15600f681ebb810301478ee9384082130faeecdfc",
+        "private_originals": true,
+        "scope": "Actual matching uploaded-skill and native knowledge-search activity. Expanded inputs/results are retained privately; reasoning is not displayed."
+      },
+      "visible_anchors": [
+        "prior-authorization-criteria-evidence",
+        "Searched knowledge"
+      ]
+    },
+    {
+      "id": "manual-r4-pa-03-activity",
+      "mode": "activity",
+      "case_id": "PA-03",
+      "evidence_stage": "native_execution_activity",
+      "capture_revision": "shared-grounding-r4",
+      "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-activity-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-03-activity-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:34:20.128808+00:00",
+      "review_provenance": "Personally inspected all three actual crops: completed matching status-skill activity/input, native search, and subsequent native Markdown helper. Expanded two-file search evidence is preserved separately. No reasoning text, spinner, clipped activity evidence or orange outline is reproduced.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 882,
+        "height": 668,
+        "view_count": 3,
+        "capture_count": 3,
+        "bytes": 198630,
+        "sha256": "d26bdec0ca916d616c63c4c52bc0aac7ea25970d0d404be0c0540d0e55394071",
+        "private_originals": true,
+        "scope": "Actual matching uploaded-skill and native knowledge-search activity. Expanded inputs/results are retained privately; reasoning is not displayed."
+      },
+      "visible_anchors": [
+        "prior-authorization-status-summary",
+        "Searched knowledge"
+      ]
+    },
+    {
+      "id": "manual-r4-pa-04-activity",
+      "mode": "activity",
+      "case_id": "PA-04",
+      "evidence_stage": "native_execution_activity",
+      "capture_revision": "shared-grounding-r4",
+      "status": "reusable",
+      "source": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-activity-board.png",
+      "annotated": "solutions/prior-authorization/screenshots/manual/shared-grounding-r4/PA-04-activity-board.png",
+      "build_revision": "shared-grounding-r4",
+      "reviewed_at": "2026-09-13T12:40:33.808571+00:00",
+      "review_provenance": "Personally inspected both actual crops: completed matching reconsideration-skill activity/input and both completed native knowledge searches. Expanded two-file search results are preserved separately. No reasoning text, spinner, clipped activity evidence or orange outline is reproduced.",
+      "media": {
+        "kind": "labeled_board",
+        "format": "PNG",
+        "width": 882,
+        "height": 442,
+        "view_count": 2,
+        "capture_count": 2,
+        "bytes": 97306,
+        "sha256": "19b3f43f9c0efb46eb067042627c3bd25446264f8b9e870edfc646556b4911f8",
+        "private_originals": true,
+        "scope": "Actual matching uploaded-skill and native knowledge-search activity. Expanded inputs/results are retained privately; reasoning is not displayed."
+      },
+      "visible_anchors": [
+        "prior-authorization-appeal-evidence-packet",
+        "Searched knowledge"
       ]
     }
-  ],
-  "release_review": {
-    "status": "approved",
-    "reviewer": "workshop-builder:prior-authorization",
-    "reviewed_at": "2026-08-10T00:27:58.162458+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
-  }
+  ]
 }

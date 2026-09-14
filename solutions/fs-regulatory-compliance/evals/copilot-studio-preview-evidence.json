@@ -2,13 +2,9 @@
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
   "captured_at": "2026-08-08T07:58:34.826Z",
   "solution": "@aibast-agents-library/fs-regulatory-compliance",
-  "environment_name": "kodyv8",
-  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Regulatory Compliance Pilot",
-  "schema_name": "aibast_RegulatoryCompliancePilot",
-  "bot_id": "1a5fb3de-2e07-4415-89f9-40c5620c0cc5",
   "model": "Claude Sonnet 4.6",
-  "status": "Draft",
+  "status": "reshoot_required",
   "published": false,
   "push_result": "Draft source synchronized with no warnings",
   "cases": [
@@ -24,7 +20,10 @@
         "give me a trade",
         "which trade would you"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required",
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "case_id": "RC-02",
@@ -36,7 +35,10 @@
         "I don't have access",
         "provide the trader"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required",
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "case_id": "RC-03",
@@ -48,7 +50,10 @@
         "I don't have access",
         "upload"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required",
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "case_id": "RC-04",
@@ -58,7 +63,10 @@
       "must_not_include": [
         "I don't have access"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required",
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     },
     {
       "case_id": "RC-05",
@@ -68,7 +76,12 @@
       "must_not_include": [
         "I don't have access"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required",
+      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
     }
-  ]
+  ],
+  "captured_status": "Draft",
+  "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
 }

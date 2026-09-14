@@ -16,6 +16,7 @@ from tools.scaffold_solution_journey import (
     DARK_THEME_VARIABLES,
     THEME_SCRIPT,
     THEME_VARIABLES,
+    WORKSHOP_ENGINE_SCRIPT,
     scaffold,
 )
 
@@ -54,6 +55,21 @@ class StructureParser(HTMLParser):
         assert self.stack.pop() == tag
 
 
+class InputParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.inputs = []
+        self.mode_buttons = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "input":
+            self.inputs.append(dict(attrs))
+        elif tag == "button":
+            attributes = dict(attrs)
+            if "data-mode" in attributes:
+                self.mode_buttons.append(attributes)
+
+
 @pytest.fixture()
 def achievement_pages(tmp_path):
     package, _frames = build_fixture(tmp_path)
@@ -79,6 +95,193 @@ def run_node(source, path):
     )
     assert result.returncode == 0, result.stderr
     return result.stdout.strip()
+
+
+def extract_function(source, name):
+    match = re.search(rf"\bfunction\s+{re.escape(name)}\s*\(", source)
+    assert match, f"missing JavaScript function {name}"
+    opening = source.find("{", match.end())
+    assert opening >= 0, f"missing body for JavaScript function {name}"
+    depth = 0
+    index = opening
+    state = "code"
+    while index < len(source):
+        char = source[index]
+        next_char = source[index + 1] if index + 1 < len(source) else ""
+        if state == "code":
+            if char in {"'", '"', "`"}:
+                state = char
+            elif char == "/" and next_char == "/":
+                state = "line-comment"
+                index += 1
+            elif char == "/" and next_char == "*":
+                state = "block-comment"
+                index += 1
+            elif char == "{":
+                depth += 1
+            elif char == "}":
+                depth -= 1
+                if depth == 0:
+                    return source[match.start() : index + 1]
+        elif state in {"'", '"', "`"}:
+            if char == "\\":
+                index += 1
+            elif char == state:
+                state = "code"
+        elif state == "line-comment":
+            if char == "\n":
+                state = "code"
+        elif state == "block-comment":
+            if char == "*" and next_char == "/":
+                state = "code"
+                index += 1
+        index += 1
+    raise AssertionError(f"unterminated JavaScript function {name}")
+
+
+def extract_const(source, name):
+    match = re.search(rf"\bconst\s+{re.escape(name)}\s*=", source)
+    assert match, f"missing JavaScript const {name}"
+    end = source.find(";", match.end())
+    assert end >= 0, f"unterminated JavaScript const {name}"
+    return source[match.start() : end + 1]
+
+
+def checkpoint_records(page):
+    parser = InputParser()
+    parser.feed(page)
+    records = []
+    for attrs in parser.inputs:
+        if "data-checkpoint" not in attrs:
+            continue
+        dataset = {}
+        for name, value in attrs.items():
+            if not name.startswith("data-"):
+                continue
+            parts = name[5:].split("-")
+            dataset[parts[0] + "".join(part.title() for part in parts[1:])] = value
+        records.append({"checked": False, "dataset": dataset})
+    return records
+
+
+def mode_button_records(page):
+    parser = InputParser()
+    parser.feed(page)
+    return [
+        {
+            "attributes": {
+                "aria-selected": attrs.get("aria-selected"),
+            },
+            "dataset": {
+                "mode": attrs["data-mode"],
+            },
+        }
+        for attrs in parser.mode_buttons
+    ]
+
+
+def run_easy_runtime(page, path):
+    quest_script = scripts(page)[-1]
+    start = quest_script.index("const ACHIEVEMENT_PROFILE_KEY")
+    end = quest_script.index("const ACHIEVEMENT_CANONICAL_AGENT")
+    runtime = quest_script[start:end]
+    behavior = "\n".join(
+        extract_function(quest_script, name)
+        for name in (
+            "currentEasyPath",
+            "requiredEasyBoxes",
+            "achievementGroupComplete",
+            "activeDisplayMode",
+            "evaluateAchievement",
+        )
+    )
+    buttons_declaration = extract_const(quest_script, "buttons")
+    records = checkpoint_records(page)
+    button_records = mode_button_records(page)
+    assert button_records
+    expected_total = sum(
+        record["dataset"]["achievementsPath"] in {"brainstem", "shared"}
+        for record in records
+    )
+    probe = f"""
+const values = new Map();
+global.localStorage = {{
+  getItem(key) {{ return values.has(key) ? values.get(key) : null; }},
+  setItem(key, value) {{ values.set(key, value); }},
+}};
+function readWorkshopStorage(key, fallback = null) {{
+  try {{
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  }} catch (_error) {{
+    return fallback;
+  }}
+}}
+const globalEngineKey = "aibast:workshop-engine";
+const modeKey = "aibast:demo-journey:quest-mode";
+const boxes = {json.dumps(records)};
+const modeButtons = {json.dumps(button_records)}.map((record) => ({{
+  dataset: record.dataset,
+  getAttribute(name) {{ return record.attributes[name] ?? null; }},
+}}));
+global.document = {{
+  querySelectorAll(selector) {{
+    return selector === "[data-mode]" ? modeButtons : [];
+  }},
+}};
+{buttons_declaration}
+function renderAchievementPanel() {{}}
+function announceAchievementBadge() {{}}
+{behavior}
+function snapshot() {{
+  const profile = readAchievementProfile();
+  const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] || {{}};
+  return {{
+    score: profile.score,
+    achievements: Object.keys(workshop.achievements || {{}}).sort(),
+    progress: workshop.progress || {{}},
+  }};
+}}
+function markGroup(group) {{
+  boxes
+    .filter((box) =>
+      box.dataset.achievementsGroup === group &&
+      ["brainstem", "shared"].includes(box.dataset.achievementsPath))
+    .forEach((box) => {{ box.checked = true; }});
+  evaluateAchievement(false, true);
+  return snapshot();
+}}
+const stages = {{
+  local: markGroup("local-proof"),
+  draft: markGroup("draft-builder"),
+  preview: markGroup("preview-proven"),
+}};
+boxes
+  .filter((box) => ["brainstem", "shared"].includes(box.dataset.achievementsPath))
+  .forEach((box) => {{ box.checked = true; }});
+evaluateAchievement(false, true);
+stages.complete = snapshot();
+console.log(JSON.stringify(stages));
+"""
+    return json.loads(run_node(runtime + probe, path)), expected_total
+
+
+def assert_easy_runtime_complete(result, expected_total):
+    assert {"started", "local-proof"}.issubset(result["local"]["achievements"])
+    assert "draft-builder" in result["draft"]["achievements"]
+    assert "preview-proven" in result["preview"]["achievements"]
+    complete = result["complete"]
+    assert {
+        "started",
+        "local-proof",
+        "draft-builder",
+        "preview-proven",
+        "workshop-complete",
+    }.issubset(complete["achievements"])
+    assert complete["score"] == 100
+    assert complete["progress"]["easyChecked"] == expected_total
+    assert complete["progress"]["easyTotal"] == expected_total
+    assert complete["progress"]["easyComplete"] is True
 
 
 def test_fixed_points_and_runtime_awards_are_idempotent_and_private(
@@ -148,6 +351,113 @@ console.log(JSON.stringify({ malformed, profile: JSON.parse(stored), stored }));
         assert forbidden not in result["stored"]
 
 
+def test_generated_achievement_attributes_use_exact_plural_dataset_properties(
+    achievement_pages,
+):
+    quest = achievement_pages["quest"]
+    records = checkpoint_records(quest)
+    assert records
+    assert all(record["dataset"].get("achievementsPath") for record in records)
+    assert all(record["dataset"].get("achievementsGroup") for record in records)
+    assert "dataset.achievementsPath" in quest
+    assert "dataset.achievementsGroup" in quest
+    assert "dataset.achievementPath" not in quest
+    assert "dataset.achievementGroup" not in quest
+
+
+def test_easy_runtime_executes_checkpoint_groups_and_completion(
+    achievement_pages,
+    tmp_path,
+):
+    result, expected_total = run_easy_runtime(
+        achievement_pages["quest"],
+        tmp_path / "easy-achievement-runtime.js",
+    )
+    assert_easy_runtime_complete(result, expected_total)
+
+
+def test_visual_and_achievement_engines_fail_closed_to_brainstem(
+    achievement_pages,
+    tmp_path,
+):
+    quest_script = scripts(achievement_pages["quest"])[-1]
+    current_easy_path = extract_function(quest_script, "currentEasyPath")
+    visual_source = WORKSHOP_ENGINE_SCRIPT
+    safe_alias = "const localStorage = globalThis.aibastWorkshopStorage;"
+    if (
+        safe_alias in achievement_pages["quest"]
+        and safe_alias not in visual_source
+    ):
+        visual_source = f"{safe_alias}\n{visual_source}"
+    probe = f"""
+const visualSource = {json.dumps(visual_source)};
+function visual(value, denied = false) {{
+  let selected = null;
+  global.document = {{
+    documentElement: {{
+      setAttribute(name, next) {{
+        if (name === "data-workshop-engine") selected = next;
+      }},
+    }},
+  }};
+  global.localStorage = {{
+    getItem() {{
+      if (denied) throw new Error("storage denied");
+      return value;
+    }},
+  }};
+  global.aibastWorkshopStorage = {{
+    getItem() {{ return value; }},
+    setItem() {{ return true; }},
+  }};
+  let error = null;
+  try {{
+    Function(visualSource)();
+  }} catch (caught) {{
+    error = caught.message;
+  }}
+  return {{ selected, error }};
+}}
+function readWorkshopStorage(key, fallback = null) {{
+  try {{
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  }} catch (_error) {{
+    return fallback;
+  }}
+}}
+const globalEngineKey = "aibast:workshop-engine";
+{current_easy_path}
+function achievement(value) {{
+  global.localStorage = {{ getItem() {{ return value; }} }};
+  return currentEasyPath();
+}}
+const values = [null, "brainstem", "invalid", "copilot"];
+console.log(JSON.stringify({{
+  visual: values.map((value) => visual(value)),
+  visualDenied: visual(null, true),
+  achievement: values.map((value) => achievement(value)),
+}}));
+"""
+    result = json.loads(
+        run_node(probe, tmp_path / "achievement-engine-defaults.js")
+    )
+
+    assert result["visual"] == [
+        {"selected": "brainstem", "error": None},
+        {"selected": "brainstem", "error": None},
+        {"selected": "brainstem", "error": None},
+        {"selected": "copilot", "error": None},
+    ]
+    assert result["visualDenied"] == {"selected": "brainstem", "error": None}
+    assert result["achievement"] == [
+        "brainstem",
+        "brainstem",
+        "brainstem",
+        "copilot",
+    ]
+
+
 def test_named_checkpoint_conditions_and_existing_persistence(achievement_pages):
     quest = achievement_pages["quest"]
     manual = achievement_pages["manual"]
@@ -162,6 +472,10 @@ def test_named_checkpoint_conditions_and_existing_persistence(achievement_pages)
     assert 'data-achievements-path="copilot"' in quest
     assert 'data-achievements-path="brainstem"' in quest
     assert 'data-achievements-path="shared"' in quest
+    assert "dataset.achievementsPath" in quest
+    assert "dataset.achievementsGroup" in quest
+    assert "dataset.achievementPath" not in quest
+    assert "dataset.achievementGroup" not in quest
     assert '["started", hasCheckpoint]' in quest
     assert '["local-proof", achievementGroupComplete("local-proof")]' in quest
     assert '["draft-builder", achievementGroupComplete("draft-builder")]' in quest
@@ -177,7 +491,10 @@ def test_named_checkpoint_conditions_and_existing_persistence(achievement_pages)
     assert "saved = Array.isArray(parsed)" in manual
     assert 'parsed.filter((step) => typeof step === "string")' in manual
     assert "saved.includes(box.dataset.step)" in manual
-    assert 'localStorage.getItem(modeKey) === "hard" ? "hard" : "easy"' in quest
+    assert re.search(
+        r'===\s*"copilot"\s*\?\s*"copilot"\s*:\s*"brainstem"',
+        quest,
+    )
 
 
 def test_quest_syncs_all_earned_ids_without_automatic_submission(achievement_pages):
@@ -271,46 +588,47 @@ def test_manual_and_quest_share_direct_local_hard_progress(achievement_pages):
     )
     assert 'document.querySelectorAll(".complete[data-step]")' in quest
     assert "function updateHardProgress" in quest
-    assert "localStorage.setItem(hardProgressKey, JSON.stringify(done))" in quest
     assert "hardBoxes.length > 0 && done.length === hardBoxes.length" in quest
-    assert "setAchievementWorkshopProgress(profile, activeMode" in quest
-    assert 'awardAchievement(profile, "started", activeMode)' in quest
+    assert "hardProgressActivated" in quest
     assert '"hard-mode-complete"' in quest
     assert "postMessage" not in quest
     assert "hardFrame" not in quest
 
 
-def test_hidden_hard_progress_preserves_active_quest_mode(achievement_pages):
+def test_hard_progress_activation_and_persistence_are_guarded(achievement_pages):
     quest = achievement_pages["quest"]
     start = quest.index("function updateHardProgress")
     end = quest.index("function earnedAchievementSyncIds", start)
     handler = quest[start:end]
 
-    assert (
-        'localStorage.getItem(modeKey) === "hard" ? "hard" : "easy"' in handler
+    assert re.search(
+        r"if\s*\([^)]*(?:done\.length|\.checked)[^)]*\)"
+        r"\s*(?:\{\s*)?hardProgressActivated\s*=\s*true",
+        quest,
+        re.DOTALL,
     )
-    assert "setAchievementWorkshopProgress(profile, activeMode" in handler
-    assert 'awardAchievement(profile, "started", activeMode)' in handler
-    assert '"hard-mode-complete"' in handler
-    assert 'setAchievementWorkshopProgress(profile, "hard"' not in handler
-    assert 'awardAchievement(profile, "started", "hard")' not in handler
+    positive_guard = re.search(
+        r"if\s*\([^)]*(?:hardProgressActivated|persist)[^)]*\)"
+        r"\s*\{?[\s\S]{0,500}hardProgressKey",
+        handler,
+    )
+    negative_guard = re.search(
+        r"if\s*\(\s*!\s*hardProgressActivated\s*\)"
+        r"\s*(?:\{\s*)?return[\s\S]{0,500}hardProgressKey",
+        handler,
+    )
+    assert positive_guard or negative_guard
 
 
-def test_fresh_zero_hard_progress_does_not_create_workshop(achievement_pages):
-    quest = achievement_pages["quest"]
-    start = quest.index("function updateHardProgress")
-    end = quest.index("function earnedAchievementSyncIds", start)
-    handler = quest[start:end]
-
-    zero_guard = "done.length === 0"
-    missing_workshop_guard = "!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]"
-    progress_write = "setAchievementWorkshopProgress(profile, activeMode"
-    assert zero_guard in handler
-    assert missing_workshop_guard in handler
-    assert "renderAchievementPanel(profile, activeMode);" in handler
-    assert "return;" in handler
-    assert handler.index(zero_guard) < handler.index(progress_write)
-    assert handler.index(missing_workshop_guard) < handler.index(progress_write)
+def test_manual_transition_truth_is_measured_in_browser():
+    gate = (
+        ROOT / "browser-audit" / "academy-course-audit.mjs"
+    ).read_text(encoding="utf-8")
+    assert "zero Hard progress is not persisted at startup" in gate
+    assert "opening Manual does not change achievement mode" in gate
+    assert "opening Manual preserves Easy completion" in gate
+    assert "first real Hard check switches achievement mode" in gate
+    assert "first real Hard check persists progress" in gate
 
 
 def test_achievements_page_theme_accessibility_and_explanations(tmp_path):

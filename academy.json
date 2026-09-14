@@ -1,0 +1,4091 @@
+{
+  "schema": "aibast-academy/1.0",
+  "version": "1.0.0",
+  "generated_at": "2026-08-19T17:10:50.278007+00:00",
+  "title": "Microsoft AI Academy",
+  "description": "A hands-on catalog for exploring experimental AIBAST agents through scenario quests, guided builds, evidence reviews, and portable Microsoft implementation patterns.",
+  "disclaimer": "Microsoft AI Academy is an experimental AIBAST learning experience. It is not an official Microsoft credential, certification, training program, or replacement for Microsoft Learn. Activities use synthetic data and self-reported milestones unless a course states otherwise.",
+  "summary": {
+    "courses": 51,
+    "skills": 229,
+    "paths": 6,
+    "industries": 12,
+    "points_per_course": 150
+  },
+  "milestones": [
+    {
+      "id": "started",
+      "claim_id": "started",
+      "title": "Started",
+      "description": "Open the quest and begin the learning scenario.",
+      "points": 5
+    },
+    {
+      "id": "local-proof",
+      "claim_id": "local-proof",
+      "title": "Local proof",
+      "description": "Run the scenario locally and capture evidence that the agent responded.",
+      "points": 15
+    },
+    {
+      "id": "draft-builder",
+      "claim_id": "draft-builder",
+      "title": "Draft builder",
+      "description": "Create a governed draft from the packaged instructions, knowledge, and skills.",
+      "points": 20
+    },
+    {
+      "id": "preview-proven",
+      "claim_id": "preview-proven",
+      "title": "Preview proven",
+      "description": "Exercise the draft in preview and compare the result with the course evidence.",
+      "points": 25
+    },
+    {
+      "id": "workshop-complete",
+      "claim_id": "workshop-completed",
+      "title": "Workshop complete",
+      "description": "Finish the guided quest and its required evidence checkpoints.",
+      "points": 35
+    },
+    {
+      "id": "hard-mode-complete",
+      "claim_id": "hard-mode-completed",
+      "title": "Manual mode complete",
+      "description": "Complete the manual build path without publishing or connecting customer data.",
+      "points": 50
+    }
+  ],
+  "ecosystem": [
+    {
+      "id": "discover-skill",
+      "title": "Discover a skill",
+      "description": "Choose an AIBAST capability that matches a role, industry, or problem you want to understand."
+    },
+    {
+      "id": "learn-scenario",
+      "title": "Learn the scenario",
+      "description": "Use the quest and field guide to understand the people, evidence, constraints, and expected outcome."
+    },
+    {
+      "id": "build-and-test",
+      "title": "Build and test",
+      "description": "Follow the guided or manual path, test with synthetic data, and keep consequential actions under human review."
+    },
+    {
+      "id": "prove-outcome",
+      "title": "Prove the outcome",
+      "description": "Compare the result with the evidence report and record what the workshop actually demonstrated."
+    },
+    {
+      "id": "carry-into-microsoft",
+      "title": "Carry it into Microsoft",
+      "description": "Reuse the portable skill and implementation pattern in the appropriate Microsoft agent, app, or workflow."
+    }
+  ],
+  "paths": [
+    {
+      "id": "start-here",
+      "title": "Start here",
+      "description": "Build confidence with four approachable scenarios spanning service, people, public services, and account work.",
+      "audience": "First-time AIBAST learners and teams deciding where applied AI can help.",
+      "level": "Foundational",
+      "categories": [],
+      "course_slugs": [
+        "account-intelligence",
+        "ai-customer-assistant",
+        "ask-hr",
+        "building-permit-processing"
+      ],
+      "course_count": 4
+    },
+    {
+      "id": "sales-customer-growth",
+      "title": "Sales and customer growth",
+      "description": "Practice customer understanding, seller preparation, personalized engagement, and retail growth scenarios.",
+      "audience": "Sales, marketing, commerce, customer success, and store teams.",
+      "level": "Foundational to intermediate",
+      "categories": [
+        "b2b_sales",
+        "b2c_sales",
+        "retail_cpg"
+      ],
+      "course_slugs": [
+        "account-intelligence",
+        "cart-abandonment-recovery",
+        "customer-loyalty-rewards",
+        "deal-progression",
+        "inventory-visibility",
+        "omnichannel-engagement",
+        "personalized-marketing",
+        "personalized-shopping-assistant",
+        "proposal-generation",
+        "returns-complaints-resolution",
+        "sales-qualification",
+        "store-associate-copilot",
+        "supply-chain-disruption-alert",
+        "win-loss-analysis"
+      ],
+      "course_count": 14
+    },
+    {
+      "id": "operations-supply-chain",
+      "title": "Operations and supply chain",
+      "description": "Explore asset, field, energy, plant, maintenance, and production decisions grounded in operational evidence.",
+      "audience": "Operations, plant, field service, energy, maintenance, and supply chain teams.",
+      "level": "Intermediate",
+      "categories": [
+        "energy",
+        "manufacturing"
+      ],
+      "course_slugs": [
+        "asset-maintenance-forecast",
+        "emission-tracking",
+        "energy-regulatory-reporting",
+        "field-service-dispatch",
+        "inventory-rebalancing",
+        "maintenance-scheduling",
+        "order-status-communication",
+        "permit-license-management",
+        "product-line-optimization",
+        "supplier-risk-monitoring"
+      ],
+      "course_count": 10
+    },
+    {
+      "id": "regulated-public-services",
+      "title": "Regulated and public services",
+      "description": "Learn evidence-first patterns for financial, health, government, eligibility, compliance, and citizen-service work.",
+      "audience": "Financial services, healthcare, compliance, and state or local government teams.",
+      "level": "Intermediate",
+      "categories": [
+        "financial_services",
+        "healthcare",
+        "slg_government"
+      ],
+      "course_slugs": [
+        "building-permit-processing",
+        "care-gap-closure",
+        "claims-processing",
+        "clinical-notes-summarizer",
+        "customer-sentiment-churn",
+        "financial-advisor-copilot",
+        "fraud-detection-alert",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "loan-origination-assistant",
+        "patient-intake",
+        "portfolio-rebalancing",
+        "prior-authorization",
+        "underwriting-support",
+        "utility-billing-assistance",
+        "wealth-insights-generator"
+      ],
+      "course_count": 16
+    },
+    {
+      "id": "workforce-professional-productivity",
+      "title": "Workforce and professional productivity",
+      "description": "Build practical assistants for employee support, professional delivery, product feedback, and recurring knowledge work.",
+      "audience": "HR, consulting, legal, finance operations, product, and software teams.",
+      "level": "Foundational to intermediate",
+      "categories": [
+        "human_resources",
+        "professional_services",
+        "software_digital_products"
+      ],
+      "course_slugs": [
+        "ask-hr",
+        "client-health-score",
+        "contract-risk-review",
+        "license-renewal-expansion",
+        "product-feedback-synthesizer",
+        "resource-utilization",
+        "time-entry-billing"
+      ],
+      "course_count": 7
+    },
+    {
+      "id": "cross-industry-ai",
+      "title": "Cross-industry AI",
+      "description": "Start from reusable service and decision patterns that apply across organizations before specializing by industry.",
+      "audience": "Cross-functional teams, innovation leaders, and learners comparing multiple AI opportunities.",
+      "level": "Foundational",
+      "categories": [
+        "general"
+      ],
+      "course_slugs": [
+        "ai-customer-assistant",
+        "cross-selling",
+        "procurement-agent",
+        "procurement-support"
+      ],
+      "course_count": 4
+    }
+  ],
+  "courses": [
+    {
+      "slug": "account-intelligence",
+      "agent": "@aibast-agents-library/account-intelligence",
+      "title": "Account Intelligence Agent",
+      "description": "Bring account context, stakeholder coverage, competitor signals, risks, and draft talking points into a single reviewable briefing for sellers and customer-success teams.",
+      "category": "b2b_sales",
+      "industry": "B2B Sales",
+      "journey_stage": "Understand",
+      "personas": [
+        "Account Executive",
+        "Customer Success Manager",
+        "Sales Director"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "account-intelligence",
+        "b2b",
+        "competitive-intel",
+        "sales",
+        "stakeholder-mapping"
+      ],
+      "outcomes": [
+        "Elevated deal quality with tailored messaging and risk mitigation",
+        "Enabled real-time team alignment with automated alerts and updates",
+        "Improved win rates via better stakeholder coverage and competitive positioning",
+        "Reduced account research time from hours to minutes"
+      ],
+      "quest_url": "solutions/account-intelligence/quest.html",
+      "field_guide_url": "solutions/account-intelligence/field-guide.html",
+      "manual_url": "solutions/account-intelligence/manual-tutorial.html",
+      "evidence_url": "solutions/account-intelligence/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "account-intelligence-account-overview",
+          "title": "Account Intelligence Agent — Account Overview",
+          "description": "Create a synthetic Acme account overview and identify evidence that merits seller attention.",
+          "path": "solutions/account-intelligence/manual/skills/account-overview/SKILL.md"
+        },
+        {
+          "name": "account-intelligence-competitive-intel",
+          "title": "Account Intelligence Agent — Competitive Intel",
+          "description": "Compare synthetic competitor signals and positioning considerations for Acme.",
+          "path": "solutions/account-intelligence/manual/skills/competitive-intel/SKILL.md"
+        },
+        {
+          "name": "account-intelligence-executive-briefing",
+          "title": "Account Intelligence Agent — Executive Briefing",
+          "description": "Prepare a concise synthetic pre-meeting briefing and review checklist.",
+          "path": "solutions/account-intelligence/manual/skills/executive-briefing/SKILL.md"
+        },
+        {
+          "name": "account-intelligence-risk-assessment",
+          "title": "Account Intelligence Agent — Risk Assessment",
+          "description": "Assess synthetic deal risks and mitigation options without changing a forecast or CRM record.",
+          "path": "solutions/account-intelligence/manual/skills/risk-assessment/SKILL.md"
+        },
+        {
+          "name": "account-intelligence-stakeholder-map",
+          "title": "Account Intelligence Agent — Stakeholder Map",
+          "description": "Map the synthetic buying committee and relationship gaps without creating outreach tasks.",
+          "path": "solutions/account-intelligence/manual/skills/stakeholder-map/SKILL.md"
+        },
+        {
+          "name": "account-intelligence-value-messaging",
+          "title": "Account Intelligence Agent — Value Messaging",
+          "description": "Draft persona-specific talking points for human review; do not send messages.",
+          "path": "solutions/account-intelligence/manual/skills/value-messaging/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "start-here",
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "ai-customer-assistant",
+      "agent": "@aibast-agents-library/ai-customer-assistant",
+      "title": "Customer Escalations Agent",
+      "description": "Bring fictional case history, knowledge guidance, routing rules, and quality signals into one reviewable brief so service teams can respond consistently without letting the agent touch a customer record.",
+      "category": "general",
+      "industry": "Cross-Industry",
+      "journey_stage": "Serve",
+      "personas": [
+        "Back-Office Agent",
+        "Escalation Manager",
+        "Quality Analyst"
+      ],
+      "platforms": [
+        "Dynamics 365 for CRM, SharePoint, Microsoft Teams, Outlook",
+        "Microsoft Copilot Studio"
+      ],
+      "tags": [
+        "customer-service",
+        "escalation",
+        "knowledge-base",
+        "satisfaction",
+        "support"
+      ],
+      "outcomes": [
+        "Drive higher satisfaction and loyalty with customers",
+        "Flag issues with product team based on similar cases",
+        "Reach a successful resolution in minutes, saving FTEs time",
+        "Reduce retention risk and number of future escalations"
+      ],
+      "quest_url": "solutions/ai-customer-assistant/quest.html",
+      "field_guide_url": "solutions/ai-customer-assistant/field-guide.html",
+      "manual_url": "solutions/ai-customer-assistant/manual-tutorial.html",
+      "evidence_url": "solutions/ai-customer-assistant/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "escalation-routing",
+          "title": "Escalation routing review",
+          "description": "Use when an escalation manager asks which team and SLA rule apply, without executing the route.",
+          "path": "solutions/ai-customer-assistant/manual/skills/aibast_escalation-routing_03/SKILL.md"
+        },
+        {
+          "name": "handle-inquiry",
+          "title": "Inquiry triage brief",
+          "description": "Use when a back-office agent asks what is happening on a specific case and what should be reviewed next.",
+          "path": "solutions/ai-customer-assistant/manual/skills/aibast_handle-inquiry_01/SKILL.md"
+        },
+        {
+          "name": "knowledge-search",
+          "title": "Knowledge evidence search",
+          "description": "Use when a support agent needs the most relevant approved article and resolution steps for an inquiry.",
+          "path": "solutions/ai-customer-assistant/manual/skills/aibast_knowledge-search_02/SKILL.md"
+        },
+        {
+          "name": "satisfaction-survey",
+          "title": "Quality and satisfaction review",
+          "description": "Use when a quality analyst asks for the fictional CSAT distribution and recurring service themes.",
+          "path": "solutions/ai-customer-assistant/manual/skills/aibast_satisfaction-survey_04/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "cross-industry-ai",
+      "path_ids": [
+        "start-here",
+        "cross-industry-ai"
+      ]
+    },
+    {
+      "slug": "ask-hr",
+      "agent": "@aibast-agents-library/ask-hr",
+      "title": "Ask HR Agent",
+      "description": "Give employees a privacy-conscious self-service front door for fictional balances and published policy examples, while keeping eligibility, sensitive circumstances, submissions, and HR decisions with authorized people and systems.",
+      "category": "human_resources",
+      "industry": "Human Resources",
+      "journey_stage": "Empower",
+      "personas": [
+        "Employees",
+        "HR Operations Staff",
+        "Managers"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "Outlook"
+      ],
+      "tags": [
+        "benefits",
+        "employee-self-service",
+        "hr",
+        "human-resources",
+        "time-off"
+      ],
+      "outcomes": [
+        "Eliminated bottlenecks in time‑off management with automated routing and notifications",
+        "Improved the employee experience through clear, consistent guidance",
+        "Reduced HR workloads, freeing up time for higher-value work",
+        "Resolved common HR inquiries instantly, without tickets"
+      ],
+      "quest_url": "solutions/ask-hr/quest.html",
+      "field_guide_url": "solutions/ask-hr/field-guide.html",
+      "manual_url": "solutions/ask-hr/manual-tutorial.html",
+      "evidence_url": "solutions/ask-hr/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "benefits-summary",
+          "title": "Benefits snapshot explanation",
+          "description": "Use when HR operations needs a concise fictional profile summary without estimating compensation or deciding eligibility.",
+          "path": "solutions/ask-hr/manual/skills/aibast_benefits-summary_06/SKILL.md"
+        },
+        {
+          "name": "health-insurance",
+          "title": "Health-plan policy explanation",
+          "description": "Use when an employee asks what the fictional plan snapshot says and what must be verified with benefits staff.",
+          "path": "solutions/ask-hr/manual/skills/aibast_health-insurance_04/SKILL.md"
+        },
+        {
+          "name": "leave-balance",
+          "title": "Leave-balance explanation",
+          "description": "Use when an employee asks for the fictional balance snapshot and published time-off rules.",
+          "path": "solutions/ask-hr/manual/skills/aibast_leave-balance_01/SKILL.md"
+        },
+        {
+          "name": "parental-leave",
+          "title": "Parental-leave policy guidance",
+          "description": "Use for published leave-policy questions without inferring a family or medical circumstance or deciding eligibility.",
+          "path": "solutions/ask-hr/manual/skills/aibast_parental-leave_03/SKILL.md"
+        },
+        {
+          "name": "remote-work",
+          "title": "Remote-work policy guidance",
+          "description": "Use when an employee or manager asks for published remote-work rules without inferring a sensitive circumstance.",
+          "path": "solutions/ask-hr/manual/skills/aibast_remote-work_05/SKILL.md"
+        },
+        {
+          "name": "submit-time-off",
+          "title": "Time-off draft preview",
+          "description": "Use when an employee wants to preview dates and projected balance before using the approved submission workflow.",
+          "path": "solutions/ask-hr/manual/skills/aibast_submit-time-off_02/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "workforce-professional-productivity",
+      "path_ids": [
+        "start-here",
+        "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "asset-maintenance-forecast",
+      "agent": "@aibast-agents-library/asset-maintenance-forecast",
+      "title": "Asset Maintenance Forecast Agent",
+      "description": "Bring synthetic condition, failure-window, maintenance-budget, and work-planning evidence into one reliability brief while keeping every work order, schedule, and field instruction behind authorized systems.",
+      "category": "energy",
+      "industry": "Energy",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Compliance Manager",
+        "Data Analyst",
+        "Plant Manager / Reliability Engineer",
+        "Sustainability Lead"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "asset-health",
+        "budget",
+        "energy",
+        "maintenance",
+        "predictive",
+        "work-orders"
+      ],
+      "outcomes": [
+        "Gained real-time visibility and strategic planning support to achieve emissions goals",
+        "Improved asset reliability, reducing unplanned downtime and costs",
+        "Maintained compliance and operational continuity across facilities",
+        "Streamlined compliance reporting and minimized audit risk"
+      ],
+      "quest_url": "solutions/asset-maintenance-forecast/quest.html",
+      "field_guide_url": "solutions/asset-maintenance-forecast/field-guide.html",
+      "manual_url": "solutions/asset-maintenance-forecast/manual-tutorial.html",
+      "evidence_url": "solutions/asset-maintenance-forecast/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "asset-maintenance-forecast-asset-health",
+          "title": "Asset Maintenance Forecast Agent: Asset Health",
+          "description": "Use when a Reliability Engineer asks to triage condition scores without making a safety determination.",
+          "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_asset-health/SKILL.md"
+        },
+        {
+          "name": "asset-maintenance-forecast-budget-projection",
+          "title": "Asset Maintenance Forecast Agent: Budget Projection",
+          "description": "Use when a Finance Business Partner asks to prepare a non-binding maintenance budget estimate.",
+          "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_budget-projection/SKILL.md"
+        },
+        {
+          "name": "asset-maintenance-forecast-maintenance-forecast",
+          "title": "Asset Maintenance Forecast Agent: Maintenance Forecast",
+          "description": "Use when a Plant Manager asks to rank modeled failure windows and explain the synthetic evidence.",
+          "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_maintenance-forecast/SKILL.md"
+        },
+        {
+          "name": "asset-maintenance-forecast-work-order-plan",
+          "title": "Asset Maintenance Forecast Agent: Work Order Plan",
+          "description": "Use when a Maintenance Planner asks to prepare an approval-gated work-order planning queue.",
+          "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_work-order-plan/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "building-permit-processing",
+      "agent": "@aibast-agents-library/building-permit-processing",
+      "title": "Building Permit Processing Agent",
+      "description": "Give development services teams one place to spot late reviews, reject bad intake, route new applications, prepare applicant updates, and coordinate inspections before delays turn into complaints.",
+      "category": "slg_government",
+      "industry": "State and Local Government",
+      "journey_stage": "Govern",
+      "personas": [
+        "Inspectors",
+        "Permit Technicians",
+        "Plan Reviewers"
+      ],
+      "platforms": [
+        "Dynamics 365 Customer Service",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "building",
+        "fees",
+        "inspection",
+        "local-government",
+        "permits",
+        "zoning"
+      ],
+      "outcomes": [
+        "Accelerated approvals with consistent, automated workflows",
+        "Delivered a faster, more predictable permitting experience for residents",
+        "Improved coordination across planning, zoning, code, and inspections",
+        "Reduced status‑check calls through transparent, self‑service tracking"
+      ],
+      "quest_url": "solutions/building-permit-processing/quest.html",
+      "field_guide_url": "solutions/building-permit-processing/field-guide.html",
+      "manual_url": "solutions/building-permit-processing/manual-tutorial.html",
+      "evidence_url": "solutions/building-permit-processing/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 24,
+      "skills": [
+        {
+          "name": "inspector-board-and-coverage",
+          "title": "Inspector board and coverage",
+          "description": "Use for the inspection board, solar-job schedule, inspector specialty, availability, and service-zone questions while avoiding any claim that an assignment was changed.",
+          "path": "solutions/building-permit-processing/manual/skills/aibast_inspector-assignment_bp06/SKILL.md"
+        },
+        {
+          "name": "intake-triage-and-review-routing",
+          "title": "Intake triage and review routing",
+          "description": "Use for front-counter and newly arrived applications to identify duplicates, missing documents, acceptance readiness, review desks, and fixed statutory due dates.",
+          "path": "solutions/building-permit-processing/manual/skills/aibast_intake-triage_bp02/SKILL.md"
+        },
+        {
+          "name": "permit-backlog-and-complaint-risk",
+          "title": "Permit backlog and complaint risk",
+          "description": "Use for department-wide delay, statutory-clock, backlog, and likely-status-call questions; ranks every open synthetic permit and identifies the first intervention.",
+          "path": "solutions/building-permit-processing/manual/skills/aibast_permit-backlog_bp01/SKILL.md"
+        },
+        {
+          "name": "permit-review-checklist",
+          "title": "Permit review checklist",
+          "description": "Use when a technician or reviewer needs the fixed common and permit-type-specific review scope for a synthetic application without making a compliance finding.",
+          "path": "solutions/building-permit-processing/manual/skills/aibast_review-checklist_bp05/SKILL.md"
+        },
+        {
+          "name": "permit-status-and-zoning-detail",
+          "title": "Permit status and zoning detail",
+          "description": "Use for a named permit, applicant, parcel, address, project, or full dashboard to report the synthetic record and quote its zoning reference standards.",
+          "path": "solutions/building-permit-processing/manual/skills/aibast_permit-status_bp04/SKILL.md"
+        },
+        {
+          "name": "proactive-applicant-updates",
+          "title": "Proactive applicant updates",
+          "description": "Use when staff want to reduce status calls by drafting specific synthetic updates for every open applicant, prioritized by overdue and correction risk.",
+          "path": "solutions/building-permit-processing/manual/skills/aibast_applicant-updates_bp03/SKILL.md"
+        },
+        {
+          "name": "synthetic-permit-fee-estimate",
+          "title": "Synthetic permit fee estimate",
+          "description": "Use for permit cost, fee breakdown, or formula questions to calculate all seven synthetic fee categories from declared valuation and label the result as an estimate.",
+          "path": "solutions/building-permit-processing/manual/skills/aibast_fee-calculation_bp07/SKILL.md"
+        }
+      ],
+      "skill_count": 7,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "start-here",
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "care-gap-closure",
+      "agent": "@aibast-agents-library/care-gap-closure",
+      "title": "Care Gap Closure Agent",
+      "description": "Help quality and care-coordination teams inspect synthetic measure evidence, organize operational review cohorts, and draft unsent outreach while preserving clinical eligibility and privacy review.",
+      "category": "healthcare",
+      "industry": "Healthcare",
+      "journey_stage": "Govern",
+      "personas": [
+        "Care Coordinators",
+        "Clinical Operation Leads",
+        "Quality Managers"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "care-gaps",
+        "healthcare",
+        "human-review",
+        "outreach-draft",
+        "quality-measures"
+      ],
+      "outcomes": [
+        "Gained clear visibility into campaign progress to adjust strategies mid‑cycle",
+        "Improved care‑gap closure rates via targeted outreach",
+        "Reduced admin workloads by automating patient identification and personalizing outreach",
+        "Strengthened their HEDIS performance and Star Rating"
+      ],
+      "quest_url": "solutions/care-gap-closure/quest.html",
+      "field_guide_url": "solutions/care-gap-closure/field-guide.html",
+      "manual_url": "solutions/care-gap-closure/manual-tutorial.html",
+      "evidence_url": "solutions/care-gap-closure/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "care-gap-closure-cohort-review",
+          "title": "Care Gap Agent — cohort review",
+          "description": "Reproduce the deterministic Care Gap Agent — cohort review workflow from packaged synthetic evidence.",
+          "path": "solutions/care-gap-closure/manual/skills/cohort-review/SKILL.md"
+        },
+        {
+          "name": "care-gap-closure-gap-analysis",
+          "title": "Care Gap Agent — gap analysis",
+          "description": "Reproduce the deterministic Care Gap Agent — gap analysis workflow from packaged synthetic evidence.",
+          "path": "solutions/care-gap-closure/manual/skills/gap-analysis/SKILL.md"
+        },
+        {
+          "name": "care-gap-closure-outreach-draft",
+          "title": "Care Gap Agent — outreach draft",
+          "description": "Reproduce the deterministic Care Gap Agent — outreach draft workflow from packaged synthetic evidence.",
+          "path": "solutions/care-gap-closure/manual/skills/outreach-draft/SKILL.md"
+        },
+        {
+          "name": "care-gap-closure-quality-dashboard",
+          "title": "Care Gap Agent — quality dashboard",
+          "description": "Reproduce the deterministic Care Gap Agent — quality dashboard workflow from packaged synthetic evidence.",
+          "path": "solutions/care-gap-closure/manual/skills/quality-dashboard/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "cart-abandonment-recovery",
+      "agent": "@aibast-agents-library/cart-abandonment-recovery",
+      "title": "Cart Abandonment Recovery Agent",
+      "description": "Analyzes anonymous synthetic cart patterns, drafts neutral channel sequences, compares margin-aware incentive concepts, and reviews aggregate conversion scenarios.",
+      "category": "b2c_sales",
+      "industry": "B2C Sales",
+      "journey_stage": "Recover and learn",
+      "personas": [
+        "Digital Marketing Lead",
+        "Growth Manager",
+        "Marketing Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "Outlook"
+      ],
+      "tags": [
+        "b2c",
+        "cart-abandonment",
+        "conversion",
+        "ecommerce",
+        "email",
+        "recovery"
+      ],
+      "outcomes": [
+        "Improved decision-making with real-time performance dashboards",
+        "Increased recovery rates through precision targeting and personalized incentives",
+        "Protected margins with discount guardrails and alternative offers",
+        "Reduced manual workloads and response times"
+      ],
+      "quest_url": "solutions/cart-abandonment-recovery/quest.html",
+      "field_guide_url": "solutions/cart-abandonment-recovery/field-guide.html",
+      "manual_url": "solutions/cart-abandonment-recovery/manual-tutorial.html",
+      "evidence_url": "solutions/cart-abandonment-recovery/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "anonymous-cart-abandonment-analysis",
+          "title": "Anonymous cart abandonment analysis",
+          "description": "Helps a Marketing Manager review anonymous synthetic abandonment patterns without contacting shoppers.",
+          "path": "solutions/cart-abandonment-recovery/manual/skills/abandonment-analysis/SKILL.md"
+        },
+        {
+          "name": "consent-aware-recovery-campaign-draft",
+          "title": "Consent-aware recovery campaign draft",
+          "description": "Gives a Digital Marketing Lead a proposed recovery sequence without sending or scheduling outreach.",
+          "path": "solutions/cart-abandonment-recovery/manual/skills/recovery-campaign/SKILL.md"
+        },
+        {
+          "name": "margin-aware-incentive-scenarios",
+          "title": "Margin-aware incentive scenarios",
+          "description": "Helps a Growth Manager compare optional incentive concepts without issuing value.",
+          "path": "solutions/cart-abandonment-recovery/manual/skills/incentive-optimization/SKILL.md"
+        },
+        {
+          "name": "synthetic-recovery-conversion-tracking",
+          "title": "Synthetic recovery conversion tracking",
+          "description": "Summarizes fixed aggregate recovery metrics for a Growth Manager without claiming live performance.",
+          "path": "solutions/cart-abandonment-recovery/manual/skills/conversion-tracking/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "claims-processing",
+      "agent": "@aibast-agents-library/claims-processing",
+      "title": "Claims Processing Agent",
+      "description": "Bring intake, policy terms, documents, fraud indicators, and nonbinding settlement estimates into one adjuster workspace without claiming approval, denial, payment, or coverage action.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Decide",
+      "personas": [
+        "Claims Adjusters / Managers",
+        "Operations Leaders",
+        "SIU Teams"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "adjudication",
+        "claims",
+        "financial-services",
+        "fraud",
+        "insurance",
+        "settlement"
+      ],
+      "outcomes": [
+        "Accelerated adjudication with ready‑for‑review claim files",
+        "Cut processing time dramatically with automated workflows",
+        "Improved service quality with faster decisions and communications",
+        "Increased operational capacity",
+        "Reduced fraud exposure with earlier detection and SIU referrals"
+      ],
+      "quest_url": "solutions/claims-processing/quest.html",
+      "field_guide_url": "solutions/claims-processing/field-guide.html",
+      "manual_url": "solutions/claims-processing/manual-tutorial.html",
+      "evidence_url": "solutions/claims-processing/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "adjudication-review",
+          "title": "Claim-file readiness",
+          "description": "Use for claim-file readiness questions in the Claims Processing Agent synthetic pilot.",
+          "path": "solutions/claims-processing/manual/skills/aibast_adjudication-review_02/SKILL.md"
+        },
+        {
+          "name": "claim-intake",
+          "title": "Claims intake triage",
+          "description": "Use for claims intake triage questions in the Claims Processing Agent synthetic pilot.",
+          "path": "solutions/claims-processing/manual/skills/aibast_claim-intake_01/SKILL.md"
+        },
+        {
+          "name": "fraud-flag",
+          "title": "SIU indicator review",
+          "description": "Use for siu indicator review questions in the Claims Processing Agent synthetic pilot.",
+          "path": "solutions/claims-processing/manual/skills/aibast_fraud-flag_03/SKILL.md"
+        },
+        {
+          "name": "settlement-recommendation",
+          "title": "Policy-term settlement estimate",
+          "description": "Use for policy-term settlement estimate questions in the Claims Processing Agent synthetic pilot.",
+          "path": "solutions/claims-processing/manual/skills/aibast_settlement-recommendation_04/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "client-health-score",
+      "agent": "@aibast-agents-library/client-health-score",
+      "title": "Client Health Score Agent",
+      "description": "Help client success leaders and account managers segment relationship health, spot weakening engagement, prioritize turnaround accounts, and prepare stakeholder-led recovery plans without presenting scenario indicators as certain outcomes.",
+      "category": "professional_services",
+      "industry": "Professional Services",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Account Manager",
+        "Client Success Leaders"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "Outlook"
+      ],
+      "tags": [
+        "churn",
+        "client-health",
+        "NPS",
+        "professional-services",
+        "retention"
+      ],
+      "outcomes": [
+        "Enabled proactive intervention and portfolio stabilization, reducing churn risk",
+        "Identified relationship opportunities and improved client satisfaction",
+        "Protected revenue by safeguarding high-value relationships through structured turnaround plans"
+      ],
+      "quest_url": "solutions/client-health-score/quest.html",
+      "field_guide_url": "solutions/client-health-score/field-guide.html",
+      "manual_url": "solutions/client-health-score/manual-tutorial.html",
+      "evidence_url": "solutions/client-health-score/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 20,
+      "skills": [
+        {
+          "name": "at-risk-client-prioritization",
+          "title": "At-risk client prioritization",
+          "description": "Explains risk drivers and recovery actions for fictional accounts.",
+          "path": "solutions/client-health-score/manual/skills/at-risk-clients/SKILL.md"
+        },
+        {
+          "name": "client-engagement-analysis",
+          "title": "Client engagement analysis",
+          "description": "Finds fictional executive-contact, escalation, billing, and utilization signals.",
+          "path": "solutions/client-health-score/manual/skills/engagement-analysis/SKILL.md"
+        },
+        {
+          "name": "client-portfolio-health-dashboard",
+          "title": "Client portfolio health dashboard",
+          "description": "Segments the fictional client portfolio and shows scenario churn indicators.",
+          "path": "solutions/client-health-score/manual/skills/health-dashboard/SKILL.md"
+        },
+        {
+          "name": "client-retention-playbook",
+          "title": "Client retention playbook",
+          "description": "Builds fictional stakeholder maps and approval-gated executive engagement plans.",
+          "path": "solutions/client-health-score/manual/skills/retention-plan/SKILL.md"
+        },
+        {
+          "name": "client-satisfaction-trend",
+          "title": "Client satisfaction trend",
+          "description": "Compares the packaged fictional quarterly satisfaction history.",
+          "path": "solutions/client-health-score/manual/skills/satisfaction-trend/SKILL.md"
+        }
+      ],
+      "skill_count": 5,
+      "primary_path": "workforce-professional-productivity",
+      "path_ids": [
+        "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "clinical-notes-summarizer",
+      "agent": "@aibast-agents-library/clinical-notes-summarizer",
+      "title": "Clinical Notes Summarizer Agent",
+      "description": "Give clinical teams consistent synthetic encounter, medication, problem-list, and referral-context drafts while keeping diagnosis, treatment, clearance, urgency, scheduling, and record changes with qualified humans.",
+      "category": "healthcare",
+      "industry": "Healthcare",
+      "journey_stage": "Activate",
+      "personas": [
+        "Anesthesia teams",
+        "Primary care physicians",
+        "Surgeons"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio"
+      ],
+      "tags": [
+        "clinical-notes",
+        "clinician-review",
+        "healthcare",
+        "medication-inventory",
+        "source-summary"
+      ],
+      "outcomes": [
+        "Completed chart reviews faster with consistent output",
+        "Improved clinical safety by proactively flagging conditions and medications",
+        "Improved physician productivity and rate of clearances delivered",
+        "Reduced coordination delays across care teams with complete, ready‑to‑use summaries"
+      ],
+      "quest_url": "solutions/clinical-notes-summarizer/quest.html",
+      "field_guide_url": "solutions/clinical-notes-summarizer/field-guide.html",
+      "manual_url": "solutions/clinical-notes-summarizer/manual-tutorial.html",
+      "evidence_url": "solutions/clinical-notes-summarizer/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "clinical-notes-summarizer-encounter-summary",
+          "title": "Clinical Notes Agent — encounter summary",
+          "description": "Reproduce the deterministic Clinical Notes Agent — encounter summary workflow from packaged synthetic evidence.",
+          "path": "solutions/clinical-notes-summarizer/manual/skills/encounter-summary/SKILL.md"
+        },
+        {
+          "name": "clinical-notes-summarizer-medication-inventory",
+          "title": "Clinical Notes Agent — medication inventory",
+          "description": "Reproduce the deterministic Clinical Notes Agent — medication inventory workflow from packaged synthetic evidence.",
+          "path": "solutions/clinical-notes-summarizer/manual/skills/medication-inventory/SKILL.md"
+        },
+        {
+          "name": "clinical-notes-summarizer-problem-list-extract",
+          "title": "Clinical Notes Agent — problem-list extract",
+          "description": "Reproduce the deterministic Clinical Notes Agent — problem-list extract workflow from packaged synthetic evidence.",
+          "path": "solutions/clinical-notes-summarizer/manual/skills/problem-list-extract/SKILL.md"
+        },
+        {
+          "name": "clinical-notes-summarizer-referral-context",
+          "title": "Clinical Notes Agent — referral context",
+          "description": "Reproduce the deterministic Clinical Notes Agent — referral context workflow from packaged synthetic evidence.",
+          "path": "solutions/clinical-notes-summarizer/manual/skills/referral-context/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "contract-risk-review",
+      "agent": "@aibast-agents-library/contract-risk-review",
+      "title": "Contract Risk Review Agent",
+      "description": "Give legal operations and commercial counsel a shared view of agreement priority, clause risk, policy gaps, and negotiation positions without turning an AI review into a legal conclusion.",
+      "category": "professional_services",
+      "industry": "Professional Services",
+      "journey_stage": "Govern",
+      "personas": [
+        "Attorneys",
+        "Executives",
+        "Legal Operations"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Word",
+        "SharePoint"
+      ],
+      "tags": [
+        "compliance",
+        "contract",
+        "legal",
+        "professional-services",
+        "risk"
+      ],
+      "outcomes": [
+        "Improved financial outcomes by optimizing payment terms",
+        "Lowered legal costs and accelerated deal closure",
+        "Reduced liability exposure and safeguarded intellectual property and proprietary assets"
+      ],
+      "quest_url": "solutions/contract-risk-review/quest.html",
+      "field_guide_url": "solutions/contract-risk-review/field-guide.html",
+      "manual_url": "solutions/contract-risk-review/manual-tutorial.html",
+      "evidence_url": "solutions/contract-risk-review/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "contract-clause-analysis",
+          "title": "Contract clause analysis",
+          "description": "Explains documented liability, IP, payment, and other clause findings.",
+          "path": "solutions/contract-risk-review/manual/skills/clause-analysis/SKILL.md"
+        },
+        {
+          "name": "contract-policy-screen",
+          "title": "Contract policy screen",
+          "description": "Compares available fictional clauses with the synthetic internal policy.",
+          "path": "solutions/contract-risk-review/manual/skills/compliance-check/SKILL.md"
+        },
+        {
+          "name": "contract-portfolio-risk-scan",
+          "title": "Contract portfolio risk scan",
+          "description": "Ranks the fictional contract portfolio for counsel review.",
+          "path": "solutions/contract-risk-review/manual/skills/risk-scan/SKILL.md"
+        },
+        {
+          "name": "contract-renegotiation-brief",
+          "title": "Contract renegotiation brief",
+          "description": "Drafts prioritized amendment positions and counsel escalation points.",
+          "path": "solutions/contract-risk-review/manual/skills/renegotiation-brief/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "workforce-professional-productivity",
+      "path_ids": [
+        "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "cross-selling",
+      "agent": "@aibast-agents-library/cross-selling",
+      "title": "Cross-Selling Opportunities Agent",
+      "description": "Help sales leaders and enablement teams inspect product ownership, affinity assumptions, buying signals, and prioritized expansion options before any customer engagement.",
+      "category": "general",
+      "industry": "Cross-Industry",
+      "journey_stage": "Expand",
+      "personas": [
+        "Enablement Manager",
+        "Sales Leader",
+        "Sales Operations Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "cross-sell",
+        "product-affinity",
+        "recommendations",
+        "revenue",
+        "upsell"
+      ],
+      "outcomes": [
+        "Accelerated deal cycles by aligning outreach with budget windows",
+        "Cut account research time from hours to minutes",
+        "Increased expansion pipeline through systematic opportunity identification",
+        "Strengthened customer relationships through proactive, value-driven engagement"
+      ],
+      "quest_url": "solutions/cross-selling/quest.html",
+      "field_guide_url": "solutions/cross-selling/field-guide.html",
+      "manual_url": "solutions/cross-selling/manual-tutorial.html",
+      "evidence_url": "solutions/cross-selling/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "cross-selling-opportunity-scan",
+          "title": "Cross-Selling Opportunities Agent — Opportunity Scan",
+          "description": "Scan the synthetic CUST-001 ownership record for evidence-backed product gaps.",
+          "path": "solutions/cross-selling/manual/skills/opportunity-scan/SKILL.md"
+        },
+        {
+          "name": "cross-selling-product-affinity",
+          "title": "Cross-Selling Opportunities Agent — Product Affinity",
+          "description": "Review the synthetic affinity rules and benchmark assumptions without treating them as observed conversion performance.",
+          "path": "solutions/cross-selling/manual/skills/product-affinity/SKILL.md"
+        },
+        {
+          "name": "cross-selling-recommendation-engine",
+          "title": "Cross-Selling Opportunities Agent — Recommendation Engine",
+          "description": "Draft prioritized product recommendations for CUST-001 without sending outreach.",
+          "path": "solutions/cross-selling/manual/skills/recommendation-engine/SKILL.md"
+        },
+        {
+          "name": "cross-selling-revenue-impact",
+          "title": "Cross-Selling Opportunities Agent — Revenue Impact",
+          "description": "Compare the portfolio's synthetic cross-sell value scenarios without making revenue or margin claims.",
+          "path": "solutions/cross-selling/manual/skills/revenue-impact/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "cross-industry-ai",
+      "path_ids": [
+        "cross-industry-ai"
+      ]
+    },
+    {
+      "slug": "customer-loyalty-rewards",
+      "agent": "@aibast-agents-library/customer-loyalty-rewards",
+      "title": "Customer Loyalty and Rewards Agent",
+      "description": "Provides synthetic program health, informational points views, review-only reward options, and tier-structure analysis.",
+      "category": "b2c_sales",
+      "industry": "B2C Sales",
+      "journey_stage": "Retain and optimize",
+      "personas": [
+        "CRM Manager",
+        "Loyalty Program Director",
+        "Marketing Leader"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "Outlook"
+      ],
+      "tags": [
+        "b2c",
+        "loyalty",
+        "points",
+        "retention",
+        "rewards",
+        "tier"
+      ],
+      "outcomes": [
+        "Improved program ROI with precise targeting and optimized reward strategies",
+        "Reduced point liability by prompting relevant and high‑value redemptions",
+        "Re‑engaged at‑risk members with timely, personalized campaigns",
+        "Strengthened loyalty with offers aligned to individual intent"
+      ],
+      "quest_url": "solutions/customer-loyalty-rewards/quest.html",
+      "field_guide_url": "solutions/customer-loyalty-rewards/field-guide.html",
+      "manual_url": "solutions/customer-loyalty-rewards/manual-tutorial.html",
+      "evidence_url": "solutions/customer-loyalty-rewards/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "informational-points-summary",
+          "title": "Informational points summary",
+          "description": "Helps a CRM Manager explain a synthetic points balance without changing a ledger.",
+          "path": "solutions/customer-loyalty-rewards/manual/skills/points-summary/SKILL.md"
+        },
+        {
+          "name": "loyalty-tier-structure-analysis",
+          "title": "Loyalty tier structure analysis",
+          "description": "Helps a Loyalty Program Director review tier structure and synthetic progress without changing status.",
+          "path": "solutions/customer-loyalty-rewards/manual/skills/tier-analysis/SKILL.md"
+        },
+        {
+          "name": "review-only-reward-options",
+          "title": "Review-only reward options",
+          "description": "Gives a Marketing Leader preference-matched reward options without creating offers or issuing benefits.",
+          "path": "solutions/customer-loyalty-rewards/manual/skills/reward-recommendations/SKILL.md"
+        },
+        {
+          "name": "synthetic-loyalty-program-health",
+          "title": "Synthetic loyalty program health",
+          "description": "Gives a Loyalty Program Director an aggregate synthetic health view without changing the program.",
+          "path": "solutions/customer-loyalty-rewards/manual/skills/loyalty-dashboard/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "customer-sentiment-churn",
+      "agent": "@aibast-agents-library/customer-sentiment-churn",
+      "title": "Customer Sentiment and Churn Prediction Agent",
+      "description": "Unify sentiment, complaints, engagement, and product context into a transparent review queue with human-controlled retention options and no automated customer action.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Engage",
+      "personas": [
+        "Customer Success Teams",
+        "Relationship Managers",
+        "Retention Specialists"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "analytics",
+        "churn",
+        "financial-services",
+        "NPS",
+        "retention",
+        "sentiment"
+      ],
+      "outcomes": [
+        "Acted before churn intent surfaced",
+        "Empowered relationship managers with personalized resources",
+        "Improved overall customer experience",
+        "Prioritized high‑risk, high‑value customers",
+        "Protected revenue and reduced replacement costs"
+      ],
+      "quest_url": "solutions/customer-sentiment-churn/quest.html",
+      "field_guide_url": "solutions/customer-sentiment-churn/field-guide.html",
+      "manual_url": "solutions/customer-sentiment-churn/manual-tutorial.html",
+      "evidence_url": "solutions/customer-sentiment-churn/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "churn-prediction",
+          "title": "Churn-review prioritization",
+          "description": "Use for churn-review prioritization questions in the Customer Sentiment and Churn Prediction Agent synthetic pilot.",
+          "path": "solutions/customer-sentiment-churn/manual/skills/aibast_churn-prediction_02/SKILL.md"
+        },
+        {
+          "name": "retention-actions",
+          "title": "Retention option preparation",
+          "description": "Use for retention option preparation questions in the Customer Sentiment and Churn Prediction Agent synthetic pilot.",
+          "path": "solutions/customer-sentiment-churn/manual/skills/aibast_retention-actions_03/SKILL.md"
+        },
+        {
+          "name": "segment-analysis",
+          "title": "Segment context",
+          "description": "Use for segment context questions in the Customer Sentiment and Churn Prediction Agent synthetic pilot.",
+          "path": "solutions/customer-sentiment-churn/manual/skills/aibast_segment-analysis_04/SKILL.md"
+        },
+        {
+          "name": "sentiment-dashboard",
+          "title": "Cross-channel sentiment view",
+          "description": "Use for cross-channel sentiment view questions in the Customer Sentiment and Churn Prediction Agent synthetic pilot.",
+          "path": "solutions/customer-sentiment-churn/manual/skills/aibast_sentiment-dashboard_01/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "deal-progression",
+      "agent": "@aibast-agents-library/deal-progression",
+      "title": "Deal Progression Agent",
+      "description": "Give account executives and sales directors a shared view of pipeline health, stalled-deal evidence, blockers, and reviewable next steps without automating CRM actions.",
+      "category": "b2b_sales",
+      "industry": "B2B Sales",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Account Executive",
+        "Sales Director"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "b2b",
+        "deal-progression",
+        "forecasting",
+        "pipeline",
+        "sales"
+      ],
+      "outcomes": [
+        "Accelerated deal momentum with shorter sales cycles",
+        "Improved forecast confidence    and reduced slippage",
+        "Protected their pipeline health, reducing at-risk deals",
+        "Reduced hours of manual review, enabling managers to focus on high-impact opportunities"
+      ],
+      "quest_url": "solutions/deal-progression/quest.html",
+      "field_guide_url": "solutions/deal-progression/field-guide.html",
+      "manual_url": "solutions/deal-progression/manual-tutorial.html",
+      "evidence_url": "solutions/deal-progression/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "deal-progression-acceleration",
+          "title": "Deal Progression Agent — Acceleration",
+          "description": "Compare synthetic acceleration options and clearly separate scenario value from forecast commitments.",
+          "path": "solutions/deal-progression/manual/skills/acceleration/SKILL.md"
+        },
+        {
+          "name": "deal-progression-action-plans",
+          "title": "Deal Progression Agent — Action Plans",
+          "description": "Draft reviewable action plans for the synthetic stalled deals; do not assign tasks.",
+          "path": "solutions/deal-progression/manual/skills/action-plans/SKILL.md"
+        },
+        {
+          "name": "deal-progression-assign-tasks",
+          "title": "Deal Progression Agent — Assign Tasks",
+          "description": "Prepare a draft task-mapping plan for manager review; do not create assignments or alerts.",
+          "path": "solutions/deal-progression/manual/skills/assign-tasks/SKILL.md"
+        },
+        {
+          "name": "deal-progression-executive-summary",
+          "title": "Deal Progression Agent — Executive Summary",
+          "description": "Summarize the synthetic pipeline analysis and draft next steps for a leadership review.",
+          "path": "solutions/deal-progression/manual/skills/executive-summary/SKILL.md"
+        },
+        {
+          "name": "deal-progression-pipeline-health",
+          "title": "Deal Progression Agent — Pipeline Health",
+          "description": "Review the synthetic pipeline and show which opportunities need attention without changing the forecast.",
+          "path": "solutions/deal-progression/manual/skills/pipeline-health/SKILL.md"
+        },
+        {
+          "name": "deal-progression-stalled-deals",
+          "title": "Deal Progression Agent — Stalled Deals",
+          "description": "Diagnose the synthetic stalled deals and show the evidence behind each blocker.",
+          "path": "solutions/deal-progression/manual/skills/stalled-deals/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "emission-tracking",
+      "agent": "@aibast-agents-library/emission-tracking",
+      "title": "Emissions Tracking Agent",
+      "description": "Combine synthetic scope totals, threshold screening, reduction scenarios, and carbon-credit due diligence in one sustainability review while keeping attestations, disclosures, and transactions with qualified owners.",
+      "category": "energy",
+      "industry": "Energy",
+      "journey_stage": "Govern",
+      "personas": [
+        "Compliance Manager",
+        "Data Analyst",
+        "Plant Manager / Reliability Engineer",
+        "Sustainability Lead"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "carbon",
+        "compliance",
+        "emissions",
+        "energy",
+        "ghg",
+        "sustainability"
+      ],
+      "outcomes": [
+        "Gained real-time visibility and strategic planning support to achieve emissions goals",
+        "Improved asset reliability, reducing unplanned downtime and costs",
+        "Maintained compliance and operational continuity across facilities",
+        "Streamlined compliance reporting and minimized audit risk"
+      ],
+      "quest_url": "solutions/emission-tracking/quest.html",
+      "field_guide_url": "solutions/emission-tracking/field-guide.html",
+      "manual_url": "solutions/emission-tracking/manual-tutorial.html",
+      "evidence_url": "solutions/emission-tracking/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "emission-tracking-carbon-offset-analysis",
+          "title": "Emissions Tracking Agent: Carbon Offset Analysis",
+          "description": "Use when a Sustainability Lead asks to prepare an offset due-diligence shortlist.",
+          "path": "solutions/emission-tracking/manual/skills/aibast_carbon-offset-analysis/SKILL.md"
+        },
+        {
+          "name": "emission-tracking-compliance-status",
+          "title": "Emissions Tracking Agent: Compliance Status",
+          "description": "Use when a Environmental Compliance Manager asks to perform non-legal threshold screening.",
+          "path": "solutions/emission-tracking/manual/skills/aibast_compliance-status/SKILL.md"
+        },
+        {
+          "name": "emission-tracking-emissions-dashboard",
+          "title": "Emissions Tracking Agent: Emissions Dashboard",
+          "description": "Use when a Emissions Data Analyst asks to aggregate the synthetic scope inventory.",
+          "path": "solutions/emission-tracking/manual/skills/aibast_emissions-dashboard/SKILL.md"
+        },
+        {
+          "name": "emission-tracking-reduction-plan",
+          "title": "Emissions Tracking Agent: Reduction Plan",
+          "description": "Use when a Decarbonization Program Lead asks to compare draft reduction scenarios.",
+          "path": "solutions/emission-tracking/manual/skills/aibast_reduction-plan/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "energy-regulatory-reporting",
+      "agent": "@aibast-agents-library/energy-regulatory-reporting",
+      "title": "Regulatory Reporting Agent",
+      "description": "Bring synthetic report status, source-quality exceptions, filing-state evidence, and audit findings into one regulatory brief while leaving certification, signature, and transmission to authorized owners.",
+      "category": "energy",
+      "industry": "Energy",
+      "journey_stage": "Govern",
+      "personas": [
+        "Compliance Manager",
+        "Data Analyst",
+        "Plant Manager / Reliability Engineer",
+        "Sustainability Lead"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "audit",
+        "compliance",
+        "energy",
+        "epa",
+        "ferc",
+        "regulatory",
+        "reporting"
+      ],
+      "outcomes": [
+        "Gained real-time visibility and strategic planning support to achieve emissions goals",
+        "Improved asset reliability, reducing unplanned downtime and costs",
+        "Maintained compliance and operational continuity across facilities",
+        "Streamlined compliance reporting and minimized audit risk"
+      ],
+      "quest_url": "solutions/energy-regulatory-reporting/quest.html",
+      "field_guide_url": "solutions/energy-regulatory-reporting/field-guide.html",
+      "manual_url": "solutions/energy-regulatory-reporting/manual-tutorial.html",
+      "evidence_url": "solutions/energy-regulatory-reporting/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "energy-regulatory-reporting-audit-readiness",
+          "title": "Regulatory Reporting Agent: Audit Readiness",
+          "description": "Use when a Internal Auditor asks to triage audit evidence without predicting outcomes.",
+          "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_audit-readiness/SKILL.md"
+        },
+        {
+          "name": "energy-regulatory-reporting-data-validation",
+          "title": "Regulatory Reporting Agent: Data Validation",
+          "description": "Use when a Data Analyst asks to screen source-data quality before certification.",
+          "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_data-validation/SKILL.md"
+        },
+        {
+          "name": "energy-regulatory-reporting-report-status",
+          "title": "Regulatory Reporting Agent: Report Status",
+          "description": "Use when a Regulatory Reporting Lead asks to summarize the synthetic reporting portfolio.",
+          "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_report-status/SKILL.md"
+        },
+        {
+          "name": "energy-regulatory-reporting-submission-tracker",
+          "title": "Regulatory Reporting Agent: Submission Tracker",
+          "description": "Use when a Compliance Manager asks to track recorded filing state without transmission.",
+          "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_submission-tracker/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "field-service-dispatch",
+      "agent": "@aibast-agents-library/field-service-dispatch",
+      "title": "Field Service Dispatch Agent",
+      "description": "Turn synthetic service requests, zone capacity, certification evidence, and emergency context into dispatcher-reviewed options while keeping every job, route, message, inventory record, and field action unchanged.",
+      "category": "energy",
+      "industry": "Energy",
+      "journey_stage": "Serve",
+      "personas": [
+        "Dispatch Coordinator",
+        "Emergency Duty Manager",
+        "Field Operations Manager",
+        "Service Director"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "dispatch",
+        "emergency",
+        "energy",
+        "field-service",
+        "routing",
+        "technicians"
+      ],
+      "outcomes": [
+        "Delivered proactive customer updates, improving satisfaction",
+        "Improved first-time fix rates and eliminated redundant travel",
+        "Protected revenue and demonstrated operational excellence during crisis events",
+        "Reduced emergency response times"
+      ],
+      "quest_url": "solutions/field-service-dispatch/quest.html",
+      "field_guide_url": "solutions/field-service-dispatch/field-guide.html",
+      "manual_url": "solutions/field-service-dispatch/manual-tutorial.html",
+      "evidence_url": "solutions/field-service-dispatch/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": false,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "field-service-dispatch-dispatch-dashboard",
+          "title": "Field Service Dispatch Agent: Dispatch Dashboard",
+          "description": "Use when a Field Operations Manager asks to prioritize the read-only service-request queue.",
+          "path": "solutions/field-service-dispatch/manual/skills/aibast_dispatch-dashboard/SKILL.md"
+        },
+        {
+          "name": "field-service-dispatch-emergency-response",
+          "title": "Field Service Dispatch Agent: Emergency Response",
+          "description": "Use when a Emergency Duty Manager asks to prepare an approval-gated emergency response draft.",
+          "path": "solutions/field-service-dispatch/manual/skills/aibast_emergency-response/SKILL.md"
+        },
+        {
+          "name": "field-service-dispatch-route-optimization",
+          "title": "Field Service Dispatch Agent: Route Optimization",
+          "description": "Use when a Service Director asks to compare zone capacity without rerouting.",
+          "path": "solutions/field-service-dispatch/manual/skills/aibast_route-optimization/SKILL.md"
+        },
+        {
+          "name": "field-service-dispatch-technician-assignment",
+          "title": "Field Service Dispatch Agent: Technician Assignment",
+          "description": "Use when a Dispatch Coordinator asks to recommend a skill-matched candidate for human review.",
+          "path": "solutions/field-service-dispatch/manual/skills/aibast_technician-assignment/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "financial-advisor-copilot",
+      "agent": "@aibast-agents-library/financial-advisor-copilot",
+      "title": "Financial Advisor Agent",
+      "description": "Connect service intake, portfolio context, advisor discussion candidates, compliance checkpoints, and structured handoffs without claiming identity verification, advice, account action, or trade execution.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Engage",
+      "personas": [
+        "Branch Bankers",
+        "Compliance Officers",
+        "Financial Advisors"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "advisor",
+        "compliance",
+        "financial-services",
+        "investment",
+        "portfolio"
+      ],
+      "outcomes": [
+        "Delivered smoother, enhanced branch experiences",
+        "Elevated the quality of financial guidance with risk insights and contextual financial research",
+        "Ensured compliance through embedded policy guidance and validation checkpoints",
+        "Improved banker–advisor coordination efforts"
+      ],
+      "quest_url": "solutions/financial-advisor-copilot/quest.html",
+      "field_guide_url": "solutions/financial-advisor-copilot/field-guide.html",
+      "manual_url": "solutions/financial-advisor-copilot/manual-tutorial.html",
+      "evidence_url": "solutions/financial-advisor-copilot/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "advisor-handoff",
+          "title": "Banker-to-advisor handoff",
+          "description": "Use for banker-to-advisor handoff questions in the Financial Advisor Agent synthetic pilot.",
+          "path": "solutions/financial-advisor-copilot/manual/skills/aibast_advisor-handoff_06/SKILL.md"
+        },
+        {
+          "name": "client-review",
+          "title": "Client review",
+          "description": "Use for client review questions in the Financial Advisor Agent synthetic pilot.",
+          "path": "solutions/financial-advisor-copilot/manual/skills/aibast_client-review_02/SKILL.md"
+        },
+        {
+          "name": "compliance-check",
+          "title": "Compliance checkpoints",
+          "description": "Use for compliance checkpoints questions in the Financial Advisor Agent synthetic pilot.",
+          "path": "solutions/financial-advisor-copilot/manual/skills/aibast_compliance-check_05/SKILL.md"
+        },
+        {
+          "name": "portfolio-summary",
+          "title": "Portfolio context",
+          "description": "Use for portfolio context questions in the Financial Advisor Agent synthetic pilot.",
+          "path": "solutions/financial-advisor-copilot/manual/skills/aibast_portfolio-summary_03/SKILL.md"
+        },
+        {
+          "name": "recommendation-engine",
+          "title": "Advisor-review considerations",
+          "description": "Use for advisor-review considerations questions in the Financial Advisor Agent synthetic pilot.",
+          "path": "solutions/financial-advisor-copilot/manual/skills/aibast_recommendation-engine_04/SKILL.md"
+        },
+        {
+          "name": "service-intake",
+          "title": "Service intake and routing",
+          "description": "Use for service intake and routing questions in the Financial Advisor Agent synthetic pilot.",
+          "path": "solutions/financial-advisor-copilot/manual/skills/aibast_service-intake_01/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "fraud-detection-alert",
+      "agent": "@aibast-agents-library/fraud-detection-alert",
+      "title": "Fraud Detection and Alert Agent",
+      "description": "Connect alert severity, transaction evidence, pattern hypotheses, and case routing in one fraud-operations view that never treats a score as proof or claims a protective action occurred.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Protect",
+      "personas": [
+        "Fraud Analysts",
+        "Risk Leaders",
+        "SIU Investigators"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "alerts",
+        "detection",
+        "financial-services",
+        "fraud",
+        "investigation",
+        "transactions"
+      ],
+      "outcomes": [
+        "Accelerated investigations via automated workflows and routing",
+        "Responded faster to critical events while reducing alert noise",
+        "Stopped coordinated fraud schemes before funds were lost",
+        "Strengthened compliance and increased productivity with automated prioritization and documentation"
+      ],
+      "quest_url": "solutions/fraud-detection-alert/quest.html",
+      "field_guide_url": "solutions/fraud-detection-alert/field-guide.html",
+      "manual_url": "solutions/fraud-detection-alert/manual-tutorial.html",
+      "evidence_url": "solutions/fraud-detection-alert/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "alert-triage",
+          "title": "Alert triage",
+          "description": "Use for alert triage questions in the Fraud Detection and Alert Agent synthetic pilot.",
+          "path": "solutions/fraud-detection-alert/manual/skills/aibast_alert-triage_01/SKILL.md"
+        },
+        {
+          "name": "investigation-summary",
+          "title": "Case preparation and routing",
+          "description": "Use for case preparation and routing questions in the Fraud Detection and Alert Agent synthetic pilot.",
+          "path": "solutions/fraud-detection-alert/manual/skills/aibast_investigation-summary_04/SKILL.md"
+        },
+        {
+          "name": "pattern-detection",
+          "title": "Fraud-pattern hypotheses",
+          "description": "Use for fraud-pattern hypotheses questions in the Fraud Detection and Alert Agent synthetic pilot.",
+          "path": "solutions/fraud-detection-alert/manual/skills/aibast_pattern-detection_03/SKILL.md"
+        },
+        {
+          "name": "transaction-analysis",
+          "title": "Transaction evidence review",
+          "description": "Use for transaction evidence review questions in the Fraud Detection and Alert Agent synthetic pilot.",
+          "path": "solutions/fraud-detection-alert/manual/skills/aibast_transaction-analysis_02/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "fs-customer-onboarding",
+      "agent": "@aibast-agents-library/fs-customer-onboarding",
+      "title": "Customer Onboarding Agent",
+      "description": "Give onboarding, relationship, and compliance teams one governed view of KYC evidence, missing documents, service-setup preparation, and application ownership without claiming an identity check or account activation occurred.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Govern",
+      "personas": [
+        "Compliance Officer",
+        "Onboarding Specialist",
+        "Relationship Manager"
+      ],
+      "platforms": [
+        "Dynamics365 for ERP",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "account-setup",
+        "compliance",
+        "financial-services",
+        "KYC",
+        "onboarding"
+      ],
+      "outcomes": [
+        "Boost accuracy of compliance checks, limiting regulatory risk",
+        "Reduce manual coordination and labor costs and free up FTEs with a highly scalable workflow",
+        "Reduce onboarding from weeks to days while improve revenue and customer experience"
+      ],
+      "quest_url": "solutions/fs-customer-onboarding/quest.html",
+      "field_guide_url": "solutions/fs-customer-onboarding/field-guide.html",
+      "manual_url": "solutions/fs-customer-onboarding/manual-tutorial.html",
+      "evidence_url": "solutions/fs-customer-onboarding/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "account-setup",
+          "title": "Account setup preparation",
+          "description": "Use for account setup preparation questions in the Customer Onboarding Agent synthetic pilot.",
+          "path": "solutions/fs-customer-onboarding/manual/skills/aibast_account-setup_02/SKILL.md"
+        },
+        {
+          "name": "document-checklist",
+          "title": "Document readiness",
+          "description": "Use for document readiness questions in the Customer Onboarding Agent synthetic pilot.",
+          "path": "solutions/fs-customer-onboarding/manual/skills/aibast_document-checklist_03/SKILL.md"
+        },
+        {
+          "name": "kyc-verification",
+          "title": "KYC evidence review",
+          "description": "Use for kyc evidence review questions in the Customer Onboarding Agent synthetic pilot.",
+          "path": "solutions/fs-customer-onboarding/manual/skills/aibast_kyc-verification_01/SKILL.md"
+        },
+        {
+          "name": "onboarding-status",
+          "title": "Onboarding pipeline",
+          "description": "Use for onboarding pipeline questions in the Customer Onboarding Agent synthetic pilot.",
+          "path": "solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-status_04/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "fs-regulatory-compliance",
+      "agent": "@aibast-agents-library/fs-regulatory-compliance",
+      "title": "Regulatory Compliance Agent",
+      "description": "Give compliance and trading leaders one governed view of reporting exceptions, execution-quality signals, algorithm documentation, remediation readiness, and trader certifications.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Govern",
+      "personas": [
+        "Chief Compliance Officers",
+        "Compliance Managers",
+        "Trading Desk Supervisors"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "best-execution",
+        "certifications",
+        "compliance",
+        "financial-services",
+        "MiFID-II",
+        "trade-surveillance",
+        "transaction-reporting"
+      ],
+      "outcomes": [
+        "Ensured near‑perfect reporting accuracy and reduced exposure to regulatory penalties",
+        "Maintained certification readiness across the desk with automated scheduling and alerts",
+        "Reduced compliance workload by automating reviews and reporting",
+        "Validated algorithm documentation before go‑live"
+      ],
+      "quest_url": "solutions/fs-regulatory-compliance/quest.html",
+      "field_guide_url": "solutions/fs-regulatory-compliance/field-guide.html",
+      "manual_url": "solutions/fs-regulatory-compliance/manual-tutorial.html",
+      "evidence_url": "solutions/fs-regulatory-compliance/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 26,
+      "skills": [
+        {
+          "name": "algorithm-documentation-and-go-live-review",
+          "title": "Algorithm documentation and go-live review",
+          "description": "Use when an algorithm or strategy is about to go live, needs sign-off, or may be running with incomplete or expired documentation.",
+          "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md"
+        },
+        {
+          "name": "compliance-dashboard-and-audit-readiness",
+          "title": "Compliance dashboard and audit readiness",
+          "description": "Use for whole-desk audit readiness, what is broken, board evidence, or cross-domain compliance-risk questions.",
+          "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md"
+        },
+        {
+          "name": "regulatory-correction-and-submission-preparation",
+          "title": "Regulatory correction and submission preparation",
+          "description": "Use to stage source-backed corrections and prepare new or correction-report payloads for an Approved Reporting Mechanism.",
+          "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md"
+        },
+        {
+          "name": "trade-reporting-and-execution-surveillance",
+          "title": "Trade reporting and execution surveillance",
+          "description": "Use for regulator-rejection, missing-field, venue, late-reporting, slippage, best-execution, or trade-level exception questions.",
+          "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md"
+        },
+        {
+          "name": "trader-certification-readiness",
+          "title": "Trader certification readiness",
+          "description": "Use for who may trade, lapsed or upcoming certifications, supervisor escalation, and training-session planning.",
+          "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md"
+        }
+      ],
+      "skill_count": 5,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "inventory-rebalancing",
+      "agent": "@aibast-agents-library/inventory-rebalancing",
+      "title": "Inventory Rebalancing Agent",
+      "description": "Turn warehouse capacity, SKU position, demand, lifecycle, and cost evidence into review-ready balancing options without moving stock or changing inventory policy.",
+      "category": "manufacturing",
+      "industry": "Manufacturing",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Inventory Managers",
+        "Procurement Manager",
+        "Supply Chain Managers"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "inventory",
+        "manufacturing",
+        "rebalancing",
+        "supply-chain",
+        "warehouse"
+      ],
+      "outcomes": [
+        "Enhanced operational agility with dynamic inventory policies and AI-driven demand alignment",
+        "Freed up working capital",
+        "Improved warehouse efficiency with space optimization and streamlined picking processes",
+        "Reduced financial risk by minimizing obsolescence"
+      ],
+      "quest_url": "solutions/inventory-rebalancing/quest.html",
+      "field_guide_url": "solutions/inventory-rebalancing/field-guide.html",
+      "manual_url": "solutions/inventory-rebalancing/manual-tutorial.html",
+      "evidence_url": "solutions/inventory-rebalancing/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "aibast-cost-analysis",
+          "title": "Inventory cost analysis",
+          "description": "Use when a procurement manager asks where synthetic holding and shortage exposure is concentrated.",
+          "path": "solutions/inventory-rebalancing/manual/skills/aibast_cost_analysis/SKILL.md"
+        },
+        {
+          "name": "aibast-inventory-snapshot",
+          "title": "Inventory snapshot",
+          "description": "Use when a supply chain manager asks where capacity, stock, and reorder exposure need attention.",
+          "path": "solutions/inventory-rebalancing/manual/skills/aibast_inventory_snapshot/SKILL.md"
+        },
+        {
+          "name": "aibast-rebalance-recommendation",
+          "title": "Rebalancing review",
+          "description": "Use when an inventory manager asks where forecast-relative shortages and excess should be reviewed.",
+          "path": "solutions/inventory-rebalancing/manual/skills/aibast_rebalance_recommendation/SKILL.md"
+        },
+        {
+          "name": "aibast-transfer-plan",
+          "title": "Proposed transfer plan",
+          "description": "Use when a supply chain manager asks for review-ready inter-warehouse move options.",
+          "path": "solutions/inventory-rebalancing/manual/skills/aibast_transfer_plan/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "inventory-visibility",
+      "agent": "@aibast-agents-library/inventory-visibility",
+      "title": "Inventory Visibility Agent",
+      "description": "Provides synthetic location and SKU visibility, exception review, replenishment scenarios, and channel planning while keeping every quantity read-only.",
+      "category": "retail_cpg",
+      "industry": "Retail & CPG",
+      "journey_stage": "Plan and fulfill",
+      "personas": [
+        "Category Managers",
+        "Inventory Planners",
+        "Store Managers"
+      ],
+      "platforms": [
+        "Dynamics 365 Commerce",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "inventory",
+        "omni-channel",
+        "replenishment",
+        "retail",
+        "stock-management"
+      ],
+      "outcomes": [
+        "Enhanced demand planning with more reliable forecasts",
+        "Identified excess inventory and highlighted opportunities",
+        "Improved inventory efficiency and accelerated store decision‑making",
+        "Resolved urgent stockouts quickly and avoided lost sales"
+      ],
+      "quest_url": "solutions/inventory-visibility/quest.html",
+      "field_guide_url": "solutions/inventory-visibility/field-guide.html",
+      "manual_url": "solutions/inventory-visibility/manual-tutorial.html",
+      "evidence_url": "solutions/inventory-visibility/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "category-channel-allocation-scenario",
+          "title": "Category channel allocation scenario",
+          "description": "Helps a Category Manager compare channel planning weights without reserving or allocating stock.",
+          "path": "solutions/inventory-visibility/manual/skills/channel-allocation/SKILL.md"
+        },
+        {
+          "name": "draft-replenishment-scenario",
+          "title": "Draft replenishment scenario",
+          "description": "Gives an Inventory Planner a fourteen-day replenishment scenario without creating orders or transfers.",
+          "path": "solutions/inventory-visibility/manual/skills/replenishment-plan/SKILL.md"
+        },
+        {
+          "name": "read-only-inventory-visibility",
+          "title": "Read-only inventory visibility",
+          "description": "Gives an Inventory Planner a synthetic network snapshot with explicit verification requirements.",
+          "path": "solutions/inventory-visibility/manual/skills/inventory-dashboard/SKILL.md"
+        },
+        {
+          "name": "store-stock-review-candidates",
+          "title": "Store stock review candidates",
+          "description": "Helps a Store Manager review critical and low-stock candidates without executing inventory actions.",
+          "path": "solutions/inventory-visibility/manual/skills/stock-alerts/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "license-renewal-expansion",
+      "agent": "@aibast-agents-library/license-renewal-expansion",
+      "title": "License Renewal and Expansion Agent",
+      "description": "Help account, customer-success, and sales leaders review renewal timing, account health, demand signals, churn evidence, and clearly labeled commercial scenarios before negotiation begins.",
+      "category": "software_digital_products",
+      "industry": "Software & Digital Products",
+      "journey_stage": "Retain",
+      "personas": [
+        "Account Executives",
+        "Customer Success Managers",
+        "Sales Leadership"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "churn",
+        "expansion",
+        "license",
+        "renewal",
+        "revenue",
+        "saas"
+      ],
+      "outcomes": [
+        "Accelerated internal approvals and positioned the renewal as a multi‑year strategic partnership",
+        "Countered competitive threats with data‑driven switching‑cost analysis",
+        "Delivered a tailored renewal and expansion proposal",
+        "Secured expansion by validating unmet demand and aligning pricing to requirements"
+      ],
+      "quest_url": "solutions/license-renewal-expansion/quest.html",
+      "field_guide_url": "solutions/license-renewal-expansion/field-guide.html",
+      "manual_url": "solutions/license-renewal-expansion/manual-tutorial.html",
+      "evidence_url": "solutions/license-renewal-expansion/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "license-renewal-expansion-churn-risk",
+          "title": "License Renewal and Expansion Agent — Churn Risk",
+          "description": "Assess synthetic churn signals and evidence without initiating customer outreach.",
+          "path": "solutions/license-renewal-expansion/manual/skills/churn-risk/SKILL.md"
+        },
+        {
+          "name": "license-renewal-expansion-expansion-opportunities",
+          "title": "License Renewal and Expansion Agent — Expansion Opportunities",
+          "description": "Identify synthetic demand signals and draft expansion options for authorized review.",
+          "path": "solutions/license-renewal-expansion/manual/skills/expansion-opportunities/SKILL.md"
+        },
+        {
+          "name": "license-renewal-expansion-renewal-pipeline",
+          "title": "License Renewal and Expansion Agent — Renewal Pipeline",
+          "description": "Review the synthetic renewal pipeline and risk bands without changing CRM or forecast records.",
+          "path": "solutions/license-renewal-expansion/manual/skills/renewal-pipeline/SKILL.md"
+        },
+        {
+          "name": "license-renewal-expansion-revenue-impact",
+          "title": "License Renewal and Expansion Agent — Revenue Impact",
+          "description": "Compare synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+          "path": "solutions/license-renewal-expansion/manual/skills/revenue-impact/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "workforce-professional-productivity",
+      "path_ids": [
+        "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "loan-origination-assistant",
+      "agent": "@aibast-agents-library/loan-origination-assistant",
+      "title": "Loan Origination Assistant",
+      "description": "Unify application intake, ratio analysis, document readiness, underwriting exceptions, and open conditions in one controlled workspace that never approves, prices, locks, closes, or funds a loan.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Decide",
+      "personas": [
+        "Loan Officers",
+        "Processors",
+        "Underwriters"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "credit",
+        "financial-services",
+        "loan",
+        "mortgage",
+        "origination",
+        "underwriting"
+      ],
+      "outcomes": [
+        "Accelerated intake and reduced manual document handling",
+        "Delivered same‑day eligibility guidance to borrowers",
+        "Freed teams for high-value tasks",
+        "Improved underwriting quality by highlighting risk factors early",
+        "Shortened closing timelines with automated condition tracking"
+      ],
+      "quest_url": "solutions/loan-origination-assistant/quest.html",
+      "field_guide_url": "solutions/loan-origination-assistant/field-guide.html",
+      "manual_url": "solutions/loan-origination-assistant/manual-tutorial.html",
+      "evidence_url": "solutions/loan-origination-assistant/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 20,
+      "skills": [
+        {
+          "name": "application-review",
+          "title": "Application intake",
+          "description": "Use for application intake questions in the Loan Origination Assistant synthetic pilot.",
+          "path": "solutions/loan-origination-assistant/manual/skills/aibast_application-review_01/SKILL.md"
+        },
+        {
+          "name": "condition-tracking",
+          "title": "Condition and timeline review",
+          "description": "Use for condition and timeline review questions in the Loan Origination Assistant synthetic pilot.",
+          "path": "solutions/loan-origination-assistant/manual/skills/aibast_condition-tracking_05/SKILL.md"
+        },
+        {
+          "name": "credit-analysis",
+          "title": "Eligibility and ratio analysis",
+          "description": "Use for eligibility and ratio analysis questions in the Loan Origination Assistant synthetic pilot.",
+          "path": "solutions/loan-origination-assistant/manual/skills/aibast_credit-analysis_02/SKILL.md"
+        },
+        {
+          "name": "decision-recommendation",
+          "title": "Nonbinding underwriting findings",
+          "description": "Use for nonbinding underwriting findings questions in the Loan Origination Assistant synthetic pilot.",
+          "path": "solutions/loan-origination-assistant/manual/skills/aibast_decision-recommendation_04/SKILL.md"
+        },
+        {
+          "name": "document-verification",
+          "title": "Document readiness",
+          "description": "Use for document readiness questions in the Loan Origination Assistant synthetic pilot.",
+          "path": "solutions/loan-origination-assistant/manual/skills/aibast_document-verification_03/SKILL.md"
+        }
+      ],
+      "skill_count": 5,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "maintenance-scheduling",
+      "agent": "@aibast-agents-library/maintenance-scheduling",
+      "title": "Maintenance Scheduling Agent",
+      "description": "Turn equipment condition, failure-risk, technician capacity, parts readiness, backup capacity, and downtime evidence into review-ready maintenance options without controlling equipment or dispatching work.",
+      "category": "manufacturing",
+      "industry": "Manufacturing",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Maintenance Manager",
+        "Operation Leader",
+        "Production Supervisor"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "IoT",
+        "maintenance",
+        "manufacturing",
+        "predictive",
+        "scheduling"
+      ],
+      "outcomes": [
+        "Extended equipment lifespan while sustaining quality standards",
+        "Improved production schedule adherence, reducing disruptions",
+        "Prevented unplanned downtime and maintained delivery commitments",
+        "Reduced emergency repair costs through proactive scheduling"
+      ],
+      "quest_url": "solutions/maintenance-scheduling/quest.html",
+      "field_guide_url": "solutions/maintenance-scheduling/field-guide.html",
+      "manual_url": "solutions/maintenance-scheduling/manual-tutorial.html",
+      "evidence_url": "solutions/maintenance-scheduling/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "downtime-analysis",
+          "title": "Downtime analysis",
+          "description": "Use when an operations leader asks for synthetic exposure and preventive trade-offs.",
+          "path": "solutions/maintenance-scheduling/manual/skills/aibast_downtime_analysis/SKILL.md"
+        },
+        {
+          "name": "predictive-alerts",
+          "title": "Predictive alerts",
+          "description": "Use when a production supervisor asks which assets deserve condition review.",
+          "path": "solutions/maintenance-scheduling/manual/skills/aibast_predictive_alerts/SKILL.md"
+        },
+        {
+          "name": "schedule-overview",
+          "title": "Maintenance overview",
+          "description": "Use when a maintenance manager asks for equipment condition and technician-capacity context.",
+          "path": "solutions/maintenance-scheduling/manual/skills/aibast_schedule_overview/SKILL.md"
+        },
+        {
+          "name": "work-order-plan",
+          "title": "Proposed work plan",
+          "description": "Use when a maintenance manager asks for windows, technician candidates, parts checks, and backup checks.",
+          "path": "solutions/maintenance-scheduling/manual/skills/aibast_work_order_plan/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "omnichannel-engagement",
+      "agent": "@aibast-agents-library/omnichannel-engagement",
+      "title": "Omnichannel Engagement Agent",
+      "description": "Compares aggregate channels, maps journey archetypes, drafts consent-aware engagement experiments, and reviews synthetic attribution evidence.",
+      "category": "b2c_sales",
+      "industry": "B2C Sales",
+      "journey_stage": "Understand and optimize",
+      "personas": [
+        "Contact Center Supervisor",
+        "Customer Experience Leader",
+        "Digital Engagement Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Outlook"
+      ],
+      "tags": [
+        "attribution",
+        "b2c",
+        "campaign",
+        "engagement",
+        "journey",
+        "omnichannel"
+      ],
+      "outcomes": [
+        "Improved customer satisfaction through consistent, personalized engagement",
+        "Increased conversion by delivering the right content at key moments",
+        "Reduced repeat contacts across channels",
+        "Resolved issues in a single interaction with complete context"
+      ],
+      "quest_url": "solutions/omnichannel-engagement/quest.html",
+      "field_guide_url": "solutions/omnichannel-engagement/field-guide.html",
+      "manual_url": "solutions/omnichannel-engagement/manual-tutorial.html",
+      "evidence_url": "solutions/omnichannel-engagement/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "aggregate-channel-performance-review",
+          "title": "Aggregate channel performance review",
+          "description": "Gives a Customer Experience Leader an aggregate channel view without identity stitching.",
+          "path": "solutions/omnichannel-engagement/manual/skills/channel-performance/SKILL.md"
+        },
+        {
+          "name": "consent-aware-engagement-options",
+          "title": "Consent-aware engagement options",
+          "description": "Drafts channel optimization options for a Digital Engagement Manager without outreach.",
+          "path": "solutions/omnichannel-engagement/manual/skills/engagement-optimization/SKILL.md"
+        },
+        {
+          "name": "privacy-safe-journey-friction-analysis",
+          "title": "Privacy-safe journey friction analysis",
+          "description": "Helps a Contact Center Supervisor review aggregate journey friction without reconstructing individual behavior.",
+          "path": "solutions/omnichannel-engagement/manual/skills/journey-analysis/SKILL.md"
+        },
+        {
+          "name": "synthetic-campaign-attribution-review",
+          "title": "Synthetic campaign attribution review",
+          "description": "Summarizes fixed attribution examples for a Digital Engagement Manager without claiming causality or live performance.",
+          "path": "solutions/omnichannel-engagement/manual/skills/campaign-attribution/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "order-status-communication",
+      "agent": "@aibast-agents-library/order-status-communication",
+      "title": "Order Status Communications Agent",
+      "description": "Bring order, production, shipment, delay, recovery, owner, and channel context into one governed review and prepare consistent customer-message drafts without changing operations or sending updates.",
+      "category": "manufacturing",
+      "industry": "Manufacturing",
+      "journey_stage": "Serve",
+      "personas": [
+        "Account Manager",
+        "Customer Service Rep",
+        "Operations Leader"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "communication",
+        "customer-service",
+        "manufacturing",
+        "orders",
+        "shipment"
+      ],
+      "outcomes": [
+        "Gave timely, transparent updates that increased customer trust",
+        "Minimized inquiry volume with proactive updates and next steps",
+        "Preserved account health and supplier ratings through consistent disruption handling",
+        "Reduced delivery delays with faster recovery plan activation"
+      ],
+      "quest_url": "solutions/order-status-communication/quest.html",
+      "field_guide_url": "solutions/order-status-communication/field-guide.html",
+      "manual_url": "solutions/order-status-communication/manual-tutorial.html",
+      "evidence_url": "solutions/order-status-communication/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "customer-update",
+          "title": "Customer update drafts",
+          "description": "Use for exact customer, contact, tier, preferred channel, authorized owner, subject, order status, shipment evidence, delay evidence, recovery wording, and signature.",
+          "path": "solutions/order-status-communication/manual/skills/aibast_customer_update/SKILL.md"
+        },
+        {
+          "name": "delay-notification",
+          "title": "Internal delay review",
+          "description": "Use for exact delayed order, product, quantity, value, delay dates, reason, cost, owner, response window, channel, and recorded recovery options.",
+          "path": "solutions/order-status-communication/manual/skills/aibast_delay_notification/SKILL.md"
+        },
+        {
+          "name": "order-lookup",
+          "title": "Order status dashboard",
+          "description": "Use for exact order, customer, product, quantity, value, status, completion, promise date, days left, and at-risk value.",
+          "path": "solutions/order-status-communication/manual/skills/aibast_order_lookup/SKILL.md"
+        },
+        {
+          "name": "shipment-tracking",
+          "title": "Shipment tracking",
+          "description": "Use for exact order, carrier, tracking number, ship date, estimated delivery, route, weight, and recorded status.",
+          "path": "solutions/order-status-communication/manual/skills/aibast_shipment_tracking/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "patient-intake",
+      "agent": "@aibast-agents-library/patient-intake",
+      "title": "Patient Intake and Scheduling Agent",
+      "description": "Give patient-access teams a safe, read-only view of synthetic intake completeness, recorded coverage evidence, candidate availability, and pre-visit follow-up—without booking care or changing a record.",
+      "category": "healthcare",
+      "industry": "Healthcare",
+      "journey_stage": "Activate",
+      "personas": [
+        "Front Desk Staff",
+        "Patient Access Reps",
+        "Scheduling Coordinators"
+      ],
+      "platforms": [
+        "Dynamics 36",
+        "Microsoft Copilot Studio",
+        "SharePoint"
+      ],
+      "tags": [
+        "appointment-readiness",
+        "coverage-evidence",
+        "healthcare",
+        "human-review",
+        "intake"
+      ],
+      "outcomes": [
+        "Freed staff capacity by automating routine scheduling, verification, and follow‑up tasks",
+        "Improved visit readiness by resolving eligibility and referral requirements upfront",
+        "Reduced no‑shows with automated reminders, avoiding lost revenue",
+        "Streamlined digital intake, reducing manual data entry and wait‑times"
+      ],
+      "quest_url": "solutions/patient-intake/quest.html",
+      "field_guide_url": "solutions/patient-intake/field-guide.html",
+      "manual_url": "solutions/patient-intake/manual-tutorial.html",
+      "evidence_url": "solutions/patient-intake/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "patient-intake-appointment-availability",
+          "title": "Patient Intake Agent — appointment availability",
+          "description": "Reproduce the deterministic Patient Intake Agent — appointment availability workflow from packaged synthetic evidence.",
+          "path": "solutions/patient-intake/manual/skills/appointment-availability/SKILL.md"
+        },
+        {
+          "name": "patient-intake-coverage-evidence",
+          "title": "Patient Intake Agent — coverage evidence",
+          "description": "Reproduce the deterministic Patient Intake Agent — coverage evidence workflow from packaged synthetic evidence.",
+          "path": "solutions/patient-intake/manual/skills/coverage-evidence/SKILL.md"
+        },
+        {
+          "name": "patient-intake-intake-readiness",
+          "title": "Patient Intake Agent — intake readiness",
+          "description": "Reproduce the deterministic Patient Intake Agent — intake readiness workflow from packaged synthetic evidence.",
+          "path": "solutions/patient-intake/manual/skills/intake-readiness/SKILL.md"
+        },
+        {
+          "name": "patient-intake-pre-visit-summary",
+          "title": "Patient Intake Agent — pre-visit summary",
+          "description": "Reproduce the deterministic Patient Intake Agent — pre-visit summary workflow from packaged synthetic evidence.",
+          "path": "solutions/patient-intake/manual/skills/pre-visit-summary/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "permit-license-management",
+      "agent": "@aibast-agents-library/permit-license-management",
+      "title": "Permit Management Agent",
+      "description": "Turn a synthetic permit register, renewal calendar, compliance-gap view, and submitted-application tracker into a reviewable operating brief without renewing, amending, or filing anything.",
+      "category": "energy",
+      "industry": "Energy",
+      "journey_stage": "Govern",
+      "personas": [
+        "Compliance Manager",
+        "Data Analyst",
+        "Plant Manager / Reliability Engineer",
+        "Sustainability Lead"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "compliance",
+        "energy",
+        "licenses",
+        "permits",
+        "regulatory",
+        "renewals"
+      ],
+      "outcomes": [
+        "Gained real-time visibility and strategic planning support to achieve emissions goals",
+        "Improved asset reliability, reducing unplanned downtime and costs",
+        "Maintained compliance and operational continuity across facilities",
+        "Streamlined compliance reporting and minimized audit risk"
+      ],
+      "quest_url": "solutions/permit-license-management/quest.html",
+      "field_guide_url": "solutions/permit-license-management/field-guide.html",
+      "manual_url": "solutions/permit-license-management/manual-tutorial.html",
+      "evidence_url": "solutions/permit-license-management/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "permit-license-management-application-status",
+          "title": "Permit Management Agent: Application Status",
+          "description": "Use when a Environmental Counsel asks to track existing applications without filing or amendment.",
+          "path": "solutions/permit-license-management/manual/skills/aibast_application-status/SKILL.md"
+        },
+        {
+          "name": "permit-license-management-compliance-gaps",
+          "title": "Permit Management Agent: Compliance Gaps",
+          "description": "Use when a Compliance Manager asks to triage gaps without declaring legal compliance.",
+          "path": "solutions/permit-license-management/manual/skills/aibast_compliance-gaps/SKILL.md"
+        },
+        {
+          "name": "permit-license-management-permit-inventory",
+          "title": "Permit Management Agent: Permit Inventory",
+          "description": "Use when a Facility Manager asks to review the synthetic permit register by facility.",
+          "path": "solutions/permit-license-management/manual/skills/aibast_permit-inventory/SKILL.md"
+        },
+        {
+          "name": "permit-license-management-renewal-calendar",
+          "title": "Permit Management Agent: Renewal Calendar",
+          "description": "Use when a Permit Coordinator asks to prepare a read-only renewal calendar.",
+          "path": "solutions/permit-license-management/manual/skills/aibast_renewal-calendar/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "personalized-marketing",
+      "agent": "@aibast-agents-library/personalized-marketing",
+      "title": "Personalized Marketing Agent",
+      "description": "Helps retail marketing teams understand aggregate commercial segments, compare campaign concepts, draft relevant content, and review synthetic performance evidence without sensitive profiling or activation.",
+      "category": "retail_cpg",
+      "industry": "Retail & CPG",
+      "journey_stage": "Plan and evaluate",
+      "personas": [
+        "Campaign Manager",
+        "Marketing Director"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "campaigns",
+        "marketing",
+        "personalization",
+        "retail",
+        "segmentation"
+      ],
+      "outcomes": [
+        "Drove higher conversion rates via precision-targeted campaigns",
+        "Increased repeat purchases and average order value",
+        "Provided leaders with real-time performance insights to guide decisions during peak periods",
+        "Reduced campaign planning cycles from weeks to hours"
+      ],
+      "quest_url": "solutions/personalized-marketing/quest.html",
+      "field_guide_url": "solutions/personalized-marketing/field-guide.html",
+      "manual_url": "solutions/personalized-marketing/manual-tutorial.html",
+      "evidence_url": "solutions/personalized-marketing/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "consent-aware-content-personalization",
+          "title": "Consent-aware content personalization",
+          "description": "Drafts segment-level content ideas for a Campaign Manager without sensitive profiling or message delivery.",
+          "path": "solutions/personalized-marketing/manual/skills/content-personalization/SKILL.md"
+        },
+        {
+          "name": "privacy-safe-customer-segmentation",
+          "title": "Privacy-safe customer segmentation",
+          "description": "Gives a Marketing Director an aggregate segment overview using only the packaged synthetic commercial signals.",
+          "path": "solutions/personalized-marketing/manual/skills/customer-segmentation/SKILL.md"
+        },
+        {
+          "name": "review-only-campaign-design",
+          "title": "Review-only campaign design",
+          "description": "Helps a Campaign Manager compare multi-wave campaign concepts without launching outreach or creating offers.",
+          "path": "solutions/personalized-marketing/manual/skills/campaign-design/SKILL.md"
+        },
+        {
+          "name": "synthetic-marketing-performance-analysis",
+          "title": "Synthetic marketing performance analysis",
+          "description": "Summarizes fixed A/B and campaign scenarios for a Marketing Director without claiming live results.",
+          "path": "solutions/personalized-marketing/manual/skills/performance-analysis/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "personalized-shopping-assistant",
+      "agent": "@aibast-agents-library/personalized-shopping-assistant",
+      "title": "Personalized Shopping Agent",
+      "description": "Uses synthetic stated preferences to draft explainable product and outfit options, summarize style context, and show read-only availability.",
+      "category": "b2c_sales",
+      "industry": "B2C Sales",
+      "journey_stage": "Discover and advise",
+      "personas": [
+        "Clienteling Specialists",
+        "Personal Shoppers",
+        "Retail Managers"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Outlook"
+      ],
+      "tags": [
+        "b2c",
+        "inventory",
+        "personalization",
+        "recommendations",
+        "shopping",
+        "style"
+      ],
+      "outcomes": [
+        "Delivered polished, occasion- specific outfits in minutes",
+        "Enabled seamless follow‑ups",
+        "Increased conversion with better suggestions and pricing clarity",
+        "Raised consistency and quality across all stylist recommendations",
+        "Reduced returns via closer size matching and aligned preferences"
+      ],
+      "quest_url": "solutions/personalized-shopping-assistant/quest.html",
+      "field_guide_url": "solutions/personalized-shopping-assistant/field-guide.html",
+      "manual_url": "solutions/personalized-shopping-assistant/manual-tutorial.html",
+      "evidence_url": "solutions/personalized-shopping-assistant/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "opt-in-style-profile-summary",
+          "title": "Opt-in style profile summary",
+          "description": "Helps a Clienteling Specialist summarize stated preferences without sensitive inference.",
+          "path": "solutions/personalized-shopping-assistant/manual/skills/style-profile/SKILL.md"
+        },
+        {
+          "name": "read-only-shopping-inventory-check",
+          "title": "Read-only shopping inventory check",
+          "description": "Gives a Retail Manager a synthetic size-level inventory snapshot with a verification gate.",
+          "path": "solutions/personalized-shopping-assistant/manual/skills/inventory-check/SKILL.md"
+        },
+        {
+          "name": "review-only-outfit-builder",
+          "title": "Review-only outfit builder",
+          "description": "Drafts coordinated outfit options for a Personal Shopper without ordering or reserving items.",
+          "path": "solutions/personalized-shopping-assistant/manual/skills/outfit-builder/SKILL.md"
+        },
+        {
+          "name": "transparent-product-recommendations",
+          "title": "Transparent product recommendations",
+          "description": "Gives a Personal Shopper explainable product options based only on stated synthetic preferences.",
+          "path": "solutions/personalized-shopping-assistant/manual/skills/product-recommendations/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "portfolio-rebalancing",
+      "agent": "@aibast-agents-library/portfolio-rebalancing",
+      "title": "Portfolio Rebalancing Agent",
+      "description": "Connect allocation drift, tax assumptions, loss candidates, retirement scenarios, and implementation controls in one advisor workspace that never presents a trade as advice or execution.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Financial Advisor",
+        "Paraplanner",
+        "Portfolio Manager"
+      ],
+      "platforms": [
+        "Dynamics365 for CRM",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "PowerPoint"
+      ],
+      "tags": [
+        "allocation",
+        "financial-services",
+        "portfolio",
+        "rebalancing",
+        "tax",
+        "trading"
+      ],
+      "outcomes": [
+        "Captured tax savings per client during market corrections",
+        "Improved client satisfaction with proactive, personalized, and audit-ready recommendations",
+        "Increased retirement success probability via timely rebalancing",
+        "Reduced portfolio review time dramatically"
+      ],
+      "quest_url": "solutions/portfolio-rebalancing/quest.html",
+      "field_guide_url": "solutions/portfolio-rebalancing/field-guide.html",
+      "manual_url": "solutions/portfolio-rebalancing/manual-tutorial.html",
+      "evidence_url": "solutions/portfolio-rebalancing/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "execution-plan",
+          "title": "Human-controlled implementation checklist",
+          "description": "Use for human-controlled implementation checklist questions in the Portfolio Rebalancing Agent synthetic pilot.",
+          "path": "solutions/portfolio-rebalancing/manual/skills/aibast_execution-plan_06/SKILL.md"
+        },
+        {
+          "name": "portfolio-analysis",
+          "title": "Portfolio drift analysis",
+          "description": "Use for portfolio drift analysis questions in the Portfolio Rebalancing Agent synthetic pilot.",
+          "path": "solutions/portfolio-rebalancing/manual/skills/aibast_portfolio-analysis_01/SKILL.md"
+        },
+        {
+          "name": "rebalance-recommendation",
+          "title": "Rebalancing candidates",
+          "description": "Use for rebalancing candidates questions in the Portfolio Rebalancing Agent synthetic pilot.",
+          "path": "solutions/portfolio-rebalancing/manual/skills/aibast_rebalance-recommendation_02/SKILL.md"
+        },
+        {
+          "name": "retirement-scenario",
+          "title": "Retirement scenario inputs",
+          "description": "Use for retirement scenario inputs questions in the Portfolio Rebalancing Agent synthetic pilot.",
+          "path": "solutions/portfolio-rebalancing/manual/skills/aibast_retirement-scenario_05/SKILL.md"
+        },
+        {
+          "name": "tax-impact",
+          "title": "Illustrative tax impact",
+          "description": "Use for illustrative tax impact questions in the Portfolio Rebalancing Agent synthetic pilot.",
+          "path": "solutions/portfolio-rebalancing/manual/skills/aibast_tax-impact_03/SKILL.md"
+        },
+        {
+          "name": "tax-loss-harvest",
+          "title": "Tax-loss-harvesting candidates",
+          "description": "Use for tax-loss-harvesting candidates questions in the Portfolio Rebalancing Agent synthetic pilot.",
+          "path": "solutions/portfolio-rebalancing/manual/skills/aibast_tax-loss-harvest_04/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "prior-authorization",
+      "agent": "@aibast-agents-library/prior-authorization",
+      "title": "Prior Authorization Agent",
+      "description": "Give utilization teams a read-only synthetic inventory of request evidence, policy checklist context, recorded workflow state, and reconsideration material—without predicting, submitting, granting, or denying authorization.",
+      "category": "healthcare",
+      "industry": "Healthcare",
+      "journey_stage": "Govern",
+      "personas": [
+        "Nurse Case Managers",
+        "Radiology Schedulers",
+        "Utilization Management Coordinators"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "evidence-packet",
+        "healthcare",
+        "human-review",
+        "payer-criteria",
+        "prior-auth"
+      ],
+      "outcomes": [
+        "Completed authorizations faster by relying on fewer manual steps",
+        "Gained clear visibility into authorization progress, reducing anxiety and delays",
+        "Met payer criteria consistently, reducing denials",
+        "Received timely notifications, enabling earlier appointment booking"
+      ],
+      "quest_url": "solutions/prior-authorization/quest.html",
+      "field_guide_url": "solutions/prior-authorization/field-guide.html",
+      "manual_url": "solutions/prior-authorization/manual-tutorial.html",
+      "evidence_url": "solutions/prior-authorization/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "prior-authorization-appeal-evidence-packet",
+          "title": "Prior Authorization Agent — reconsideration evidence",
+          "description": "Reproduce the deterministic Prior Authorization Agent — reconsideration evidence workflow from packaged synthetic evidence.",
+          "path": "solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md"
+        },
+        {
+          "name": "prior-authorization-criteria-evidence",
+          "title": "Prior Authorization Agent — criteria evidence",
+          "description": "Reproduce the deterministic Prior Authorization Agent — criteria evidence workflow from packaged synthetic evidence.",
+          "path": "solutions/prior-authorization/manual/skills/criteria-evidence/SKILL.md"
+        },
+        {
+          "name": "prior-authorization-request-evidence",
+          "title": "Prior Authorization Agent — request evidence",
+          "description": "Reproduce the deterministic Prior Authorization Agent — request evidence workflow from packaged synthetic evidence.",
+          "path": "solutions/prior-authorization/manual/skills/request-evidence/SKILL.md"
+        },
+        {
+          "name": "prior-authorization-status-summary",
+          "title": "Prior Authorization Agent — status summary",
+          "description": "Reproduce the deterministic Prior Authorization Agent — status summary workflow from packaged synthetic evidence.",
+          "path": "solutions/prior-authorization/manual/skills/status-summary/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "procurement-agent",
+      "agent": "@aibast-agents-library/procurement-agent",
+      "title": "Procurement Agent",
+      "description": "Give procurement and finance a shared synthetic view of requests, vendor evidence, approval thresholds, and budget pressure while keeping supplier selection, PO creation, and spend commitments behind human authorization.",
+      "category": "general",
+      "industry": "Cross-Industry",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Department Approver",
+        "Finance Director",
+        "Procurement Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "approval",
+        "procurement",
+        "purchasing",
+        "spend-analysis",
+        "vendor"
+      ],
+      "outcomes": [
+        "Captured volume discounts and flagged duplicate spending",
+        "Delivered equipment on time while maintaining budget compliance",
+        "Freed team capacity for strategic vendor negotiations",
+        "Reduced procurement cycle time from hours to minutes"
+      ],
+      "quest_url": "solutions/procurement-agent/quest.html",
+      "field_guide_url": "solutions/procurement-agent/field-guide.html",
+      "manual_url": "solutions/procurement-agent/manual-tutorial.html",
+      "evidence_url": "solutions/procurement-agent/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "approval-routing",
+          "title": "Approval-path recommendation",
+          "description": "Use when a department approver asks which authorization threshold applies to a request.",
+          "path": "solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md"
+        },
+        {
+          "name": "purchase-request",
+          "title": "Purchase-request review",
+          "description": "Use when a procurement manager asks for request context and the applicable approval level.",
+          "path": "solutions/procurement-agent/manual/skills/aibast_purchase-request_01/SKILL.md"
+        },
+        {
+          "name": "spend-analysis",
+          "title": "Spend and budget review",
+          "description": "Use when a finance director asks which synthetic category is over budget or approaching a limit.",
+          "path": "solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md"
+        },
+        {
+          "name": "vendor-comparison",
+          "title": "Vendor evidence comparison",
+          "description": "Use when a category buyer wants a neutral view of synthetic vendor ratings, terms, and tiers.",
+          "path": "solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "cross-industry-ai",
+      "path_ids": [
+        "cross-industry-ai"
+      ]
+    },
+    {
+      "slug": "procurement-support",
+      "agent": "@aibast-agents-library/procurement-support",
+      "title": "Discount Finder Agent",
+      "description": "Surface contract tiers, dated pricing notices, fragmented demand, and timing tradeoffs in a sourcing-review brief that helps category teams investigate savings without contacting a supplier or placing an order.",
+      "category": "general",
+      "industry": "Cross-Industry",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Category Buyer",
+        "Finance Director",
+        "Procurement Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "budget",
+        "contracts",
+        "procurement",
+        "requisition",
+        "supplier"
+      ],
+      "outcomes": [
+        "Captured volume discounts and flagged duplicate spending",
+        "Delivered equipment on time while maintaining budget compliance",
+        "Freed team capacity for strategic vendor negotiations",
+        "Reduced procurement cycle time from hours to minutes"
+      ],
+      "quest_url": "solutions/procurement-support/quest.html",
+      "field_guide_url": "solutions/procurement-support/field-guide.html",
+      "manual_url": "solutions/procurement-support/manual-tutorial.html",
+      "evidence_url": "solutions/procurement-support/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "consolidation-analysis",
+          "title": "Demand-consolidation analysis",
+          "description": "Use when a finance director asks whether fragmented facility demand may qualify for structured sourcing review.",
+          "path": "solutions/procurement-support/manual/skills/aibast_consolidation-analysis_03/SKILL.md"
+        },
+        {
+          "name": "purchase-timing",
+          "title": "Purchase-timing brief",
+          "description": "Use when a category buyer asks how to sequence review of renewals, volume tiers, and announced price changes.",
+          "path": "solutions/procurement-support/manual/skills/aibast_purchase-timing_04/SKILL.md"
+        },
+        {
+          "name": "savings-scan",
+          "title": "Savings-opportunity scan",
+          "description": "Use when a procurement manager asks which synthetic contracts or forecasts contain reviewable savings signals.",
+          "path": "solutions/procurement-support/manual/skills/aibast_savings-scan_01/SKILL.md"
+        },
+        {
+          "name": "time-sensitive-deals",
+          "title": "Dated pricing review",
+          "description": "Use when a category buyer asks which offers or price notices need review first.",
+          "path": "solutions/procurement-support/manual/skills/aibast_time-sensitive-deals_02/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "cross-industry-ai",
+      "path_ids": [
+        "cross-industry-ai"
+      ]
+    },
+    {
+      "slug": "product-feedback-synthesizer",
+      "agent": "@aibast-agents-library/product-feedback-synthesizer",
+      "title": "Product Feedback Synthesizer Agent",
+      "description": "Unify fictional feedback, sentiment, feature requests, and impact signals into transparent review candidates without turning one score or account comment into a roadmap promise.",
+      "category": "software_digital_products",
+      "industry": "Software & Digital Products",
+      "journey_stage": "Innovate",
+      "personas": [
+        "Director of Product",
+        "Engineering Lead",
+        "Product Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "feature-requests",
+        "feedback",
+        "nps",
+        "product",
+        "roadmap",
+        "sentiment"
+      ],
+      "outcomes": [
+        "Accelerated feature delivery and improved customer satisfaction",
+        "Delivered data-driven prioritization for roadmap planning",
+        "Prevented churn through early detection of at-risk accounts",
+        "Reduced feedback analysis time from weeks to minutes"
+      ],
+      "quest_url": "solutions/product-feedback-synthesizer/quest.html",
+      "field_guide_url": "solutions/product-feedback-synthesizer/field-guide.html",
+      "manual_url": "solutions/product-feedback-synthesizer/manual-tutorial.html",
+      "evidence_url": "solutions/product-feedback-synthesizer/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "feature-requests",
+          "title": "Feature-request evidence ranking",
+          "description": "Use when an engineering lead wants review candidates sorted by the supplied synthetic ARR weight.",
+          "path": "solutions/product-feedback-synthesizer/manual/skills/aibast_feature-requests_02/SKILL.md"
+        },
+        {
+          "name": "feedback-summary",
+          "title": "Cross-channel feedback summary",
+          "description": "Use when a product manager asks for a compact view of volume, channels, categories, and synthetic commercial context.",
+          "path": "solutions/product-feedback-synthesizer/manual/skills/aibast_feedback-summary_01/SKILL.md"
+        },
+        {
+          "name": "roadmap-impact",
+          "title": "Roadmap review candidates",
+          "description": "Use when a product trio wants a non-binding impact view with explicit validation gates.",
+          "path": "solutions/product-feedback-synthesizer/manual/skills/aibast_roadmap-impact_04/SKILL.md"
+        },
+        {
+          "name": "sentiment-analysis",
+          "title": "Sentiment and NPS evidence",
+          "description": "Use when a director of product asks for the fictional sentiment split and recent excerpts.",
+          "path": "solutions/product-feedback-synthesizer/manual/skills/aibast_sentiment-analysis_03/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "workforce-professional-productivity",
+      "path_ids": [
+        "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "product-line-optimization",
+      "agent": "@aibast-agents-library/production-line-optimization",
+      "title": "Product Line Optimization Agent",
+      "description": "Turn line efficiency, station cycle time, quality, and shift data into an operating view that exposes bottlenecks, compares improvement paths, and gives plant leaders a practical plan for protecting throughput and quality.",
+      "category": "manufacturing",
+      "industry": "Manufacturing",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Operations Director",
+        "Plant Manager",
+        "Production Engineer"
+      ],
+      "platforms": [
+        "Azure IoT Hub",
+        "Dynamics 365 for ERP",
+        "Microsoft Copilot Studio",
+        "Power BI"
+      ],
+      "tags": [
+        "bottleneck",
+        "manufacturing",
+        "OEE",
+        "production",
+        "throughput"
+      ],
+      "outcomes": [
+        "Consistent high quality and increased ROI on investments",
+        "Higher Overall Equipment Effectiveness (OEE) and throughput, exceeding holiday targets",
+        "Increased line capacity and reduced cycle times through targeted optimizations"
+      ],
+      "quest_url": "solutions/product-line-optimization/quest.html",
+      "field_guide_url": "solutions/product-line-optimization/field-guide.html",
+      "manual_url": "solutions/product-line-optimization/manual-tutorial.html",
+      "evidence_url": "solutions/product-line-optimization/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 23,
+      "skills": [
+        {
+          "name": "constraining-station-identification",
+          "title": "Constraining station identification",
+          "description": "Routes the Production Engineer prompt \"Where is the bottleneck on each line, and which station should the plant team address first?\" using cycle-versus-takt and defect evidence.",
+          "path": "solutions/product-line-optimization/manual/skills/aibast_bottleneck_plo02/SKILL.md"
+        },
+        {
+          "name": "day-swing-night-production-plan",
+          "title": "Day, swing, and night production plan",
+          "description": "Routes the Plant Manager prompt \"Translate the current line performance into a day, swing, and night shift plan.\" using the packaged schedule and staffing records.",
+          "path": "solutions/product-line-optimization/manual/skills/aibast_shift-plan_plo04/SKILL.md"
+        },
+        {
+          "name": "improvement-option-comparison",
+          "title": "Improvement option comparison",
+          "description": "Routes the Operations Director prompt \"Give me the practical options to improve throughput without hiding the quality tradeoffs.\" with three evidence-backed choices per line.",
+          "path": "solutions/product-line-optimization/manual/skills/aibast_throughput-options_plo03/SKILL.md"
+        },
+        {
+          "name": "plant-wide-operating-health-review",
+          "title": "Plant-wide operating health review",
+          "description": "Routes the Plant Manager prompt \"Which production line needs attention today, and what is driving the loss?\" by ranking all three synthetic lines and naming the drivers.",
+          "path": "solutions/product-line-optimization/manual/skills/aibast_line-health_plo01/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "proposal-generation",
+      "agent": "@aibast-agents-library/proposal-generation",
+      "title": "Proposal Generation Agent",
+      "description": "Help bid teams extract requirements, tailor positioning, compare pricing assumptions, and prepare a proposal package outline while preserving legal, pricing, reference, and delivery approvals.",
+      "category": "b2b_sales",
+      "industry": "B2B Sales",
+      "journey_stage": "Create",
+      "personas": [
+        "Account Executive",
+        "Bid Manager",
+        "Sales Leader"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "Word / PowerPoint"
+      ],
+      "tags": [
+        "b2b",
+        "competitive-positioning",
+        "pricing",
+        "proposal",
+        "rfp",
+        "sales"
+      ],
+      "outcomes": [
+        "Developed a complete, branded proposal package in minutes",
+        "Enabled same-day turnaround for competitive opportunities",
+        "Freed sales teams to pursue more deals without sacrificing proposal quality",
+        "Improved proposal quality and alignment with buyer priorities"
+      ],
+      "quest_url": "solutions/proposal-generation/quest.html",
+      "field_guide_url": "solutions/proposal-generation/field-guide.html",
+      "manual_url": "solutions/proposal-generation/manual-tutorial.html",
+      "evidence_url": "solutions/proposal-generation/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "proposal-generation-analyze-rfp",
+          "title": "Proposal Generation Agent — Analyze Rfp",
+          "description": "Analyze the Meridian Healthcare synthetic RFP and produce a traceable requirement checklist.",
+          "path": "solutions/proposal-generation/manual/skills/analyze-rfp/SKILL.md"
+        },
+        {
+          "name": "proposal-generation-compile-proposal",
+          "title": "Proposal Generation Agent — Compile Proposal",
+          "description": "Prepare a reviewable proposal package outline; do not claim a final document was generated or approved.",
+          "path": "solutions/proposal-generation/manual/skills/compile-proposal/SKILL.md"
+        },
+        {
+          "name": "proposal-generation-delivery-summary",
+          "title": "Proposal Generation Agent — Delivery Summary",
+          "description": "Summarize draft proposal readiness and human-governed next-step options without sending anything.",
+          "path": "solutions/proposal-generation/manual/skills/delivery-summary/SKILL.md"
+        },
+        {
+          "name": "proposal-generation-executive-summary",
+          "title": "Proposal Generation Agent — Executive Summary",
+          "description": "Draft a synthetic executive summary aligned to stated buyer priorities for human review.",
+          "path": "solutions/proposal-generation/manual/skills/executive-summary/SKILL.md"
+        },
+        {
+          "name": "proposal-generation-references-positioning",
+          "title": "Proposal Generation Agent — References Positioning",
+          "description": "Draft reference and competitive positioning options using synthetic evidence only.",
+          "path": "solutions/proposal-generation/manual/skills/references-positioning/SKILL.md"
+        },
+        {
+          "name": "proposal-generation-solution-pricing",
+          "title": "Proposal Generation Agent — Solution Pricing",
+          "description": "Compare the synthetic solution and pricing assumptions without approving a price or concession.",
+          "path": "solutions/proposal-generation/manual/skills/solution-pricing/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "resource-utilization",
+      "agent": "@aibast-agents-library/resource-utilization",
+      "title": "Resource Utilization Agent",
+      "description": "Give operations, resource, and finance leaders a shared view of utilization, capacity, bench skills, pipeline matches, and capability-building options while keeping assignments and financial commitments under human control.",
+      "category": "professional_services",
+      "industry": "Professional Services",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Finance Director",
+        "Operations Leader",
+        "Resource Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "bench",
+        "capacity",
+        "professional-services",
+        "staffing",
+        "utilization"
+      ],
+      "outcomes": [
+        "Accelerated project staffing while maintaining quality standards",
+        "Enabled proactive workforce planning and strategic capability building",
+        "Reduced bench costs and improved billable utilization beyond targets"
+      ],
+      "quest_url": "solutions/resource-utilization/quest.html",
+      "field_guide_url": "solutions/resource-utilization/field-guide.html",
+      "manual_url": "solutions/resource-utilization/manual-tutorial.html",
+      "evidence_url": "solutions/resource-utilization/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 20,
+      "skills": [
+        {
+          "name": "pipeline-staffing-recommendation",
+          "title": "Pipeline staffing recommendation",
+          "description": "Matches qualified fictional bench consultants to pipeline needs.",
+          "path": "solutions/resource-utilization/manual/skills/staffing-recommendation/SKILL.md"
+        },
+        {
+          "name": "professional-services-bench-analysis",
+          "title": "Bench analysis",
+          "description": "Inventories fictional bench skills and carrying-cost scenarios.",
+          "path": "solutions/resource-utilization/manual/skills/bench-analysis/SKILL.md"
+        },
+        {
+          "name": "strategic-workforce-plan",
+          "title": "Strategic workforce plan",
+          "description": "Models fictional upskilling and internal-innovation pathways.",
+          "path": "solutions/resource-utilization/manual/skills/workforce-plan/SKILL.md"
+        },
+        {
+          "name": "workforce-capacity-forecast",
+          "title": "Workforce capacity forecast",
+          "description": "Compares near-term project endings with weighted fictional demand.",
+          "path": "solutions/resource-utilization/manual/skills/capacity-forecast/SKILL.md"
+        },
+        {
+          "name": "workforce-utilization-dashboard",
+          "title": "Workforce utilization dashboard",
+          "description": "Shows current fictional utilization, targets, and availability.",
+          "path": "solutions/resource-utilization/manual/skills/utilization-dashboard/SKILL.md"
+        }
+      ],
+      "skill_count": 5,
+      "primary_path": "workforce-professional-productivity",
+      "path_ids": [
+        "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "returns-complaints-resolution",
+      "agent": "@aibast-agents-library/returns-complaints-resolution",
+      "title": "Returns and Complaints Resolution Agent",
+      "description": "Summarizes anonymous synthetic return evidence, classifies complaint themes, drafts policy-grounded options, and surfaces aggregate quality trends.",
+      "category": "retail_cpg",
+      "industry": "Retail & CPG",
+      "journey_stage": "Resolve and learn",
+      "personas": [
+        "Customer Service Agents",
+        "Loss Prevention Teams",
+        "Quality Teams"
+      ],
+      "platforms": [
+        "Dynamics 365, Outlook,",
+        "Microsoft Copilot Studio",
+        "SharePoint, Teams"
+      ],
+      "tags": [
+        "complaints",
+        "customer-service",
+        "resolution",
+        "retail",
+        "returns"
+      ],
+      "outcomes": [
+        "Accelerated return and complaint resolution",
+        "Delivered consistent, empathetic customer communications",
+        "Increased customer retention by applying recovery strategies that preserve lifetime value",
+        "Reduced fraudulent returns and improved early defect detection"
+      ],
+      "quest_url": "solutions/returns-complaints-resolution/quest.html",
+      "field_guide_url": "solutions/returns-complaints-resolution/field-guide.html",
+      "manual_url": "solutions/returns-complaints-resolution/manual-tutorial.html",
+      "evidence_url": "solutions/returns-complaints-resolution/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "aggregate-returns-quality-trends",
+          "title": "Aggregate returns quality trends",
+          "description": "Helps Quality and Loss Prevention teams review aggregate synthetic patterns without accusing people.",
+          "path": "solutions/returns-complaints-resolution/manual/skills/trend-analysis/SKILL.md"
+        },
+        {
+          "name": "anonymous-return-review-queue",
+          "title": "Anonymous return review queue",
+          "description": "Helps a Customer Service Agent review anonymous synthetic return evidence without approving or processing a return.",
+          "path": "solutions/returns-complaints-resolution/manual/skills/return-processing/SKILL.md"
+        },
+        {
+          "name": "human-approved-resolution-options",
+          "title": "Human-approved resolution options",
+          "description": "Drafts policy-grounded resolution options for a Customer Service Agent without executing them.",
+          "path": "solutions/returns-complaints-resolution/manual/skills/resolution-recommendation/SKILL.md"
+        },
+        {
+          "name": "privacy-safe-complaint-classification",
+          "title": "Privacy-safe complaint classification",
+          "description": "Classifies a complaint for a Customer Service Agent without repeating personal or sensitive content.",
+          "path": "solutions/returns-complaints-resolution/manual/skills/complaint-classification/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "sales-qualification",
+      "agent": "@aibast-agents-library/sales-qualification",
+      "title": "Sales Qualification Agent",
+      "description": "Help sales managers and business-development teams review enrichment, ICP fit, BANT evidence, draft outreach, routing recommendations, and SLA plans from one governed workflow.",
+      "category": "b2b_sales",
+      "industry": "B2B Sales",
+      "journey_stage": "Prioritize",
+      "personas": [
+        "Account Executive",
+        "Business Development Rep.",
+        "Sales Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "b2b",
+        "bant",
+        "icp-scoring",
+        "lead-qualification",
+        "lead-routing",
+        "sales"
+      ],
+      "outcomes": [
+        "Balanced workload across sales reps while maintaining SLAs",
+        "Freed team capacity to focus on strategic, high-value opportunities",
+        "Increased lead-to-meeting conversion through personalized engagement",
+        "Reduced lead qualification time from hours to minutes"
+      ],
+      "quest_url": "solutions/sales-qualification/quest.html",
+      "field_guide_url": "solutions/sales-qualification/field-guide.html",
+      "manual_url": "solutions/sales-qualification/manual-tutorial.html",
+      "evidence_url": "solutions/sales-qualification/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": false,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "sales-qualification-assign-leads",
+          "title": "Sales Qualification Agent — Assign Leads",
+          "description": "Recommend lead routing for manager review without assigning CRM owners.",
+          "path": "solutions/sales-qualification/manual/skills/assign-leads/SKILL.md"
+        },
+        {
+          "name": "sales-qualification-bant-analysis",
+          "title": "Sales Qualification Agent — Bant Analysis",
+          "description": "Review BANT evidence for the top synthetic leads and surface missing qualification data.",
+          "path": "solutions/sales-qualification/manual/skills/bant-analysis/SKILL.md"
+        },
+        {
+          "name": "sales-qualification-create-outreach",
+          "title": "Sales Qualification Agent — Create Outreach",
+          "description": "Draft outreach ideas for synthetic hot leads; do not send or schedule any communication.",
+          "path": "solutions/sales-qualification/manual/skills/create-outreach/SKILL.md"
+        },
+        {
+          "name": "sales-qualification-qualification-report",
+          "title": "Sales Qualification Agent — Qualification Report",
+          "description": "Summarize the synthetic qualified pipeline and recommended review actions without conversion claims.",
+          "path": "solutions/sales-qualification/manual/skills/qualification-report/SKILL.md"
+        },
+        {
+          "name": "sales-qualification-score-leads",
+          "title": "Sales Qualification Agent — Score Leads",
+          "description": "Score and segment the bundled synthetic leads using the documented ICP model.",
+          "path": "solutions/sales-qualification/manual/skills/score-leads/SKILL.md"
+        },
+        {
+          "name": "sales-qualification-setup-tracking",
+          "title": "Sales Qualification Agent — Setup Tracking",
+          "description": "Draft an SLA tracking and escalation plan without activating alerts or automations.",
+          "path": "solutions/sales-qualification/manual/skills/setup-tracking/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "store-associate-copilot",
+      "agent": "@aibast-agents-library/store-associate-copilot",
+      "title": "Retail Store Associate Copilot",
+      "description": "Provides synthetic product facts, respectful customer-language drafts, shift planning, and role-cohort coaching signals while leaving availability, pricing, returns, and transactions to authorized systems and people.",
+      "category": "retail_cpg",
+      "industry": "Retail & CPG",
+      "journey_stage": "Serve and coordinate",
+      "personas": [
+        "Floor Specialist",
+        "Sales Manager",
+        "Store Associate"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "associate",
+        "copilot",
+        "product-lookup",
+        "retail",
+        "store-operations"
+      ],
+      "outcomes": [
+        "Eliminated pricing errors and improved checkout speed",
+        "Enabled associates to serve more customers and boost commission",
+        "Increased accessory attach rates and average transaction value",
+        "Reduced interaction time dramatically"
+      ],
+      "quest_url": "solutions/store-associate-copilot/quest.html",
+      "field_guide_url": "solutions/store-associate-copilot/field-guide.html",
+      "manual_url": "solutions/store-associate-copilot/manual-tutorial.html",
+      "evidence_url": "solutions/store-associate-copilot/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "aggregate-store-coaching-review",
+          "title": "Aggregate store coaching review",
+          "description": "Gives a Sales Manager role-cohort coaching signals without profiling workers or making employment decisions.",
+          "path": "solutions/store-associate-copilot/manual/skills/performance-dashboard/SKILL.md"
+        },
+        {
+          "name": "respectful-customer-assistance-draft",
+          "title": "Respectful customer assistance draft",
+          "description": "Drafts pressure-free language for a Store Associate without sending a message or performing a transaction.",
+          "path": "solutions/store-associate-copilot/manual/skills/customer-assist/SKILL.md"
+        },
+        {
+          "name": "store-shift-planning-checklist",
+          "title": "Store shift planning checklist",
+          "description": "Helps a Floor Specialist review opening, midday, or closing work without claiming execution.",
+          "path": "solutions/store-associate-copilot/manual/skills/task-checklist/SKILL.md"
+        },
+        {
+          "name": "verified-product-lookup-draft",
+          "title": "Verified product lookup draft",
+          "description": "Gives a Store Associate product facts and a synthetic availability snapshot with a verification gate.",
+          "path": "solutions/store-associate-copilot/manual/skills/product-lookup/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "supplier-risk-monitoring",
+      "agent": "@aibast-agents-library/supplier-risk-monitoring",
+      "title": "Supply Risk Monitoring Agent",
+      "description": "Unify supplier quality, delivery, financial, geopolitical, incident, and backup-option evidence so procurement leaders can prioritize review without contacting, qualifying, selecting, or ordering from suppliers.",
+      "category": "manufacturing",
+      "industry": "Manufacturing",
+      "journey_stage": "Protect",
+      "personas": [
+        "Procurement Manager",
+        "Supply Chain Director"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "manufacturing",
+        "procurement",
+        "risk",
+        "supplier",
+        "supply-chain"
+      ],
+      "outcomes": [
+        "Improved procurement agility with real-time insights",
+        "Protected revenue by preventing supply chain interruptions",
+        "Reduced disruption exposure with early risk detection and mitigation",
+        "Strengthened supplier relationships with better risk communication and proactive planning"
+      ],
+      "quest_url": "solutions/supplier-risk-monitoring/quest.html",
+      "field_guide_url": "solutions/supplier-risk-monitoring/field-guide.html",
+      "manual_url": "solutions/supplier-risk-monitoring/manual-tutorial.html",
+      "evidence_url": "solutions/supplier-risk-monitoring/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "alternative-sourcing",
+          "title": "Alternative sourcing options",
+          "description": "Use for exact backup names, lead times, synthetic qualification states, premiums, modeled diversification cost, and procurement-review language.",
+          "path": "solutions/supplier-risk-monitoring/manual/skills/aibast_alternative_sourcing/SKILL.md"
+        },
+        {
+          "name": "disruption-alerts",
+          "title": "Active disruption alerts",
+          "description": "Use for exact severity, date, supplier, incident description, exposed spend, category, and backup availability.",
+          "path": "solutions/supplier-risk-monitoring/manual/skills/aibast_disruption_alerts/SKILL.md"
+        },
+        {
+          "name": "risk-dashboard",
+          "title": "Supplier risk dashboard",
+          "description": "Use for total spend, elevated-risk spend, ranked supplier risk, composite health, and incident counts.",
+          "path": "solutions/supplier-risk-monitoring/manual/skills/aibast_risk_dashboard/SKILL.md"
+        },
+        {
+          "name": "supplier-scorecard",
+          "title": "Supplier scorecards",
+          "description": "Use for exact supplier identity, category, geography, spend, tier, risk, health, dimension scores, statuses, and incidents.",
+          "path": "solutions/supplier-risk-monitoring/manual/skills/aibast_supplier_scorecard/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
+      ]
+    },
+    {
+      "slug": "supply-chain-disruption-alert",
+      "agent": "@aibast-agents-library/supply-chain-disruption-alert",
+      "title": "Supply Chain Disruption Alert Agent",
+      "description": "Turn synthetic disruption events, route risk, mitigation costs, and supplier candidates into a shared continuity brief while keeping sourcing, ordering, routing, communication, and inventory movement under human control.",
+      "category": "retail_cpg",
+      "industry": "Retail & CPG",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Customer Fulfillment Lead",
+        "Operations Leader",
+        "Procurement Manager",
+        "Supply Chain Planner"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "disruption",
+        "logistics",
+        "retail",
+        "risk-management",
+        "supply-chain"
+      ],
+      "outcomes": [
+        "Acted early enough to reduce risk and protect commitments",
+        "Activated alternate suppliers and shifted inventory to avoid delay",
+        "Boosted resilience by finding single‑source and geographic risks",
+        "Improved continuity and planning confidence during disruption events"
+      ],
+      "quest_url": "solutions/supply-chain-disruption-alert/quest.html",
+      "field_guide_url": "solutions/supply-chain-disruption-alert/field-guide.html",
+      "manual_url": "solutions/supply-chain-disruption-alert/manual-tutorial.html",
+      "evidence_url": "solutions/supply-chain-disruption-alert/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": false,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "supply-chain-disruption-alert-disruption-dashboard",
+          "title": "Supply Chain Disruption Alert Agent: Disruption Dashboard",
+          "description": "Use when a Customer Fulfillment Lead asks to summarize active disruption evidence.",
+          "path": "solutions/supply-chain-disruption-alert/manual/skills/aibast_disruption-dashboard/SKILL.md"
+        },
+        {
+          "name": "supply-chain-disruption-alert-mitigation-plan",
+          "title": "Supply Chain Disruption Alert Agent: Mitigation Plan",
+          "description": "Use when a Operations Leader asks to compare approval-gated mitigation options.",
+          "path": "solutions/supply-chain-disruption-alert/manual/skills/aibast_mitigation-plan/SKILL.md"
+        },
+        {
+          "name": "supply-chain-disruption-alert-risk-assessment",
+          "title": "Supply Chain Disruption Alert Agent: Risk Assessment",
+          "description": "Use when a Supply Chain Planner asks to explain route risk factors.",
+          "path": "solutions/supply-chain-disruption-alert/manual/skills/aibast_risk-assessment/SKILL.md"
+        },
+        {
+          "name": "supply-chain-disruption-alert-supplier-alternatives",
+          "title": "Supply Chain Disruption Alert Agent: Supplier Alternatives",
+          "description": "Use when a Procurement Manager asks to prepare supplier candidates for due diligence.",
+          "path": "solutions/supply-chain-disruption-alert/manual/skills/aibast_supplier-alternatives/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "time-entry-billing",
+      "agent": "@aibast-agents-library/time-entry-billing",
+      "title": "Time Entry and Billing Agent",
+      "description": "Help finance and billing teams find blocked work, enforce time-entry rules, prepare support for eligible invoices, and resolve disputed-hour evidence without posting revenue or contacting a client.",
+      "category": "professional_services",
+      "industry": "Professional Services",
+      "journey_stage": "Operate",
+      "personas": [
+        "Billing Manager",
+        "Finance VP"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "SharePoint"
+      ],
+      "tags": [
+        "audit",
+        "billing",
+        "invoicing",
+        "professional-services",
+        "time-entry"
+      ],
+      "outcomes": [
+        "Achieved a higher billable rate via accurate classification",
+        "Delivered audit-ready invoices and compliance documentation",
+        "Protected revenue by recovering disputed hours and preventing leakage",
+        "Reduced billing cycles from multi-day process to minutes"
+      ],
+      "quest_url": "solutions/time-entry-billing/quest.html",
+      "field_guide_url": "solutions/time-entry-billing/field-guide.html",
+      "manual_url": "solutions/time-entry-billing/manual-tutorial.html",
+      "evidence_url": "solutions/time-entry-billing/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 20,
+      "skills": [
+        {
+          "name": "approval-gated-invoice-support",
+          "title": "Approval-gated invoice support",
+          "description": "Prepares fictional T&M support while holding unapproved and fixed-fee work.",
+          "path": "solutions/time-entry-billing/manual/skills/invoice-preparation/SKILL.md"
+        },
+        {
+          "name": "billing-close-summary",
+          "title": "Billing close summary",
+          "description": "Produces project and consultant rollups from the synthetic ledger.",
+          "path": "solutions/time-entry-billing/manual/skills/billing-summary/SKILL.md"
+        },
+        {
+          "name": "disputed-hours-evidence-brief",
+          "title": "Disputed-hours evidence brief",
+          "description": "Explains evidence gaps and approval paths for fictional disputes.",
+          "path": "solutions/time-entry-billing/manual/skills/dispute-resolution/SKILL.md"
+        },
+        {
+          "name": "month-end-billing-blockers",
+          "title": "Month-end billing blockers",
+          "description": "Finds fictional billable work blocked from invoice preparation.",
+          "path": "solutions/time-entry-billing/manual/skills/unbilled-report/SKILL.md"
+        },
+        {
+          "name": "time-entry-audit",
+          "title": "Time-entry audit",
+          "description": "Flags narrative, hours, rate, approval, and budget issues.",
+          "path": "solutions/time-entry-billing/manual/skills/time-entry-audit/SKILL.md"
+        }
+      ],
+      "skill_count": 5,
+      "primary_path": "workforce-professional-productivity",
+      "path_ids": [
+        "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "underwriting-support",
+      "agent": "@aibast-agents-library/underwriting-support",
+      "title": "Underwriting Support Agent",
+      "description": "Give underwriters a single review surface for submission risk, rating factors, guideline checks, and exceptions while keeping quoting, binding, approval, and decline authority with humans.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Decide",
+      "personas": [
+        "Risk Analyst",
+        "Underwriter"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "financial-services",
+        "guidelines",
+        "insurance",
+        "pricing",
+        "risk",
+        "underwriting"
+      ],
+      "outcomes": [
+        "Enhanced pricing consistency through standardized rating factors",
+        "Increased underwriting capacity by freeing time for complex cases",
+        "Reduced evaluation time with automated analysis and risk scoring",
+        "Strengthened compliance by checking authority limits and guideline alignment"
+      ],
+      "quest_url": "solutions/underwriting-support/quest.html",
+      "field_guide_url": "solutions/underwriting-support/field-guide.html",
+      "manual_url": "solutions/underwriting-support/manual-tutorial.html",
+      "evidence_url": "solutions/underwriting-support/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "exception-review",
+          "title": "Exception review queue",
+          "description": "Use for exception review queue questions in the Underwriting Support Agent synthetic pilot.",
+          "path": "solutions/underwriting-support/manual/skills/aibast_exception-review_04/SKILL.md"
+        },
+        {
+          "name": "guideline-check",
+          "title": "Guideline and document alignment",
+          "description": "Use for guideline and document alignment questions in the Underwriting Support Agent synthetic pilot.",
+          "path": "solutions/underwriting-support/manual/skills/aibast_guideline-check_03/SKILL.md"
+        },
+        {
+          "name": "pricing-recommendation",
+          "title": "Illustrative pricing-factor review",
+          "description": "Use for illustrative pricing-factor review questions in the Underwriting Support Agent synthetic pilot.",
+          "path": "solutions/underwriting-support/manual/skills/aibast_pricing-recommendation_02/SKILL.md"
+        },
+        {
+          "name": "risk-evaluation",
+          "title": "Submission risk evaluation",
+          "description": "Use for submission risk evaluation questions in the Underwriting Support Agent synthetic pilot.",
+          "path": "solutions/underwriting-support/manual/skills/aibast_risk-evaluation_01/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "utility-billing-assistance",
+      "agent": "@aibast-agents-library/utility-billing-assistance",
+      "title": "Utility Billing and Assistance Agent",
+      "description": "Bring synthetic balances, smart-meter history, leak-policy screening, payment options, and assistance criteria into one resident-service brief without changing a bill, plan, repair, enrollment, or account.",
+      "category": "slg_government",
+      "industry": "State and Local Government",
+      "journey_stage": "Serve",
+      "personas": [
+        "Assistance Coordinator",
+        "Billing Specialist",
+        "Customer Service Rep"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "Outlook"
+      ],
+      "tags": [
+        "assistance",
+        "billing",
+        "municipal",
+        "payment",
+        "utility",
+        "water"
+      ],
+      "outcomes": [
+        "Eliminated cross-system manual checks to improve productivity and consistency",
+        "Increased assistance enrollment while reducing delinquent accounts",
+        "Resolved complex billing disputes in a single interaction",
+        "Strengthened customer trust with transparent, compliant resolution"
+      ],
+      "quest_url": "solutions/utility-billing-assistance/quest.html",
+      "field_guide_url": "solutions/utility-billing-assistance/field-guide.html",
+      "manual_url": "solutions/utility-billing-assistance/manual-tutorial.html",
+      "evidence_url": "solutions/utility-billing-assistance/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "utility-billing-assistance-assistance-programs",
+          "title": "Utility Billing and Assistance Agent: Assistance Programs",
+          "description": "Use when a Assistance Coordinator asks to perform preliminary, non-binding program screening.",
+          "path": "solutions/utility-billing-assistance/manual/skills/aibast_assistance-programs/SKILL.md"
+        },
+        {
+          "name": "utility-billing-assistance-billing-inquiry",
+          "title": "Utility Billing and Assistance Agent: Billing Inquiry",
+          "description": "Use when a Customer Service Representative asks to provide a read-only account explanation.",
+          "path": "solutions/utility-billing-assistance/manual/skills/aibast_billing-inquiry/SKILL.md"
+        },
+        {
+          "name": "utility-billing-assistance-payment-plan",
+          "title": "Utility Billing and Assistance Agent: Payment Plan",
+          "description": "Use when a Revenue Services Supervisor asks to draft installment options without account changes.",
+          "path": "solutions/utility-billing-assistance/manual/skills/aibast_payment-plan/SKILL.md"
+        },
+        {
+          "name": "utility-billing-assistance-usage-analysis",
+          "title": "Utility Billing and Assistance Agent: Usage Analysis",
+          "description": "Use when a Billing Specialist asks to screen smart-meter history and prepare a non-binding estimate.",
+          "path": "solutions/utility-billing-assistance/manual/skills/aibast_usage-analysis/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "wealth-insights-generator",
+      "agent": "@aibast-agents-library/wealth-insights-generator",
+      "title": "Wealth Insights Generator Agent",
+      "description": "Connect managed and held-away assets, planning gaps, life events, performance context, and meeting preparation in one governed workspace that never presents synthetic data as current advice.",
+      "category": "financial_services",
+      "industry": "Financial Services",
+      "journey_stage": "Engage",
+      "personas": [
+        "Advisory Directors",
+        "Relationship Managers",
+        "Wealth Advisor"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Outlook"
+      ],
+      "tags": [
+        "analytics",
+        "financial-services",
+        "insights",
+        "market",
+        "performance",
+        "wealth"
+      ],
+      "outcomes": [
+        "Equipped advisors with complete materials and action plans",
+        "Identified high‑value opportunities that enabled targeted engagement",
+        "Improved advisor productivity by replacing hours of manual research with instant insights",
+        "Strengthened client relationships with personalized communication"
+      ],
+      "quest_url": "solutions/wealth-insights-generator/quest.html",
+      "field_guide_url": "solutions/wealth-insights-generator/field-guide.html",
+      "manual_url": "solutions/wealth-insights-generator/manual-tutorial.html",
+      "evidence_url": "solutions/wealth-insights-generator/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 20,
+      "skills": [
+        {
+          "name": "client-insights",
+          "title": "Unified wealth insights",
+          "description": "Use for unified wealth insights questions in the Wealth Insights Generator Agent synthetic pilot.",
+          "path": "solutions/wealth-insights-generator/manual/skills/aibast_client-insights_02/SKILL.md"
+        },
+        {
+          "name": "market-brief",
+          "title": "Fixed market snapshot",
+          "description": "Use for fixed market snapshot questions in the Wealth Insights Generator Agent synthetic pilot.",
+          "path": "solutions/wealth-insights-generator/manual/skills/aibast_market-brief_01/SKILL.md"
+        },
+        {
+          "name": "meeting-brief",
+          "title": "Advisor meeting preparation",
+          "description": "Use for advisor meeting preparation questions in the Wealth Insights Generator Agent synthetic pilot.",
+          "path": "solutions/wealth-insights-generator/manual/skills/aibast_meeting-brief_05/SKILL.md"
+        },
+        {
+          "name": "opportunity-alerts",
+          "title": "Planning-gap signals",
+          "description": "Use for planning-gap signals questions in the Wealth Insights Generator Agent synthetic pilot.",
+          "path": "solutions/wealth-insights-generator/manual/skills/aibast_opportunity-alerts_03/SKILL.md"
+        },
+        {
+          "name": "performance-attribution",
+          "title": "Performance context",
+          "description": "Use for performance context questions in the Wealth Insights Generator Agent synthetic pilot.",
+          "path": "solutions/wealth-insights-generator/manual/skills/aibast_performance-attribution_04/SKILL.md"
+        }
+      ],
+      "skill_count": 5,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "win-loss-analysis",
+      "agent": "@aibast-agents-library/win-loss-analysis",
+      "title": "Win/Loss Analysis Agent",
+      "description": "Help sales operations, enablement, and leadership compare win and loss patterns, isolate addressable drivers, draft counter-strategies, and evaluate clearly labeled scenarios.",
+      "category": "b2b_sales",
+      "industry": "B2B Sales",
+      "journey_stage": "Learn",
+      "personas": [
+        "Enablement Manager",
+        "Sales Leader",
+        "Sales Operations Manager"
+      ],
+      "platforms": [
+        "Dynamics 365",
+        "Microsoft Copilot Studio",
+        "Microsoft Teams"
+      ],
+      "tags": [
+        "b2b",
+        "competitive-intel",
+        "revenue-recovery",
+        "sales",
+        "win-loss"
+      ],
+      "outcomes": [
+        "Delivered board-ready insights and recovery plans in hours, not weeks",
+        "Equipped sales teams with data-driven objection handling and competitive talk tracks",
+        "Identified top loss drivers and prioritized addressable gaps",
+        "Reversed declining win rates through targeted interventions"
+      ],
+      "quest_url": "solutions/win-loss-analysis/quest.html",
+      "field_guide_url": "solutions/win-loss-analysis/field-guide.html",
+      "manual_url": "solutions/win-loss-analysis/manual-tutorial.html",
+      "evidence_url": "solutions/win-loss-analysis/evidence-report.html",
+      "added_at": "2026-08-12T15:38:09-04:00",
+      "has_demo_video": false,
+      "has_onepager": true,
+      "demo_cases": 6,
+      "manual_steps": 22,
+      "skills": [
+        {
+          "name": "win-loss-analysis-action-summary",
+          "title": "Win/Loss Analysis Agent — Action Summary",
+          "description": "Summarize findings and candidate next steps without activating programs or approvals.",
+          "path": "solutions/win-loss-analysis/manual/skills/action-summary/SKILL.md"
+        },
+        {
+          "name": "win-loss-analysis-board-presentation",
+          "title": "Win/Loss Analysis Agent — Board Presentation",
+          "description": "Draft a board-level narrative that labels all exact values as synthetic scenarios.",
+          "path": "solutions/win-loss-analysis/manual/skills/board-presentation/SKILL.md"
+        },
+        {
+          "name": "win-loss-analysis-counter-strategies",
+          "title": "Win/Loss Analysis Agent — Counter Strategies",
+          "description": "Draft counter-strategy and talk-track options for enablement review.",
+          "path": "solutions/win-loss-analysis/manual/skills/counter-strategies/SKILL.md"
+        },
+        {
+          "name": "win-loss-analysis-revenue-impact",
+          "title": "Win/Loss Analysis Agent — Revenue Impact",
+          "description": "Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+          "path": "solutions/win-loss-analysis/manual/skills/revenue-impact/SKILL.md"
+        },
+        {
+          "name": "win-loss-analysis-root-cause-analysis",
+          "title": "Win/Loss Analysis Agent — Root Cause Analysis",
+          "description": "Identify evidence-backed synthetic loss drivers and buyer-feedback themes.",
+          "path": "solutions/win-loss-analysis/manual/skills/root-cause-analysis/SKILL.md"
+        },
+        {
+          "name": "win-loss-analysis-win-loss-overview",
+          "title": "Win/Loss Analysis Agent — Win Loss Overview",
+          "description": "Compare the bundled synthetic Q3 and Q2 win/loss patterns.",
+          "path": "solutions/win-loss-analysis/manual/skills/win-loss-overview/SKILL.md"
+        }
+      ],
+      "skill_count": 6,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    }
+  ]
+}

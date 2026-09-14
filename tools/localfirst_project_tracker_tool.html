@@ -721,19 +721,19 @@
             <div class="card">
                 <h2>Data Management</h2>
                 <div class="data-actions">
-                    <button class="btn btn-success" onclick="exportData()">📥 Export All Data (JSON)</button>
-                    <button class="btn btn-word" onclick="exportToWord()">📄 Export to Word Format</button>
+                    <button class="btn btn-success" onclick="exportData()">Export All Data (JSON)</button>
+                    <button class="btn btn-word" onclick="exportToWord()">Export to Word Format</button>
                     <div class="file-input-wrapper">
-                        <button class="btn btn-info" onclick="document.getElementById('import-file').click()">📤 Merge Import Data (JSON)</button>
+                        <button class="btn btn-info" onclick="document.getElementById('import-file').click()">Merge Import Data (JSON)</button>
                         <input type="file" id="import-file" accept=".json" onchange="importData(event)" style="display: none;">
                     </div>
-                    <button class="btn btn-danger" onclick="clearData()">🗑️ Clear All Data</button>
+                    <button class="btn btn-danger" onclick="clearData()">Clear All Data</button>
                 </div>
                 
                 <div id="import-preview" class="import-preview">
                     <h3>Import Preview</h3>
                     <div class="merge-info">
-                        <h4>📊 Merge Operation</h4>
+                        <h4>Merge Operation</h4>
                         <p>The import will merge new data with your existing data:</p>
                         <ul style="margin-left: 20px; margin-top: 10px;">
                             <li>Existing projects will be updated if they have the same ID</li>
@@ -764,8 +764,8 @@
                         <!-- Import details will be shown here -->
                     </div>
                     <div class="btn-group">
-                        <button class="btn btn-success" onclick="confirmImport()">✅ Confirm Merge</button>
-                        <button class="btn btn-secondary" onclick="cancelImport()">❌ Cancel</button>
+                        <button class="btn btn-success" onclick="confirmImport()">✓ Confirm Merge</button>
+                        <button class="btn btn-secondary" onclick="cancelImport()">✗ Cancel</button>
                     </div>
                 </div>
                 
@@ -907,8 +907,8 @@
             <div style="margin-bottom: 20px;">
                 <p>Copy the text below and paste it into Microsoft Word. The formatting will be preserved.</p>
                 <div class="btn-group">
-                    <button class="btn btn-primary" onclick="copyWordExport()">📋 Copy to Clipboard</button>
-                    <button class="btn btn-secondary" onclick="downloadWordExport()">💾 Download as Text File</button>
+                    <button class="btn btn-primary" onclick="copyWordExport()">Copy to Clipboard</button>
+                    <button class="btn btn-secondary" onclick="downloadWordExport()">Download as Text File</button>
                 </div>
             </div>
             <div id="word-export-content" class="word-export-preview">
@@ -1110,9 +1110,9 @@
                         <div>
                             <h3 class="project-title">${project.customerName}</h3>
                             <div class="project-meta">
-                                <span>📅 ${new Date(project.createdDate).toLocaleDateString()}</span>
-                                <span>📋 ${project.type}</span>
-                                ${project.competingSolution ? `<span>⚔️ vs ${project.competingSolution}</span>` : ''}
+                                <span>${new Date(project.createdDate).toLocaleDateString()}</span>
+                                <span>${project.type}</span>
+                                ${project.competingSolution ? `<span>vs ${project.competingSolution}</span>` : ''}
                             </div>
                         </div>
                         <span class="project-status status-${project.status}">${project.status.toUpperCase()}</span>
@@ -1180,7 +1180,7 @@
                             
                             ${project.mvpUseCase ? `
                                 <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                                    <h3 style="color: #1976d2; margin-bottom: 10px;">🎯 MVP Use Case</h3>
+                                    <h3 style="color: #1976d2; margin-bottom: 10px;">MVP Use Case</h3>
                                     <h4>${project.mvpUseCase}</h4>
                                     ${project.mvpDescription ? `<p style="margin-top: 10px;">${project.mvpDescription}</p>` : ''}
                                     ${project.mvpTimeline ? `<p style="margin-top: 10px;"><strong>Timeline:</strong> ${project.mvpTimeline}</p>` : ''}

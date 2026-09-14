@@ -15,7 +15,9 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Locked persona cases | `tests/demo_cases/prior-authorization.json` |
 | Approved one-pager map | `solutions/prior-authorization/evals/onepager-map.json` |
 | Source audit | `solutions/prior-authorization/evals/source-audit.json` |
-| Strict isolated transcripts | `solutions/prior-authorization/evals/transcripts.json` |
+| Historical isolated source transcripts | `solutions/prior-authorization/evals/transcripts.json` |
+| Current native Manual evidence | `solutions/prior-authorization/evals/manual-build-evidence.json` |
+| Dated pilot review and prior failures | `solutions/prior-authorization/evals/manual-pilot-review.json` |
 | Global instructions | `solutions/prior-authorization/manual/GLOBAL-INSTRUCTIONS.md` |
 | Synthetic knowledge | `solutions/prior-authorization/manual/knowledge/` |
 | Uploadable operation skills | `solutions/prior-authorization/manual/skills/*/SKILL.md` |
@@ -29,8 +31,10 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 ## Package state
 - One locked persona case and one uploadable skill exist per operation.
 - Exactly two synthetic manual knowledge files are included.
-- All four locked cases passed a strict single-agent isolation capture.
-- No global Brainstem capture, Copilot Studio project, tutorial, screenshot, export bundle, publication, or live connector is included.
+- All four unchanged locked cases passed once each in separate fresh native Preview conversations on the saved/reopened shared-grounding-r4 build using Claude Sonnet 4.6.
+- All 18 student checkpoints have personally reviewed reference media. Initial construction, later replacements, persistence checks and final Draft confirmation retain their actual scopes; the reference set is not a continuous fresh-build film.
+- Use the seven frozen native inputs and locked cases in the Manual source ZIP with the separately published tutorial. The ZIP is not a standalone guide or native import package.
+- Historical source/assisted evidence and the incomplete five-entry native import archive are retained as history, not current Manual acceptance. No live connection, native publication or production certification is claimed.
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -48,12 +52,12 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Raw export manifest | `solutions/prior-authorization/export-manifest.json` |
 | Source bundle | `solutions/prior-authorization/exports/prior-authorization-source.zip` |
 | Manual evidence | `solutions/prior-authorization/evals/manual-build-evidence.json` |
-| Manual browserfilm | `solutions/prior-authorization/screenshots/manual/browserfilm.json` |
-| Copilot Studio solution ZIP | `solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip` |
+| Manual reviewed reference set | `solutions/prior-authorization/screenshots/manual/shared-grounding-r4/browserfilm.json` |
+| Historical Copilot Studio solution ZIP — not current source | `solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/prior-authorization/exports/prior-authorization-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/prior-authorization/exports/prior-authorization-solution-export.json` |
 
-**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 78 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation. Resource readiness means file availability, not workshop acceptance. On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -11,11 +11,13 @@
   "status": "Draft",
   "published": false,
   "push_result": "Draft source synchronized with no warnings",
+  "source_contract_status": "reshoot_required",
+  "source_contract_note": "The recorded push_result and capture date are historical. The repaired native instructions have not been synchronized or previewed; CG-01 now requires SYN-COL — 182 records.",
   "cases": [
     {
       "case_id": "CG-01",
       "must_include": [
-        "SYN-BCS",
+        "SYN-COL — 182 records",
         "Records requiring evidence review"
       ],
       "must_not_include": [
@@ -24,7 +26,14 @@
         "appointment booked",
         "authorization granted"
       ],
-      "passed": true
+      "passed": null,
+      "status": "reshoot_required",
+      "captured_passed": true,
+      "captured_must_include": [
+        "SYN-BCS",
+        "Records requiring evidence review"
+      ],
+      "reason": "The old annotations highlight SYN-BCS. Capture a fresh Preview against the repaired source proving SYN-COL — 182 records; do not relabel the historical image."
     },
     {
       "case_id": "CG-02",

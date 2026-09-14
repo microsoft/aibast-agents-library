@@ -1,0 +1,151 @@
+{
+  "schema": "aibast-academy-config/1.0",
+  "version": "1.0.0",
+  "title": "Microsoft AI Academy",
+  "description": "A hands-on catalog for exploring experimental AIBAST agents through scenario quests, guided builds, evidence reviews, and portable Microsoft implementation patterns.",
+  "disclaimer": "Microsoft AI Academy is an experimental AIBAST learning experience. It is not an official Microsoft credential, certification, training program, or replacement for Microsoft Learn. Activities use synthetic data and self-reported milestones unless a course states otherwise.",
+  "milestones": [
+    {
+      "id": "started",
+      "claim_id": "started",
+      "title": "Started",
+      "description": "Open the quest and begin the learning scenario.",
+      "points": 5
+    },
+    {
+      "id": "local-proof",
+      "claim_id": "local-proof",
+      "title": "Local proof",
+      "description": "Run the scenario locally and capture evidence that the agent responded.",
+      "points": 15
+    },
+    {
+      "id": "draft-builder",
+      "claim_id": "draft-builder",
+      "title": "Draft builder",
+      "description": "Create a governed draft from the packaged instructions, knowledge, and skills.",
+      "points": 20
+    },
+    {
+      "id": "preview-proven",
+      "claim_id": "preview-proven",
+      "title": "Preview proven",
+      "description": "Exercise the draft in preview and compare the result with the course evidence.",
+      "points": 25
+    },
+    {
+      "id": "workshop-complete",
+      "claim_id": "workshop-completed",
+      "title": "Workshop complete",
+      "description": "Finish the guided quest and its required evidence checkpoints.",
+      "points": 35
+    },
+    {
+      "id": "hard-mode-complete",
+      "claim_id": "hard-mode-completed",
+      "title": "Manual mode complete",
+      "description": "Complete the manual build path without publishing or connecting customer data.",
+      "points": 50
+    }
+  ],
+  "ecosystem": [
+    {
+      "id": "discover-skill",
+      "title": "Discover a skill",
+      "description": "Choose an AIBAST capability that matches a role, industry, or problem you want to understand."
+    },
+    {
+      "id": "learn-scenario",
+      "title": "Learn the scenario",
+      "description": "Use the quest and field guide to understand the people, evidence, constraints, and expected outcome."
+    },
+    {
+      "id": "build-and-test",
+      "title": "Build and test",
+      "description": "Follow the guided or manual path, test with synthetic data, and keep consequential actions under human review."
+    },
+    {
+      "id": "prove-outcome",
+      "title": "Prove the outcome",
+      "description": "Compare the result with the evidence report and record what the workshop actually demonstrated."
+    },
+    {
+      "id": "carry-into-microsoft",
+      "title": "Carry it into Microsoft",
+      "description": "Reuse the portable skill and implementation pattern in the appropriate Microsoft agent, app, or workflow."
+    }
+  ],
+  "paths": [
+    {
+      "id": "start-here",
+      "title": "Start here",
+      "description": "Build confidence with four approachable scenarios spanning service, people, public services, and account work.",
+      "audience": "First-time AIBAST learners and teams deciding where applied AI can help.",
+      "level": "Foundational",
+      "categories": [],
+      "curated_slugs": [
+        "ai-customer-assistant",
+        "ask-hr",
+        "building-permit-processing",
+        "account-intelligence"
+      ]
+    },
+    {
+      "id": "sales-customer-growth",
+      "title": "Sales and customer growth",
+      "description": "Practice customer understanding, seller preparation, personalized engagement, and retail growth scenarios.",
+      "audience": "Sales, marketing, commerce, customer success, and store teams.",
+      "level": "Foundational to intermediate",
+      "categories": [
+        "b2b_sales",
+        "b2c_sales",
+        "retail_cpg"
+      ]
+    },
+    {
+      "id": "operations-supply-chain",
+      "title": "Operations and supply chain",
+      "description": "Explore asset, field, energy, plant, maintenance, and production decisions grounded in operational evidence.",
+      "audience": "Operations, plant, field service, energy, maintenance, and supply chain teams.",
+      "level": "Intermediate",
+      "categories": [
+        "energy",
+        "manufacturing"
+      ]
+    },
+    {
+      "id": "regulated-public-services",
+      "title": "Regulated and public services",
+      "description": "Learn evidence-first patterns for financial, health, government, eligibility, compliance, and citizen-service work.",
+      "audience": "Financial services, healthcare, compliance, and state or local government teams.",
+      "level": "Intermediate",
+      "categories": [
+        "financial_services",
+        "healthcare",
+        "slg_government"
+      ]
+    },
+    {
+      "id": "workforce-professional-productivity",
+      "title": "Workforce and professional productivity",
+      "description": "Build practical assistants for employee support, professional delivery, product feedback, and recurring knowledge work.",
+      "audience": "HR, consulting, legal, finance operations, product, and software teams.",
+      "level": "Foundational to intermediate",
+      "categories": [
+        "human_resources",
+        "professional_services",
+        "software_digital_products"
+      ]
+    },
+    {
+      "id": "cross-industry-ai",
+      "title": "Cross-industry AI",
+      "description": "Start from reusable service and decision patterns that apply across organizations before specializing by industry.",
+      "audience": "Cross-functional teams, innovation leaders, and learners comparing multiple AI opportunities.",
+      "level": "Foundational",
+      "categories": [
+        "general"
+      ]
+    }
+  ]
+}

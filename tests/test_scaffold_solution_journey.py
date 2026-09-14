@@ -14,8 +14,12 @@ from tools.scaffold_solution_journey import (
     THEME_SCRIPT,
     THEME_VARIABLES,
     ScaffoldError,
+    choose_frame_resources,
+    expected_result,
+    load_context,
     scaffold,
 )
+from tools import build_solution_export
 
 
 class StructureParser(HTMLParser):
@@ -319,14 +323,19 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 8
-    assert "Install RAPP Brainstem Frontier" in quest
-    assert "Open Frontier installer" in quest
+    assert quest.count("data-copy-target=") == 9
+    assert "Install RAPP Brainstem" in quest
+    assert "Install RAPP Brainstem Frontier" not in quest
+    assert "Install with GitHub Copilot in VS Code" in quest
+    assert "Copy AI prompt" in quest
+    assert "any coding AI" in quest
     assert "Download Windows install.cmd" in quest
-    assert "beta/install.sh | bash" in quest
+    assert "aibast-agents-library/install.sh | bash" in quest
+    assert "beta/install.sh | bash" not in quest
+    assert "Download onboarding skill" in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
-    assert quest.count('download="SKILL.md"') == 2
+    assert quest.count('download="SKILL.md"') == 3
     assert "Drag the downloaded file into the chat." in quest
     assert "Give me Demo Journey using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
@@ -361,7 +370,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'role="tabpanel" aria-labelledby="mode-tab-hard"' in quest
     assert 'button.setAttribute("aria-selected", String(selected));' in quest
     assert quest.count('<article class="step"') == len(frames)
-    assert "manually on this page." in quest
+    assert "is built, one capability at a time." in quest
+    assert "Easy mode already did all of this for you" in quest
     assert "manual-progress" in quest
     assert "Draft · published false" in quest
     assert "manual-tutorial.html" in quest
@@ -476,6 +486,43 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "Open a fresh Preview conversation",
         "unmatched.jpg",
     ).startswith("A fresh Preview surface")
+
+
+@pytest.mark.parametrize("review_snapshot", [False, True])
+@pytest.mark.parametrize(
+    ("action", "expected_file"),
+    [
+        ("Add knowledge: aibast_portfolio-controls-and-review.md", "knowledge file"),
+        ("Add knowledge: agent-skill-and-review-rules.md", "knowledge file"),
+        ("Upload synthetic records", "knowledge file"),
+        ("Upload knowledge: reviewed-instructions.md", "knowledge file"),
+        ("Add skill: aibast_rebalance-recommendation_02", "SKILL.md"),
+        ("Add review skill", "SKILL.md"),
+        ("Replace skill: knowledge-review", "SKILL.md"),
+    ],
+)
+def test_upload_checkpoints_do_not_require_the_final_inventory(
+    tmp_path, review_snapshot, action, expected_file
+):
+    build_fixture(tmp_path)
+    ctx = load_context(
+        tmp_path,
+        "demo-journey",
+        allow_pending=False,
+        raw_base="https://example.test/raw/",
+    )
+    if review_snapshot:
+        ctx.manual_evidence["review_snapshot"] = "evals/manual-pilot-review.json"
+
+    result = expected_result(ctx, action, "upload-checkpoint.jpg")
+
+    assert expected_file in result
+    assert "final inventory" in result
+    assert "rendered skills" not in result
+    assert "no tools" not in result
+    assert "skills" in expected_result(
+        ctx, "Review model, skills, knowledge, and safety boundaries", "inventory.jpg"
+    )
 
 
 def test_scaffolder_uses_reviewed_copilot_studio_knowledge_as_legacy_fallback(
@@ -849,3 +896,77 @@ def test_scaffold_exposes_complete_copilot_studio_solution_export(tmp_path):
     assert "publish the agent" in exports_readme
     package_readme = (package / "README.md").read_text(encoding="utf-8")
     assert "Copilot Studio solution ZIP" in package_readme
+
+
+def test_explicit_frame_sources_override_filename_sort_order(tmp_path):
+    package, _ = build_fixture(tmp_path)
+    path = package / "screenshots/manual/browserfilm.json"
+    film = json.loads(path.read_text())
+    film["frames"][2]["source_path"] = "manual/knowledge/synthetic-records.md"
+    film["frames"][3]["source_path"] = "manual/skills/summary/SKILL.md"
+    write(path, json.dumps(film))
+    context = load_context(tmp_path, "demo-journey", allow_pending=False, raw_base="https://example.test/")
+    resources = choose_frame_resources(context)
+    assert resources[2] == package / "manual/knowledge/synthetic-records.md"
+    assert resources[3] == package / "manual/skills/summary/SKILL.md"
+
+
+@pytest.mark.parametrize("source", ["../README.md", "/outside.md", "manual/missing.md"])
+def test_explicit_frame_sources_must_exist_inside_package(tmp_path, source):
+    package, _ = build_fixture(tmp_path)
+    path = package / "screenshots/manual/browserfilm.json"
+    film = json.loads(path.read_text())
+    film["frames"][2]["source_path"] = source
+    write(path, json.dumps(film))
+    with pytest.raises(ScaffoldError, match="source_path"):
+        scaffold("demo-journey", root=tmp_path)
+
+
+def test_explicit_source_bundle_excludes_unselected_artifacts_and_is_reproducible(tmp_path, monkeypatch):
+    monkeypatch.setattr(build_solution_export, "ROOT", tmp_path)
+    package = tmp_path / "solutions/review"
+    selected = "solutions/review/manual/SKILL.md"
+    write(tmp_path / selected, "---\nname: review\n---\n")
+    write(package / "raw-browser.txt", "private fixture must not be packaged")
+    write(package / "screenshot.jpg", b"unreviewed fixture")
+    manifest = package / "export-manifest.json"
+    write(manifest, json.dumps({
+        "bundle": {
+            "path": "solutions/review/exports/review-source.zip",
+            "include_paths": [selected],
+        },
+        "files": [{"path": "solutions/review/raw-browser.txt", "status": "ready"}],
+    }))
+    bundle, count = build_solution_export.build(manifest)
+    first = bundle.read_bytes()
+    assert count == 1
+    with zipfile.ZipFile(bundle) as archive:
+        assert archive.namelist() == [selected]
+        assert archive.read(selected) == (tmp_path / selected).read_bytes()
+    write(package / "raw-browser.txt", "another private value")
+    build_solution_export.build(manifest)
+    assert bundle.read_bytes() == first
+    document = json.loads(manifest.read_text())
+    document["bundle"]["include_paths"] = ["solutions/review/missing.md"]
+    write(manifest, json.dumps(document))
+    with pytest.raises(FileNotFoundError):
+        build_solution_export.build(manifest)
+    assert bundle.read_bytes() == first
+
+
+@pytest.mark.parametrize("paths", [
+    [], "manual/SKILL.md", [None], ["../outside"], ["/outside"], [".private/secret"],
+    ["solutions/review/exports/review-source.zip"],
+])
+def test_explicit_source_bundle_rejects_unsafe_or_ambiguous_selection(tmp_path, monkeypatch, paths):
+    monkeypatch.setattr(build_solution_export, "ROOT", tmp_path)
+    manifest = tmp_path / "solutions/review/export-manifest.json"
+    write(manifest, json.dumps({
+        "bundle": {
+            "path": "solutions/review/exports/review-source.zip",
+            "include_paths": paths,
+        },
+        "files": [],
+    }))
+    with pytest.raises(ValueError):
+        build_solution_export.build(manifest)

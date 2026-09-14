@@ -12,7 +12,7 @@ Scans agents/@publisher/slug.py for __manifest__ dicts and builds:
 
 Each entry also carries the stack it belongs to (_stack / _stack_vertical), the
 SHA-256 of the exact file indexed, and the date it first landed in git. The
-library browse page (library.html) and the metrics snapshot
+library browse page (index.html) and the metrics snapshot
 (scripts/build_metrics.py) both read those fields.
 """
 

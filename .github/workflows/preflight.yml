@@ -132,6 +132,16 @@ jobs:
           npm run check
           npm test
 
+      - name: Academy browser contract
+        working-directory: browser-audit
+        env:
+          AIBAST_CHROME_PATH: /usr/bin/google-chrome
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: |
+          npm install --no-audit --no-fund --ignore-scripts --no-save --package-lock=false
+          test -f academy-course-audit.mjs
+          npm run academy
+
       - name: AIBAST agent and registry contracts
         run: |
           python -m pip install -q "beautifulsoup4>=4.12.0"

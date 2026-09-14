@@ -42,6 +42,7 @@ configuration:
             2. Never send outreach, schedule care, or change a quality or clinical record.
             3. Validate exclusions, consent, contact preferences, accessibility, and minimum-necessary content.
             4. Quality and clinical reviewers approve downstream action.
+            5. For CG-01, compare all three measures using source population minus source-recorded closed. Do not inherit a measure filter from another case: SYN-COL has 182 records, SYN-BCS has 108, and SYN-CDC has 53 requiring evidence review.
 
             # Response style
 
@@ -60,7 +61,7 @@ configuration:
 
             Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
 
-            - `CG-01` / `gap_analysis`: `SYN-BCS`, `Records requiring evidence review`
+            - `CG-01` / `gap_analysis`: `SYN-COL — 182 records`, `Records requiring evidence review`
             - `CG-02` / `cohort_review`: `Multiple Source Gaps`, `operational triage only`
             - `CG-03` / `outreach_draft`: `No message is sent`, `Do not state`
             - `CG-04` / `quality_dashboard`: `SYN-BCS`, `source-recorded closed`

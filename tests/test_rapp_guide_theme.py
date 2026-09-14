@@ -106,6 +106,14 @@ body:not(.js-enabled) .sidebar-scrim {{
   .layout {{ display: block; }}
   .sidebar {{ width: 100%; transform: translateX(-105%); }}
 }}
+@media (max-width: 46rem) {{
+  .topbar-link-secondary {{ display: none; }}
+}}
+@media (max-width: 34rem) {{
+  .topbar-link:not([aria-current="page"]):not(.topbar-link-academy) {{
+    display: none;
+  }}
+}}
 @media (prefers-reduced-motion: reduce) {{
   *, *::before, *::after {{
     scroll-behavior: auto;
@@ -295,8 +303,12 @@ window.addEventListener("popstate", handleHashNavigation);
 <a class="skip-link" href="#mainContent">Skip to content</a>
 <header class="topbar">
   <strong>AIBAST Production Guide</strong>
-  <a href="../library.html">Library</a>
-  <a href="../solutions/_shared/workshop-settings.html">Workshop settings</a>
+  <a class="topbar-link topbar-link-secondary"
+     href="../library.html">Library</a>
+  <a class="topbar-link topbar-link-academy"
+     href="../academy.html">Academy</a>
+  <a class="topbar-link topbar-link-secondary"
+     href="../solutions/_shared/workshop-settings.html">Workshop settings</a>
   <a class="report-control" id="reportIssue"
      aria-label="Report an issue"
      href="https://github.com/microsoft/aibast-agents-library/issues/new?template=workshop.md">Report an issue</a>
@@ -394,6 +406,10 @@ def test_real_guide_contract_is_reconstructed_from_trusted_git_blob():
         ROOT / "state" / "rapp_guide_content_contract.json",
     )
     assert report["ok"], report["failures"]
+    assert report["measurements"]["academy_mobile_widths_checked"] == [
+        700,
+        375,
+    ]
 
 
 def test_gate_fails_closed_without_verified_baseline():
@@ -593,6 +609,30 @@ def test_gate_rejects_unallowlisted_shell_link():
 
 
 @pytest.mark.parametrize(
+    ("old", "new"),
+    (
+        (
+            "topbar-link topbar-link-academy",
+            "topbar-link topbar-link-secondary",
+        ),
+        (
+            ':not([aria-current="page"]):not(.topbar-link-academy)',
+            ':not([aria-current="page"])',
+        ),
+        (
+            "</style>",
+            ".js-enabled .topbar-link-academy { display: none; }\n</style>",
+        ),
+    ),
+)
+def test_gate_catches_academy_hidden_at_mobile_widths(old, new):
+    original = valid_fixture()
+    assert old in original
+    changed = original.replace(old, new, 1)
+    assert "behavior.mobile_academy" in categories(run_audit(changed))
+
+
+@pytest.mark.parametrize(
     ("old", "new", "category"),
     (
         (
@@ -697,7 +737,7 @@ def test_gate_catches_google_fonts_and_inter():
 
 def test_gate_catches_missing_dark_theme_token():
     original = valid_fixture()
-    changed = original.replace("  --cp-link: #4da6ff;\n", "", 1)
+    changed = original.replace("  --cp-link: #66b3ff;\n", "", 1)
     assert "theme.tokens" in categories(run_audit(changed))
 
 

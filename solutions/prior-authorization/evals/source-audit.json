@@ -1,5 +1,8 @@
 {
   "schema": "aibast-source-audit/1.0",
+  "evidence_scope": "Historical portable-source audit plus a current native Manual review pointer. Source routing logs and old pass flags do not establish current final-answer acceptance.",
+  "current_native_manual_review": "solutions/prior-authorization/evals/manual-pilot-review.json",
+  "current_native_manual_evidence": "solutions/prior-authorization/evals/manual-build-evidence.json",
   "solution": "@aibast-agents-library/prior-authorization",
   "audited_source": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
   "case_file": "tests/demo_cases/prior-authorization.json",
@@ -58,6 +61,8 @@
     }
   ],
   "routing_result": {
+    "evidence_status": "historical_routing_only",
+    "current_final_answer_acceptance": false,
     "cases_passed": 4,
     "cases_total": 4,
     "strict_isolation": true,
@@ -65,5 +70,16 @@
     "artifact": "solutions/prior-authorization/evals/transcripts.json"
   },
   "claim_policy": "Catalog value claims are qualitative. Exact fields and identifiers are retained only as clearly labeled synthetic evidence.",
-  "unresolved_defects": []
+  "unresolved_defects": [
+    {
+      "scope": "historical assisted/import lane, excluded from current Manual acceptance",
+      "finding": "The five-entry import archive has zero skill and knowledge payloads and cannot recreate the current Manual build.",
+      "disposition": "Preserved as history and withheld from current reproduction downloads; no import retry or generated tenant agent was substituted."
+    },
+    {
+      "scope": "historical source final responses, excluded from current Manual acceptance",
+      "finding": "The historical Haiku response fields do not satisfy all current locked final-answer anchors and the terminal healthcare footer, despite recorded pass booleans.",
+      "disposition": "Historical transcripts remain unchanged and explicitly separate from the reviewed Sonnet r4 native evidence."
+    }
+  ]
 }

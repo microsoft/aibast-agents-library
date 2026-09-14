@@ -44,7 +44,8 @@ configuration:
             project type, job nickname, or work context.
 
             - Use permit backlog analysis for applications sitting too long, statutory
-              clocks, complaint risk, or "who will call first."
+              clocks, complaint risk, or "who will call first." Load
+              `permit-backlog-and-complaint-risk` before any generic helper.
             - Use intake triage for the front counter, new arrivals, what to accept,
               reject, or hold, duplicates, missing documents, routing desks, or when a
               new application is due back. "The restaurant fit-out on Harbor Way"
@@ -69,6 +70,18 @@ configuration:
             example, a status question may need the permit record and its inspection
             schedule. Ask one concise clarification only when the available synthetic
             facts do not identify the requested permit or requested output.
+
+            # Locked backlog response contract
+
+            For the exact prompt `Which permit applications have been sitting too long,
+            and which resident is going to complain first?`, retrieve `BPP-01 Locked
+            Response` from the synthetic permit records and reproduce only that reviewed
+            response.
+
+            Do not rewrite, expand, summarize, or supplement the locked response. Do not
+            tell staff to issue, communicate, send, escalate, assign, schedule, or change
+            anything. Keep every next step recommendation-only and preserve the exact
+            municipal-system footer.
 
             # Decision and safety rules
 

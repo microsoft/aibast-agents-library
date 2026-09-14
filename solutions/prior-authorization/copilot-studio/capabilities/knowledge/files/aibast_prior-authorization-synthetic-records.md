@@ -8,6 +8,7 @@
 - **Payer in synthetic source:** Synthetic Health Plan
 - **Source-recorded workflow state:** additional evidence requested
 - **Source date:** 2026-07-30
+- **Workflow-state rationale:** not stated in synthetic source
 - **Referenced policy:** SYN-POL-IMG-01
 - **Evidence — encounter note:** present
 - **Evidence — prior imaging report:** present
@@ -19,6 +20,7 @@
 - **Payer in synthetic source:** Synthetic Community Plan
 - **Source-recorded workflow state:** payer response recorded
 - **Source date:** 2026-07-31
+- **Workflow-state rationale:** not stated in synthetic source
 - **Referenced policy:** SYN-POL-PROC-02
 - **Evidence — encounter note:** present
 - **Evidence — specialist note:** present
@@ -40,7 +42,7 @@ These are fictional checklists. Presence of a listed item does not establish med
 
 ## Fixed source facts used by the locked cases
 
-- PA-01 must preserve SYN-AUTH-001, `additional evidence requested`, 2026-07-30, SYN-POL-IMG-01, both present items, and `conservative-care duration: not found in synthetic source`. The captured agentic loop also followed the inventory with the SYN-POL-IMG-01 criteria crosswalk.
+- PA-01 must preserve SYN-AUTH-001, `additional evidence requested`, 2026-07-30, SYN-POL-IMG-01, both present items, and `conservative-care duration: not found in synthetic source`.
 - PA-02 must preserve `Synthetic Imaging Evidence Checklist`, 2026-07-01, all three reviewer checks, and `Checklist only; presence does not establish medical necessity or authorization.`
 - PA-03 must preserve `additional evidence requested as recorded on 2026-07-30` and `This is a source transcription, not an agent determination.`
 - PA-04 must preserve SYN-POL-IMG-01, `Include only authorized, minimum-necessary evidence.`, and human utilization-review ownership.

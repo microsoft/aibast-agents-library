@@ -14,7 +14,17 @@
     }
   ],
   "case_file": "tests/demo_cases/care-gap-closure.json",
-  "case_file_sha256": "1bdadb805383e84752aeef511969d709f10d2e794b512f58772a62c94919d75c",
+  "case_file_sha256": "de446da9f1b5c071172e9c141bc67fc2dc0ae3d4b0242b6db58dde8150836270",
+  "captured_case_file_sha256": "1bdadb805383e84752aeef511969d709f10d2e794b512f58772a62c94919d75c",
+  "contract_revalidation": {
+    "reviewed_on": "2026-09-11",
+    "validator": "tools.run_demo_cases.run_case",
+    "scope": "Required markers checked against stored deterministic agent_logs; forbidden prose and word count checked against the unchanged assistant_response.",
+    "live_capture": false,
+    "cases_passed": 4,
+    "cases_total": 4,
+    "note": "CG-01 already computed SYN-COL — 182 records. Only the acceptance contract and its digest changed; capture timestamps, responses, logs, models, and agent source are preserved. This is not a new Copilot Studio Preview pass."
+  },
   "strict_isolation": true,
   "transcripts": [
     {
@@ -26,7 +36,7 @@
       "agent_logs": "[CareGapClosureAgent] # Source-Evidence Gap Analysis\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\n**Largest evidence-review queue:** SYN-COL \u2014 182 records.\n\n## Synthetic Breast Screening Measure (SYN-BCS)\n- Source population: 400\n- Source-recorded closed: 292\n- Records requiring evidence review: 108\n- Limitation: Eligibility and exclusions are unvalidated synthetic source fields.\n\n## Synthetic Colorectal Screening Measure (SYN-COL)\n- Source population: 520\n- Source-recorded closed: 338\n- Records requiring evidence review: 182\n- Limitation: Clinical exclusions and external claims may be incomplete.\n\n## Synthetic Diabetes Monitoring Measure (SYN-CDC)\n- Source population: 310\n- Source-recorded closed: 257\n- Records requiring evidence review: 53\n- Limitation: Recent labs and measure-year attribution require reviewer validation.\n",
       "expected_agent": "CareGapClosureAgent",
       "must_include": [
-        "SYN-BCS",
+        "SYN-COL — 182 records",
         "Records requiring evidence review"
       ],
       "model": "claude-haiku-4.5",
