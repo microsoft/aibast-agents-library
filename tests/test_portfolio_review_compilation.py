@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "solutions/portfolio-rebalancing"
 PREFIX = "solutions/portfolio-rebalancing/"
 INPUTS = {
-    "manual/GLOBAL-INSTRUCTIONS.md": (5154, "b9e120836fe330ca5c79f9ffe0336e448671eecec3f70550c8a58164226e6070"),
+    "manual/GLOBAL-INSTRUCTIONS.md": (6104, "263396c47f80e3d8572cf7264d9f717b13f0e3f05803d26cf0fd4f2b51650931"),
     "manual/skills/aibast_execution-plan_06/SKILL.md": (2881, "5ce85e4f7aa132efa23e37e20e0aa0a7ae708d32a891d459e6d305470ca67181"),
     "manual/skills/aibast_portfolio-analysis_01/SKILL.md": (1044, "9c0f20bb40cc1c961e73a19ff0774fd40137fba5e665b539fb0cb5c5150f189f"),
     "manual/skills/aibast_rebalance-recommendation_02/SKILL.md": (2482, "787d18b44961a31b89badbbcd84e9887d53891a893c8ed6cd968e5af3ae40fc9"),

@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from tools import build_solution_export, normalize_manual_instructions
+from tools import build_solution_export
 from tools import scaffold_solution_journey as scaffold
 from tools.run_demo_cases import run_case
 
@@ -112,9 +112,14 @@ def test_manual_and_native_sources_share_the_same_contract():
     manual = PACKAGE / "manual"
     native = PACKAGE / "copilot-studio"
     instructions = (manual / "GLOBAL-INSTRUCTIONS.md").read_text()
-    assert normalize_manual_instructions.render_section(
-        read_json(CASE_FILE)["cases"]
-    ) in instructions
+    # The anchor block now carries the anti-hallucination "Skill routing map"
+    # guardrail (root cause of #220) alongside the per-case acceptance-evidence
+    # phrases; both must be present, not the older render_section() template.
+    for case in read_json(CASE_FILE)["cases"]:
+        for anchor in case["must_include"]:
+            assert anchor in instructions
+    assert "ONLY valid skill identifiers" in instructions
+    assert "Never invent, guess, or reference any other skill name" in instructions
     settings = (native / "settings.mcs.yml").read_text()
     native_instructions = settings.split("          value: |\n", 1)[1].split(
         "template:", 1
