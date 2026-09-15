@@ -168,6 +168,7 @@ jobs:
               "origin", TRUSTED_COMMIT, TRUSTED_SOURCE_COMMIT,
           ], check=True)
           PY
+          python scripts/build_academy.py --check
           python -m pytest tests -q
           python - <<'PY'
           import json

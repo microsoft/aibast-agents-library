@@ -94,6 +94,16 @@ def test_generated_catalogs_are_committed_atomically():
     )
 
 
+def test_preflight_rejects_stale_academy_output_before_promotion():
+    workflow = PREFLIGHT_WORKFLOW.read_text(encoding="utf-8")
+    step = _step(workflow, "AIBAST agent and registry contracts")
+    assert "python scripts/build_academy.py --check" in step
+    assert step.index("python scripts/build_academy.py --check") < step.index(
+        "python -m pytest tests -q"
+    )
+    assert "continue-on-error" not in step
+
+
 def test_catalog_commit_sequences_asset_publication_without_skip_markers():
     build = BUILD_WORKFLOW.read_text(encoding="utf-8")
     assets = ASSET_WORKFLOW.read_text(encoding="utf-8")

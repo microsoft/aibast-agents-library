@@ -47,6 +47,9 @@ failure, but stop on cancellation. No failure is ignored: the static job and
 the release remain blocked until every gate passes.
 Hosted-page browser assertions run in `browser-audit` CI rather than the
 desktop installer's Node test suite; they remain mandatory release gates.
+After catalog or skill-metadata changes, regenerate both `registry.json` and
+`academy.json`. Preflight checks the Academy output before promotion so its
+dates, skill titles, and descriptions cannot lag the committed sources.
 
 ### Content scale
 
