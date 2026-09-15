@@ -1,0 +1,84 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/procurement-agent",
+  "display_name": "Procurement Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
+  "target_filename": "procurement_agent.py",
+  "expected_tool": "ProcurementAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+    "arguments": {
+      "operation": "purchase_request",
+      "request_id": "PR-5001"
+    },
+    "must_call": "ProcurementAgent",
+    "must_include": [
+      "PR-5001",
+      "$125,000"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "purchase_request",
+      "vendor_comparison",
+      "approval_routing",
+      "spend_analysis"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_procurement-agent-synthetic-records.md",
+      "manual/knowledge/aibast_procurement-agent-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Bind only customer-approved systems after security, privacy, and business-owner review"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Procurement Manual",
+      "bot_id": "c5ccfeb5-690c-40fa-8d12-1e14bf315222",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Procurement Pilot",
+      "schema_name": "aibast_ProcurementPilot",
+      "bot_id": "25961b55-08a9-4a19-9c1c-3f015842a79e",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  }
+}

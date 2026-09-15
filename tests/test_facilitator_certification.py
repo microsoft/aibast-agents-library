@@ -1,5 +1,6 @@
 """Facilitator-only enrollment, certification, and Brainstem guide contract."""
 
+import hashlib
 import html
 import json
 import re
@@ -164,7 +165,7 @@ def test_import_ready_forms_exist_and_contain_only_the_expected_questions():
     assert "Open text response" not in qualification
 
 
-def test_every_source_bundle_contains_the_linked_forms_templates():
+def test_source_bundles_respect_full_or_manual_only_facilitator_scope():
     expected = {
         "solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
         "solutions/_shared/AIBAST-Badge-Qualification.docx",
@@ -178,7 +179,41 @@ def test_every_source_bundle_contains_the_linked_forms_templates():
         assert expected <= manifest_paths
         bundle = ROOT / manifest["bundle"]["path"]
         with zipfile.ZipFile(bundle) as archive:
-            assert expected <= set(archive.namelist())
+            names = set(archive.namelist())
+        if manifest["bundle"].get("include_paths") is not None:
+            assert manifest["bundle"]["kind"] in {"manual-review-source", "manual-inputs"}
+            assert manifest["bundle"]["native_importable"] is False
+            assert names == set(manifest["bundle"]["include_paths"])
+            assert expected.isdisjoint(names)
+            if manifest["bundle"]["kind"] == "manual-inputs":
+                assert manifest["bundle"]["standalone_guide"] is False
+                inventory = next(
+                    item for item in manifest["files"]
+                    if item["id"] == "manual-input-inventory"
+                )
+                inputs = json.loads((ROOT / inventory["path"]).read_text(encoding="utf-8"))
+                declared = {item["path"] for item in inputs["inputs"]} | {
+                    inventory["path"],
+                    (package / "exports/README.md").relative_to(ROOT).as_posix(),
+                }
+                if "locked_cases" in inputs:
+                    cases = inputs["locked_cases"]
+                    canonical = f"tests/demo_cases/{row['slug']}.json"
+                    assert cases["path"] == canonical
+                    assert canonical in manifest_paths
+                    payload = (ROOT / canonical).read_bytes()
+                    assert len(payload) == cases["bytes"]
+                    assert hashlib.sha256(payload).hexdigest() == cases["sha256"]
+                    declared.add(canonical)
+                assert names == declared
+            for item in manifest["files"]:
+                if item["path"] in expected:
+                    assert item["included_in_bundle"] is False
+            tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
+            for path in expected:
+                assert Path(path).name not in tutorial
+        else:
+            assert expected <= names
 
 
 def test_generated_issue_triggers_are_public_safe_and_strictly_shaped():

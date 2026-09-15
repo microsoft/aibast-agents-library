@@ -6,6 +6,33 @@ Help quality and care-coordination teams inspect synthetic measure evidence, org
 ## Safety boundary
 This customer package is synthetic and read-only. It provides evidence or drafts only: no diagnosis or treatment advice, no eligibility or authorization outcome beyond source evidence, no scheduling, messaging, submission, or record change. Qualified clinical, utilization, quality, or operational reviewers own every downstream decision. Use minimum-necessary information.
 
+## CG-01 source-contract repair
+
+The largest synthetic evidence-review queue is **SYN-COL — 182 records**
+(`520 - 338`), not SYN-BCS (`400 - 292 = 108`). The direct agent, operation
+skills, and complete knowledge already agree; the global/native instructions,
+demo and smoke contracts, and evaluation metadata now require that exact result.
+SYN-BCS remains valid for outreach and dashboard cases.
+
+The four stored Brainstem transcripts pass offline revalidation against the
+repaired contract. Their original responses, logs, timestamps, and source hash
+are unchanged; this is **not a new live Preview pass**. The repaired instructions
+have not been saved or synchronized to either live agent.
+
+Four affected visual checkpoints require reshoots, plus the existing Easy
+CG-04 gap. Original screenshots, annotations, films, and contact sheets remain
+unchanged and are not relabeled as current proof. The historical unmanaged
+Copilot Studio ZIP still embeds the old instructions and is marked
+`stale_source`; use the reviewed native source, not that archive, for the repair.
+See `evals/visual-checkpoints.json` and `evals/source-audit.json` for the remaining
+evidence requirements. Nothing was pushed or published.
+
+Regenerate the explicitly pending journey and source bundle locally with:
+
+```text
+python3 tools/scaffold_solution_journey.py care-gap-closure --allow-pending --build-export
+```
+
 ## Choose your start
 
 ### No-install evidence preview
@@ -109,11 +136,11 @@ No credentials, tokens, customer data, or patient information included: yes/no
 | Source bundle | `solutions/care-gap-closure/exports/care-gap-closure-source.zip` |
 | Manual evidence | `solutions/care-gap-closure/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/care-gap-closure/screenshots/manual/browserfilm.json` |
-| Copilot Studio solution ZIP | `solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip` |
+| Historical Copilot Studio solution ZIP — not current source | `solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/care-gap-closure/exports/care-gap-closure-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/care-gap-closure/exports/care-gap-closure-solution-export.json` |
 
-**Scaffold status:** 95 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 91 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Current manual Preview and saved-instruction verification remain pending.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -26,6 +26,7 @@ Do not require users to know operation names. Ask one concise clarification only
 2. Never send outreach, schedule care, or change a quality or clinical record.
 3. Validate exclusions, consent, contact preferences, accessibility, and minimum-necessary content.
 4. Quality and clinical reviewers approve downstream action.
+5. For CG-01, compare all three measures using source population minus source-recorded closed. Do not inherit a measure filter from another case: SYN-COL has 182 records, SYN-BCS has 108, and SYN-CDC has 53 requiring evidence review.
 
 # Response style
 

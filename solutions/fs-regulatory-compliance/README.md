@@ -38,9 +38,11 @@ customer systems. The manual knowledge files freeze the canonical
 ## Required proof
 
 The approved one-pager advertises automated monitoring, documentation review,
-remediation, reporting, and certification readiness. Each promise is mapped to
-source behavior and at least one locked case under `evals/onepager-map.json`.
-All five cases were captured with only `FSRegulatoryCompliance` discoverable.
+remediation, reporting, and certification readiness. Source mappings are under
+`evals/onepager-map.json`; they are not proof of live manual coverage.
+The five locked prompts do not exercise the remediation skill. The stored
+portable transcripts describe an earlier isolated run, not acceptance of this
+repaired manual package.
 
 Published value claims remain qualitative. Exact identifiers, dates,
 percentages, notionals, and counts in this package are synthetic demo evidence,
@@ -48,14 +50,32 @@ not customer outcomes or regulatory advice.
 
 ## Manual Copilot Studio preparation
 
-Upload both Markdown files in `manual/knowledge/`, then upload the five
-`SKILL.md` files in `manual/skills/`. The recommended production pattern adds
-approved order-management, reporting-mechanism, learning-management, and
-Microsoft Teams connections. The Easy and manual Copilot Studio agents are initialized, validated in
-Preview, and remain Draft.
+Upload the exact policy, both knowledge files and all five `SKILL.md` files
+using `manual-tutorial.html`. This manual lane has no tools or production
+connections. Save, leave and reopen the Draft to verify persistence, then run
+each unchanged locked prompt in a fresh Preview conversation. Stop before
+publish. Production connections remain future governed integration work.
 
-The manual tutorial contains 26 captured browser actions and five passing
-Preview cases for `Regulatory Manual Build`.
+## Preservation review — 2026-09-12
+
+The [pilot review](evals/manual-pilot-review.json) preserves five reported
+passing responses and the narrower findings independently corroborated from
+their actual text. RC-03 still overstates regulatory risk certainty and RC-05
+overstates what the absence of an ARM record proves. RC-02/03/04 predate the
+last dashboard replacement, so a complete final-revision regression is not
+established.
+
+The final native upload text, not the earlier local skill drafts, is preserved
+in `manual/` and mirrored in native source. Tutorial download bindings are
+corrected, while historical screenshots remain withheld from current proof.
+Response, source/runtime parity, remediation coverage and per-step visual
+gates remain open. This is **not certified**.
+
+The [as-of progress snapshot](../../state/manual_workshop_pilot_2026-09-12.json)
+does not upgrade inherited completion reports. The source ZIP is an explicit
+public-safe manual review subset, not a native import package. The historical
+native ZIP omits all five skills and both knowledge files and does not
+reproduce this manual build.
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -74,11 +94,11 @@ Preview cases for `Regulatory Manual Build`.
 | Source bundle | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip` |
 | Manual evidence | `solutions/fs-regulatory-compliance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json` |
-| Copilot Studio solution ZIP | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |
+| Historical Copilot Studio solution ZIP — not current source | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-solution-export.json` |
 
-**Scaffold status:** 114 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 86 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Current manual Preview and saved-instruction verification remain pending.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

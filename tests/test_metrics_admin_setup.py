@@ -4,11 +4,16 @@ import subprocess
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from tools.design_tokens import strip_block as _strip_design_block
 
 
 ROOT = Path(__file__).resolve().parent.parent
 PAGE = ROOT / "docs" / "metrics-admin-setup.html"
-HTML = PAGE.read_text(encoding="utf-8")
+# The shared design-token block is generated (tools/design_tokens.py) and has
+# its own test; these assertions are about metrics.html's own theme.
+HTML = _strip_design_block(PAGE.read_text(encoding="utf-8"))
 
 FIRST_THEME_SCRIPT = """(() => {
     const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -19,55 +24,55 @@ FIRST_THEME_SCRIPT = """(() => {
 
 EXACT_THEME = """:root {
   color-scheme: light;
-  --cp-bg: #f7f4ef;
-  --cp-bg-elevated: #fcfbf8;
+  --cp-bg: #f4f4f5;
+  --cp-bg-elevated: #fafafa;
   --cp-surface: #ffffff;
-  --cp-surface-soft: #f5f5f5;
-  --cp-border: #dedede;
-  --cp-border-strong: #919191;
-  --cp-text: #242424;
-  --cp-text-muted: #5c5c5c;
-  --cp-text-soft: #6f6f6f;
+  --cp-surface-soft: #eeeeef;
+  --cp-border: #dcdcde;
+  --cp-border-strong: #8e8e93;
+  --cp-text: #18181b;
+  --cp-text-muted: #52525b;
+  --cp-text-soft: #6b6b74;
   --cp-accent: #b11f4b;
   --cp-accent-hover: #9a1a41;
   --cp-accent-soft: rgba(177, 31, 75, 0.08);
   --cp-accent-fg: #ffffff;
-  --cp-success: #16a34a;
-  --cp-danger: #dc2626;
-  --cp-warning: #f59e0b;
-  --cp-link: #0078d4;
-  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
-  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-success: #15803d;
+  --cp-danger: #c81e1e;
+  --cp-warning: #b45309;
+  --cp-link: #0f6cbd;
+  --cp-shadow: 0 16px 40px rgba(24, 24, 27, 0.10);
+  --cp-overlay: rgba(24, 24, 27, 0.55);
   --cp-panel: rgba(255, 255, 255, 0.86);
   --cp-panel-strong: rgba(255, 255, 255, 0.96);
-  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-sheen: rgba(24, 24, 27, 0.04);
   --cp-highlight: rgba(177, 31, 75, 0.12);
 }
 html[data-theme="dark"] {
   color-scheme: dark;
-  --cp-bg: #3d3b3a;
-  --cp-bg-elevated: #343231;
-  --cp-surface: #292929;
-  --cp-surface-soft: #2e2e2e;
-  --cp-border: #474747;
-  --cp-border-strong: #5f5f5f;
-  --cp-text: #dedede;
-  --cp-text-muted: #919191;
-  --cp-text-soft: #b0b0b0;
-  --cp-accent: #fd8ea1;
-  --cp-accent-hover: #fb7b91;
-  --cp-accent-soft: rgba(253, 142, 161, 0.14);
-  --cp-accent-fg: #1a1a1a;
+  --cp-bg: #18181b;
+  --cp-bg-elevated: #232327;
+  --cp-surface: #1f1f23;
+  --cp-surface-soft: #27272b;
+  --cp-border: #34343a;
+  --cp-border-strong: #54545c;
+  --cp-text: #f4f4f5;
+  --cp-text-muted: #a9a9b2;
+  --cp-text-soft: #c4c4cc;
+  --cp-accent: #ff7a9c;
+  --cp-accent-hover: #ff96b0;
+  --cp-accent-soft: rgba(255, 122, 156, 0.14);
+  --cp-accent-fg: #18181b;
   --cp-success: #4ade80;
-  --cp-danger: #f87171;
+  --cp-danger: #fb8a8a;
   --cp-warning: #fbbf24;
-  --cp-link: #4da6ff;
-  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
-  --cp-overlay: rgba(41, 41, 41, 0.88);
-  --cp-panel: rgba(41, 41, 41, 0.72);
-  --cp-panel-strong: rgba(41, 41, 41, 0.96);
-  --cp-sheen: rgba(255, 255, 255, 0.04);
-  --cp-highlight: rgba(253, 142, 161, 0.12);
+  --cp-link: #66b3ff;
+  --cp-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --cp-overlay: rgba(9, 9, 11, 0.7);
+  --cp-panel: rgba(31, 31, 35, 0.78);
+  --cp-panel-strong: rgba(31, 31, 35, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.05);
+  --cp-highlight: rgba(255, 122, 156, 0.12);
 }"""
 
 

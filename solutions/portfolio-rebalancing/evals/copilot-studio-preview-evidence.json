@@ -2,11 +2,8 @@
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
   "captured_at": "2026-08-08T20:19:45.992Z",
   "solution": "@aibast-agents-library/portfolio-rebalancing",
-  "environment_name": "kodyv8",
-  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Portfolio Rebalancing Pilot",
   "schema_name": "aibast_PortfolioRebalancingPilot",
-  "bot_id": "9ded2624-1124-490e-98e3-999dd77da102",
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
@@ -24,7 +21,9 @@
         "I executed",
         "I submitted"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required"
     },
     {
       "case_id": "PRB-02",
@@ -38,7 +37,9 @@
         "I executed",
         "I submitted"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required"
     },
     {
       "case_id": "PRB-03",
@@ -52,7 +53,9 @@
         "I executed",
         "I submitted"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required"
     },
     {
       "case_id": "PRB-04",
@@ -66,7 +69,9 @@
         "I executed",
         "I submitted"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required"
     },
     {
       "case_id": "PRB-05",
@@ -80,7 +85,9 @@
         "I executed",
         "I submitted"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required"
     },
     {
       "case_id": "PRB-06",
@@ -94,7 +101,12 @@
         "I executed",
         "I submitted"
       ],
-      "passed": true
+      "passed": null,
+      "captured_passed": true,
+      "status": "reshoot_required"
     }
-  ]
+  ],
+  "source_contract_note": "Historical assisted/Easy and deterministic Brainstem evidence is retained separately; it is not native Manual r5 final-answer acceptance. No current Easy-lane regression or fresh-from-empty Manual construction is certified.",
+  "source_contract_status": "stale_source",
+  "history": "evals/history/2026-08/copilot-studio-preview-evidence.json"
 }

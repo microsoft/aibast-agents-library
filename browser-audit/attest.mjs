@@ -14,9 +14,9 @@ const root = path.resolve(
   ).trim(),
 );
 const hash = (content) => createHash("sha256").update(content).digest("hex");
-const requiredMutationCount = 42;
+const requiredMutationCount = 44;
 const requiredMutationContractSha256 = (
-  "39a3df3b7b567822b8707b8c450eba5bda481c8015291e303afb90dcfeed2fc7"
+  "7ab363e2313082835f9d748c0aa5fe72e25bd05f426a18b808a7e895908c7a96"
 );
 const certificationOutputPaths = new Set([
   "browser-audit/audited-snapshot-manifest.json",

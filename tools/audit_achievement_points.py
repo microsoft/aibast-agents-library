@@ -184,7 +184,7 @@ def audit_generated_workshops(
 def audit_public_pages(root: Path, failures: Failures) -> None:
     achievements = read_text(root / "achievements.html", failures)
     metrics = read_text(root / "metrics.html", failures)
-    library = read_text(root / "library.html", failures)
+    library = read_text(root / "index.html", failures)
     admin = read_text(root / "docs" / "metrics-admin-setup.html", failures)
     workflow = read_text(
         root / ".github" / "workflows" / "workshop-feedback.yml",
@@ -233,7 +233,7 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
             failures.add(f"metrics.html: missing {token}")
 
     if '<a href="achievements.html">Achievements</a>' not in library:
-        failures.add("library.html: Achievements navigation is missing")
+        failures.add("index.html: Achievements navigation is missing")
     for token in (
         "function canonicalDiscussionUrl",
         'disabled aria-disabled="true"',
@@ -241,12 +241,12 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
     ):
         if token not in library:
             failures.add(
-                "library.html: unavailable structured signals are not "
+                "index.html: unavailable structured signals are not "
                 f"fail-closed ({token})"
             )
     if "discussionFallbackUrl" in library:
         failures.add(
-            "library.html: unavailable structured signals must not open searches"
+            "index.html: unavailable structured signals must not open searches"
         )
 
     metrics_workflow_tokens = {

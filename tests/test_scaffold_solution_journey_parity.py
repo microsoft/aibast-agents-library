@@ -1,7 +1,9 @@
 import json
 import re
+import zipfile
 from pathlib import Path
 
+from tools.build_solution_export import bundle_bytes
 from tools import scaffold_solution_journey as scaffold
 
 
@@ -28,12 +30,22 @@ def advertised_slugs():
 
 def test_all_advertised_workshops_match_the_authoritative_scaffold():
     for slug in advertised_slugs():
+        evidence_path = ROOT / "solutions" / slug / "evals/manual-build-evidence.json"
+        documented_reshoot = (
+            json.loads(evidence_path.read_text(encoding="utf-8")).get("status")
+            == "reshoot_required"
+        )
         context = scaffold.load_context(
             ROOT,
             slug,
-            allow_pending=False,
+            allow_pending=documented_reshoot,
             raw_base=scaffold.DEFAULT_RAW_BASE,
         )
+        if documented_reshoot:
+            assert context.missing_evidence == [
+                f"solutions/{slug}/evals/manual-build-evidence.json "
+                "does not record passed manual Preview evidence"
+            ]
         resources, outputs = scaffold.generated_outputs(context)
 
         for path, expected in outputs.items():
@@ -51,3 +63,15 @@ def test_all_advertised_workshops_match_the_authoritative_scaffold():
         )
         assert match, f"{slug}: generated README block is missing"
         assert match.group(0) == scaffold.readme_block(context, resources)
+
+
+def test_all_advertised_source_bundles_match_current_files_with_hosting_normalization():
+    for slug in advertised_slugs():
+        manifest = json.loads(
+            (ROOT / "solutions" / slug / "export-manifest.json").read_text(encoding="utf-8")
+        )
+        with zipfile.ZipFile(ROOT / manifest["bundle"]["path"]) as archive:
+            for name in archive.namelist():
+                source = ROOT / name
+                assert source.is_file(), f"{slug}: missing bundle source {name}"
+                assert archive.read(name) == bundle_bytes(source), f"{slug}: stale bundle member {name}"

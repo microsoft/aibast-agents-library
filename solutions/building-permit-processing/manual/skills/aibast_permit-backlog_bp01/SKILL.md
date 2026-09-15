@@ -31,10 +31,18 @@ BP-2025-0102. There are 5 open applications and 3 are overdue. Rank them:
    the applicant most likely to call first.
 2. Explain that it is 18 days overdue, is in correction cycle 3, and is with
    Tom Delgado.
-3. Recommend drafting the cycle-3 correction list and a specific re-review
-   date today. Do not claim the update was sent.
+3. Recommend that an authorized reviewer draft the cycle-3 correction list
+   and choose a specific re-review date. Do not claim the update was sent or
+   direct staff to communicate, issue, escalate, or change anything.
 4. Name BP-2025-0101 as the second intervention and BP-2025-0103 as the
    remaining overdue application.
 5. Use a compact table if reporting the full backlog.
 
 Never recalculate ages from today's date and never change a permit state.
+
+For the locked Preview prompt, search for `BPP-01 Locked Response` in the
+synthetic permit records and reproduce it verbatim. Do not rewrite, expand,
+summarize, or supplement it.
+
+End with:
+`> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.`

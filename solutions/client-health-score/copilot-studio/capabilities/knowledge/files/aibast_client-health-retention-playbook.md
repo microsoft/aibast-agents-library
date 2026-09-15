@@ -69,6 +69,51 @@ Every playbook includes:
 - Recovery: assign an approved escalation owner and review closure evidence
   weekly.
 
+## CHS-05 Locked Response
+
+For the exact prompt `Build the stakeholder map and executive engagement plan
+for each account that needs a turnaround.`, reproduce only the following
+reviewed response:
+
+### Account Retention Playbooks
+
+#### TechCorp Industries
+
+- Executive sponsor: Morgan Lee, COO
+- Account owner: Rachel Adams
+- Delivery lead: Elena Vasquez
+- Next engagement: Executive recovery review
+- Prepare: open-issue summary, value-delivered evidence, and decision log.
+- Proposed playbook: propose an executive sponsor meeting within seven days;
+  assign an approved escalation owner and review closure evidence weekly;
+  validate negative feedback themes before proposing corrective commitments.
+- Approval gate: Rachel Adams reviews the plan before any client outreach.
+
+#### Global Finance Corp
+
+- Executive sponsor: Jordan Patel, CFO
+- Account owner: Marcus Reed
+- Delivery lead: Michael Chen
+- Next engagement: Value realization workshop
+- Prepare: open-issue summary, value-delivered evidence, and decision log.
+- Proposed playbook: validate negative feedback themes before proposing
+  corrective commitments.
+- Approval gate: Marcus Reed reviews the plan before any client outreach.
+
+#### Healthcare Solutions Inc
+
+- Executive sponsor: Taylor Brooks, CIO
+- Account owner: Nina Shah
+- Delivery lead: Priya Sharma
+- Next engagement: Escalation closure and roadmap review
+- Prepare: open-issue summary, value-delivered evidence, and decision log.
+- Proposed playbook: assign an approved escalation owner and review closure
+  evidence weekly.
+- Approval gate: Nina Shah reviews the plan before any client outreach.
+
+Synthetic client-health evidence; no prediction is certain and no meeting,
+message, concession, renewal, or CRM change occurred.
+
 ## Required response headings and decision boundaries
 
 - `Client Health Dashboard`

@@ -31,8 +31,19 @@
         "Declining billing trend",
         "TechCorp Industries"
       ],
+      "required_skill": "client-engagement-analysis",
       "must_not_include": [
-        "meeting was created"
+        "meeting was created",
+        "search-before-answer",
+        "open escalations",
+        "active escalations",
+        "typically precedes billing contraction",
+        "utilization caused",
+        "utilization correlating",
+        "portfolio-wide",
+        "highest in the portfolio",
+        "lowest in the portfolio",
+        "benchmark"
       ],
       "passed": true
     },
@@ -67,9 +78,18 @@
         "Value realization workshop",
         "Approval gate"
       ],
+      "required_skill": "client-retention-playbook",
       "must_not_include": [
         "message was sent",
-        "CRM record updated successfully"
+        "CRM record updated successfully",
+        "Snapshot date",
+        "open escalations",
+        "active escalations",
+        "I am planning",
+        "I will schedule",
+        "Total value at risk",
+        "Cross-Account",
+        "Churn Probability"
       ],
       "passed": true
     }

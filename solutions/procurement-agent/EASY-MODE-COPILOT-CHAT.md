@@ -1,5 +1,11 @@
 # Procurement Agent — GitHub Copilot Easy mode
 
+## Evidence lane boundary
+
+Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending.
+
+The steps below describe the Easy workflow, not a newly accepted run. For the current Manual build and its open gates, use [the Manual tutorial](manual-tutorial.html) and [the dated review](evals/manual-pilot-review.json).
+
 ## 1. Attach the Copilot-only skill
 
 Download [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md), open GitHub

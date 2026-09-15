@@ -18,6 +18,10 @@ const auditPath = path.join(out, "audit.mjs");
 const attestationPath = path.join(out, "attest.mjs");
 const mutationOut = path.join(out, "mutation-runs");
 const reportPath = path.join(mutationOut, "browser-audit.json");
+const manifestPath = path.join(
+  mutationOut,
+  "audited-snapshot-manifest.json",
+);
 const mutationReportPath = path.join(out, "mutation-suite.json");
 const questPath = path.join(root, "solutions", "account-intelligence", "quest.html");
 const catalogPath = path.join(root, "solutions", "catalog.json");
@@ -103,7 +107,10 @@ async function restoreTrackedFiles() {
 
 async function runAudit(scriptPath = auditPath) {
   await fs.mkdir(mutationOut, { recursive: true });
-  await fs.rm(reportPath, { force: true });
+  await Promise.all([
+    fs.rm(reportPath, { force: true }),
+    fs.rm(manifestPath, { force: true }),
+  ]);
   const result = spawnSync(process.execPath, [scriptPath], {
     cwd: out,
     env: {
@@ -123,10 +130,36 @@ async function runAudit(scriptPath = auditPath) {
   return {
     status: result.status,
     signal: result.signal,
+    error: result.error?.message || null,
     stdout: result.stdout,
     stderr: result.stderr,
     report,
   };
+}
+
+function auditFailureDetails(label, run) {
+  return [
+    `${label} did not pass.`,
+    `exit_status: ${String(run.status)}`,
+    `signal: ${String(run.signal)}`,
+    `spawn_error: ${run.error || "(none)"}`,
+    `stdout:\n${sanitizeOutput(run.stdout).trim() || "(empty)"}`,
+    `stderr:\n${sanitizeOutput(run.stderr).trim() || "(empty)"}`,
+  ].join("\n");
+}
+
+async function readBaselineArtifact(file, label, baseline) {
+  try {
+    return await fs.readFile(file);
+  } catch (error) {
+    const reason = error.code === "ENOENT"
+      ? "the artifact is absent"
+      : error.message;
+    throw new Error(
+      `${auditFailureDetails("Baseline audit", baseline)}\n`
+      + `${label} was not written because ${reason}.`,
+    );
+  }
 }
 
 function allImageFailures(report) {
@@ -360,6 +393,46 @@ setTimeout(() => {
     assert: ({ status, report }) => (
       status !== 0
       && report?.results?.[0]?.easy?.tabSemantics === false
+    ),
+  },
+  {
+    name: "manual-tab-accessible-name",
+    apply: async () => {
+      const mutated = replaceOnce(
+        originalQuest,
+        ">Manual</button>",
+        ">Hard</button>",
+        "Manual tab accessible name",
+      );
+      await fs.writeFile(questPath, mutated);
+    },
+    assert: ({ status, report }) => (
+      status !== 0
+      && report?.results?.[0]?.hardTabIdentity === false
+    ),
+  },
+  {
+    name: "duplicate-easy-step-id",
+    apply: async () => {
+      const uniqueCompletion = 'id="easy-step-6"';
+      const fallbackUniqueStep = 'id="brainstem-step-4"';
+      const anchor = originalQuest.includes(uniqueCompletion)
+        ? uniqueCompletion
+        : fallbackUniqueStep;
+      const mutated = replaceOnce(
+        originalQuest,
+        anchor,
+        'id="easy-step-5"',
+        "unique Easy completion step ID",
+      );
+      await fs.writeFile(questPath, mutated);
+    },
+    assert: ({ status, report }) => (
+      status !== 0
+      && report?.results?.[0]?.easy?.semanticAnchor === false
+      && report?.results?.[0]?.easy?.duplicateIds?.some(
+        (entry) => entry.id === "easy-step-5" && entry.count > 1,
+      )
     ),
   },
   {
@@ -1244,6 +1317,9 @@ const baselinePassed = Boolean(
   && baseline.report?.passed === 1
   && baseline.report?.failed === 0
 );
+if (!baselinePassed && baseline.report) {
+  console.error(auditFailureDetails("Baseline audit", baseline));
+}
 const [
   auditScriptSource,
   mutationScriptSource,
@@ -1254,8 +1330,8 @@ const [
   fs.readFile(auditPath),
   fs.readFile(mutationScriptPath),
   fs.readFile(attestationPath),
-  fs.readFile(reportPath),
-  fs.readFile(path.join(mutationOut, "audited-snapshot-manifest.json")),
+  readBaselineArtifact(reportPath, "Baseline browser report", baseline),
+  readBaselineArtifact(manifestPath, "Baseline snapshot manifest", baseline),
 ]);
 const summary = {
   schema: "aibast-browser-audit-mutations/1.10",

@@ -9,7 +9,7 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parent.parent
 FIRST_PARTY_FILE = REPO_ROOT / "first_party.json"
 REGISTRY_FILE = REPO_ROOT / "registry.json"
-LIBRARY_PAGE = REPO_ROOT / "library.html"
+LIBRARY_PAGE = REPO_ROOT / "index.html"
 
 REQUIRED_FIELDS = {
     "id",
@@ -50,21 +50,23 @@ def registry():
 
 def test_schema_count_and_snapshot(catalog, entries):
     assert catalog["schema"] == "aibast-first-party/1.0"
-    assert catalog["count"] == len(entries) == 14
+    assert catalog["count"] == len(entries) == 22
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", catalog["snapshot_date"])
     assert catalog["links_verified_at"] == catalog["snapshot_date"]
 
 
 def test_required_fields_and_identity(entries):
     ids = []
-    names = []
+    name_product_pairs = []
     for entry in entries:
         assert REQUIRED_FIELDS.issubset(entry), (
             f"{entry.get('id')}: missing "
             f"{sorted(REQUIRED_FIELDS - set(entry))}"
         )
         assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", entry["id"])
-        assert entry["source_slide"] in {1, 2}
+        # 1/2 = original PRO-ENG slide-deck provenance; 3 = directly
+        # researched against Microsoft Learn (no slide-deck origin).
+        assert entry["source_slide"] in {1, 2, 3}
         assert entry["doc_status"] == "dedicated"
         assert isinstance(entry["use_cases"], list)
         assert len(entry["use_cases"]) >= 3
@@ -74,14 +76,18 @@ def test_required_fields_and_identity(entries):
         )
         assert isinstance(entry["personas"], list) and entry["personas"]
         ids.append(entry["id"])
-        names.append(entry["name"])
+        # Microsoft genuinely reuses the same agent name across different
+        # products (e.g. "Expense Agent" in both Project Operations and
+        # Business Central), so uniqueness is checked per (name, product)
+        # rather than name alone.
+        name_product_pairs.append((entry["name"], entry["product"]))
     assert len(ids) == len(set(ids))
-    assert len(names) == len(set(names))
+    assert len(name_product_pairs) == len(set(name_product_pairs))
 
 
 def test_deck_status_is_provenance_not_current_lifecycle(entries):
-    assert sum(entry["deck_status"] == "GA" for entry in entries) == 10
-    assert sum(entry["deck_status"] == "Preview" for entry in entries) == 4
+    assert sum(entry["deck_status"] == "GA" for entry in entries) == 11
+    assert sum(entry["deck_status"] == "Preview" for entry in entries) == 11
     for entry in entries:
         assert entry["deck_status"] in DECK_STATUSES
         assert "status" not in entry, (
@@ -107,6 +113,13 @@ def test_only_current_docs_explicitly_previewed_agents_are_labelled_preview(entr
     assert preview_ids == {
         "sales-development-agent",
         "recommended-actions-agent",
+        "procurement-agent",
+        "account-reconciliation-agent",
+        "expense-agent-project-operations",
+        "expense-agent-business-central",
+        "approvals-agent",
+        "time-entry-agent",
+        "payables-agent",
     }
 
 
@@ -215,9 +228,9 @@ def test_no_roadmap_or_unannounced_product_claims(entries):
 def test_registry_carries_first_party_separately(registry, entries):
     assert len(registry["first_party"]) == len(entries)
     assert registry["stats"]["total_first_party"] == len(entries)
-    assert registry["stats"]["first_party_available"] == 12
-    assert registry["stats"]["first_party_preview"] == 2
-    assert registry["stats"]["first_party_documented"] == 14
+    assert registry["stats"]["first_party_available"] == 13
+    assert registry["stats"]["first_party_preview"] == 9
+    assert registry["stats"]["first_party_documented"] == 22
     assert registry["stats"]["total_agents"] == len(registry["agents"])
     assert all(
         agent.get("_catalog_kind") != "first_party"
@@ -244,6 +257,8 @@ def test_library_exposes_only_the_first_party_catalog_contract():
         "function openFirstParty",
         "Current use cases",
         "Microsoft Learn",
+        "Estimate cost",
+        "https://microsoft.github.io/copilot-studio-estimator/",
     ):
         assert token in page
     for forbidden in (

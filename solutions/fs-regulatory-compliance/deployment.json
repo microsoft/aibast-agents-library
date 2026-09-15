@@ -33,18 +33,17 @@
     "authoring_mode": "cli-copilot",
     "validated_pilot": {
       "display_name": "Regulatory Compliance Pilot",
-      "schema_name": "aibast_RegulatoryCompliancePilot",
-      "bot_id": "1a5fb3de-2e07-4415-89f9-40c5620c0cc5",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
       "skills": 5,
       "knowledge_files": 2,
       "changes_pushed": 8,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": null,
+      "preview_cases_total": 5,
+      "source_contract_status": "stale_source",
+      "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json.",
+      "captured_preview_cases_passed": 5
     },
     "required_connections": [
       "Order-management or transaction-reporting data through an approved connector or API",
@@ -72,5 +71,31 @@
     "regulatory-trade-surveillance",
     "regulatory-algorithm-go-live",
     "regulatory-board-evidence"
-  ]
+  ],
+  "source_bundle": {
+    "label": "Regulatory Compliance Agent manual workshop review source",
+    "kind": "manual-review-source",
+    "native_importable": false,
+    "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+    "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/fs-regulatory-compliance",
+    "include_paths": [
+      "solutions/fs-regulatory-compliance/README.md",
+      "solutions/fs-regulatory-compliance/deployment.json",
+      "solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
+      "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md",
+      "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md",
+      "solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
+      "solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
+      "solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md",
+      "solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md",
+      "solutions/fs-regulatory-compliance/manual-tutorial.html",
+      "solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
+      "solutions/fs-regulatory-compliance/evals/manual-pilot-review.json",
+      "solutions/fs-regulatory-compliance/evals/visual-checkpoints.json",
+      "solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json",
+      "solutions/fs-regulatory-compliance/export-manifest.json",
+      "solutions/fs-regulatory-compliance/exports/README.md"
+    ]
+  }
 }

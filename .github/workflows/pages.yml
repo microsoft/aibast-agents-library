@@ -1,0 +1,121 @@
+name: Deploy Academy Pages
+
+on:
+  push:
+    branches:
+      - staging
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: >-
+      (github.event.repository.fork == true &&
+       github.ref == 'refs/heads/staging') ||
+      (github.repository == 'microsoft/aibast-agents-library' &&
+       github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout Pages inputs
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.nojekyll
+            /*.html
+            /*.json
+            /*.sh
+            /*.ps1
+            /*.cmd
+            /*.command
+            /README.md
+            /CONSTITUTION.md
+            /CONTRIBUTING.md
+            /LICENSE
+            /SECURITY.md
+            /skill.md
+            /docs/
+            /reports/
+            /state/
+            /academy/
+            /skills/
+            /solutions/
+            !/solutions/**/*.zip
+            !/solutions/**/*.gif
+            /beta/index.html
+            /beta/download-center.js
+            /beta/show-mode.html
+            /beta/install.sh
+            /beta/install.cmd
+            /beta/frontier.sh
+            /beta/frontier.ps1
+            /beta/README.md
+            /beta/LICENSE
+            /beta/THIRD-PARTY-NOTICES.md
+            /beta/VERSION
+            /beta/build/icon.svg
+            /beta/ui/index.html
+            /beta/ui/renderer.js
+            /beta/ui/show-mode-tour.js
+            /rapp_brainstem/README.md
+            /rapp_brainstem/VERSION
+            /scripts/build_pages_site.py
+            /tests/test_pages_site.py
+            /.github/workflows/pages.yml
+            !/browser-audit/
+            !/agents/
+            !/tools/
+            !/**/node_modules/
+            !/**/__pycache__/
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+
+      - name: Build slim Pages artifact
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          python scripts/build_pages_site.py
+          --root .
+          --out _site
+          --owner "${{ github.repository_owner }}"
+          --repo "${{ github.event.repository.name }}"
+          --ref "${{ github.sha }}"
+          --ring-branch "${{ github.ref_name }}"
+          --check-links
+
+      - name: Run Pages artifact tests
+        env:
+          PAGES_SITE_DIR: ${{ github.workspace }}/_site
+        run: python -m unittest -v tests/test_pages_site.py
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: _site
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

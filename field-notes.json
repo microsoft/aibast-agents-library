@@ -1,0 +1,148 @@
+{
+  "$comment": "Frontier Field Notes. blog.html renders this file; tests/test_field_notes.py checks that every internal link resolves and that each note actually answers its question. To change the featured workshop, edit featured_workshop below and nothing else. Notes are written for someone who has never built an agent: no jargon without a definition, and every claim has to be true of the platform as it ships today.",
+  "schema": "aibast-field-notes/1.0",
+  "title": "Frontier Field Notes",
+  "tagline": "Notes from the frontier of building agents, one topic at a time. Written for anyone who wants to understand what this is, who it is for, where it runs and why it exists.",
+  "updated": "2026-09-11",
+  "featured_workshop": {
+    "month": "September 2026",
+    "slug": "building-permit-processing",
+    "title": "Building Permit Processing Agent",
+    "href": "solutions/building-permit-processing/quest.html",
+    "industry": "State and local government",
+    "summary": "A city development services department was slow to approve building permits, and residents called constantly to ask where their application stood. This workshop builds the agent that reads an application at intake, decides whether it is complete, routes it to the right review team, and can say what is holding it up.",
+    "who": "Anyone curious about agents. You do not need to write code, and you do not need to know anything about permits. Inside a government customer, the people who feel this are permit technicians, plan reviewers and inspectors.",
+    "what": "One agent that classifies and validates an application at intake, routes it to the correct team, and reports its status in plain language. You build it, you test it against recorded cases, and you watch it refuse a duplicate application.",
+    "where": "Two ways, and you pick one on the first screen. The Brainstem lane runs the agent on your own laptop. The Copilot lane drives the whole build from GitHub Copilot with nothing installed. Both end at the same proven agent.",
+    "why": "It is the clearest example of the thing this library is actually claiming: that a described problem can become a working, tested agent in an afternoon, and that you can show the evidence rather than describe it.",
+    "evidence": [
+      {
+        "label": "The workshop",
+        "href": "solutions/building-permit-processing/quest.html",
+        "note": "The guided build, in either lane."
+      },
+      {
+        "label": "What the agent answered",
+        "href": "solutions/building-permit-processing/evidence-report.html",
+        "note": "The recorded runs, including the application it declined and why."
+      },
+      {
+        "label": "The field guide",
+        "href": "solutions/building-permit-processing/field-guide.html",
+        "note": "The short version to read before a customer conversation."
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": "workshops",
+      "title": "Workshops",
+      "blurb": "A workshop is a guided build. You end it holding a working agent, not a certificate.",
+      "notes": [
+        {
+          "id": "what-is-a-workshop",
+          "question": "What is a workshop, exactly?",
+          "answer": "It is a single web page that walks you through building one agent for one real problem. Each step tells you what to do, what you should see, and how to report it if you see something else. There are 51 of them, one per published solution.",
+          "takeaway": "You are building, not reading. The page is the instructor.",
+          "link": { "label": "Browse the workshops", "href": "index.html?view=solutions#workshops" }
+        },
+        {
+          "id": "two-lanes",
+          "question": "Why does it ask me to pick a lane?",
+          "answer": "Because there are two honest ways to do this and they suit different people. The Brainstem lane installs a small server on your laptop and you talk to it directly. The Copilot lane installs nothing and drives the same build from GitHub Copilot. The steps are matched, so you can switch if one stalls.",
+          "takeaway": "Pick the Copilot lane if you cannot install software. Pick the Brainstem lane if you want to see the machinery.",
+          "link": { "label": "See both lanes in the featured workshop", "href": "solutions/building-permit-processing/quest.html" }
+        },
+        {
+          "id": "what-you-walk-away-with",
+          "question": "What do I actually have at the end?",
+          "answer": "A single agent file that works, the recorded runs that prove it works, and a Copilot Studio solution packaged beside it. The agent file is portable. It is yours, it is one file, and it does not depend on this website.",
+          "takeaway": "The artifact outlives the lesson.",
+          "link": { "label": "What ships with every solution", "href": "index.html?view=solutions" }
+        }
+      ]
+    },
+    {
+      "id": "brainstem",
+      "title": "The Brainstem",
+      "blurb": "The small server that makes an agent answerable on your own machine.",
+      "notes": [
+        {
+          "id": "what-is-the-brainstem",
+          "question": "What is the Brainstem?",
+          "answer": "A single local program that receives your question, decides which of your agents can help, runs it, and answers. It is the smallest piece of the stack that still does something useful, which is why it is named after the smallest part of a brain that keeps you alive.",
+          "takeaway": "It is infrastructure, not a product. You point things at it.",
+          "link": { "label": "Install it", "href": "docs/installer.html" }
+        },
+        {
+          "id": "why-local",
+          "question": "Why does it run on my laptop instead of the cloud?",
+          "answer": "So that nothing has to be approved before you can learn. There is no subscription to buy, no environment to request and nobody to ask. When you delete the folder, it is gone.",
+          "takeaway": "Local is the fastest place to be wrong cheaply.",
+          "link": { "label": "The quick start", "href": "docs/index.html" }
+        },
+        {
+          "id": "what-it-costs",
+          "question": "What does it cost to run?",
+          "answer": "It borrows the GitHub Copilot access you already have. There is no separate model key to create, no billing account to attach and no usage meter of its own.",
+          "takeaway": "If you have Copilot, you already have what this needs.",
+          "link": { "label": "The one-liner", "href": "docs/installer.html" }
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "Agents",
+      "blurb": "The unit of work. One capability, one file.",
+      "notes": [
+        {
+          "id": "what-is-an-agent",
+          "question": "What is an agent, concretely?",
+          "answer": "One Python file. It declares what it can do in a form the model understands, and it contains the code that does it. That is the whole contract. The library publishes 72 of them across 12 industries.",
+          "takeaway": "If you can read one file, you can read an agent.",
+          "link": { "label": "Read the catalog", "href": "index.html" }
+        },
+        {
+          "id": "how-to-add-one",
+          "question": "How do I add my own?",
+          "answer": "Save the file into the agents folder. The server re-reads that folder on every question, so the next thing you ask can already use it. Delete the file and it is gone just as quickly.",
+          "takeaway": "There is no deploy step, and no restart.",
+          "link": { "label": "The tutorial", "href": "docs/tutorial.html" }
+        }
+      ]
+    },
+    {
+      "id": "shipping",
+      "title": "Shipping it",
+      "blurb": "What happens after the prototype works.",
+      "notes": [
+        {
+          "id": "where-it-goes-next",
+          "question": "Where does a working prototype go?",
+          "answer": "Into Copilot Studio, where the business can run it, publish it and share it. The point of proving it on a laptop first is that you only spend the approval and deployment effort on something you already know works.",
+          "takeaway": "Prove it where it is cheap. Ship it where it counts.",
+          "link": { "label": "The production guide", "href": "docs/rapp-guide.html" }
+        },
+        {
+          "id": "what-ships-with-it",
+          "question": "Do I have to rebuild it to ship it?",
+          "answer": "No. Every published solution carries a Copilot Studio solution file and its deployment settings alongside the workshop, so the thing you proved is the thing you import.",
+          "takeaway": "The skill and the wire do not get rewritten on the way to production.",
+          "link": { "label": "See a packaged solution", "href": "solutions/building-permit-processing/quest.html" }
+        },
+        {
+          "id": "how-big-is-this",
+          "question": "How big is the library, really?",
+          "answer": "72 agents, 52 stacks and 51 complete workshops across 12 industries, at around 30,700 lines of published agent code. The numbers on the metrics page are rebuilt daily rather than written by hand.",
+          "takeaway": "Check the number before you quote it.",
+          "link": { "label": "Library metrics", "href": "metrics.html" }
+        }
+      ]
+    }
+  ],
+  "deep_dives": {
+    "id": "under-the-hood",
+    "title": "Under the hood",
+    "blurb": "Longer engineering notes, kept as written. These assume more background than the notes above."
+  }
+}

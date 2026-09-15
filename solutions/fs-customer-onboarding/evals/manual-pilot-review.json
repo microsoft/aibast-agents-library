@@ -1,0 +1,108 @@
+{
+  "schema": "aibast-manual-pilot-review/1.0",
+  "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "reviewed_on": "2026-09-12",
+  "status": "blocked",
+  "certified": false,
+  "evidence_basis": "Read-only review of preserved native upload payloads, saved policy readbacks, and final Preview text. This preservation batch ran no live conversation and reviewed no images.",
+  "tested_source_commit": "2819766b789dfff55d4a710351d24622b802f4b8",
+  "reported_passing_responses": 4,
+  "corroborated_response_findings": 4,
+  "acceptance_boundary": "Response checks are not whole-workshop acceptance. The rebuilt package requires a fresh saved-state check, all locked cases, routing and retrieval evidence, citations, safety boundaries, and personally reviewed evidence for every declared student step.",
+  "case_checks": [
+    {
+      "case_id": "FCO-01",
+      "recorded_status": "passed",
+      "review_result": "response_findings_corroborated",
+      "routing_skill": "kyc-verification",
+      "review_criteria": "Load kyc-verification and retrieve attached knowledge. Return APP-6003, 4 of 7 = 57.1%, exactly four completed/clear checks and the three recorded review statuses, the recorded owner, evidence-receipt uncertainty, native citations, and the exact no-action footer. PEP flagged is not a verified match."
+    },
+    {
+      "case_id": "FCO-02",
+      "recorded_status": "passed",
+      "review_result": "response_findings_corroborated",
+      "routing_skill": "account-setup",
+      "review_criteria": "Load account-setup and retrieve attached knowledge. Return only APP-6004, Basic Savings, setup_review_ready, $25 minimum deposit, $0 monthly fee, 0.5% APY, and the recorded features. Preserve native citations and the exact no-action footer; review-ready is not approval, consent, provisioning, or account opening."
+    },
+    {
+      "case_id": "FCO-03",
+      "recorded_status": "passed",
+      "review_result": "response_findings_corroborated",
+      "routing_skill": "document-checklist",
+      "review_criteria": "Load document-checklist and retrieve attached knowledge. Return APP-6002, exactly six required and two optional document types including Beneficial ownership, and the exact beneficial_ownership = in_progress document-receipt uncertainty line. Preserve the recorded owner, synthetic-rule disclaimer, native citations, no-outreach statement, and exact no-action footer."
+    },
+    {
+      "case_id": "FCO-04",
+      "recorded_status": "passed",
+      "review_result": "response_findings_corroborated",
+      "routing_skill": "onboarding-status",
+      "review_criteria": "Load onboarding-status and retrieve attached knowledge. Return all four applications, including APP-6001 and APP-6003, $8,465,000 total estimated assets, exact status/owner pairs, and recorded open checks. Assets are not funded balances; checks do not prove blockage. Preserve native citations and the exact no-action footer without invented ranking, SLA, elapsed time, or transitions."
+    }
+  ],
+  "historical_failures": [
+    "Initial FCO-01 used a generic helper and invented KYC checks and evidence receipt.",
+    "Initial FCO-03 equated KYC checks with document receipt, overstated missing documents, and suggested outreach.",
+    "FCO-04 ranked bottlenecks and overstated workflow transitions.",
+    "An unchanged FCO-03 regression again added unrelated checks and missed the uncertainty contract before the minimal document skill replacement.",
+    "A later FCO-01 regression invented missing evidence and outreach-oriented next steps before the minimal KYC skill replacement."
+  ],
+  "source_only_reconciliation": [
+    "The controls knowledge file now distinguishes the portable tool reference from the zero-tool manual lane and embeds the repaired skills. This changes an uploaded knowledge input and has not been live-regressed.",
+    "Native settings and InlineAgentSkill source were rendered with the existing repository formatters. This is source parity, not evidence of a new tenant deployment.",
+    "Historical screenshot metadata is withheld from current learner proof without altering the original images or converting old failures to passes."
+  ],
+  "open_gates": [
+    "Fresh live regression of this assembled source package, including the changed controls knowledge file.",
+    "Per-step screenshots and annotations require fresh capture or personal review; a final inventory image does not prove individual uploads.",
+    "The portable account_setup/onboarding_status application-scope defects and document_checklist missing-ID fallback remain unresolved.",
+    "Historical marker-only evaluators do not establish factual, routing, citation, or safety correctness.",
+    "Native import packaging and live imported-runtime parity remain unverified."
+  ],
+  "native_import_archive": {
+    "status": "historical_incomplete_for_manual_reproduction",
+    "archive_entries": 5,
+    "included_workshop_skills": 0,
+    "included_workshop_knowledge_files": 0,
+    "regenerated": false,
+    "published": false
+  },
+  "manual_source_bundle": {
+    "kind": "explicit_public_safe_source_subset",
+    "native_importable": false,
+    "contains_images_or_raw_browser_logs": false
+  },
+  "promoted_manual_sources": [
+    {
+      "path": "solutions/fs-customer-onboarding/manual/skills/aibast_document-checklist_03/SKILL.md",
+      "native_payload_sha256": "dc7a11bfb900e28168392010624181451ea1c73ca9f9a586e5343e67dfb007dc",
+      "packaged_sha256": "64c12b35537f34efe996a1c03f681aa5241fd22c880de19ac2eacbf20984f9f3",
+      "comparison": "exact content; terminal newline normalized"
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/manual/skills/aibast_kyc-verification_01/SKILL.md",
+      "native_payload_sha256": "fab0300da8b10ce22b01f4a85c2228e314d385903ab84e97f6c6c21ef7266f36",
+      "packaged_sha256": "cc65e6f02b9666e8bdfc31b7478ca74ffb7b3fa6364e91018afff71814aaea7c",
+      "comparison": "exact content; terminal newline normalized"
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/manual/GLOBAL-INSTRUCTIONS.md",
+      "native_payload_sha256": "40550c9b62c7649028bdd9e3fd6fd3619434d563d1cf39320605014fa328ee26",
+      "packaged_sha256": "40550c9b62c7649028bdd9e3fd6fd3619434d563d1cf39320605014fa328ee26",
+      "comparison": "exact content; terminal newline normalized"
+    }
+  ],
+  "knowledge_sources": [
+    {
+      "path": "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-controls-and-review.md",
+      "tested_sha256": "ee8bbb8b049b087c74eac4c69b2391126f67f56de38f2ecf71151dee34bf665b",
+      "packaged_sha256": "4a67f6afc69c8825228667d51c34ba689eced7dbdd0540bec2ec12ea686d33af",
+      "changed_since_live_capture": true
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-synthetic-records.md",
+      "tested_sha256": "327c9f57ee86f51fdcb9759a71196e7dfc935aaed4e116fe372f6b8eda41934f",
+      "packaged_sha256": "327c9f57ee86f51fdcb9759a71196e7dfc935aaed4e116fe372f6b8eda41934f",
+      "changed_since_live_capture": false
+    }
+  ]
+}

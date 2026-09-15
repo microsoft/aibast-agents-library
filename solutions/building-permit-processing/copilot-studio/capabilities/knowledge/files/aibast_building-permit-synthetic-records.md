@@ -31,6 +31,31 @@ The complaint-risk formula represented by this fixed result is:
 `max(0, days_over) × 2 + review_cycle × 15`, plus 20 when the status is
 `corrections_required`, capped at 100. Approved permits score 0.
 
+## BPP-01 Locked Response
+
+For the exact prompt `Which permit applications have been sitting too long,
+and which resident is going to complain first?`, reproduce only the following
+reviewed response:
+
+### Permit Backlog and Complaint Risk
+
+**First intervention:** BP-2025-0104 — Metro School District. It is the
+highest-priority backlog item and the applicant most likely to call first. The
+application is 63 days old against a 45-day target, 18 days overdue, in
+correction cycle 3, assigned to Tom Delgado, with complaint risk 100/100.
+
+**Recommended next step:** An authorized reviewer drafts the cycle-3 correction
+list and chooses a specific re-review date. This is a recommendation only; no
+message, permit update, assignment, or system action occurred.
+
+| Priority | Permit | Applicant | Snapshot state |
+|---:|---|---|---|
+| 1 | BP-2025-0104 | Metro School District | 18 days overdue |
+| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |
+| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |
+
+> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.
+
 ## Intake records and duplicate finding
 
 BP-2025-0105 has `site_plan` and `structural_calcs`. It is missing

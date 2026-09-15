@@ -53,80 +53,233 @@ def valid_pages() -> dict[str, str]:
         "<!-- aibast-workshop-feedback:v1 -->"
         "<script>const feedbackSchema = 'aibast-workshop-feedback/1.0';</script>"
     )
-    engine = """
+    responsive_style = """
+    <style>
+    .skip-link { position: absolute; }
+    main, section, article, .card { min-width: 0; overflow-wrap: anywhere; }
+    .table-scroll { width: 100%; max-width: 100%; overflow-x: auto; }
+    </style>
+    """
+    storage = """
+    const localStorage = globalThis.aibastWorkshopStorage;
+    function readWorkshopStorage(key, fallback = null) {
+      const value = localStorage.getItem(key);
+      return value === null ? fallback : value;
+    }
+    function writeWorkshopStorage(key, value) {
+      const stored = localStorage.setItem(key, value);
+      if (stored === false) {
+        announcePersistenceFailure();
+      }
+      return stored !== false;
+    }
+    """
+    engine = f"""
     <script>
-    const engine = localStorage.getItem("aibast:workshop-engine") === "brainstem"
-      ? "brainstem" : "copilot";
+    (() => {{
+    {storage}
+    const engine = readWorkshopStorage("aibast:workshop-engine") === "copilot"
+      ? "copilot" : "brainstem";
     document.documentElement.setAttribute("data-workshop-engine", engine);
+    }})();
     </script>
     """
     reports = "".join(report_button(f"base-{index}") for index in range(7))
     quest = f"""<!doctype html>
-<html><head><title>Fixture workshop</title>{engine}<style>body{{color:#222}}</style></head>
+<html><head><title>Fixture workshop</title>{engine}{responsive_style}</head>
 <body>
+<a class="skip-link" href="#main-content">Skip to workshop</a>
 <header>AIBAST guided workshop
+<a href="../../academy.html">Academy</a>
 <a href="../_shared/workshop-settings.html?return=quest.html">Workshop settings</a>
 <a href="field-guide.html">Field guide</a>
-<a href="evidence-report.html">Evidence report</a></header>
-<main><section class="learn-step" id="workshop-step-1">
-<h3>Install RAPP Brainstem Frontier</h3>
-<a href="../../beta/">Open Frontier installer</a>
-<a href="../../beta/install.cmd" download>Download Windows install.cmd</a>
-<a href="../../beta/README.md" download>Download installation guide</a>
+<a href="evidence-report.html">Evidence report</a>
+<div class="mode-switch" role="tablist">
+<button id="mode-tab-easy" data-mode="easy" role="tab"
+ aria-controls="mode-panel-easy" aria-selected="true" tabindex="0">Easy</button>
+<button id="mode-tab-hard" data-mode="hard" role="tab"
+ aria-controls="mode-panel-hard" aria-selected="false" tabindex="-1">Manual</button>
+</div></header>
+<main id="main-content" tabindex="-1"><section class="learn-step" id="workshop-step-1">
+<h3>Open GitHub Copilot Chat</h3>
+<p>Every workshop runs through GitHub Copilot only.</p>
 {report_button("beta-install")}
+<label><input type="checkbox" data-checkpoint="install"
+ data-achievements-group="onboarding" data-achievements-path="shared">Installed</label>
 </section>
+<section id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy"
+ data-path="easy">
 <section data-easy-lane="brainstem">Brainstem lane</section>
 <section data-easy-lane="copilot">GitHub Copilot only lane</section>
+<label><input type="checkbox" data-checkpoint="local"
+ data-achievements-group="local-proof" data-achievements-path="brainstem">Local</label>
+<label><input type="checkbox" data-checkpoint="draft"
+ data-achievements-group="draft-builder" data-achievements-path="brainstem">Draft</label>
 {reports}
 <article class="preview-case">
 <button data-copy-target="preview-prompt-case-01">Copy Preview prompt</button>
 {report_button("preview-case-01")}
 <pre id="preview-prompt-case-01">Run the locked case.</pre>
 <img src="screenshots/assisted/annotated/01-case.png" alt="Reusable evidence">
+<label><input type="checkbox" data-checkpoint="preview"
+ data-achievements-group="preview-proven" data-achievements-path="shared">Preview</label>
 </article>
-<section data-path="hard">
+<label><input type="checkbox" data-checkpoint="complete"
+ data-achievements-group="final-verdict" data-achievements-path="shared">Complete</label>
+</section>
+<section id="mode-panel-hard" role="tabpanel" aria-labelledby="mode-tab-hard"
+ data-path="hard" hidden>
 <a href="manual-tutorial.html">Standalone manual tutorial</a>
 <article class="step"><header>{report_button("native-hard-step-1")}</header>
 <img src="screenshots/manual/annotated/01-step.png" alt="Reusable evidence">
-<footer><a href="source.py" download>Download source: Agent</a></footer>
+<footer><a href="source.py" download>Download source: Agent</a>
+<input class="complete" type="checkbox" data-step="1"></footer>
 </article>
 </section>
-</main>{feedback}</body></html>"""
+</main>
+<p id="persistence-status" role="status" aria-live="polite"></p>
+{feedback}
+<script>
+(() => {{
+{storage}
+const globalEngineKey = "aibast:workshop-engine";
+const modeKey = "aibast:{SLUG}:quest-mode";
+const hardProgressKey = "aibast:{SLUG}:manual-progress";
+const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
+const hardBoxes = Array.from(document.querySelectorAll(".complete[data-step]"));
+const buttons = Array.from(document.querySelectorAll("[role=tab]"));
+const paths = Array.from(document.querySelectorAll("[role=tabpanel]"));
+const persistenceStatus = document.getElementById("persistence-status");
+function announcePersistenceFailure() {{
+  persistenceStatus.textContent =
+    "Storage unavailable; progress is not saved, but remains usable in memory for this session.";
+}}
+function currentEasyPath() {{
+  return readWorkshopStorage(globalEngineKey) === "copilot"
+    ? "copilot" : "brainstem";
+}}
+function requiredEasyBoxes() {{
+  const path = currentEasyPath();
+  return boxes.filter((box) =>
+    box.dataset.achievementsPath === path ||
+    box.dataset.achievementsPath === "shared");
+}}
+function achievementGroupComplete(group) {{
+  const path = currentEasyPath();
+  const members = boxes.filter((box) =>
+    box.dataset.achievementsGroup === group &&
+    (box.dataset.achievementsPath === path ||
+      box.dataset.achievementsPath === "shared"));
+  return members.length > 0 && members.every((box) => box.checked);
+}}
+let hardProgressActivated = false;
+function updateHardProgress(announce = false, persist = false) {{
+  const done = hardBoxes.filter((box) => box.checked).map((box) => box.dataset.step);
+  if (announce && done.length > 0) {{
+    hardProgressActivated = true;
+  }}
+  if (persist && hardProgressActivated) {{
+    writeWorkshopStorage(hardProgressKey, JSON.stringify(done));
+  }}
+  const activeMode = hardProgressActivated ? "hard" : "easy";
+  if (hardProgressActivated) {{
+    let profile = readAchievementProfile();
+    profile = setAchievementWorkshopProgress(profile, activeMode, {{
+      hardChecked: done.length,
+      hardTotal: hardBoxes.length,
+      hardComplete: done.length === hardBoxes.length,
+    }});
+    if (announce) announceAchievementBadge(profile);
+  }}
+}}
+function resumeWorkshop() {{
+  if (location.hash !== "#resume") return;
+  const incomplete = requiredEasyBoxes().find((box) => !box.checked);
+  if (incomplete) incomplete.focus();
+}}
+function selectMode(mode, focus = false) {{
+  buttons.forEach((button) => {{
+    const selected = button.dataset.mode === mode;
+    button.setAttribute("aria-selected", String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    if (selected && focus) button.focus();
+  }});
+  paths.forEach((path) => {{ path.hidden = path.dataset.path !== mode; }});
+  writeWorkshopStorage(modeKey, mode);
+}}
+buttons.forEach((button, index) => {{
+  button.addEventListener("keydown", (event) => {{
+    const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
+    if (!keys.includes(event.key)) return;
+    event.preventDefault();
+    const target = event.key === "Home" ? 0
+      : event.key === "End" ? buttons.length - 1
+      : event.key === "ArrowRight" ? (index + 1) % buttons.length
+      : (index - 1 + buttons.length) % buttons.length;
+    selectMode(buttons[target].dataset.mode, true);
+  }});
+}});
+resumeWorkshop();
+}})();
+</script>
+</body></html>"""
     manual = f"""<!doctype html>
-<html><head><title>Manual tutorial</title>
-<style>body{{color:#222}}</style></head>
-<body>AIBAST manual workshop
+<html><head><title>Manual tutorial</title>{responsive_style}</head>
+<body><a class="skip-link" href="#main-content">Skip to tutorial</a>
+<header>AIBAST manual workshop <a href="../../academy.html">Academy</a></header>
+<main id="main-content" tabindex="-1">
 <article class="step"><header>{report_button("hard-step-1")}</header>
 <img src="screenshots/manual/annotated/01-step.png" alt="Reusable evidence">
 <footer><a href="source.py" download>Download source: Agent</a></footer>
 </article>
+</main>
+<p id="persistence-status" role="status" aria-live="polite"></p>
 {feedback}
 <script>
+(() => {{
+function announcePersistenceFailure() {{
+  document.getElementById("persistence-status").textContent =
+    "Storage unavailable; Manual progress is not saved but remains in memory.";
+}}
+{storage}
 const key = "aibast:time-entry-billing:manual-progress";
 const badgeIds = [];
 badgeIds.push("hard-mode-complete");
 const hardProgress = {{hardComplete: complete}};
+writeWorkshopStorage(key, JSON.stringify([]));
+}})();
 </script></body></html>"""
     field = f"""<!doctype html>
 <html><head><title>Field guide</title>{engine}<script>
 document.documentElement.setAttribute("data-theme", "light");
-</script><style>body{{color:#222}}</style></head>
-<body>AIBAST field guide
+</script>{responsive_style}</head>
+<body><a class="skip-link" href="#main-content">Skip to field guide</a>
+<header>AIBAST field guide <a href="../../academy.html">Academy</a></header>
+<main id="main-content" tabindex="-1">
 <a href="../_shared/workshop-settings.html">Workshop settings</a>
 <a href="quest.html">Back to workshop</a>
 <h2>Locked Preview corpus</h2>
 <h2>Production replacement seams</h2>
 <h2>Evidence gates</h2>
 <a href="source.py" download>Download source</a>
-</body></html>"""
+</main></body></html>"""
     evidence = """<!doctype html>
 <html><head><title>Evidence report</title>
 <script>document.documentElement.setAttribute("data-theme", "light");</script>
-<style>body{color:#222}</style></head>
-<body>AIBAST evidence report
+<style>
+.skip-link { position: absolute; }
+main, section, article, .card { min-width: 0; overflow-wrap: anywhere; }
+.table-scroll { width: 100%; max-width: 100%; overflow-x: auto; }
+</style></head>
+<body><a class="skip-link" href="#main-content">Skip to evidence</a>
+<header>AIBAST evidence report <a href="../../academy.html">Academy</a></header>
+<main id="main-content" tabindex="-1">
 <div class="summary-grid"><strong>2</strong> Reusable positive checkpoints
 <strong>0</strong> Images hidden from learner proof</div>
-<h2>Deterministic case contract</h2><section id="locked-cases">CASE-01</section>
+<h2>Deterministic case contract</h2>
+<section id="locked-cases" class="table-scroll">
+<table><tbody><tr><td>CASE-01</td></tr></tbody></table>
+</section>
 <h2>Displayed visual checkpoints</h2>
 <h2>Reference-only visual gaps</h2>
 <h2>Downloads for audit</h2>
@@ -134,7 +287,7 @@ document.documentElement.setAttribute("data-theme", "light");
 <a href="export-manifest.json" download>Manifest</a>
 <a href="exports/fixture-solution-source.zip" download>Bundle</a>
 <a href="VISUAL-EVIDENCE-AUDIT.md" download>Detailed audit</a>
-</body></html>"""
+</main></body></html>"""
     return {
         "quest.html": quest,
         "manual-tutorial.html": manual,
@@ -375,9 +528,9 @@ def test_rejects_manual_film_when_hard_capture_requires_reshoot(tmp_path):
     manual = package / "manual-tutorial.html"
     manual.write_text(
         manual.read_text(encoding="utf-8").replace(
-            "<body>AIBAST manual workshop",
+            '<body><a class="skip-link" href="#main-content">',
             '<body><a href="screenshots/manual/manual-build-walkthrough.gif">'
-            "Watch the manual film</a>AIBAST manual workshop",
+            'Watch the manual film</a><a class="skip-link" href="#main-content">',
         ),
         encoding="utf-8",
     )
@@ -556,6 +709,238 @@ def test_catches_malformed_inline_javascript(tmp_path):
     assert_failure(audit_fixture(tmp_path), "malformed inline JavaScript")
 
 
+def test_mutation_catches_singular_achievement_dataset_spelling(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    source = path.read_text(encoding="utf-8")
+    source = source.replace(
+        "dataset.achievementsPath",
+        "dataset.achievementPath",
+    ).replace(
+        "dataset.achievementsGroup",
+        "dataset.achievementGroup",
+    )
+    path.write_text(source, encoding="utf-8")
+    build_zip(tmp_path)
+
+    result = audit_fixture(tmp_path)
+
+    assert_failure(result, "singular dataset spelling remains")
+    assert_failure(result, "runtime lacks exact dataset.achievementsPath mapping")
+    assert_failure(result, "runtime lacks exact dataset.achievementsGroup mapping")
+
+
+def test_mutation_catches_unguarded_storage_access(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    source = path.read_text(encoding="utf-8").replace(
+        "resumeWorkshop();",
+        'const unsafeProgress = globalThis.localStorage.getItem("unsafe-progress");\n'
+        "resumeWorkshop();",
+    )
+    path.write_text(source, encoding="utf-8")
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "unguarded localStorage access",
+    )
+
+
+def test_storage_alias_audit_distinguishes_safe_and_raw_calls():
+    safe = """
+    (() => {
+      const localStorage = globalThis.aibastWorkshopStorage;
+      localStorage.getItem("progress");
+      function persist() {
+        localStorage.setItem("progress", "{}");
+      }
+      persist();
+    })();
+    """
+    assert AUDIT.unguarded_storage_calls(safe) == []
+
+    for raw in (
+        'globalThis.localStorage.getItem("progress");',
+        'window.localStorage.setItem("progress", "{}");',
+        'localStorage.removeItem("progress");',
+    ):
+        assert AUDIT.unguarded_storage_calls(raw), raw
+
+    guarded_raw = """
+    try {
+      window.localStorage.getItem("progress");
+      globalThis.localStorage.setItem("progress", "{}");
+    } catch (_error) {
+      // Denial is handled.
+    }
+    """
+    assert AUDIT.unguarded_storage_calls(guarded_raw) == []
+
+
+def test_mutation_catches_removed_safe_storage_alias(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    source = path.read_text(encoding="utf-8").replace(
+        "const localStorage = globalThis.aibastWorkshopStorage;",
+        "",
+    )
+    path.write_text(source, encoding="utf-8")
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "unguarded localStorage access",
+    )
+
+
+def test_mutation_catches_manual_initial_profile_mutation(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    source = path.read_text(encoding="utf-8").replace(
+        """if (announce && done.length > 0) {
+    hardProgressActivated = true;
+  }""",
+        "hardProgressActivated = true;",
+        1,
+    )
+    path.write_text(source, encoding="utf-8")
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "Manual progress activation lacks a checked-progress guard",
+    )
+
+
+def test_mutation_catches_removed_hard_persistence_guard(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    source = path.read_text(encoding="utf-8").replace(
+        """if (persist && hardProgressActivated) {
+    writeWorkshopStorage(hardProgressKey, JSON.stringify(done));
+  }""",
+        "writeWorkshopStorage(hardProgressKey, JSON.stringify(done));",
+        1,
+    )
+    path.write_text(source, encoding="utf-8")
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "Manual progress persistence lacks an activation guard",
+    )
+
+
+def test_mutation_catches_removed_academy_link(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            '<a href="../../academy.html">Academy</a>',
+            "",
+            1,
+        ),
+        encoding="utf-8",
+    )
+    build_zip(tmp_path)
+
+    assert_failure(audit_fixture(tmp_path), "missing visible Academy link")
+
+
+def test_mutation_catches_removed_resume_behavior(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace("#resume", "#continue"),
+        encoding="utf-8",
+    )
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "#resume does not focus an incomplete checkpoint or step",
+    )
+
+
+def test_mutation_catches_removed_overflow_containment(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "evidence-report.html"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace("overflow-x: auto;", ""),
+        encoding="utf-8",
+    )
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "tables lack responsive overflow containment",
+    )
+
+
+def test_mutation_catches_copilot_default_engine(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            '? "copilot" : "brainstem"',
+            '? "brainstem" : "copilot"',
+        ),
+        encoding="utf-8",
+    )
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "visual and achievement engines must both default to brainstem",
+    )
+
+
+def test_mutation_catches_removed_skip_link(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "manual-tutorial.html"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            '<a class="skip-link" href="#main-content">Skip to tutorial</a>',
+            "",
+        ),
+        encoding="utf-8",
+    )
+    build_zip(tmp_path)
+
+    assert_failure(audit_fixture(tmp_path), "expected exactly one skip link")
+
+
+def test_mutation_catches_non_focusable_skip_target(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "evidence-report.html"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            '<main id="main-content" tabindex="-1">',
+            '<main id="main-content">',
+        ),
+        encoding="utf-8",
+    )
+    build_zip(tmp_path)
+
+    assert_failure(
+        audit_fixture(tmp_path),
+        "must be programmatically focusable",
+    )
+
+
+def test_mutation_catches_incomplete_tab_keyboard_semantics(tmp_path):
+    package = create_fixture(tmp_path)
+    path = package / "quest.html"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace('"ArrowRight"', '"PageDown"'),
+        encoding="utf-8",
+    )
+    build_zip(tmp_path)
+
+    assert_failure(audit_fixture(tmp_path), "mode tabs lack ArrowRight")
+
+
 def test_time_entry_billing_reference_passes_with_withheld_reshoots():
     assert shutil.which("node"), "node is required by the acceptance gate"
     checker = AUDIT.ScriptChecker()
@@ -595,3 +980,28 @@ def test_repository_course_scope_uses_catalog_truth():
         "sharepoint_advertised": False,
         "ship_gate": "advertise-before-ship",
     }
+
+
+def test_playwright_academy_gate_is_exact_and_fail_closed():
+    package = json.loads(
+        (ROOT / "browser-audit" / "package.json").read_text(encoding="utf-8")
+    )
+    source = (
+        ROOT / "browser-audit" / "academy-course-audit.mjs"
+    ).read_text(encoding="utf-8")
+
+    assert package["scripts"]["academy"] == "node academy-course-audit.mjs"
+    assert "const expectedWorkshops = 51;" in source
+    assert "const viewportWidths = [320, 360, 375];" in source
+    assert 'const auditedPages = ["quest.html", "evidence-report.html"];' in source
+    assert "attempts === expectedWorkshops * auditedPages.length" in source
+    assert "document.documentElement.scrollWidth" in source
+    assert "result.overflow === 0" in source
+    assert 'target.getAttribute("tabindex") === "-1"' in source
+    assert "auditAcademyManualResumeLifecycle" in source
+    assert "Academy classifies Easy-complete Manual progress as Active" in source
+    assert "Academy Resume Manual focuses the next standalone step" in source
+    assert "embedded Manual initial display uses actual step total" in source
+    assert "quest refreshes embedded Manual checkbox and progress on return" in source
+    assert "A Chromium-compatible browser is required" in source
+    assert "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" in source

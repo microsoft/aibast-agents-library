@@ -79,7 +79,7 @@ def test_workflow_publishes_exactly_the_mapped_assets():
 
 
 def test_public_one_liners_point_at_the_release_assets():
-    for page in ("README.md", "index.html"):
+    for page in ("README.md", "docs/installer.html"):
         text = (ROOT / page).read_text(encoding="utf-8")
         assert not re.search(
             r"raw\.githubusercontent\.com/microsoft/aibast-agents-library/main/(community_rapp/)?install\.(sh|ps1)",

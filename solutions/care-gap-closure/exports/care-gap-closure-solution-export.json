@@ -20,5 +20,7 @@
     "Map connection references and environment variables before enabling integrations.",
     "The exported agent remains unpublished unless the target administrator explicitly publishes it."
   ],
-  "settings_error": null
+  "settings_error": null,
+  "source_contract_status": "stale_source",
+  "source_contract_note": "Historical export predates the SYN-COL — 182 records repair. Do not use it as the repaired source; synchronize the reviewed native files, rerun Preview, and create a fresh unmanaged export before import."
 }

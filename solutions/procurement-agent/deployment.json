@@ -53,32 +53,61 @@
     "publish_requires_confirmation": true,
     "validated_manual": {
       "display_name": "Procurement Manual",
-      "bot_id": "c5ccfeb5-690c-40fa-8d12-1e14bf315222",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
       "skills": 4,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 0,
+      "preview_cases_total": 4,
+      "captured_preview_cases_passed": 4,
+      "preview_cases_pending": 4,
+      "build_revision": "grounding-r3",
+      "source_contract_status": "reshoot_required",
+      "source_contract_note": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance.",
+      "current_revision_confirmed": false
     },
     "validated_pilot": {
       "display_name": "Procurement Pilot",
       "schema_name": "aibast_ProcurementPilot",
-      "bot_id": "25961b55-08a9-4a19-9c1c-3f015842a79e",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
       "skills": 4,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
-    }
+      "preview_cases_passed": 0,
+      "preview_cases_total": 4,
+      "captured_preview_cases_passed": 4,
+      "preview_cases_pending": 4,
+      "build_revision": "grounding-r3",
+      "source_contract_status": "reshoot_required",
+      "source_contract_note": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending.",
+      "current_revision_confirmed": false
+    },
+    "source_contract_status": "reshoot_required",
+    "source_contract_note": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+  },
+  "source_bundle": {
+    "label": "Procurement grounding-r3 candidate manual inputs and locked cases",
+    "kind": "manual-inputs",
+    "native_importable": false,
+    "standalone_guide": false,
+    "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+    "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/procurement-agent",
+    "description": "Seven source-only candidate inputs, unchanged locked cases, the SHA256 inventory and this export README. Native installation, persistence, Preview and screenshot acceptance remain pending. No historical native import, tenant binding, screenshot, HTML guide or runtime is bundled.",
+    "include_paths": [
+      "solutions/procurement-agent/manual/GLOBAL-INSTRUCTIONS.md",
+      "solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md",
+      "solutions/procurement-agent/manual/skills/aibast_purchase-request_01/SKILL.md",
+      "solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md",
+      "solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md",
+      "solutions/procurement-agent/manual/knowledge/aibast_procurement-agent-rules-and-guardrails.md",
+      "solutions/procurement-agent/manual/knowledge/aibast_procurement-agent-synthetic-records.md",
+      "tests/demo_cases/procurement-agent.json",
+      "solutions/procurement-agent/evals/manual-inputs-r3.json",
+      "solutions/procurement-agent/exports/README.md"
+    ]
   }
 }

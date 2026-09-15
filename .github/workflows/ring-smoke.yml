@@ -1,0 +1,195 @@
+# Installs the Brainstem from THIS repository's published GitHub Pages one-liner
+# on clean runners, exactly as a user would, with no environment overrides.
+#
+# On the Microsoft repository that is https://microsoft.github.io/aibast-agents-library
+# serving main. On a staging fork it is the fork's Pages serving its default
+# branch. Either way the served installer must install this ring's own vendored
+# kernel at the ring's current tree, that kernel must still be the same species
+# as the pinned Grail, and the server must answer on its public health route.
+
+name: Ring one-liner smoke
+
+on:
+  workflow_run:
+    workflows: ["Deploy Academy Pages", "pages build and deployment"]
+    types: [completed]
+  schedule:
+    - cron: '15 */6 * * *'  # every six hours: a broken public installer is found within hours, not by users
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Pages base URL to smoke (default: this repository's Pages)"
+        required: false
+      ring_branch:
+        description: "Branch the installer is expected to install (default: the default branch)"
+        required: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ring-smoke-${{ github.event.workflow_run.head_branch || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  BASE_URL: ${{ inputs.base_url || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
+  RING_BRANCH: ${{ inputs.ring_branch || github.event.repository.default_branch }}
+
+jobs:
+  smoke:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - name: Check out the ring branch (expected tree and species tools)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ inputs.ring_branch || github.event.repository.default_branch }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+
+      - name: Smoke the published one-liner (bash)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          set -euo pipefail
+          export HOME="$RUNNER_TEMP/ring-home"
+          mkdir -p "$HOME"
+          echo "ring: $GITHUB_REPOSITORY@$RING_BRANCH via $BASE_URL"
+          curl -fsSL "$BASE_URL/install.sh" -o "$RUNNER_TEMP/installer.sh"
+
+          # The served installer must point at this ring by default (no env overrides).
+          grep -Fq "REPO_URL=\"\${BRAINSTEM_REPO_URL:-https://github.com/$GITHUB_REPOSITORY.git}\"" "$RUNNER_TEMP/installer.sh"
+          grep -Fq "REPO_REF=\"\${BRAINSTEM_REPO_REF:-$RING_BRANCH}\"" "$RUNNER_TEMP/installer.sh"
+          echo "installer identity: $GITHUB_REPOSITORY@$RING_BRANCH"
+
+          bash "$RUNNER_TEMP/installer.sh" --no-launch | tee "$RUNNER_TEMP/install.log"
+          test -f "$HOME/.brainstem/src/rapp_brainstem/brainstem.py"
+          test -x "$HOME/.brainstem/venv/bin/python"
+
+          expected_tree="$(git rev-parse HEAD:rapp_brainstem)"
+          installed_tree="$(git -C "$HOME/.brainstem/src" rev-parse HEAD:rapp_brainstem)"
+          echo "expected kernel tree $expected_tree / installed $installed_tree (installed head $(git -C "$HOME/.brainstem/src" rev-parse HEAD))"
+          test "$installed_tree" = "$expected_tree"
+
+          python scripts/grail_species.py shape "$HOME/.brainstem/src/rapp_brainstem" \
+            --installer "$RUNNER_TEMP/installer.sh" > "$RUNNER_TEMP/installed-shape.json"
+          python scripts/grail_species.py diff rapp/GRAIL-SPECIES.json "$RUNNER_TEMP/installed-shape.json"
+
+          port="$(python -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1",0)); print(s.getsockname()[1]); s.close()')"
+          ( cd "$HOME/.brainstem/src/rapp_brainstem" && PORT="$port" \
+              "$HOME/.brainstem/venv/bin/python" brainstem.py > "$RUNNER_TEMP/server.log" 2>&1 ) &
+          server_pid=$!
+          healthy=false
+          for _ in $(seq 1 60); do
+            if body="$(curl -sf "http://127.0.0.1:$port/health/public" 2>/dev/null)"; then
+              echo "health/public: $body"
+              printf '%s' "$body" | python -c 'import sys,json; d=json.load(sys.stdin); assert d["status"]=="ok" and d["version"], d'
+              healthy=true
+              break
+            fi
+            sleep 2
+          done
+          kill "$server_pid" 2>/dev/null || true
+          if [ "$healthy" != true ]; then
+            echo "::error::installed Brainstem never answered /health/public"; tail -50 "$RUNNER_TEMP/server.log"; exit 1
+          fi
+
+      - name: Smoke the published one-liner (PowerShell)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $env:USERPROFILE = Join-Path $env:RUNNER_TEMP 'ring-home'
+          New-Item -ItemType Directory -Force -Path $env:USERPROFILE | Out-Null
+          Write-Host "ring: $env:GITHUB_REPOSITORY@$env:RING_BRANCH via $env:BASE_URL"
+          $installerPath = Join-Path $env:RUNNER_TEMP 'installer.ps1'
+          Invoke-WebRequest -Uri "$env:BASE_URL/install.ps1" -UseBasicParsing -OutFile $installerPath
+          $content = Get-Content -Raw $installerPath
+          if (-not $content.Contains("else { `"https://github.com/$env:GITHUB_REPOSITORY.git`" }")) { throw 'served install.ps1 does not default to this ring repository' }
+          if (-not $content.Contains("else { `"$env:RING_BRANCH`" }")) { throw 'served install.ps1 does not default to this ring branch' }
+          Write-Host "installer identity: $env:GITHUB_REPOSITORY@$env:RING_BRANCH"
+
+          & ([scriptblock]::Create($content)) --no-launch *>&1 | Tee-Object -FilePath (Join-Path $env:RUNNER_TEMP 'install.log') | Write-Host
+          $src = Join-Path $env:USERPROFILE '.brainstem\src'
+          $venvPython = Join-Path $env:USERPROFILE '.brainstem\venv\Scripts\python.exe'
+          if (-not (Test-Path (Join-Path $src 'rapp_brainstem\brainstem.py'))) { throw 'brainstem.py missing after install' }
+          if (-not (Test-Path $venvPython)) { throw 'venv python missing after install' }
+
+          $expectedTree = (git rev-parse 'HEAD:rapp_brainstem').Trim()
+          $installedTree = (git -C $src rev-parse 'HEAD:rapp_brainstem').Trim()
+          Write-Host "expected kernel tree $expectedTree / installed $installedTree"
+          if ($installedTree -ne $expectedTree) { throw "installed kernel tree $installedTree instead of $expectedTree" }
+
+          $shape = Join-Path $env:RUNNER_TEMP 'installed-shape.json'
+          python scripts/grail_species.py shape (Join-Path $src 'rapp_brainstem') --installer install.sh | Out-File -Encoding utf8 $shape
+          python scripts/grail_species.py diff rapp/GRAIL-SPECIES.json $shape
+          if ($LASTEXITCODE -ne 0) { throw 'installed kernel is not the same species as the pinned Grail' }
+
+          $port = Get-Random -Minimum 20000 -Maximum 40000
+          $env:PORT = "$port"
+          $server = Start-Process -FilePath $venvPython -ArgumentList 'brainstem.py' -WorkingDirectory (Join-Path $src 'rapp_brainstem') -PassThru -RedirectStandardOutput (Join-Path $env:RUNNER_TEMP 'server.log') -RedirectStandardError (Join-Path $env:RUNNER_TEMP 'server.err')
+          $healthy = $false
+          foreach ($i in 1..60) {
+            try {
+              $resp = Invoke-RestMethod -Uri "http://127.0.0.1:$port/health/public" -TimeoutSec 5
+              if ($resp.status -eq 'ok' -and $resp.version) { Write-Host "health/public: $($resp | ConvertTo-Json -Compress)"; $healthy = $true; break }
+            } catch { Start-Sleep -Seconds 2 }
+          }
+          Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue
+          if (-not $healthy) { Get-Content (Join-Path $env:RUNNER_TEMP 'server.err') -Tail 50; throw 'installed Brainstem never answered /health/public' }
+
+  incident:
+    # Files (or closes) an incident issue so a broken public one-liner is
+    # visible to maintainers within hours, without waiting for a user report.
+    needs: smoke
+    if: always() && github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SMOKE_RESULT: ${{ needs.smoke.result }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Open, update, or close the incident issue
+        run: |
+          set -euo pipefail
+          title="Incident: public one-liner smoke failing on $RING_BRANCH"
+          existing="$(gh issue list -R "$GITHUB_REPOSITORY" --state open --label incident --search "\"$title\" in:title" --json number --jq '.[0].number // empty')"
+          if [ "$SMOKE_RESULT" = "success" ]; then
+            if [ -n "$existing" ]; then
+              gh issue comment "$existing" -R "$GITHUB_REPOSITORY" --body "Recovered: the published one-liner installed and answered on all runners. $RUN_URL"
+              gh issue close "$existing" -R "$GITHUB_REPOSITORY" --reason completed
+              echo "closed incident #$existing"
+            fi
+            exit 0
+          fi
+          body="$(printf '%s\n' \
+            "The published one-liner at $BASE_URL failed the clean-runner smoke ($SMOKE_RESULT)." \
+            "" \
+            "Run: $RUN_URL" \
+            "Ring: $GITHUB_REPOSITORY@$RING_BRANCH" \
+            "Trigger: $GITHUB_EVENT_NAME" \
+            "" \
+            "What the smoke checks: the served installer defaults to this ring, installs the ring's vendored kernel tree, that kernel is the same species as the pinned Grail, and the server answers on /health/public." \
+            "" \
+            "Record the outcome in docs/RELEASES.md under the current release once resolved.")"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" -R "$GITHUB_REPOSITORY" --body "Still failing: $RUN_URL"
+            echo "updated incident #$existing"
+          else
+            gh label create incident -R "$GITHUB_REPOSITORY" --color B60205 --description "Production smoke failure, auto-filed" --force >/dev/null 2>&1 || true
+            gh label create post-release -R "$GITHUB_REPOSITORY" --color 0E8A16 --description "Reported after a release; tracked in docs/RELEASES.md" --force >/dev/null 2>&1 || true
+            gh issue create -R "$GITHUB_REPOSITORY" --title "$title" --label incident --label post-release --body "$body"
+            echo "opened incident issue"
+          fi

@@ -24,12 +24,75 @@ trends, at-risk accounts, and retention playbooks.
 
 - Healthy, at-risk, and critical segmentation: use the health dashboard.
 - Executive contact, escalations, billing direction, and utilization: use
-  engagement analysis.
+  `client-engagement-analysis` before any generic helper.
 - Quarterly satisfaction movement and NPS: use satisfaction trends.
 - Intervention priorities, risk drivers, and initial recovery actions: use
   at-risk client prioritization.
-- Stakeholder maps and executive engagement preparation: use the retention
-  playbook.
+- Stakeholder maps and executive engagement preparation: use
+  `client-retention-playbook` before any generic helper.
+- A generic helper may support the matching uploaded skill after it loads, but
+  must never replace that skill.
+
+## Deterministic evidence limits
+
+- Treat the packaged tables and prose as the complete evidence for this frozen
+  scenario. Do not claim a field is unavailable when it appears in either
+  packaged file.
+- Copy source-recorded values and labels without adding a current date, snapshot
+  date, deadline, timeline, aggregate, ratio, average, correlation, causal
+  explanation, likely outcome, or benchmark that the files do not state.
+- `Escalations (90d)` and `Exec meetings (90d)` are historical counts only.
+  Never relabel them as open, active, unresolved, scheduled, or completed work.
+- Do not infer that utilization caused billing or satisfaction movement, that
+  an NPS value proves a relationship condition, or that any indicator predicts
+  renewal or churn.
+- Describe every next engagement and retention action as a packaged proposal
+  requiring approval. Never say "I am planning," "I will schedule," or imply
+  that execution has started.
+- If a requested value is not explicitly present, omit it and state the narrow
+  limitation. Do not browse or substitute external evidence.
+
+## Locked case response contracts
+
+For the exact CHS-02 prompt, after loading `client-engagement-analysis` and
+retrieving the packaged portfolio, the final answer must contain only:
+
+- `Engagement Analysis`
+- TechCorp Industries: `No executive contact in 90 days`;
+  `4 escalations in 90 days`; `Declining billing trend`.
+- Global Finance Corp: `Low utilization (45%) -- may not see value`.
+- Healthcare Solutions Inc: `3 escalations in 90 days`.
+- `No other client produces an engagement red flag in the packaged rules.`
+- A statement that these are source-recorded historical signals, not a
+  conclusion about relationship condition.
+- The next account-owner-approved internal engagement review.
+- The required no-action footer.
+
+Do not include any other client, metric, table, stakeholder, comparison,
+ranking, range, total, or derived pattern in CHS-02.
+
+For the exact CHS-05 prompt, after loading `client-retention-playbook` and
+retrieving the packaged playbook, the final answer must contain only:
+
+- `Account Retention Playbooks`
+- TechCorp Industries: Morgan Lee, COO; Rachel Adams; Elena Vasquez;
+  `Executive recovery review`; the common preparation; propose an executive
+  sponsor meeting within seven days; assign an approved escalation owner and
+  review closure evidence weekly; validate negative feedback themes;
+  `Approval gate`.
+- Global Finance Corp: Jordan Patel, CFO; Marcus Reed; Michael Chen;
+  `Value realization workshop`; the common preparation; validate negative
+  feedback themes; `Approval gate`.
+- Healthcare Solutions Inc: Taylor Brooks, CIO; Nina Shah; Priya Sharma;
+  `Escalation closure and roadmap review`; the common preparation; assign an
+  approved escalation owner and review closure evidence weekly;
+  `Approval gate`.
+- The required no-action footer.
+
+The common preparation is exactly: prepare open-issue summary,
+value-delivered evidence, and decision log. Do not include account metrics,
+dates, counts, totals, cross-account summaries, urgency rankings, or additional
+steps in CHS-05.
 
 ## Client and authorization gates
 
@@ -48,7 +111,8 @@ trends, at-risk accounts, and retention playbooks.
    finding.
 2. Cite the exact packaged client, score, trend, interaction, stakeholder, and
    scenario indicator supporting it.
-3. Separate observed synthetic evidence from uncertainty and recommended action.
+3. Separate observed synthetic evidence from uncertainty and packaged proposed
+   action.
 4. State the next account-owner-approved internal review.
 5. End with: `Synthetic client-health evidence; no prediction is certain and no meeting, message, concession, renewal, or CRM change occurred.`
 

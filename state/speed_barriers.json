@@ -1,0 +1,87 @@
+{
+  "$comment": "The log of speed barriers broken. A row is added when a barrier actually falls, with the evidence that it fell; nothing goes in as a forecast. The 'then' figures are the ones docs/rapp-guide.html shipped with, kept deliberately so the gain is measurable rather than remembered. tests/test_speed_barriers.py checks that every entry here is also stated in the guide's Speed Barriers Broken section.",
+  "schema": "aibast-speed-barriers/1.0",
+  "updated": "2026-09-11",
+  "baseline": {
+    "document": "docs/rapp-guide.html",
+    "written": "2025",
+    "note": "Every duration in the original guide was measured and was true when written. The barriers below record what changed underneath the method, not a correction of the method."
+  },
+  "barriers": [
+    {
+      "id": "build-one-agent",
+      "barrier": "Build one agent",
+      "then": "2-3 weeks per agent, hand-written. Step 5 called it days to weeks and set the goal at hours.",
+      "now": "Minutes. A scaffolded agent is generated, smoke-tested and hot-loaded in about fifteen seconds; a hand-written one is live the moment the file is saved.",
+      "caveat": "The generated perform() is a scaffold. Writing the business logic inside it is still the real work.",
+      "evidence": "The LearnNew agent ships in the Brainstem's default agent set; measured at 15.9s from description to hot-loaded agent.",
+      "broken": "2026"
+    },
+    {
+      "id": "see-a-change",
+      "barrier": "See a change take effect",
+      "then": "3-5 days: code change, testing, approval, deployment.",
+      "now": "The next question, locally. The local server re-reads its agents folder on every request; the cloud tier refreshes on a five-minute cache.",
+      "evidence": "Measured on a running install: a file saved at 10:27:45 answered on the very next request with no restart, and disappeared within a second of deletion.",
+      "broken": "2026"
+    },
+    {
+      "id": "setup-before-learning",
+      "barrier": "Set up before you can learn anything",
+      "then": "An Azure subscription, a Function App, a storage account, and a deployment before the first lesson.",
+      "now": "One command. No cloud account, no subscription and no model key: the server borrows existing GitHub Copilot access.",
+      "evidence": "install.sh; the auth chain resolves a Copilot token by device code and never asks for a provider API key.",
+      "broken": "2026"
+    },
+    {
+      "id": "start-from-nothing",
+      "barrier": "Start from nothing",
+      "then": "Every engagement began with a blank transcript and an empty folder.",
+      "now": "52 published solutions, each a single-file agent with tested operations, a guided workshop and a Copilot Studio solution beside it.",
+      "evidence": "registry.json: 72 agents, 52 stacks, 30,699 lines; 51 complete workshops under solutions/.",
+      "broken": "2026"
+    },
+    {
+      "id": "demo-for-the-field",
+      "barrier": "Put a demo in front of the field",
+      "then": "Planned as a shared, non-expiring cloud tenant with live endpoints so nobody had to deploy per demo.",
+      "now": "No shared tenant at all. The catalog and its workshops are public, and any agent is one command away on a laptop.",
+      "evidence": "The 2025 plan's third priority, versus the published catalog and the one-liner installer.",
+      "broken": "2026"
+    },
+    {
+      "id": "hand-to-copilot-studio",
+      "barrier": "Hand a prototype to Copilot Studio",
+      "then": "Built by hand in the portal, per agent.",
+      "now": "A Copilot Studio solution and its deployment settings ship beside every published workshop, 51 of them today.",
+      "evidence": "solutions/<slug>/exports/<slug>-copilot-studio-solution.zip and <slug>-deployment-settings.json, one pair per solution.",
+      "broken": "2026"
+    },
+    {
+      "id": "use-case-to-prototype",
+      "barrier": "Described use case to working prototype",
+      "then": "3-5 days.",
+      "now": "Minutes, when the library already covers the problem.",
+      "caveat": "Production deployment is still 3-5 weeks, and still mostly waiting for security and compliance.",
+      "evidence": "Step 14 of the original guide, versus a measured clean install.",
+      "broken": "2026"
+    }
+  ],
+  "still_standing": [
+    {
+      "barrier": "Security and compliance approval",
+      "cost": "1-3 weeks, unchanged",
+      "note": "This is the longest pole in the guide and no tooling has moved it. It is a review by people who are right to take their time."
+    },
+    {
+      "barrier": "Recording a demo video",
+      "cost": "Manual",
+      "note": "The 2025 plan wanted speech-to-text timing so demos assembled themselves. It did not ship."
+    },
+    {
+      "barrier": "Writing the business logic",
+      "cost": "Unchanged",
+      "note": "Scaffolding an agent is now seconds. Knowing what the agent should actually do is still the work."
+    }
+  ]
+}

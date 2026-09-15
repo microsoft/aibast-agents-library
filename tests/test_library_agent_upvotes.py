@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LIBRARY = ROOT / "library.html"
+LIBRARY = ROOT / "index.html"
 
 
 def library_text():
@@ -43,7 +43,7 @@ globalThis.window = {
 globalThis.location = {
   hash: "",
   search: "",
-  pathname: "/library.html",
+  pathname: "/index.html",
   hostname: __HOSTNAME__
 };
 globalThis.history = { replaceState() {} };
@@ -73,17 +73,19 @@ def test_library_scripts_parse_with_node():
     assert result.returncode == 0, result.stderr
 
 
-def test_toolbar_only_links_agent_library_and_industry_workshops():
+def test_toolbar_links_library_academy_and_industry_workshops():
     text = library_text()
     nav = text[
         text.index('<nav class="nav" aria-label="Primary navigation">'):
         text.index("</nav>", text.index('<nav class="nav" aria-label="Primary navigation">'))
     ]
 
-    assert nav.count("<a ") == 2
+    assert nav.count("<a ") == 4
     assert ">Agent Library</a>" in nav
+    assert 'href="docs/installer.html">Install Brainstem</a>' in nav
+    assert 'href="academy.html">Academy</a>' in nav
     assert (
-        'href="library.html?view=solutions#workshops">'
+        'href="index.html?view=solutions#workshops">'
         "Industry Workshops</a>"
     ) in nav
     for removed in (
@@ -108,13 +110,14 @@ def test_catalog_selector_only_shows_solutions_and_first_party():
         )
     ]
 
-    assert tabs.count('data-action="view"') == 2
+    assert tabs.count('data-action="view"') == 3
     assert 'data-view="solutions">Industry solutions</button>' in tabs
     assert 'data-view="first-party">Microsoft first-party</button>' in tabs
+    assert 'data-view="partners">Partner solutions</button>' in tabs
     assert "Multi-agent stacks" not in tabs
     assert "Building blocks" not in tabs
     assert (
-        '["solutions", "first-party"].includes(params.get("view"))'
+        '["solutions", "first-party", "partners"].includes(params.get("view"))'
         in text
     )
 

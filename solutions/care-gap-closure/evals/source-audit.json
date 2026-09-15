@@ -33,6 +33,11 @@
       "area": "quality-manager persona routing",
       "before": "The live model could route the largest evidence-review queue question to the qualitative dashboard, omitting the locked evidence-review wording.",
       "after": "Tool and operation descriptions now map the exact persona intent to gap_analysis, which identifies the largest queue and emits Records requiring evidence review for every measure."
+    },
+    {
+      "area": "CG-01 source-contract consistency",
+      "before": "Global and native instructions, the smoke test, locked demo case, and evaluation metadata anchored CG-01 to SYN-BCS even though the source agent, skills, knowledge, and recorded tool output identify SYN-COL as the largest queue.",
+      "after": "The active contract requires SYN-COL — 182 records and Records requiring evidence review. The unchanged source calculates 520 - 338 = 182, ahead of SYN-BCS at 108 and SYN-CDC at 53. Regression tests compare all measures, verify native mirrors, and reject an incorrect leader even when every measure row is present."
     }
   ],
   "claim_audit": [
@@ -65,5 +70,18 @@
     "artifact": "solutions/care-gap-closure/evals/transcripts.json"
   },
   "claim_policy": "Catalog value claims are qualitative. Exact fields and identifiers are retained only as clearly labeled synthetic evidence.",
-  "unresolved_defects": []
+  "source_contract_revalidation": {
+    "reviewed_on": "2026-09-11",
+    "stored_transcript_cases_passed": 4,
+    "stored_transcript_cases_total": 4,
+    "validator": "tools.run_demo_cases.run_case",
+    "live_capture": false,
+    "historical_pixels_changed": false,
+    "visual_checkpoints_requiring_reshoot": 5,
+    "note": "Skills, complete knowledge, and their native mirrors already describe the correct result and are preserved. Live Preview and saved-instruction evidence are not inferred from local source validation."
+  },
+  "unresolved_defects": [
+    "Fresh saved-instruction and CG-01 Preview evidence is required for the repaired live Manual and assisted agents. Four affected visual checkpoints are reshoot_required, in addition to the pre-existing Easy CG-04 gap.",
+    "The unmanaged Copilot Studio export is preserved as a historical artifact and marked stale_source. A fresh reviewed source synchronization, Preview run, and unmanaged export are still required; nothing was pushed or published."
+  ]
 }

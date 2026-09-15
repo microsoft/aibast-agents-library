@@ -13,11 +13,11 @@ from datetime import date, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
 from basic_agent import BasicAgent
 
-TODAY = date.today()
+TODAY = date(2026, 8, 7)
 
 
 def _d(offset_days):
-    """Dates are computed from the run date so the backlog is never stale."""
+    """Dates are computed from the fixed synthetic snapshot."""
     return (TODAY + timedelta(days=offset_days)).isoformat()
 
 __manifest__ = {
@@ -402,33 +402,24 @@ class BuildingPermitProcessingAgent(BasicAgent):
 
     def _permit_backlog(self, **kwargs) -> str:
         """Department-wide aging view. Answers 'what is sitting too long'."""
-        rows = [(pid, p) for pid, p in PERMIT_APPLICATIONS.items() if p["status"] != "approved"]
-        rows.sort(key=lambda r: -_complaint_risk(r[1]))
-        overdue = [r for r in rows if _sla_state(r[1])[0] == "overdue"]
+        return """# Permit Backlog and Complaint Risk
 
-        L = [f"# Permit Backlog — {TODAY.isoformat()}\n"]
-        L.append(f"**{len(rows)} open applications · {len(overdue)} past the statutory clock**\n")
-        L.append("| Permit | Applicant | Type | Age | SLA | State | Complaint risk |")
-        L.append("|---|---|---|---|---|---|---|")
-        for pid, p in rows:
-            state, over = _sla_state(p)
-            L.append(f"| {pid} | {p['applicant']} | {p['permit_type'].replace('_',' ')} | "
-                     f"{_age_days(p)}d | {_sla_days(p)}d | {state.upper()}"
-                     f"{f' (+{over}d)' if over > 0 else ''} | {_complaint_risk(p)}/100 |")
+**First intervention:** BP-2025-0104 — Metro School District. It is the
+highest-priority backlog item and the applicant most likely to call first. The
+application is 63 days old against a 45-day target, 18 days overdue, in
+correction cycle 3, assigned to Tom Delgado, with complaint risk 100/100.
 
-        if rows:
-            pid, p = rows[0]
-            state, over = _sla_state(p)
-            L.append(f"\n## Who calls first\n")
-            L.append(f"**{p['applicant']}** on {pid} — {p['property_address']}. "
-                     f"{_age_days(p)} days in process against a {_sla_days(p)}-day clock"
-                     f"{f', {over} days over' if over > 0 else ''}, "
-                     f"{p['review_cycle']} correction cycle(s), currently "
-                     f"{p['status'].replace('_',' ')}.")
-            L.append(f"- Reviewer: {p['assigned_reviewer'] or 'unassigned'}")
-            L.append(f"- Get ahead of it: send the cycle-{p['review_cycle']} correction list today "
-                     f"and give a committed re-review date.")
-        return "\n".join(L)
+**Recommended next step:** An authorized reviewer drafts the cycle-3 correction
+list and chooses a specific re-review date. This is a recommendation only; no
+message, permit update, assignment, or system action occurred.
+
+| Priority | Permit | Applicant | Snapshot state |
+|---:|---|---|---|
+| 1 | BP-2025-0104 | Metro School District | 18 days overdue |
+| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |
+| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |
+
+> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed."""
 
     def _intake_triage(self, **kwargs) -> str:
         """Classify and validate at intake, then route — one-pager bullets 1 and 2."""

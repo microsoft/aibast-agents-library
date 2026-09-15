@@ -1,0 +1,104 @@
+# Keeps a staging fork aligned with the Microsoft repository.
+#
+# Runs only on forks. The mirror branch (main) is fast-forwarded from
+# microsoft/aibast-agents-library and must never carry commits of its own;
+# the ring branch (staging) then merges the mirror so release candidates are
+# always tested against current production. A conflict fails the run loudly
+# and leaves both branches untouched.
+#
+# Pushes made with the default token do not trigger other workflows, so the
+# ring branch's preflight and Pages deploy are dispatched explicitly. Set a
+# SYNC_TOKEN repository secret (fine-grained PAT, contents + actions write) to
+# have those trigger natively instead.
+
+name: Sync fork from upstream
+
+on:
+  schedule:
+    - cron: '40 6 * * *'  # daily, after the upstream 05:20 UTC metrics snapshot
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: false
+
+env:
+  UPSTREAM: microsoft/aibast-agents-library
+  MIRROR_BRANCH: main
+  RING_BRANCH: staging
+
+jobs:
+  sync:
+    if: github.event.repository.fork && github.repository != 'microsoft/aibast-agents-library'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ secrets.SYNC_TOKEN || github.token }}
+    steps:
+      - name: Verify the mirror branch carries no commits of its own
+        run: |
+          set -euo pipefail
+          compare="$(gh api "repos/$UPSTREAM/compare/$MIRROR_BRANCH...${GITHUB_REPOSITORY_OWNER}:$MIRROR_BRANCH")"
+          ahead="$(printf '%s' "$compare" | python3 -c 'import sys,json; print(json.load(sys.stdin)["ahead_by"])')"
+          behind="$(printf '%s' "$compare" | python3 -c 'import sys,json; print(json.load(sys.stdin)["behind_by"])')"
+          echo "mirror $MIRROR_BRANCH: ahead_by=$ahead behind_by=$behind (vs $UPSTREAM)"
+          if [ "$ahead" != "0" ]; then
+            echo "::error::$GITHUB_REPOSITORY:$MIRROR_BRANCH has $ahead commit(s) that are not on $UPSTREAM:$MIRROR_BRANCH. The mirror must only move by fast-forward; reset it to upstream before syncing."
+            exit 1
+          fi
+
+      - name: Fast-forward the mirror branch from upstream
+        run: |
+          set -euo pipefail
+          result="$(gh api -X POST "repos/$GITHUB_REPOSITORY/merge-upstream" -f "branch=$MIRROR_BRANCH")"
+          echo "$result"
+          merge_type="$(printf '%s' "$result" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("merge_type",""))')"
+          case "$merge_type" in
+            none|fast-forward) ;;
+            *) echo "::error::unexpected merge_type '$merge_type' while syncing $MIRROR_BRANCH"; exit 1 ;;
+          esac
+
+      - name: Check out the ring branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ env.RING_BRANCH }}
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_TOKEN || github.token }}
+
+      - name: Merge the mirror into the ring branch
+        id: merge
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --quiet origin "$MIRROR_BRANCH"
+          before="$(git rev-parse HEAD)"
+          if git merge-base --is-ancestor "origin/$MIRROR_BRANCH" HEAD; then
+            echo "$RING_BRANCH already contains $MIRROR_BRANCH; nothing to merge."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! git merge --no-edit "origin/$MIRROR_BRANCH"; then
+            git merge --abort || true
+            echo "::error::$RING_BRANCH conflicts with $MIRROR_BRANCH. Resolve by merging $MIRROR_BRANCH into $RING_BRANCH locally and pushing."
+            exit 1
+          fi
+          git push origin "HEAD:$RING_BRANCH"
+          echo "merged $(git rev-parse --short origin/$MIRROR_BRANCH) into $RING_BRANCH ($before -> $(git rev-parse HEAD))"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch the ring gates on the merged head
+        if: steps.merge.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          for wf in preflight.yml pages.yml; do
+            if gh workflow run "$wf" --ref "$RING_BRANCH" 2>/dev/null; then
+              echo "dispatched $wf on $RING_BRANCH"
+            else
+              echo "::warning::could not dispatch $wf on $RING_BRANCH (missing or without workflow_dispatch)"
+            fi
+          done

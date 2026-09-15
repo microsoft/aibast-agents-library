@@ -24,7 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          filter: blob:none
 
       - name: Shell syntax
         run: |
@@ -124,6 +125,7 @@ jobs:
           node-version: '24.19.0'
 
       - name: Beta desktop launcher contracts
+        timeout-minutes: 10
         working-directory: beta
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
@@ -132,10 +134,41 @@ jobs:
           npm run check
           npm test
 
+      - name: Academy browser contract
+        if: ${{ !cancelled() }}
+        working-directory: browser-audit
+        env:
+          AIBAST_CHROME_PATH: /usr/bin/google-chrome
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: |
+          npm install --no-audit --no-fund --ignore-scripts --no-save --package-lock=false
+          test -f academy-course-audit.mjs
+          npm run academy
+
+      - name: Download Center browser contract
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        working-directory: browser-audit
+        env:
+          AIBAST_CHROME_PATH: /usr/bin/google-chrome
+        run: npm run test:downloads
+
       - name: AIBAST agent and registry contracts
+        if: ${{ !cancelled() }}
         run: |
           python -m pip install -q "beautifulsoup4>=4.12.0"
           python -m pip install -q -r scripts/impact-report-requirements.txt
+          python - <<'PY'
+          import subprocess
+          from tools.audit_metrics_page import TRUSTED_COMMIT
+          from tools.audit_rapp_guide import TRUSTED_SOURCE_COMMIT
+
+          subprocess.run([
+              "git", "fetch", "--no-tags", "--depth=1", "--filter=blob:none",
+              "origin", TRUSTED_COMMIT, TRUSTED_SOURCE_COMMIT,
+          ], check=True)
+          PY
+          python scripts/build_academy.py --check
           python -m pytest tests -q
           python - <<'PY'
           import json
@@ -151,6 +184,7 @@ jobs:
           PY
 
       - name: AIBAST Azure tier tests
+        if: ${{ !cancelled() }}
         run: |
           python -m pip install -q -r rapp_ai/requirements.txt
           python -m pytest rapp_ai/tests -q
@@ -171,7 +205,12 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+
+      - name: Fetch upgrade baseline
+        if: matrix.scenario == 'upgrade'
+        shell: bash
+        run: git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
 
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
@@ -195,7 +234,10 @@ jobs:
           git clone --bare . "$BARE"
           git -C "$BARE" update-ref refs/heads/main "$GITHUB_SHA"
           git -C "$BARE" symbolic-ref HEAD refs/heads/main
-          git -C "$BARE" update-ref refs/heads/production-baseline "$(git rev-parse origin/main)"
+          if [ "${{ matrix.scenario }}" = "upgrade" ]; then
+            git -C "$BARE" fetch --no-tags --depth=1 "$PWD" \
+              refs/remotes/origin/main:refs/heads/production-baseline
+          fi
           BARE_URL="file://$(echo "$BARE" | sed 's|\\|/|g; s|^\([A-Za-z]\):|/\1:|')"
           git config --global "url.${BARE_URL}.insteadOf" \
             "https://github.com/microsoft/aibast-agents-library.git"

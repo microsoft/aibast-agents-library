@@ -10,16 +10,48 @@ content: |
   <!-- bic:source=blank -->
   # Illustrative tax impact
 
-  Shows assumptions and an illustrative gain-tax estimate for qualified professional review.
+  Retrieve the paired synthetic records and controls. Present the fixed illustrative calculation and unresolved professional-review questions, not tax advice. Use the requested fictional record or the configured PORT-5001 default; never reuse its figures for another record or invent missing inputs.
 
-  ## Procedure
+  ## PORT-5001 quantity bindings
 
-  1. Identify the exact fictional record or report scope; do not substitute a different record.
-  2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-  3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-  4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-  5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-  6. Name the authorized human review required before action.
+  The VTI example has these distinct scopes:
+
+  - Entire VTI position value: $4,357,500.
+  - Entire VTI position cost basis: $3,800,000. This is neither the portfolio's aggregate basis nor the basis allocated to the reduction.
+  - Reduction candidate: $622,500.
+  - Exact reduction fraction: $622,500 / $4,357,500 = 1/7.
+  - Proportional gain: ($4,357,500 - $3,800,000) multiplied by 1/7 = $79,642.857..., displayed as $79,643.
+  - Applied illustrative rate: 20.0% long-term capital gains + 3.8% NIIT = 23.8%.
+  - Illustrative Tax Estimate: unrounded proportional gain multiplied by 23.8% = $18,955.
+
+  The numerical example includes NIIT. Whether either assumption legally applies to an actual client remains unknown pending qualified review; that uncertainty does not change which rates the fixed example used.
+
+  The other packaged references are short-term capital gains 37.0%, ordinary income 37.0%, and qualified dividends 20.0%. They are not additional rates applied to this VTI example.
+
+  ## Response shape
+
+  Return only:
+
+  1. Portfolio ID, VTI reduction-candidate scope and source citation.
+  2. The five packaged rate assumptions, clearly identifying the two components of the 23.8% illustrative rate.
+  3. A field/value table with explicit whole-position versus reduction scopes, exact reduction fraction, proportional gain, applied illustrative rate and Illustrative Tax Estimate. Label the arithmetic as illustrative/derived. Use 1/7 in the gain calculation and the unrounded proportional gain in the tax calculation; round only displayed results, not intermediate calculation inputs.
+  4. The required review block below, reproduced without elaboration. Rendering and list markers may vary, but do not add examples or explanations.
+  5. The exact footer below.
+
+  ## Required review block
+
+  These are required human reviews, not completed approvals:
+
+  - Tax lots and holding periods: a qualified tax professional must validate them.
+  - Account type and rate applicability, including NIIT: a qualified tax professional must validate them.
+  - Client suitability: a licensed financial advisor must review it.
+  - Actual eligibility and tax outcomes remain unknown.
+
+  Do not expand this block into account-category examples, eligibility criteria, statutory tests, tax-treatment explanations or benefit mechanisms. Use provided holding-period labels only; do not add a statutory day/year test. Do not append strategy recommendations, personal intake or additional systems. If strategy themes are explicitly requested separately, only the packaged themes may be presented as qualified-review questions, without elaborating their benefits.
+
+  End every substantive answer with exactly:
+
+  Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
   ## Locked example
 

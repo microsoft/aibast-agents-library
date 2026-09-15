@@ -1,4 +1,5 @@
 import html
+import importlib.util
 import json
 import re
 import zipfile
@@ -170,6 +171,39 @@ def test_transcripts_cover_every_locked_case_in_strict_isolation():
                 assert value.lower() in item["agent_logs"].lower()
 
 
+def test_building_permit_backlog_is_recommendation_only_and_has_boundary():
+    path = (
+        ROOT
+        / "agents"
+        / "@aibast-agents-library"
+        / "slg_government_stacks"
+        / "building_permit_processing_stack"
+        / "building_permit_processing_agent.py"
+    )
+    spec = importlib.util.spec_from_file_location("building_permit_agent", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    output = module.BuildingPermitProcessingAgent().perform(
+        operation="permit_backlog"
+    )
+    assert "BP-2025-0104" in output
+    assert "Metro School District" in output
+    assert "18 days overdue" in output
+    assert (
+        "Synthetic pilot data as of 2026-08-07; "
+        "no live municipal system was accessed or changed."
+    ) in output
+    lowered = output.lower()
+    for forbidden in (
+        "send the",
+        "issue the",
+        "communicate",
+        "date today",
+        "update was sent",
+    ):
+        assert forbidden not in lowered
+
+
 def test_catalog_demo_links_point_to_exact_canonical_prompts():
     for name, package in PACKAGES.items():
         folder = ROOT / "solutions" / package["slug"]
@@ -306,7 +340,7 @@ def test_rapp_browserfilm_assets_are_reproducible():
     assert 'data-easy-lane="copilot"' in quest
     assert 'data-easy-lane="brainstem"' in quest
     assert 'localStorage.getItem("aibast:workshop-engine") === "copilot"' in quest
-    assert re.search(r'\?\s*"brainstem"\s*:\s*"copilot"', quest)
+    assert re.search(r'\?\s*"copilot"\s*:\s*"brainstem"', quest)
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
@@ -385,7 +419,9 @@ def test_manual_tutorial_matches_browserfilm_and_visual_contract():
     assert set(hard_visuals) == set(range(1, len(frames) + 1))
 
     for index, (step, frame) in enumerate(zip(steps, frames), start=1):
-        action = re.sub(r"^\d+\s*·\s*", "", frame["label"])
+        action = frame.get("tutorial", {}).get("title") or re.sub(
+            r"^\d+\s*·\s*", "", frame["label"]
+        )
         assert step["number"] == index
         assert step["title"] == action
         assert step["reports"] == 1

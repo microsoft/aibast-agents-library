@@ -1,16 +1,15 @@
-displayName: Product Line Optimization Pilot
-schemaName: aibast_ProductLineOptimizationPilot
+displayName: "Product Line Optimization Pilot"
+schemaName: "aibast_ProductLineOptimizationPilot"
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
+  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
-
   agentSettings:
     model:
       series: Sonnet46
-
     instructions:
       segments:
         - kind: StaticSegment
@@ -104,8 +103,5 @@ configuration:
             equipment telemetry, and Power BI reporting surfaces. Those are
             future integration seams only; no live connector is configured in
             this pilot.
-
-  authoringModel: CliCopilot
-
 template: cliagent-1.0.0
 language: 1033

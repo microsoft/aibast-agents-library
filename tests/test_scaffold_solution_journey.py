@@ -14,8 +14,12 @@ from tools.scaffold_solution_journey import (
     THEME_SCRIPT,
     THEME_VARIABLES,
     ScaffoldError,
+    choose_frame_resources,
+    expected_result,
+    load_context,
     scaffold,
 )
+from tools import build_solution_export
 
 
 class StructureParser(HTMLParser):
@@ -309,7 +313,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert "localStorage" in generated
     assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
-    assert "Personless harness" in quest
+    assert "Personless harness article" not in quest
+    assert "kodyw.com" not in quest
     assert "Download generic workshop agent" in quest
     assert "Skeptic comparison" in quest
     assert "aibast:workshop-engine" in quest
@@ -319,11 +324,10 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 8
-    assert "Install RAPP Brainstem Frontier" in quest
-    assert "Open Frontier installer" in quest
-    assert "Download Windows install.cmd" in quest
-    assert "beta/install.sh | bash" in quest
+    assert quest.count("data-copy-target=") == 7
+    assert "Open GitHub Copilot Chat" in quest
+    assert "Install RAPP Brainstem" not in quest
+    assert "Install RAPP Brainstem Frontier" not in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
@@ -361,7 +365,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'role="tabpanel" aria-labelledby="mode-tab-hard"' in quest
     assert 'button.setAttribute("aria-selected", String(selected));' in quest
     assert quest.count('<article class="step"') == len(frames)
-    assert "manually on this page." in quest
+    assert "is built, one capability at a time." in quest
+    assert "Easy mode already did all of this for you" in quest
     assert "manual-progress" in quest
     assert "Draft · published false" in quest
     assert "manual-tutorial.html" in quest
@@ -476,6 +481,43 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "Open a fresh Preview conversation",
         "unmatched.jpg",
     ).startswith("A fresh Preview surface")
+
+
+@pytest.mark.parametrize("review_snapshot", [False, True])
+@pytest.mark.parametrize(
+    ("action", "expected_file"),
+    [
+        ("Add knowledge: aibast_portfolio-controls-and-review.md", "knowledge file"),
+        ("Add knowledge: agent-skill-and-review-rules.md", "knowledge file"),
+        ("Upload synthetic records", "knowledge file"),
+        ("Upload knowledge: reviewed-instructions.md", "knowledge file"),
+        ("Add skill: aibast_rebalance-recommendation_02", "SKILL.md"),
+        ("Add review skill", "SKILL.md"),
+        ("Replace skill: knowledge-review", "SKILL.md"),
+    ],
+)
+def test_upload_checkpoints_do_not_require_the_final_inventory(
+    tmp_path, review_snapshot, action, expected_file
+):
+    build_fixture(tmp_path)
+    ctx = load_context(
+        tmp_path,
+        "demo-journey",
+        allow_pending=False,
+        raw_base="https://example.test/raw/",
+    )
+    if review_snapshot:
+        ctx.manual_evidence["review_snapshot"] = "evals/manual-pilot-review.json"
+
+    result = expected_result(ctx, action, "upload-checkpoint.jpg")
+
+    assert expected_file in result
+    assert "final inventory" in result
+    assert "rendered skills" not in result
+    assert "no tools" not in result
+    assert "skills" in expected_result(
+        ctx, "Review model, skills, knowledge, and safety boundaries", "inventory.jpg"
+    )
 
 
 def test_scaffolder_uses_reviewed_copilot_studio_knowledge_as_legacy_fallback(
@@ -742,6 +784,83 @@ def test_refuses_unpassed_manual_evidence_unless_allow_pending(tmp_path):
     assert "Pending items are not proof" in guide
 
 
+def test_explicit_tutorial_contract_overrides_historical_frame_heuristics(tmp_path):
+    package, _frames = build_fixture(tmp_path)
+    manifest_path = package / "screenshots/manual/browserfilm.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    contract = {
+        "title": "Record the actual upload outcome",
+        "action": (
+            "Upload the complete skill unchanged. If validation succeeds, "
+            "record acceptance. If an authentic <validation error> occurs, "
+            "capture it before fixing and retrying. Never manufacture an error."
+        ),
+        "expected_result": "Either an accepted upload or an authentic error is recorded.",
+        "source": "manual/skills/summary/SKILL.md",
+    }
+    manifest["frames"][3]["label"] = "4 · Historical validation failure"
+    manifest["frames"][3]["tutorial"] = contract
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    scaffold("demo-journey", root=tmp_path)
+
+    for name in ("manual-tutorial.html", "quest.html"):
+        page = (package / name).read_text(encoding="utf-8")
+        step = re.search(
+            r'<article class="step" id="step-4">(.*?)</article>', page, re.DOTALL
+        ).group(1)
+        assert f'<h3>{contract["title"]}</h3>' in step
+        assert "Historical validation failure" not in step
+        assert "If validation succeeds" in step
+        assert "&lt;validation error&gt;" in step
+        assert "<validation error>" not in step
+        assert contract["expected_result"] in step
+        assert f'href="{contract["source"]}" download' in step
+        assert 'href="export-manifest.json" download' not in step
+        assert_html_and_javascript_valid(package / name, tmp_path)
+
+
+@pytest.mark.parametrize(
+    "override",
+    [
+        None,
+        {},
+        "ignore the real outcome",
+        {"title": "Incomplete override"},
+        {
+            "title": "Upload",
+            "action": "Record the outcome",
+            "expected_result": "",
+            "source": "manual/skills/review/SKILL.md",
+        },
+        {
+            "title": "Upload",
+            "action": "Record the outcome",
+            "expected_result": "Accepted",
+            "source": "../missing/SKILL.md",
+        },
+        {
+            "title": "Upload",
+            "action": "Record the outcome",
+            "expected_result": "Accepted",
+            "source": "manual/skills/missing/SKILL.md",
+        },
+    ],
+)
+def test_invalid_tutorial_override_cannot_fall_back_to_historical_label(
+    tmp_path, override
+):
+    package, _frames = build_fixture(tmp_path)
+    manifest_path = package / "screenshots/manual/browserfilm.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["frames"][3]["tutorial"] = override
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(ScaffoldError, match="tutorial"):
+        scaffold("demo-journey", root=tmp_path)
+    assert not (package / "manual-tutorial.html").exists()
+
+
 def test_readme_update_is_idempotent_and_preserves_domain_content(tmp_path):
     package, _frames = build_fixture(tmp_path)
 
@@ -849,3 +968,77 @@ def test_scaffold_exposes_complete_copilot_studio_solution_export(tmp_path):
     assert "publish the agent" in exports_readme
     package_readme = (package / "README.md").read_text(encoding="utf-8")
     assert "Copilot Studio solution ZIP" in package_readme
+
+
+def test_explicit_frame_sources_override_filename_sort_order(tmp_path):
+    package, _ = build_fixture(tmp_path)
+    path = package / "screenshots/manual/browserfilm.json"
+    film = json.loads(path.read_text())
+    film["frames"][2]["source_path"] = "manual/knowledge/synthetic-records.md"
+    film["frames"][3]["source_path"] = "manual/skills/summary/SKILL.md"
+    write(path, json.dumps(film))
+    context = load_context(tmp_path, "demo-journey", allow_pending=False, raw_base="https://example.test/")
+    resources = choose_frame_resources(context)
+    assert resources[2] == package / "manual/knowledge/synthetic-records.md"
+    assert resources[3] == package / "manual/skills/summary/SKILL.md"
+
+
+@pytest.mark.parametrize("source", ["../README.md", "/outside.md", "manual/missing.md"])
+def test_explicit_frame_sources_must_exist_inside_package(tmp_path, source):
+    package, _ = build_fixture(tmp_path)
+    path = package / "screenshots/manual/browserfilm.json"
+    film = json.loads(path.read_text())
+    film["frames"][2]["source_path"] = source
+    write(path, json.dumps(film))
+    with pytest.raises(ScaffoldError, match="source_path"):
+        scaffold("demo-journey", root=tmp_path)
+
+
+def test_explicit_source_bundle_excludes_unselected_artifacts_and_is_reproducible(tmp_path, monkeypatch):
+    monkeypatch.setattr(build_solution_export, "ROOT", tmp_path)
+    package = tmp_path / "solutions/review"
+    selected = "solutions/review/manual/SKILL.md"
+    write(tmp_path / selected, "---\nname: review\n---\n")
+    write(package / "raw-browser.txt", "private fixture must not be packaged")
+    write(package / "screenshot.jpg", b"unreviewed fixture")
+    manifest = package / "export-manifest.json"
+    write(manifest, json.dumps({
+        "bundle": {
+            "path": "solutions/review/exports/review-source.zip",
+            "include_paths": [selected],
+        },
+        "files": [{"path": "solutions/review/raw-browser.txt", "status": "ready"}],
+    }))
+    bundle, count = build_solution_export.build(manifest)
+    first = bundle.read_bytes()
+    assert count == 1
+    with zipfile.ZipFile(bundle) as archive:
+        assert archive.namelist() == [selected]
+        assert archive.read(selected) == (tmp_path / selected).read_bytes()
+    write(package / "raw-browser.txt", "another private value")
+    build_solution_export.build(manifest)
+    assert bundle.read_bytes() == first
+    document = json.loads(manifest.read_text())
+    document["bundle"]["include_paths"] = ["solutions/review/missing.md"]
+    write(manifest, json.dumps(document))
+    with pytest.raises(FileNotFoundError):
+        build_solution_export.build(manifest)
+    assert bundle.read_bytes() == first
+
+
+@pytest.mark.parametrize("paths", [
+    [], "manual/SKILL.md", [None], ["../outside"], ["/outside"], [".private/secret"],
+    ["solutions/review/exports/review-source.zip"],
+])
+def test_explicit_source_bundle_rejects_unsafe_or_ambiguous_selection(tmp_path, monkeypatch, paths):
+    monkeypatch.setattr(build_solution_export, "ROOT", tmp_path)
+    manifest = tmp_path / "solutions/review/export-manifest.json"
+    write(manifest, json.dumps({
+        "bundle": {
+            "path": "solutions/review/exports/review-source.zip",
+            "include_paths": paths,
+        },
+        "files": [],
+    }))
+    with pytest.raises(ValueError):
+        build_solution_export.build(manifest)

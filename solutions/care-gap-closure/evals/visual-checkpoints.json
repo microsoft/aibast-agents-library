@@ -9,8 +9,8 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 22,
-    "reshoot_required": 1
+    "reusable": 18,
+    "reshoot_required": 5
   },
   "captures": [
     {
@@ -18,13 +18,14 @@
       "mode": "easy",
       "case_id": "CG-01",
       "source": "solutions/care-gap-closure/screenshots/assisted/02-cg-01.jpg",
-      "annotated": "solutions/care-gap-closure/screenshots/assisted/annotated/02-cg-01.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "historical_annotation": "solutions/care-gap-closure/screenshots/assisted/annotated/02-cg-01.png",
+      "status": "reshoot_required",
+      "reason": "The source frame shows the colorectal queue, but its historical annotation locks SYN-BCS and predates the repaired instructions. Capture a fresh CG-01 Preview proving SYN-COL — 182 records and Records requiring evidence review; preserve the old pixels and labels.",
+      "historical_visible_anchors": [
         "SYN-BCS",
         "Records requiring evidence review"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 292,
           "y": 232,
@@ -163,16 +164,17 @@
       "mode": "hard",
       "step": 3,
       "source": "solutions/care-gap-closure/screenshots/manual/03-enter-instructions.jpg",
-      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/03-enter-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "historical_annotation": "solutions/care-gap-closure/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reshoot_required",
+      "reason": "The editor visibly anchors CG-01 to SYN-BCS. Capture the repaired global instructions with CG-01 anchored to SYN-COL — 182 records and Records requiring evidence review; do not relabel the historical instructions.",
+      "historical_visible_anchors": [
         "Locked Preview evidence anchors",
         "CG-01 / gap_analysis: SYN-BCS, Records requiring evidence review",
         "CG-02 / cohort_review: Multiple Source Gaps, operational triage only",
         "CG-03 / outreach_draft: No message is sent, Do not state",
         "CG-04 / quality_dashboard: SYN-BCS, source-recorded closed"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 82,
           "y": 507,
@@ -187,9 +189,10 @@
       "mode": "hard",
       "step": 4,
       "source": "solutions/care-gap-closure/screenshots/manual/04-save-instructions.jpg",
-      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/04-save-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "historical_annotation": "solutions/care-gap-closure/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reshoot_required",
+      "reason": "This frame belongs to the old instruction revision and has no explicit saved-state indicator. Verify the repaired SYN-COL — 182 records instructions persist after saving, then capture the saved state without changing the historical image.",
+      "historical_visible_anchors": [
         "Care Gap Closure Agent",
         "Quality Manager",
         "Care Coordinator",
@@ -198,7 +201,7 @@
       "full_step_not_visibly_proven": [
         "This frame shows the reviewed instructions in the editor but no explicit saved-state indicator; step 12 later shows Reason: No unsaved changes."
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 80,
           "y": 296,
@@ -432,13 +435,14 @@
       "step": 14,
       "case_id": "CG-01",
       "source": "solutions/care-gap-closure/screenshots/manual/14-cg-01.jpg",
-      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/14-cg-01.png",
-      "status": "reusable",
-      "visible_anchors": [
+      "historical_annotation": "solutions/care-gap-closure/screenshots/manual/annotated/14-cg-01.png",
+      "status": "reshoot_required",
+      "reason": "The source frame shows the colorectal queue, but its historical annotation locks SYN-BCS and predates the repaired instructions. After saving the repaired instructions, capture a fresh CG-01 Preview proving SYN-COL — 182 records and Records requiring evidence review; preserve the old pixels and labels.",
+      "historical_visible_anchors": [
         "SYN-BCS",
         "Records requiring evidence review"
       ],
-      "boxes": [
+      "historical_boxes": [
         {
           "x": 292,
           "y": 259,
@@ -551,6 +555,10 @@
   ],
   "reshoot_plan": {
     "replacement_captures": [
+      "Easy CG-01 after synchronizing the repaired native source, with SYN-COL — 182 records and Records requiring evidence review visible.",
+      "Manual step 3 with the repaired CG-01 instructions visible, not the historical SYN-BCS anchor.",
+      "Manual step 4 with the repaired instructions verified after saving and an explicit saved-state indicator.",
+      "Manual CG-01 in a fresh conversation after saving the repaired instructions, with SYN-COL — 182 records and Records requiring evidence review visible.",
       "Easy CG-04 with SYN-BCS and source-recorded closed visible in the final answer."
     ],
     "new_learn_step_captures": [
@@ -564,11 +572,17 @@
       "Copilot-only final complete verdict."
     ]
   },
-  "release_review": {
+  "historical_release_review": {
     "status": "approved",
     "reviewer": "workshop-builder:care-gap-closure",
     "reviewed_at": "2026-08-10T00:27:58.128642+00:00",
     "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
     "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  },
+  "source_contract_review": {
+    "status": "reshoot_required",
+    "reviewed_on": "2026-09-11",
+    "method": "Compared canonical measure arithmetic, deterministic agent output, stored transcripts, source instructions, and the four affected original browser frames.",
+    "notes": "The historical review is retained as history, not approval of this source revision. All original and annotated pixels remain unchanged. Four affected checkpoints are demoted; the pre-existing Easy CG-04 gap remains open."
   }
 }

@@ -53,32 +53,31 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Customer Onboarding Manual",
-      "bot_id": "93546705-f6b3-427a-9afe-9d99c11e9afb",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
       "skills": 4,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": null,
+      "preview_cases_total": 4,
+      "source_contract_status": "stale_source",
+      "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json.",
+      "captured_preview_cases_passed": 4
     },
     "validated_pilot": {
       "display_name": "Customer Onboarding Pilot",
-      "schema_name": "aibast_CustomerOnboardingPilot",
-      "bot_id": "764b64a0-bb6c-450d-a917-142de5d4f45d",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
       "skills": 4,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": null,
+      "preview_cases_total": 4,
+      "source_contract_status": "stale_source",
+      "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json.",
+      "captured_preview_cases_passed": 4
     }
   },
   "demo_scenarios": [
@@ -86,5 +85,30 @@
     "fs-customer-onboarding-account-setup",
     "fs-customer-onboarding-document-checklist",
     "fs-customer-onboarding-onboarding-status"
-  ]
+  ],
+  "source_bundle": {
+    "label": "Customer Onboarding Agent manual workshop review source",
+    "kind": "manual-review-source",
+    "native_importable": false,
+    "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+    "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/fs-customer-onboarding",
+    "include_paths": [
+      "solutions/fs-customer-onboarding/README.md",
+      "solutions/fs-customer-onboarding/deployment.json",
+      "solutions/fs-customer-onboarding/manual/GLOBAL-INSTRUCTIONS.md",
+      "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-controls-and-review.md",
+      "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-synthetic-records.md",
+      "solutions/fs-customer-onboarding/manual/skills/aibast_account-setup_02/SKILL.md",
+      "solutions/fs-customer-onboarding/manual/skills/aibast_document-checklist_03/SKILL.md",
+      "solutions/fs-customer-onboarding/manual/skills/aibast_kyc-verification_01/SKILL.md",
+      "solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-status_04/SKILL.md",
+      "solutions/fs-customer-onboarding/manual-tutorial.html",
+      "solutions/fs-customer-onboarding/evals/manual-build-evidence.json",
+      "solutions/fs-customer-onboarding/evals/manual-pilot-review.json",
+      "solutions/fs-customer-onboarding/evals/visual-checkpoints.json",
+      "solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json",
+      "solutions/fs-customer-onboarding/export-manifest.json",
+      "solutions/fs-customer-onboarding/exports/README.md"
+    ]
+  }
 }

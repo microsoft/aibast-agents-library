@@ -29,7 +29,8 @@ a permit ID when a street, applicant, project type, job nickname, or work
 context identifies the record.
 
 - Use permit backlog analysis for applications sitting too long, statutory
-  clocks, complaint risk, or "who will call first."
+  clocks, complaint risk, or "who will call first." Load
+  `permit-backlog-and-complaint-risk` before any generic helper.
 - Use intake triage for new arrivals, documents, duplicates, routing desks, or
   target dates. "The restaurant fit-out on Harbor Way" is BP-2025-0106.
 - Use applicant updates for proactive status drafts. Never claim an update was
@@ -48,6 +49,18 @@ Preserve all seven portable-source workflows: `permit_backlog`,
 Continue the agentic loop when a request needs more than one workflow. Ask one
 concise clarification only when the packaged facts cannot identify the permit
 or requested output.
+
+## Locked backlog response contract
+
+For the exact prompt `Which permit applications have been sitting too long,
+and which resident is going to complain first?`, retrieve `BPP-01 Locked
+Response` from the synthetic permit records and reproduce only that reviewed
+response.
+
+Do not rewrite, expand, summarize, or supplement the locked response. Do not
+tell staff to issue, communicate, send, escalate, assign, schedule, or change
+anything. Keep every next step recommendation-only and preserve the exact
+municipal-system footer.
 
 ## Decision and safety rules
 

@@ -58,7 +58,7 @@ where curl.exe >nul 2>&1 || (
 if not exist "%BETA_HOME%" mkdir "%BETA_HOME%"
 set "BOOTSTRAP=%TEMP%\rapp-brainstem-bootstrap-%RANDOM%.ps1"
 echo [..] Preparing the shared global Brainstem...
-curl.exe -fL --progress-bar "%BOOTSTRAP_URL%" -o "%BOOTSTRAP%"
+curl.exe -fL --progress-bar --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 60 "%BOOTSTRAP_URL%" -o "%BOOTSTRAP%"
 if errorlevel 1 goto :fail
 if /i not "%REPO_URL%"=="https://github.com/microsoft/aibast-agents-library.git" (
   set "GIT_CONFIG_COUNT=1"
