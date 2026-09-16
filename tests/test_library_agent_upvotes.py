@@ -122,6 +122,66 @@ def test_catalog_selector_only_shows_solutions_and_first_party():
     )
 
 
+def test_industry_groups_restore_filter_and_publish_shareable_deep_links():
+    result = run_library_node(
+        """
+state.advertisedSolutions = new Set(["financial", "healthcare"]);
+state.agents = [
+  {
+    name: "financial",
+    display_name: "Financial Agent",
+    category: "financial_services",
+    _catalog_kind: "solution",
+    _solution: {}
+  },
+  {
+    name: "healthcare",
+    display_name: "Healthcare Agent",
+    category: "healthcare",
+    _catalog_kind: "solution",
+    _solution: {}
+  }
+];
+location.search = "?industry=Financial%20Services";
+restoreState();
+const fromLabel = state.industry;
+const filteredNames = filteredAgents().map(row => row.agent.name);
+location.search = "?industry=financial_services";
+restoreState();
+const fromInternalKey = state.industry;
+location.search = "?industry=not-a-real-industry";
+restoreState();
+const invalid = state.industry;
+state.industry = "financial_services";
+location.search = "";
+location.hash = "#library";
+let replaced = "";
+history.replaceState = (_state, _title, url) => { replaced = url; };
+syncURL();
+console.log(JSON.stringify({
+  fromLabel,
+  fromInternalKey,
+  invalid,
+  filteredNames,
+  replaced,
+  deepLink: industryDeepLink("financial_services")
+}));
+"""
+    )
+
+    assert result == {
+        "fromLabel": "financial_services",
+        "fromInternalKey": "financial_services",
+        "invalid": "",
+        "filteredNames": ["financial"],
+        "replaced": "/index.html?industry=financial-services#library",
+        "deepLink": "?industry=financial-services#library",
+    }
+    text = library_text()
+    assert 'class="industry-share-link"' in text
+    assert "Share this industry</a>" in text
+
+
 def test_example_prompts_open_direct_or_inherited_interactive_demo():
     result = run_library_node(
         """
