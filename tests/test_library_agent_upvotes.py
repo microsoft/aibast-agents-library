@@ -1,3 +1,4 @@
+import html
 import json
 import re
 import shutil
@@ -7,6 +8,62 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LIBRARY = ROOT / "index.html"
+FORM_SOLUTION_CHOICES = set(
+    """
+Account Intelligence Agent
+Deal Progression Agent
+Proposal Generation Agent
+Sales Qualification Agent
+Win Loss Analysis Agent
+Cart Abandonment Recovery Agent
+Customer Loyalty and Rewards Agent
+Omnichannel Engagement Agent
+Personalized Shopping Agent
+Cross Selling Opportunities Agent
+Customer Escalations Agent
+Discount Finder Agent
+Procurement Agent
+Asset Maintenance Forecast Agent
+Emissions Tracking Agent
+Field Service Dispatch Agent
+Grid Outage Response Agent
+Permit Management Agent
+Regulatory Reporting Agent
+Claims Processing Agent
+Customer Onboarding Agent
+Customer Sentiment and Churn Prediction Agent
+Financial Advisor Agent
+Fraud Detection and Alert Agent
+Loan Origination Assistant
+Portfolio Rebalancing Agent
+Regulatory Compliance Agent
+Underwriting Support Agent
+Wealth Insights Generator Agent
+Care Gap Closure Agent
+Clinical Notes Summarizer Agent
+Patient Intake and Scheduling Agent
+Prior Authorization Agent
+Ask HR Agent
+Inventory Rebalancing Agent
+Maintenance Scheduling Agent
+Order Status Communications Agent
+Product Line Optimization Agent
+Supply Risk Monitoring Agent
+Client Health Score Agent
+Contract Risk Review Agent
+Resource Utilization Agent
+Time and Entry Billing Agent
+Inventory Visibility Agent
+Personalized Marketing Agent
+Retail Store Associate Copilot
+Returns and Complaints Resolution Agent
+Supply Chain Disruption Alert Agent
+Building Permit Processing Agent
+Utility Billing and Assistance Agent
+License Renewal and Expansion Agent
+Product Feedback Synthesizer Agent
+""".strip().splitlines()
+)
 
 
 def library_text():
@@ -380,6 +437,89 @@ console.log(JSON.stringify({unavailable, available, downloads}));
     assert ">12</span>" in result["available"]
     assert 'disabled aria-disabled="true"' not in result["available"]
     assert "↓ 142" in result["downloads"]
+
+
+def test_available_field_assets_open_the_solution_prefilled_request_form():
+    result = run_library_node(
+        """
+const agent = {
+  name: "@aibast-agents-library/ai-customer-assistant",
+  display_name: "Customer Escalations Agent",
+  _solution: {}
+};
+const aliased = {
+  name: "@aibast-agents-library/win-loss-analysis",
+  display_name: "Win/Loss Analysis Agent",
+  _solution: {}
+};
+const careGap = {
+  name: "@aibast-agents-library/care-gap-closure",
+  display_name: "Care Gap Closure Agent",
+  _solution: {}
+};
+const formUrl = requestFormUrl(agent);
+console.log(JSON.stringify({
+  formUrl,
+  aliasedUrl: requestFormUrl(aliased),
+  careGapUrl: requestFormUrl(careGap),
+  onePager: fieldAssetRow("One-pager", "Customer Escalations one-pager.pdf", true, formUrl),
+  demo: fieldAssetRow("Demo video", "Customer Escalations demo.mp4", true, formUrl),
+  unavailable: fieldAssetRow("Demo video", "", false, formUrl)
+}));
+"""
+    )
+
+    form_prefix = (
+        "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
+        "?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-"
+        "hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u"
+        "&r2c6c3672a0d9465d8f24e5caf6f21619="
+    )
+    assert result["formUrl"] == form_prefix + "%22Customer%20Escalations%20Agent%22"
+    assert result["aliasedUrl"] == form_prefix + "%22Win%20Loss%20Analysis%20Agent%22"
+    assert result["careGapUrl"] == form_prefix + "%22Care%20Gap%20Closure%20Agent%22"
+
+    for key in ("onePager", "demo"):
+        row = result[key]
+        assert f'href="{result["formUrl"]}"' in html.unescape(row)
+        assert 'target="_blank"' in row
+        assert 'rel="noopener"' in row
+        assert 'data-action="stop"' in row
+        assert 'class="asset asset-request-link"' in row
+        assert "Open the access request form" in row
+
+    assert "Customer Escalations one-pager.pdf" in result["onePager"]
+    assert "Customer Escalations demo.mp4" in result["demo"]
+    assert 'href="' not in result["unavailable"]
+    assert 'class="asset"' in result["unavailable"]
+    assert "Not listed" in result["unavailable"]
+
+    text = library_text()
+    detail = text[text.index("function openAgent(name)"):text.index("function openStack")]
+    assert detail.count("fieldAssetRow(") == 2
+    assert "const formUrl = requestFormUrl(agent);" in detail
+
+
+def test_every_library_solution_maps_to_an_exact_microsoft_forms_choice():
+    registry = json.loads((ROOT / "registry.json").read_text(encoding="utf-8"))
+    agents = [
+        {
+            "name": agent["name"],
+            "display_name": agent["display_name"],
+            "_solution": agent.get("_solution") or {},
+        }
+        for agent in registry["agents"]
+        if agent.get("_catalog_kind") == "solution"
+    ]
+    result = run_library_node(
+        "const agents = "
+        + json.dumps(agents)
+        + ";\nconsole.log(JSON.stringify(agents.map(requestFormSolutionName)));"
+    )
+
+    assert len(result) == 52
+    assert len(set(result)) == len(result)
+    assert set(result) == FORM_SOLUTION_CHOICES
 
 
 def test_library_supports_top_downloaded_sort():
