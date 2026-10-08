@@ -785,6 +785,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: 0.6rem;
   font-weight: 750;
 }
+.badge-request {
+  color: var(--cp-link);
+  text-decoration: none;
+}
+.badge-request:hover,
+.badge-request:focus-visible {
+  border-color: currentColor;
+  text-decoration: underline;
+}
 .badge.proven {
   border-color: var(--cp-success);
   color: var(--cp-success);
@@ -2688,7 +2697,7 @@ function agentCard(agent) {
   badges.push(`<span class="badge stage-badge">${esc(journeyStage(agent))}</span>`);
   if (agent._demo && agent._demo.case_count) badges.push(`<span class="badge proven">Demo proven</span>`);
   else if (solution.has_demo_video) badges.push(`<span class="badge demo">Demo available</span>`);
-  if (solution.has_onepager) badges.push(`<span class="badge">One-pager</span>`);
+  if (solution.has_onepager) badges.push(onepagerRequestBadge(agent));
   if ((solution.sample_prompts || []).length) badges.push(`<span class="badge demo">${solution.sample_prompts.length} demos</span>`);
   return `
     <article class="agent-card" tabindex="0" data-action="open-agent" data-name="${enc(agent.name)}">
@@ -2989,6 +2998,13 @@ function requestFormUrl(agent) {
   return `${REQUEST_FORM}&${REQUEST_FORM_SOLUTION_FIELD}=${enc(JSON.stringify(solutionName))}`;
 }
 
+// One-pagers and demo videos are gated by the request form, so the badge goes straight there.
+function onepagerRequestBadge(agent) {
+  return `<a class="badge badge-request" href="${esc(requestFormUrl(agent))}" target="_blank"
+    rel="noopener" data-action="stop"
+    aria-label="Request the one-pager for ${esc(shown(agent))}">Request one-pager ↗</a>`;
+}
+
 function fieldAssetRow(label, filename, available, formUrl) {
   const value = filename || "Not listed";
   const content = `<strong>${esc(label)}</strong><span title="${esc(filename || "")}">${esc(value)}</span>`;
@@ -3038,7 +3054,7 @@ function openAgent(name) {
           <div class="badges">
             ${agent._demo && agent._demo.case_count ? `<span class="badge proven">Demo proven</span>` : ""}
             ${solution.has_demo_video ? `<span class="badge demo">Recorded demo</span>` : ""}
-            ${solution.has_onepager ? `<span class="badge">One-pager</span>` : ""}
+            ${solution.has_onepager ? onepagerRequestBadge(agent) : ""}
           </div>
           ${agentUpvoteControl(agent)}
         </div>
