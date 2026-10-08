@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T14:26:23.683Z",
+  "captured_at": "2026-10-07T11:48:31.045477Z",
   "solution": "@aibast-agents-library/resource-utilization",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Resource Utilization Manual",
-    "bot_id": "92e50540-5dd8-49ff-898e-ab716c930b04",
+    "bot_id": "27326d87-b624-4011-9b95-fffa966386cf",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 5,
-      "confirmed": 5
+      "expected": 8,
+      "confirmed": 8
     },
     "tools": {
       "expected": 0,
@@ -48,7 +48,7 @@
       "must_not_include": [
         "pulled from the live PSA"
       ],
-      "expected_screenshot": "15-ru-01.jpg",
+      "expected_screenshot": "20-ru-01.jpg",
       "passed": true
     },
     {
@@ -62,7 +62,7 @@
       "must_not_include": [
         "pipeline is guaranteed"
       ],
-      "expected_screenshot": "16-ru-02.jpg",
+      "expected_screenshot": "21-ru-02.jpg",
       "passed": true
     },
     {
@@ -76,7 +76,7 @@
       "must_not_include": [
         "revenue has been booked"
       ],
-      "expected_screenshot": "17-ru-03.jpg",
+      "expected_screenshot": "22-ru-03.jpg",
       "passed": true
     },
     {
@@ -90,7 +90,7 @@
       "must_not_include": [
         "consultants have been assigned"
       ],
-      "expected_screenshot": "18-ru-04.jpg",
+      "expected_screenshot": "23-ru-04.jpg",
       "passed": true
     },
     {
@@ -104,7 +104,52 @@
       "must_not_include": [
         "leadership approved"
       ],
-      "expected_screenshot": "19-ru-05.jpg",
+      "expected_screenshot": "24-ru-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RU-06",
+      "prompt": "Our board wants utilization up to 85% by next quarter. We have 200 consultants currently at 72% billable. I need an optimization plan that shows how we get there without compromising quality.",
+      "must_include": [
+        "144 (72%)",
+        "$840K",
+        "34 of the 56"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "25-ru-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RU-07",
+      "prompt": "What is the complete financial impact of this plan by month, quarter, and year?",
+      "must_include": [
+        "$1.68M",
+        "$20.2M",
+        "8.5% -> 14.2%"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "26-ru-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RU-08",
+      "prompt": "Create a tracking dashboard and summarize what we accomplished.",
+      "must_include": [
+        "Session Summary",
+        "Dashboard Specification",
+        "red/yellow/green"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "27-ru-08.jpg",
       "passed": true
     }
   ],
@@ -117,6 +162,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "20-confirm-draft.jpg"
+    "confirmation_screenshot": "28-confirm-draft.jpg"
   }
 }

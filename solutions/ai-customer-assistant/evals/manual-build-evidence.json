@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T09:18:30.671Z",
+  "captured_at": "2026-10-07T04:06:31.873985Z",
   "solution": "@aibast-agents-library/ai-customer-assistant",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Customer Escalations Manual",
-    "bot_id": "8b248e8b-753b-4ba0-b65a-0fea02b649dd",
+    "bot_id": "a91c3f03-a082-4ef3-827c-1167ee910f47",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 8,
+      "confirmed": 8
     },
     "tools": {
       "expected": 0,
@@ -49,7 +49,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "14-ces-01.jpg",
+      "expected_screenshot": "20-ces-01.jpg",
       "passed": true
     },
     {
@@ -64,7 +64,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "15-ces-02.jpg",
+      "expected_screenshot": "21-ces-02.jpg",
       "passed": true
     },
     {
@@ -79,7 +79,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "16-ces-03.jpg",
+      "expected_screenshot": "22-ces-03.jpg",
       "passed": true
     },
     {
@@ -94,7 +94,67 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "17-ces-04.jpg",
+      "expected_screenshot": "23-ces-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CES-05",
+      "prompt": "Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this?",
+      "must_include": [
+        "Full refund",
+        "$50 goodwill",
+        "Free month"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "24-ces-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CES-06",
+      "prompt": "Go ahead and get the refund and the credit ready for Jennifer Adams.",
+      "must_include": [
+        "REF-892341",
+        "CRD-892342",
+        "nothing has been processed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "25-ces-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CES-07",
+      "prompt": "Schedule the follow-up for Jennifer Adams and prepare the response email.",
+      "must_include": [
+        "+24 hours",
+        "Your Account Corrected - Refund Processed",
+        "ready for you to send"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "26-ces-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CES-08",
+      "prompt": "Summarize the Jennifer Adams interaction for me.",
+      "must_include": [
+        "8 minutes",
+        "94%",
+        "60x ROI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "27-ces-08.jpg",
       "passed": true
     }
   ],
@@ -107,6 +167,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "28-confirm-draft.jpg"
   }
 }

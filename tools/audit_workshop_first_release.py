@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed first-release gate for the 51 advertised workshops."""
+"""Fail-closed first-release gate for the 66 advertised workshops."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ from tools import audit_workshop_course_rollout as course  # noqa: E402
 
 
 SCHEMA = "aibast-workshop-first-release-audit/1.0"
-EXPECTED_WORKSHOPS = 51
+EXPECTED_WORKSHOPS = 66
 GENERIC_REASON = "captures were not independently revalidated"
 GENERIC_REASON_SINGULAR = "capture was not independently revalidated"
 DRAFT_PATTERN = re.compile(
@@ -891,7 +891,7 @@ def audit_repository(root: Path = ROOT) -> dict[str, Any]:
         or len(base_solutions) != EXPECTED_WORKSHOPS
     ):
         global_failures.append(
-            "base course audit did not resolve exactly 51 workshops"
+            "base course audit did not resolve exactly 66 workshops"
         )
     base_by_slug = {
         item.get("slug"): item

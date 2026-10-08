@@ -38,7 +38,7 @@ concepts, and incentive scenarios only; it contacts nobody and changes no cart.
 | Copilot Studio deployment settings | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-solution-export.json` |
 
-**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

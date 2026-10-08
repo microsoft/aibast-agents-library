@@ -87,12 +87,10 @@ unchanged prompts. Confirm the same Draft afterward. **Do not Publish.**
 
 ## Download scope
 
-The [r5 manual-input ZIP](exports/portfolio-rebalancing-source.zip) contains
-exactly the [nine frozen inputs and their hashes](evals/manual-inputs-r5.json),
-plus its export README. It is deliberately **not a standalone workshop, runtime
-or native import**: guides and the reviewed PNG references are separate
-site assets, not ZIP contents. The native source project, tutorials, evidence
-and historical captures do exist in this package.
+The [source ZIP](exports/portfolio-rebalancing-source.zip) is the standard
+complete source bundle for the re-shot build. The superseded
+[r5 input inventory](evals/history/2026-10-08-pre-reshoot/manual-inputs-r5.json)
+is kept as history only.
 
 The unchanged August native import archive has five entries, **zero skills
 and zero knowledge files**. It cannot reproduce this six-skill/two-file Manual
@@ -118,12 +116,12 @@ local file availability alone is not public-delivery evidence.
 | Raw export manifest | `solutions/portfolio-rebalancing/export-manifest.json` |
 | Source bundle | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-source.zip` |
 | Manual evidence | `solutions/portfolio-rebalancing/evals/manual-build-evidence.json` |
-| Manual reviewed reference set | `solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — not current source | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip` |
+| Manual browserfilm | `solutions/portfolio-rebalancing/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-solution-export.json` |
 
-**Scaffold status:** 74 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Resource readiness means file availability, not workshop acceptance. On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified.
+**Scaffold status:** 135 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

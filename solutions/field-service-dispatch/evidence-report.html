@@ -462,8 +462,8 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>15</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>8</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>35</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -477,22 +477,37 @@ html[data-theme="dark"] {
           <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
           <tbody><tr>
           <td><code>FIELD_SERVICE_DISPATCH-01</code></td>
-          <td><span class="marker-chip">Emergency: SCADA communication failure</span><span class="marker-chip">CRITICAL</span><span class="marker-chip">No job</span></td>
+          <td><span class="marker-chip">J-101</span><span class="marker-chip">Marcus Chen</span><span class="marker-chip">No job</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>FIELD_SERVICE_DISPATCH-02</code></td>
-          <td><span class="marker-chip">Central</span><span class="marker-chip">3</span><span class="marker-chip">dispatcher must validate</span></td>
+          <td><span class="marker-chip">34%</span><span class="marker-chip">187 miles</span><span class="marker-chip">$1,840/day</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>FIELD_SERVICE_DISPATCH-03</code></td>
-          <td><span class="marker-chip">Marcus Thompson</span><span class="marker-chip">Candidate for dispatcher review</span><span class="marker-chip">No technician has been assigned</span></td>
+          <td><span class="marker-chip">Marcus Chen</span><span class="marker-chip">Truck</span><span class="marker-chip">Underground cable certified</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>FIELD_SERVICE_DISPATCH-04</code></td>
-          <td><span class="marker-chip">Emergency Response Draft</span><span class="marker-chip">Marcus Thompson</span><span class="marker-chip">No field action</span></td>
+          <td><span class="marker-chip">1,247</span><span class="marker-chip">$26,140/hour</span><span class="marker-chip">No crew was dispatched</span></td>
+          <td><span class="marker-chip">No unsupported side effect</span></td>
+        </tr>
+<tr>
+          <td><code>FIELD_SERVICE_DISPATCH-05</code></td>
+          <td><span class="marker-chip">Phase B insulator</span><span class="marker-chip">$12,400</span><span class="marker-chip">93 min</span></td>
+          <td><span class="marker-chip">No unsupported side effect</span></td>
+        </tr>
+<tr>
+          <td><code>FIELD_SERVICE_DISPATCH-06</code></td>
+          <td><span class="marker-chip">87 Minutes</span><span class="marker-chip">785% ROI</span><span class="marker-chip">Substation 7B</span></td>
+          <td><span class="marker-chip">No unsupported side effect</span></td>
+        </tr>
+<tr>
+          <td><code>FIELD_SERVICE_DISPATCH-07</code></td>
+          <td><span class="marker-chip">WO-2847</span><span class="marker-chip">$29,260/month</span><span class="marker-chip">none was created</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr></tbody>
         </table>
@@ -506,46 +521,88 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
+          <td><code>easy-review-build</code></td>
+          <td>easy</td>
+          <td>Field Service Dispatch Pilot; Draft; field-service-dispatch-work-orders-report; field-service-dispatch-incident-status; field-service-dispatch-post-incident-review; field-service-dispatch-technician-assignment; field-service-dispatch-emergency-response; field-service-dispatch-rules-and-controls.md; field-service-dispatch-synthetic-records.md</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/01-review-build.png</td>
+        </tr>
+<tr>
           <td><code>easy-field_service_dispatch-01</code></td>
           <td>easy</td>
-          <td>SCADA communication failure is the active CRITICAL request in the Central zone; no technician job assigned; No job has been created</td>
-          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/01-field_service_dispatch-01.png</td>
+          <td>Marcus Chen; J-101; No job</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/02-field_service_dispatch-01.png</td>
         </tr>
 <tr>
           <td><code>easy-field_service_dispatch-02</code></td>
           <td>easy</td>
-          <td>Central&#x27;s available capacity; 3 technicians on hand; the dispatcher must validate</td>
-          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/02-field_service_dispatch-02.png</td>
+          <td>34%; 187 miles; $1,840/day</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/03-field_service_dispatch-02.png</td>
         </tr>
 <tr>
           <td><code>easy-field_service_dispatch-03</code></td>
           <td>easy</td>
-          <td>Marcus Thompson; top skill-matched candidate for SR-4005; No technician has been assigned</td>
-          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/03-field_service_dispatch-03.png</td>
+          <td>Marcus Chen; Truck; Underground cable certified</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/04-field_service_dispatch-03.png</td>
         </tr>
 <tr>
           <td><code>easy-field_service_dispatch-04</code></td>
           <td>easy</td>
-          <td>Marcus Thompson is a recommendation only; before any field action is authorized; read-only Emergency Response Draft</td>
-          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/04-field_service_dispatch-04.png</td>
+          <td>1,247; $26,140/hour</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/05-field_service_dispatch-04.png</td>
+        </tr>
+<tr>
+          <td><code>easy-field_service_dispatch-05</code></td>
+          <td>easy</td>
+          <td>Phase B insulator; 93 min; $12,400</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/06-field_service_dispatch-05.png</td>
+        </tr>
+<tr>
+          <td><code>easy-field_service_dispatch-06</code></td>
+          <td>easy</td>
+          <td>87 Minutes; Substation 7B; 785% ROI</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/07-field_service_dispatch-06.png</td>
+        </tr>
+<tr>
+          <td><code>easy-field_service_dispatch-07</code></td>
+          <td>easy</td>
+          <td>WO-2847; none was created; $29,260/month</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/08-field_service_dispatch-07.png</td>
+        </tr>
+<tr>
+          <td><code>easy-confirm-draft</code></td>
+          <td>easy</td>
+          <td>Field Service Dispatch Pilot</td>
+          <td>solutions/field-service-dispatch/screenshots/assisted/annotated/09-confirm-draft.png</td>
         </tr>
 <tr>
           <td><code>hard-step-01</code></td>
           <td>hard</td>
-          <td>Untitled Agent; blank Build workspace</td>
+          <td>Untitled Agent</td>
           <td>solutions/field-service-dispatch/screenshots/manual/annotated/01-create-blank-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-02</code></td>
           <td>hard</td>
-          <td>Field Service Dispatch Manual in the name field</td>
+          <td>Field Service Dispatch Manual</td>
           <td>solutions/field-service-dispatch/screenshots/manual/annotated/02-name-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Field Service Dispatch Agent — Manual Global Instructions; Locked Preview evidence anchors</td>
+          <td>Field Service Dispatch Agent — Manual Global Ins</td>
           <td>solutions/field-service-dispatch/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>Draft</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/04-save-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>Provide trusted context to guide decisions</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/05-remove-web-search.png</td>
         </tr>
 <tr>
           <td><code>hard-step-06</code></td>
@@ -554,46 +611,124 @@ html[data-theme="dark"] {
           <td>solutions/field-service-dispatch/screenshots/manual/annotated/06-add-field-service-dispatch-rules-and-controls.png</td>
         </tr>
 <tr>
+          <td><code>hard-step-07</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-synthetic-records.md</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/07-add-field-service-dispatch-synthetic-records.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-08</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-dispatch-dashboard</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/08-add-aibast-dispatch-dashboard-01.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-09</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-emergency-response</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/09-add-aibast-emergency-response-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-10</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-incident-status</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/10-add-aibast-incident-status-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-11</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-post-incident-review</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/11-add-aibast-post-incident-review-06.png</td>
+        </tr>
+<tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>Claude Sonnet 4.6; four configured skills; two knowledge files; Tools section contains no configured tool</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/annotated/12-review-inventory.png</td>
+          <td>field-service-dispatch-route-optimization</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/12-add-aibast-route-optimization-02.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>Preview selected; New chat; Field Service Dispatch Manual</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/annotated/13-open-preview.png</td>
+          <td>field-service-dispatch-technician-assignment</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/13-add-aibast-technician-assignment-03.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-14</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-work-orders-report</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/14-add-aibast-work-orders-report-07.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-15</code></td>
+          <td>hard</td>
+          <td>Claude Opus 5; field-service-dispatch-work-orders-report; field-service-dispatch-technician-assignment; field-service-dispatch-route-optimization; field-service-dispatch-post-incident-review; field-service-dispatch-incident-status; field-service-dispatch-synthetic-records.md; field-service-dispatch-rules-and-controls.md</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/15-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-16</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-dispatch-dashboard · field-service-dispatch-emergency-response · field-service-dispatch-incident-status · field-service-dispatch-post-incident-review · field-service-dispatch-route-optimization · field-service-dispatch-technician-assignment · field-service-dispatch-work-orders-report</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/16-review-skills.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-17</code></td>
+          <td>hard</td>
+          <td>field-service-dispatch-dispatch-dashboard · field-service-dispatch-emergency-response · field-service-dispatch-incident-status · field-service-dispatch-post-incident-review · field-service-dispatch-route-optimization · field-service-dispatch-technician-assignment · field-service-dispatch-work-orders-report</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/17-review-skills-more.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-18</code></td>
+          <td>hard</td>
+          <td>Field Service Dispatch Manual</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/18-open-preview.png</td>
         </tr>
 <tr>
           <td><code>hard-field_service_dispatch-01</code></td>
           <td>hard</td>
-          <td>Unassigned — No job assigned; CRITICAL-priority; Central zone</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/annotated/14-field_service_dispatch-01.png</td>
+          <td>J-101; Marcus Chen; No job</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/19-field_service_dispatch-01.png</td>
         </tr>
 <tr>
           <td><code>hard-field_service_dispatch-02</code></td>
           <td>hard</td>
-          <td>50.0% utilization; SR-4005, SR-4001, and SR-4002 open requests; A dispatcher must validate travel, safety, labor, and SLA constraints before rerouting</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/annotated/15-field_service_dispatch-02.png</td>
+          <td>34%; 187 miles; $1,840/day</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/20-field_service_dispatch-02.png</td>
         </tr>
 <tr>
           <td><code>hard-field_service_dispatch-03</code></td>
           <td>hard</td>
-          <td>Marcus Thompson; A Dispatch Coordinator must review this recommendation; No technician has been assigned</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/annotated/16-field_service_dispatch-03.png</td>
+          <td>Marcus Chen; Truck; Underground cable certified</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/21-field_service_dispatch-03.png</td>
         </tr>
 <tr>
           <td><code>hard-field_service_dispatch-04</code></td>
           <td>hard</td>
-          <td>Marcus Thompson&#x27;s break status; Emergency Duty Manager / Dispatch Coordinator; No field action has been taken</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/annotated/17-field_service_dispatch-04.png</td>
+          <td>1,247; $26,140/hour</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/22-field_service_dispatch-04.png</td>
         </tr>
 <tr>
-          <td><code>hard-draft</code></td>
+          <td><code>hard-field_service_dispatch-05</code></td>
           <td>hard</td>
-          <td>Field Service Dispatch Manual; Draft</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/annotated/18-confirm-draft.png</td>
+          <td>Phase B insulator; $12,400; 93 min</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/23-field_service_dispatch-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-field_service_dispatch-06</code></td>
+          <td>hard</td>
+          <td>87 Minutes; Substation 7B; 785% ROI</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/24-field_service_dispatch-06.png</td>
+        </tr>
+<tr>
+          <td><code>hard-field_service_dispatch-07</code></td>
+          <td>hard</td>
+          <td>WO-2847; $29,260/month; none was created</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/25-field_service_dispatch-07.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-26</code></td>
+          <td>hard</td>
+          <td>Field Service Dispatch Manual</td>
+          <td>solutions/field-service-dispatch/screenshots/manual/annotated/26-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -605,54 +740,7 @@ html[data-theme="dark"] {
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
-          <tbody><tr>
-          <td><code>easy-draft</code></td>
-          <td>easy</td>
-          <td>solutions/field-service-dispatch/screenshots/assisted/05-confirm-draft.jpg</td>
-          <td>The target Field Service Dispatch Pilot row is not visible in the agent list.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The frame is pixel-identical to steps 5-11 and shows the completed inventory without a visible saved-state indicator for this step.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-05</code></td>
-          <td>hard</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/05-remove-web-search.jpg</td>
-          <td>The frame is pixel-identical to steps 4 and 6-11 and shows the completed inventory rather than a positive visual anchor for removing the default web-search capability.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-07</code></td>
-          <td>hard</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/07-add-field-service-dispatch-synthetic-records.jpg</td>
-          <td>Duplicate visual evidence; retained capture hard-step-06.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-08</code></td>
-          <td>hard</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/08-add-aibast-dispatch-dashboard.jpg</td>
-          <td>The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_dispatch-dashboard addition.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-09</code></td>
-          <td>hard</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/09-add-aibast-emergency-response.jpg</td>
-          <td>The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_emergency-response addition.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-10</code></td>
-          <td>hard</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/10-add-aibast-route-optimization.jpg</td>
-          <td>The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_route-optimization addition.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-11</code></td>
-          <td>hard</td>
-          <td>solutions/field-service-dispatch/screenshots/manual/11-add-aibast-technician-assignment.jpg</td>
-          <td>The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_technician-assignment addition.</td>
-        </tr></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>

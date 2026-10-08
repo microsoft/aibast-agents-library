@@ -462,8 +462,8 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>11</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>13</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>35</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -477,22 +477,37 @@ html[data-theme="dark"] {
           <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
           <tbody><tr>
           <td><code>MS-01</code></td>
-          <td><span class="marker-chip">EQ-INJ-01</span><span class="marker-chip">Technician Availability</span></td>
+          <td><span class="marker-chip">IM-07</span><span class="marker-chip">Technician Availability</span><span class="marker-chip">Marcus Chen</span></td>
           <td><span class="marker-chip">I do not have access to the synthetic pilot data</span></td>
         </tr>
 <tr>
           <td><code>MS-02</code></td>
-          <td><span class="marker-chip">EQ-INJ-01</span><span class="marker-chip">Barrel heater band failure</span></td>
+          <td><span class="marker-chip">Screw wear at 78%</span><span class="marker-chip">120 operating hours</span><span class="marker-chip">50,000 units</span></td>
           <td><span class="marker-chip">I do not have access to the synthetic pilot data</span></td>
         </tr>
 <tr>
           <td><code>MS-03</code></td>
-          <td><span class="marker-chip">EQ-INJ-01</span><span class="marker-chip">No work order is created or dispatched</span></td>
+          <td><span class="marker-chip">Saturday 6 AM - 10 AM</span><span class="marker-chip">104%</span><span class="marker-chip">No work order is created or dispatched</span></td>
           <td><span class="marker-chip">I do not have access to the synthetic pilot data</span></td>
         </tr>
 <tr>
           <td><code>MS-04</code></td>
-          <td><span class="marker-chip">Modeled avoided-cost opportunity</span><span class="marker-chip">synthetic planning estimates</span></td>
+          <td><span class="marker-chip">$3,200</span><span class="marker-chip">$18,500</span><span class="marker-chip">478%</span></td>
+          <td><span class="marker-chip">I do not have access to the synthetic pilot data</span></td>
+        </tr>
+<tr>
+          <td><code>MS-05</code></td>
+          <td><span class="marker-chip">WO-2024-3847</span><span class="marker-chip">Bin 12-A</span><span class="marker-chip">No work order is created or dispatched</span></td>
+          <td><span class="marker-chip">I do not have access to the synthetic pilot data</span></td>
+        </tr>
+<tr>
+          <td><code>MS-06</code></td>
+          <td><span class="marker-chip">Machine #12</span><span class="marker-chip">87% planned</span><span class="marker-chip">Calibration</span></td>
+          <td><span class="marker-chip">I do not have access to the synthetic pilot data</span></td>
+        </tr>
+<tr>
+          <td><code>MS-07</code></td>
+          <td><span class="marker-chip">Quick Wins</span><span class="marker-chip">$124K</span><span class="marker-chip">Run pilot on Line 3</span></td>
           <td><span class="marker-chip">I do not have access to the synthetic pilot data</span></td>
         </tr></tbody>
         </table>
@@ -506,70 +521,214 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
+          <td><code>easy-review-build</code></td>
+          <td>easy</td>
+          <td>Maintenance Scheduling Pilot; Draft; work-order-draft; optimization-plan; maintenance-calendar; downtime-analysis; schedule-overview; aibast_maintenance-scheduling-synthetic-records.; aibast_maintenance-scheduling-review-rules.md</td>
+          <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/01-review-build.png</td>
+        </tr>
+<tr>
+          <td><code>easy-ms-01</code></td>
+          <td>easy</td>
+          <td>IM-07; Technician Availability; Marcus Chen</td>
+          <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/02-ms-01.png</td>
+        </tr>
+<tr>
           <td><code>easy-ms-02</code></td>
           <td>easy</td>
-          <td>Priority 3 — Monitor; No Immediate Intervention Indicated; EQ-CNC-01; Spindle bearing wear</td>
+          <td>Screw wear at 78%; 120 operating hours; 50,000 units</td>
           <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/03-ms-02.png</td>
         </tr>
 <tr>
           <td><code>easy-ms-03</code></td>
           <td>easy</td>
-          <td>Required Authorization Before Any Action; No work order is created or dispatched</td>
+          <td>No work order is created or dispatched; Saturday 6 AM - 10 AM; 104%</td>
           <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/04-ms-03.png</td>
         </tr>
 <tr>
           <td><code>easy-ms-04</code></td>
           <td>easy</td>
-          <td>Preventive trade-offs for parts, technician demand, production impact, and recovery duration; EQ-INJ-01 represents the most acute case</td>
+          <td>$3,200; $18,500; 478%</td>
           <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/05-ms-04.png</td>
+        </tr>
+<tr>
+          <td><code>easy-ms-05</code></td>
+          <td>easy</td>
+          <td>WO-2024-3847; No work order is created or dispatched; Bin 12-A</td>
+          <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/06-ms-05.png</td>
+        </tr>
+<tr>
+          <td><code>easy-ms-06</code></td>
+          <td>easy</td>
+          <td>Calibration; Machine #12; 87% planned</td>
+          <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/07-ms-06.png</td>
+        </tr>
+<tr>
+          <td><code>easy-ms-07</code></td>
+          <td>easy</td>
+          <td>Quick Wins; $124K; Run pilot on Line 3</td>
+          <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/08-ms-07.png</td>
+        </tr>
+<tr>
+          <td><code>easy-confirm-draft</code></td>
+          <td>easy</td>
+          <td>Maintenance Scheduling Pilot</td>
+          <td>solutions/maintenance-scheduling/screenshots/assisted/annotated/09-confirm-draft.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-01</code></td>
+          <td>hard</td>
+          <td>Untitled Agent</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/01-create-blank-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-02</code></td>
           <td>hard</td>
-          <td>Maintenance Scheduling Manual in the name field</td>
+          <td>Maintenance Scheduling Manual</td>
           <td>solutions/maintenance-scheduling/screenshots/manual/annotated/02-name-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Maintenance Scheduling Agent — Manual Global Instructions; Locked Preview evidence anchors; MS-01 through MS-04 acceptance anchors</td>
+          <td>Maintenance Scheduling Agent — Manual Global Ins</td>
           <td>solutions/maintenance-scheduling/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>Draft</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/04-save-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>Provide trusted context to guide decisions</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/05-remove-web-search.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-06</code></td>
+          <td>hard</td>
+          <td>aibast_maintenance-scheduling-review-rules.md</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/06-add-aibast-maintenance-scheduling-review-rules.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-07</code></td>
+          <td>hard</td>
+          <td>aibast_maintenance-scheduling-synthetic-records.</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/07-add-aibast-maintenance-scheduling-synthetic-records.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-08</code></td>
+          <td>hard</td>
+          <td>downtime-analysis</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/08-add-aibast-downtime-analysis-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-09</code></td>
+          <td>hard</td>
+          <td>maintenance-calendar</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/09-add-aibast-maintenance-calendar-06.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-10</code></td>
+          <td>hard</td>
+          <td>optimization-plan</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/10-add-aibast-optimization-plan-07.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-11</code></td>
+          <td>hard</td>
+          <td>predictive-alerts</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/11-add-aibast-predictive-alerts-02.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>Save tooltip states No unsaved changes; Claude Sonnet 4.6; Four configured skills; Two configured knowledge files</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/12-review-inventory.png</td>
+          <td>schedule-overview</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/12-add-aibast-schedule-overview-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>Preview tab; New chat; Maintenance Scheduling Manual greeting</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/13-open-preview.png</td>
+          <td>work-order-draft</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/13-add-aibast-work-order-draft-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-14</code></td>
+          <td>hard</td>
+          <td>work-order-plan</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/14-add-aibast-work-order-plan-03.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-15</code></td>
+          <td>hard</td>
+          <td>Claude Opus 5; work-order-plan; work-order-draft; schedule-overview; predictive-alerts; optimization-plan; aibast_maintenance-scheduling-synthetic-records.; aibast_maintenance-scheduling-review-rules.md</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/15-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-16</code></td>
+          <td>hard</td>
+          <td>work-order-plan; maintenance-calendar; work-order-draft; schedule-overview; predictive-alerts</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/16-review-skills.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-17</code></td>
+          <td>hard</td>
+          <td>schedule-overview; maintenance-calendar; predictive-alerts; optimization-plan; downtime-analysis</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/17-review-skills-more.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-18</code></td>
+          <td>hard</td>
+          <td>Maintenance Scheduling Manual</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/18-open-preview.png</td>
         </tr>
 <tr>
           <td><code>hard-ms-01</code></td>
           <td>hard</td>
-          <td>Technician candidates based on synthetic certifications and available hours; Confirm technician availability through the connected scheduling system; Parts &amp; Backup Readiness</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/14-ms-01.png</td>
+          <td>IM-07; Technician Availability; Marcus Chen</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/19-ms-01.png</td>
         </tr>
 <tr>
           <td><code>hard-ms-02</code></td>
           <td>hard</td>
-          <td>Priority 3 — Monitor; Review at Next Maintenance Window; EQ-CNC-01; Spindle bearing wear</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/15-ms-02.png</td>
+          <td>Screw wear at 78%; 120 operating hours; 50,000 units</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/20-ms-02.png</td>
         </tr>
 <tr>
           <td><code>hard-ms-03</code></td>
           <td>hard</td>
-          <td>EQ-INJ-01; Injection Molder; Barrel heater band failure; Maintenance Window Proposal</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/16-ms-03.png</td>
+          <td>No work order is created or dispatched; Saturday 6 AM - 10 AM; 104%</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/21-ms-03.png</td>
         </tr>
 <tr>
           <td><code>hard-ms-04</code></td>
           <td>hard</td>
-          <td>Key Trade-Off Principles (Synthetic Planning Estimates); Unplanned Failure Path; Preventive Intervention Path</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/17-ms-04.png</td>
+          <td>$3,200; $18,500; 478%</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/22-ms-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-ms-05</code></td>
+          <td>hard</td>
+          <td>No work order is created or dispatched; WO-2024-3847; Bin 12-A</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/23-ms-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-ms-06</code></td>
+          <td>hard</td>
+          <td>Calibration; Machine #12; 87% planned</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/24-ms-06.png</td>
+        </tr>
+<tr>
+          <td><code>hard-ms-07</code></td>
+          <td>hard</td>
+          <td>Quick Wins; $124K; Run pilot on Line 3</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/25-ms-07.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-26</code></td>
+          <td>hard</td>
+          <td>Maintenance Scheduling Manual</td>
+          <td>solutions/maintenance-scheduling/screenshots/manual/annotated/26-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -581,84 +740,7 @@ html[data-theme="dark"] {
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
-          <tbody><tr>
-          <td><code>easy-review-build</code></td>
-          <td>easy</td>
-          <td>solutions/maintenance-scheduling/screenshots/assisted/01-review-build.jpg</td>
-          <td>The configuration is visible, but no Draft status indicator appears; this frame cannot prove the target remains an unpublished Draft.</td>
-        </tr>
-<tr>
-          <td><code>easy-ms-01</code></td>
-          <td>easy</td>
-          <td>solutions/maintenance-scheduling/screenshots/assisted/02-ms-01.jpg</td>
-          <td>The viewport shows parts, backup, and authorization boundaries, but neither EQ-INJ-01 nor the Technician Availability capacity picture is visible.</td>
-        </tr>
-<tr>
-          <td><code>easy-draft</code></td>
-          <td>easy</td>
-          <td>solutions/maintenance-scheduling/screenshots/assisted/06-confirm-draft.jpg</td>
-          <td>The Agents list does not visibly contain Maintenance Scheduling Pilot, so it cannot prove the validated target remains Draft.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-01</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/01-create-blank-agent.jpg</td>
-          <td>The screenshot is an empty loading surface with a spinner; no blank agent workspace, Untitled Agent label, or other positive creation anchor is visible.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The instruction policy is visible, but the screenshot contains no saved-state tooltip or other positive confirmation that the save completed.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-05</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/05-remove-web-search.jpg</td>
-          <td>The frame is byte-for-byte identical to steps 6-11 and shows a later completed inventory rather than a distinct positive capture of the web-search removal.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-06</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/06-add-aibast-maintenance-scheduling-review-rules.jpg</td>
-          <td>The review-rules chip is visible, but this frame is byte-for-byte identical to steps 5 and 7-11, so it records the completed inventory rather than the distinct knowledge-add checkpoint.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-07</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/07-add-aibast-maintenance-scheduling-synthetic-records.jpg</td>
-          <td>The synthetic-records chip is visible, but this frame is byte-for-byte identical to steps 5-6 and 8-11, so it records the completed inventory rather than the distinct knowledge-add checkpoint.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-08</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/08-add-aibast-downtime-analysis.jpg</td>
-          <td>The frame is byte-for-byte identical to steps 5-7 and 9-11 and shows all four final skills rather than isolating the downtime-analysis addition.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-09</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/09-add-aibast-predictive-alerts.jpg</td>
-          <td>The frame is byte-for-byte identical to steps 5-8 and 10-11 and shows all four final skills rather than isolating the predictive-alerts addition.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-10</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/10-add-aibast-schedule-overview.jpg</td>
-          <td>The frame is byte-for-byte identical to steps 5-9 and 11 and shows all four final skills rather than isolating the schedule-overview addition.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-11</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/11-add-aibast-work-order-plan.jpg</td>
-          <td>The frame is byte-for-byte identical to steps 5-10 and shows all four final skills rather than isolating the work-order-plan addition.</td>
-        </tr>
-<tr>
-          <td><code>hard-draft</code></td>
-          <td>hard</td>
-          <td>solutions/maintenance-scheduling/screenshots/manual/18-confirm-draft.jpg</td>
-          <td>The Agents list does not visibly contain Maintenance Scheduling Manual, so it cannot prove that the validated manual agent remains Draft.</td>
-        </tr></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>

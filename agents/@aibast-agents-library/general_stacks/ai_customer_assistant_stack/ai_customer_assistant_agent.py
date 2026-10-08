@@ -19,7 +19,7 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/ai-customer-assistant",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Customer Escalations Agent",
     "description": "Automate back-office contact center escalation workflows to deliver better service outcomes and retention rates.",
     "author": "AIBAST",
@@ -72,6 +72,48 @@ _INQUIRIES = {
         "created_at": "2025-11-13T16:30:00Z", "status": "Open",
         "account_tier": "Professional", "sentiment": "Positive",
     },
+    "INQ-4005": {
+        "id": "INQ-4005", "customer": "Jennifer Adams", "contact": "Jennifer Adams",
+        "email": "jennifer.adams@example.com", "channel": "Live Chat",
+        "subject": "Unrecognized Premium Support charge",
+        "description": "Charged $149 never ordered. Second time. Want refund/explanation or canceling.",
+        "category": "Billing & Pricing", "priority": "High",
+        "created_at": "2025-11-14T11:02:00Z", "status": "Open",
+        "account_tier": "Gold", "sentiment": "Frustrated",
+        "headline": "Billing dispute from long-term Gold customer - requires careful handling",
+        "loyalty": "Gold (5 years)", "loyalty_years": 5, "base_monthly": 200,
+        "sentiment_score": -0.6,
+        "context": "Previous issue 8 months ago, charge from add-on auto-enrollment",
+        "card": "Visa ****4521",
+    },
+}
+
+# Billing-dispute playbook for INQ-4005 (the demo case). Every action is a prepared,
+# approval-pending item: this agent never refunds, credits, cancels or sends anything.
+_RESOLUTIONS = {
+    "INQ-4005": {
+        "addon": "Premium Support", "addon_monthly": 149,
+        "immediate": [
+            ("Full refund", "$149 (ready to process on approval)"),
+            ("Cancel add-on", "Remove Premium Support from account"),
+            ("Block auto-enroll", "Flag account against promo auto-enrollment"),
+        ],
+        "retention": [("Service credit", 50, "$50 goodwill"), ("Free month", 200, "$200 value")],
+        "credit": 50,
+        "refund_ref": "REF-892341", "credit_ref": "CRD-892342", "refund_days": "3-5 business days",
+        "follow_up": [
+            ("Satisfaction survey", "+24 hours", "Gauge resolution"),
+            ("Check-in call", "+7 days", "Relationship"),
+            ("Retention review", "+30 days", "Account health"),
+        ],
+        "email_subject": "Your Account Corrected - Refund Processed",
+        "summary": {
+            "issue": "Unauthorized $149 charge",
+            "first_contact_resolution": "Yes", "handle_minutes": 8,
+            "predicted_csat": 4.5, "retention_probability_pct": 94,
+            "similar_cases": 23,
+        },
+    },
 }
 
 _KB_ARTICLES = {
@@ -115,13 +157,32 @@ _KB_ARTICLES = {
     "KB-104": {
         "id": "KB-104", "title": "Known Issue: Report Export Timeout for Large Date Ranges",
         "category": "Analytics", "relevance_score": 0.97,
-        "summary": "Export fails with 500 error for date ranges exceeding 60 days. Workaround and fix timeline available.",
+        "summary": "Export fails with 500 error for date ranges exceeding 30 days. Workaround and fix timeline available.",
         "resolution_steps": [
             "Split export into 30-day segments as a workaround",
             "Engineering fix scheduled for v3.8.2 (target: Dec 2025)",
             "Contact support if you need a one-time bulk export",
         ],
         "last_updated": "2025-11-10", "views": 456, "helpful_votes": 398,
+    },
+    "KB-105": {
+        "id": "KB-105", "title": "Known Issue: Premium Support Promo Auto-Enrollment Charges",
+        "category": "Billing", "relevance_score": 0.98,
+        "summary": "A promotion enrolled customers in a Premium Support add-on trial that converts to a paid charge. Charges are refund eligible.",
+        "resolution_steps": [
+            "Confirm the add-on was added by the promo auto-enrollment, not by the customer",
+            "Refund the add-on charge in full (refund eligible within 30 days, no cancel penalty)",
+            "Cancel the add-on and flag the account to block future auto-enrollment",
+            "Log the case against the known issue for the product team",
+        ],
+        "finding": [
+            ("Charge", "Premium Support $149/month"),
+            ("Source", "Promo auto-enroll"),
+            ("Timeline", "45 days ago promo enrollment > 30-day trial > charged 15 days ago"),
+        ],
+        "policy": "Refund eligible (within 30 days of the charge), no cancel penalty, agent has full refund authority",
+        "similar_cases": "23 complaints this month (known issue)",
+        "last_updated": "2025-11-12", "views": 312, "helpful_votes": 287,
     },
 }
 
@@ -172,14 +233,18 @@ _READ_ONLY_NOTICE = (
 # HELPERS
 # ═══════════════════════════════════════════════════════════════
 
+_DEFAULT_INQUIRY = "INQ-4005"
+
+
 def _resolve_inquiry(query):
+    """Inquiry ID or customer name; None when nothing matches (never another case)."""
     if not query:
-        return "INQ-4001"
-    q = query.upper().strip()
-    for key in _INQUIRIES:
-        if key in q:
+        return _DEFAULT_INQUIRY
+    q = query.lower().strip()
+    for key, inq in _INQUIRIES.items():
+        if key.lower() in q or q in inq["customer"].lower() or q in inq["contact"].lower():
             return key
-    return "INQ-4001"
+    return None
 
 
 def _match_kb_articles(inquiry_id):
@@ -213,6 +278,12 @@ def _compute_csat_breakdown():
 # AGENT CLASS
 # ═══════════════════════════════════════════════════════════════
 
+_OPERATIONS = [
+    "handle_inquiry", "knowledge_search", "escalation_routing", "satisfaction_survey",
+    "recommend_resolution", "prepare_actions", "follow_up_plan", "interaction_summary",
+]
+
+
 class AICustomerAssistantAgent(BasicAgent):
     """
     AI-powered customer service assistant.
@@ -221,7 +292,11 @@ class AICustomerAssistantAgent(BasicAgent):
         handle_inquiry       - triage and respond to a customer inquiry
         knowledge_search     - search knowledge base for relevant articles
         escalation_routing   - determine escalation path and SLA
-        satisfaction_survey   - review CSAT scores and survey feedback
+        satisfaction_survey  - review CSAT scores and survey feedback
+        recommend_resolution - resolution and retention recommendation for the case
+        prepare_actions      - approval-pending refund/credit action package (never executed)
+        follow_up_plan       - follow-up touchpoints and a draft customer email (never sent)
+        interaction_summary  - session summary with quality metrics and value protected
     """
 
     def __init__(self):
@@ -230,38 +305,44 @@ class AICustomerAssistantAgent(BasicAgent):
             "name": self.name,
             "description": (
                 f"{__manifest__['description']} Always use this tool for a "
-                "back-office customer escalation brief, inherited support case, "
-                "export-error case, knowledge guidance, escalation queue or SLA, "
-                "and service-quality or CSAT review. If the user asks for the "
-                "full brief before responding and gives no inquiry ID, use "
-                "handle_inquiry with the default synthetic INQ-4001. Analyze only "
-                "the synthetic snapshot; never send customer communications, "
-                "update a case, or execute an escalation."
+                "back-office customer escalation brief, resolving a customer inquiry, "
+                "inherited support case, billing dispute, export-error case, knowledge "
+                "guidance, escalation queue or SLA, resolution recommendations, refunds and "
+                "credits to approve, follow-up and response drafts, interaction summaries, "
+                "and service-quality or CSAT review. The demo case is INQ-4005, Jennifer "
+                "Adams' disputed $149 charge: if the user asks to resolve 'this customer "
+                "inquiry' and gives no inquiry ID, use handle_inquiry with INQ-4005; if the "
+                "user asks for the full brief before responding on the export-error case, use "
+                "handle_inquiry with INQ-4001. Analyze only the synthetic snapshot; never send "
+                "customer communications, update a case, process a refund or credit, or "
+                "execute an escalation: actions come back as approval-pending drafts."
             ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "enum": [
-                            "handle_inquiry", "knowledge_search",
-                            "escalation_routing", "satisfaction_survey",
-                        ],
+                        "enum": list(_OPERATIONS),
                         "description": (
-                            "Choose handle_inquiry for a full case or escalation "
-                            "brief before responding; knowledge_search for approved "
-                            "guidance or resolution steps; escalation_routing for "
-                            "the recommended queue, team, or response target; and "
-                            "satisfaction_survey for CSAT, NPS, survey, or service-"
-                            "quality questions."
+                            "Choose handle_inquiry to resolve or brief a customer inquiry "
+                            "(customer context, sentiment, risk); knowledge_search for knowledge "
+                            "articles, what happened, approved guidance or resolution steps; "
+                            "recommend_resolution for 'what should I do to resolve this'; "
+                            "prepare_actions for 'process the refund and apply the credit' "
+                            "(returns the approval-pending action package); follow_up_plan to "
+                            "schedule follow-up and prepare the response email; "
+                            "interaction_summary to summarize the interaction; "
+                            "escalation_routing for the recommended queue, team, or response "
+                            "target; and satisfaction_survey for CSAT, NPS, survey, or "
+                            "service-quality questions."
                         ),
                     },
                     "inquiry_id": {
                         "type": "string",
                         "description": (
-                            "Synthetic inquiry ID. Use INQ-4001 for the analytics "
-                            "export-error escalation and INQ-4003 for the urgent "
-                            "SSO migration case."
+                            "Synthetic inquiry ID or customer name. INQ-4005 (Jennifer Adams "
+                            "billing dispute) is the default; INQ-4001 is the analytics "
+                            "export-error escalation and INQ-4003 the urgent SSO migration case."
                         ),
                     },
                 },
@@ -272,22 +353,142 @@ class AICustomerAssistantAgent(BasicAgent):
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "handle_inquiry")
-        default_inquiry = "INQ-4003" if op == "escalation_routing" else "INQ-4001"
-        inq_id = _resolve_inquiry(kwargs.get("inquiry_id", default_inquiry))
         dispatch = {
             "handle_inquiry": self._handle_inquiry,
             "knowledge_search": self._knowledge_search,
             "escalation_routing": self._escalation_routing,
             "satisfaction_survey": self._satisfaction_survey,
+            "recommend_resolution": self._recommend_resolution,
+            "prepare_actions": self._prepare_actions,
+            "follow_up_plan": self._follow_up_plan,
+            "interaction_summary": self._interaction_summary,
         }
         handler = dispatch.get(op)
         if not handler:
             return f"Unknown operation: {op}"
+        default_inquiry = "INQ-4003" if op == "escalation_routing" else _DEFAULT_INQUIRY
+        inq_id = _resolve_inquiry(kwargs.get("inquiry_id") or default_inquiry)
+        if inq_id is None:
+            return (f"No synthetic inquiry matches '{kwargs.get('inquiry_id')}'. Known inquiries: "
+                    f"{', '.join(_INQUIRIES)}. {_READ_ONLY_NOTICE}")
+        if op in ("recommend_resolution", "prepare_actions", "follow_up_plan",
+                  "interaction_summary") and inq_id not in _RESOLUTIONS:
+            return (f"No resolution playbook is packaged for {inq_id}; the playbook covers "
+                    f"{', '.join(_RESOLUTIONS)} (Jennifer Adams). Use the knowledge search and "
+                    f"escalation routing for {inq_id}. {_READ_ONLY_NOTICE}")
         return handler(inq_id)
+
+    # ── recommend_resolution ───────────────────────────────────
+    def _recommend_resolution(self, inq_id):
+        inq = _INQUIRIES[inq_id]
+        r = _RESOLUTIONS[inq_id]
+        imm = "\n".join(f"| {a} | {d} |" for a, d in r["immediate"])
+        ret = "\n".join(f"| {a} | {label} |" for a, _v, label in r["retention"])
+        return (
+            f"**Resolution with customer retention focus: {inq['customer']} ({inq_id})**\n\n"
+            f"**Immediate Resolution:**\n\n| Action | Details |\n|---|---|\n{imm}\n\n"
+            f"**Retention Gesture:**\n\n| Offer | Value |\n|---|---|\n{ret}\n\n"
+            f"**Script:** \"Processed ${r['addon_monthly']} refund ({r['refund_days'].replace(' business days', ' days')}). "
+            f"Canceled add-on, flagged account. As thanks for {inq['loyalty_years']} years, adding "
+            f"${r['credit']} credit.\" (use once the actions are approved and processed)\n\n"
+            f"**Review gate:** recommendation only; the refund, cancellation and credit need your "
+            f"approval in the billing system. {_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic Playbooks]\nAgents: AICustomerAssistantAgent\n\nExecute?"
+        )
+
+    # ── prepare_actions ────────────────────────────────────────
+    def _prepare_actions(self, inq_id):
+        inq = _INQUIRIES[inq_id]
+        r = _RESOLUTIONS[inq_id]
+        before = inq["base_monthly"] + r["addon_monthly"]
+        after = inq["base_monthly"]
+        return (
+            f"**Actions ready for your approval: {inq['customer']} ({inq_id})**\n\n"
+            f"| Action | Status | Reference |\n|---|---|---|\n"
+            f"| Refund ${r['addon_monthly']} | Ready to process | {r['refund_ref']} (proposed) |\n"
+            f"| Cancel add-on | Ready | Immediate on approval |\n"
+            f"| Block auto-enroll | Ready | Account flag |\n"
+            f"| Apply ${r['credit']} credit | Ready | {r['credit_ref']} (proposed) |\n\n"
+            f"**Account after approval:**\n\n| Before | After |\n|---|---|\n"
+            f"| Monthly: ${before} | Monthly: ${after} |\n"
+            f"| Credits: $0 | Credits: ${r['credit']} |\n\n"
+            f"- Refund: ${r['addon_monthly']} to {inq['card']}, {r['refund_days']} after processing\n"
+            f"- Communication: confirmation email drafted in the follow-up step, sent only by you\n\n"
+            f"**Review gate:** nothing has been processed. Approve and submit these in the billing "
+            f"system; the references are proposed IDs. {_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic Billing + Account Management]\nAgents: AICustomerAssistantAgent\n\n"
+            f"Set up follow-up?"
+        )
+
+    # ── follow_up_plan ─────────────────────────────────────────
+    def _follow_up_plan(self, inq_id):
+        inq = _INQUIRIES[inq_id]
+        r = _RESOLUTIONS[inq_id]
+        rows = "\n".join(f"| {a} | {t} | {p} |" for a, t, p in r["follow_up"])
+        return (
+            f"**Follow-up plan and response draft for {inq['customer']}**\n\n"
+            f"| Touchpoint | Timing | Purpose |\n|---|---|---|\n{rows}\n\n"
+            f"**Draft Email**\n\n"
+            f"Subject: {r['email_subject']}\n\n"
+            f"Body: \"Thank you for bringing this up, and sincere apologies. Here's what we did: "
+            f"${r['addon_monthly']} refund ({r['refund_ref']}); canceled the add-on; ${r['credit']} credit "
+            f"applied; blocked auto-enrollments. The refund appears in {r['refund_days'].replace(' business days', ' days')}, "
+            f"the credit is available now. We value your {inq['loyalty_years']} years with us.\"\n\n"
+            f"**Approval:** ready for you to send once the refund and credit are processed; the "
+            f"touchpoints are a proposed schedule for your task list.\n\n"
+            f"**Review gate:** {_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic Task Management + Email Templates]\nAgents: AICustomerAssistantAgent\n\n"
+            f"Generate session summary?"
+        )
+
+    # ── interaction_summary ────────────────────────────────────
+    def _interaction_summary(self, inq_id):
+        inq = _INQUIRIES[inq_id]
+        r = _RESOLUTIONS[inq_id]
+        m = r["summary"]
+        arr = inq["base_monthly"] * 12
+        ltv = arr * inq["loyalty_years"]
+        cost = r["addon_monthly"] + r["credit"]
+        roi = ltv // cost
+        return (
+            f"**Interaction Summary: {inq['customer']} ({inq_id})**\n\n"
+            f"| Item | Detail |\n|---|---|\n"
+            f"| Issue | {m['issue']} |\n"
+            f"| Resolution | Full refund + ${r['credit']} credit (prepared for approval) |\n"
+            f"| Outcome | Retained (predicted) |\n\n"
+            f"**Quality Metrics:**\n\n| Metric | Score |\n|---|---|\n"
+            f"| First contact resolution | {m['first_contact_resolution']} |\n"
+            f"| Handle time | {m['handle_minutes']} minutes |\n"
+            f"| Predicted CSAT | {m['predicted_csat']}/5 |\n"
+            f"| Retention probability | {m['retention_probability_pct']}% |\n\n"
+            f"**Value Protected:** ${arr:,}/year ARR, ${ltv:,}+ lifetime value vs ${cost} resolution "
+            f"cost ({roi}x ROI)\n\n"
+            f"**System Learning:** recommend flagging the issue to the product team "
+            f"({m['similar_cases']} similar cases) and adding this resolution to the knowledge base.\n\n"
+            f"**Review gate:** {_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic Service Systems]\nAgents: AICustomerAssistantAgent"
+        )
 
     # ── handle_inquiry ─────────────────────────────────────────
     def _handle_inquiry(self, inq_id):
         inq = _INQUIRIES[inq_id]
+        if inq.get("loyalty"):
+            value = inq["base_monthly"] * 12
+            return (
+                f"**{inq['headline']}** ({inq['id']})\n\n"
+                f"| Element | Finding |\n|---|---|\n"
+                f"| Customer | {inq['customer']} |\n"
+                f"| Loyalty | {inq['loyalty']} |\n"
+                f"| Account value | ${value:,}/year |\n"
+                f"| Sentiment | {inq['sentiment']} ({inq['sentiment_score']}) |\n"
+                f"| Channel | {inq['channel']} |\n\n"
+                f"**Inquiry:** \"{inq['description']}\"\n\n"
+                f"**Context:** {inq['context']}\n\n"
+                f"**Risk:** High churn threat, ${value:,} at risk\n\n"
+                f"**Review gate:** {_READ_ONLY_NOTICE}\n\n"
+                f"Source: [Synthetic CRM + Billing]\nAgents: AICustomerAssistantAgent\n\n"
+                f"Search knowledge base?"
+            )
         kb_matches = _match_kb_articles(inq_id)
         routing = _get_routing(inq["category"], inq["priority"])
         top_kb = kb_matches[0] if kb_matches else None
@@ -317,6 +518,21 @@ class AICustomerAssistantAgent(BasicAgent):
     def _knowledge_search(self, inq_id):
         articles = _match_kb_articles(inq_id)
         inq = _INQUIRIES[inq_id]
+        top = articles[0]
+        if top.get("finding"):
+            rows = "\n".join(f"| {k} | {v} |" for k, v in top["finding"])
+            return (
+                f"**Issue identified - auto-enrollment promo, refund eligible** ({inq['id']})\n\n"
+                f"Top match: [{top['id']}] {top['title']}\n\n"
+                f"| Finding | Details |\n|---|---|\n{rows}\n\n"
+                f"**Policy:** {top['policy']}\n\n"
+                f"**Similar Cases:** {top['similar_cases']}\n\n"
+                f"**Resolution Steps:**\n"
+                + "\n".join(f"{i + 1}. {x}" for i, x in enumerate(top["resolution_steps"])) + "\n\n"
+                f"**Review gate:** {_READ_ONLY_NOTICE}\n\n"
+                f"Source: [Synthetic Knowledge Base + Billing]\nAgents: AICustomerAssistantAgent\n\n"
+                f"Get recommended actions?"
+            )
         rows = ""
         for a in articles:
             rows += f"| {a['id']} | {a['title']} | {a['relevance_score']:.0%} | {a['views']:,} |\n"
@@ -396,7 +612,8 @@ class AICustomerAssistantAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = AICustomerAssistantAgent()
-    for op in ["handle_inquiry", "knowledge_search", "escalation_routing", "satisfaction_survey"]:
+    for op in ["handle_inquiry", "knowledge_search", "recommend_resolution", "prepare_actions",
+               "follow_up_plan", "interaction_summary"]:
         print("=" * 60)
-        print(agent.perform(operation=op, inquiry_id="INQ-4001"))
+        print(agent.perform(operation=op))
         print()

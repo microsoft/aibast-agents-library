@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T08:59:20.047Z",
+  "captured_at": "2026-10-07T04:51:30.605181Z",
   "solution": "@aibast-agents-library/claims-processing",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Claims Processing Manual",
-    "bot_id": "72ff18d3-f6ba-45c9-a85f-3ef0cbf472be",
+    "bot_id": "3cfeb250-d26a-48e4-bc54-8bd542692d56",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 7,
+      "confirmed": 7
     },
     "tools": {
       "expected": 0,
@@ -39,10 +39,11 @@
   "canonical_preview": [
     {
       "case_id": "CLP-01",
-      "prompt": "Which incoming claim needs specialized handling first, and where should it be reviewed?",
+      "prompt": "Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
       "must_include": [
-        "CLM-2025-7003",
-        "Investigation"
+        "2,847",
+        "1,936",
+        "34 claims with regulatory deadlines"
       ],
       "must_not_include": [
         "I do not have access",
@@ -50,7 +51,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "14-clp-01.jpg",
+      "expected_screenshot": "19-clp-01.jpg",
       "passed": true
     },
     {
@@ -66,15 +67,16 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "15-clp-02.jpg",
+      "expected_screenshot": "20-clp-02.jpg",
       "passed": true
     },
     {
       "case_id": "CLP-03",
-      "prompt": "Which claim crosses the SIU review threshold, and does that prove fraud?",
+      "prompt": "Yes, show me the fraud detection results and high-risk claims.",
       "must_include": [
-        "CLM-2025-7003",
-        "SIU Referrals"
+        "89 suspicious claims",
+        "CLM-78234",
+        "$890K"
       ],
       "must_not_include": [
         "I do not have access",
@@ -82,7 +84,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "16-clp-03.jpg",
+      "expected_screenshot": "21-clp-03.jpg",
       "passed": true
     },
     {
@@ -98,7 +100,58 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "17-clp-04.jpg",
+      "expected_screenshot": "22-clp-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-05",
+      "prompt": "Yes, auto-adjudicate the eligible claims and show me the results.",
+      "must_include": [
+        "1,724",
+        "$290,350",
+        "sign-off"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "23-clp-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-06",
+      "prompt": "Yes, show me the metrics and where we can improve further.",
+      "must_include": [
+        "5.2 days",
+        "+467%",
+        "Mobile photo AI assessment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "24-clp-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-07",
+      "prompt": "Yes, summarize everything we accomplished today.",
+      "must_include": [
+        "2,847 total",
+        "5,807 adjuster hours",
+        "$290,350"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "25-clp-07.jpg",
       "passed": true
     }
   ],
@@ -111,6 +164,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "26-confirm-draft.jpg"
   }
 }

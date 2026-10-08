@@ -8,218 +8,482 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 15,
-    "reshoot_required": 8
+    "total_existing_captures": 35,
+    "reusable": 35,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-field_service_dispatch-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "FIELD_SERVICE_DISPATCH-01",
-      "source": "solutions/field-service-dispatch/screenshots/assisted/01-field_service_dispatch-01.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/01-field_service_dispatch-01.png",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "SCADA communication failure is the active CRITICAL request in the Central zone",
-        "no technician job assigned",
-        "No job has been created"
+        "Field Service Dispatch Pilot",
+        "Draft",
+        "field-service-dispatch-work-orders-report",
+        "field-service-dispatch-incident-status",
+        "field-service-dispatch-post-incident-review",
+        "field-service-dispatch-technician-assignment",
+        "field-service-dispatch-emergency-response",
+        "field-service-dispatch-rules-and-controls.md",
+        "field-service-dispatch-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 176,
-          "width": 940,
-          "height": 104,
-          "label": "Critical Central request"
+          "x": 84,
+          "y": 20,
+          "width": 206,
+          "height": 24,
+          "label": "Field Service Dispatch Pilot"
         },
         {
-          "x": 284,
-          "y": 500,
-          "width": 940,
-          "height": 78,
-          "label": "No job or field action"
+          "x": 302,
+          "y": 22,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 268,
+          "height": 22,
+          "label": "field-service-dispatch-work-orders-report"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 240,
+          "height": 22,
+          "label": "field-service-dispatch-incident-status"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 277,
+          "height": 22,
+          "label": "field-service-dispatch-post-incident-review"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 288,
+          "height": 22,
+          "label": "field-service-dispatch-technician-assignment"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 279,
+          "height": 22,
+          "label": "field-service-dispatch-emergency-response"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 286,
+          "height": 22,
+          "label": "field-service-dispatch-rules-and-controls.md"
+        },
+        {
+          "x": 1057,
+          "y": 605,
+          "width": 279,
+          "height": 22,
+          "label": "field-service-dispatch-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-field_service_dispatch-01",
+      "mode": "easy",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/02-field_service_dispatch-01.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-01 · Field Operations Manager: What does tomorrow's job list look like by crew, and which crews are on standby?",
+      "case_id": "FIELD_SERVICE_DISPATCH-01",
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/02-field_service_dispatch-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Marcus Chen",
+        "J-101",
+        "No job"
+      ],
+      "boxes": [
+        {
+          "x": 396,
+          "y": 510,
+          "width": 104,
+          "height": 20,
+          "label": "Marcus Chen"
+        },
+        {
+          "x": 298,
+          "y": 649,
+          "width": 43,
+          "height": 20,
+          "label": "J-101"
+        },
+        {
+          "x": 477,
+          "y": 1789,
+          "width": 83,
+          "height": 24,
+          "label": "No job"
         }
       ]
     },
     {
       "id": "easy-field_service_dispatch-02",
       "mode": "easy",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/03-field_service_dispatch-02.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-02 · Service Director: I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
       "case_id": "FIELD_SERVICE_DISPATCH-02",
-      "source": "solutions/field-service-dispatch/screenshots/assisted/02-field_service_dispatch-02.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/02-field_service_dispatch-02.png",
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/03-field_service_dispatch-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Central's available capacity",
-        "3 technicians on hand",
-        "the dispatcher must validate"
+        "34%",
+        "187 miles",
+        "$1,840/day"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 118,
-          "width": 940,
-          "height": 145,
-          "label": "Capacity and validation"
+          "x": 736,
+          "y": 462,
+          "width": 45,
+          "height": 22,
+          "label": "34%"
+        },
+        {
+          "x": 823,
+          "y": 461,
+          "width": 78,
+          "height": 21,
+          "label": "187 miles"
+        },
+        {
+          "x": 429,
+          "y": 865,
+          "width": 86,
+          "height": 24,
+          "label": "$1,840/day"
         }
       ]
     },
     {
       "id": "easy-field_service_dispatch-03",
       "mode": "easy",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/04-field_service_dispatch-03.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-03 · Dispatch Coordinator: Yes, show me Crew A-1's detailed route",
       "case_id": "FIELD_SERVICE_DISPATCH-03",
-      "source": "solutions/field-service-dispatch/screenshots/assisted/03-field_service_dispatch-03.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/03-field_service_dispatch-03.png",
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/04-field_service_dispatch-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Marcus Thompson",
-        "top skill-matched candidate for SR-4005",
-        "No technician has been assigned"
+        "Marcus Chen",
+        "Truck",
+        "Underground cable certified"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 126,
-          "width": 940,
-          "height": 58,
-          "label": "Marcus Thompson match"
+          "x": 476,
+          "y": 472,
+          "width": 128,
+          "height": 24,
+          "label": "Marcus Chen"
         },
         {
-          "x": 284,
-          "y": 214,
-          "width": 940,
-          "height": 112,
-          "label": "Recommendation only"
+          "x": 298,
+          "y": 660,
+          "width": 51,
+          "height": 21,
+          "label": "Truck"
         },
         {
-          "x": 284,
-          "y": 486,
-          "width": 940,
-          "height": 90,
-          "label": "No assignment made"
+          "x": 537,
+          "y": 790,
+          "width": 214,
+          "height": 24,
+          "label": "Underground cable certified"
         }
       ]
     },
     {
       "id": "easy-field_service_dispatch-04",
       "mode": "easy",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/05-field_service_dispatch-04.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-04 · Emergency Duty Manager: URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!",
       "case_id": "FIELD_SERVICE_DISPATCH-04",
-      "source": "solutions/field-service-dispatch/screenshots/assisted/04-field_service_dispatch-04.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/04-field_service_dispatch-04.png",
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/05-field_service_dispatch-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Marcus Thompson is a recommendation only",
-        "before any field action is authorized",
-        "read-only Emergency Response Draft"
+        "1,247",
+        "$26,140/hour"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 160,
-          "width": 940,
-          "height": 76,
-          "label": "Recommendation only"
+          "x": 428,
+          "y": 489,
+          "width": 46,
+          "height": 22,
+          "label": "1,247"
         },
         {
-          "x": 284,
-          "y": 474,
-          "width": 940,
-          "height": 108,
-          "label": "Draft and no-write boundary"
+          "x": 423,
+          "y": 817,
+          "width": 108,
+          "height": 23,
+          "label": "$26,140/hour"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No crew was dispatched not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-field_service_dispatch-05",
+      "mode": "easy",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/06-field_service_dispatch-05.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-05 · Control Room Operator: Yes, give me live updates and customer impact",
+      "case_id": "FIELD_SERVICE_DISPATCH-05",
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/06-field_service_dispatch-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Phase B insulator",
+        "93 min",
+        "$12,400"
+      ],
+      "boxes": [
+        {
+          "x": 620,
+          "y": 665,
+          "width": 135,
+          "height": 32,
+          "label": "Phase B insulator"
+        },
+        {
+          "x": 483,
+          "y": 756,
+          "width": 60,
+          "height": 20,
+          "label": "93 min"
+        },
+        {
+          "x": 538,
+          "y": 1245,
+          "width": 88,
+          "height": 23,
+          "label": "$12,400"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-field_service_dispatch-06",
       "mode": "easy",
-      "source": "solutions/field-service-dispatch/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Field Service Dispatch Pilot row is not visible in the agent list.",
-      "draft": true
+      "source": "solutions/field-service-dispatch/screenshots/assisted/07-field_service_dispatch-06.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-06 · Reliability Engineer: The outage is resolved. Show me the post-incident review and how we prevent the next one.",
+      "case_id": "FIELD_SERVICE_DISPATCH-06",
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/07-field_service_dispatch-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "87 Minutes",
+        "Substation 7B",
+        "785% ROI"
+      ],
+      "boxes": [
+        {
+          "x": 793,
+          "y": 455,
+          "width": 131,
+          "height": 26,
+          "label": "87 Minutes"
+        },
+        {
+          "x": 526,
+          "y": 488,
+          "width": 86,
+          "height": 21,
+          "label": "Substation 7B"
+        },
+        {
+          "x": 476,
+          "y": 1040,
+          "width": 81,
+          "height": 20,
+          "label": "785% ROI"
+        }
+      ]
+    },
+    {
+      "id": "easy-field_service_dispatch-07",
+      "mode": "easy",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/08-field_service_dispatch-07.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-07 · Operations Analyst: Yes, create the work orders and show me the monthly operations report",
+      "case_id": "FIELD_SERVICE_DISPATCH-07",
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/08-field_service_dispatch-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "WO-2847",
+        "none was created",
+        "$29,260/month"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 609,
+          "width": 81,
+          "height": 20,
+          "label": "WO-2847"
+        },
+        {
+          "x": 342,
+          "y": 744,
+          "width": 133,
+          "height": 21,
+          "label": "none was created"
+        },
+        {
+          "x": 425,
+          "y": 1095,
+          "width": 123,
+          "height": 23,
+          "label": "$29,260/month"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/field-service-dispatch/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/field-service-dispatch/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Field Service Dispatch Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 208,
+          "height": 24,
+          "label": "Field Service Dispatch Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/field-service-dispatch/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 92,
-          "width": 820,
-          "height": 70,
-          "label": "Blank agent workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/field-service-dispatch/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Field Service Dispatch Manual",
+      "step": 2,
       "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Field Service Dispatch Manual in the name field"
+        "Field Service Dispatch Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 92,
-          "width": 820,
-          "height": 70,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 227,
+          "height": 24,
+          "label": "Field Service Dispatch Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/field-service-dispatch/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Field Service Dispatch Agent \u2014 Manual Global Instructions",
-        "Locked Preview evidence anchors"
+        "Field Service Dispatch Agent — Manual Global Ins"
       ],
       "boxes": [
         {
-          "x": 72,
-          "y": 198,
-          "width": 905,
-          "height": 620,
-          "label": "Reviewed instruction policy"
+          "x": 204,
+          "y": 131,
+          "width": 339,
+          "height": 39,
+          "label": "Field Service Dispatch Agent — Manual Global Ins"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/field-service-dispatch/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 5-11 and shows the completed inventory without a visible saved-state indicator for this step."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 323,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/field-service-dispatch/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4 and 6-11 and shows the completed inventory rather than a positive visual anchor for removing the default web-search capability."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/field-service-dispatch/screenshots/manual/06-add-field-service-dispatch-rules-and-controls.jpg",
+      "caption": "Manual step 6 · Add knowledge: field-service-dispatch-rules-and-controls.md",
+      "step": 6,
       "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/06-add-field-service-dispatch-rules-and-controls.png",
       "status": "reusable",
       "visible_anchors": [
@@ -227,323 +491,615 @@
       ],
       "boxes": [
         {
-          "x": 1024,
-          "y": 506,
-          "width": 370,
-          "height": 50,
-          "label": "Rules knowledge file"
+          "x": 1057,
+          "y": 321,
+          "width": 286,
+          "height": 22,
+          "label": "field-service-dispatch-rules-and-controls.md"
         }
-      ],
-      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/field-service-dispatch/screenshots/manual/07-add-field-service-dispatch-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "caption": "Manual step 7 · Add knowledge: field-service-dispatch-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/07-add-field-service-dispatch-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1033,
+          "y": 319,
+          "width": 302,
+          "height": 24,
+          "label": "field-service-dispatch-synthetic-records.md"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/08-add-aibast-dispatch-dashboard-01.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_dispatch-dashboard_01",
       "step": 8,
-      "source": "solutions/field-service-dispatch/screenshots/manual/08-add-aibast-dispatch-dashboard.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_dispatch-dashboard addition."
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/08-add-aibast-dispatch-dashboard-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-dispatch-dashboard"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 272,
+          "height": 22,
+          "label": "field-service-dispatch-dispatch-dashboard"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/09-add-aibast-emergency-response-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_emergency-response_04",
       "step": 9,
-      "source": "solutions/field-service-dispatch/screenshots/manual/09-add-aibast-emergency-response.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_emergency-response addition."
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/09-add-aibast-emergency-response-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-emergency-response"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 279,
+          "height": 22,
+          "label": "field-service-dispatch-emergency-response"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/10-add-aibast-incident-status-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_incident-status_05",
       "step": 10,
-      "source": "solutions/field-service-dispatch/screenshots/manual/10-add-aibast-route-optimization.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_route-optimization addition."
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/10-add-aibast-incident-status-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-incident-status"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 240,
+          "height": 22,
+          "label": "field-service-dispatch-incident-status"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/11-add-aibast-post-incident-review-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_post-incident-review_06",
       "step": 11,
-      "source": "solutions/field-service-dispatch/screenshots/manual/11-add-aibast-technician-assignment.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the aibast_technician-assignment addition."
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/11-add-aibast-post-incident-review-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-post-incident-review"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 277,
+          "height": 22,
+          "label": "field-service-dispatch-post-incident-review"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/12-add-aibast-route-optimization-02.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_route-optimization_02",
       "step": 12,
-      "source": "solutions/field-service-dispatch/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/12-add-aibast-route-optimization-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "four configured skills",
-        "two knowledge files",
-        "Tools section contains no configured tool"
+        "field-service-dispatch-route-optimization"
       ],
       "boxes": [
         {
-          "x": 1200,
-          "y": 84,
-          "width": 195,
-          "height": 42,
-          "label": "Sonnet 4.6"
-        },
-        {
-          "x": 1024,
-          "y": 180,
-          "width": 370,
-          "height": 162,
-          "label": "Four skills"
-        },
-        {
-          "x": 1024,
-          "y": 385,
-          "width": 370,
-          "height": 35,
-          "label": "No tools"
-        },
-        {
-          "x": 1024,
-          "y": 462,
-          "width": 370,
-          "height": 98,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 197,
+          "width": 265,
+          "height": 22,
+          "label": "field-service-dispatch-route-optimization"
         }
-      ],
-      "note": "Several label pills covered helper text in the Skills/Tools/Knowledge panel; regenerated with the pills moved into clear whitespace 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/13-add-aibast-technician-assignment-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_technician-assignment_03",
       "step": 13,
-      "source": "solutions/field-service-dispatch/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/13-add-aibast-technician-assignment-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview selected",
-        "New chat",
+        "field-service-dispatch-technician-assignment"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 288,
+          "height": 22,
+          "label": "field-service-dispatch-technician-assignment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/14-add-aibast-work-orders-report-07.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_work-orders-report_07",
+      "step": 14,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/14-add-aibast-work-orders-report-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-work-orders-report"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 268,
+          "height": 22,
+          "label": "field-service-dispatch-work-orders-report"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "field-service-dispatch-work-orders-report",
+        "field-service-dispatch-technician-assignment",
+        "field-service-dispatch-route-optimization",
+        "field-service-dispatch-post-incident-review",
+        "field-service-dispatch-incident-status",
+        "field-service-dispatch-synthetic-records.md",
+        "field-service-dispatch-rules-and-controls.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 268,
+          "height": 22,
+          "label": "field-service-dispatch-work-orders-report"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 288,
+          "height": 22,
+          "label": "field-service-dispatch-technician-assignment"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 265,
+          "height": 22,
+          "label": "field-service-dispatch-route-optimization"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 277,
+          "height": 22,
+          "label": "field-service-dispatch-post-incident-review"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 240,
+          "height": 22,
+          "label": "field-service-dispatch-incident-status"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 279,
+          "height": 22,
+          "label": "field-service-dispatch-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 286,
+          "height": 22,
+          "label": "field-service-dispatch-rules-and-controls.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-dispatch-dashboard · field-service-dispatch-emergency-response · field-service-dispatch-incident-status · field-service-dispatch-post-incident-review · field-service-dispatch-route-optimization · field-service-dispatch-technician-assignment · field-service-dispatch-work-orders-report"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 91,
+          "height": 19,
+          "label": "field-service-dispatch-dispatch-dashboard · field-service-dispatch-emergency-response · field-service-dispatch-incident-status · field-service-dispatch-post-incident-review · field-service-dispatch-route-optimization · field-service-dispatch-technician-assignment · field-service-dispatch-work-orders-report"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "field-service-dispatch-dispatch-dashboard · field-service-dispatch-emergency-response · field-service-dispatch-incident-status · field-service-dispatch-post-incident-review · field-service-dispatch-route-optimization · field-service-dispatch-technician-assignment · field-service-dispatch-work-orders-report"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 144,
+          "width": 91,
+          "height": 19,
+          "label": "field-service-dispatch-dispatch-dashboard · field-service-dispatch-emergency-response · field-service-dispatch-incident-status · field-service-dispatch-post-incident-review · field-service-dispatch-route-optimization · field-service-dispatch-technician-assignment · field-service-dispatch-work-orders-report"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Field Service Dispatch Manual"
       ],
       "boxes": [
         {
-          "x": 638,
-          "y": 5,
-          "width": 100,
-          "height": 54,
-          "label": "Preview"
-        },
-        {
-          "x": 834,
-          "y": 87,
-          "width": 115,
-          "height": 44,
-          "label": "New chat"
-        },
-        {
-          "x": 286,
-          "y": 145,
-          "width": 540,
-          "height": 94,
-          "label": "Fresh conversation"
+          "x": 84,
+          "y": 20,
+          "width": 227,
+          "height": 24,
+          "label": "Field Service Dispatch Manual"
         }
       ]
     },
     {
       "id": "hard-field_service_dispatch-01",
       "mode": "hard",
-      "step": 14,
+      "source": "solutions/field-service-dispatch/screenshots/manual/19-field_service_dispatch-01.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-01 · Field Operations Manager: What does tomorrow's job list look like by crew, and which crews are on standby?",
+      "step": 19,
       "case_id": "FIELD_SERVICE_DISPATCH-01",
-      "source": "solutions/field-service-dispatch/screenshots/manual/14-field_service_dispatch-01.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/14-field_service_dispatch-01.png",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/19-field_service_dispatch-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Unassigned \u2014 No job assigned",
-        "CRITICAL-priority",
-        "Central zone"
+        "J-101",
+        "Marcus Chen",
+        "No job"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 112,
-          "width": 520,
-          "height": 132,
-          "label": "Unassigned request"
+          "x": 298,
+          "y": 614,
+          "width": 43,
+          "height": 20,
+          "label": "J-101"
         },
         {
-          "x": 284,
-          "y": 298,
-          "width": 940,
-          "height": 62,
-          "label": "Critical Central evidence"
+          "x": 418,
+          "y": 1223,
+          "width": 103,
+          "height": 20,
+          "label": "Marcus Chen"
         },
         {
-          "x": 284,
-          "y": 501,
-          "width": 940,
-          "height": 78,
-          "label": "No job created"
+          "x": 532,
+          "y": 1887,
+          "width": 63,
+          "height": 24,
+          "label": "No job"
         }
       ]
     },
     {
       "id": "hard-field_service_dispatch-02",
       "mode": "hard",
-      "step": 15,
+      "source": "solutions/field-service-dispatch/screenshots/manual/20-field_service_dispatch-02.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-02 · Service Director: I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
+      "step": 20,
       "case_id": "FIELD_SERVICE_DISPATCH-02",
-      "source": "solutions/field-service-dispatch/screenshots/manual/15-field_service_dispatch-02.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/15-field_service_dispatch-02.png",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/20-field_service_dispatch-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "50.0% utilization",
-        "SR-4005, SR-4001, and SR-4002 open requests",
-        "A dispatcher must validate travel, safety, labor, and SLA constraints before rerouting"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Central zone heading is above the captured viewport."
+        "34%",
+        "187 miles",
+        "$1,840/day"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 304,
-          "width": 940,
-          "height": 84,
-          "label": "Capacity and three requests"
+          "x": 736,
+          "y": 507,
+          "width": 45,
+          "height": 21,
+          "label": "34%"
         },
         {
-          "x": 284,
-          "y": 430,
-          "width": 940,
-          "height": 30,
-          "label": "Dispatcher validation"
-        }
-      ],
-      "note": "Top evidence box extended into the Material uncertainty paragraph and the reviewer box started on the text, causing strikethrough; re-measured and corrected 2026-09-10."
-    },
-    {
-      "id": "hard-field_service_dispatch-03",
-      "mode": "hard",
-      "step": 16,
-      "case_id": "FIELD_SERVICE_DISPATCH-03",
-      "source": "solutions/field-service-dispatch/screenshots/manual/16-field_service_dispatch-03.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/16-field_service_dispatch-03.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Marcus Thompson",
-        "A Dispatch Coordinator must review this recommendation",
-        "No technician has been assigned"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Candidate for dispatcher review phrase is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 284,
-          "y": 190,
-          "width": 940,
-          "height": 104,
-          "label": "Marcus Thompson evidence"
+          "x": 823,
+          "y": 506,
+          "width": 78,
+          "height": 21,
+          "label": "187 miles"
         },
         {
-          "x": 284,
-          "y": 410,
-          "width": 940,
-          "height": 84,
-          "label": "Dispatcher review"
-        },
-        {
-          "x": 284,
-          "y": 501,
-          "width": 940,
-          "height": 80,
-          "label": "No assignment made"
-        }
-      ],
-      "note": "Dispatcher review box was a little short at the lower paragraph edge; re-measured and extended it to clear the wrapped line 2026-09-10."
-    },
-    {
-      "id": "hard-field_service_dispatch-04",
-      "mode": "hard",
-      "step": 17,
-      "case_id": "FIELD_SERVICE_DISPATCH-04",
-      "source": "solutions/field-service-dispatch/screenshots/manual/17-field_service_dispatch-04.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/17-field_service_dispatch-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Marcus Thompson's break status",
-        "Emergency Duty Manager / Dispatch Coordinator",
-        "No field action has been taken"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Emergency Response Draft heading is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 284,
-          "y": 178,
-          "width": 940,
-          "height": 182,
-          "label": "Marcus and uncertainty"
-        },
-        {
-          "x": 284,
-          "y": 382,
-          "width": 940,
-          "height": 88,
-          "label": "Authorized reviewer"
-        },
-        {
-          "x": 284,
-          "y": 474,
-          "width": 940,
-          "height": 108,
-          "label": "No field action"
+          "x": 405,
+          "y": 910,
+          "width": 91,
+          "height": 24,
+          "label": "$1,840/day"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-field_service_dispatch-03",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/field-service-dispatch/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/field-service-dispatch/screenshots/manual/21-field_service_dispatch-03.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-03 · Dispatch Coordinator: Yes, show me Crew A-1's detailed route",
+      "step": 21,
+      "case_id": "FIELD_SERVICE_DISPATCH-03",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/21-field_service_dispatch-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Field Service Dispatch Manual",
-        "Draft"
+        "Marcus Chen",
+        "Truck",
+        "Underground cable certified"
       ],
       "boxes": [
         {
-          "x": 108,
-          "y": 244,
-          "width": 670,
-          "height": 58,
-          "label": "Target agent remains Draft"
+          "x": 328,
+          "y": 461,
+          "width": 103,
+          "height": 21,
+          "label": "Marcus Chen"
+        },
+        {
+          "x": 541,
+          "y": 461,
+          "width": 55,
+          "height": 21,
+          "label": "Truck"
+        },
+        {
+          "x": 556,
+          "y": 612,
+          "width": 536,
+          "height": 24,
+          "label": "Underground cable certified"
+        }
+      ]
+    },
+    {
+      "id": "hard-field_service_dispatch-04",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/22-field_service_dispatch-04.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-04 · Emergency Duty Manager: URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!",
+      "step": 22,
+      "case_id": "FIELD_SERVICE_DISPATCH-04",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/22-field_service_dispatch-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1,247",
+        "$26,140/hour"
+      ],
+      "boxes": [
+        {
+          "x": 428,
+          "y": 534,
+          "width": 46,
+          "height": 22,
+          "label": "1,247"
+        },
+        {
+          "x": 424,
+          "y": 863,
+          "width": 107,
+          "height": 22,
+          "label": "$26,140/hour"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No crew was dispatched not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-field_service_dispatch-05",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/23-field_service_dispatch-05.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-05 · Control Room Operator: Yes, give me live updates and customer impact",
+      "step": 23,
+      "case_id": "FIELD_SERVICE_DISPATCH-05",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/23-field_service_dispatch-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Phase B insulator",
+        "$12,400",
+        "93 min"
+      ],
+      "boxes": [
+        {
+          "x": 447,
+          "y": 540,
+          "width": 135,
+          "height": 20,
+          "label": "Phase B insulator"
+        },
+        {
+          "x": 418,
+          "y": 850,
+          "width": 63,
+          "height": 23,
+          "label": "$12,400"
+        },
+        {
+          "x": 447,
+          "y": 1191,
+          "width": 59,
+          "height": 20,
+          "label": "93 min"
+        }
+      ]
+    },
+    {
+      "id": "hard-field_service_dispatch-06",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/24-field_service_dispatch-06.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-06 · Reliability Engineer: The outage is resolved. Show me the post-incident review and how we prevent the next one.",
+      "step": 24,
+      "case_id": "FIELD_SERVICE_DISPATCH-06",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/24-field_service_dispatch-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "87 Minutes",
+        "Substation 7B",
+        "785% ROI"
+      ],
+      "boxes": [
+        {
+          "x": 678,
+          "y": 500,
+          "width": 131,
+          "height": 26,
+          "label": "87 Minutes"
+        },
+        {
+          "x": 607,
+          "y": 533,
+          "width": 111,
+          "height": 21,
+          "label": "Substation 7B"
+        },
+        {
+          "x": 718,
+          "y": 852,
+          "width": 81,
+          "height": 20,
+          "label": "785% ROI"
+        }
+      ]
+    },
+    {
+      "id": "hard-field_service_dispatch-07",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/25-field_service_dispatch-07.jpg",
+      "caption": "FIELD_SERVICE_DISPATCH-07 · Operations Analyst: Yes, create the work orders and show me the monthly operations report",
+      "step": 25,
+      "case_id": "FIELD_SERVICE_DISPATCH-07",
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/25-field_service_dispatch-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "WO-2847",
+        "$29,260/month",
+        "none was created"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 569,
+          "width": 79,
+          "height": 20,
+          "label": "WO-2847"
+        },
+        {
+          "x": 386,
+          "y": 1022,
+          "width": 119,
+          "height": 23,
+          "label": "$29,260/month"
+        },
+        {
+          "x": 471,
+          "y": 1433,
+          "width": 134,
+          "height": 20,
+          "label": "none was created"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/field-service-dispatch/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/field-service-dispatch/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Field Service Dispatch Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 228,
+          "height": 24,
+          "label": "Field Service Dispatch Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Field Service Dispatch Pilot with Draft visible.",
-      "Manual step 4 with a visible saved-state indicator for the instruction policy.",
-      "Manual step 5 with positive visual evidence that default web search was removed.",
-      "Manual steps 8-11 captured at the moment each exact skill is added."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:field-service-dispatch",
-    "reviewed_at": "2026-08-10T00:27:58.148944+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:48:11.730047+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

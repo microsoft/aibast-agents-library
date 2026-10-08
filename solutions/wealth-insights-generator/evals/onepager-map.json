@@ -7,43 +7,76 @@
     {
       "advertised_promise": "Analyze client portfolios and surface held-away wealth to uncover expansion opportunities",
       "operations": [
-        "client_insights"
+        "client_insights",
+        "book_insights",
+        "insights_summary"
       ],
       "demo_cases": [
-        "WIG-02"
+        "WIG-02",
+        "WIG-06",
+        "WIG-09"
       ],
       "synthetic_evidence": [
         "Unified wealth insights returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "85 families",
+        "37% (target 55%)",
+        "$4.2M/year",
+        "$8.1M",
+        "Chen call (this week)",
+        "Thompson intro (next week)"
       ]
     },
     {
       "advertised_promise": "Detect planning gaps and risk exposures to support proactive client conversations",
       "operations": [
         "opportunity_alerts",
-        "performance_attribution"
+        "performance_attribution",
+        "planning_gaps"
       ],
       "demo_cases": [
         "WIG-03",
-        "WIG-04"
+        "WIG-04",
+        "WIG-07"
       ],
       "synthetic_evidence": [
         "Planning-gap signals returns deterministic fictional identifiers and review context",
         "Performance context returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Outdated (8 yrs)",
+        "pre-TCJA",
+        "+$48K annual fees"
       ]
     },
     {
       "advertised_promise": "Produce personalized engagement materials instantly",
       "operations": [
-        "meeting_brief"
+        "meeting_brief",
+        "engagement_strategy"
       ],
       "demo_cases": [
-        "WIG-05"
+        "WIG-05",
+        "WIG-08"
       ],
       "synthetic_evidence": [
         "Advisor meeting preparation returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Phase 1",
+        "Retirement readiness review",
+        "Legacy goals"
+      ]
+    },
+    {
+      "advertised_promise": "Fixed market snapshot",
+      "operations": [
+        "market_brief"
+      ],
+      "demo_cases": [
+        "WIG-01"
+      ],
+      "synthetic_evidence": [
+        "NASDAQ Composite",
+        "Fixed Synthetic"
       ]
     }
   ]

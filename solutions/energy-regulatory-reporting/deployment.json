@@ -35,14 +35,16 @@
       "report_status",
       "data_validation",
       "submission_tracker",
-      "audit_readiness"
+      "audit_readiness",
+      "emissions_summary",
+      "prepare_submission"
     ],
     "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
     "manual_knowledge_files": [
       "manual/knowledge/energy-regulatory-reporting-synthetic-records.md",
       "manual/knowledge/energy-regulatory-reporting-rules-and-controls.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 6,
     "required_connections": [
       "Regulatory data lake",
       "Controlled reporting workspace",
@@ -54,17 +56,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "Regulatory Reporting Manual",
-      "bot_id": "66b3797f-6fd3-4614-bb66-2d253c06b0c3",
+      "bot_id": "11dddd4b-3665-4c28-bc9f-d951229b12bb",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 6,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
     },
     "validated_pilot": {
       "display_name": "Regulatory Reporting Pilot",
@@ -73,20 +75,22 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 6,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
     }
   },
   "demo_scenarios": [
     "energy-regulatory-reporting-report-status",
     "energy-regulatory-reporting-data-validation",
     "energy-regulatory-reporting-submission-tracker",
-    "energy-regulatory-reporting-audit-readiness"
+    "energy-regulatory-reporting-audit-readiness",
+    "energy-regulatory-reporting-emissions-summary",
+    "energy-regulatory-reporting-prepare-submission"
   ],
   "write_controls": {
     "authenticated_tools_required": true,

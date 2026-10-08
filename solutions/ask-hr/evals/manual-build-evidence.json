@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T08:28:16.847Z",
+  "captured_at": "2026-10-07T04:11:44.933470Z",
   "solution": "@aibast-agents-library/ask-hr",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Ask HR Manual",
-    "bot_id": "44971048-1ef4-4880-86ed-465f21750fac",
+    "bot_id": "cd45b2b7-6480-486c-9114-51a2e0553e62",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 6,
-      "confirmed": 6
+      "expected": 8,
+      "confirmed": 8
     },
     "tools": {
       "expected": 0,
@@ -41,7 +41,7 @@
       "case_id": "HR-01",
       "prompt": "What does my fictional leave snapshot show, and what notice rules should I review?",
       "must_include": [
-        "15.5 days",
+        "14 days",
         "Upcoming Company Holidays",
         "Synthetic HRIS"
       ],
@@ -49,7 +49,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "16-hr-01.jpg",
+      "expected_screenshot": "20-hr-01.jpg",
       "passed": true
     },
     {
@@ -64,7 +64,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "17-hr-02.jpg",
+      "expected_screenshot": "21-hr-02.jpg",
       "passed": true
     },
     {
@@ -79,7 +79,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "18-hr-03.jpg",
+      "expected_screenshot": "22-hr-03.jpg",
       "passed": true
     },
     {
@@ -94,7 +94,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "19-hr-04.jpg",
+      "expected_screenshot": "23-hr-04.jpg",
       "passed": true
     },
     {
@@ -109,7 +109,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "20-hr-05.jpg",
+      "expected_screenshot": "24-hr-05.jpg",
       "passed": true
     },
     {
@@ -124,7 +124,37 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "21-hr-06.jpg",
+      "expected_screenshot": "25-hr-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "HR-07",
+      "prompt": "I want to take 5 days off next month for a family trip. Is that okay with my balance and the policy?",
+      "must_include": [
+        "After Request",
+        "David Kim",
+        "Blackout dates"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "26-hr-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "HR-08",
+      "prompt": "Is there anything else I should know about my benefits or time off before the end of the year?",
+      "must_include": [
+        "Open enrollment",
+        "Carryover",
+        "before Dec 31"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "27-hr-08.jpg",
       "passed": true
     }
   ],
@@ -137,6 +167,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "22-confirm-draft.jpg"
+    "confirmation_screenshot": "28-confirm-draft.jpg"
   }
 }

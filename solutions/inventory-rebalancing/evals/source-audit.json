@@ -16,6 +16,24 @@
     ],
     "cost_analysis": [
       "IR-04"
+    ],
+    "portfolio_analysis": [
+      "IR-05"
+    ],
+    "recovery_plan": [
+      "IR-06"
+    ],
+    "warehouse_impact": [
+      "IR-07"
+    ],
+    "financial_impact": [
+      "IR-08"
+    ],
+    "execution_timeline": [
+      "IR-09"
+    ],
+    "monitoring_plan": [
+      "IR-10"
     ]
   },
   "defects_fixed": [
@@ -28,6 +46,11 @@
       "area": "recommendation-only safety",
       "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
       "after": "The agent recommends options only; inventory movement and policy changes require approved tools and authorized owners. Every output labels the fixed data and exact figures as synthetic."
+    },
+    {
+      "area": "demo-video alignment",
+      "before": "The agent covered only multi-warehouse transfer rebalancing; the demo video's portfolio story ($5M inventory, 30% slow-moving, 95% full warehouse, 90-day recovery plan, warehouse and financial impact, execution timeline, monitoring) had no operations. Holding cost was computed as ~100% of inventory value, transfer projections never subtracted outbound moves, and the cost trade-off used unexplained multipliers.",
+      "after": "Added portfolio_analysis, recovery_plan, warehouse_impact, financial_impact, execution_timeline and monitoring_plan carrying the video's figures computed from one consistent data set (slow-moving $1.5M incl. a $250K other-slow-movers bucket, $1.2M recovered = 24%, $640K annual savings, 7,329% ROI); holding cost is now 13.5% of inventory value, the transfer projection subtracts outbound units, and the multipliers were removed. All outputs remain recommendations; nothing is liquidated, returned, moved or posted."
     }
   ],
   "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",

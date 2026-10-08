@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T22:21:59.047Z",
+  "captured_at": "2026-10-08T10:30:29.542485Z",
   "solution": "@aibast-agents-library/resource-utilization",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Resource Utilization Pilot",
   "schema_name": "aibast_ResourceUtilizationPilot",
   "bot_id": "85ea6539-485e-40e9-8ce2-fd10521bf65c",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 1 change(s) pushed.",
   "cases": [
     {
       "case_id": "RU-01",
@@ -69,6 +69,45 @@
       ],
       "must_not_include": [
         "leadership approved"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RU-06",
+      "must_include": [
+        "144 (72%)",
+        "$840K",
+        "34 of the 56"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RU-07",
+      "must_include": [
+        "$1.68M",
+        "$20.2M",
+        "8.5% -> 14.2%"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RU-08",
+      "must_include": [
+        "Session Summary",
+        "Dashboard Specification",
+        "red/yellow/green"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
       ],
       "passed": true
     }

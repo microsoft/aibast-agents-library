@@ -1,0 +1,1070 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/insurance-book-cross-sell",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Book of Business Cross-Sell",
+        "routing-plan",
+        "unit-confirmation",
+        "appetite-match",
+        "book-summary",
+        "broker-confirmation",
+        "aibast_insurance-book-cross-sell-rules-and-guard",
+        "aibast_insurance-book-cross-sell-synthetic-recor"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 208,
+          "height": 20,
+          "label": "Book of Business Cross-Sell"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 88,
+          "height": 22,
+          "label": "routing-plan"
+        },
+        {
+          "x": 1203,
+          "y": 197,
+          "width": 119,
+          "height": 19,
+          "label": "unit-confirmation"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 105,
+          "height": 22,
+          "label": "appetite-match"
+        },
+        {
+          "x": 1220,
+          "y": 237,
+          "width": 105,
+          "height": 22,
+          "label": "book-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 135,
+          "height": 19,
+          "label": "broker-confirmation"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_insurance-book-cross-sell-rules-and-guard"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 306,
+          "height": 22,
+          "label": "aibast_insurance-book-cross-sell-synthetic-recor"
+        }
+      ]
+    },
+    {
+      "id": "easy-xs-01",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/02-xs-01.jpg",
+      "caption": "XS-01 · Cross-Sell Manager: A broker just sent over their book of business. What's in it?",
+      "case_id": "XS-01",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/02-xs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fabrikam Insurance Brokers",
+        "10 policy lines",
+        "$363,000 total premium"
+      ],
+      "boxes": [
+        {
+          "x": 506,
+          "y": 417,
+          "width": 210,
+          "height": 21,
+          "label": "Fabrikam Insurance Brokers"
+        },
+        {
+          "x": 399,
+          "y": 505,
+          "width": 112,
+          "height": 24,
+          "label": "10 policy lines"
+        },
+        {
+          "x": 512,
+          "y": 505,
+          "width": 185,
+          "height": 24,
+          "label": "$363,000 total premium"
+        }
+      ]
+    },
+    {
+      "id": "easy-xs-02",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/03-xs-02.jpg",
+      "caption": "XS-02 · Cross-Sell Manager: Can you fill in the industry classes for those accounts and tell me which ones you couldn't figure out?",
+      "case_id": "XS-02",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/03-xs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Resolved 6 of 7 accounts",
+        "Legacy code L-2051 crosswalk",
+        "Foxglove Studio"
+      ],
+      "boxes": [
+        {
+          "x": 377,
+          "y": 444,
+          "width": 70,
+          "height": 21,
+          "label": "Resolved 6 of 7 accounts"
+        },
+        {
+          "x": 811,
+          "y": 634,
+          "width": 220,
+          "height": 24,
+          "label": "Legacy code L-2051 crosswalk"
+        },
+        {
+          "x": 299,
+          "y": 1013,
+          "width": 126,
+          "height": 24,
+          "label": "Foxglove Studio"
+        }
+      ]
+    },
+    {
+      "id": "easy-xs-03",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/04-xs-03.jpg",
+      "caption": "XS-03 · Cross-Sell Manager: Which of these accounts fit our appetite, and where's the white space?",
+      "case_id": "XS-03",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/04-xs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "7 competing-market lines",
+        "5 white-space lines",
+        "unavailable in AZ"
+      ],
+      "boxes": [
+        {
+          "x": 310,
+          "y": 959,
+          "width": 197,
+          "height": 24,
+          "label": "7 competing-market lines"
+        },
+        {
+          "x": 310,
+          "y": 990,
+          "width": 148,
+          "height": 24,
+          "label": "5 white-space lines"
+        },
+        {
+          "x": 644,
+          "y": 1093,
+          "width": 138,
+          "height": 22,
+          "label": "unavailable in AZ"
+        }
+      ]
+    },
+    {
+      "id": "easy-xs-04",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/05-xs-04.jpg",
+      "caption": "XS-04 · Underwriting Unit Lead: Ask our underwriting units to confirm they want these before we route anything.",
+      "case_id": "XS-04",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/05-xs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Sent",
+        "12 opportunities across 5 units",
+        "Elena Ruiz"
+      ],
+      "boxes": [
+        {
+          "x": 539,
+          "y": 418,
+          "width": 422,
+          "height": 20,
+          "label": "Not Sent"
+        },
+        {
+          "x": 601,
+          "y": 418,
+          "width": 236,
+          "height": 23,
+          "label": "12 opportunities across 5 units"
+        },
+        {
+          "x": 659,
+          "y": 527,
+          "width": 84,
+          "height": 20,
+          "label": "Elena Ruiz"
+        }
+      ]
+    },
+    {
+      "id": "easy-xs-05",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/06-xs-05.jpg",
+      "caption": "XS-05 · Broker Relationship Manager: Now draft a note back to the broker to make sure none of these are dead or already placed.",
+      "case_id": "XS-05",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/06-xs-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Broker Confirmation Draft",
+        "Priya Natarajan",
+        "out of business or already placed elsewhere"
+      ],
+      "boxes": [
+        {
+          "x": 366,
+          "y": 417,
+          "width": 200,
+          "height": 21,
+          "label": "Broker Confirmation Draft"
+        },
+        {
+          "x": 311,
+          "y": 478,
+          "width": 120,
+          "height": 23,
+          "label": "Priya Natarajan"
+        },
+        {
+          "x": 714,
+          "y": 622,
+          "width": 121,
+          "height": 21,
+          "label": "out of business or already placed elsewhere"
+        }
+      ]
+    },
+    {
+      "id": "easy-xs-06",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/07-xs-06.jpg",
+      "caption": "XS-06 · Cross-Sell Manager: The replies are in. Route what's left to the right sellers with follow-up dates.",
+      "case_id": "XS-06",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/07-xs-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "renewed early with its current market",
+        "9 opportunities ready to route",
+        "Follow-Up By"
+      ],
+      "boxes": [
+        {
+          "x": 558,
+          "y": 613,
+          "width": 448,
+          "height": 24,
+          "label": "renewed early with its current market"
+        },
+        {
+          "x": 286,
+          "y": 798,
+          "width": 251,
+          "height": 24,
+          "label": "9 opportunities ready to route"
+        },
+        {
+          "x": 394,
+          "y": 1492,
+          "width": 79,
+          "height": 24,
+          "label": "Follow-Up By"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/insurance-book-cross-sell/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Book of Business Cross-Sell"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 214,
+          "height": 21,
+          "label": "Book of Business Cross-Sell"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Book of Business Manual",
+      "step": 2,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Book of Business Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 191,
+          "height": 20,
+          "label": "Book of Business Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Book of Business Cross-Sell Agent — Manual Globa"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 262,
+          "height": 32,
+          "label": "Book of Business Cross-Sell Agent — Manual Globa"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/06-add-aibast-insurance-book-cross-sell-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_insurance-book-cross-sell-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/06-add-aibast-insurance-book-cross-sell-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_insurance-book-cross-sell-rules-and-guard"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_insurance-book-cross-sell-rules-and-guard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/07-add-aibast-insurance-book-cross-sell-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_insurance-book-cross-sell-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/07-add-aibast-insurance-book-cross-sell-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_insurance-book-cross-sell-synthetic-recor"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 305,
+          "height": 33,
+          "label": "aibast_insurance-book-cross-sell-synthetic-recor"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/08-add-aibast-appetite-match-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_appetite-match_03",
+      "step": 8,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/08-add-aibast-appetite-match-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "appetite-match"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 105,
+          "height": 22,
+          "label": "appetite-match"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/09-add-aibast-book-summary-01.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_book-summary_01",
+      "step": 9,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/09-add-aibast-book-summary-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "book-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 105,
+          "height": 22,
+          "label": "book-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/10-add-aibast-broker-confirmation-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_broker-confirmation_05",
+      "step": 10,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/10-add-aibast-broker-confirmation-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "broker-confirmation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 135,
+          "height": 19,
+          "label": "broker-confirmation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/11-add-aibast-classify-lines-02.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_classify-lines_02",
+      "step": 11,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/11-add-aibast-classify-lines-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "classify-lines"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 88,
+          "height": 22,
+          "label": "classify-lines"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/12-add-aibast-routing-plan-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_routing-plan_06",
+      "step": 12,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/12-add-aibast-routing-plan-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "routing-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 88,
+          "height": 22,
+          "label": "routing-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/13-add-aibast-unit-confirmation-04.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_unit-confirmation_04",
+      "step": 13,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/13-add-aibast-unit-confirmation-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "unit-confirmation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 119,
+          "height": 19,
+          "label": "unit-confirmation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "unit-confirmation",
+        "routing-plan",
+        "classify-lines",
+        "broker-confirmation",
+        "book-summary",
+        "aibast_insurance-book-cross-sell-synthetic-recor",
+        "aibast_insurance-book-cross-sell-rules-and-guard"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 101,
+          "height": 21,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 119,
+          "height": 19,
+          "label": "unit-confirmation"
+        },
+        {
+          "x": 1234,
+          "y": 198,
+          "width": 88,
+          "height": 21,
+          "label": "routing-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 88,
+          "height": 22,
+          "label": "classify-lines"
+        },
+        {
+          "x": 1202,
+          "y": 237,
+          "width": 135,
+          "height": 19,
+          "label": "broker-confirmation"
+        },
+        {
+          "x": 1058,
+          "y": 277,
+          "width": 105,
+          "height": 22,
+          "label": "book-summary"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 306,
+          "height": 22,
+          "label": "aibast_insurance-book-cross-sell-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_insurance-book-cross-sell-rules-and-guard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "unit-confirmation",
+        "appetite-match",
+        "routing-plan",
+        "classify-lines",
+        "broker-confirmation"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 119,
+          "height": 19,
+          "label": "unit-confirmation"
+        },
+        {
+          "x": 1113,
+          "y": 220,
+          "width": 55,
+          "height": 20,
+          "label": "appetite-match"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 88,
+          "height": 22,
+          "label": "routing-plan"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 88,
+          "height": 22,
+          "label": "classify-lines"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 135,
+          "height": 19,
+          "label": "broker-confirmation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "routing-plan",
+        "classify-lines",
+        "broker-confirmation",
+        "book-summary",
+        "appetite-match"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 104,
+          "width": 88,
+          "height": 22,
+          "label": "routing-plan"
+        },
+        {
+          "x": 1055,
+          "y": 202,
+          "width": 88,
+          "height": 22,
+          "label": "classify-lines"
+        },
+        {
+          "x": 1055,
+          "y": 280,
+          "width": 135,
+          "height": 19,
+          "label": "broker-confirmation"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 105,
+          "height": 22,
+          "label": "book-summary"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 106,
+          "height": 22,
+          "label": "appetite-match"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Book of Business Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 191,
+          "height": 20,
+          "label": "Book of Business Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-xs-01",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/18-xs-01.jpg",
+      "caption": "XS-01 · Cross-Sell Manager: A broker just sent over their book of business. What's in it?",
+      "step": 18,
+      "case_id": "XS-01",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/18-xs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fabrikam Insurance Brokers",
+        "10 policy lines",
+        "$363,000 total premium"
+      ],
+      "boxes": [
+        {
+          "x": 416,
+          "y": 462,
+          "width": 211,
+          "height": 21,
+          "label": "Fabrikam Insurance Brokers"
+        },
+        {
+          "x": 664,
+          "y": 462,
+          "width": 309,
+          "height": 24,
+          "label": "10 policy lines"
+        },
+        {
+          "x": 967,
+          "y": 462,
+          "width": 184,
+          "height": 24,
+          "label": "$363,000 total premium"
+        }
+      ]
+    },
+    {
+      "id": "hard-xs-02",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/19-xs-02.jpg",
+      "caption": "XS-02 · Cross-Sell Manager: Can you fill in the industry classes for those accounts and tell me which ones you couldn't figure out?",
+      "step": 19,
+      "case_id": "XS-02",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/19-xs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Foxglove Studio",
+        "Legacy code L-2051 crosswalk",
+        "Resolved 6 of 7 accounts"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 813,
+          "width": 123,
+          "height": 24,
+          "label": "Foxglove Studio"
+        },
+        {
+          "x": 1014,
+          "y": 856,
+          "width": 99,
+          "height": 24,
+          "label": "Legacy code L-2051 crosswalk"
+        },
+        {
+          "x": 286,
+          "y": 921,
+          "width": 193,
+          "height": 21,
+          "label": "Resolved 6 of 7 accounts"
+        }
+      ]
+    },
+    {
+      "id": "hard-xs-03",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/20-xs-03.jpg",
+      "caption": "XS-03 · Cross-Sell Manager: Which of these accounts fit our appetite, and where's the white space?",
+      "step": 20,
+      "case_id": "XS-03",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/20-xs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "7 competing-market lines",
+        "5 white-space lines",
+        "unavailable in AZ"
+      ],
+      "boxes": [
+        {
+          "x": 384,
+          "y": 894,
+          "width": 191,
+          "height": 24,
+          "label": "7 competing-market lines"
+        },
+        {
+          "x": 796,
+          "y": 894,
+          "width": 145,
+          "height": 24,
+          "label": "5 white-space lines"
+        },
+        {
+          "x": 909,
+          "y": 961,
+          "width": 143,
+          "height": 20,
+          "label": "unavailable in AZ"
+        }
+      ]
+    },
+    {
+      "id": "hard-xs-04",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/21-xs-04.jpg",
+      "caption": "XS-04 · Underwriting Unit Lead: Ask our underwriting units to confirm they want these before we route anything.",
+      "step": 21,
+      "case_id": "XS-04",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/21-xs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Sent",
+        "12 opportunities across 5 units",
+        "Elena Ruiz"
+      ],
+      "boxes": [
+        {
+          "x": 693,
+          "y": 473,
+          "width": 106,
+          "height": 26,
+          "label": "Not Sent"
+        },
+        {
+          "x": 354,
+          "y": 507,
+          "width": 236,
+          "height": 23,
+          "label": "12 opportunities across 5 units"
+        },
+        {
+          "x": 612,
+          "y": 856,
+          "width": 86,
+          "height": 23,
+          "label": "Elena Ruiz"
+        }
+      ]
+    },
+    {
+      "id": "hard-xs-05",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/22-xs-05.jpg",
+      "caption": "XS-05 · Broker Relationship Manager: Now draft a note back to the broker to make sure none of these are dead or already placed.",
+      "step": 22,
+      "case_id": "XS-05",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/22-xs-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Broker Confirmation Draft",
+        "Priya Natarajan"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 417,
+          "width": 200,
+          "height": 21,
+          "label": "Broker Confirmation Draft"
+        },
+        {
+          "x": 327,
+          "y": 827,
+          "width": 120,
+          "height": 23,
+          "label": "Priya Natarajan"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "out of business or already placed elsewhere not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-xs-06",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/23-xs-06.jpg",
+      "caption": "XS-06 · Cross-Sell Manager: The replies are in. Route what's left to the right sellers with follow-up dates.",
+      "step": 23,
+      "case_id": "XS-06",
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/23-xs-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "9 opportunities ready to route",
+        "Follow-Up By",
+        "renewed early with its current market"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 502,
+          "width": 230,
+          "height": 24,
+          "label": "9 opportunities ready to route"
+        },
+        {
+          "x": 897,
+          "y": 502,
+          "width": 79,
+          "height": 24,
+          "label": "Follow-Up By"
+        },
+        {
+          "x": 558,
+          "y": 1155,
+          "width": 448,
+          "height": 24,
+          "label": "renewed early with its current market"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/insurance-book-cross-sell/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/insurance-book-cross-sell/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Book of Business Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 192,
+          "height": 21,
+          "label": "Book of Business Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:57:16.548104+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

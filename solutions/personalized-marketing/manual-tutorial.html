@@ -549,11 +549,11 @@ html[data-theme="dark"] {
       <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
       <a class="academy-breadcrumb" href="../../academy.html#course/personalized-marketing">Academy / Personalized Marketing Agent</a>
     </div>
-    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button" href="quest.html">Back to workshop</a><a class="button primary" href="exports/personalized-marketing-source.zip">Download source bundle</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button" href="quest.html">Back to workshop</a><a class="button primary" href="exports/personalized-marketing-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
-      <strong id="progress-label">0 of 18 complete</strong>
+      <strong id="progress-label">0 of 26 complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
       <p class="achievements-manual-note">Manual-mode progress earns self-paced local achievement points on this device.</p>
       <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -564,17 +564,25 @@ html[data-theme="dark"] {
 <a href="#step-5">5. Remove default web search</a>
 <a href="#step-6">6. Add knowledge: aibast_personalized-marketing-rules-and-safety.md</a>
 <a href="#step-7">7. Add knowledge: aibast_personalized-marketing-synthetic-records.md</a>
-<a href="#step-8">8. Add skill: campaign-design</a>
-<a href="#step-9">9. Add skill: content-personalization</a>
-<a href="#step-10">10. Add skill: customer-segmentation</a>
-<a href="#step-11">11. Add skill: performance-analysis</a>
-<a href="#step-12">12. Review model, skills, knowledge, and safety boundaries</a>
-<a href="#step-13">13. Open a fresh Preview conversation</a>
-<a href="#step-14">14. Pass PM-01: Marketing Director</a>
-<a href="#step-15">15. Pass PM-02: Campaign Manager</a>
-<a href="#step-16">16. Pass PM-03: Campaign Manager</a>
-<a href="#step-17">17. Pass PM-04: Marketing Director</a>
-<a href="#step-18">18. Confirm Draft and stop before publish</a></nav>
+<a href="#step-8">8. Add skill: aibast_campaign-design_02</a>
+<a href="#step-9">9. Add skill: aibast_campaign-workflow_05</a>
+<a href="#step-10">10. Add skill: aibast_content-personalization_03</a>
+<a href="#step-11">11. Add skill: aibast_customer-segmentation_01</a>
+<a href="#step-12">12. Add skill: aibast_executive-brief_07</a>
+<a href="#step-13">13. Add skill: aibast_performance-analysis_04</a>
+<a href="#step-14">14. Add skill: aibast_revenue-projection_06</a>
+<a href="#step-15">15. Review model, skills, knowledge, and safety boundaries</a>
+<a href="#step-16">16. Review the skill list (7 skills)</a>
+<a href="#step-17">17. Review the rest of the skill list</a>
+<a href="#step-18">18. Open a fresh Preview conversation</a>
+<a href="#step-19">19. Pass PM-01: Marketing Director</a>
+<a href="#step-20">20. Pass PM-02: Campaign Manager</a>
+<a href="#step-21">21. Pass PM-03: Campaign Manager</a>
+<a href="#step-22">22. Pass PM-04: Marketing Director</a>
+<a href="#step-23">23. Pass PM-05: Campaign Manager</a>
+<a href="#step-24">24. Pass PM-06: Marketing Director</a>
+<a href="#step-25">25. Pass PM-07: Marketing Director</a>
+<a href="#step-26">26. Confirm Draft and stop before publish</a></nav>
     </aside>
     <main id="course-content" tabindex="-1">
       <section class="hero">
@@ -588,14 +596,14 @@ html[data-theme="dark"] {
       </section>
       <h2>Build and verify</h2>
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/personalized-marketing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/personalized-marketing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/01-create-blank-agent.png" download="01-create-blank-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -603,14 +611,14 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name Personalized Marketing Manual</h3><p>Step 2 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name Personalized Marketing Manual" data-report-expected="The page header shows the recorded manual build name: Personalized Marketing Manual." data-report-evidence="solutions/personalized-marketing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <header><span>2</span><div><h3>Name Personalized Marketing Manual</h3><p>Step 2 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name Personalized Marketing Manual" data-report-expected="The page header shows the recorded manual build name: Personalized Marketing Manual." data-report-evidence="solutions/personalized-marketing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Personalized Marketing Manual</pre></div><span>Name Personalized Marketing Manual</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Personalized Marketing Manual.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Personalized Marketing Manual reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Personalized Marketing Manual in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Personalized Marketing Manual reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Personalized Marketing Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -618,7 +626,7 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/personalized-marketing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/personalized-marketing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Personalized Marketing Agent — Manual Global Instructions
@@ -633,6 +641,15 @@ apply an offer, launch a campaign, issue a reward, or complete a purchase.
 Lead with evidence, distinguish synthetic facts from recommendations, name the
 human approval gate, and state that no external side effect occurred.
 
+The fixed scenario is the holiday email promotion: 240,000 customers in five segments ($8.4M
+addressable), a five-wave plan led by VIP Shoppers ($8.12M expected from a $47K investment), three VIP
+A/B variants, a draft VIP launch tomorrow 8:00 AM PST with a 72-hour workflow, and VIP revenue scenarios
+of $1.42M / $1.78M / $2.11M. Route segment analysis to `privacy-safe-customer-segmentation`, campaign
+recommendations to `review-only-campaign-design`, VIP creative and A/B variants to
+`consent-aware-content-personalization`, scheduling and the automation workflow to `campaign-workflow`,
+the revenue projection to `revenue-projection`, the executive brief to `executive-brief`, and past test
+results to `synthetic-marketing-performance-analysis`. Schedules and briefs are drafts for approval.
+
 &lt;!-- locked-preview-anchors:start --&gt;
 ## Skill routing map
 
@@ -642,6 +659,9 @@ Route from the user&#x27;s natural-language intent to the correct skill below. D
 - `PM-02` uses skill `review-only-campaign-design`.
 - `PM-03` uses skill `consent-aware-content-personalization`.
 - `PM-04` uses skill `synthetic-marketing-performance-analysis`.
+- `PM-05` uses skill `campaign-workflow`.
+- `PM-06` uses skill `revenue-projection`.
+- `PM-07` uses skill `executive-brief`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 &lt;!-- locked-preview-anchors:end --&gt;
@@ -649,7 +669,7 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Personalized Marketing Agent — Manual Global Instructions; Locked Preview evidence anchors; PM-01 through PM-04 acceptance anchors. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Personalized Marketing Agent — Manual Global Ins. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -657,14 +677,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/personalized-marketing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/personalized-marketing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/04-save-instructions.png" download="04-save-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-instructions.png" alt="Save the instruction policy reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -672,14 +692,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/personalized-marketing/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/personalized-marketing/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/05-remove-web-search.png" download="05-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Tools section contains no configured tool; Knowledge section contains no Search all websites item. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/05-remove-web-search.png" download="05-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Provide trusted context to guide decisions. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg">Download original</a>.</p>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -687,14 +707,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Add knowledge: aibast_personalized-marketing-rules-and-safety.md</h3><p>Step 6 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Add knowledge: aibast_personalized-marketing-rules-and-safety.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/06-add-aibast-personalized-marketing-rules-and-safety.jpg">Report an issue</button></header>
+        <header><span>6</span><div><h3>Add knowledge: aibast_personalized-marketing-rules-and-safety.md</h3><p>Step 6 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Add knowledge: aibast_personalized-marketing-rules-and-safety.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/06-add-aibast-personalized-marketing-rules-and-safety.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_personalized-marketing-rules-and-safety.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/06-add-aibast-personalized-marketing-rules-and-safety.png" download="06-add-aibast-personalized-marketing-rules-and-safety.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-add-aibast-personalized-marketing-rules-and-safety.png" alt="Add knowledge: aibast_personalized-marketing-rules-and-safety.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Knowledge pill begins aibast_personalized-marketing-rules-and-saf. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-add-aibast-personalized-marketing-rules-and-safety.jpg" download="06-add-aibast-personalized-marketing-rules-and-safety.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/06-add-aibast-personalized-marketing-rules-and-safety.png" download="06-add-aibast-personalized-marketing-rules-and-safety.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-add-aibast-personalized-marketing-rules-and-safety.png" alt="Add knowledge: aibast_personalized-marketing-rules-and-safety.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_personalized-marketing-rules-and-safety.m. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-add-aibast-personalized-marketing-rules-and-safety.jpg" download="06-add-aibast-personalized-marketing-rules-and-safety.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/knowledge/aibast_personalized-marketing-rules-and-safety.md" download>Download source: Aibast Personalized Marketing Rules And Safety</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -702,14 +722,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Add knowledge: aibast_personalized-marketing-synthetic-records.md</h3><p>Step 7 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Add knowledge: aibast_personalized-marketing-synthetic-records.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/07-add-aibast-personalized-marketing-synthetic-records.jpg">Report an issue</button></header>
+        <header><span>7</span><div><h3>Add knowledge: aibast_personalized-marketing-synthetic-records.md</h3><p>Step 7 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Add knowledge: aibast_personalized-marketing-synthetic-records.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/07-add-aibast-personalized-marketing-synthetic-records.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_personalized-marketing-synthetic-records.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/07-add-aibast-personalized-marketing-synthetic-records.png" download="07-add-aibast-personalized-marketing-synthetic-records.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-add-aibast-personalized-marketing-synthetic-records.png" alt="Add knowledge: aibast_personalized-marketing-synthetic-records.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Knowledge pill begins aibast_personalized-marketing-synthetic-rec; Knowledge pill begins aibast_personalized-marketing-rules-and-saf. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-add-aibast-personalized-marketing-synthetic-records.jpg" download="07-add-aibast-personalized-marketing-synthetic-records.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/07-add-aibast-personalized-marketing-synthetic-records.png" download="07-add-aibast-personalized-marketing-synthetic-records.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-add-aibast-personalized-marketing-synthetic-records.png" alt="Add knowledge: aibast_personalized-marketing-synthetic-records.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_personalized-marketing-synthetic-records.. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-add-aibast-personalized-marketing-synthetic-records.jpg" download="07-add-aibast-personalized-marketing-synthetic-records.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/knowledge/aibast_personalized-marketing-synthetic-records.md" download>Download source: Aibast Personalized Marketing Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -717,167 +737,287 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Add skill: campaign-design</h3><p>Step 8 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Add skill: campaign-design" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/08-add-campaign-design.jpg">Report an issue</button></header>
+        <header><span>8</span><div><h3>Add skill: aibast_campaign-design_02</h3><p>Step 8 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Add skill: aibast_campaign-design_02" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/08-add-aibast-campaign-design-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: campaign-design</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_campaign-design_02</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/08-add-campaign-design.png" download="08-add-campaign-design.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/08-add-campaign-design.png" alt="Add skill: campaign-design reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: review-only-campaign-design. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/08-add-campaign-design.jpg" download="08-add-campaign-design.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/08-add-aibast-campaign-design-02.png" download="08-add-aibast-campaign-design-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/08-add-aibast-campaign-design-02.png" alt="Add skill: aibast_campaign-design_02 reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: review-only-campaign-design. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/08-add-aibast-campaign-design-02.jpg" download="08-add-aibast-campaign-design-02.jpg">Download original</a>.</p>
           <footer>
-            <a href="manual/skills/campaign-design/SKILL.md" download>Download source: Capability card: campaign design</a>
+            <a href="manual/skills/aibast_campaign-design_02/SKILL.md" download>Download source: Capability card: aibast campaign design 02</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Add skill: content-personalization</h3><p>Step 9 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Add skill: content-personalization" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/09-add-content-personalization.jpg">Report an issue</button></header>
+        <header><span>9</span><div><h3>Add skill: aibast_campaign-workflow_05</h3><p>Step 9 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Add skill: aibast_campaign-workflow_05" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/09-add-aibast-campaign-workflow-05.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: content-personalization</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_campaign-workflow_05</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/09-add-content-personalization.png" download="09-add-content-personalization.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-add-content-personalization.png" alt="Add skill: content-personalization reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: consent-aware-content-personalization; review-only-campaign-design. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-add-content-personalization.jpg" download="09-add-content-personalization.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/09-add-aibast-campaign-workflow-05.png" download="09-add-aibast-campaign-workflow-05.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-add-aibast-campaign-workflow-05.png" alt="Add skill: aibast_campaign-workflow_05 reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: campaign-workflow. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-add-aibast-campaign-workflow-05.jpg" download="09-add-aibast-campaign-workflow-05.jpg">Download original</a>.</p>
           <footer>
-            <a href="manual/skills/content-personalization/SKILL.md" download>Download source: Capability card: content personalization</a>
+            <a href="manual/skills/aibast_campaign-workflow_05/SKILL.md" download>Download source: Capability card: aibast campaign workflow 05</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Add skill: customer-segmentation</h3><p>Step 10 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Add skill: customer-segmentation" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/10-add-customer-segmentation.jpg">Report an issue</button></header>
+        <header><span>10</span><div><h3>Add skill: aibast_content-personalization_03</h3><p>Step 10 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Add skill: aibast_content-personalization_03" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/10-add-aibast-content-personalization-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: customer-segmentation</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_content-personalization_03</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/10-add-customer-segmentation.png" download="10-add-customer-segmentation.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-add-customer-segmentation.png" alt="Add skill: customer-segmentation reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: privacy-safe-customer-segmentation; consent-aware-content-personalization; review-only-campaign-design. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-add-customer-segmentation.jpg" download="10-add-customer-segmentation.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/10-add-aibast-content-personalization-03.png" download="10-add-aibast-content-personalization-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-add-aibast-content-personalization-03.png" alt="Add skill: aibast_content-personalization_03 reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: consent-aware-content-personalization. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-add-aibast-content-personalization-03.jpg" download="10-add-aibast-content-personalization-03.jpg">Download original</a>.</p>
           <footer>
-            <a href="manual/skills/customer-segmentation/SKILL.md" download>Download source: Capability card: customer segmentation</a>
+            <a href="manual/skills/aibast_content-personalization_03/SKILL.md" download>Download source: Capability card: aibast content personalization 03</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add skill: performance-analysis</h3><p>Step 11 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add skill: performance-analysis" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/11-add-performance-analysis.jpg">Report an issue</button></header>
+        <header><span>11</span><div><h3>Add skill: aibast_customer-segmentation_01</h3><p>Step 11 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add skill: aibast_customer-segmentation_01" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/11-add-aibast-customer-segmentation-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: performance-analysis</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_customer-segmentation_01</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/11-add-performance-analysis.png" download="11-add-performance-analysis.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-add-performance-analysis.png" alt="Add skill: performance-analysis reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: synthetic-marketing-performance-analysis; privacy-safe-customer-segmentation; consent-aware-content-personalization; review-only-campaign-design. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-add-performance-analysis.jpg" download="11-add-performance-analysis.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/11-add-aibast-customer-segmentation-01.png" download="11-add-aibast-customer-segmentation-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-add-aibast-customer-segmentation-01.png" alt="Add skill: aibast_customer-segmentation_01 reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: privacy-safe-customer-segmentation. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-add-aibast-customer-segmentation-01.jpg" download="11-add-aibast-customer-segmentation-01.jpg">Download original</a>.</p>
           <footer>
-            <a href="manual/skills/performance-analysis/SKILL.md" download>Download source: Capability card: performance analysis</a>
+            <a href="manual/skills/aibast_customer-segmentation_01/SKILL.md" download>Download source: Capability card: aibast customer segmentation 01</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 12 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/personalized-marketing/screenshots/manual/12-review-inventory.jpg">Report an issue</button></header>
+        <header><span>12</span><div><h3>Add skill: aibast_executive-brief_07</h3><p>Step 12 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Add skill: aibast_executive-brief_07" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/12-add-aibast-executive-brief-07.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_executive-brief_07</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/12-review-inventory.png" download="12-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; four configured skills; Tools section contains no configured tool; two knowledge files; Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-review-inventory.jpg" download="12-review-inventory.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/12-add-aibast-executive-brief-07.png" download="12-add-aibast-executive-brief-07.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-add-aibast-executive-brief-07.png" alt="Add skill: aibast_executive-brief_07 reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: executive-brief. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-add-aibast-executive-brief-07.jpg" download="12-add-aibast-executive-brief-07.jpg">Download original</a>.</p>
           <footer>
-            <a href="deployment.json" download>Download source: Deployment</a>
+            <a href="manual/skills/aibast_executive-brief_07/SKILL.md" download>Download source: Capability card: aibast executive brief 07</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
           </footer>
         </div>
       </article>
 <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Open a fresh Preview conversation</h3><p>Step 13 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/personalized-marketing/screenshots/manual/13-open-preview.jpg">Report an issue</button></header>
+        <header><span>13</span><div><h3>Add skill: aibast_performance-analysis_04</h3><p>Step 13 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Add skill: aibast_performance-analysis_04" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/13-add-aibast-performance-analysis-04.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_performance-analysis_04</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/13-add-aibast-performance-analysis-04.png" download="13-add-aibast-performance-analysis-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-add-aibast-performance-analysis-04.png" alt="Add skill: aibast_performance-analysis_04 reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: synthetic-marketing-performance-analysis. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-add-aibast-performance-analysis-04.jpg" download="13-add-aibast-performance-analysis-04.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_performance-analysis_04/SKILL.md" download>Download source: Capability card: aibast performance analysis 04</a>
+            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Add skill: aibast_revenue-projection_06</h3><p>Step 14 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Add skill: aibast_revenue-projection_06" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/personalized-marketing/screenshots/manual/14-add-aibast-revenue-projection-06.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_revenue-projection_06</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/14-add-aibast-revenue-projection-06.png" download="14-add-aibast-revenue-projection-06.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-add-aibast-revenue-projection-06.png" alt="Add skill: aibast_revenue-projection_06 reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: revenue-projection. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-add-aibast-revenue-projection-06.jpg" download="14-add-aibast-revenue-projection-06.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_revenue-projection_06/SKILL.md" download>Download source: Capability card: aibast revenue projection 06</a>
+            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 15 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Opus 5, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/personalized-marketing/screenshots/manual/15-review-inventory.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Opus 5, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/15-review-inventory.png" download="15-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Opus 5; revenue-projection; synthetic-marketing-performance-analysis; executive-brief; privacy-safe-customer-segmentation; consent-aware-content-personalization; aibast_personalized-marketing-synthetic-records.; aibast_personalized-marketing-rules-and-safety.m. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-review-inventory.jpg" download="15-review-inventory.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Review the skill list (7 skills)</h3><p>Step 16 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Review the skill list (7 skills)" data-report-expected="The screenshot visibly confirms Claude Opus 5, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/personalized-marketing/screenshots/manual/16-review-skills.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review the skill list (7 skills)</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Opus 5, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/16-review-skills.png" download="16-review-skills.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-review-skills.png" alt="Review the skill list (7 skills) reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: revenue-projection; synthetic-marketing-performance-analysis; campaign-workflow; executive-brief; privacy-safe-customer-segmentation. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-review-skills.jpg" download="16-review-skills.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Review the rest of the skill list</h3><p>Step 17 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Review the rest of the skill list" data-report-expected="The screenshot visibly confirms Claude Opus 5, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/personalized-marketing/screenshots/manual/17-review-skills-more.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review the rest of the skill list</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Opus 5, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/17-review-skills-more.png" download="17-review-skills-more.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-review-skills-more.png" alt="Review the rest of the skill list reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: executive-brief; campaign-workflow; privacy-safe-customer-segmentation; synthetic-marketing-performance-analysis; consent-aware-content-personalization; review-only-campaign-design. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-review-skills-more.jpg" download="17-review-skills-more.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Open a fresh Preview conversation</h3><p>Step 18 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/personalized-marketing/screenshots/manual/18-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/13-open-preview.png" download="13-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-open-preview.png" alt="Open a fresh Preview conversation reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat; Personalized Marketing Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-open-preview.jpg" download="13-open-preview.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/18-open-preview.png" download="18-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-open-preview.png" alt="Open a fresh Preview conversation reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Personalized Marketing Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-open-preview.jpg" download="18-open-preview.jpg">Download original</a>.</p>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
-            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-14">
-        <header><span>14</span><div><h3>Pass PM-01: Marketing Director</h3><p>Step 14 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Pass PM-01: Marketing Director" data-report-expected="The captured Preview evidence records PM-01 with the recorded identifiers Prepared for:** Marketing Director, Total Addressable Customers, no audience is profiled with sensitive attributes; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/14-pm-01.jpg">Report an issue</button></header>
+<article class="step" id="step-19">
+        <header><span>19</span><div><h3>Pass PM-01: Marketing Director</h3><p>Step 19 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 19: Pass PM-01: Marketing Director" data-report-expected="The captured Preview evidence records PM-01 with the recorded identifiers Prepared for:** Marketing Director, Total Addressable Customers, no audience is profiled with sensitive attributes; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/19-pm-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-14">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-14" hidden>As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.</pre></div><span>Pass PM-01: Marketing Director</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-19">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-19" hidden>As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.</pre></div><span>Pass PM-01: Marketing Director</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-01 with the recorded identifiers Prepared for:** Marketing Director, Total Addressable Customers, no audience is profiled with sensitive attributes; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PM-01. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/14-pm-01.png" download="14-pm-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-pm-01.png" alt="Pass PM-01: Marketing Director reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Portfolio Review Priorities; Priority 2 — Intervene on At-Risk Churners; Priority 3 — Convert New Explorers Before They Lapse; synthetic aggregate. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-pm-01.jpg" download="14-pm-01.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/19-pm-01.png" download="19-pm-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-pm-01.png" alt="Pass PM-01: Marketing Director reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Prepared for:** Marketing Director; no audience is profiled with sensitive attribute; Total Addressable Customers. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-pm-01.jpg" download="19-pm-01.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-15">
-        <header><span>15</span><div><h3>Pass PM-02: Campaign Manager</h3><p>Step 15 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Pass PM-02: Campaign Manager" data-report-expected="The captured Preview evidence records PM-02 with the recorded identifiers Prepared for:** Campaign Manager, Draft Campaign Design Portfolio, Win-Back Journey; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/15-pm-02.jpg">Report an issue</button></header>
+<article class="step" id="step-20">
+        <header><span>20</span><div><h3>Pass PM-02: Campaign Manager</h3><p>Step 20 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 20: Pass PM-02: Campaign Manager" data-report-expected="The captured Preview evidence records PM-02 with the recorded identifiers Prepared for:** Campaign Manager, Draft Campaign Design Portfolio, Total Campaign Projection; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/20-pm-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-15">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-15" hidden>As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.</pre></div><span>Pass PM-02: Campaign Manager</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-02 with the recorded identifiers Prepared for:** Campaign Manager, Draft Campaign Design Portfolio, Win-Back Journey; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-20">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-20" hidden>As Campaign Manager, show me the personalized multi-wave campaign recommendations for the holiday promotion and the approval gates.</pre></div><span>Pass PM-02: Campaign Manager</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-02 with the recorded identifiers Prepared for:** Campaign Manager, Draft Campaign Design Portfolio, Total Campaign Projection; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PM-02. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/15-pm-02.png" download="15-pm-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-pm-02.png" alt="Pass PM-02: Campaign Manager reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Planning Assumptions; SEG-DORMANT (34,200 contacts); carries no sensitive attribute profiling; Approval Gates (all required before any activation). Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-pm-02.jpg" download="15-pm-02.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/20-pm-02.png" download="20-pm-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-pm-02.png" alt="Pass PM-02: Campaign Manager reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Prepared for:** Campaign Manager; Draft Campaign Design Portfolio; Total Campaign Projection. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-pm-02.jpg" download="20-pm-02.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-16">
-        <header><span>16</span><div><h3>Pass PM-03: Campaign Manager</h3><p>Step 16 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Pass PM-03: Campaign Manager" data-report-expected="The captured Preview evidence records PM-03 with the recorded identifiers Draft Content Personalization Matrix, New Explorers, Draft Hero Copy; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/16-pm-03.jpg">Report an issue</button></header>
+<article class="step" id="step-21">
+        <header><span>21</span><div><h3>Pass PM-03: Campaign Manager</h3><p>Step 21 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 21: Pass PM-03: Campaign Manager" data-report-expected="The captured Preview evidence records PM-03 with the recorded identifiers Draft Content Personalization Matrix, VIP Shoppers, A/B Test Setup; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/21-pm-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.</pre></div><span>Pass PM-03: Campaign Manager</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-03 with the recorded identifiers Draft Content Personalization Matrix, New Explorers, Draft Hero Copy; do not infer results beyond it.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-21">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-21" hidden>As Campaign Manager, generate the VIP campaign with personalized content and A/B test variants.</pre></div><span>Pass PM-03: Campaign Manager</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-03 with the recorded identifiers Draft Content Personalization Matrix, VIP Shoppers, A/B Test Setup; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PM-03. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/16-pm-03.png" download="16-pm-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-pm-03.png" alt="Pass PM-03: Campaign Manager reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Tone &amp; Messaging Guidance (Draft); Welcoming, not pressuring; Neutral alternatives; authorized human review and approval; No action has been taken. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-pm-03.jpg" download="16-pm-03.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/21-pm-03.png" download="21-pm-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/21-pm-03.png" alt="Pass PM-03: Campaign Manager reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Draft Content Personalization Matrix; A/B Test Setup; VIP Shoppers. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/21-pm-03.jpg" download="21-pm-03.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-17">
-        <header><span>17</span><div><h3>Pass PM-04: Marketing Director</h3><p>Step 17 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Pass PM-04: Marketing Director" data-report-expected="The captured Preview evidence records PM-04 with the recorded identifiers Marketing Performance Analysis, A/B Test Results, Synthetic aggregate planning data; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/17-pm-04.jpg">Report an issue</button></header>
+<article class="step" id="step-22">
+        <header><span>22</span><div><h3>Pass PM-04: Marketing Director</h3><p>Step 22 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 22: Pass PM-04: Marketing Director" data-report-expected="The captured Preview evidence records PM-04 with the recorded identifiers Marketing Performance Analysis, A/B Test Results, Synthetic aggregate planning data; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/22-pm-04.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.</pre></div><span>Pass PM-04: Marketing Director</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-22">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-22" hidden>As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.</pre></div><span>Pass PM-04: Marketing Director</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-04 with the recorded identifiers Marketing Performance Analysis, A/B Test Results, Synthetic aggregate planning data; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PM-04. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/17-pm-04.png" download="17-pm-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-pm-04.png" alt="Pass PM-04: Marketing Director reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: ABT-003 — VIP Exclusive Preview; 88% confidence; Measurement Limitations — Flag Before Any Decision; Synthetic data only. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-pm-04.jpg" download="17-pm-04.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/22-pm-04.png" download="22-pm-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/22-pm-04.png" alt="Pass PM-04: Marketing Director reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Marketing Performance Analysis; Synthetic aggregate planning data; A/B Test Results. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/22-pm-04.jpg" download="22-pm-04.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-18">
-        <header><span>18</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 18 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/personalized-marketing/screenshots/manual/18-confirm-draft.jpg">Report an issue</button></header>
+<article class="step" id="step-23">
+        <header><span>23</span><div><h3>Pass PM-05: Campaign Manager</h3><p>Step 23 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 23: Pass PM-05: Campaign Manager" data-report-expected="The captured Preview evidence records PM-05 with the recorded identifiers Draft VIP Launch Schedule, Hour 48, Nothing is scheduled or sent; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/23-pm-05.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-23">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-23" hidden>As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval.</pre></div><span>Pass PM-05: Campaign Manager</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-05 with the recorded identifiers Draft VIP Launch Schedule, Hour 48, Nothing is scheduled or sent; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PM-05. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/23-pm-05.png" download="23-pm-05.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/23-pm-05.png" alt="Pass PM-05: Campaign Manager reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Draft VIP Launch Schedule; Nothing is scheduled or sent; Hour 48. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/23-pm-05.jpg" download="23-pm-05.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="23"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-24">
+        <header><span>24</span><div><h3>Pass PM-06: Marketing Director</h3><p>Step 24 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 24: Pass PM-06: Marketing Director" data-report-expected="The captured Preview evidence records PM-06 with the recorded identifiers VIP Revenue Projection Model, Conservative (Baseline), ROI Range; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/24-pm-06.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-24">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-24" hidden>As Marketing Director, break down the revenue projection scenarios for the VIP wave.</pre></div><span>Pass PM-06: Marketing Director</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-06 with the recorded identifiers VIP Revenue Projection Model, Conservative (Baseline), ROI Range; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PM-06. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/24-pm-06.png" download="24-pm-06.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/24-pm-06.png" alt="Pass PM-06: Marketing Director reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: VIP Revenue Projection Model; Conservative (Baseline); ROI Range. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/24-pm-06.jpg" download="24-pm-06.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="24"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-25">
+        <header><span>25</span><div><h3>Pass PM-07: Marketing Director</h3><p>Step 25 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 25: Pass PM-07: Marketing Director" data-report-expected="The captured Preview evidence records PM-07 with the recorded identifiers Executive Campaign Brief, Program Economics, has not been sent; do not infer results beyond it." data-report-evidence="solutions/personalized-marketing/screenshots/manual/25-pm-07.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-25">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-25" hidden>As Marketing Director, create the executive brief summarizing our holiday campaign strategy.</pre></div><span>Pass PM-07: Marketing Director</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records PM-07 with the recorded identifiers Executive Campaign Brief, Program Economics, has not been sent; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running PM-07. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/25-pm-07.png" download="25-pm-07.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/25-pm-07.png" alt="Pass PM-07: Marketing Director reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Executive Campaign Brief; Program Economics; has not been sent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/25-pm-07.jpg" download="25-pm-07.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="25"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-26">
+        <header><span>26</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 26 of 26</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 26: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/personalized-marketing/screenshots/manual/26-confirm-draft.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The agent remains Draft and no Publish action is taken.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/26-confirm-draft.png" download="26-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/26-confirm-draft.png" alt="Confirm Draft and stop before publish reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Personalized Marketing Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/26-confirm-draft.jpg" download="26-confirm-draft.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
-            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="26"> Mark complete</label>
           </footer>
         </div>
       </article>

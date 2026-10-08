@@ -1,0 +1,1000 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/public-correspondence-response",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/public-correspondence-response",
+  "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
+  "bundle": {
+    "label": "Complete Public Correspondence Agent source bundle",
+    "path": "solutions/public-correspondence-response/exports/public-correspondence-response-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable source agent",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+      "use": "Local Brainstem runtime and production-logic reference",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "Deployment recipe",
+      "path": "solutions/public-correspondence-response/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/deployment.json",
+      "use": "Easy-mode deployment contract",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/public-correspondence-response/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
+      "path": "solutions/public-correspondence-response/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/FIELD-GUIDE.md",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "facilitator-cohort-form",
+      "label": "Facilitator cohort registration form",
+      "path": "solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
+      "use": "Private Microsoft Forms Quick Import template for SE identity, MSIX, and cohort registration",
+      "status": "ready"
+    },
+    {
+      "id": "badge-qualification-form",
+      "label": "Badge qualification form",
+      "path": "solutions/_shared/AIBAST-Badge-Qualification.docx",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/AIBAST-Badge-Qualification.docx",
+      "use": "Private Microsoft Forms Quick Import template for consent, module test, and reviewer matching",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/public-correspondence-response/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/public-correspondence-response/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
+      "status": "ready"
+    },
+    {
+      "id": "manual-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/public-correspondence-response/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Reviewed instructions for literal browser construction",
+      "status": "ready"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/public-correspondence-response/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/settings.mcs.yml",
+      "use": "Easy-mode agent settings and instruction copy",
+      "status": "ready"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/public-correspondence-response/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/agent.sync.yaml",
+      "use": "Easy-mode component synchronization",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-aibast-public-correspondence-response-rules-and-guardrails",
+      "label": "Aibast Public Correspondence Response Rules And Guardrails",
+      "path": "solutions/public-correspondence-response/manual/knowledge/aibast_public-correspondence-response-rules-and-guardrails.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/knowledge/aibast_public-correspondence-response-rules-and-guardrails.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-aibast-public-correspondence-response-synthetic-records",
+      "label": "Aibast Public Correspondence Response Synthetic Records",
+      "path": "solutions/public-correspondence-response/manual/knowledge/aibast_public-correspondence-response-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/knowledge/aibast_public-correspondence-response-synthetic-records.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-break-down-enquiry-02",
+      "label": "Capability card: aibast break down enquiry 02",
+      "path": "solutions/public-correspondence-response/manual/skills/aibast_break-down-enquiry_02/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/skills/aibast_break-down-enquiry_02/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-draft-response-05",
+      "label": "Capability card: aibast draft response 05",
+      "path": "solutions/public-correspondence-response/manual/skills/aibast_draft-response_05/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/skills/aibast_draft-response_05/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-find-precedents-03",
+      "label": "Capability card: aibast find precedents 03",
+      "path": "solutions/public-correspondence-response/manual/skills/aibast_find-precedents_03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/skills/aibast_find-precedents_03/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-inbox-queue-01",
+      "label": "Capability card: aibast inbox queue 01",
+      "path": "solutions/public-correspondence-response/manual/skills/aibast_inbox-queue_01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/skills/aibast_inbox-queue_01/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-library-update-06",
+      "label": "Capability card: aibast library update 06",
+      "path": "solutions/public-correspondence-response/manual/skills/aibast_library-update_06/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/skills/aibast_library-update_06/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-route-and-refer-04",
+      "label": "Capability card: aibast route and refer 04",
+      "path": "solutions/public-correspondence-response/manual/skills/aibast_route-and-refer_04/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual/skills/aibast_route-and-refer_04/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-public-correspondence-response-rules-and-guardrails",
+      "label": "Aibast Public Correspondence Response Rules And Guardrails",
+      "path": "solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-rules-and-guardrails.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-rules-and-guardrails.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-public-correspondence-response-rules-and-guardrails-md-mcs",
+      "label": "Aibast Public Correspondence Response Rules And Guardrails.Md.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-rules-and-guardrails.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-rules-and-guardrails.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-public-correspondence-response-synthetic-records",
+      "label": "Aibast Public Correspondence Response Synthetic Records",
+      "path": "solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-synthetic-records.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-public-correspondence-response-synthetic-records-md-mcs",
+      "label": "Aibast Public Correspondence Response Synthetic Records.Md.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/capabilities/knowledge/files/aibast_public-correspondence-response-synthetic-records.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-break-down-enquiry-mcs",
+      "label": "Aibast Break Down Enquiry.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/behaviors/aibast_break-down-enquiry.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/behaviors/aibast_break-down-enquiry.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-draft-response-mcs",
+      "label": "Aibast Draft Response.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/behaviors/aibast_draft-response.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/behaviors/aibast_draft-response.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-find-precedents-mcs",
+      "label": "Aibast Find Precedents.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/behaviors/aibast_find-precedents.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/behaviors/aibast_find-precedents.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-inbox-queue-mcs",
+      "label": "Aibast Inbox Queue.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/behaviors/aibast_inbox-queue.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/behaviors/aibast_inbox-queue.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-library-update-mcs",
+      "label": "Aibast Library Update.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/behaviors/aibast_library-update.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/behaviors/aibast_library-update.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-route-and-refer-mcs",
+      "label": "Aibast Route And Refer.Mcs",
+      "path": "solutions/public-correspondence-response/copilot-studio/behaviors/aibast_route-and-refer.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/copilot-studio/behaviors/aibast_route-and-refer.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-copilot-studio-preview-evidence",
+      "label": "Copilot Studio Preview Evidence",
+      "path": "solutions/public-correspondence-response/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evals/copilot-studio-preview-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/public-correspondence-response/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/public-correspondence-response/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
+      "status": "ready"
+    },
+    {
+      "id": "onepager-map",
+      "label": "Onepager Map",
+      "path": "solutions/public-correspondence-response/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evals/onepager-map.json",
+      "use": "Advertised-promise mapping evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-source-audit",
+      "label": "Source Audit",
+      "path": "solutions/public-correspondence-response/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evals/source-audit.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/public-correspondence-response/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual checkpoint contract",
+      "path": "solutions/public-correspondence-response/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evals/visual-checkpoints.json",
+      "use": "Reviewed image scope, media format, provenance and open student steps",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-review-build",
+      "label": "Annotated visual checkpoint: easy-review-build",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/01-review-build.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/01-review-build.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-pcr-01",
+      "label": "Annotated visual checkpoint: easy-pcr-01",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/02-pcr-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/02-pcr-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-pcr-02",
+      "label": "Annotated visual checkpoint: easy-pcr-02",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/03-pcr-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/03-pcr-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-pcr-03",
+      "label": "Annotated visual checkpoint: easy-pcr-03",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/04-pcr-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/04-pcr-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-pcr-04",
+      "label": "Annotated visual checkpoint: easy-pcr-04",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/05-pcr-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/05-pcr-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-pcr-05",
+      "label": "Annotated visual checkpoint: easy-pcr-05",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/06-pcr-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/06-pcr-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-pcr-06",
+      "label": "Annotated visual checkpoint: easy-pcr-06",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/07-pcr-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/07-pcr-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-confirm-draft",
+      "label": "Annotated visual checkpoint: easy-confirm-draft",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/annotated/08-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/annotated/08-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/04-save-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-public-correspondence-response-rules-and-guardrails",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/06-add-aibast-public-correspondence-response-rules-and-guardrails.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/06-add-aibast-public-correspondence-response-rules-and-guardrails.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-public-correspondence-response-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/07-add-aibast-public-correspondence-response-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/07-add-aibast-public-correspondence-response-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-break-down-enquiry-02",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/08-add-aibast-break-down-enquiry-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/08-add-aibast-break-down-enquiry-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-draft-response-05",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/09-add-aibast-draft-response-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/09-add-aibast-draft-response-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-find-precedents-03",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/10-add-aibast-find-precedents-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/10-add-aibast-find-precedents-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-aibast-inbox-queue-01",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/11-add-aibast-inbox-queue-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/11-add-aibast-inbox-queue-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-aibast-library-update-06",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/12-add-aibast-library-update-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/12-add-aibast-library-update-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-aibast-route-and-refer-04",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/13-add-aibast-route-and-refer-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/13-add-aibast-route-and-refer-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/14-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/14-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-review-skills",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/15-review-skills.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/15-review-skills.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-review-skills-more",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/16-review-skills-more.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/16-review-skills-more.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/17-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/17-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-pcr-01",
+      "label": "Annotated visual checkpoint: hard-pcr-01",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/18-pcr-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/18-pcr-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-pcr-02",
+      "label": "Annotated visual checkpoint: hard-pcr-02",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/19-pcr-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/19-pcr-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-pcr-03",
+      "label": "Annotated visual checkpoint: hard-pcr-03",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/20-pcr-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/20-pcr-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-pcr-04",
+      "label": "Annotated visual checkpoint: hard-pcr-04",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/21-pcr-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/21-pcr-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-pcr-05",
+      "label": "Annotated visual checkpoint: hard-pcr-05",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/22-pcr-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/22-pcr-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-pcr-06",
+      "label": "Annotated visual checkpoint: hard-pcr-06",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/23-pcr-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/23-pcr-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-24-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-24",
+      "path": "solutions/public-correspondence-response/screenshots/manual/annotated/24-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/annotated/24-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/public-correspondence-response/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/public-correspondence-response/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name Public Correspondence Manual",
+      "path": "solutions/public-correspondence-response/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/02-name-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/public-correspondence-response/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/03-enter-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction policy",
+      "path": "solutions/public-correspondence-response/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/04-save-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Remove default web search",
+      "path": "solutions/public-correspondence-response/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/05-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Add knowledge: aibast_public-correspondence-response-rules-and-guardrails.md",
+      "path": "solutions/public-correspondence-response/screenshots/manual/06-add-aibast-public-correspondence-response-rules-and-guardrails.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/06-add-aibast-public-correspondence-response-rules-and-guardrails.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Add knowledge: aibast_public-correspondence-response-synthetic-records.md",
+      "path": "solutions/public-correspondence-response/screenshots/manual/07-add-aibast-public-correspondence-response-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/07-add-aibast-public-correspondence-response-synthetic-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Add skill: aibast_break-down-enquiry_02",
+      "path": "solutions/public-correspondence-response/screenshots/manual/08-add-aibast-break-down-enquiry-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/08-add-aibast-break-down-enquiry-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Add skill: aibast_draft-response_05",
+      "path": "solutions/public-correspondence-response/screenshots/manual/09-add-aibast-draft-response-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/09-add-aibast-draft-response-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Add skill: aibast_find-precedents_03",
+      "path": "solutions/public-correspondence-response/screenshots/manual/10-add-aibast-find-precedents-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/10-add-aibast-find-precedents-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Add skill: aibast_inbox-queue_01",
+      "path": "solutions/public-correspondence-response/screenshots/manual/11-add-aibast-inbox-queue-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/11-add-aibast-inbox-queue-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Add skill: aibast_library-update_06",
+      "path": "solutions/public-correspondence-response/screenshots/manual/12-add-aibast-library-update-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/12-add-aibast-library-update-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Add skill: aibast_route-and-refer_04",
+      "path": "solutions/public-correspondence-response/screenshots/manual/13-add-aibast-route-and-refer-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/13-add-aibast-route-and-refer-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/public-correspondence-response/screenshots/manual/14-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/14-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Review the skill list (6 skills)",
+      "path": "solutions/public-correspondence-response/screenshots/manual/15-review-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/15-review-skills.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Review the rest of the skill list",
+      "path": "solutions/public-correspondence-response/screenshots/manual/16-review-skills-more.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/16-review-skills-more.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/public-correspondence-response/screenshots/manual/17-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/17-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Pass PCR-01: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/manual/18-pcr-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/18-pcr-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Pass PCR-02: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/manual/19-pcr-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/19-pcr-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Pass PCR-03: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/manual/20-pcr-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/20-pcr-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Pass PCR-04: Correspondence Team Lead",
+      "path": "solutions/public-correspondence-response/screenshots/manual/21-pcr-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/21-pcr-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Pass PCR-05: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/manual/22-pcr-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/22-pcr-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Pass PCR-06: Knowledge Owner",
+      "path": "solutions/public-correspondence-response/screenshots/manual/23-pcr-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/23-pcr-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-24",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/public-correspondence-response/screenshots/manual/24-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/24-confirm-draft.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual browserfilm",
+      "path": "solutions/public-correspondence-response/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual contact sheet",
+      "path": "solutions/public-correspondence-response/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/browserfilm.json",
+      "use": "Ordered Easy-mode evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted browserfilm",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated Easy-mode walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-01",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/01-review-build.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
+      "label": "Pass PCR-01: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/02-pcr-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/02-pcr-01.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-03",
+      "label": "Pass PCR-02: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/03-pcr-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/03-pcr-02.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-04",
+      "label": "Pass PCR-03: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/04-pcr-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/04-pcr-03.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-05",
+      "label": "Pass PCR-04: Correspondence Team Lead",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/05-pcr-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/05-pcr-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-06",
+      "label": "Pass PCR-05: Correspondence Officer",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/06-pcr-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/06-pcr-05.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-07",
+      "label": "Pass PCR-06: Knowledge Owner",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/07-pcr-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/07-pcr-06.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-08",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/08-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/08-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/public-correspondence-response/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
+      "status": "ready"
+    },
+    {
+      "id": "quest",
+      "label": "Guided field quest",
+      "path": "solutions/public-correspondence-response/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/quest.html",
+      "use": "Resumable Easy/Manual customer journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser tutorial",
+      "path": "solutions/public-correspondence-response/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/manual-tutorial.html",
+      "use": "Student actions, source downloads, reviewed references and explicit evidence gaps",
+      "status": "ready"
+    },
+    {
+      "id": "screenshots-readme",
+      "label": "Screenshot evidence README",
+      "path": "solutions/public-correspondence-response/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/README.md",
+      "use": "Evidence boundary and capture inventory",
+      "status": "ready"
+    },
+    {
+      "id": "manual-screenshots-readme",
+      "label": "Manual screenshot README",
+      "path": "solutions/public-correspondence-response/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/manual/README.md",
+      "use": "Manual frame and film inventory",
+      "status": "ready"
+    },
+    {
+      "id": "exports-readme",
+      "label": "Export README",
+      "path": "solutions/public-correspondence-response/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/README.md",
+      "use": "Bundle build instructions",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-screenshots-readme",
+      "label": "Assisted screenshot README",
+      "path": "solutions/public-correspondence-response/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/screenshots/assisted/README.md",
+      "use": "Copilot-assisted evidence inventory",
+      "status": "ready"
+    }
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Public Correspondence Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_PublicCorrespondenceManualBuild",
+    "zip": {
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-copilot-studio-solution.zip",
+      "sha256": "1f29c1d6c02fcae41dfe1a98f2b76466f2f19e6b290e4f25b5c331ad758bddea",
+      "bytes": 45875
+    },
+    "deployment_settings": {
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
+}

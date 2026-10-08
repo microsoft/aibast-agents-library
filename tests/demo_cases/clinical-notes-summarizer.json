@@ -83,6 +83,146 @@
       ],
       "min_words": 25,
       "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-05",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Automatically generate concise, clinically relevant patient summaries",
+      "operation": "preop_snapshot",
+      "prompt": "I need a pre-op clearance summary for Patient ID 78392.",
+      "must_include": [
+        "John Martinez",
+        "Right eye phacoemulsification",
+        "ASA class"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-06",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Surface key risks, comorbidities, and medication considerations",
+      "operation": "cardiopulmonary_review",
+      "prompt": "Show me his cardiac and respiratory status with recent testing.",
+      "must_include": [
+        "82 bpm",
+        "FEV1 68%",
+        "eGFR 67"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-07",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Surface key risks, comorbidities, and medication considerations",
+      "operation": "perioperative_medication_review",
+      "prompt": "Review his medications and flag any surgical concerns.",
+      "must_include": [
+        "Lisinopril 10mg daily",
+        "Floppy iris",
+        "12 Active"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-08",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "operation": "anesthesia_considerations",
+      "prompt": "Give me anesthesia and monitoring considerations for his eye surgery.",
+      "must_include": [
+        "MAC preferred",
+        "Extended PACU",
+        "Afternoon slot"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-09",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Surface key risks, comorbidities, and medication considerations",
+      "operation": "risk_factor_summary",
+      "prompt": "Explain his ASA class III and the factors behind it.",
+      "must_include": [
+        "ASA Class III Justification",
+        "Goldman <1%",
+        "FEV1 68%"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-10",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "operation": "reevaluation_criteria",
+      "prompt": "What would change the recommendation, and when should I reconsider clearance?",
+      "must_include": [
+        "COPD exacerbation <2 weeks",
+        "delay 2-4 weeks",
+        "ICU bed availability"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-11",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Send summaries through EHR and secure messaging systems",
+      "operation": "clearance_note_draft",
+      "prompt": "Generate the clearance note and send it to ophthalmology.",
+      "must_include": [
+        "Dr. Amanda Chen",
+        "Draft ready for physician e-signature",
+        "nothing was sent"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
     }
   ]
 }

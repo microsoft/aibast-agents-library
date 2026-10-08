@@ -1,29 +1,27 @@
-# Customer Onboarding Agent manual workshop review source
+# Export bundle
 
-Build `fs-customer-onboarding-source.zip` with the existing source bundler:
+Build `fs-customer-onboarding-source.zip` from the generated manifest:
 
 ```text
-python3 tools/build_solution_export.py solutions/fs-customer-onboarding/export-manifest.json
+python3 tools/build_solution_export.py \
+  solutions/fs-customer-onboarding/export-manifest.json
 ```
 
-This archive contains only the explicit `bundle.include_paths` list in
-the separately published `export-manifest.json`.
+The existing builder includes the complete solution package plus every
+non-pending resource declared by the manifest. Items marked `pending_capture`
+are intentionally excluded until real evidence exists.
 
-Manual policy, skills, knowledge, learner guide and public-safe review metadata. Only files explicitly listed in the manifest are included.
 
-It is not a native
-Copilot Studio import package, a complete repository mirror, or certification.
+## Import the Copilot Studio solution
 
-An advertised catalog resource is not necessarily a bundle member; the
-manifest's `included_in_bundle` flags distinguish them. Images or guides are
-included only when explicitly listed. Historical files still in the repository
-are not promoted as current evidence.
+- Solution ZIP: [`fs-customer-onboarding-copilot-studio-solution.zip`](fs-customer-onboarding-copilot-studio-solution.zip)
+- Deployment settings: [`fs-customer-onboarding-deployment-settings.json`](fs-customer-onboarding-deployment-settings.json)
+- Export details: [`fs-customer-onboarding-solution-export.json`](fs-customer-onboarding-solution-export.json)
 
-The historical native import ZIP is separate and is not proof that the manual
-skills or knowledge are included. It is withheld from current-workshop
-downloads; the review metadata records its inspected contents. No import,
-new tenant export, or publication was performed.
-See the separately published `evals/manual-pilot-review.json` for the dated
-review findings and remaining gates. Public delivery is a separate gate:
-after push/deploy, fetch the published URLs and compare the manifest hashes.
-Local existence is not live URL verification.
+The ZIP is an unmanaged solution for manual review. Importing it does not
+publish the agent. Review connection references and environment variables
+before enabling any integration.
+
+- Import as an unmanaged solution for manual review.
+- Map connection references and environment variables before enabling integrations.
+- The exported agent remains unpublished unless the target administrator explicitly publishes it.

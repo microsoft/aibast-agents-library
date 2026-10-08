@@ -34,7 +34,7 @@ same unpublished Draft. Publishing is outside this workshop.
 | Uploadable manual skills | `solutions/building-permit-processing/manual/skills/` |
 | Live behavior gate | `tests/demo_cases/building-permit-processing.json` |
 | Isolated Brainstem proof | `solutions/building-permit-processing/evals/transcripts.json` |
-| Copilot Studio proof | `solutions/building-permit-processing/evals/copilot-studio-transcripts.json` |
+| Copilot Studio proof | `solutions/building-permit-processing/evals/copilot-studio-preview-evidence.json` |
 | Manual Preview proof | `solutions/building-permit-processing/evals/manual-build-evidence.json` |
 | Deployment evidence | `solutions/building-permit-processing/evals/deployment-evidence.json` |
 | PowerPoint evidence | `state/onepager_content.json` |
@@ -117,7 +117,7 @@ copied verbatim into the generated tutorial and quest.
 | Copilot Studio deployment settings | `solutions/building-permit-processing/exports/building-permit-processing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/building-permit-processing/exports/building-permit-processing-solution-export.json` |
 
-**Scaffold status:** 108 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 156 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

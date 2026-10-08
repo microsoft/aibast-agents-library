@@ -23,7 +23,7 @@ def load_copy():
 def test_pilot_copy_is_hand_authored_and_complete():
     solutions = load_copy()
     assert PILOTS <= set(solutions)
-    assert len(solutions) == 51
+    assert len(solutions) == 66
     required = {
         "display_name",
         "sales_headline",

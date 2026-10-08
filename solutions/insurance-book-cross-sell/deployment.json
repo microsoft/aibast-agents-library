@@ -1,0 +1,102 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/insurance-book-cross-sell",
+  "display_name": "Book of Business Cross-Sell Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/insurance_book_cross_sell_stack/insurance_book_cross_sell_agent.py",
+  "source_path": "agents/@aibast-agents-library/financial_services_stacks/insurance_book_cross_sell_stack/insurance_book_cross_sell_agent.py",
+  "target_filename": "insurance_book_cross_sell_agent.py",
+  "expected_tool": "BookCrossSellAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "A broker just sent over their book of business. What's in it?",
+    "arguments": {
+      "operation": "book_summary"
+    },
+    "must_call": "BookCrossSellAgent",
+    "must_include": [
+      "10 policy lines",
+      "$363,000 total premium"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "book_summary",
+      "classify_lines",
+      "appetite_match",
+      "unit_confirmation",
+      "broker_confirmation",
+      "routing_plan"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_insurance-book-cross-sell-synthetic-records.md",
+      "manual/knowledge/aibast_insurance-book-cross-sell-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 6,
+    "required_connections": [
+      "Outlook shared intake mailbox (read only)",
+      "Approved appetite guide source",
+      "Dynamics 365 pipeline (write after human approval)"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Book of Business Manual",
+      "bot_id": "321b6f67-eace-4f49-8b60-f09f60cae860",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 6,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Book of Business Cross-Sell",
+      "bot_id": "f11b6dca-764f-4404-a4c0-0ea784db4223",
+      "schema_name": "aibast_BookofBusinessCrossSell",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Book of Business Manual",
+      "schema_name": "cr2bf_bookofbusinessmanual_8cp8MY",
+      "solution_unique_name": "aibast_BookOfBusinessManualBuild",
+      "bot_id": "321b6f67-eace-4f49-8b60-f09f60cae860",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "insurance-book-cross-sell-book-summary",
+    "insurance-book-cross-sell-classify-lines",
+    "insurance-book-cross-sell-appetite-match",
+    "insurance-book-cross-sell-unit-confirmation",
+    "insurance-book-cross-sell-broker-confirmation",
+    "insurance-book-cross-sell-routing-plan"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

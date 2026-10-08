@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PM-01, PM-02, PM-03, PM-04`.
+1. Which locked case IDs did you complete? Expected scope: `PM-01, PM-02, PM-03, PM-04, PM-05, PM-06, PM-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -213,9 +213,12 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 Both Easy lanes preserve every recorded case prompt:
 
 - `PM-01` — As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.
-- `PM-02` — As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.
-- `PM-03` — As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.
+- `PM-02` — As Campaign Manager, show me the personalized multi-wave campaign recommendations for the holiday promotion and the approval gates.
+- `PM-03` — As Campaign Manager, generate the VIP campaign with personalized content and A/B test variants.
 - `PM-04` — As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.
+- `PM-05` — As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval.
+- `PM-06` — As Marketing Director, break down the revenue projection scenarios for the VIP wave.
+- `PM-07` — As Marketing Director, create the executive brief summarizing our holiday campaign strategy.
 
 ## Manual mode — literal browser construction
 

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PI-01, PI-02, PI-03, PI-04`.
+1. Which locked case IDs did you complete? Expected scope: `PI-01, PI-02, PI-03, PI-04, PI-05, PI-06, PI-07, PI-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `PI-02` — What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?
 - `PI-03` — Show the candidate source slots for Clinician A without booking anything.
 - `PI-04` — Prepare a pre-visit readiness summary for Synthetic Patient Alpha.
+- `PI-05` — New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.
+- `PI-06` — Book Sarah Martinez for Tuesday at 2:30 and tell me which intake forms she needs.
+- `PI-07` — Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?
+- `PI-08` — Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.
 
 ## Manual mode — literal browser construction
 

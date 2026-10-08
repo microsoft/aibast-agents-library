@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-10-08T13:15:47.774486+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "insurance-book-cross-sell",
+    "solution": "@aibast-agents-library/insurance-book-cross-sell",
+    "display_name": "Book of Business Manual",
+    "schema_name": "cr2bf_bookofbusinessmanual_8cp8MY",
+    "bot_id": "321b6f67-eace-4f49-8b60-f09f60cae860"
+  },
+  "record": {
+    "name": "Book of Business Manual",
+    "botid": "321b6f67-eace-4f49-8b60-f09f60cae860",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-10-08T03:11:32Z",
+    "publishedon": null,
+    "versionnumber": 20363779,
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"20363779\""
+  },
+  "record_sha256": "28b91f5fe4d12190c944f174514148adead8947b58ebb2bb129a1a9fe5f6da87",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

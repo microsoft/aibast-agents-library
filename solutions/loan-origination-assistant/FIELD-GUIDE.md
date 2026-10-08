@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `LOA-01, LOA-02, LOA-03, LOA-04, LOA-05`.
+1. Which locked case IDs did you complete? Expected scope: `LOA-01, LOA-02, LOA-03, LOA-04, LOA-05, LOA-06, LOA-07, LOA-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -217,6 +217,9 @@ Both Easy lanes preserve every recorded case prompt:
 - `LOA-03` — Build the VA document checklist for Sandra so I can verify the file.
 - `LOA-04` — Which files meet the limited criteria, and did the assistant approve any loan?
 - `LOA-05` — Which conditions are still open on the commercial refinance, and is a closing date promised?
+- `LOA-06` — Process the Martinez mortgage application and give me an eligibility assessment with documentation status.
+- `LOA-07` — Which loan programs are the Martinezes eligible for, and which one do you recommend?
+- `LOA-08` — Give me the complete loan processing summary for the Martinez file.
 
 ## Manual mode — literal browser construction
 

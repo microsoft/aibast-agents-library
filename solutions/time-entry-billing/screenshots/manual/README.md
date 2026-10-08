@@ -1,6 +1,6 @@
 # Literal browser manual-mode evidence
 
-`browserfilm.json` is the ordered authority for 20 real browser frames.
+`browserfilm.json` is the ordered authority for 30 real browser frames.
 `manual-build-walkthrough.gif` and `manual-build-contact-sheet.jpg` summarize those frames when the files are present.
 
 Do not replace a missing capture with a generated image or describe a pending

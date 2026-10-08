@@ -254,10 +254,79 @@ TREND_DATA = {
     "refund_total_usd": [18720.00, 21450.00, 34200.00, 24800.00, 19650.00, 22100.00],
 }
 
+# ---------------------------------------------------------------------------
+# Synthetic Data — escalated VIP complaint (the demo case)
+# ---------------------------------------------------------------------------
+
+ESCALATED_CASES = {
+    "CMP-5001": {
+        "customer": "David Chen",
+        "alias": "chen",
+        "tier": "Diamond VIP",
+        "lifetime_value": 18400,
+        "purchases": 47,
+        "expected_next_12m_revenue": 3200,
+        "churn_risk_pct": 87,
+        "churn_driver": "elevated due to poor service experience",
+        "frustration": "High - 2 failed support calls",
+        "product": "ProBook Elite 15\"",
+        "price": 1899,
+        "days_since_purchase": 3,
+        "issue": "Display flickering, won't boot",
+        "warranty": "Active (2-year standard)",
+        "support_history": ["Call 1: 45 min hold, transferred 3 times", "Call 2: Troubleshooting failed, no resolution"],
+        "upgrade_model": "ProBook Elite Plus",
+        "upgrade_value": 2299,
+        "courier_eta": "4:30 PM today (about 4 hours)",
+        "talking_points": [
+            ["Apologize sincerely", "I'm sorry for your experience, David. We failed your expectations."],
+            ["Acknowledge VIP status", "As a Diamond member with 47 purchases, you deserve better."],
+            ["Present upgrade", "We're sending the Elite Plus model - better processor, more RAM."],
+            ["Emphasize speed", "Courier delivers in 4 hours, not days."],
+            ["Highlight credit", "$200 store credit for the inconvenience."],
+            ["Show commitment", "I'm personally overseeing this. Here's my direct line."],
+        ],
+    },
+}
+
+# Recovery tiers: cost to company = upgrade cost + credit + delivery.
+RECOVERY_TIERS = [
+    {"tier": 1, "name": "Premium Recovery", "replacement": "Upgrade to ProBook Elite Plus ($2,299 value)", "delivery": "Same-day courier delivery", "credit": 200, "return_extension_days": 90, "upgrade_cost": 300, "delivery_cost": 40, "retention_pct": 94, "min_tier": "Diamond VIP"},
+    {"tier": 2, "name": "Standard Plus", "replacement": "Same model replacement", "delivery": "2-day shipping", "credit": 100, "return_extension_days": 0, "upgrade_cost": 0, "delivery_cost": 80, "retention_pct": 65, "min_tier": "Gold"},
+    {"tier": 3, "name": "Standard", "replacement": "Same model replacement only", "delivery": "Standard shipping (5 days)", "credit": 0, "return_extension_days": 0, "upgrade_cost": 0, "delivery_cost": 0, "retention_pct": 35, "min_tier": "Any"},
+]
+
+FOLLOW_UP_PLAN = [
+    ["Today (post-delivery)", "6:00 PM: automated delivery confirmation SMS"],
+    ["Today (post-delivery)", "7:00 PM: \"How's your new laptop?\" email from you"],
+    ["Day 3", "Check-in call from the customer success team"],
+    ["Day 3", "Satisfaction survey (track NPS score)"],
+    ["Day 7", "\"Tech tips for your Elite Plus\" email series begins"],
+    ["Day 7", "Exclusive VIP promotion (accessories 25% off)"],
+    ["Day 30", "Relationship health check"],
+    ["Day 30", "Invitation to VIP appreciation event"],
+]
+
+FOLLOW_UP_MONITORING = ["Support ticket auto-priority for 90 days", "Churn risk score tracking", "Purchase behavior analysis"]
+
+RECOVERY_PROGRAM = {
+    "period": "last quarter",
+    "metrics": [
+        ["Resolution time", "4.2 hours", "3-5 days"],
+        ["Customer retention", "94%", "68%"],
+        ["NPS recovery", "+47 points", "+18 points"],
+        ["Repeat purchase rate", "76% (6 months)", "34%"],
+    ],
+    "quarterly_investment": 127000,
+    "revenue_protected": 4800000,
+    "session_minutes": 12,
+}
+
 APPROVED_PERSONAS = {
     "Customer Service Agent": "empathetic review summaries and clear human-approval next steps",
     "Quality Team": "aggregate defect patterns and product-quality evidence",
     "Loss Prevention Team": "policy exceptions and suspicious aggregate patterns without accusation",
+    "Service Manager": "VIP escalations, recovery options, and follow-up plans for approval",
 }
 
 SAFETY_NOTICE = (
@@ -283,12 +352,39 @@ def _response_header(persona):
 # ---------------------------------------------------------------------------
 
 def _days_since_purchase(ret):
-    """Calculate days between purchase and return request (simplified)."""
-    purchase_parts = ret["purchase_date"].split("-")
-    request_parts = ret["request_date"].split("-")
-    p_days = int(purchase_parts[0]) * 365 + int(purchase_parts[1]) * 30 + int(purchase_parts[2])
-    r_days = int(request_parts[0]) * 365 + int(request_parts[1]) * 30 + int(request_parts[2])
-    return r_days - p_days
+    """Calendar days between purchase and return request."""
+    import datetime
+    p = ret["purchase_date"].split("-")
+    r = ret["request_date"].split("-")
+    start = datetime.date(int(p[0]), int(p[1]), int(p[2]))
+    end = datetime.date(int(r[0]), int(r[1]), int(r[2]))
+    return (end - start).days
+
+
+def _resolve_case(query):
+    """Case ID or customer name; CMP-5001 when empty; None when nothing matches."""
+    if not query:
+        return "CMP-5001"
+    q = str(query).lower().strip()
+    for cid, case in ESCALATED_CASES.items():
+        if cid.lower() in q or case["alias"] in q or q in case["customer"].lower():
+            return cid
+    return None
+
+
+def _tier_cost(tier):
+    return tier["upgrade_cost"] + tier["credit"] + tier["delivery_cost"]
+
+
+def _recommended_tier(case):
+    for tier in RECOVERY_TIERS:
+        if tier["min_tier"] == case["tier"]:
+            return tier
+    return RECOVERY_TIERS[1]
+
+
+def _program_net():
+    return RECOVERY_PROGRAM["revenue_protected"] - RECOVERY_PROGRAM["quarterly_investment"]
 
 
 def _classify_complaint(text):
@@ -334,6 +430,20 @@ def _return_rate_trend():
 # Agent Class
 # ---------------------------------------------------------------------------
 
+_OPERATIONS = [
+    "return_processing",
+    "complaint_classification",
+    "resolution_recommendation",
+    "trend_analysis",
+    "escalation_snapshot",
+    "recovery_tiers",
+    "resolution_execution_plan",
+    "follow_up_plan",
+    "recovery_performance",
+    "executive_summary",
+]
+
+
 class ReturnsComplaintsResolutionAgent(BasicAgent):
     """Agent for automated returns processing and complaint resolution."""
 
@@ -342,16 +452,22 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "description": (
-                f"{__manifest__['description']} Route return queue, case evidence, "
-                "or approval-boundary questions to `return_processing`; complaint "
-                "category questions to `complaint_classification`; policy-grounded "
-                "resolution options to `resolution_recommendation`; and aggregate "
-                "patterns to `trend_analysis`. Always call this tool for an anonymous "
-                "return review; when no return ID is named, omit return_id and return "
-                "the synthetic review queue instead of asking a follow-up question. "
-                "For a request to classify 'this product concern' without quoted text, "
-                "call `complaint_classification` and omit complaint_text; the operation "
-                "uses the packaged canonical synthetic product-quality concern."
+                f"{__manifest__['description']} Always call this tool for returns and "
+                "complaints work. For an escalated customer complaint (the demo case: David "
+                "Chen, Diamond VIP, defective ProBook laptop, case CMP-5001) use "
+                "`escalation_snapshot` first, then `recovery_tiers` for resolution options that "
+                "keep a VIP satisfied, `resolution_execution_plan` when a tier is approved and "
+                "talking points are needed, `follow_up_plan` after the call, `recovery_performance` "
+                "for service recovery performance and financial impact, and `executive_summary` to "
+                "recap. Route return queue, case evidence, or approval-boundary questions to "
+                "`return_processing`; complaint category questions to `complaint_classification`; "
+                "policy-grounded resolution options for a return to `resolution_recommendation`; "
+                "and aggregate patterns to `trend_analysis`. When no ID is named, omit it: the "
+                "escalation operations use CMP-5001 and return_processing returns the synthetic "
+                "review queue, instead of asking a follow-up question. For a request to classify "
+                "'this product concern' without quoted text, call `complaint_classification` and "
+                "omit complaint_text; the operation uses the packaged canonical synthetic "
+                "product-quality concern."
             ),
             "parameters": {
                 "type": "object",
@@ -359,23 +475,33 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
                     "operation": {
                         "type": "string",
                         "description": (
-                            "Required routing key. Use return_processing for an "
-                            "anonymous return review, case evidence, queue, or approval "
-                            "boundary; do not ask for a case ID and do not substitute "
-                            "resolution_recommendation."
+                            "Required routing key. escalation_snapshot for an escalated "
+                            "customer complaint (customer profile, purchase, support history, "
+                            "churn risk); recovery_tiers for resolution options that keep a VIP "
+                            "satisfied; resolution_execution_plan when a tier is approved / "
+                            "'execute Tier 1' and talking points; follow_up_plan for the "
+                            "follow-up plan after the call; recovery_performance for service "
+                            "recovery performance and financial impact; executive_summary for "
+                            "the executive summary / recap. return_processing for an anonymous "
+                            "return review, case evidence, queue, or approval boundary (do not "
+                            "ask for a case ID and do not substitute resolution_recommendation); "
+                            "complaint_classification, resolution_recommendation and "
+                            "trend_analysis as named."
                         ),
-                        "enum": [
-                            "return_processing",
-                            "complaint_classification",
-                            "resolution_recommendation",
-                            "trend_analysis",
-                        ],
+                        "enum": list(_OPERATIONS),
                     },
                     "return_id": {
                         "type": "string",
                         "description": (
                             "Synthetic return ID when a specific case is requested. "
                             "The size-mismatch case is RET-4001."
+                        ),
+                    },
+                    "case_id": {
+                        "type": "string",
+                        "description": (
+                            "Escalated complaint case or customer name: David Chen is CMP-5001 "
+                            "(the default). Omit when the prompt names no case."
                         ),
                     },
                     "complaint_text": {
@@ -523,10 +649,205 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
         lines.append("")
         lines.append("## Key Insights")
         lines.append("")
-        lines.append("- Holiday season (Dec) drove a 44% spike in returns, primarily changed-mind returns")
+        tr = TREND_DATA["total_returns"]
+        spike = round((tr[2] - tr[1]) * 100 / tr[1])
+        hours = TREND_DATA["avg_resolution_hours"]
+        change = round((hours[-1] - hours[0]) * 100 / hours[0], 1)
+        direction = "slower" if change > 0 else "faster"
+        lines.append(f"- Holiday season (Dec) drove a {spike}% spike in returns, primarily changed-mind returns")
         lines.append("- Wrong-size returns consistently highest — consider enhanced size guide implementation")
-        lines.append("- Resolution time improved 8% over the period despite volume increases")
+        lines.append(f"- Resolution time is {abs(change)}% {direction} than at the start of the period ({hours[0]}h -> {hours[-1]}h)")
         lines.append("- CSAT recovered to 4.1 after post-holiday dip to 3.6")
+        return "\n".join(lines)
+
+    # -- escalated VIP complaint (demo video) --------------------------------
+    def _case(self, kwargs):
+        cid = _resolve_case(kwargs.get("case_id"))
+        return cid, ESCALATED_CASES[cid]
+
+    def _header(self, kwargs):
+        return _response_header(kwargs.get("persona") or "Service Manager")
+
+    def _escalation_snapshot(self, **kwargs):
+        cid, c = self._case(kwargs)
+        lines = self._header(kwargs) + [f"# Escalated Complaint {cid}: {c['customer']}", ""]
+        lines.append(
+            f"{c['customer']} is a {c['tier']} customer with ${c['lifetime_value']:,} lifetime value. "
+            "Immediate resolution recommended."
+        )
+        lines.append("")
+        lines.append("**Customer Profile:**")
+        lines.append("")
+        lines.append("| Detail | Information |")
+        lines.append("|---|---|")
+        lines.append(f"| Name | {c['customer']} |")
+        lines.append(f"| Tier | {c['tier']} |")
+        lines.append(f"| Lifetime value | ${c['lifetime_value']:,} ({c['purchases']} purchases) |")
+        lines.append(f"| Issue | Laptop defect (day {c['days_since_purchase']}) |")
+        lines.append(f"| Frustration level | {c['frustration']} |")
+        lines.append("")
+        lines.append("**Purchase Details:**")
+        lines.append("")
+        lines.append(f"- Product: {c['product']} (${c['price']:,})")
+        lines.append(f"- Purchased: {c['days_since_purchase']} days ago")
+        lines.append(f"- Issue: {c['issue']}")
+        lines.append(f"- Warranty: {c['warranty']}")
+        lines.append("")
+        lines.append("**Previous Support:**")
+        lines.append("")
+        for call in c["support_history"]:
+            lines.append(f"- {call}")
+        lines.append("")
+        lines.append(f"**Churn Risk:** {c['churn_risk_pct']}% ({c['churn_driver']})")
+        lines.append("")
+        lines.append("Source: [CRM + Support History + Purchase Records] (synthetic)")
+        lines.append("")
+        lines.append("**Next step:** prepare resolution options for this customer?")
+        return "\n".join(lines)
+
+    def _recovery_tiers(self, **kwargs):
+        cid, c = self._case(kwargs)
+        rec = _recommended_tier(c)
+        lines = self._header(kwargs) + [f"# Resolution Options: {c['customer']} ({cid})", ""]
+        lines.append(f"Three resolution tiers; Tier {rec['tier']} recommended for this {c['tier']} customer to protect retention.")
+        lines.append("")
+        for t in RECOVERY_TIERS:
+            tag = " (Recommended)" if t["tier"] == rec["tier"] else ""
+            lines.append(f"## Tier {t['tier']}: {t['name']}{tag}")
+            lines.append("")
+            lines.append(f"- {t['replacement']}")
+            lines.append(f"- {t['delivery']}")
+            if t["credit"]:
+                lines.append(f"- ${t['credit']} store credit for inconvenience")
+            if t["return_extension_days"]:
+                lines.append(f"- {t['return_extension_days']}-day return extension")
+            if t["tier"] == rec["tier"]:
+                lines.append(f"- Cost to company: ${_tier_cost(t):,} | Retention value: ${c['lifetime_value']:,}")
+            else:
+                lines.append(f"- Cost: ${_tier_cost(t):,} | Retention: {t['retention_pct']}%")
+            lines.append("")
+        roi = c["lifetime_value"] // _tier_cost(rec)
+        lines.append(
+            f"**Recommendation:** Tier {rec['tier']} protects ${c['lifetime_value'] / 1000:.1f}K customer lifetime value "
+            f"for a ${_tier_cost(rec):,} investment ({roi}:1 ROI)."
+        )
+        lines.append("")
+        lines.append("Source: [Customer Analytics + Inventory + Retention Models] (synthetic)")
+        lines.append("")
+        lines.append(f"**Next step:** approve the Tier {rec['tier']} resolution?")
+        return "\n".join(lines)
+
+    def _resolution_execution_plan(self, **kwargs):
+        cid, c = self._case(kwargs)
+        t = _recommended_tier(c)
+        lines = self._header(kwargs) + [f"# Tier {t['tier']} Resolution — ready for authorized execution ({cid})", ""]
+        lines.append(
+            "Approved option prepared. Each action below is ready for you to execute in the order, "
+            "shipping and loyalty systems; the agent has not dispatched, credited or generated anything."
+        )
+        lines.append("")
+        lines.append("| Action | Detail | Status |")
+        lines.append("|---|---|---|")
+        lines.append(f"| Dispatch upgrade | {c['upgrade_model']} (${c['upgrade_value']:,} value) | Ready to dispatch |")
+        lines.append(f"| Courier | Same-day delivery, expected {c['courier_eta']} | Ready to book |")
+        lines.append(f"| Store credit | ${t['credit']} to the customer account | Ready to apply |")
+        lines.append("| Return label | For the defective unit | Ready to generate |")
+        lines.append(f"| Return extension | {t['return_extension_days']} days | Ready to activate |")
+        lines.append("")
+        lines.append("**Your Talking Points:**")
+        lines.append("")
+        n = 0
+        for label, text in c["talking_points"]:
+            n += 1
+            lines.append(f"{n}. {label} - \"{text}\"")
+        lines.append("")
+        lines.append("Source: [Service Recovery Playbook + CRM] (synthetic)")
+        lines.append("")
+        lines.append("**Next step:** make the call once the actions are confirmed.")
+        return "\n".join(lines)
+
+    def _follow_up_plan(self, **kwargs):
+        cid, c = self._case(kwargs)
+        lines = self._header(kwargs) + [f"# Follow-Up Plan: {c['customer']} ({cid})", ""]
+        lines.append("Proposed touchpoints to confirm satisfaction and prevent future issues; ready for you to schedule.")
+        lines.append("")
+        current = ""
+        for when, step in FOLLOW_UP_PLAN:
+            if when != current:
+                lines.append(f"**{when}:**")
+                current = when
+            lines.append(f"- {step}")
+        lines.append("")
+        lines.append("**Monitoring to activate:**")
+        lines.append("")
+        for item in FOLLOW_UP_MONITORING:
+            lines.append(f"- {item}")
+        lines.append("")
+        lines.append("Nothing has been scheduled or sent by the agent.")
+        lines.append("")
+        lines.append("Source: [Customer Success Automation + CRM] (synthetic)")
+        lines.append("")
+        lines.append("**Next step:** see the service recovery metrics?")
+        return "\n".join(lines)
+
+    def _recovery_performance(self, **kwargs):
+        cid, c = self._case(kwargs)
+        t = _recommended_tier(c)
+        cost = _tier_cost(t)
+        pr = RECOVERY_PROGRAM
+        lines = self._header(kwargs) + ["# Service Recovery Performance and Financial Impact", ""]
+        lines.append(f"**Program Performance ({pr['period']}):**")
+        lines.append("")
+        lines.append("| Metric | Result | Industry Avg |")
+        lines.append("|---|---|---|")
+        for metric, result, avg in pr["metrics"]:
+            lines.append(f"| {metric} | {result} | {avg} |")
+        lines.append("")
+        lines.append(f"**Financial Impact - This Case ({cid}):**")
+        lines.append("")
+        lines.append(f"- Investment: ${cost:,} (upgrade ${t['upgrade_cost']} + credit ${t['credit']} + courier ${t['delivery_cost']})")
+        lines.append(f"- Customer lifetime value protected: ${c['lifetime_value']:,}")
+        lines.append(f"- Expected next 12-month revenue: ${c['expected_next_12m_revenue']:,}")
+        lines.append(
+            f"- ROI: {c['lifetime_value'] // cost}:1 on retention, "
+            f"{round(c['expected_next_12m_revenue'] / cost)}:1 on near-term revenue"
+        )
+        lines.append("")
+        lines.append("**Program Economics:**")
+        lines.append("")
+        lines.append(f"- Quarterly recovery investment: ${pr['quarterly_investment']:,}")
+        lines.append(f"- Revenue protected: ${pr['revenue_protected'] / 1000000:.1f}M")
+        lines.append(f"- Net value: ${_program_net() / 1000000:.2f}M")
+        lines.append("")
+        lines.append("Source: [Service Analytics + Financial Data] (synthetic)")
+        lines.append("")
+        lines.append("**Next step:** generate the executive summary for leadership?")
+        return "\n".join(lines)
+
+    def _executive_summary(self, **kwargs):
+        cid, c = self._case(kwargs)
+        t = _recommended_tier(c)
+        cost = _tier_cost(t)
+        pr = RECOVERY_PROGRAM
+        lines = self._header(kwargs) + [f"# Executive Summary: Service Recovery {cid} (draft for leadership)", ""]
+        lines.append(f"What this {pr['session_minutes']}-minute session prepared:")
+        lines.append("")
+        lines.append(f"- Customer analysis — {c['customer']}: {c['tier']}, ${c['lifetime_value'] / 1000:.1f}K lifetime value, {c['churn_risk_pct']}% churn risk")
+        lines.append(f"- Solution designed — Tier {t['tier']} {t['name'].lower()}: upgrade + same-day delivery + ${t['credit']} credit")
+        lines.append(f"- Execution — {c['upgrade_model']} dispatch and 4-hour courier prepared for authorized execution")
+        lines.append("- Call support — talking points, apology framework, commitment statements")
+        lines.append("- Follow-up — 30-day touchpoint series, satisfaction tracking, VIP monitoring (proposed)")
+        lines.append(f"- Performance — {pr['metrics'][1][1]} retention, {c['lifetime_value'] // cost}:1 ROI, ${_program_net() / 1000000:.2f}M quarterly program value")
+        lines.append("")
+        lines.append(
+            f"**Customer Outcome:** issue resolved in about 4 hours vs the 3-5 day standard once the actions are "
+            f"executed; upgraded product, ${t['credit']} credit, personal manager relationship."
+        )
+        lines.append(f"**Business Value:** ${c['lifetime_value']:,} customer retained for a ${cost:,} investment, {c['lifetime_value'] // cost}:1 ROI model.")
+        lines.append("")
+        lines.append("Draft summary ready for you to share in Teams; nothing has been sent.")
+        lines.append("")
+        lines.append("Source: [All connected systems] (synthetic)")
         return "\n".join(lines)
 
     def perform(self, **kwargs):
@@ -544,7 +865,19 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
             "complaint_classification": self._complaint_classification,
             "resolution_recommendation": self._resolution_recommendation,
             "trend_analysis": self._trend_analysis,
+            "escalation_snapshot": self._escalation_snapshot,
+            "recovery_tiers": self._recovery_tiers,
+            "resolution_execution_plan": self._resolution_execution_plan,
+            "follow_up_plan": self._follow_up_plan,
+            "recovery_performance": self._recovery_performance,
+            "executive_summary": self._executive_summary,
         }
+        case_query = kwargs.get("case_id")
+        if case_query and _resolve_case(case_query) is None:
+            return (
+                f"Unknown case_id `{case_query}`. Valid synthetic cases: "
+                f"{', '.join(ESCALATED_CASES)} (David Chen)"
+            )
         handler = dispatch.get(operation)
         if not handler:
             return f"Unknown operation `{operation}`. Valid: {', '.join(dispatch.keys())}"
@@ -565,4 +898,6 @@ if __name__ == "__main__":
     print(agent.perform(operation="resolution_recommendation", return_id="RET-4001"))
     print("\n" + "=" * 80)
     print(agent.perform(operation="trend_analysis"))
-    print("=" * 80)
+    for op in _OPERATIONS[4:]:
+        print("=" * 80)
+        print(agent.perform(operation=op))

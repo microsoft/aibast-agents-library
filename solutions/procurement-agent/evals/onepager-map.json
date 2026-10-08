@@ -10,7 +10,11 @@
       "purchase_request",
       "vendor_comparison",
       "approval_routing",
-      "spend_analysis"
+      "spend_analysis",
+      "draft_purchase_order",
+      "expedite_approval",
+      "budget_impact",
+      "draft_rfq"
     ],
     "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
   },
@@ -18,26 +22,35 @@
     {
       "advertised_promise": "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
       "operations": [
-        "vendor_comparison"
+        "vendor_comparison",
+        "draft_rfq"
       ],
       "demo_cases": [
-        "PROC-02"
+        "PROC-02",
+        "PROC-08"
       ],
       "synthetic_evidence": [
         "AWS",
         "Azure",
-        "Ratings and terms are comparison evidence"
+        "Ratings and terms are comparison evidence",
+        "RFQ-2024-FRN-0145",
+        "Sustainability: 15%",
+        "No RFQ was distributed"
       ]
     },
     {
       "advertised_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
       "operations": [
         "purchase_request",
-        "approval_routing"
+        "approval_routing",
+        "draft_purchase_order",
+        "expedite_approval"
       ],
       "demo_cases": [
         "PROC-01",
-        "PROC-03"
+        "PROC-03",
+        "PROC-05",
+        "PROC-06"
       ],
       "synthetic_evidence": [
         "PR-5001",
@@ -45,21 +58,32 @@
         "CFO",
         "PR-5001",
         "CFO",
-        "does not record an approval"
+        "does not record an approval",
+        "PO-2024-ENG-0892",
+        "$81,893",
+        "No purchase order is created",
+        "Sarah Thompson",
+        "4 hours 23 minutes",
+        "No notification was sent"
       ]
     },
     {
       "advertised_promise": "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending",
       "operations": [
-        "spend_analysis"
+        "spend_analysis",
+        "budget_impact"
       ],
       "demo_cases": [
-        "PROC-04"
+        "PROC-04",
+        "PROC-07"
       ],
       "synthetic_evidence": [
         "Software",
         "$60,000",
-        "No purchase order is created"
+        "No purchase order is created",
+        "$80,607",
+        "82% committed",
+        "$12,400"
       ]
     }
   ]

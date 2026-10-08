@@ -1,6 +1,6 @@
 mcs.metadata:
-  componentName: "pattern-detection"
-  description: "Use for fraud-pattern hypotheses questions in the Fraud Detection and Alert Agent synthetic pilot."
+  componentName: pattern-detection
+  description: Use for fraud-pattern hypotheses questions in the Fraud Detection and Alert Agent synthetic pilot.
 kind: InlineAgentSkill
 content: |
   ---
@@ -25,6 +25,6 @@ content: |
 
   Persona: SIU Investigator
 
-  Prompt: Which active case resembles a coordinated fraud pattern, and what makes that only a hypothesis?
+  Prompt: Yes, show me the pattern analysis and connected activity.
 
-  Expected synthetic evidence: INV-2025-301, Card Cloning.
+  Expected synthetic evidence: 3 organized fraud rings, 94%, INV-2025-301.

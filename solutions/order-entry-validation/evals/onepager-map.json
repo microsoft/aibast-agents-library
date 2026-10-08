@@ -1,0 +1,127 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/order-entry-validation",
+  "onepager": "54. Order Entry Validation Agent one-pager.pptx",
+  "source_slide_sha256": "c6d72ed8955f7352fc6eec084243a6cfe2c56b83b4062fc0d9fe6402d779152e",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/manufacturing_stacks/order_entry_validation_stack/order_entry_validation_agent.py",
+    "implemented_operations": [
+      "order_queue",
+      "extract_po",
+      "quote_validation",
+      "configuration_check",
+      "order_classification",
+      "draft_sales_order",
+      "queue_review"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Shows the pending purchase-order queue with the matched quote and what to watch for on each",
+      "operations": [
+        "order_queue"
+      ],
+      "demo_cases": [
+        "OE-01"
+      ],
+      "synthetic_evidence": [
+        "5 purchase orders",
+        "$221,900",
+        "Woodgrove Water Authority"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Reads each purchase order into structured header and line fields with nothing inferred",
+      "operations": [
+        "extract_po"
+      ],
+      "demo_cases": [
+        "OE-02"
+      ],
+      "synthetic_evidence": [
+        "1200 Reservoir Rd, Dock 3",
+        "Hannah Cole",
+        "PO total"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Validates prices, terms, ship-to and contact against the accepted quote with a per-line price tolerance",
+      "operations": [
+        "quote_validation"
+      ],
+      "demo_cases": [
+        "OE-03"
+      ],
+      "synthetic_evidence": [
+        "$410 on the PO vs $395 on the quote",
+        "Price tolerance is 1%",
+        "Mismatch"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Catches incompatible pairings, missing mandatory kits and region-restricted configurations before entry",
+      "operations": [
+        "configuration_check"
+      ],
+      "demo_cases": [
+        "OE-04"
+      ],
+      "synthetic_evidence": [
+        "SH-H2S needs KIT-SAFE",
+        "1 of 2 configuration rules pass",
+        "Never enter this order with the wrong configuration"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Classifies region, order type, order class and sales channel from the PO and the quote",
+      "operations": [
+        "order_classification"
+      ],
+      "demo_cases": [
+        "OE-05"
+      ],
+      "synthetic_evidence": [
+        "STD-DOM",
+        "Public sector",
+        "Order Class"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Prepares a draft sales order at quote prices with every exception listed for the specialist",
+      "operations": [
+        "draft_sales_order"
+      ],
+      "demo_cases": [
+        "OE-06"
+      ],
+      "synthetic_evidence": [
+        "Not Submitted",
+        "$27,940",
+        "nothing was submitted to the ERP"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Reviews the whole queue so ready orders go in first and every exception has a named reason",
+      "operations": [
+        "queue_review"
+      ],
+      "demo_cases": [
+        "OE-07"
+      ],
+      "synthetic_evidence": [
+        "1 of 5 purchase orders are ready",
+        "Lucerne Labs",
+        "Needs fix"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

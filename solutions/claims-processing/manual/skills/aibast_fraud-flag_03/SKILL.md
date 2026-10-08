@@ -20,6 +20,6 @@ Surfaces explainable fraud indicators without declaring fraud or changing covera
 
 Persona: SIU Investigator
 
-Prompt: Which claim crosses the SIU review threshold, and does that prove fraud?
+Prompt: Yes, show me the fraud detection results and high-risk claims.
 
-Expected synthetic evidence: CLM-2025-7003, SIU Referrals.
+Expected synthetic evidence: 89 suspicious claims, CLM-78234, $890K.

@@ -20,6 +20,6 @@ Builds a review-ready case summary and proposed queue without taking a protectiv
 
 Persona: Risk Leader
 
-Prompt: Prepare the critical wire case for SIU review and tell me what actions actually occurred.
+Prompt: Yes, create investigation cases and take protective action.
 
-Expected synthetic evidence: INV-2025-302, no external action.
+Expected synthetic evidence: FRD-2024-1847, Ready for authorized execution, no external action.

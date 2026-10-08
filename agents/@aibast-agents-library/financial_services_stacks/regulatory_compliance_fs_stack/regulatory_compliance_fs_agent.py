@@ -2,34 +2,30 @@
 Regulatory Compliance Agent — Financial Services Stack
 
 Implements the published AIBAST one-pager "Regulatory Compliance Agent"
-(advertised solution #40) end to end. The advertised scenario is an investment
-firm validating compliance across thousands of executed trades, and the
-one-pager promises exactly four things:
+(advertised solution #40) and its demo session: a Chief Compliance Officer
+reviews last quarter's 12,000 trades for MiFID II compliance, works the 24
+transaction-report exceptions, stages the batch amendment, closes the algo
+documentation gaps on Strategy #5, checks best execution by venue, tracks
+trader certifications and ends with an executive report.
+
+The one-pager promises:
 
   1. Scan all executed trades for reporting accuracy, required fields, and
-     best-execution performance            -> operation "trade_surveillance"
-  2. Flag missing or outdated documentation -> operation "documentation_review"
-  3. Automate corrections and submissions
-     to the regulatory portal               -> operation "remediation_submission"
-  4. Identify upcoming certification
-     expirations and enroll traders         -> operation "certification_tracker"
+     best-execution performance   -> "trade_surveillance", "best_execution_analysis"
+  2. Flag missing or outdated documentation -> "documentation_review"
+  3. Automate corrections and submissions to the regulatory portal
+                                   -> "remediation_submission" (staged, never transmitted)
+  4. Identify upcoming certification expirations and enroll traders
+                                   -> "certification_tracker"
 
-plus the Chief Compliance Officer roll-up the demo opens on
-("compliance_dashboard", the default).
+plus the roll-ups "compliance_dashboard" (the default) and "executive_summary".
 
-Personas served: Chief Compliance Officer, Compliance Manager, Trading Desk
-Supervisor. Regime: MiFID II — RTS 22 transaction reporting, RTS 27/28 best
-execution.
-
-Where a real deployment would connect to an order management system, an
-Approved Reporting Mechanism (ARM) and an LMS, this agent uses a synthetic data
-layer so it runs with no configuration. All dates are computed relative to the
-day it runs, so a demo never goes stale.
+Everything is a fixed synthetic quarter: no current-date dependence, no
+connection to an order management system, ARM, FCA portal or LMS.
 """
 
 import os
 import sys
-from datetime import date, timedelta
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
 from basic_agent import BasicAgent
@@ -37,7 +33,7 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/fs-regulatory-compliance",
-    "version": "2.0.2",
+    "version": "2.1.0",
     "display_name": "Regulatory Compliance Agent",
     "description": "Automates compliance monitoring and regulatory reporting to achieve proactive risk management with real-time surveillance.",
     "author": "AIBAST",
@@ -49,307 +45,208 @@ __manifest__ = {
     "dependencies": ["@rapp/basic-agent"],
 }
 
-TODAY = date.today()
-
-
-def _d(offset_days):
-    return (TODAY + timedelta(days=offset_days)).isoformat()
-
-
 # ---------------------------------------------------------------------------
-# Synthetic domain data — an investment firm's trading desk
+# Synthetic domain data — one quarter on a trading desk
 # ---------------------------------------------------------------------------
 
-# The reporting entity. A real deployment reads this from the firm's MiFIR
-# registration; the LEI is correctly formatted (20 char, ISO 17442) but synthetic.
 EXECUTING_ENTITY = {
     "name": "Northgate Asset Management LLP",
     "lei": "549300XKQZ2P4NLK7T18",
-    "mifir_status": "Investment firm — MiFID II Article 26 reporting entity",
-    "arm": "Unavista ARM",
-    "nca": "FCA (UK) / AFM (NL) passporting",
+    "regulator": "FCA",
+    "portal": "FCA transaction reporting via the firm's ARM",
 }
 
-# MiFID II RTS 22 transaction reporting. Field numbers are the real Annex I
-# Table 2 positions a compliance officer reads off a rejection notice, so the
-# agent's output can be reconciled against an actual ARM response file.
-RTS22_FIELDS = {
-    "transaction_reference": (2, "Transaction Reference Number"),
-    "executing_entity_lei": (4, "Executing entity identification code"),
-    "buyer_lei": (7, "Buyer identification code"),
-    "seller_lei": (16, "Seller identification code"),
-    "trading_datetime": (28, "Trading date time"),
-    "quantity": (30, "Quantity"),
-    "price": (33, "Price"),
-    "trading_venue": (36, "Venue"),
-    "instrument_id": (41, "Instrument identification code"),
-    "investment_decision_id": (57, "Investment decision within firm"),
-    "execution_decision_id": (59, "Execution within firm"),
-}
-RTS22_REQUIRED_FIELDS = list(RTS22_FIELDS)
-
-# ARM rejection codes as they come back on a MiFIR response file.
-ARM_REJECTION_CODES = {
-    "missing_field": ("CON-412", "Mandatory field absent or empty"),
-    "venue_mismatch": ("CON-190", "Venue does not match instrument reference data (FIRDS)"),
-    "not_submitted": ("LATE-026", "Transaction not reported by T+1 (MiFIR Art. 26(1))"),
+DESK_SUMMARY = {
+    "period": "last quarter",
+    "trades": 12000,
+    "client_trades": 8432,
+    "traders": 12,
+    "market_making_uptime_pct": 98.5,
+    "market_making_obligation_pct": 95.0,
+    "batch_minutes": 8,
+    "penalty_exposure_avoided_gbp": 847000,
 }
 
-# Counterparties, by LEI. Correctly formatted, synthetic.
-COUNTERPARTIES = {
-    "5493001KJTIIGC8Y1R12": "Meridian Pension Trustees Ltd",
-    "213800QILIUD4ROSU703": "Halden Life Assurance plc",
-    "549300ZFEEJ2IP5VME73": "Cavendish Multi-Asset Fund SICAV",
-    "894500PL5FUZ1QG6JS64": "Ashcombe Endowment Trust",
-}
-
-# Where each instrument is admitted to trading. A report naming a venue the
-# instrument is not admitted on is the "venue mismatch" the one-pager calls out.
-INSTRUMENT_VENUES = {
-    "GB00BH4HKS39": {"name": "Vodafone Group PLC", "admitted": ["XLON", "CHIX", "BATE"], "asset_class": "Equity"},
-    "DE0007164600": {"name": "SAP SE", "admitted": ["XETR", "CHIX", "TQEX"], "asset_class": "Equity"},
-    "FR0000120271": {"name": "TotalEnergies SE", "admitted": ["XPAR", "CHIX"], "asset_class": "Equity"},
-    "NL0011794037": {"name": "Koninklijke Ahold Delhaize", "admitted": ["XAMS", "CHIX"], "asset_class": "Equity"},
-    "XS2434891912": {"name": "Iberdrola 1.875% 2030", "admitted": ["XLON"], "asset_class": "Bond"},
-}
-
-# Executed trades. Each carries what the desk actually reported.
-TRADES = [
-    {"ref": "TRD-88104", "instrument": "GB00BH4HKS39", "venue": "XLON", "side": "BUY",
-     "quantity": 145000, "price": 74.82, "arrival_price": 74.79, "benchmark_vwap": 74.86,
-     "executed": _d(-1), "exec_time": "09:14:22.418733", "counterparty": "5493001KJTIIGC8Y1R12",
-     "trader": "T-2041", "algo": "ALGO-VWAP-EU", "missing_fields": [], "reported": True},
-    {"ref": "TRD-88117", "instrument": "DE0007164600", "venue": "XETR", "side": "SELL",
-     "quantity": 22500, "price": 141.60, "arrival_price": 141.63, "benchmark_vwap": 141.58,
-     "executed": _d(-1), "exec_time": "11:02:57.996210", "counterparty": "213800QILIUD4ROSU703",
-     "trader": "T-2041", "algo": "ALGO-IS-DE", "missing_fields": ["investment_decision_id"],
-     "source_fields": {"investment_decision_id": "T-2041"}, "reported": True},
-    {"ref": "TRD-88129", "instrument": "FR0000120271", "venue": "XETR", "side": "BUY",
-     "quantity": 61000, "price": 58.14, "arrival_price": 58.12, "benchmark_vwap": 58.15,
-     "executed": _d(-2), "exec_time": "14:38:05.113904", "counterparty": "549300ZFEEJ2IP5VME73",
-     "trader": "T-2107", "algo": "ALGO-VWAP-EU", "missing_fields": [],
-     "verified_venue": "XPAR", "reported": True},
-    # The problem trade the demo lands on: incomplete, unlodged, and a genuine
-    # best-execution outlier all at once.
-    {"ref": "TRD-88133", "instrument": "NL0011794037", "venue": "XAMS", "side": "BUY",
-     "quantity": 38000, "price": 29.44, "arrival_price": 29.39, "benchmark_vwap": 29.40,
-     "executed": _d(-2), "exec_time": "16:51:44.207518", "counterparty": "894500PL5FUZ1QG6JS64",
-     "trader": "T-2107", "algo": "ALGO-IS-DE", "missing_fields": ["execution_decision_id", "buyer_lei"],
-     "source_fields": {"execution_decision_id": "T-2107", "buyer_lei": EXECUTING_ENTITY["lei"]},
-     "reported": False},
-    {"ref": "TRD-88146", "instrument": "XS2434891912", "venue": "XLON", "side": "SELL",
-     "quantity": 4000000, "price": 96.35, "arrival_price": 96.36, "benchmark_vwap": 96.34,
-     "executed": _d(-3), "exec_time": "10:07:31.660042", "counterparty": "213800QILIUD4ROSU703",
-     "trader": "T-2233", "algo": None, "missing_fields": [], "reported": True},
-    {"ref": "TRD-88150", "instrument": "GB00BH4HKS39", "venue": "TQEX", "side": "SELL",
-     "quantity": 96000, "price": 74.51, "arrival_price": 74.60, "benchmark_vwap": 74.55,
-     "executed": _d(-3), "exec_time": "15:22:09.874311", "counterparty": "5493001KJTIIGC8Y1R12",
-     "trader": "T-2233", "algo": "ALGO-DARK-EU", "missing_fields": [],
-     "verified_venue": "XLON", "reported": True},
-    {"ref": "TRD-88162", "instrument": "DE0007164600", "venue": "CHIX", "side": "BUY",
-     "quantity": 18700, "price": 142.05, "arrival_price": 142.02, "benchmark_vwap": 142.07,
-     "executed": _d(-4), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2041", "algo": "ALGO-IS-DE",
-     "missing_fields": [], "reported": True},
-    {"ref": "TRD-88178", "instrument": "FR0000120271", "venue": "XPAR", "side": "SELL",
-     "quantity": 74500, "price": 57.88, "arrival_price": 57.90, "benchmark_vwap": 57.86,
-     "executed": _d(-4), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2107", "algo": "ALGO-VWAP-EU",
-     "missing_fields": [], "reported": True},
-    {"ref": "TRD-88184", "instrument": "GB00BH4HKS39", "venue": "CHIX", "side": "BUY",
-     "quantity": 52000, "price": 74.66, "arrival_price": 74.64, "benchmark_vwap": 74.68,
-     "executed": _d(-5), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2041", "algo": "ALGO-VWAP-EU",
-     "missing_fields": [], "reported": True},
-    {"ref": "TRD-88191", "instrument": "NL0011794037", "venue": "XAMS", "side": "SELL",
-     "quantity": 27400, "price": 29.51, "arrival_price": 29.52, "benchmark_vwap": 29.49,
-     "executed": _d(-5), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2107", "algo": "ALGO-VWAP-EU",
-     "missing_fields": [], "reported": True},
-    {"ref": "TRD-88203", "instrument": "DE0007164600", "venue": "XETR", "side": "BUY",
-     "quantity": 31200, "price": 141.88, "arrival_price": 141.85, "benchmark_vwap": 141.90,
-     "executed": _d(-6), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2041", "algo": "ALGO-VWAP-EU",
-     "missing_fields": [], "reported": True},
-    {"ref": "TRD-88215", "instrument": "XS2434891912", "venue": "XLON", "side": "BUY",
-     "quantity": 2500000, "price": 96.42, "arrival_price": 96.40, "benchmark_vwap": 96.43,
-     "executed": _d(-6), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2233", "algo": None,
-     "missing_fields": [], "reported": True},
-    {"ref": "TRD-88228", "instrument": "FR0000120271", "venue": "CHIX", "side": "BUY",
-     "quantity": 44300, "price": 58.06, "arrival_price": 58.04, "benchmark_vwap": 58.08,
-     "executed": _d(-7), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2107", "algo": "ALGO-VWAP-EU",
-     "missing_fields": [], "reported": True},
+# Transaction-report exceptions by category: [issue, trades, auto_fix, priority]
+ISSUE_CATEGORIES = [
+    ["Venue ID mismatch", 11, True, "High"],
+    ["Counterparty LEI", 8, True, "High"],
+    ["Timestamp format", 4, True, "Medium"],
+    ["Manual review needed", 1, False, "Critical"],
 ]
 
-# Algorithm and strategy documentation. MiFID II Art. 17 / RTS 6 requires an
-# algo to be documented and re-validated before it runs.
-ALGO_DOCUMENTATION = {
-    "ALGO-VWAP-EU": {"name": "VWAP Europe", "owner": "Quant Execution", "version": "4.2",
-                     "last_validated": _d(-95), "revalidation_days": 365, "go_live": _d(-400),
-                     "docs": ["strategy_description", "risk_controls", "kill_switch_test", "conformance_test"]},
-    "ALGO-IS-DE": {"name": "Implementation Shortfall DE", "owner": "Quant Execution", "version": "2.9",
-                   "last_validated": _d(-402), "revalidation_days": 365, "go_live": _d(-720),
-                   "docs": ["strategy_description", "risk_controls"]},
-    "ALGO-POV-NL": {"name": "Percentage of Volume NL", "owner": "Quant Execution", "version": "1.4",
-                    "last_validated": None, "revalidation_days": 365, "go_live": _d(6),
-                    "docs": ["strategy_description"]},
-    "ALGO-DARK-EU": {"name": "Dark Aggregator Europe", "owner": "Quant Execution", "version": "3.1",
-                     "last_validated": _d(-310), "revalidation_days": 365, "go_live": _d(-500),
-                     "docs": ["strategy_description", "risk_controls", "kill_switch_test", "conformance_test"]},
+# Sample exceptions behind the categories (the full 24 live in the trade repository).
+EXCEPTION_SAMPLES = [
+    {"trade_id": "APX-2024-8847", "issue": "Manual review needed", "detail": "Counterparty LEI expired during settlement", "client": "Standard National Bank", "resolution": "Updated LEI required from client"},
+    {"trade_id": "APX-2024-8812", "issue": "Venue ID mismatch", "detail": "Reported XPAR; instrument admitted on XLON", "client": "Meridian Pension Trustees", "resolution": "Correct venue to XLON"},
+    {"trade_id": "APX-2024-8829", "issue": "Counterparty LEI", "detail": "Buyer LEI field empty", "client": "Halden Life Assurance", "resolution": "Populate LEI from client master"},
+    {"trade_id": "APX-2024-8853", "issue": "Timestamp format", "detail": "Trading time not in UTC microseconds", "client": "Cavendish Multi-Asset Fund", "resolution": "Reformat to ISO 8601 UTC"},
+]
+
+ALGO_STRATEGIES = [
+    {"number": 1, "id": "ALGO-VWAP-EU", "name": "VWAP Europe", "status": "live", "docs": ["pre_trade_testing", "stress_scenarios", "kill_switch_test", "audit_trail"]},
+    {"number": 2, "id": "ALGO-IS-EU", "name": "Implementation Shortfall", "status": "live", "docs": ["pre_trade_testing", "stress_scenarios", "kill_switch_test", "audit_trail"]},
+    {"number": 3, "id": "ALGO-POV-EU", "name": "Percentage of Volume", "status": "live", "docs": ["pre_trade_testing", "stress_scenarios", "kill_switch_test", "audit_trail"]},
+    {"number": 4, "id": "ALGO-DARK-EU", "name": "Dark Aggregator", "status": "live", "docs": ["pre_trade_testing", "stress_scenarios", "kill_switch_test", "audit_trail"]},
+    {"number": 5, "id": "ALGO-MOM-05", "name": "Momentum algo", "status": "pre-deployment", "docs": ["kill_switch_test", "audit_trail"],
+     "deadline": "End of week", "revenue_at_risk_gbp": 2100000,
+     "actions": ["Complete 12-month backtest with volatility scenarios",
+                 "Document circuit breaker triggers (currently at 5% daily loss)",
+                 "Obtain Quant team sign-off",
+                 "File with compliance register"]},
+]
+
+REQUIRED_ALGO_DOCS = [
+    ["pre_trade_testing", "Pre-trade testing"],
+    ["stress_scenarios", "Stress scenarios"],
+    ["kill_switch_test", "Kill switch test"],
+    ["audit_trail", "Audit trail"],
+]
+
+# [metric, result, benchmark, unit, higher_is_better]
+BEST_EX_METRICS = [
+    ["Within best bid/offer", 97.0, 95.0, "%", True],
+    ["Optimal venue selection", 94.0, 90.0, "%", True],
+    ["Average slippage", 2.3, 3.0, " bps", False],
+    ["Execution speed", 42.0, 100.0, " ms", False],
+]
+
+VENUE_PERFORMANCE = [
+    ["LSE (London)", 4247, 98.2],
+    ["BATS Europe", 2156, 96.8],
+    ["Chi-X", 1589, 95.1],
+    ["Turquoise", 440, 93.4],
+]
+
+TRADERS = [
+    {"name": "James Morrison", "certification": "MiFID II Algo", "expires_in_days": 15, "action": "Enrollment in next week's recertification prepared"},
+    {"name": "Sarah Chen", "certification": "Best Execution", "expires_in_days": 22, "action": "Reminder drafted, session proposed"},
+    {"name": "Michael Torres", "certification": "Transaction Reporting", "expires_in_days": 28, "action": "Reminder drafted, session proposed"},
+    {"name": "Lisa Wong", "certification": "Market Abuse", "expires_in_days": 180, "action": "None needed"},
+]
+
+TRAINING = {
+    "fully_current": 11,
+    "assessment_avg_pct": 94,
+    "next_refresh_days": 45,
+    "aml_current": 12,
+    "penalty_per_uncertified_gbp": 50000,
 }
 
-REQUIRED_ALGO_DOCS = ["strategy_description", "risk_controls", "kill_switch_test", "conformance_test"]
+CERT_WINDOW_DAYS = 30
 
-TRADERS = {
-    "T-2041": {"name": "Trader 2041", "desk": "EU Equities", "supervisor": "Desk Supervisor — EU Equities",
-               "certifications": {"MiFID II Knowledge & Competence": _d(24),
-                                  "Market Abuse Regulation": _d(210),
-                                  "Algo Trading Certification": _d(-12)}},
-    "T-2107": {"name": "Trader 2107", "desk": "EU Equities", "supervisor": "Desk Supervisor — EU Equities",
-               "certifications": {"MiFID II Knowledge & Competence": _d(88),
-                                  "Market Abuse Regulation": _d(41)}},
-    "T-2233": {"name": "Trader 2233", "desk": "Credit", "supervisor": "Desk Supervisor — Credit",
-               "certifications": {"MiFID II Knowledge & Competence": _d(300),
-                                  "Market Abuse Regulation": _d(-3),
-                                  "Bond Market Conduct": _d(150)}},
-}
+_OPERATIONS = [
+    "compliance_dashboard",
+    "trade_surveillance",
+    "documentation_review",
+    "remediation_submission",
+    "certification_tracker",
+    "best_execution_analysis",
+    "executive_summary",
+]
 
-# Course sessions the agent can enrol a trader into.
-TRAINING_CALENDAR = {
-    "MiFID II Knowledge & Competence": [_d(9), _d(30), _d(58)],
-    "Market Abuse Regulation": [_d(5), _d(26), _d(54)],
-    "Algo Trading Certification": [_d(12), _d(40)],
-    "Bond Market Conduct": [_d(19), _d(47)],
-}
-
-# Best execution: RTS 27/28 tolerance in basis points before a fill is outlier.
-BEST_EX_TOLERANCE_BPS = 5.0
-CERT_WARNING_DAYS = 90
-REGULATORY_PORTAL = "ARM — Approved Reporting Mechanism (T+1 submission window)"
-
+_BOUNDARY = (
+    "This synthetic pilot identifies at-risk areas and control gaps only. It cannot determine whether an "
+    "audit will pass or fail and does not provide legal or regulatory advice."
+)
 
 # ---------------------------------------------------------------------------
-# Helpers — the real computation behind every advertised bullet
+# Helpers
 # ---------------------------------------------------------------------------
 
-def _days_until(iso):
-    return (date.fromisoformat(iso) - TODAY).days
+def _exceptions():
+    total = 0
+    for row in ISSUE_CATEGORIES:
+        total += row[1]
+    return total
 
 
-def _slippage_bps(trade):
-    """Signed execution slippage against arrival price, in basis points.
-
-    Positive = worse than arrival for the client. This is the best-execution
-    performance measure the one-pager promises to surface.
-    """
-    arrival = trade["arrival_price"]
-    if not arrival:
-        return 0.0
-    diff = trade["price"] - arrival
-    if trade["side"] == "SELL":
-        diff = -diff
-    return round((diff / arrival) * 10000, 2)
+def _auto_fixable():
+    total = 0
+    for row in ISSUE_CATEGORIES:
+        if row[2]:
+            total += row[1]
+    return total
 
 
-def _vwap_bps(trade):
-    """Performance against the venue VWAP benchmark, in basis points."""
-    bm = trade["benchmark_vwap"]
-    if not bm:
-        return 0.0
-    diff = trade["price"] - bm
-    if trade["side"] == "SELL":
-        diff = -diff
-    return round((diff / bm) * 10000, 2)
+def _reporting_pct():
+    return round((DESK_SUMMARY["trades"] - _exceptions()) * 100 / DESK_SUMMARY["trades"], 1)
 
 
-def _venue_mismatch(trade):
-    """True when the reported venue is not one the instrument is admitted on."""
-    inst = INSTRUMENT_VENUES.get(trade["instrument"])
-    return bool(inst) and trade["venue"] not in inst["admitted"]
+def _algo_complete():
+    done = 0
+    for s in ALGO_STRATEGIES:
+        if len(s["docs"]) == len(REQUIRED_ALGO_DOCS):
+            done += 1
+    return done
 
 
-def _notional(trade):
-    return trade["quantity"] * trade["price"]
+def _gap_strategy():
+    for s in ALGO_STRATEGIES:
+        if len(s["docs"]) < len(REQUIRED_ALGO_DOCS):
+            return s
+    return None
 
 
-def _field_label(field):
-    """'buyer_lei' -> 'field 7 Buyer identification code' — as an ARM reports it."""
-    num, name = RTS22_FIELDS.get(field, ("?", field))
-    return f"field {num} {name}"
+def _cert_status(days):
+    if days < 0:
+        return "LAPSED"
+    if days <= 15:
+        return "Urgent"
+    if days <= CERT_WINDOW_DAYS:
+        return "Soon"
+    return "Current"
 
 
-def _trade_exceptions(trade):
-    """Every reportable defect on one trade, as (severity, category, detail)."""
-    out = []
-    for f in trade["missing_fields"]:
-        code, desc = ARM_REJECTION_CODES["missing_field"]
-        out.append(("high", "Missing RTS 22 field", f"{_field_label(f)} — {code} {desc}"))
-    if _venue_mismatch(trade):
-        inst = INSTRUMENT_VENUES[trade["instrument"]]
-        code, desc = ARM_REJECTION_CODES["venue_mismatch"]
-        out.append(("high", "Venue mismatch",
-                    f"{_field_label('trading_venue')} reported {trade['venue']}; {inst['name']} "
-                    f"is admitted on {', '.join(inst['admitted'])} — {code} {desc}"))
-    if not trade["reported"]:
-        code, desc = ARM_REJECTION_CODES["not_submitted"]
-        out.append(("high", "Not submitted",
-                    f"no {EXECUTING_ENTITY['arm']} submission recorded — {code} {desc}"))
-    slip = _slippage_bps(trade)
-    if slip > BEST_EX_TOLERANCE_BPS:
-        out.append(("medium", "Best execution outlier",
-                    f"{slip} bps worse than arrival (tolerance {BEST_EX_TOLERANCE_BPS} bps)"))
-    algo = trade.get("algo")
-    if algo:
-        doc = ALGO_DOCUMENTATION.get(algo, {})
-        if _algo_doc_status(algo)[0] != "current":
-            out.append(("medium", "Algorithm documentation",
-                        f"{algo} ({doc.get('name', '?')}) is not current at time of execution"))
-    return out
+def _expiry_text(days):
+    if days >= 180:
+        return f"{days // 30} months"
+    return f"{days} days"
 
 
-def _algo_doc_status(algo_id):
-    """(status, reason) for one algorithm's documentation pack."""
-    doc = ALGO_DOCUMENTATION.get(algo_id)
-    if not doc:
-        return "unknown", "no documentation record"
-    missing = [d for d in REQUIRED_ALGO_DOCS if d not in doc["docs"]]
-    if doc["last_validated"] is None:
-        return "never validated", f"missing {len(missing)} artefact(s), never validated"
-    age = -_days_until(doc["last_validated"])
-    if age > doc["revalidation_days"]:
-        return "expired", f"validated {age} days ago, revalidation due every {doc['revalidation_days']}"
-    if missing:
-        return "incomplete", f"missing {', '.join(missing)}"
-    return "current", f"validated {age} days ago"
+def _due_soon():
+    return [t for t in TRADERS if t["expires_in_days"] <= CERT_WINDOW_DAYS]
 
 
-def _exception_rate():
-    flagged = sum(1 for t in TRADES if _trade_exceptions(t))
-    return round(100.0 * flagged / len(TRADES), 1) if TRADES else 0.0
+def _lapsed():
+    return [t for t in TRADERS if t["expires_in_days"] < 0]
 
 
-#: Exception categories that make a *transaction report* wrong. Best execution
-#: and algorithm documentation are separate obligations and are reported
-#: separately — folding them in here would make the headline mean nothing.
-REPORTING_DEFECTS = {"Missing RTS 22 field", "Venue mismatch", "Not submitted"}
+def _team_pct():
+    return round(TRAINING["fully_current"] * 100 / DESK_SUMMARY["traders"])
 
 
-def _reporting_accuracy():
-    """Share of trades whose transaction report is complete and correctly lodged."""
-    clean = sum(1 for t in TRADES
-                if not any(e[1] in REPORTING_DEFECTS for e in _trade_exceptions(t)))
-    return round(100.0 * clean / len(TRADES), 1) if TRADES else 0.0
+def _best_ex_status(result, benchmark, higher, unit):
+    if higher:
+        return "Exceeds" if result > benchmark else "Below"
+    if result >= benchmark:
+        return "Above limit"
+    return "Met" if unit == " ms" else "Better"
 
 
-def _expiring_certifications(window_days=CERT_WARNING_DAYS):
-    """(trader_id, certification, days_left) for lapsed or soon-to-lapse credentials."""
-    out = []
-    for tid, t in TRADERS.items():
-        for cert, expiry in t["certifications"].items():
-            days = _days_until(expiry)
-            if days <= window_days:
-                out.append((tid, cert, days))
-    return sorted(out, key=lambda r: r[2])
+def _fmt(value, unit):
+    text = f"{value:g}"
+    return f"{text}{unit}"
 
 
-def _blocked_traders():
-    """Traders with a lapsed certification — they must not be on the desk."""
-    return sorted({tid for tid, _, days in _expiring_certifications(0) if days < 0})
+def _gbp(value):
+    if value >= 1000000:
+        return f"£{value / 1000000:.1f}M"
+    return f"£{value // 1000}K"
+
+
+def _risk(score):
+    return "Low" if score >= 95 else "Medium"
+
+
+def _algo_gap_table(strategy):
+    lines = ["| Requirement | Status | Deadline |", "|---|---|---|"]
+    for key, label in REQUIRED_ALGO_DOCS:
+        if key in strategy["docs"]:
+            lines.append(f"| {label} | Complete | - |")
+        else:
+            lines.append(f"| {label} | Missing | {strategy['deadline']} |")
+    return lines
 
 
 # ---------------------------------------------------------------------------
@@ -364,20 +261,19 @@ class FSRegulatoryComplianceAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "display_name": "Regulatory Compliance Agent",
-            # Article III.2: the manifest description is the advertised summary
-            # for the catalog page; this string is what the model routes on, so
-            # it names the surfaces a desk asks about in their own words.
             "description": (
                 "A synthetic trading-desk regulatory compliance pilot under MiFID II / MiFIR. "
-                "Use this for questions about trade-reporting control gaps, audit readiness, "
-                "potential regulator validation or rejection issues, best execution or execution "
-                "quality, venue mismatches, trader-certification status, algorithm or strategy "
-                "sign-off, and preparing reporting payloads for review. For audit questions, "
-                "identify at-risk areas and control gaps only: never state that an audit will "
-                "pass or fail, and never present the result as legal or regulatory advice. "
-                "The remediation workflow prepares synthetic correction and submission payloads "
-                "for authorized review; it never changes external records or transmits to an ARM "
-                "portal. Route natural-language questions even when they do not name a regulation."
+                "Use this to review trading desk activities for MiFID II compliance (the demo quarter: "
+                "12,000 trades with new algo strategies), the transaction reporting issues, executing "
+                "or staging the batch fix, algo documentation gaps, best execution analysis by venue, "
+                "trader certifications and training gaps, and the executive compliance report. Also "
+                "use it for audit readiness, regulator validation or rejection issues, and whether an "
+                "algorithm is about to go live. For audit questions, identify at-risk areas and control "
+                "gaps only: never state that an audit will pass or fail, and never present the result as "
+                "legal or regulatory advice. The remediation workflow prepares synthetic correction and "
+                "submission payloads for authorized review; it never changes external records or "
+                "transmits to an ARM portal. Route natural-language questions even when they do not name "
+                "a regulation."
             ),
             "parameters": {
                 "type": "object",
@@ -386,32 +282,24 @@ class FSRegulatoryComplianceAgent(BasicAgent):
                         "type": "string",
                         "description": (
                             "Which compliance workflow to run. "
-                            "trade_surveillance: trade-reporting control gaps that could trigger "
-                            "validation or rejection review, including missing fields, venue "
-                            "mismatches, best execution and slippage. "
-                            "documentation_review: whether an ALGORITHM or strategy is about to go "
-                            "live without validated documentation, or is running on outdated docs "
-                            "— use this for any 'about to go live', 'is it signed off', 'can we "
-                            "turn it on' question. "
-                            "remediation_submission: prepare synthetic correction and submission "
-                            "payloads for authorized compliance review; never file, transmit, or "
-                            "change an external ARM record. "
-                            "certification_tracker: which TRADERS are lapsed or expiring and "
-                            "prepare enrollment and supervisor follow-up. "
-                            "compliance_dashboard: the whole-desk roll-up of at-risk areas and "
-                            "control gaps; never predict an audit pass or failure."
+                            "compliance_dashboard: review trading desk activities for MiFID II compliance; "
+                            "the whole-desk roll-up of at-risk areas and control gaps; never predict an audit "
+                            "pass or failure. "
+                            "trade_surveillance: the detailed breakdown of the transaction reporting issues "
+                            "(venue, LEI, timestamp, manual review) or which trades the regulator would reject. "
+                            "remediation_submission: execute or stage the batch fix / amendment, plus the algo "
+                            "documentation gaps; prepare synthetic correction and submission payloads for "
+                            "authorized compliance review; never file, transmit, or change an external ARM record. "
+                            "documentation_review: algo or strategy documentation gaps, or whether anything is "
+                            "about to go live that shouldn't. "
+                            "best_execution_analysis: best execution results, venue ranking and the RTS 28 report. "
+                            "certification_tracker: trader certifications, expirations and training gaps. "
+                            "executive_summary: the executive compliance report and summary of what was accomplished."
                         ),
-                        "enum": [
-                            "compliance_dashboard",
-                            "trade_surveillance",
-                            "documentation_review",
-                            "remediation_submission",
-                            "certification_tracker",
-                        ],
+                        "enum": list(_OPERATIONS),
                     },
-                    "trade_ref": {"type": "string", "description": "Limit surveillance to one trade reference, e.g. TRD-88133."},
-                    "trader_id": {"type": "string", "description": "Limit certification tracking to one trader, e.g. T-2041."},
-                    "window_days": {"type": "integer", "description": "Certification look-ahead window in days (default 90)."},
+                    "trade_ref": {"type": "string", "description": "Limit surveillance to one trade, e.g. APX-2024-8847."},
+                    "trader_id": {"type": "string", "description": "Limit certification tracking to one trader name, e.g. James Morrison."},
                 },
                 "required": ["operation"],
             },
@@ -426,6 +314,8 @@ class FSRegulatoryComplianceAgent(BasicAgent):
             "documentation_review": self._documentation_review,
             "remediation_submission": self._remediation_submission,
             "certification_tracker": self._certification_tracker,
+            "best_execution_analysis": self._best_execution_analysis,
+            "executive_summary": self._executive_summary,
         }
         handler = dispatch.get(operation)
         if not handler:
@@ -433,287 +323,227 @@ class FSRegulatoryComplianceAgent(BasicAgent):
                     f"Available: {', '.join(dispatch)}.")
         return handler(**kwargs)
 
-    # -- the Chief Compliance Officer roll-up -------------------------------
+    # -- video turn 1 --------------------------------------------------------
     def _compliance_dashboard(self, **kwargs) -> str:
-        exceptions = {t["ref"]: _trade_exceptions(t) for t in TRADES}
-        total_ex = sum(len(v) for v in exceptions.values())
-        high = sum(1 for v in exceptions.values() for e in v if e[0] == "high")
-        unsubmitted = [t for t in TRADES if not t["reported"]]
-        expiring = _expiring_certifications()
-        lapsed = [r for r in expiring if r[2] < 0]
-        stale_algos = [a for a in ALGO_DOCUMENTATION if _algo_doc_status(a)[0] != "current"]
-
-        L = [f"# Regulatory Compliance — Desk Overview ({TODAY.isoformat()})\n"]
-        L.append("**Audit-readiness assessment: AT RISK — control gaps require "
-                 "authorized review.**\n")
-        L.append("This synthetic pilot identifies audit-readiness gaps only. It cannot "
-                 "determine whether an audit will pass or fail and does not provide legal "
-                 "or regulatory advice.\n")
-        L.append(f"**Reporting accuracy:** {_reporting_accuracy()}%  ·  "
-                 f"**Trades with exceptions:** {_exception_rate()}%  ·  "
-                 f"**Open exceptions:** {total_ex} ({high} high)\n")
-        if lapsed:
-            who = ", ".join(f"{tid} ({TRADERS[tid]['desk']}, {cert})"
-                            for tid, cert, _ in lapsed)
-            L.append(f"**Pilot control requires stand-down pending authorized review: "
-                     f"{who}.** A lapsed certification is a blocking control gap in this "
-                     f"dataset, not a legal conclusion.\n")
-        L.append("| Area | Status | Detail |")
-        L.append("|---|---|---|")
-        worst_ref = max(TRADES, key=lambda t: len(_trade_exceptions(t)))["ref"] if TRADES else "-"
-        L.append(f"| Transaction reporting (RTS 22) | {'ATTENTION' if high else 'OK'} | "
-                 f"{high} high-severity defect(s) across {len(TRADES)} executed trades; "
-                 f"worst is {worst_ref} |")
-        L.append(f"| ARM submission | {'ATTENTION' if unsubmitted else 'OK'} | "
-                 f"{len(unsubmitted)} trade(s) outside the T+1 window |")
-        L.append(f"| Best execution (RTS 27/28) | "
-                 f"{'ATTENTION' if any(_slippage_bps(t) > BEST_EX_TOLERANCE_BPS for t in TRADES) else 'OK'} | "
-                 f"tolerance {BEST_EX_TOLERANCE_BPS} bps vs arrival price |")
-        L.append(f"| Algorithm documentation (RTS 6) | {'ATTENTION' if stale_algos else 'OK'} | "
-                 f"{len(stale_algos)} of {len(ALGO_DOCUMENTATION)} algorithms not current |")
-        L.append(f"| Trader certifications | {'BLOCKED' if lapsed else 'ATTENTION' if expiring else 'OK'} | "
-                 f"{len(lapsed)} lapsed, {len(expiring) - len(lapsed)} expiring within {CERT_WARNING_DAYS} days |")
-
-        blocked = _blocked_traders()
-        if blocked:
-            L.append("\n## Immediate action\n")
-            for tid in blocked:
-                lapsed_for = [c for t, c, d in expiring if t == tid and d < 0]
-                L.append(f"- **{tid} ({TRADERS[tid]['desk']})** must be stood down: "
-                         f"{', '.join(lapsed_for)} lapsed. Supervisor: {TRADERS[tid]['supervisor']}.")
-        L.append("\nRun `trade_surveillance`, `documentation_review`, "
-                 "`remediation_submission` or `certification_tracker` for the detail behind each row.")
+        d = DESK_SUMMARY
+        gap = _gap_strategy()
+        due = _due_soon()
+        lapsed = _lapsed()
+        risk = "LOW RISK - technical deficiencies only, no material violations" if not lapsed else "AT RISK - lapsed certifications"
+        L = [f"# MiFID II Compliance Review — {d['trades']:,} trades ({d['period']})\n"]
+        L.append(
+            f"Analyzed all {d['trades']:,} trades against MiFID II requirements. Overall compliance is "
+            f"{_reporting_pct()}% with {_exceptions()} trades requiring amendment.\n"
+        )
+        L.append("| Requirement | Status | Compliance |\n|---|---|---|")
+        L.append(f"| Transaction Reporting | {d['trades'] - _exceptions():,} filed on time | {_reporting_pct()}% |")
+        L.append(f"| Best Execution | {d['client_trades']:,} client trades | {BEST_EX_METRICS[0][1]:g}% within best bid/offer |")
+        L.append(f"| Algo Testing Docs | {_algo_complete()} of {len(ALGO_STRATEGIES)} complete | {_algo_complete() * 100 // len(ALGO_STRATEGIES)}% |")
+        L.append(f"| Market Making Uptime | {d['market_making_uptime_pct']}% achieved | obligation {d['market_making_obligation_pct']}% |")
+        L.append("\n**Critical findings (control gaps):**\n")
+        L.append(f"- {_exceptions()} transaction reports need amendment by end of day "
+                 f"({_auto_fixable()} auto-fixable)")
+        for s in EXCEPTION_SAMPLES:
+            if s["issue"] == "Manual review needed":
+                L.append(f"- 1 needs manual review: {s['trade_id']} ({s['client']}: {s['detail']})")
+        if gap:
+            L.append(f"- Strategy #{gap['number']} ({gap['name'].lower()}, {gap['id']}) missing testing documentation")
+        L.append(f"- {len(due)} traders require updated certifications within {CERT_WINDOW_DAYS} days")
+        L.append(f"\n**Audit-readiness assessment: {risk}.** The control gaps above require authorized review.\n")
+        L.append(_BOUNDARY)
+        L.append("\nSource: [GRC Platform + Compliance + Trade Surveillance] (synthetic)")
+        L.append(f"\n**Next step:** see the detailed breakdown of the {_exceptions()} reporting issues?")
         return "\n".join(L)
 
-    # -- one-pager bullet 1 -------------------------------------------------
+    # -- video turn 2 --------------------------------------------------------
     def _trade_surveillance(self, **kwargs) -> str:
         ref = kwargs.get("trade_ref")
-        trades = [t for t in TRADES if not ref or t["ref"] == ref.upper()]
-        if not trades:
-            return f"**No trade found for reference `{ref}`.** Known: {', '.join(t['ref'] for t in TRADES)}."
-
-        L = [f"# Trade Surveillance — {len(trades)} executed trade(s) scanned\n"]
-        L.append(f"**Executing entity:** {EXECUTING_ENTITY['name']} · LEI `{EXECUTING_ENTITY['lei']}` · "
-                 f"reporting via {EXECUTING_ENTITY['arm']} · NCA {EXECUTING_ENTITY['nca']}\n")
-        L.append(f"Scanned against MiFID II RTS 22 ({len(RTS22_REQUIRED_FIELDS)} mandatory fields), "
-                 f"FIRDS venue admission, and RTS 27/28 best execution vs arrival price "
-                 f"(tolerance {BEST_EX_TOLERANCE_BPS} bps).\n")
-        L.append("| Trade | Instrument | Venue | Notional | Slippage | vs VWAP | Exceptions |")
-        L.append("|---|---|---|---|---|---|---|")
-        for t in trades:
-            inst = INSTRUMENT_VENUES.get(t["instrument"], {})
-            ex = _trade_exceptions(t)
-            L.append(f"| {t['ref']} | {inst.get('name', t['instrument'])} | {t['venue']}"
-                     f"{' ⚠' if _venue_mismatch(t) else ''} | {_notional(t):,.0f} | "
-                     f"{_slippage_bps(t):+.2f} bps | {_vwap_bps(t):+.2f} bps | "
-                     f"{len(ex) if ex else '—'} |")
-
-        flagged = [(t, _trade_exceptions(t)) for t in trades if _trade_exceptions(t)]
-        if flagged:
-            L.append(f"\n## Exceptions ({sum(len(e) for _, e in flagged)})\n")
-            for t, ex in flagged:
-                cp = COUNTERPARTIES.get(t.get('counterparty'), 'unknown counterparty')
-                L.append(f"**{t['ref']}** — {INSTRUMENT_VENUES.get(t['instrument'], {}).get('name', '')} "
-                         f"({t['instrument']}) · {t['side']} {t['quantity']:,} @ {t['price']} · "
-                         f"{t['executed']}T{t.get('exec_time', '')}Z · counterparty {cp} · trader {t['trader']}")
-                for sev, cat, detail in ex:
-                    L.append(f"- `{sev.upper()}` **{cat}:** {detail}")
-                L.append("")
-        else:
-            L.append("\nNo exceptions. Every scanned trade carries all required RTS 22 fields, "
-                     "was executed on an admitted venue, and fell inside the best-execution tolerance.\n")
-
-        L.append("## Best execution summary\n")
-        worst = max(trades, key=_slippage_bps)
-        avg = round(sum(_slippage_bps(t) for t in trades) / len(trades), 2)
-        L.append(f"- Average slippage vs arrival: **{avg:+.2f} bps** across "
-                 f"{sum(_notional(t) for t in trades):,.0f} notional")
-        L.append(f"- Worst fill: **{worst['ref']}** at {_slippage_bps(worst):+.2f} bps "
-                 f"({INSTRUMENT_VENUES.get(worst['instrument'], {}).get('name', '')}, {worst['venue']})")
-        L.append(f"- Outliers beyond tolerance: "
-                 f"**{sum(1 for t in trades if _slippage_bps(t) > BEST_EX_TOLERANCE_BPS)}**")
+        if ref:
+            hit = [s for s in EXCEPTION_SAMPLES if s["trade_id"].lower() == str(ref).lower().strip()]
+            if not hit:
+                return (f"**No exception found for trade `{ref}`;** no substitute record was used. "
+                        f"Sample exceptions: {', '.join(s['trade_id'] for s in EXCEPTION_SAMPLES)}.")
+            s = hit[0]
+            return (f"# Trade {s['trade_id']}\n\n- Issue: {s['issue']} — {s['detail']}\n- Client: {s['client']}\n"
+                    f"- Resolution: {s['resolution']}\n\nSynthetic record; no external record was changed.")
+        L = [f"# Transaction Report Issues — {_exceptions()} trades\n"]
+        L.append(
+            f"The {_exceptions()} reporting issues are concentrated in cross-border trades with minor field "
+            f"errors. Automated correction is available for {_auto_fixable()} of them.\n"
+        )
+        L.append("| Issue Type | Trades | Auto-Fix | Priority |\n|---|---|---|---|")
+        for issue, count, auto, priority in ISSUE_CATEGORIES:
+            L.append(f"| {issue} | {count} | {'Yes' if auto else 'No'} | {priority} |")
+        for s in EXCEPTION_SAMPLES:
+            if s["issue"] == "Manual review needed":
+                L.append("\n**Critical Trade (Manual Review):**\n")
+                L.append(f"- Trade ID: {s['trade_id']}")
+                L.append(f"- Issue: {s['detail']}")
+                L.append(f"- Client: {s['client']}")
+                L.append(f"- Resolution: {s['resolution']}")
+        L.append("\n**Sample corrections (from the trade repository):**\n")
+        L.append("| Trade | Issue | Detail | Fix |\n|---|---|---|---|")
+        for s in EXCEPTION_SAMPLES:
+            if s["issue"] != "Manual review needed":
+                L.append(f"| {s['trade_id']} | {s['issue']} | {s['detail']} | {s['resolution']} |")
+        L.append("\n**Automated corrections ready:**\n")
+        L.append(f"- {_auto_fixable()} trades can be amended in one batch")
+        L.append(f"- Estimated processing: {DESK_SUMMARY['batch_minutes']} minutes")
+        L.append(f"- Submission target: {EXECUTING_ENTITY['portal']}, after authorized approval")
+        L.append("\nSource: [Trade Repository + LEI Database] (synthetic)")
+        L.append("\n**Next step:** stage the batch amendment and show the algo strategy gaps?")
         return "\n".join(L)
 
-    # -- one-pager bullet 2 -------------------------------------------------
+    # -- video turn 3 --------------------------------------------------------
+    def _remediation_submission(self, **kwargs) -> str:
+        pending = [s for s in EXCEPTION_SAMPLES if s["issue"] == "Manual review needed"]
+        L = ["# Batch Amendment — staged for approval\n"]
+        L.append(
+            "Synthetic dry run: correction and submission payloads are prepared for approval; no external "
+            "record is changed and no filing is transmitted.\n"
+        )
+        L.append(f"**{_auto_fixable()} amendments staged** as correction reports for the {EXECUTING_ENTITY['regulator']} "
+                 f"({EXECUTING_ENTITY['portal']}); reporting entity {EXECUTING_ENTITY['name']}, LEI "
+                 f"`{EXECUTING_ENTITY['lei']}`.\n")
+        L.append("| Issue Type | Trades | Payload |\n|---|---|---|")
+        for issue, count, auto, _ in ISSUE_CATEGORIES:
+            if auto:
+                L.append(f"| {issue} | {count} | correction report |")
+        for s in pending:
+            L.append(f"\n**{len(pending)} trade pending:** {s['trade_id']} — {s['client']} must supply an updated "
+                     f"LEI; it then goes as a new submission.")
+        L.append(
+            f"\n**Approval gate:** an authorized compliance reviewer approves the batch (about "
+            f"{DESK_SUMMARY['batch_minutes']} minutes to process) before the ARM connector transmits it; the "
+            "batch is ready for you to submit."
+        )
+        gap = _gap_strategy()
+        if gap:
+            L.append(f"\n## Algo Strategy #{gap['number']} Documentation Gaps ({gap['id']})\n")
+            L.extend(_algo_gap_table(gap))
+            L.append("\n**Required actions:**\n")
+            for a in gap["actions"]:
+                L.append(f"- {a}")
+            L.append(
+                f"\n**Risk if incomplete:** strategy cannot be deployed until documentation is filed. "
+                f"Potential {_gbp(gap['revenue_at_risk_gbp'])} revenue impact."
+            )
+        L.append("\nSource: [Trade Repository + Algo Registry] (synthetic)")
+        L.append("\n**Next step:** see the best execution analysis?")
+        return "\n".join(L)
+
+    # -- algo documentation --------------------------------------------------
     def _documentation_review(self, **kwargs) -> str:
         L = ["# Algorithm & Strategy Documentation Review\n"]
         L.append("MiFID II Art. 17 / RTS 6 requires each trading algorithm to hold a complete, "
-                 "revalidated documentation pack before it runs.\n")
-        L.append("| Algorithm | Version | Owner | Status | Detail | Go-live |")
-        L.append("|---|---|---|---|---|---|")
-        for algo_id, doc in ALGO_DOCUMENTATION.items():
-            status, reason = _algo_doc_status(algo_id)
-            gl = _days_until(doc["go_live"])
-            gl_txt = f"in {gl}d" if gl > 0 else "live"
-            L.append(f"| {algo_id} — {doc['name']} | {doc['version']} | {doc['owner']} | "
-                     f"{status.upper()} | {reason} | {gl_txt} |")
-
-        blocking = []
-        for algo_id, doc in ALGO_DOCUMENTATION.items():
-            status, reason = _algo_doc_status(algo_id)
-            gl = _days_until(doc["go_live"])
-            if status != "current" and gl > 0:
-                blocking.append((algo_id, doc, status, reason, gl))
-        if blocking:
-            L.append("\n## Blocking go-live\n")
-            for algo_id, doc, status, reason, gl in blocking:
-                missing = [d for d in REQUIRED_ALGO_DOCS if d not in doc["docs"]]
-                L.append(f"**{algo_id} — {doc['name']}** goes live in {gl} days and is `{status}` ({reason}).")
-                if missing:
-                    L.append(f"- Missing artefacts: {', '.join('`' + m + '`' for m in missing)}")
-                L.append(f"- Owner to complete: {doc['owner']}")
-                L.append("")
-
-        stale = [(a, d) for a, d in ALGO_DOCUMENTATION.items() if _algo_doc_status(a)[0] == "expired"]
-        if stale:
-            L.append("## Outdated documentation on live algorithms\n")
-            for algo_id, doc in stale:
-                age = -_days_until(doc["last_validated"])
-                affected = [t["ref"] for t in TRADES if t.get("algo") == algo_id]
-                L.append(f"- **{algo_id} — {doc['name']}**: last validated {age} days ago "
-                         f"(limit {doc['revalidation_days']}). "
-                         f"{len(affected)} executed trade(s) affected: {', '.join(affected) or 'none'}")
+                 "tested documentation pack before it runs.\n")
+        L.append("| # | Strategy | Status | Docs complete |\n|---|---|---|---|")
+        for s in ALGO_STRATEGIES:
+            L.append(f"| {s['number']} | {s['id']} — {s['name']} | {s['status']} | "
+                     f"{len(s['docs'])} of {len(REQUIRED_ALGO_DOCS)} |")
+        gap = _gap_strategy()
+        if gap:
+            L.append(f"\n## Blocking go-live: Strategy #{gap['number']} ({gap['name'].lower()}, {gap['id']})\n")
+            L.extend(_algo_gap_table(gap))
+            L.append("\n**Required actions:**\n")
+            for a in gap["actions"]:
+                L.append(f"- {a}")
+            L.append(
+                f"\n**Risk if incomplete:** cannot deploy until documentation is filed; potential "
+                f"{_gbp(gap['revenue_at_risk_gbp'])} revenue impact. Go-live needs Quant sign-off and authorized "
+                "review; no deployment was changed or blocked by this pilot."
+            )
         return "\n".join(L)
 
-    # -- one-pager bullet 3 -------------------------------------------------
-    def _remediation_submission(self, **kwargs) -> str:
-        corrections, submission_batch, manual_review = [], set(), []
-        for t in TRADES:
-            ex = _trade_exceptions(t)
-            for _, cat, detail in ex:
-                if cat == "Missing RTS 22 field":
-                    field = next(
-                        (
-                            candidate
-                            for candidate in t["missing_fields"]
-                            if _field_label(candidate) in detail
-                        ),
-                        None,
-                    )
-                    value = t.get("source_fields", {}).get(field)
-                    if value:
-                        corrections.append(
-                            (t, _field_label(field), value, "order management record")
-                        )
-                        submission_batch.add(t["ref"])
-                    else:
-                        manual_review.append(
-                            (t["ref"], _field_label(field or "unknown"), "source value unavailable")
-                        )
-                elif cat == "Venue mismatch":
-                    verified = t.get("verified_venue")
-                    if verified:
-                        corrections.append(
-                            (
-                                t,
-                                _field_label("trading_venue"),
-                                verified,
-                                "execution venue record",
-                            )
-                        )
-                        submission_batch.add(t["ref"])
-                    else:
-                        manual_review.append(
-                            (
-                                t["ref"],
-                                _field_label("trading_venue"),
-                                "verified execution venue unavailable",
-                            )
-                        )
-            if not t["reported"]:
-                submission_batch.add(t["ref"])
-
-        L = ["# Automated Correction & Submission\n"]
-        L.append(f"Target portal: **{REGULATORY_PORTAL}**\n")
-        L.append("Synthetic dry run: corrections and portal payloads are prepared for approval; "
-                 "no external record is changed and no filing is transmitted.\n")
-        if not corrections and not submission_batch:
-            L.append("Nothing to submit — every executed trade is complete and already lodged.")
-            return "\n".join(L)
-
-        if corrections:
-            L.append(f"## Field corrections prepared ({len(corrections)})\n")
-            L.append("| Trade | Field | Corrected value | Evidence | Status |")
-            L.append("|---|---|---|---|---|")
-            for t, field, value, evidence in corrections:
-                L.append(f"| {t['ref']} | {field} | `{value}` | {evidence} | prepared |")
-
-        if submission_batch:
-            L.append(f"\n## Portal payloads prepared ({len(submission_batch)})\n")
-            by_ref = {t["ref"]: t for t in TRADES}
-            for ref in sorted(submission_batch):
-                t = by_ref[ref]
-                inst = INSTRUMENT_VENUES.get(t["instrument"], {})
-                age = -_days_until(t["executed"])
-                submission_type = "new submission" if not t["reported"] else "correction report"
-                L.append(f"- **{t['ref']}** — {inst.get('name', '')} {t['side']} {t['quantity']:,} @ {t['price']} "
-                         f"(executed {t['executed']}, {age} day(s) ago); **{submission_type}**. "
-                         f"{'**Breach: outside T+1.**' if age > 1 else 'Within T+1.'}")
-
-        L.append("\n## Approval gate\n")
-        L.append(f"- Trades in staged batch: **{len(submission_batch)}** "
-                 f"({', '.join(sorted(submission_batch))})")
-        L.append(f"- Field corrections staged from synthetic source evidence: **{len(corrections)}**")
-        if manual_review:
-            L.append(f"- Manual evidence checks required: **{len(manual_review)}**")
-            for ref, field, reason in manual_review:
-                L.append(f"  - {ref} · {field}: {reason}")
-        else:
-            L.append("- Manual evidence checks required: **0**")
-            L.append(f"- Projected synthetic reporting accuracy after approved submission: "
-                     f"**{_reporting_accuracy()}% → 100.0%**")
-        L.append("- Required production control: an authorized compliance reviewer must approve "
-                 "the payload before the ARM connector transmits it.")
+    # -- video turn 4 --------------------------------------------------------
+    def _best_execution_analysis(self, **kwargs) -> str:
+        top = BEST_EX_METRICS[0]
+        L = [f"# Best Execution Summary ({DESK_SUMMARY['client_trades']:,} client trades)\n"]
+        L.append(f"Best execution achieved {top[1]:g}% with {100 - top[1]:g}% of trades showing potential "
+                 "execution quality issues.\n")
+        L.append("| Metric | Result | Benchmark | Status |\n|---|---|---|---|")
+        for metric, result, bench, unit, higher in BEST_EX_METRICS:
+            mark = "" if higher else "<"
+            L.append(f"| {metric} | {_fmt(result, unit)} | {mark}{_fmt(bench, unit)} | "
+                     f"{_best_ex_status(result, bench, higher, unit)} |")
+        L.append("\n**Venue Performance Ranking:**\n")
+        n = 0
+        total = 0
+        for venue, trades, quality in VENUE_PERFORMANCE:
+            n += 1
+            total += trades
+            L.append(f"{n}. {venue} - {trades:,} trades, {quality}% quality")
+        L.append(f"\nVenue trades total {total:,}.")
+        L.append(
+            "\n**RTS 28 report:** quarterly report drafted with the top venue analysis, ready for your review "
+            "before client distribution (not published)."
+        )
+        L.append("\nSource: [Execution Analytics + Venue Data] (synthetic)")
+        L.append("\n**Next step:** show trader certification status and training requirements?")
         return "\n".join(L)
 
-    # -- one-pager bullet 4 -------------------------------------------------
+    # -- video turn 5 --------------------------------------------------------
     def _certification_tracker(self, **kwargs) -> str:
-        window = int(kwargs.get("window_days") or CERT_WARNING_DAYS)
         only = kwargs.get("trader_id")
-        rows = _expiring_certifications(window)
+        rows = TRADERS
         if only:
-            rows = [r for r in rows if r[0] == only.upper()]
+            q = str(only).lower().strip()
+            rows = [t for t in TRADERS if q in t["name"].lower()]
             if not rows:
-                return (f"**No certification expiring within {window} days for `{only}`.** "
-                        f"Known traders: {', '.join(TRADERS)}.")
-
-        L = [f"# Trader Certification Readiness — {window}-day window\n"]
-        lapsed = [r for r in rows if r[2] < 0]
+                return (f"**No synthetic trader matches `{only}`;** no substitute record was used. "
+                        f"Traders: {', '.join(t['name'] for t in TRADERS)}.")
+        due = _due_soon()
+        lapsed = _lapsed()
+        L = ["# Trader Certification Status\n"]
         if lapsed:
-            L.append(f"**{len(lapsed)} lapsed certification(s) — affected traders must be stood down.**\n")
+            L.append(f"**{len(lapsed)} lapsed certification(s): those traders must stop trading pending authorized review.**\n")
+        else:
+            L.append(f"No trader is lapsed today; {len(due)} traders need certification renewal within "
+                     f"{CERT_WINDOW_DAYS} days (by end of month).\n")
+        L.append("| Trader | Certification | Expiry | Status |\n|---|---|---|---|")
+        for t in rows:
+            L.append(f"| {t['name']} | {t['certification']} | {_expiry_text(t['expires_in_days'])} | "
+                     f"{_cert_status(t['expires_in_days'])} |")
+        L.append("\n**Training actions (prepared for the desk supervisor to confirm):**\n")
+        for t in rows:
+            if t["expires_in_days"] <= CERT_WINDOW_DAYS:
+                L.append(f"- {t['name']}: {t['action']}")
+        L.append(f"- All {TRAINING['aml_current']} traders current on AML training")
+        L.append("\n**Compliance Training Dashboard:**\n")
+        L.append(f"- Team compliance rate: {_team_pct()}% ({TRAINING['fully_current']} of {DESK_SUMMARY['traders']} fully current; target 100%)")
+        L.append(f"- Average score on assessments: {TRAINING['assessment_avg_pct']}%")
+        L.append(f"- Next mandatory refresh: {TRAINING['next_refresh_days']} days")
+        L.append(f"\n**Penalty risk:** {_gbp(TRAINING['penalty_per_uncertified_gbp'])}+ per uncertified trader operating.")
+        L.append("\nNo enrollment was submitted and no message was sent; call the desk supervisor to confirm the sessions.")
+        L.append("\nSource: [Learning Management + HR System] (synthetic)")
+        L.append("\n**Next step:** generate the executive compliance report?")
+        return "\n".join(L)
 
-        L.append("| Trader | Desk | Certification | Expires | Status | Action |")
-        L.append("|---|---|---|---|---|---|")
-        enrolments = []
-        for tid, cert, days in rows:
-            t = TRADERS[tid]
-            expiry = t["certifications"][cert]
-            status = "LAPSED" if days < 0 else ("URGENT" if days <= 30 else "DUE")
-            sessions = [s for s in TRAINING_CALENDAR.get(cert, []) if _days_until(s) >= 0]
-            if sessions:
-                nxt = sessions[0]
-                enrolments.append((tid, cert, nxt, days))
-                action = f"enrol {nxt}"
-            else:
-                action = "no session scheduled — escalate"
-            L.append(f"| {tid} | {t['desk']} | {cert} | {expiry} | {status} "
-                     f"({days:+d}d) | {action} |")
-
-        if enrolments:
-            L.append(f"\n## Enrolments raised ({len(enrolments)})\n")
-            for tid, cert, session, days in enrolments:
-                t = TRADERS[tid]
-                before = "before expiry" if _days_until(session) < days else "**after expiry — gap in coverage**"
-                L.append(f"- **{tid}** → *{cert}*, session {session} ({before}). "
-                         f"Notify {t['supervisor']}.")
-
-        gaps = [(tid, cert, s) for tid, cert, s, days in enrolments if _days_until(s) >= days >= 0]
-        if gaps or lapsed:
-            L.append("\n## Desk coverage risk\n")
-            for tid in sorted({r[0] for r in lapsed}):
-                L.append(f"- **{tid}** ({TRADERS[tid]['desk']}) is not currently certified to trade.")
-            for tid, cert, s in gaps:
-                L.append(f"- **{tid}** has no session for *{cert}* before it expires.")
+    # -- video turn 6 --------------------------------------------------------
+    def _executive_summary(self, **kwargs) -> str:
+        d = DESK_SUMMARY
+        gap = _gap_strategy()
+        algo_pct = _algo_complete() * 100 // len(ALGO_STRATEGIES)
+        pending = [s for s in EXCEPTION_SAMPLES if s["issue"] == "Manual review needed"]
+        L = ["# Executive Compliance Report (draft for leadership)\n"]
+        L.append("**Session Summary:**\n")
+        L.append(f"- Analyzed — {d['trades']:,} trades reviewed for MiFID II compliance ({_reporting_pct()}% compliant)")
+        L.append(f"- Amended — {_auto_fixable()} transaction reports corrected and staged for {EXECUTING_ENTITY['regulator']} submission")
+        if gap:
+            L.append(f"- Identified — Strategy #{gap['number']} documentation gaps with resolution timeline ({gap['deadline'].lower()})")
+        L.append(f"- Verified — best execution at {BEST_EX_METRICS[0][1]:g}% (exceeds {BEST_EX_METRICS[0][2]:g}% benchmark)")
+        L.append(f"- Scheduled — {len(_due_soon())} trader recertifications with training sessions proposed")
+        L.append("- Generated — RTS 28 quarterly report draft ready for review")
+        L.append("\n**Compliance Scorecard:**\n")
+        L.append("| Area | Score | Risk Level |\n|---|---|---|")
+        L.append(f"| Transaction Reporting | {_reporting_pct()}% | {_risk(_reporting_pct())} |")
+        L.append(f"| Best Execution | {BEST_EX_METRICS[0][1]:g}% | {_risk(BEST_EX_METRICS[0][1])} |")
+        L.append(f"| Algo Compliance | {algo_pct}% | {_risk(algo_pct)} |")
+        L.append(f"| Trader Certifications | {_team_pct()}% | {_risk(_team_pct())} |")
+        L.append(f"\n**Remaining actions:** {len(pending)} trade pending LEI update, algo docs due end of week.")
+        L.append(f"**Penalty exposure avoided (modeled):** {_gbp(d['penalty_exposure_avoided_gbp'])} in potential MiFID II fines.")
+        L.append("\nThe report is a draft ready for you to share with leadership; nothing has been sent. " + _BOUNDARY)
+        L.append("\nSource: [All connected systems] (synthetic)")
         return "\n".join(L)
 
 
@@ -723,7 +553,7 @@ class FSRegulatoryComplianceAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = FSRegulatoryComplianceAgent()
-    for op in ("compliance_dashboard", "trade_surveillance", "documentation_review",
-               "remediation_submission", "certification_tracker"):
+    for op in ("compliance_dashboard", "trade_surveillance", "remediation_submission",
+               "best_execution_analysis", "certification_tracker", "executive_summary"):
         print(agent.perform(operation=op))
         print("\n" + "=" * 80 + "\n")

@@ -15,22 +15,27 @@ The following metadata is the authoritative natural-language router. Do not requ
 
 ```json
 {
-  "description": "Always call this tool for underwriter, pricing-analyst, risk-analyst, or senior-underwriter requests about which submission needs the most experienced underwriter, rating factors and loss evidence, guideline exceptions or missing evidence, or preparing an exception file and checking whether a coverage decision occurred. Do not answer those workflows from general knowledge. For 'Which submission needs the most experienced underwriter, and why?', call risk_evaluation with no application_id; the synthetic queue returns UW-2025-103 as Substandard. For 'Which applications are outside a stated guideline or missing required evidence?', call guideline_check with no application_id; it returns UW-2025-103 and High-Risk Specialty. For an exception file and whether a coverage decision was made, call exception_review; it returns UW-2025-103 and the No approval boundary. Uses fictional records only and never binds, quotes, approves, declines, or changes coverage. All conclusions are nonbinding decision support for an authorized underwriter and require explicit human review.",
+  "description": "Always call this tool for underwriter, pricing-analyst, risk-analyst, or senior-underwriter requests. Commercial submission demo flow (Midwest Manufacturing Inc., UW-2025-100, the default; no ID needed): evaluate this commercial insurance application -> submission_review; full risk assessment and loss history -> risk_assessment; what premium should we quote -> pricing_recommendation; what coverage structure -> coverage_structure; check compliance and finalize -> compliance_check; complete underwriting summary -> underwriting_summary. Queue requests requests about which submission needs the most experienced underwriter, rating factors and loss evidence, guideline exceptions or missing evidence, or preparing an exception file and checking whether a coverage decision occurred. Do not answer those workflows from general knowledge. For 'Which submission needs the most experienced underwriter, and why?', call risk_evaluation with no application_id; the synthetic queue returns UW-2025-103 as Substandard. For 'Which applications are outside a stated guideline or missing required evidence?', call guideline_check with no application_id; it returns UW-2025-103 and High-Risk Specialty. For an exception file and whether a coverage decision was made, call exception_review; it returns UW-2025-103 and the No approval boundary. Uses fictional records only and never binds, quotes, approves, declines, or changes coverage. All conclusions are nonbinding decision support for an authorized underwriter and require explicit human review.",
   "display_name": "Underwriting Support Agent",
   "name": "UnderwritingSupportAgent",
   "parameters": {
     "properties": {
       "application_id": {
-        "description": "Synthetic application mapping: Riverside Manufacturing is UW-2025-101; Sarah Mitchell is UW-2025-102; Downtown Medical Associates, the orthopedic submission, highest-risk submission, or exception file is UW-2025-103; Harbor View Restaurant Group is UW-2025-104. Omit for queue-wide and guideline-wide reports.",
+        "description": "Synthetic application mapping: Midwest Manufacturing is UW-2025-100 (default for the commercial submission flow); Riverside Manufacturing is UW-2025-101; Sarah Mitchell is UW-2025-102; Downtown Medical Associates, the orthopedic submission, highest-risk submission, or exception file is UW-2025-103; Harbor View Restaurant Group is UW-2025-104. Omit for queue-wide and guideline-wide reports.",
         "type": "string"
       },
       "operation": {
-        "description": "Choose risk_evaluation for the submission queue, highest-risk case, which submission needs an experienced underwriter, risk scores, or tiers; omit application_id for that queue-wide request so UW-2025-103 and its Substandard tier are returned. Choose pricing_recommendation for rating factors, indicated premium, loss evidence, or Riverside without issuing a quote. Choose guideline_check for applications outside a stated guideline, required documents, inspections, or missing evidence; omit application_id so the queue includes UW-2025-103 and High-Risk Specialty. Choose exception_review for the exception file, senior review paths, or whether any coverage decision was made; the output states No approval.",
+        "description": "For the Midwest Manufacturing commercial submission (default): submission_review to evaluate the application; risk_assessment for the full four-factor risk assessment and loss history; pricing_recommendation for the premium to quote; coverage_structure for limits, deductibles and endorsements; compliance_check to check compliance / authority and finalize; underwriting_summary for the complete underwriting summary. Choose risk_evaluation for the submission queue, highest-risk case, which submission needs an experienced underwriter, risk scores, or tiers; omit application_id for that queue-wide request so UW-2025-103 and its Substandard tier are returned. Choose pricing_recommendation for the premium to quote (Midwest by default) or, with an application_id, rating factors, indicated premium and loss evidence (e.g. Riverside) without issuing a quote. Choose guideline_check for applications outside a stated guideline, required documents, inspections, or missing evidence; omit application_id so the queue includes UW-2025-103 and High-Risk Specialty. Choose exception_review for the exception file, senior review paths, or whether any coverage decision was made; the output states No approval.",
         "enum": [
           "risk_evaluation",
           "pricing_recommendation",
           "guideline_check",
-          "exception_review"
+          "exception_review",
+          "submission_review",
+          "risk_assessment",
+          "coverage_structure",
+          "compliance_check",
+          "underwriting_summary"
         ],
         "type": "string"
       }
@@ -217,7 +222,6 @@ For each case, route to the declared operation, ground every factual statement i
 #### Canonical strict-isolation tool evidence
 
 ```text
-Agent 'UnderwritingSupport Agent' not found.
 [UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
 
 # Illustrative Pricing-Factor Review: UW-2025-101
@@ -262,7 +266,6 @@ Agent 'UnderwritingSupport Agent' not found.
 #### Canonical strict-isolation tool evidence
 
 ```text
-Agent 'UnderwritingSupport' not found.
 [UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
 
 # Underwriting Guideline Check
@@ -307,7 +310,6 @@ Agent 'UnderwritingSupport' not found.
 #### Canonical strict-isolation tool evidence
 
 ```text
-Agent 'UnderwritingSupport Agent' not found.
 [UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
 
 # Exception Review Queue
@@ -334,7 +336,261 @@ Agent 'UnderwritingSupport Agent' not found.
 No approval, decline, quote, or binder has been issued.
 ```
 
+### UWS-05 — Underwriter
+
+- User wording: Help me evaluate this commercial insurance application and tell me what is missing.
+- Route: `submission_review` via `UnderwritingSupportAgent`
+- Required evidence: `Midwest Manufacturing Inc.`, `95% complete`, `68/100 (Moderate)`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Submission Review: Midwest Manufacturing Inc. (UW-2025-100)
+
+Analyzed the Midwest Manufacturing Inc. application - moderate risk with attention areas.
+
+| Field | Details |
+|---|---|
+| Applicant | Midwest Manufacturing Inc. |
+| Industry | Metal fabrication (NAICS 332312) |
+| Revenue | $24M, 145 employees |
+| Coverage | GL, Property, Products |
+| State | OH |
+
+**Completeness:** 95% complete, need current financials and property value confirmation
+**Risk Flags:** 40% equipment >15 years, single location concentration, heavy machinery
+**Preliminary Risk Score:** 68/100 (Moderate)
+
+Source: [Application Portal (synthetic)]
+
+See detailed risk and loss history?
+[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Underwriting Guideline Check
+
+## UW-2025-101: Riverside Manufacturing Inc. — No Stated Exception
+
+- **LOB:** Commercial Property
+- **Max Coverage:** $25,000,000
+- **Required Inspections:** fire_protection, electrical, roof_condition
+
+## UW-2025-102: Sarah Mitchell — No Stated Exception
+
+- **LOB:** Personal Auto
+- **Max Coverage:** $1,000,000
+- **Required Documents:** MVR, prior_insurance_dec
+
+## UW-2025-103: Downtown Medical Associates — Exceptions Noted
+
+- **LOB:** Professional Liability
+- **Max Coverage:** $10,000,000
+- **Required Documents:** CV, board_certifications, claims_history
+
+**Violations:**
+
+- High-risk specialty: Orthopedic Surgery
+
+## UW-2025-104: Harbor View Restaurant Group — No Stated Exception
+
+- **LOB:** General Liability
+- **Max Coverage:** $5,000,000
+- **Required Documents:** financial_statements, safety_program, certificates_of_insurance
+
+```
+
+### UWS-06 — Risk Analyst
+
+- User wording: Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.
+- Route: `risk_assessment` via `UnderwritingSupportAgent`
+- Required evidence: `Industry hazard`, `$237K`, `0.42 vs class 0.58`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Risk Assessment: Midwest Manufacturing Inc. (UW-2025-100)
+
+Risk assessment complete - favorable loss history with one notable claim.
+
+| Risk Factor | Score | Notes |
+|---|---|---|
+| Industry hazard | 72/100 | Metal fab = moderate |
+| Financial stability | 78/100 | Healthy ratios |
+| Loss experience | 82/100 | Better than class |
+| Operations | 70/100 | Equipment age concern |
+
+**5-Year Loss History:** Total incurred $237K (below the class average)
+**Notable Claim:** Year -3 products liability $180K (defective bracket, QC gap addressed)
+**Benchmark:** Loss ratio 0.42 vs class 0.58 (better than average)
+**Preliminary Risk Score:** 68/100 (Moderate)
+
+Source: [Claims Database (synthetic)]
+
+Generate pricing?
+```
+
+### UWS-07 — Underwriter
+
+- User wording: What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?
+- Route: `coverage_structure` via `UnderwritingSupportAgent`
+- Required evidence: `Equipment breakdown`, `$5K deductible`, `$8.2M total`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Recommended Coverage Structure: Midwest Manufacturing Inc. (UW-2025-100)
+
+Coverage structure designed for the manufacturing risk profile (recommendation for the underwriter).
+
+**General Liability:** $1M occurrence, $2M aggregate, $5K deductible
+**Property Coverage:** $8.2M total (building $4.2M, contents $3.4M, equipment (scheduled) $600K)
+
+**Recommended Endorsements:**
+
+| Endorsement | Reason |
+|---|---|
+| Equipment breakdown | Aging machinery |
+| Contingent business income | Single location |
+| Blanket additional insured | Contracts |
+
+**Subjectivities:** Current financials, equipment maintenance records, QC procedures
+
+Source: [Product Library (synthetic)]
+
+Run compliance check?
+```
+
+### UWS-08 — Senior Underwriter
+
+- User wording: Check compliance and authority before we finalize the Midwest Manufacturing recommendation.
+- Route: `compliance_check` via `UnderwritingSupportAgent`
+- Required evidence: `Within $10M limit`, `OH rates filed`, `30 days`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Compliance and Authority Check: Midwest Manufacturing Inc. (UW-2025-100)
+
+Compliance validated - within authority, ready for your quote decision.
+
+| Check | Status |
+|---|---|
+| Underwriting authority | Within $10M limit |
+| Rate adequacy | Above minimum |
+| Reinsurance treaty | Within capacity |
+| State filing | OH rates filed |
+
+**Approval:** Within your binding authority, no referral required; the bind decision is yours.
+**Subjectivities Before Binding:** Current financials, equipment maintenance records, QC procedures
+**Quote Validity:** 30 days
+
+Source: [Authority Matrix (synthetic)]
+
+Generate underwriting summary?
+```
+
+### UWS-09 — Senior Underwriter
+
+- User wording: Generate the complete underwriting summary for the Midwest Manufacturing submission.
+- Route: `underwriting_summary` via `UnderwritingSupportAgent`
+- Required evidence: `Approve with conditions`, `$88,100`, `drafted for you to issue`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Underwriting Summary: Midwest Manufacturing Inc. (UW-2025-100)
+
+Recommendation for the underwriter: approve with conditions, $88,100 premium.
+
+| Decision Detail | Value |
+|---|---|
+| Recommendation | Approve with conditions (underwriter decision) |
+| Risk score | 68/100 (Moderate) |
+| Premium | $88,100 |
+| Authority | Within limits |
+
+**Strengths:** Favorable loss history, strong financials, safety program
+**Conditions for Binding:** Current financials, equipment maintenance records, QC procedures
+**Quote Package:** drafted for you to issue - letter, coverage summary, subjectivities listed
+
+Source: [All Underwriting Systems (synthetic)]
+```
+
 ## Packaged skill contracts
+
+### `manual/skills/aibast_compliance-check_08/SKILL.md`
+
+````markdown
+---
+name: compliance-check
+description: "Use when a senior underwriter asks something like \"Check compliance and authority before we finalize the Midwest Manufacturing recommendation\""
+---
+<!-- bic:source=blank -->
+# Compliance check
+
+Use when a senior underwriter asks something like "Check compliance and authority before we finalize the Midwest Manufacturing recommendation"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Within $10M limit`
+- `OH rates filed`
+- `30 days`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+````
+
+### `manual/skills/aibast_coverage-structure_07/SKILL.md`
+
+````markdown
+---
+name: coverage-structure
+description: "Use when an underwriter asks something like \"What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing\""
+---
+<!-- bic:source=blank -->
+# Coverage structure
+
+Use when an underwriter asks something like "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Equipment breakdown`
+- `$5K deductible`
+- `$8.2M total`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+````
 
 ### `manual/skills/aibast_exception-review_04/SKILL.md`
 
@@ -428,6 +684,36 @@ Prompt: Walk me through the rating factors and loss evidence for Riverside witho
 Expected synthetic evidence: UW-2025-101, Indicated Premium.
 ````
 
+### `manual/skills/aibast_risk-assessment_06/SKILL.md`
+
+````markdown
+---
+name: risk-assessment
+description: "Use when a risk analyst asks something like \"Show me the full risk assessment and the loss history for the Midwest Manufacturing submission\""
+---
+<!-- bic:source=blank -->
+# Risk assessment
+
+Use when a risk analyst asks something like "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Industry hazard`
+- `$237K`
+- `0.42 vs class 0.58`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+````
+
 ### `manual/skills/aibast_risk-evaluation_01/SKILL.md`
 
 ````markdown
@@ -457,6 +743,66 @@ Persona: Underwriter
 Prompt: Which submission needs the most experienced underwriter, and why?
 
 Expected synthetic evidence: UW-2025-103, Substandard.
+````
+
+### `manual/skills/aibast_submission-review_05/SKILL.md`
+
+````markdown
+---
+name: submission-review
+description: "Use when an underwriter asks something like \"Help me evaluate this commercial insurance application and tell me what is missing\""
+---
+<!-- bic:source=blank -->
+# Submission review
+
+Use when an underwriter asks something like "Help me evaluate this commercial insurance application and tell me what is missing"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Midwest Manufacturing Inc.`
+- `95% complete`
+- `68/100 (Moderate)`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+````
+
+### `manual/skills/aibast_underwriting-summary_09/SKILL.md`
+
+````markdown
+---
+name: underwriting-summary
+description: "Use when a senior underwriter asks something like \"Generate the complete underwriting summary for the Midwest Manufacturing submission\""
+---
+<!-- bic:source=blank -->
+# Underwriting summary
+
+Use when a senior underwriter asks something like "Generate the complete underwriting summary for the Midwest Manufacturing submission"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Approve with conditions`
+- `$88,100`
+- `drafted for you to issue`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
 ````
 
 ## Evidence-first response contract

@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T11:51:42.846Z",
+  "captured_at": "2026-10-08T02:01:31.108000Z",
   "solution": "@aibast-agents-library/procurement-support",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Discount Finder Manual",
-    "bot_id": "cedbd48a-981f-44b3-b8a6-1df0c199c3e8",
+    "bot_id": "bc491965-bce2-442b-b2b2-0221705afc96",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 6,
+      "confirmed": 6
     },
     "tools": {
       "expected": 0,
@@ -39,7 +39,7 @@
   "canonical_preview": [
     {
       "case_id": "DISC-01",
-      "prompt": "Scan the upcoming healthcare purchases and show me which savings signals are worth validating.",
+      "prompt": "I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.",
       "must_include": [
         "DISC-101",
         "DISC-102",
@@ -49,52 +49,82 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "14-disc-01.jpg",
+      "expected_screenshot": "18-disc-01.jpg",
       "passed": true
     },
     {
       "case_id": "DISC-02",
-      "prompt": "Which pricing notices expire first, and what evidence should I verify before I act?",
+      "prompt": "Which IT equipment deals expire this week, and what should we lock in immediately?",
       "must_include": [
-        "2026-08-31",
-        "2026-09-30",
+        "Dell",
+        "Thursday 5 PM",
         "approved procurement process"
       ],
       "must_not_include": [
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "15-disc-02.jpg",
+      "expected_screenshot": "19-disc-02.jpg",
       "passed": true
     },
     {
       "case_id": "DISC-03",
-      "prompt": "Are our facilities buying the same categories separately enough to justify a sourcing review?",
+      "prompt": "Model the office-supply bulk order strategy and the total savings projection for the quarter.",
       "must_include": [
-        "Clinical consumables",
-        "4",
+        "Office Supply Bulk Strategy",
+        "$56,400",
         "does not recommend a supplier award"
       ],
       "must_not_include": [
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "16-disc-03.jpg",
+      "expected_screenshot": "20-disc-03.jpg",
       "passed": true
     },
     {
       "case_id": "DISC-04",
-      "prompt": "Sequence the renewal, volume-tier, and price-change reviews without placing anything.",
+      "prompt": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
       "must_include": [
-        "Northstar Imaging",
-        "MedSupply Cooperative",
+        "PO-2024-Q1-0234",
+        "$21,760",
         "No supplier is selected"
       ],
       "must_not_include": [
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "17-disc-04.jpg",
+      "expected_screenshot": "21-disc-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "DISC-05",
+      "prompt": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+      "must_include": [
+        "PO-2024-Q1-0234",
+        "$36,200",
+        "Not Submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "22-disc-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "DISC-06",
+      "prompt": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+      "must_include": [
+        "$27,300",
+        "$9,360",
+        "Duplicate licenses"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "23-disc-06.jpg",
       "passed": true
     }
   ],
@@ -107,6 +137,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "24-confirm-draft.jpg"
   }
 }

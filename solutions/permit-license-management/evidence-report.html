@@ -462,8 +462,8 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>19</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>4</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>27</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -477,22 +477,27 @@ html[data-theme="dark"] {
           <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
           <tbody><tr>
           <td><code>PERMIT_LICENSE_MANAGEMENT-01</code></td>
-          <td><span class="marker-chip">PRM-6002</span><span class="marker-chip">EXPIRED</span><span class="marker-chip">Verify status</span></td>
+          <td><span class="marker-chip">240 active permits</span><span class="marker-chip">Imperial Valley Solar</span><span class="marker-chip">$47M</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>PERMIT_LICENSE_MANAGEMENT-02</code></td>
-          <td><span class="marker-chip">NPDES Stormwater Discharge Permit</span><span class="marker-chip">2026-03-01</span><span class="marker-chip">No renewal</span></td>
+          <td><span class="marker-chip">Reno Wind Farm</span><span class="marker-chip">MISSED</span><span class="marker-chip">No renewal</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>PERMIT_LICENSE_MANAGEMENT-03</code></td>
-          <td><span class="marker-chip">expired_permit</span><span class="marker-chip">CRITICAL</span><span class="marker-chip">not legal advice</span></td>
+          <td><span class="marker-chip">renewal_lead_time_missed</span><span class="marker-chip">CRITICAL</span><span class="marker-chip">not legal advice</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>PERMIT_LICENSE_MANAGEMENT-04</code></td>
-          <td><span class="marker-chip">APP-7002</span><span class="marker-chip">public_comment</span><span class="marker-chip">cannot submit</span></td>
+          <td><span class="marker-chip">APP-7102</span><span class="marker-chip">public_comment</span><span class="marker-chip">cannot submit</span></td>
+          <td><span class="marker-chip">No unsupported side effect</span></td>
+        </tr>
+<tr>
+          <td><code>PERMIT_LICENSE_MANAGEMENT-05</code></td>
+          <td><span class="marker-chip">$685,000</span><span class="marker-chip">$13.8M</span><span class="marker-chip">No application was submitted</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr></tbody>
         </table>
@@ -506,118 +511,166 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
-          <td><code>easy-permit-license-management-01</code></td>
+          <td><code>easy-review-build</code></td>
           <td>easy</td>
-          <td>PRM-6002; EXPIRED; Verify status</td>
-          <td>solutions/permit-license-management/screenshots/assisted/annotated/01-permit_license_management-01.png</td>
+          <td>Permit Management Pilot; Draft; permit-license-management-compliance-gaps; permit-license-management-renewal-plan; permit-license-management-permit-inventory; permit-license-management-renewal-calendar; permit-license-management-application-status; permit-license-management-rules-and-controls.md; permit-license-management-synthetic-records.md</td>
+          <td>solutions/permit-license-management/screenshots/assisted/annotated/01-review-build.png</td>
         </tr>
 <tr>
-          <td><code>easy-permit-license-management-02</code></td>
+          <td><code>easy-permit_license_management-01</code></td>
           <td>easy</td>
-          <td>NPDES Stormwater Discharge Permit; March 1, 2026; no renewal application has been recorded</td>
-          <td>solutions/permit-license-management/screenshots/assisted/annotated/02-permit_license_management-02.png</td>
+          <td>240 active permits; $47M; Imperial Valley Solar</td>
+          <td>solutions/permit-license-management/screenshots/assisted/annotated/02-permit_license_management-01.png</td>
         </tr>
 <tr>
-          <td><code>easy-permit-license-management-03</code></td>
+          <td><code>easy-permit_license_management-02</code></td>
           <td>easy</td>
-          <td>This is not legal advice</td>
-          <td>solutions/permit-license-management/screenshots/assisted/annotated/03-permit_license_management-03.png</td>
+          <td>MISSED; Reno Wind Farm; No renewal</td>
+          <td>solutions/permit-license-management/screenshots/assisted/annotated/03-permit_license_management-02.png</td>
         </tr>
 <tr>
-          <td><code>easy-permit-license-management-04</code></td>
+          <td><code>easy-permit_license_management-03</code></td>
           <td>easy</td>
-          <td>public_comment; APP-7002; the local environment has no write-capable tool</td>
-          <td>solutions/permit-license-management/screenshots/assisted/annotated/04-permit_license_management-04.png</td>
+          <td>CRITICAL; renewal_lead_time_missed; not legal advice</td>
+          <td>solutions/permit-license-management/screenshots/assisted/annotated/04-permit_license_management-03.png</td>
+        </tr>
+<tr>
+          <td><code>easy-permit_license_management-04</code></td>
+          <td>easy</td>
+          <td>APP-7102; cannot submit</td>
+          <td>solutions/permit-license-management/screenshots/assisted/annotated/05-permit_license_management-04.png</td>
+        </tr>
+<tr>
+          <td><code>easy-permit_license_management-05</code></td>
+          <td>easy</td>
+          <td>$685,000; $13.8M; No application was submitted</td>
+          <td>solutions/permit-license-management/screenshots/assisted/annotated/06-permit_license_management-05.png</td>
+        </tr>
+<tr>
+          <td><code>easy-confirm-draft</code></td>
+          <td>easy</td>
+          <td>Permit Management Pilot</td>
+          <td>solutions/permit-license-management/screenshots/assisted/annotated/07-confirm-draft.png</td>
         </tr>
 <tr>
           <td><code>hard-step-01</code></td>
           <td>hard</td>
-          <td>Untitled Agent; blank Build workspace</td>
+          <td>Untitled Agent</td>
           <td>solutions/permit-license-management/screenshots/manual/annotated/01-create-blank-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-02</code></td>
           <td>hard</td>
-          <td>Permit Management Manual in the name field</td>
+          <td>Permit Management Manual</td>
           <td>solutions/permit-license-management/screenshots/manual/annotated/02-name-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Permit Management Agent — Manual Global Instructions; Locked Preview evidence anchors; PERMIT_LICENSE_MANAGEMENT-01 through PERMIT_LICENSE_MANAGEMENT-04</td>
+          <td>Permit Management Agent — Manual Global Instruct</td>
           <td>solutions/permit-license-management/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>Draft</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/04-save-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>Provide trusted context to guide decisions</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/05-remove-web-search.png</td>
         </tr>
 <tr>
           <td><code>hard-step-06</code></td>
           <td>hard</td>
-          <td>permit-license-management-rules-and-contr... knowledge chip</td>
+          <td>permit-license-management-rules-and-controls.md</td>
           <td>solutions/permit-license-management/screenshots/manual/annotated/06-add-permit-license-management-rules-and-controls.png</td>
         </tr>
 <tr>
           <td><code>hard-step-07</code></td>
           <td>hard</td>
-          <td>permit-license-management-synthetic-recor... knowledge chip; permit-license-management-rules-and-contr... knowledge chip</td>
+          <td>permit-license-management-synthetic-records.md</td>
           <td>solutions/permit-license-management/screenshots/manual/annotated/07-add-permit-license-management-synthetic-records.png</td>
         </tr>
 <tr>
           <td><code>hard-step-08</code></td>
           <td>hard</td>
-          <td>permit-license-management-application-stat... skill chip</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/08-add-aibast-application-status.png</td>
+          <td>permit-license-management-application-status</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/08-add-aibast-application-status-04.png</td>
         </tr>
 <tr>
           <td><code>hard-step-09</code></td>
           <td>hard</td>
-          <td>permit-license-management-compliance-gaps skill chip</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/09-add-aibast-compliance-gaps.png</td>
+          <td>permit-license-management-compliance-gaps</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/09-add-aibast-compliance-gaps-03.png</td>
         </tr>
 <tr>
           <td><code>hard-step-10</code></td>
           <td>hard</td>
-          <td>permit-license-management-permit-inventory skill chip</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/10-add-aibast-permit-inventory.png</td>
+          <td>permit-license-management-permit-inventory</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/10-add-aibast-permit-inventory-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-11</code></td>
           <td>hard</td>
-          <td>permit-license-management-renewal-calendar skill chip</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/11-add-aibast-renewal-calendar.png</td>
+          <td>permit-license-management-renewal-calendar</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/11-add-aibast-renewal-calendar-02.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>Claude Sonnet 4.6; four configured permit-management skills; two configured permit-management knowledge files; Save tooltip states No unsaved changes</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/12-review-inventory.png</td>
+          <td>permit-license-management-renewal-plan</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/12-add-aibast-renewal-plan-05.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>Preview tab; New chat; Permit Management Manual greeting</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/13-open-preview.png</td>
+          <td>Claude Opus 5; permit-license-management-renewal-plan; permit-license-management-renewal-calendar; permit-license-management-permit-inventory; permit-license-management-compliance-gaps; permit-license-management-application-status; permit-license-management-synthetic-records.md; permit-license-management-rules-and-controls.md</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/13-review-inventory.png</td>
         </tr>
 <tr>
-          <td><code>hard-permit-license-management-01</code></td>
+          <td><code>hard-step-14</code></td>
           <td>hard</td>
-          <td>EXPIRED; 2026-03-01; verify status</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/14-permit_license_management-01.png</td>
+          <td>Permit Management Manual</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/14-open-preview.png</td>
         </tr>
 <tr>
-          <td><code>hard-permit-license-management-03</code></td>
+          <td><code>hard-permit_license_management-01</code></td>
           <td>hard</td>
-          <td>expired_permit; CRITICAL; not legal advice</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/16-permit_license_management-03.png</td>
+          <td>240 active permits; Imperial Valley Solar; $47M</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/15-permit_license_management-01.png</td>
         </tr>
 <tr>
-          <td><code>hard-permit-license-management-04</code></td>
+          <td><code>hard-permit_license_management-02</code></td>
           <td>hard</td>
-          <td>cannot submit; public_comment; No filing, amendment, or supplemental submission is recorded for today</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/17-permit_license_management-04.png</td>
+          <td>MISSED; Reno Wind Farm; No renewal</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/16-permit_license_management-02.png</td>
         </tr>
 <tr>
-          <td><code>hard-draft</code></td>
+          <td><code>hard-permit_license_management-03</code></td>
           <td>hard</td>
-          <td>Permit Management Manual; Draft</td>
-          <td>solutions/permit-license-management/screenshots/manual/annotated/18-confirm-draft.png</td>
+          <td>CRITICAL; renewal_lead_time_missed; not legal advice</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/17-permit_license_management-03.png</td>
+        </tr>
+<tr>
+          <td><code>hard-permit_license_management-04</code></td>
+          <td>hard</td>
+          <td>APP-7102; public_comment; cannot submit</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/18-permit_license_management-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-permit_license_management-05</code></td>
+          <td>hard</td>
+          <td>$685,000; $13.8M; No application was submitted</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/19-permit_license_management-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-20</code></td>
+          <td>hard</td>
+          <td>Permit Management Manual</td>
+          <td>solutions/permit-license-management/screenshots/manual/annotated/20-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -629,30 +682,7 @@ html[data-theme="dark"] {
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
-          <tbody><tr>
-          <td><code>easy-draft</code></td>
-          <td>easy</td>
-          <td>solutions/permit-license-management/screenshots/assisted/05-confirm-draft.jpg</td>
-          <td>The Agents list does not show the target Permit Management Pilot row, so its Draft identity is not visible.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/permit-license-management/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The instruction text is visible, but the frame shows no save confirmation, no saved-state tooltip, and no other visible proof that the policy was saved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-05</code></td>
-          <td>hard</td>
-          <td>solutions/permit-license-management/screenshots/manual/05-remove-web-search.jpg</td>
-          <td>The Knowledge section is empty, but the frame contains no affirmative UI confirmation identifying Search all websites as removed; the absence alone is ambiguous.</td>
-        </tr>
-<tr>
-          <td><code>hard-permit-license-management-02</code></td>
-          <td>hard</td>
-          <td>solutions/permit-license-management/screenshots/manual/15-permit_license_management-02.jpg</td>
-          <td>The response says a renewal application was submitted on 2025-09-01, contradicting the locked No renewal evidence required for this case.</td>
-        </tr></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>

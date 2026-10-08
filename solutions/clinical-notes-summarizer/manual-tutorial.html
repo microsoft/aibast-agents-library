@@ -549,11 +549,11 @@ html[data-theme="dark"] {
       <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
       <a class="academy-breadcrumb" href="../../academy.html#course/clinical-notes-summarizer">Academy / Clinical Notes Summarizer Agent</a>
     </div>
-    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button" href="quest.html">Back to workshop</a><a class="button primary" href="exports/clinical-notes-summarizer-source.zip">Download source bundle</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button" href="quest.html">Back to workshop</a><a class="button primary" href="exports/clinical-notes-summarizer-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
-      <strong id="progress-label">0 of 18 complete</strong>
+      <strong id="progress-label">0 of 34 complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
       <p class="achievements-manual-note">Manual-mode progress earns self-paced local achievement points on this device.</p>
       <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -564,17 +564,33 @@ html[data-theme="dark"] {
 <a href="#step-5">5. Remove default web search</a>
 <a href="#step-6">6. Add knowledge: aibast_clinical-notes-summarizer-review-rules.md</a>
 <a href="#step-7">7. Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md</a>
-<a href="#step-8">8. Add skill: encounter-summary</a>
-<a href="#step-9">9. Add skill: medication-inventory</a>
-<a href="#step-10">10. Add skill: problem-list-extract</a>
-<a href="#step-11">11. Add skill: referral-context</a>
-<a href="#step-12">12. Review model, skills, knowledge, and safety boundaries</a>
-<a href="#step-13">13. Open a fresh Preview conversation</a>
-<a href="#step-14">14. Pass CN-01: Primary Care Physician</a>
-<a href="#step-15">15. Pass CN-02: Anesthesia Clinician</a>
-<a href="#step-16">16. Pass CN-03: Surgeon</a>
-<a href="#step-17">17. Pass CN-04: Primary Care Physician</a>
-<a href="#step-18">18. Confirm Draft and stop before publish</a></nav>
+<a href="#step-8">8. Add skill: anesthesia-considerations</a>
+<a href="#step-9">9. Add skill: cardiopulmonary-review</a>
+<a href="#step-10">10. Add skill: clearance-note-draft</a>
+<a href="#step-11">11. Add skill: encounter-summary</a>
+<a href="#step-12">12. Add skill: medication-inventory</a>
+<a href="#step-13">13. Add skill: perioperative-medication-review</a>
+<a href="#step-14">14. Add skill: preop-snapshot</a>
+<a href="#step-15">15. Add skill: problem-list-extract</a>
+<a href="#step-16">16. Add skill: reevaluation-criteria</a>
+<a href="#step-17">17. Add skill: referral-context</a>
+<a href="#step-18">18. Add skill: risk-factor-summary</a>
+<a href="#step-19">19. Review model, skills, knowledge, and safety boundaries</a>
+<a href="#step-20">20. Review the skill list (11 skills)</a>
+<a href="#step-21">21. Review the rest of the skill list</a>
+<a href="#step-22">22. Open a fresh Preview conversation</a>
+<a href="#step-23">23. Pass CN-01: Primary Care Physician</a>
+<a href="#step-24">24. Pass CN-02: Anesthesia Clinician</a>
+<a href="#step-25">25. Pass CN-03: Surgeon</a>
+<a href="#step-26">26. Pass CN-04: Primary Care Physician</a>
+<a href="#step-27">27. Pass CN-05: Primary Care Physician</a>
+<a href="#step-28">28. Pass CN-06: Primary Care Physician</a>
+<a href="#step-29">29. Pass CN-07: Primary Care Physician</a>
+<a href="#step-30">30. Pass CN-08: Primary Care Physician</a>
+<a href="#step-31">31. Pass CN-09: Primary Care Physician</a>
+<a href="#step-32">32. Pass CN-10: Primary Care Physician</a>
+<a href="#step-33">33. Pass CN-11: Primary Care Physician</a>
+<a href="#step-34">34. Confirm Draft and stop before publish</a></nav>
     </aside>
     <main id="course-content" tabindex="-1">
       <section class="hero">
@@ -588,14 +604,14 @@ html[data-theme="dark"] {
       </section>
       <h2>Build and verify</h2>
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/01-create-blank-agent.png" download="01-create-blank-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; blank Build workspace. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/01-create-blank-agent.png" download="01-create-blank-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -603,14 +619,14 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name Clinical Notes Manual</h3><p>Step 2 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name Clinical Notes Manual" data-report-expected="The page header shows the recorded manual build name: Clinical Notes Manual." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <header><span>2</span><div><h3>Name Clinical Notes Manual</h3><p>Step 2 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name Clinical Notes Manual" data-report-expected="The page header shows the recorded manual build name: Clinical Notes Manual." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Clinical Notes Manual</pre></div><span>Name Clinical Notes Manual</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Clinical Notes Manual.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Clinical Notes Manual reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Clinical Notes Manual in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Clinical Notes Manual reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Clinical Notes Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -618,7 +634,7 @@ html[data-theme="dark"] {
         </div>
       </article>
 <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Role
@@ -640,6 +656,14 @@ You are Clinical Notes Summarizer Agent, a synthetic, read-only healthcare evide
 - Route requests about **medication source inventory** to `medication_inventory`. Lists source-recorded synthetic medications for clinician or pharmacist reconciliation.
 - Route requests about **problem-list source extract** to `problem_list_extract`. Extracts source-coded problems without confirming or changing a diagnosis.
 - Route requests about **referral context extract** to `referral_context`. Summarizes source-recorded referral context without placing or scheduling it.
+- Route requests about **pre-op clearance summary** to `preop_snapshot`. It assembles the pre-op patient snapshot for patient 78392.
+- Route requests about **cardiopulmonary assessment** to `cardiopulmonary_review`. It reports source-recorded cardiac and respiratory findings and labs.
+- Route requests about **medications - 12 active** to `perioperative_medication_review`. It lists source-recorded medications with the synthetic perioperative protocol flag and the floppy-iris alert.
+- Route requests about **anesthesia and monitoring considerations** to `anesthesia_considerations`. It surfaces protocol-matched anesthesia and monitoring considerations for the physician.
+- Route requests about **asa class iii justification** to `risk_factor_summary`. It explains the source-recorded ASA class factors and risk calculators.
+- Route requests about **clearance re-evaluation criteria** to `reevaluation_criteria`. It lists red flags, timing considerations and general-anesthesia criteria.
+- Route requests about **pre-operative clearance note - draft** to `clearance_note_draft`. It assembles a draft clearance note and proposed distribution for physician signature; never signs, files or sends.
+- The pre-op clearance walkthrough is for John Martinez (Patient ID / MRN 78392, right eye phacoemulsification); &quot;generate the clearance note and send to ophthalmology&quot; uses `clearance_note_draft`, which returns a draft for physician signature and sends nothing.
 
 Do not require users to know operation names. Ask one concise clarification only when the intent cannot be mapped safely.
 
@@ -669,6 +693,13 @@ Route from the user&#x27;s natural-language intent to the correct skill below. D
 - `CN-02` uses skill `clinical-notes-summarizer-medication-inventory`.
 - `CN-03` uses skill `clinical-notes-summarizer-problem-list-extract`.
 - `CN-04` uses skill `clinical-notes-summarizer-referral-context`.
+- `CN-05` uses skill `clinical-notes-summarizer-preop-snapshot`.
+- `CN-06` uses skill `clinical-notes-summarizer-cardiopulmonary-review`.
+- `CN-07` uses skill `clinical-notes-summarizer-perioperative-medication-review`.
+- `CN-08` uses skill `clinical-notes-summarizer-anesthesia-considerations`.
+- `CN-09` uses skill `clinical-notes-summarizer-risk-factor-summary`.
+- `CN-10` uses skill `clinical-notes-summarizer-reevaluation-criteria`.
+- `CN-11` uses skill `clinical-notes-summarizer-clearance-note-draft`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 &lt;!-- locked-preview-anchors:end --&gt;
@@ -676,7 +707,7 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Synthetic healthcare evidence only; Locked Preview evidence anchors. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Role. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -684,14 +715,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/04-save-instructions.png" download="04-save-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-instructions.png" alt="Save the instruction policy reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -699,14 +730,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/05-remove-web-search.png" download="05-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Tools section contains no web-search chip. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/05-remove-web-search.png" download="05-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Provide trusted context to guide decisions. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg">Download original</a>.</p>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -714,14 +745,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Add knowledge: aibast_clinical-notes-summarizer-review-rules.md</h3><p>Step 6 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Add knowledge: aibast_clinical-notes-summarizer-review-rules.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/06-add-aibast-clinical-notes-summarizer-review-rules.jpg">Report an issue</button></header>
+        <header><span>6</span><div><h3>Add knowledge: aibast_clinical-notes-summarizer-review-rules.md</h3><p>Step 6 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Add knowledge: aibast_clinical-notes-summarizer-review-rules.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/06-add-aibast-clinical-notes-summarizer-review-rules.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_clinical-notes-summarizer-review-rules.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/06-add-aibast-clinical-notes-summarizer-review-rules.png" download="06-add-aibast-clinical-notes-summarizer-review-rules.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-add-aibast-clinical-notes-summarizer-review-rules.png" alt="Add knowledge: aibast_clinical-notes-summarizer-review-rules.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_clinical-notes-summarizer-review-rules.md. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-add-aibast-clinical-notes-summarizer-review-rules.jpg" download="06-add-aibast-clinical-notes-summarizer-review-rules.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/knowledge/aibast_clinical-notes-summarizer-review-rules.md" download>Download source: Aibast Clinical Notes Summarizer Review Rules</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -729,14 +760,14 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md</h3><p>Step 7 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/07-add-aibast-clinical-notes-summarizer-synthetic-records.jpg">Report an issue</button></header>
+        <header><span>7</span><div><h3>Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md</h3><p>Step 7 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md" data-report-expected="The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/07-add-aibast-clinical-notes-summarizer-synthetic-records.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The exact knowledge file linked for this step is attached under its complete filename. Wait for processing to finish before continuing. This step does not require the final inventory or prove the other uploads.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/07-add-aibast-clinical-notes-summarizer-synthetic-records.png" download="07-add-aibast-clinical-notes-summarizer-synthetic-records.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-add-aibast-clinical-notes-summarizer-synthetic-records.png" alt="Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_clinical-notes-summarizer-synthetic-recor. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-add-aibast-clinical-notes-summarizer-synthetic-records.jpg" download="07-add-aibast-clinical-notes-summarizer-synthetic-records.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/knowledge/aibast_clinical-notes-summarizer-synthetic-records.md" download>Download source: Aibast Clinical Notes Summarizer Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -744,167 +775,407 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
         </div>
       </article>
 <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Add skill: encounter-summary</h3><p>Step 8 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Add skill: encounter-summary" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/08-add-encounter-summary.jpg">Report an issue</button></header>
+        <header><span>8</span><div><h3>Add skill: anesthesia-considerations</h3><p>Step 8 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Add skill: anesthesia-considerations" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/08-add-anesthesia-considerations.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: anesthesia-considerations</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/08-add-anesthesia-considerations.png" download="08-add-anesthesia-considerations.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/08-add-anesthesia-considerations.png" alt="Add skill: anesthesia-considerations reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-anesthesia-considerati. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/08-add-anesthesia-considerations.jpg" download="08-add-anesthesia-considerations.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/anesthesia-considerations/SKILL.md" download>Download source: Capability card: anesthesia considerations</a>
+            <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-9">
+        <header><span>9</span><div><h3>Add skill: cardiopulmonary-review</h3><p>Step 9 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Add skill: cardiopulmonary-review" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/09-add-cardiopulmonary-review.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: cardiopulmonary-review</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/09-add-cardiopulmonary-review.png" download="09-add-cardiopulmonary-review.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-add-cardiopulmonary-review.png" alt="Add skill: cardiopulmonary-review reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-cardiopulmonary-review. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-add-cardiopulmonary-review.jpg" download="09-add-cardiopulmonary-review.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/cardiopulmonary-review/SKILL.md" download>Download source: Capability card: cardiopulmonary review</a>
+            <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-10">
+        <header><span>10</span><div><h3>Add skill: clearance-note-draft</h3><p>Step 10 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Add skill: clearance-note-draft" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/10-add-clearance-note-draft.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: clearance-note-draft</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/10-add-clearance-note-draft.png" download="10-add-clearance-note-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-add-clearance-note-draft.png" alt="Add skill: clearance-note-draft reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-clearance-note-draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-add-clearance-note-draft.jpg" download="10-add-clearance-note-draft.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/clearance-note-draft/SKILL.md" download>Download source: Capability card: clearance note draft</a>
+            <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-11">
+        <header><span>11</span><div><h3>Add skill: encounter-summary</h3><p>Step 11 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add skill: encounter-summary" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/11-add-encounter-summary.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: encounter-summary</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/11-add-encounter-summary.png" download="11-add-encounter-summary.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-add-encounter-summary.png" alt="Add skill: encounter-summary reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-encounter-summary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-add-encounter-summary.jpg" download="11-add-encounter-summary.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/encounter-summary/SKILL.md" download>Download source: Capability card: encounter summary</a>
-            <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-9">
-        <header><span>9</span><div><h3>Add skill: medication-inventory</h3><p>Step 9 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Add skill: medication-inventory" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/09-add-medication-inventory.jpg">Report an issue</button></header>
+<article class="step" id="step-12">
+        <header><span>12</span><div><h3>Add skill: medication-inventory</h3><p>Step 12 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Add skill: medication-inventory" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/12-add-medication-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: medication-inventory</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/12-add-medication-inventory.png" download="12-add-medication-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-add-medication-inventory.png" alt="Add skill: medication-inventory reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-medication-inventory. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-add-medication-inventory.jpg" download="12-add-medication-inventory.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/medication-inventory/SKILL.md" download>Download source: Capability card: medication inventory</a>
-            <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-10">
-        <header><span>10</span><div><h3>Add skill: problem-list-extract</h3><p>Step 10 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Add skill: problem-list-extract" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/10-add-problem-list-extract.jpg">Report an issue</button></header>
+<article class="step" id="step-13">
+        <header><span>13</span><div><h3>Add skill: perioperative-medication-review</h3><p>Step 13 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Add skill: perioperative-medication-review" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/13-add-perioperative-medication-review.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: perioperative-medication-review</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/13-add-perioperative-medication-review.png" download="13-add-perioperative-medication-review.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-add-perioperative-medication-review.png" alt="Add skill: perioperative-medication-review reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-perioperative-medicati. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-add-perioperative-medication-review.jpg" download="13-add-perioperative-medication-review.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/perioperative-medication-review/SKILL.md" download>Download source: Capability card: perioperative medication review</a>
+            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Add skill: preop-snapshot</h3><p>Step 14 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Add skill: preop-snapshot" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/14-add-preop-snapshot.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: preop-snapshot</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/14-add-preop-snapshot.png" download="14-add-preop-snapshot.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-add-preop-snapshot.png" alt="Add skill: preop-snapshot reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-preop-snapshot. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-add-preop-snapshot.jpg" download="14-add-preop-snapshot.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/preop-snapshot/SKILL.md" download>Download source: Capability card: preop snapshot</a>
+            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Add skill: problem-list-extract</h3><p>Step 15 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Add skill: problem-list-extract" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/15-add-problem-list-extract.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: problem-list-extract</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/15-add-problem-list-extract.png" download="15-add-problem-list-extract.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-add-problem-list-extract.png" alt="Add skill: problem-list-extract reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-problem-list-extract. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-add-problem-list-extract.jpg" download="15-add-problem-list-extract.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/problem-list-extract/SKILL.md" download>Download source: Capability card: problem list extract</a>
-            <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add skill: referral-context</h3><p>Step 11 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add skill: referral-context" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/11-add-referral-context.jpg">Report an issue</button></header>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Add skill: reevaluation-criteria</h3><p>Step 16 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Add skill: reevaluation-criteria" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/16-add-reevaluation-criteria.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: reevaluation-criteria</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/16-add-reevaluation-criteria.png" download="16-add-reevaluation-criteria.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-add-reevaluation-criteria.png" alt="Add skill: reevaluation-criteria reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-reevaluation-criteria. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-add-reevaluation-criteria.jpg" download="16-add-reevaluation-criteria.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/reevaluation-criteria/SKILL.md" download>Download source: Capability card: reevaluation criteria</a>
+            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Add skill: referral-context</h3><p>Step 17 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Add skill: referral-context" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/17-add-referral-context.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: referral-context</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
           </div>
 
-          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/17-add-referral-context.png" download="17-add-referral-context.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-add-referral-context.png" alt="Add skill: referral-context reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-referral-context. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-add-referral-context.jpg" download="17-add-referral-context.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/skills/referral-context/SKILL.md" download>Download source: Capability card: referral context</a>
-            <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-12">
-        <header><span>12</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 12 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/12-review-inventory.jpg">Report an issue</button></header>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Add skill: risk-factor-summary</h3><p>Step 18 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Add skill: risk-factor-summary" data-report-expected="The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/18-add-risk-factor-summary.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: risk-factor-summary</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The linked SKILL.md appears with its frontmatter name and description. Open it and compare the complete instructions with the source file. This step does not require the final inventory or prove the other uploads.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/18-add-risk-factor-summary.png" download="18-add-risk-factor-summary.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-add-risk-factor-summary.png" alt="Add skill: risk-factor-summary reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-risk-factor-summary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-add-risk-factor-summary.jpg" download="18-add-risk-factor-summary.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/risk-factor-summary/SKILL.md" download>Download source: Capability card: risk factor summary</a>
+            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-19">
+        <header><span>19</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 19 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 19: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Opus 5, 11 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/19-review-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
-            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Opus 5, 11 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/12-review-inventory.png" download="12-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; four Clinical Notes skills; two knowledge sources; No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-review-inventory.jpg" download="12-review-inventory.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/19-review-inventory.png" download="19-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Opus 5; clinical-notes-summarizer-risk-factor-summary; clinical-notes-summarizer-reevaluation-criteria; clinical-notes-summarizer-problem-list-extract; clinical-notes-summarizer-preop-snapshot; aibast_clinical-notes-summarizer-synthetic-recor; aibast_clinical-notes-summarizer-review-rules.md. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-review-inventory.jpg" download="19-review-inventory.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
-            <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-13">
-        <header><span>13</span><div><h3>Open a fresh Preview conversation</h3><p>Step 13 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/13-open-preview.jpg">Report an issue</button></header>
+<article class="step" id="step-20">
+        <header><span>20</span><div><h3>Review the skill list (11 skills)</h3><p>Step 20 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 20: Review the skill list (11 skills)" data-report-expected="The screenshot visibly confirms Claude Opus 5, 11 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/20-review-skills.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review the skill list (11 skills)</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Opus 5, 11 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/20-review-skills.png" download="20-review-skills.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-review-skills.png" alt="Review the skill list (11 skills) reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-anesthesia-considerati · clinical-notes-summarizer-cardiopulmonary-review · clinical-notes-summarizer-clearance-note-draft · clinical-notes-summarizer-encounter-summary · clinical-notes-summarizer-medication-inventory · clinical-notes-summarizer-perioperative-medicati · clinical-notes-summarizer-preop-snapshot · clinical-notes-summarizer-problem-list-extract · clinical-notes-summarizer-reevaluation-criteria · clinical-notes-summarizer-referral-context · clinical-notes-summarizer-risk-factor-summary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-review-skills.jpg" download="20-review-skills.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-21">
+        <header><span>21</span><div><h3>Review the rest of the skill list</h3><p>Step 21 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 21: Review the rest of the skill list" data-report-expected="The screenshot visibly confirms Claude Opus 5, 11 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/21-review-skills-more.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review the rest of the skill list</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Opus 5, 11 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/21-review-skills-more.png" download="21-review-skills-more.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/21-review-skills-more.png" alt="Review the rest of the skill list reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: clinical-notes-summarizer-encounter-summary; clinical-notes-summarizer-anesthesia-considerati · clinical-notes-summarizer-cardiopulmonary-review · clinical-notes-summarizer-clearance-note-draft · clinical-notes-summarizer-medication-inventory · clinical-notes-summarizer-perioperative-medicati · clinical-notes-summarizer-preop-snapshot · clinical-notes-summarizer-problem-list-extract · clinical-notes-summarizer-reevaluation-criteria · clinical-notes-summarizer-referral-context · clinical-notes-summarizer-risk-factor-summary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/21-review-skills-more.jpg" download="21-review-skills-more.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-22">
+        <header><span>22</span><div><h3>Open a fresh Preview conversation</h3><p>Step 22 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 22: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/22-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/13-open-preview.png" download="13-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-open-preview.png" alt="Open a fresh Preview conversation reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat; Clinical Notes Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-open-preview.jpg" download="13-open-preview.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/22-open-preview.png" download="22-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/22-open-preview.png" alt="Open a fresh Preview conversation reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Clinical Notes Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/22-open-preview.jpg" download="22-open-preview.jpg">Download original</a>.</p>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
-            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-14">
-        <header><span>14</span><div><h3>Pass CN-01: Primary Care Physician</h3><p>Step 14 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Pass CN-01: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-01 with the recorded identifiers SYN-ENC-001, Clinical interpretation: not performed; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/14-cn-01.jpg">Report an issue</button></header>
+<article class="step" id="step-23">
+        <header><span>23</span><div><h3>Pass CN-01: Primary Care Physician</h3><p>Step 23 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 23: Pass CN-01: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-01 with the recorded identifiers SYN-ENC-001, Clinical interpretation: not performed; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/23-cn-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-14">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-14" hidden>Summarize synthetic encounter SYN-ENC-001 using source facts only.</pre></div><span>Pass CN-01: Primary Care Physician</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-23">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-23" hidden>Summarize synthetic encounter SYN-ENC-001 using source facts only.</pre></div><span>Pass CN-01: Primary Care Physician</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-01 with the recorded identifiers SYN-ENC-001, Clinical interpretation: not performed; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-01. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/14-cn-01.png" download="14-cn-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-cn-01.png" alt="Pass CN-01: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Clinical interpretation: not performed; clinician review required. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-cn-01.jpg" download="14-cn-01.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/23-cn-01.png" download="23-cn-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/23-cn-01.png" alt="Pass CN-01: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: SYN-ENC-001; Clinical interpretation: not performed. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/23-cn-01.jpg" download="23-cn-01.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="23"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-15">
-        <header><span>15</span><div><h3>Pass CN-02: Anesthesia Clinician</h3><p>Step 15 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Pass CN-02: Anesthesia Clinician" data-report-expected="The captured Preview evidence records CN-02 with the recorded identifiers Metformin 1000 mg twice daily, clinician/pharmacist review; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/15-cn-02.jpg">Report an issue</button></header>
+<article class="step" id="step-24">
+        <header><span>24</span><div><h3>Pass CN-02: Anesthesia Clinician</h3><p>Step 24 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 24: Pass CN-02: Anesthesia Clinician" data-report-expected="The captured Preview evidence records CN-02 with the recorded identifiers Metformin 1000 mg twice daily, clinician/pharmacist review; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/24-cn-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-15">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-15" hidden>List the source-recorded medications for SYN-ENC-001 for reconciliation.</pre></div><span>Pass CN-02: Anesthesia Clinician</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-24">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-24" hidden>List the source-recorded medications for SYN-ENC-001 for reconciliation.</pre></div><span>Pass CN-02: Anesthesia Clinician</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-02 with the recorded identifiers Metformin 1000 mg twice daily, clinician/pharmacist review; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-02. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/15-cn-02.png" download="15-cn-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-cn-02.png" alt="Pass CN-02: Anesthesia Clinician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Metformin | 1000 mg | Twice daily; Reconciliation review required; clinician or pharmacist review. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-cn-02.jpg" download="15-cn-02.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/24-cn-02.png" download="24-cn-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/24-cn-02.png" alt="Pass CN-02: Anesthesia Clinician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Metformin 1000 mg twice daily; clinician/pharmacist review. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/24-cn-02.jpg" download="24-cn-02.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="24"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-16">
-        <header><span>16</span><div><h3>Pass CN-03: Surgeon</h3><p>Step 16 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Pass CN-03: Surgeon" data-report-expected="The captured Preview evidence records CN-03 with the recorded identifiers source-coded type 2 diabetes, No diagnosis was added; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/16-cn-03.jpg">Report an issue</button></header>
+<article class="step" id="step-25">
+        <header><span>25</span><div><h3>Pass CN-03: Surgeon</h3><p>Step 25 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 25: Pass CN-03: Surgeon" data-report-expected="The captured Preview evidence records CN-03 with the recorded identifiers source-coded type 2 diabetes, No diagnosis was added; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/25-cn-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.</pre></div><span>Pass CN-03: Surgeon</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-25">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-25" hidden>Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.</pre></div><span>Pass CN-03: Surgeon</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-03 with the recorded identifiers source-coded type 2 diabetes, No diagnosis was added; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-03. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/16-cn-03.png" download="16-cn-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-cn-03.png" alt="Pass CN-03: Surgeon reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Source-coded type 2 diabetes; No diagnosis was added. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-cn-03.jpg" download="16-cn-03.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/25-cn-03.png" download="25-cn-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/25-cn-03.png" alt="Pass CN-03: Surgeon reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: source-coded type 2 diabetes; No diagnosis was added. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/25-cn-03.jpg" download="25-cn-03.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="25"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-17">
-        <header><span>17</span><div><h3>Pass CN-04: Primary Care Physician</h3><p>Step 17 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Pass CN-04: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-04 with the recorded identifiers Orthopedics referral draft, No referral was placed; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/17-cn-04.jpg">Report an issue</button></header>
+<article class="step" id="step-26">
+        <header><span>26</span><div><h3>Pass CN-04: Primary Care Physician</h3><p>Step 26 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 26: Pass CN-04: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-04 with the recorded identifiers Orthopedics referral draft, No referral was placed; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/26-cn-04.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>What referral context is recorded for SYN-ENC-001, and what action has not occurred?</pre></div><span>Pass CN-04: Primary Care Physician</span></div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-26">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-26" hidden>What referral context is recorded for SYN-ENC-001, and what action has not occurred?</pre></div><span>Pass CN-04: Primary Care Physician</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-04 with the recorded identifiers Orthopedics referral draft, No referral was placed; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-04. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/annotated/17-cn-04.png" download="17-cn-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-cn-04.png" alt="Pass CN-04: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Orthopedics referral draft recorded; No referral was placed; Authorized clinician/staff review is required. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-cn-04.jpg" download="17-cn-04.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/26-cn-04.png" download="26-cn-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/26-cn-04.png" alt="Pass CN-04: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Orthopedics referral draft; No referral was placed. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/26-cn-04.jpg" download="26-cn-04.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
-            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="26"> Mark complete</label>
           </footer>
         </div>
       </article>
-<article class="step" id="step-18">
-        <header><span>18</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 18 of 18</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/18-confirm-draft.jpg">Report an issue</button></header>
+<article class="step" id="step-27">
+        <header><span>27</span><div><h3>Pass CN-05: Primary Care Physician</h3><p>Step 27 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 27: Pass CN-05: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-05 with the recorded identifiers John Martinez, Right eye phacoemulsification, ASA class; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/27-cn-05.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-27">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-27" hidden>I need a pre-op clearance summary for Patient ID 78392.</pre></div><span>Pass CN-05: Primary Care Physician</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-05 with the recorded identifiers John Martinez, Right eye phacoemulsification, ASA class; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-05. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/27-cn-05.png" download="27-cn-05.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/27-cn-05.png" alt="Pass CN-05: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: John Martinez; ASA class. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/27-cn-05.jpg" download="27-cn-05.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="27"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-28">
+        <header><span>28</span><div><h3>Pass CN-06: Primary Care Physician</h3><p>Step 28 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 28: Pass CN-06: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-06 with the recorded identifiers 82 bpm, FEV1 68%, eGFR 67; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/28-cn-06.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-28">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-28" hidden>Show me his cardiac and respiratory status with recent testing.</pre></div><span>Pass CN-06: Primary Care Physician</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-06 with the recorded identifiers 82 bpm, FEV1 68%, eGFR 67; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-06. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/28-cn-06.png" download="28-cn-06.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/28-cn-06.png" alt="Pass CN-06: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: 82 bpm; FEV1 68%; eGFR 67. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/28-cn-06.jpg" download="28-cn-06.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="28"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-29">
+        <header><span>29</span><div><h3>Pass CN-07: Primary Care Physician</h3><p>Step 29 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 29: Pass CN-07: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-07 with the recorded identifiers Lisinopril 10mg daily, Floppy iris, 12 Active; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/29-cn-07.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-29">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-29" hidden>Review his medications and flag any surgical concerns.</pre></div><span>Pass CN-07: Primary Care Physician</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-07 with the recorded identifiers Lisinopril 10mg daily, Floppy iris, 12 Active; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-07. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/29-cn-07.png" download="29-cn-07.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/29-cn-07.png" alt="Pass CN-07: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: 12 Active; Lisinopril 10mg daily; Floppy iris. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/29-cn-07.jpg" download="29-cn-07.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="29"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-30">
+        <header><span>30</span><div><h3>Pass CN-08: Primary Care Physician</h3><p>Step 30 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 30: Pass CN-08: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-08 with the recorded identifiers MAC preferred, Extended PACU, Afternoon slot; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/30-cn-08.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-30">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-30" hidden>Give me anesthesia and monitoring considerations for his eye surgery.</pre></div><span>Pass CN-08: Primary Care Physician</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-08 with the recorded identifiers MAC preferred, Extended PACU, Afternoon slot; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-08. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/30-cn-08.png" download="30-cn-08.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/30-cn-08.png" alt="Pass CN-08: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: MAC preferred; Extended PACU; Afternoon slot. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/30-cn-08.jpg" download="30-cn-08.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="30"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-31">
+        <header><span>31</span><div><h3>Pass CN-09: Primary Care Physician</h3><p>Step 31 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 31: Pass CN-09: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-09 with the recorded identifiers ASA Class III Justification, Goldman &lt;1%, FEV1 68%; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/31-cn-09.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-31">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-31" hidden>Explain his ASA class III and the factors behind it.</pre></div><span>Pass CN-09: Primary Care Physician</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-09 with the recorded identifiers ASA Class III Justification, Goldman &lt;1%, FEV1 68%; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-09. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/31-cn-09.png" download="31-cn-09.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/31-cn-09.png" alt="Pass CN-09: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: ASA Class III Justification; FEV1 68%; Goldman &lt;1%. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/31-cn-09.jpg" download="31-cn-09.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="31"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-32">
+        <header><span>32</span><div><h3>Pass CN-10: Primary Care Physician</h3><p>Step 32 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 32: Pass CN-10: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-10 with the recorded identifiers COPD exacerbation &lt;2 weeks, delay 2-4 weeks, ICU bed availability; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/32-cn-10.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-32">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-32" hidden>What would change the recommendation, and when should I reconsider clearance?</pre></div><span>Pass CN-10: Primary Care Physician</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-10 with the recorded identifiers COPD exacerbation &lt;2 weeks, delay 2-4 weeks, ICU bed availability; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-10. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/32-cn-10.png" download="32-cn-10.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/32-cn-10.png" alt="Pass CN-10: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: COPD exacerbation &lt;2 weeks; delay 2-4 weeks; ICU bed availability. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/32-cn-10.jpg" download="32-cn-10.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="32"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-33">
+        <header><span>33</span><div><h3>Pass CN-11: Primary Care Physician</h3><p>Step 33 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 33: Pass CN-11: Primary Care Physician" data-report-expected="The captured Preview evidence records CN-11 with the recorded identifiers Dr. Amanda Chen, Draft ready for physician e-signature, nothing was sent; do not infer results beyond it." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/33-cn-11.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-33">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-33" hidden>Generate the clearance note and send it to ophthalmology.</pre></div><span>Pass CN-11: Primary Care Physician</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records CN-11 with the recorded identifiers Dr. Amanda Chen, Draft ready for physician e-signature, nothing was sent; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running CN-11. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/33-cn-11.png" download="33-cn-11.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/33-cn-11.png" alt="Pass CN-11: Primary Care Physician reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Draft ready for physician e-signature; nothing was sent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/33-cn-11.jpg" download="33-cn-11.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="33"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-34">
+        <header><span>34</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 34 of 34</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 34: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/clinical-notes-summarizer/screenshots/manual/34-confirm-draft.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/annotated/18-confirm-draft.png" download="18-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-confirm-draft.png" alt="Confirm Draft and stop before publish reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Clinical Notes Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-confirm-draft.jpg" download="18-confirm-draft.jpg">Download original</a>.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/34-confirm-draft.png" download="34-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/34-confirm-draft.png" alt="Confirm Draft and stop before publish reviewed visual reference" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Clinical Notes Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/34-confirm-draft.jpg" download="34-confirm-draft.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
-            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+            <label><input class="complete" type="checkbox" data-step="34"> Mark complete</label>
           </footer>
         </div>
       </article>

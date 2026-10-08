@@ -22,7 +22,7 @@ Business Development Rep.
 1. Confirm that the request matches `create_outreach`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Personalized Outreach`, `Draft Sequence Cadence`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Personalized Outreach`, `Draft Sequence Cadence`, `Connecting 12 data sources in weeks`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.
 
 ## Expected evidence marker
-The response must include `Personalized Outreach`, `Draft Sequence Cadence`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Personalized Outreach`, `Draft Sequence Cadence`, `Connecting 12 data sources in weeks`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

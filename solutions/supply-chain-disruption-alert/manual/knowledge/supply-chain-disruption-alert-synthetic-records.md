@@ -5,9 +5,9 @@
 ## Provenance
 
 - Deterministic source: `agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py`
-- Captured source SHA-256: `ad921fdd2417b9bc9bacfa2bdf70998c150c615968f7ad0c32ae0b91e47531d1`
+- Captured source SHA-256: `6f7e8aac2c1b221a240c9bd9c65301f3207f382c038fcd1de21eb709935ffbdd`
 - Locked case file: `tests/demo_cases/supply-chain-disruption-alert.json`
-- Locked case SHA-256: `5a8ef6d1b299867f259db1eaddf650a1d751fb2b512e696875ea95c237ca7595`
+- Locked case SHA-256: `7848d9ec4ffb7e0cfb177e711f169ae07d7874b072dafa9e8ed7128afe0d41ea`
 - Strict isolation: `true`
 
 ## Record index
@@ -17,6 +17,18 @@
 - `RISK_SCORES`
 - `MITIGATION_PLAYBOOKS`
 - `ALTERNATIVE_SUPPLIERS`
+- `DC_INCIDENT`
+- `NORTHWEST_STORES`
+- `AFFECTED_CATEGORIES`
+- `EMERGENCY_OPTIONS`
+- `EXPANSION`
+- `TRANSFER_PLAN`
+- `SHIPMENT_STATUS`
+- `DC_RECOVERY`
+- `BACKLOG`
+- `PREVENTION`
+- `RESPONSE_PERFORMANCE`
+- `LESSONS_LEARNED`
 
 ## SUPPLY_ROUTES
 
@@ -427,6 +439,246 @@
 }
 ```
 
+## DC_INCIDENT
+
+```json
+{
+  "id": "DISR-PDX-01",
+  "dc": "Portland DC",
+  "region": "Northwest",
+  "root_cause": "Equipment failure (main conveyor)",
+  "backup_days": 3,
+  "stores_in_network": 47,
+  "lost_revenue_per_week": 84300,
+  "complaints": 37,
+  "complaint_increase_pct": 280,
+  "social": "social media mentions spiking"
+}
+```
+
+## NORTHWEST_STORES
+
+```json
+[
+  {
+    "store": "Seattle Flagship",
+    "stockout_pct": 47
+  },
+  {
+    "store": "Portland South",
+    "stockout_pct": 31
+  },
+  {
+    "store": "Tacoma Mall",
+    "stockout_pct": 29
+  },
+  {
+    "store": "Bellevue Square",
+    "stockout_pct": 27
+  },
+  {
+    "store": "Olympia Center",
+    "stockout_pct": 24
+  },
+  {
+    "store": "Spokane Valley",
+    "stockout_pct": 22
+  },
+  {
+    "store": "Portland Pearl",
+    "stockout_pct": 18
+  },
+  {
+    "store": "Eugene Valley",
+    "stockout_pct": 16
+  },
+  {
+    "store": "Salem Center",
+    "stockout_pct": 15
+  },
+  {
+    "store": "Everett Commons",
+    "stockout_pct": 14
+  },
+  {
+    "store": "Vancouver Plaza",
+    "stockout_pct": 12
+  },
+  {
+    "store": "Boise Towne",
+    "stockout_pct": 11
+  }
+]
+```
+
+## AFFECTED_CATEGORIES
+
+```json
+{
+  "Electronics": 42,
+  "Apparel": 38,
+  "Home goods": 31,
+  "Sporting": 32
+}
+```
+
+## EMERGENCY_OPTIONS
+
+```json
+[
+  {
+    "option": "A",
+    "name": "Denver DC Emergency Transfer",
+    "timeline": "36 hours to Seattle",
+    "coverage": "Top 80 priority SKUs delivered",
+    "cost": 15600,
+    "cost_note": "truck + handling",
+    "recovery": 47000,
+    "window": "5-day window",
+    "additional_loss": 0
+  },
+  {
+    "option": "B",
+    "name": "Partial Fill + Wait",
+    "timeline": "2 days for Portland recovery",
+    "coverage": "Only 40% of SKUs restored",
+    "cost": 0,
+    "cost_note": "no added freight",
+    "recovery": 0,
+    "window": "none",
+    "additional_loss": 127000
+  }
+]
+```
+
+## EXPANSION
+
+```json
+{
+  "stores": [
+    "Portland South",
+    "Tacoma Mall",
+    "Bellevue Square",
+    "Olympia Center",
+    "Spokane Valley"
+  ],
+  "cost": 8900,
+  "recovery": 31000,
+  "skus_per_store": 60,
+  "arrival": "Saturday morning",
+  "focus": "highest velocity items"
+}
+```
+
+## TRANSFER_PLAN
+
+```json
+{
+  "source_dc": "Denver DC",
+  "dc_contact": "Lisa Park, Denver DC operations manager",
+  "primary_store": "Seattle Flagship",
+  "primary_skus": 80,
+  "primary_focus": "electronics priority",
+  "departure": "Tonight 6 PM",
+  "arrival": "Friday 10 AM",
+  "coordination": [
+    "Teams notice to the 6 store managers",
+    "Receiving staff schedule for Friday and Saturday",
+    "Restocking plans for store tablets",
+    "Customer SMS notification for back-in-stock items"
+  ]
+}
+```
+
+## SHIPMENT_STATUS
+
+```json
+{
+  "truck": "Denver truck",
+  "departed": "6:04 PM",
+  "eta": "Friday 9:47 AM",
+  "status": "On schedule"
+}
+```
+
+## DC_RECOVERY
+
+```json
+[
+  {
+    "action": "Conveyor repair",
+    "status": "In progress",
+    "complete_by": "Thursday 8 PM"
+  },
+  {
+    "action": "Backlog processing",
+    "status": "Staged",
+    "complete_by": "Friday 6 AM"
+  },
+  {
+    "action": "Normal ops resume",
+    "status": "Planned",
+    "complete_by": "Friday noon"
+  }
+]
+```
+
+## BACKLOG
+
+```json
+{
+  "pending_orders": 340,
+  "priority": "Seattle + affected stores first",
+  "full_clearance": "Saturday end of day"
+}
+```
+
+## PREVENTION
+
+```json
+{
+  "item": "Backup conveyor system",
+  "investment": 145000,
+  "install_hours": 48,
+  "three_year_avoided_losses": 340000
+}
+```
+
+## RESPONSE_PERFORMANCE
+
+```json
+{
+  "detection_to_action_minutes": 47,
+  "alternative_dc_hours": 36,
+  "days_to_95pct_inventory": 3,
+  "csat": 4.2,
+  "alert_tuning_minutes_saved": 18
+}
+```
+
+## LESSONS_LEARNED
+
+```json
+[
+  "Backup conveyor needed ($145K)",
+  "Multi-DC sourcing rules updated",
+  "Monitoring alerts tuned (reduce response time by 18 minutes)"
+]
+```
+
+## Demo walkthrough (video scenario)
+
+A conveyor failure at the Portland DC (`DISR-PDX-01`) causes cascading stockouts across 12 Northwest stores of a
+47-store retailer. Every walkthrough operation has demo defaults; no identifier is needed.
+
+| Turn | User prompt | Operation | Key values |
+|---|---|---|---|
+| 1 | I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening? | `root_cause_analysis` | Portland DC delay 3-day backup (Active); Seattle Flagship 47% stockout (Critical); SKUs affected 143 products (High); Lost revenue $84,300/week (Escalating); Electronics 42, Apparel 38, Home goods 31, Sporting 32; 37 complaints (up 280% vs baseline) |
+| 2 | What are our emergency options and costs? | `emergency_options` | Option A Denver DC Emergency Transfer: 36 hours to Seattle, top 80 priority SKUs, $15,600, $47,000 recovery (5-day window), ROI 3:1; Option B Partial Fill + Wait: 2 days, 40% of SKUs, $0, $127,000 additional loss; recommended A + 5 additional stores for $8,900 |
+| 3 | Approved. Execute both Seattle and the 5 additional stores. | `transfer_plan` | Plan ready to release (nothing dispatched); Denver DC contact Lisa Park; Seattle Flagship departs tonight 6 PM, arrives Friday 10 AM, 80 SKUs; Portland South, Tacoma Mall, Bellevue Square, Olympia Center, Spokane Valley arrive Saturday morning, 60 SKUs each; coordination drafts not sent; investment $24,500, recovery $78,000 |
+| 4 | Activate tracking and show me the Portland DC recovery plan. | `recovery_plan` | Tracking snapshot: departed 6:04 PM, ETA Friday 9:47 AM, on schedule; Conveyor repair (In progress, Thursday 8 PM); Backlog processing (Staged, Friday 6 AM); Normal ops resume (Planned, Friday noon); 340 pending orders, full clearance Saturday end of day; backup conveyor $145K, 48-hour install |
+| 5 | Create the executive report with financial impact. | `incident_report` | Revenue at risk $84,300; response cost $24,500; recovered $78,000; net $53,500; 47 minutes detection to action; 36 hours; 3 days to 95% inventory; CSAT 4.2/5.0; $340K 3-year avoided losses vs $145K |
+| 6 | Distribute the report and summarize what we accomplished. | `incident_summary` | Crisis Response Summary, package ready to distribute (not sent); 6 stores; $24.5K; $53,500 net; monitoring on all 47 stores; Portland DC back online Friday noon |
 ## Record-use boundary
 
 - Values are fixed synthetic evidence, not live telemetry or customer records.

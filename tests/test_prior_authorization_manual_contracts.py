@@ -106,6 +106,12 @@ def test_prior_source_records_explicitly_preserve_unknown_workflow_reasons(reque
     assert "**Workflow-state rationale:** not stated in synthetic source" in section
 
 
+def normalized(text):
+    # Studio-synced YAML indents blank lines inside block scalars; that is
+    # whitespace-only and parses to the same value, so compare per-line rstrip.
+    return "\n".join(line.rstrip() for line in text.splitlines()) + "\n"
+
+
 def test_prior_manual_and_native_shared_sources_match():
     settings = (PACKAGE / "copilot-studio/settings.mcs.yml").read_text(encoding="utf-8")
     policy = (PACKAGE / "manual/GLOBAL-INSTRUCTIONS.md").read_text(encoding="utf-8")
@@ -113,7 +119,7 @@ def test_prior_manual_and_native_shared_sources_match():
     schema = parse_yaml_scalar(settings, "schemaName")
     assert name and schema
     rendered = render_settings(name, schema, policy)
-    assert settings == "\n".join(line.rstrip() for line in rendered.splitlines()) + "\n"
+    assert normalized(settings) == normalized(rendered)
     for path in (PACKAGE / "manual/knowledge").glob("*.md"):
         mirror = PACKAGE / "copilot-studio/capabilities/knowledge/files" / path.name
         assert mirror.read_bytes() == path.read_bytes()
@@ -121,9 +127,9 @@ def test_prior_manual_and_native_shared_sources_match():
 
 def test_prior_manual_and_native_skill_sources_match():
     skills = sorted((PACKAGE / "manual/skills").glob("*/SKILL.md"))
-    assert len(skills) == 4
+    assert len(skills) == 11
     for path in skills:
         content, fields = render_skill(path)
         mirror = PACKAGE / "copilot-studio/behaviors" / f"aibast_{fields['name']}.mcs.yml"
-        expected = "\n".join(line.rstrip() for line in content.splitlines()) + "\n"
-        assert mirror.read_text(encoding="utf-8") == expected
+        assert normalized(mirror.read_text(encoding="utf-8")) == normalized(content)
+    assert len(list((PACKAGE / "copilot-studio/behaviors").glob("*.mcs.yml"))) == len(skills)

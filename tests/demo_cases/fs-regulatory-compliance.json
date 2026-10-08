@@ -11,11 +11,12 @@
   {
    "id": "RC-01",
    "persona": "Chief Compliance Officer",
+   "operation": "compliance_dashboard",
    "onepager_bullet": "pain: manual review created delays and increased audit risk",
    "prompt": "Are we going to fail our next MiFID audit? What's actually broken on the desk right now?",
    "must_include": [
-    "T-2041",
-    "T-2233"
+    "99.8%",
+    "Strategy #5"
    ],
    "must_not_include": [
     "I don't have access",
@@ -24,17 +25,18 @@
     "which trade would you"
    ],
    "min_words": 50,
-   "assertion_note": "Assert ONLY on identifiers the agent computed (trader ids). The LLM's prose varies run to run, so thematic words like 'reporting' or regime names like 'RTS 22' make a good answer flake red. Entities are stable because they come from the agent, not the model.",
+   "assertion_note": "Assert ONLY on values the agent computed (compliance rate, the gap strategy). The LLM's prose varies run to run; entities and figures are stable because they come from the agent, not the model.",
    "expects_agent": "FSRegulatoryCompliance"
   },
   {
    "id": "RC-02",
    "persona": "Trading Desk Supervisor",
+   "operation": "certification_tracker",
    "onepager_bullet": "Identify upcoming certification expirations and enroll traders",
    "prompt": "Which of my traders can't legally trade today, and who do I have to call?",
    "must_include": [
-    "T-2041",
-    "T-2233"
+    "James Morrison",
+    "No trader is lapsed"
    ],
    "must_not_include": [
     "I don't have access",
@@ -46,11 +48,12 @@
   {
    "id": "RC-03",
    "persona": "Compliance Manager",
+   "operation": "trade_surveillance",
    "onepager_bullet": "Scan all executed trades for reporting accuracy, required fields, and best-execution performance",
    "prompt": "We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?",
    "must_include": [
-    "TRD-88133",
-    "field"
+    "APX-2024-8847",
+    "Venue ID mismatch"
    ],
    "must_not_include": [
     "I don't have access",
@@ -62,10 +65,12 @@
   {
    "id": "RC-04",
    "persona": "Head of Quant Execution",
+   "operation": "documentation_review",
    "onepager_bullet": "Flag missing or outdated documentation",
    "prompt": "Is anything about to go live that shouldn't?",
    "must_include": [
-    "ALGO-POV-NL"
+    "Strategy #5",
+    "Pre-trade testing"
    ],
    "must_not_include": [
     "I don't have access"
@@ -76,15 +81,51 @@
   {
    "id": "RC-05",
    "persona": "Chief Risk Officer",
+   "operation": "remediation_submission",
    "onepager_bullet": "Automate corrections and submissions to the regulatory portal",
    "prompt": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
    "must_include": [
-    "TRD-88133"
+    "APX-2024-8847",
+    "Standard National Bank"
    ],
    "must_not_include": [
     "I don't have access"
    ],
    "min_words": 60,
+   "expects_agent": "FSRegulatoryCompliance"
+  },
+  {
+   "id": "RC-06",
+   "persona": "Compliance Manager",
+   "operation": "best_execution_analysis",
+   "onepager_bullet": "Scan all executed trades for reporting accuracy, required fields, and best-execution performance",
+   "prompt": "How did best execution hold up last quarter, venue by venue?",
+   "must_include": [
+    "LSE (London)",
+    "98.2%",
+    "RTS 28"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 30,
+   "expects_agent": "FSRegulatoryCompliance"
+  },
+  {
+   "id": "RC-07",
+   "persona": "Chief Compliance Officer",
+   "operation": "executive_summary",
+   "onepager_bullet": "Automate corrections and submissions to the regulatory portal",
+   "prompt": "Generate the executive report and summarize what we accomplished in this review.",
+   "must_include": [
+    "Compliance Scorecard",
+    "£847K",
+    "80%"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 40,
    "expects_agent": "FSRegulatoryCompliance"
   }
  ],

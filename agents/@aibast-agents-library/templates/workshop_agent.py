@@ -402,10 +402,12 @@ class AIBASTWorkshopAgent(BasicAgent):
     def _run_local_cases(self, agent, cases):
         results = []
         for case in cases.get("cases", []):
-            output = agent.perform(
-                operation=case["operation"],
-                **(case.get("arguments") or {}),
-            )
+            arguments = {
+                key: value
+                for key, value in (case.get("arguments") or {}).items()
+                if key != "operation"
+            }
+            output = agent.perform(operation=case["operation"], **arguments)
             lower = output.lower()
             missing = [
                 marker

@@ -8,514 +8,1031 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 18,
-    "reshoot_required": 5
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-disc-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "DISC-01",
-      "source": "solutions/procurement-support/screenshots/assisted/01-disc-01.jpg",
-      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/01-disc-01.png",
+      "source": "solutions/procurement-support/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "DISC-101",
-        "DISC-102",
+        "Discount Finder Pilot",
+        "Draft",
+        "license-optimization",
+        "savings-scan",
+        "draft-purchase-order",
+        "purchase-timing",
+        "consolidation-analysis",
+        "aibast_procurement-support-rules-and-guardrails.",
+        "aibast_procurement-support-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 162,
+          "height": 20,
+          "label": "Discount Finder Pilot"
+        },
+        {
+          "x": 257,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 135,
+          "height": 22,
+          "label": "license-optimization"
+        },
+        {
+          "x": 1250,
+          "y": 197,
+          "width": 89,
+          "height": 22,
+          "label": "savings-scan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 141,
+          "height": 22,
+          "label": "draft-purchase-order"
+        },
+        {
+          "x": 1255,
+          "y": 237,
+          "width": 111,
+          "height": 22,
+          "label": "purchase-timing"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 147,
+          "height": 22,
+          "label": "consolidation-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_procurement-support-rules-and-guardrails."
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 302,
+          "height": 22,
+          "label": "aibast_procurement-support-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-disc-01",
+      "mode": "easy",
+      "source": "solutions/procurement-support/screenshots/assisted/02-disc-01.jpg",
+      "caption": "DISC-01 · Procurement Manager: I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and softwar",
+      "case_id": "DISC-01",
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/02-disc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "DISC-101 · DISC-102",
         "not realized savings"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 249,
-          "width": 895,
-          "height": 175,
-          "label": "Savings signal IDs"
+          "x": 299,
+          "y": 672,
+          "width": 73,
+          "height": 20,
+          "label": "DISC-101 · DISC-102"
         },
         {
-          "x": 285,
-          "y": 452,
-          "width": 950,
-          "height": 80,
-          "label": "Not realized savings"
+          "x": 1081,
+          "y": 844,
+          "width": 92,
+          "height": 20,
+          "label": "not realized savings"
         }
       ]
     },
     {
       "id": "easy-disc-02",
       "mode": "easy",
+      "source": "solutions/procurement-support/screenshots/assisted/03-disc-02.jpg",
+      "caption": "DISC-02 · Category Buyer: Which IT equipment deals expire this week, and what should we lock in immediately?",
       "case_id": "DISC-02",
-      "source": "solutions/procurement-support/screenshots/assisted/02-disc-02.jpg",
-      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/02-disc-02.png",
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/03-disc-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "2026-09-30",
+        "Dell",
+        "Thursday 5 PM",
         "approved procurement process"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact 2026-08-31 marker is above the captured viewport."
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 230,
-          "width": 930,
-          "height": 48,
-          "label": "2026-09-30 review date"
+          "x": 299,
+          "y": 569,
+          "width": 38,
+          "height": 20,
+          "label": "Dell"
         },
         {
-          "x": 286,
-          "y": 447,
-          "width": 940,
-          "height": 80,
-          "label": "Approved process gate"
+          "x": 706,
+          "y": 1213,
+          "width": 119,
+          "height": 24,
+          "label": "Thursday 5 PM"
+        },
+        {
+          "x": 677,
+          "y": 1594,
+          "width": 422,
+          "height": 23,
+          "label": "approved procurement process"
         }
       ]
     },
     {
       "id": "easy-disc-03",
       "mode": "easy",
+      "source": "solutions/procurement-support/screenshots/assisted/04-disc-03.jpg",
+      "caption": "DISC-03 · Finance Director: Model the office-supply bulk order strategy and the total savings projection for the quarter.",
       "case_id": "DISC-03",
-      "source": "solutions/procurement-support/screenshots/assisted/03-disc-03.jpg",
-      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/03-disc-03.png",
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/04-disc-03.png",
       "status": "reusable",
       "visible_anchors": [
+        "Office Supply Bulk Strategy",
+        "$56,400",
         "does not recommend a supplier award"
-      ],
-      "full_case_not_visibly_proven": [
-        "Clinical consumables and the exact facility count are above the captured viewport."
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 398,
-          "width": 940,
-          "height": 112,
-          "label": "No supplier award"
+          "y": 472,
+          "width": 258,
+          "height": 28,
+          "label": "Office Supply Bulk Strategy"
+        },
+        {
+          "x": 494,
+          "y": 1218,
+          "width": 68,
+          "height": 23,
+          "label": "$56,400"
+        },
+        {
+          "x": 396,
+          "y": 1665,
+          "width": 294,
+          "height": 24,
+          "label": "does not recommend a supplier award"
         }
       ]
     },
     {
       "id": "easy-disc-04",
       "mode": "easy",
+      "source": "solutions/procurement-support/screenshots/assisted/05-disc-04.jpg",
+      "caption": "DISC-04 · Category Buyer: Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
       "case_id": "DISC-04",
-      "source": "solutions/procurement-support/screenshots/assisted/04-disc-04.jpg",
-      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/04-disc-04.png",
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/05-disc-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Northstar Imaging",
-        "MedSupply Cooperative",
-        "No supplier is selected"
+        "No supplier is selected",
+        "PO-2024-Q1-0234",
+        "$21,760"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 249,
-          "width": 835,
-          "height": 176,
-          "label": "Supplier review order"
+          "x": 639,
+          "y": 488,
+          "width": 95,
+          "height": 24,
+          "label": "No supplier is selected"
         },
         {
-          "x": 286,
-          "y": 452,
-          "width": 940,
-          "height": 77,
-          "label": "No supplier selected"
+          "x": 395,
+          "y": 646,
+          "width": 141,
+          "height": 21,
+          "label": "PO-2024-Q1-0234"
+        },
+        {
+          "x": 929,
+          "y": 688,
+          "width": 65,
+          "height": 23,
+          "label": "$21,760"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-disc-05",
       "mode": "easy",
-      "source": "solutions/procurement-support/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Discount Finder Pilot row is not visible, so the screenshot cannot prove the target agent remains Draft.",
-      "draft": true
+      "source": "solutions/procurement-support/screenshots/assisted/06-disc-05.jpg",
+      "caption": "DISC-05 · Procurement Manager: Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+      "case_id": "DISC-05",
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/06-disc-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "PO-2024-Q1-0234",
+        "$36,200"
+      ],
+      "boxes": [
+        {
+          "x": 560,
+          "y": 444,
+          "width": 208,
+          "height": 24,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 508,
+          "y": 500,
+          "width": 174,
+          "height": 25,
+          "label": "PO-2024-Q1-0234"
+        },
+        {
+          "x": 879,
+          "y": 769,
+          "width": 68,
+          "height": 23,
+          "label": "$36,200"
+        }
+      ]
+    },
+    {
+      "id": "easy-disc-06",
+      "mode": "easy",
+      "source": "solutions/procurement-support/screenshots/assisted/07-disc-06.jpg",
+      "caption": "DISC-06 · IT Asset Manager: Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+      "case_id": "DISC-06",
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/07-disc-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$27,300",
+        "$9,360",
+        "Duplicate licenses"
+      ],
+      "boxes": [
+        {
+          "x": 439,
+          "y": 544,
+          "width": 68,
+          "height": 23,
+          "label": "$27,300"
+        },
+        {
+          "x": 484,
+          "y": 1005,
+          "width": 59,
+          "height": 23,
+          "label": "$9,360"
+        },
+        {
+          "x": 286,
+          "y": 1231,
+          "width": 144,
+          "height": 24,
+          "label": "Duplicate licenses"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/procurement-support/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Discount Finder Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 161,
+          "height": 21,
+          "label": "Discount Finder Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/procurement-support/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is a blank loading view and contains no visible blank-agent workspace or other positive target-state anchor."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/procurement-support/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Discount Finder Manual",
+      "step": 2,
       "annotated": "solutions/procurement-support/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Discount Finder Manual in the name field"
+        "Discount Finder Manual"
       ],
       "boxes": [
         {
-          "x": 165,
-          "y": 99,
-          "width": 815,
-          "height": 49,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 183,
+          "height": 20,
+          "label": "Discount Finder Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/procurement-support/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/procurement-support/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Discount Finder Agent \u2014 Manual Global Instructions",
-        "Locked Preview evidence anchors",
-        "DISC-01 through DISC-04 acceptance anchors"
+        "Discount Finder Agent — Manual Global Instructio"
       ],
       "boxes": [
         {
-          "x": 84,
-          "y": 222,
-          "width": 890,
-          "height": 50,
-          "label": "Reviewed instructions"
-        },
-        {
-          "x": 84,
-          "y": 510,
-          "width": 890,
-          "height": 304,
-          "label": "Locked Preview anchors"
+          "x": 204,
+          "y": 131,
+          "width": 247,
+          "height": 32,
+          "label": "Discount Finder Agent — Manual Global Instructio"
         }
-      ],
-      "note": "The Reviewed instructions pill was covering text above the evidence-first heading; kept the box and moved the pill into the whitespace below it 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/procurement-support/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The save icon is visible, but no saved-state confirmation such as No unsaved changes appears; the screenshot does not prove the instruction policy was saved."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 278,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/procurement-support/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
       "annotated": "solutions/procurement-support/screenshots/manual/annotated/05-remove-web-search.png",
       "status": "reusable",
       "visible_anchors": [
-        "The visible Knowledge section contains no Search all websites entry"
+        "Provide trusted context to guide decisions"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 255,
-          "width": 385,
-          "height": 78,
-          "label": "Web search removed"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
       ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/procurement-support/screenshots/manual/06-add-aibast-procurement-support-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_procurement-support-rules-and-guardrails.md",
+      "step": 6,
       "annotated": "solutions/procurement-support/screenshots/manual/annotated/06-add-aibast-procurement-support-rules-and-guardrails.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_procurement-support-rules-and-guar... knowledge entry"
-      ],
-      "full_filename_not_visibly_proven": [
-        "The Copilot Studio chip truncates the end of the filename."
+        "aibast_procurement-support-rules-and-guardrails."
       ],
       "boxes": [
         {
-          "x": 1030,
-          "y": 310,
-          "width": 370,
-          "height": 38,
-          "label": "Rules file added"
+          "x": 1057,
+          "y": 321,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_procurement-support-rules-and-guardrails."
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/procurement-support/screenshots/manual/07-add-aibast-procurement-support-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_procurement-support-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/procurement-support/screenshots/manual/annotated/07-add-aibast-procurement-support-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_procurement-support-synthetic-recor... knowledge entry"
-      ],
-      "full_filename_not_visibly_proven": [
-        "The Copilot Studio chip truncates the end of the filename."
+        "aibast_procurement-support-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 1030,
-          "y": 310,
-          "width": 370,
-          "height": 39,
-          "label": "Synthetic records added"
+          "x": 1057,
+          "y": 321,
+          "width": 312,
+          "height": 22,
+          "label": "aibast_procurement-support-synthetic-records.md"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "step": 8,
       "source": "solutions/procurement-support/screenshots/manual/08-add-aibast-consolidation-analysis-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_consolidation-analysis_03",
+      "step": 8,
       "annotated": "solutions/procurement-support/screenshots/manual/annotated/08-add-aibast-consolidation-analysis-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "consolidation-analysis skill"
+        "consolidation-analysis"
       ],
       "boxes": [
         {
-          "x": 1030,
-          "y": 187,
-          "width": 205,
-          "height": 38,
-          "label": "Consolidation skill"
+          "x": 1057,
+          "y": 197,
+          "width": 147,
+          "height": 22,
+          "label": "consolidation-analysis"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/09-add-aibast-draft-purchase-order-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_draft-purchase-order_05",
       "step": 9,
-      "source": "solutions/procurement-support/screenshots/manual/09-add-aibast-purchase-timing-04.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to step 8 and shows only consolidation-analysis; purchase-timing is not visible."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/09-add-aibast-draft-purchase-order-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "draft-purchase-order"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 141,
+          "height": 22,
+          "label": "draft-purchase-order"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/10-add-aibast-license-optimization-06.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_license-optimization_06",
       "step": 10,
-      "source": "solutions/procurement-support/screenshots/manual/10-add-aibast-savings-scan-01.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/10-add-aibast-savings-scan-01.png",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/10-add-aibast-license-optimization-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "savings-scan skill"
+        "license-optimization"
       ],
       "boxes": [
         {
-          "x": 1029,
-          "y": 187,
-          "width": 151,
-          "height": 38,
-          "label": "Savings skill"
+          "x": 1057,
+          "y": 197,
+          "width": 135,
+          "height": 22,
+          "label": "license-optimization"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/11-add-aibast-purchase-timing-04.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_purchase-timing_04",
       "step": 11,
-      "source": "solutions/procurement-support/screenshots/manual/11-add-aibast-time-sensitive-deals-02.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/11-add-aibast-time-sensitive-deals-02.png",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/11-add-aibast-purchase-timing-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "time-sensitive-deals skill"
+        "purchase-timing"
       ],
       "boxes": [
         {
-          "x": 1029,
-          "y": 187,
-          "width": 195,
-          "height": 39,
-          "label": "Time-sensitive skill"
+          "x": 1057,
+          "y": 197,
+          "width": 111,
+          "height": 22,
+          "label": "purchase-timing"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/12-add-aibast-savings-scan-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_savings-scan_01",
       "step": 12,
-      "source": "solutions/procurement-support/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "The inventory shows only three skills and omits purchase-timing, so the visible state defeats the required four-skill review checkpoint."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/12-add-aibast-savings-scan-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "savings-scan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 89,
+          "height": 22,
+          "label": "savings-scan"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/13-add-aibast-time-sensitive-deals-02.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_time-sensitive-deals_02",
       "step": 13,
-      "source": "solutions/procurement-support/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/13-add-aibast-time-sensitive-deals-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
+        "time-sensitive-deals"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 135,
+          "height": 19,
+          "label": "time-sensitive-deals"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "time-sensitive-deals",
+        "savings-scan",
+        "purchase-timing",
+        "license-optimization",
+        "draft-purchase-order",
+        "aibast_procurement-support-synthetic-records.md",
+        "aibast_procurement-support-rules-and-guardrails."
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 135,
+          "height": 19,
+          "label": "time-sensitive-deals"
+        },
+        {
+          "x": 1249,
+          "y": 197,
+          "width": 89,
+          "height": 21,
+          "label": "savings-scan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 111,
+          "height": 22,
+          "label": "purchase-timing"
+        },
+        {
+          "x": 1227,
+          "y": 238,
+          "width": 135,
+          "height": 21,
+          "label": "license-optimization"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 141,
+          "height": 22,
+          "label": "draft-purchase-order"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 312,
+          "height": 22,
+          "label": "aibast_procurement-support-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_procurement-support-rules-and-guardrails."
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "time-sensitive-deals",
+        "savings-scan",
+        "purchase-timing",
+        "license-optimization"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 135,
+          "height": 19,
+          "label": "time-sensitive-deals"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 89,
+          "height": 22,
+          "label": "savings-scan"
+        },
+        {
+          "x": 1249,
+          "y": 298,
+          "width": 59,
+          "height": 20,
+          "label": "purchase-timing"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 135,
+          "height": 22,
+          "label": "license-optimization"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "purchase-timing",
+        "license-optimization",
+        "draft-purchase-order",
+        "consolidation-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1249,
+          "y": 69,
+          "width": 59,
+          "height": 18,
+          "label": "purchase-timing"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 135,
+          "height": 22,
+          "label": "license-optimization"
+        },
+        {
+          "x": 1055,
+          "y": 337,
+          "width": 141,
+          "height": 23,
+          "label": "draft-purchase-order"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 148,
+          "height": 22,
+          "label": "consolidation-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Discount Finder Manual"
       ],
       "boxes": [
         {
-          "x": 566,
-          "y": 10,
-          "width": 170,
-          "height": 52,
-          "label": "Preview selected"
-        },
-        {
-          "x": 833,
-          "y": 88,
-          "width": 108,
-          "height": 41,
-          "label": "Fresh chat"
+          "x": 84,
+          "y": 20,
+          "width": 182,
+          "height": 20,
+          "label": "Discount Finder Manual"
         }
       ]
     },
     {
       "id": "hard-disc-01",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/18-disc-01.jpg",
+      "caption": "DISC-01 · Procurement Manager: I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and softwar",
+      "step": 18,
       "case_id": "DISC-01",
-      "source": "solutions/procurement-support/screenshots/manual/14-disc-01.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/14-disc-01.png",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/18-disc-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "DISC-101",
-        "DISC-102",
-        "not realized savings"
+        "not realized savings",
+        "DISC-101 · DISC-102"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 292,
-          "width": 752,
-          "height": 133,
-          "label": "DISC-101 and DISC-102"
+          "x": 513,
+          "y": 561,
+          "width": 157,
+          "height": 24,
+          "label": "not realized savings"
         },
         {
-          "x": 287,
-          "y": 452,
-          "width": 940,
-          "height": 80,
-          "label": "Not realized savings"
+          "x": 305,
+          "y": 669,
+          "width": 79,
+          "height": 20,
+          "label": "DISC-101 · DISC-102"
         }
-      ],
-      "step": 14
+      ]
     },
     {
       "id": "hard-disc-02",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/19-disc-02.jpg",
+      "caption": "DISC-02 · Category Buyer: Which IT equipment deals expire this week, and what should we lock in immediately?",
+      "step": 19,
       "case_id": "DISC-02",
-      "source": "solutions/procurement-support/screenshots/manual/15-disc-02.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/15-disc-02.png",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/19-disc-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "2026-08-31",
-        "2026-09-30"
-      ],
-      "full_case_not_visibly_proven": [
-        "The approved procurement process marker is partially cropped at the top of the frame."
+        "Dell",
+        "Thursday 5 PM",
+        "approved procurement process"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 389,
-          "width": 812,
-          "height": 173,
-          "label": "Locked review dates"
+          "x": 299,
+          "y": 575,
+          "width": 37,
+          "height": 20,
+          "label": "Dell"
+        },
+        {
+          "x": 854,
+          "y": 766,
+          "width": 119,
+          "height": 24,
+          "label": "Thursday 5 PM"
+        },
+        {
+          "x": 1112,
+          "y": 1493,
+          "width": 80,
+          "height": 24,
+          "label": "approved procurement process"
         }
-      ],
-      "step": 15
+      ]
     },
     {
       "id": "hard-disc-03",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/20-disc-03.jpg",
+      "caption": "DISC-03 · Finance Director: Model the office-supply bulk order strategy and the total savings projection for the quarter.",
+      "step": 20,
       "case_id": "DISC-03",
-      "source": "solutions/procurement-support/screenshots/manual/16-disc-03.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/16-disc-03.png",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/20-disc-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Clinical consumables",
+        "Office Supply Bulk Strategy",
+        "$56,400",
         "does not recommend a supplier award"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact facility count 4 is above the captured viewport."
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 399,
-          "width": 940,
-          "height": 112,
-          "label": "Review-only sourcing boundary"
+          "y": 472,
+          "width": 308,
+          "height": 32,
+          "label": "Office Supply Bulk Strategy"
+        },
+        {
+          "x": 494,
+          "y": 1180,
+          "width": 68,
+          "height": 23,
+          "label": "$56,400"
+        },
+        {
+          "x": 400,
+          "y": 1523,
+          "width": 294,
+          "height": 24,
+          "label": "does not recommend a supplier award"
         }
-      ],
-      "step": 16
+      ]
     },
     {
       "id": "hard-disc-04",
       "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/21-disc-04.jpg",
+      "caption": "DISC-04 · Category Buyer: Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
+      "step": 21,
       "case_id": "DISC-04",
-      "source": "solutions/procurement-support/screenshots/manual/17-disc-04.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/17-disc-04.png",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/21-disc-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Northstar Imaging",
-        "MedSupply Cooperative",
-        "No supplier is selected"
+        "$21,760",
+        "No supplier is selected",
+        "PO-2024-Q1-0234"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 249,
-          "width": 788,
-          "height": 176,
-          "label": "Supplier sequence"
+          "x": 591,
+          "y": 561,
+          "width": 65,
+          "height": 23,
+          "label": "$21,760"
         },
         {
-          "x": 286,
-          "y": 451,
-          "width": 930,
-          "height": 80,
-          "label": "No supplier selected"
+          "x": 1004,
+          "y": 562,
+          "width": 178,
+          "height": 24,
+          "label": "No supplier is selected"
+        },
+        {
+          "x": 526,
+          "y": 741,
+          "width": 141,
+          "height": 23,
+          "label": "PO-2024-Q1-0234"
         }
-      ],
-      "step": 17
+      ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-disc-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/procurement-support/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/procurement-support/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/procurement-support/screenshots/manual/22-disc-05.jpg",
+      "caption": "DISC-05 · Procurement Manager: Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+      "step": 22,
+      "case_id": "DISC-05",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/22-disc-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Discount Finder Manual",
-        "Draft"
+        "$36,200"
       ],
       "boxes": [
         {
-          "x": 103,
-          "y": 243,
-          "width": 1280,
-          "height": 58,
-          "label": "Target agent remains Draft"
+          "x": 458,
+          "y": 489,
+          "width": 68,
+          "height": 23,
+          "label": "$36,200"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "PO-2024-Q1-0234, Not Submitted not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-disc-06",
+      "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/23-disc-06.jpg",
+      "caption": "DISC-06 · IT Asset Manager: Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+      "step": 23,
+      "case_id": "DISC-06",
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/23-disc-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$27,300",
+        "$9,360",
+        "Duplicate licenses"
+      ],
+      "boxes": [
+        {
+          "x": 823,
+          "y": 545,
+          "width": 82,
+          "height": 27,
+          "label": "$27,300"
+        },
+        {
+          "x": 932,
+          "y": 957,
+          "width": 59,
+          "height": 23,
+          "label": "$9,360"
+        },
+        {
+          "x": 308,
+          "y": 1050,
+          "width": 172,
+          "height": 28,
+          "label": "Duplicate licenses"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/procurement-support/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Discount Finder Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 181,
+          "height": 21,
+          "label": "Discount Finder Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Discount Finder Pilot with Draft visible.",
-      "Manual step 1 with the blank-agent Build workspace visible after loading completes.",
-      "Manual step 4 with an explicit saved-state confirmation such as No unsaved changes.",
-      "Manual step 9 with purchase-timing visibly attached.",
-      "Manual step 12 with Claude Sonnet 4.6, all four skills, both knowledge files, and no configured tools visible."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:procurement-support",
-    "reviewed_at": "2026-08-10T00:27:58.164968+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:00.144911+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

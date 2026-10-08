@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PFS-01, PFS-02, PFS-03, PFS-04`.
+1. Which locked case IDs did you complete? Expected scope: `PFS-01, PFS-02, PFS-03, PFS-04, PFS-05, PFS-06`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,8 @@ Both Easy lanes preserve every recorded case prompt:
 - `PFS-02` — Rank the feature-request evidence for review, but do not turn it into a roadmap.
 - `PFS-03` — What are the strongest sentiment signals in the fictional customer snapshot?
 - `PFS-04` — Frame the impact tradeoffs the product trio should validate before sequencing work.
+- `PFS-05` — What are the biggest problems customers keep running into with the product?
+- `PFS-06` — Write up engineering tickets for the most urgent fixes and a heads-up message for the team.
 
 ## Manual mode — literal browser construction
 

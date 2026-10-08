@@ -47,6 +47,12 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `CG-02` uses skill `care-gap-closure-cohort-review`.
 - `CG-03` uses skill `care-gap-closure-outreach-draft`.
 - `CG-04` uses skill `care-gap-closure-quality-dashboard`.
+- `CG-05` uses skill `hedis-status`.
+- `CG-06` uses skill `top-gaps`.
+- `CG-07` uses skill `risk-stratification`.
+- `CG-08` uses skill `outreach-strategy`.
+- `CG-09` uses skill `campaign-projection`.
+- `CG-10` uses skill `monitoring-plan`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

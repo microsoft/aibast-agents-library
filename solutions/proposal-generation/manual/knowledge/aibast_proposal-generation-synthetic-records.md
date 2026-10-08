@@ -19,11 +19,36 @@ If a requested identifier or fact is absent below, state that it is absent from 
 | `_RFPS` | 3 |
 | `_PRODUCT_CATALOG` | 6 |
 | `_SOLUTION_CONFIGS` | 3 |
-| `_DISCOUNT_RULES` | 3 |
+| `_GROUP_DISCOUNTS` | 3 |
 | `_REFERENCES` | 8 |
 | `_COMPETITOR_CAPABILITIES` | 3 |
 | `_OUR_CAPABILITIES` | 7 |
+| `_CAPABILITY_FIT` | 13 |
 | `_IMPL_PHASES` | 3 |
+| `_PROPOSAL_SECTIONS` | 8 |
+| `_DELIVERY_PACKAGE` | 3 |
+
+## Demo scenario (default account: Meridian Healthcare)
+
+- Deal: Meridian Healthcare, Digital Transformation Platform, RFP-2024-0147; deal value $1.2M; decision in 2 weeks;
+  stakeholder CIO Amanda Foster; competition 2 vendors shortlisted; budget ceiling $1,250,000.
+- RFP requirements: EHR integration, HIPAA compliance, 24/7 support, 16-week implementation, training.
+  Existing assets found: Healthcare case study, HIPAA docs, Implementation deck.
+- Executive summary (Your Need -> Our Solution): EHR Integration -> Epic & Cerner certified; HIPAA Compliance ->
+  SOC 2 + HIPAA certified; Deployment -> 12 weeks (beats your 16); Support -> 24/7, 15-min SLA. Proof: Memorial
+  Health achieved 34% efficiency gain, $2.4M savings. Investment: $1.18M (3 years support + training included).
+- 12-Week Plan: Foundation (wks 1-4) > Rollout (wks 5-10) > Optimization (wks 11-12).
+- Pricing (computed from `_PRODUCT_CATALOG` and `_GROUP_DISCOUNTS`, proposed prices rounded to the nearest $1,000):
+  Software list $681,000 -> $620K (9% savings); Implementation $382,000 -> $340K (11%); Training + Support
+  $293,000 -> $220K (25%); Total $1,356,000 -> $1.18M (13% savings, $176,000). Cost $684,400, so margin 42%
+  maintained (target 40%+).
+- References (same industry): Memorial Health 34% efficiency gain; Pacific Medical $2.4M/year savings; Summit
+  Healthcare 12-week go-live. Your edge vs competition: Implementation 12 wks (vs 16-20); Epic integration Native
+  (not third-party); Support SLA 15 min (vs 1-4 hours). Win Theme: Speed + Compliance + Support.
+- Compiled draft: 38 pages (sum of `_PROPOSAL_SECTIONS`); Package Contents: Executive Summary + Solution
+  Architecture, 12-week Implementation Plan, Pricing ($1.18M) + References (3), HIPAA + SOC 2 certificates
+  attached; Delivery Package (drafts): PDF proposal, 12-slide exec presentation, pricing spreadsheet; Checklist:
+  Legal, Pricing and Branding ready for review. Nothing is sent; the seller shares the package after review.
 
 ## Exact dataset `_RFPS`
 
@@ -34,6 +59,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   "contoso": {
     "account": "Contoso Technologies",
     "budget_ceiling": 850000,
+    "certificates": [
+      "SOC 2"
+    ],
     "competitors_shortlisted": [
       "CompetitorA"
     ],
@@ -79,11 +107,33 @@ The JSON below preserves every source identifier, name, value, label, signal, as
         "text": "Knowledge transfer and runbooks",
         "weight": 0.1
       }
+    ],
+    "summary_rows": [
+      [
+        "Multi-cloud",
+        "AWS + Azure orchestration layer"
+      ],
+      [
+        "Zero downtime",
+        "Blue-green migration with rollback"
+      ],
+      [
+        "Compliance",
+        "SOC 2 Type II audit current"
+      ],
+      [
+        "Support",
+        "24/7 managed services, 15-min SLA"
+      ]
     ]
   },
   "meridian": {
     "account": "Meridian Healthcare",
     "budget_ceiling": 1250000,
+    "certificates": [
+      "HIPAA",
+      "SOC 2"
+    ],
     "competitors_shortlisted": [
       "CompetitorA",
       "CompetitorB"
@@ -91,10 +141,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "deal_value": 1200000,
     "decision_timeline_days": 14,
     "existing_assets": [
-      "Healthcare case study (Memorial Health System)",
-      "HIPAA compliance documentation",
-      "Implementation methodology deck",
-      "Training curriculum template"
+      "Healthcare case study",
+      "HIPAA docs",
+      "Implementation deck"
     ],
     "id": "RFP-2024-0147",
     "industry": "Healthcare",
@@ -104,44 +153,60 @@ The JSON below preserves every source identifier, name, value, label, signal, as
       {
         "category": "Technical",
         "id": "R1",
-        "text": "EHR integration capabilities",
+        "text": "EHR integration",
         "weight": 0.25
       },
       {
         "category": "Compliance",
         "id": "R2",
-        "text": "HIPAA compliance certification",
-        "weight": 0.2
+        "text": "HIPAA compliance",
+        "weight": 0.25
       },
       {
         "category": "Support",
         "id": "R3",
-        "text": "24/7 support SLA with <15-min response",
+        "text": "24/7 support",
         "weight": 0.15
       },
       {
         "category": "Delivery",
         "id": "R4",
-        "text": "Implementation under 16 weeks",
+        "text": "16-week implementation",
         "weight": 0.2
       },
       {
         "category": "Training",
         "id": "R5",
-        "text": "Comprehensive staff training program",
-        "weight": 0.1
-      },
-      {
-        "category": "Technical",
-        "id": "R6",
-        "text": "Data migration from legacy systems",
-        "weight": 0.1
+        "text": "Training",
+        "weight": 0.15
       }
+    ],
+    "summary_rows": [
+      [
+        "EHR Integration",
+        "Epic & Cerner certified"
+      ],
+      [
+        "HIPAA Compliance",
+        "SOC 2 + HIPAA certified"
+      ],
+      [
+        "Deployment",
+        "12 weeks (beats your 16)"
+      ],
+      [
+        "Support",
+        "24/7, 15-min SLA"
+      ]
     ]
   },
   "pinnacle": {
     "account": "Pinnacle Financial Group",
     "budget_ceiling": 1600000,
+    "certificates": [
+      "PCI-DSS Level 1",
+      "SOC 2"
+    ],
     "competitors_shortlisted": [
       "CompetitorA",
       "CompetitorB",
@@ -189,6 +254,24 @@ The JSON below preserves every source identifier, name, value, label, signal, as
         "text": "End-user and admin training certification",
         "weight": 0.1
       }
+    ],
+    "summary_rows": [
+      [
+        "Real-time processing",
+        "Sub-30ms transaction processing"
+      ],
+      [
+        "Compliance",
+        "PCI-DSS Level 1 certified"
+      ],
+      [
+        "Uptime",
+        "Architecture supports five-nines"
+      ],
+      [
+        "Rollout",
+        "Branch-by-branch methodology"
+      ]
     ]
   }
 }
@@ -201,39 +284,39 @@ The JSON below preserves every source identifier, name, value, label, signal, as
 ```json
 {
   "analytics_module": {
-    "category": "Software",
+    "cost": 35000,
+    "group": "Software",
     "list_price": 80000,
-    "margin_floor": 0.45,
     "name": "Analytics & Reporting"
   },
   "implementation": {
-    "category": "Services",
-    "list_price": 380000,
-    "margin_floor": 0.35,
+    "cost": 238000,
+    "group": "Implementation",
+    "list_price": 382000,
     "name": "Implementation Services"
   },
   "integration_suite": {
-    "category": "Software",
+    "cost": 85000,
+    "group": "Software",
     "list_price": 180000,
-    "margin_floor": 0.4,
     "name": "Integration Suite"
   },
   "platform_core": {
-    "category": "Software",
-    "list_price": 420000,
-    "margin_floor": 0.38,
+    "cost": 190000,
+    "group": "Software",
+    "list_price": 421000,
     "name": "Platform Core License"
   },
   "support_3yr": {
-    "category": "Support",
+    "cost": 75000,
+    "group": "Training + Support",
     "list_price": 180000,
-    "margin_floor": 0.55,
     "name": "3-Year Premium Support"
   },
   "training": {
-    "category": "Services",
-    "list_price": 120000,
-    "margin_floor": 0.5,
+    "cost": 61400,
+    "group": "Training + Support",
+    "list_price": 113000,
     "name": "Training Program"
   }
 }
@@ -271,31 +354,25 @@ The JSON below preserves every source identifier, name, value, label, signal, as
 }
 ```
 
-## Exact dataset `_DISCOUNT_RULES`
+## Exact dataset `_GROUP_DISCOUNTS`
 
 The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
 
 ```json
-{
-  "Services": {
-    "base": 0.1,
-    "max": 0.18,
-    "volume_bonus": 0.04,
-    "volume_threshold": 400000
+[
+  {
+    "discount_pct": 9,
+    "group": "Software"
   },
-  "Software": {
-    "base": 0.08,
-    "max": 0.15,
-    "volume_bonus": 0.03,
-    "volume_threshold": 600000
+  {
+    "discount_pct": 11,
+    "group": "Implementation"
   },
-  "Support": {
-    "base": 0.25,
-    "max": 0.35,
-    "volume_bonus": 0.05,
-    "volume_threshold": 150000
+  {
+    "discount_pct": 25,
+    "group": "Training + Support"
   }
-}
+]
 ```
 
 ## Exact dataset `_REFERENCES`
@@ -306,23 +383,26 @@ The JSON below preserves every source identifier, name, value, label, signal, as
 [
   {
     "contact_ready": true,
-    "customer": "Memorial Health System",
+    "customer": "Memorial Health",
+    "headline": "34% efficiency gain",
     "impl_weeks": 11,
     "industry": "Healthcare",
-    "results": "34% efficiency gain, $2.4M annual savings",
+    "results": "34% efficiency gain, $2.4M savings",
     "size": "8 facilities"
   },
   {
     "contact_ready": true,
-    "customer": "Pacific Medical Group",
+    "customer": "Pacific Medical",
+    "headline": "$2.4M/year savings",
     "impl_weeks": 14,
     "industry": "Healthcare",
-    "results": "$2.4M savings/year, 99.9% uptime",
+    "results": "$2.4M/year savings, 99.9% uptime",
     "size": "15 facilities"
   },
   {
     "contact_ready": true,
-    "customer": "Summit Healthcare Network",
+    "customer": "Summit Healthcare",
+    "headline": "12-week go-live",
     "impl_weeks": 12,
     "industry": "Healthcare",
     "results": "12-week go-live, 28% cost reduction",
@@ -331,6 +411,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   {
     "contact_ready": true,
     "customer": "Atlas Cloud Services",
+    "headline": "Zero-downtime migration",
     "impl_weeks": 10,
     "industry": "Technology",
     "results": "Zero-downtime migration, 40% infra cost reduction",
@@ -339,6 +420,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   {
     "contact_ready": false,
     "customer": "Nexus Software Corp",
+    "headline": "3x deployment velocity",
     "impl_weeks": 8,
     "industry": "Technology",
     "results": "3x deployment velocity, 99.95% uptime",
@@ -347,6 +429,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   {
     "contact_ready": true,
     "customer": "Atlantic Credit Union",
+    "headline": "Sub-30ms latency",
     "impl_weeks": 16,
     "industry": "Financial Services",
     "results": "Sub-30ms latency, zero audit findings",
@@ -355,6 +438,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   {
     "contact_ready": true,
     "customer": "Sentinel Insurance",
+    "headline": "PCI-DSS compliant in 90 days",
     "impl_weeks": 14,
     "industry": "Financial Services",
     "results": "PCI-DSS compliant in 90 days, 22% ops savings",
@@ -363,6 +447,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   {
     "contact_ready": false,
     "customer": "Vanguard Logistics",
+    "headline": "18% throughput improvement",
     "impl_weeks": 12,
     "industry": "Manufacturing",
     "results": "18% throughput improvement",
@@ -393,13 +478,13 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     ]
   },
   "CompetitorB": {
-    "ehr_integration": "Native",
+    "ehr_integration": "Third-party",
     "hipaa_certified": false,
     "impl_weeks": 16,
     "pricing_position": "+5% above market",
     "strengths": [
-      "Native integrations",
-      "Modern UI"
+      "Modern UI",
+      "Aggressive pricing on licenses"
     ],
     "support_sla_min": 60,
     "weaknesses": [
@@ -439,7 +524,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   ],
   "differentiators": [
     "Pre-built healthcare accelerators cut implementation by 40%",
-    "Native EHR integration eliminates middleware costs",
+    "Native Epic integration eliminates middleware costs",
     "15-minute support SLA is fastest in industry",
     "API-first architecture for seamless ecosystem integration"
   ],
@@ -449,6 +534,80 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   "pricing_position": "Market rate",
   "support_sla_min": 15
 }
+```
+
+## Exact dataset `_CAPABILITY_FIT`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  {
+    "evidence": "Native Epic & Cerner connectors, certified",
+    "keyword": "ehr",
+    "score": 95
+  },
+  {
+    "evidence": "SOC 2 Type II + HIPAA certified",
+    "keyword": "hipaa",
+    "score": 100
+  },
+  {
+    "evidence": "24/7/365 with 15-min response SLA",
+    "keyword": "24/7",
+    "score": 98
+  },
+  {
+    "evidence": "12-week methodology with accelerators",
+    "keyword": "implementation",
+    "score": 92
+  },
+  {
+    "evidence": "Role-based curriculum with certification",
+    "keyword": "training",
+    "score": 92
+  },
+  {
+    "evidence": "AWS + Azure + GCP orchestration layer",
+    "keyword": "multi-cloud",
+    "score": 91
+  },
+  {
+    "evidence": "Blue-green deployment with automated rollback",
+    "keyword": "zero-downtime",
+    "score": 93
+  },
+  {
+    "evidence": "SOC 2 Type II audit current",
+    "keyword": "soc 2",
+    "score": 100
+  },
+  {
+    "evidence": "Structured runbook and shadowing program",
+    "keyword": "knowledge transfer",
+    "score": 85
+  },
+  {
+    "evidence": "Sub-30ms processing demonstrated at Atlantic CU",
+    "keyword": "real-time",
+    "score": 87
+  },
+  {
+    "evidence": "PCI-DSS Level 1 certified",
+    "keyword": "pci-dss",
+    "score": 100
+  },
+  {
+    "evidence": "99.99% historical, architecture supports five-nines",
+    "keyword": "99.999%",
+    "score": 88
+  },
+  {
+    "evidence": "Proven branch-by-branch methodology",
+    "keyword": "phased rollout",
+    "score": 92
+  }
+]
 ```
 
 ## Exact dataset `_IMPL_PHASES`
@@ -492,6 +651,70 @@ The JSON below preserves every source identifier, name, value, label, signal, as
   }
 ]
 ```
+
+## Exact dataset `_PROPOSAL_SECTIONS`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  {
+    "pages": 3,
+    "section": "Executive Summary (personalized)"
+  },
+  {
+    "pages": 4,
+    "section": "Company Overview + Industry Expertise"
+  },
+  {
+    "pages": 8,
+    "section": "Solution Architecture + Roadmap"
+  },
+  {
+    "pages": 5,
+    "section": "12-week Implementation Plan"
+  },
+  {
+    "pages": 4,
+    "section": "Pricing + Investment Summary"
+  },
+  {
+    "pages": 6,
+    "section": "Customer References + Case Studies"
+  },
+  {
+    "pages": 3,
+    "section": "Team Bios (Industry specialists)"
+  },
+  {
+    "pages": 5,
+    "section": "Terms + Conditions"
+  }
+]
+```
+
+## Exact dataset `_DELIVERY_PACKAGE`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  "PDF proposal",
+  "12-slide exec presentation",
+  "pricing spreadsheet"
+]
+```
+
+## Locked cases
+
+| Case | Operation | Locked prompt | Required evidence |
+|---|---|---|---|
+| PG-01 | analyze_rfp | Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist. | RFP Analysis; Requirements Analysis; Evidence boundary |
+| PG-02 | executive_summary | Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review. | Executive Summary; Personalization Applied; Evidence boundary |
+| PG-03 | solution_pricing | Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession. | Solution & Pricing; Budget Analysis; Evidence boundary |
+| PG-04 | references_positioning | Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use. | References & Competitive Positioning; Win Theme; Evidence boundary |
+| PG-05 | compile_proposal | Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery. | Proposal Package; Required Human Review Before Delivery; Evidence boundary |
+| PG-06 | delivery_summary | Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next. | Delivery Summary; Human-Governed Next-Step Options; Evidence boundary |
 
 ## Data-use boundary
 

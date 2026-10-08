@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `FAC-01, FAC-02, FAC-03, FAC-04, FAC-05, FAC-06`.
+1. Which locked case IDs did you complete? Expected scope: `FAC-01, FAC-02, FAC-03, FAC-04, FAC-05, FAC-06, FAC-07, FAC-08, FAC-09, FAC-10, FAC-11, FAC-12`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -218,6 +218,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `FAC-04` — Prepare discussion candidates for Angela without giving advice or creating an order.
 - `FAC-05` — Which client requires senior-investor controls, and what other checkpoints apply?
 - `FAC-06` — Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.
+- `FAC-07` — I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month.
+- `FAC-08` — Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents.
+- `FAC-09` — Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution.
+- `FAC-10` — Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough.
+- `FAC-11` — I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000.
+- `FAC-12` — I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call.
 
 ## Manual mode — literal browser construction
 

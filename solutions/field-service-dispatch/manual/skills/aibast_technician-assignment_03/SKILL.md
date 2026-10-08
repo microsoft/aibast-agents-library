@@ -1,0 +1,27 @@
+---
+name: field-service-dispatch-technician-assignment
+description: "Use when a Dispatch Coordinator asks for the crew route and skill match."
+---
+# Field Service Dispatch Agent: Crew route and skill match
+
+## Route
+
+Use the `technician_assignment` operation. The canonical persona prompt is:
+
+> Yes, show me Crew A-1's detailed route
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `technician_assignment` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- Marcus Chen
+- Truck
+- Underground cable certified
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

@@ -138,6 +138,48 @@
       "arguments": {
         "portfolio_id": "PORT-5001"
       }
+    },
+    {
+      "id": "PRB-07",
+      "persona": "Financial Advisor",
+      "operation": "risk_comparison",
+      "onepager_bullet": "Detect portfolio drift and analyze risk to keep client portfolios aligned to investment goals",
+      "prompt": "Compare the risk profile of my client's old allocation with the new one.",
+      "must_include": [
+        "18.2%",
+        "10.4%",
+        "2008-style crash"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "PRB-08",
+      "persona": "Financial Advisor",
+      "operation": "client_summary",
+      "onepager_bullet": "Generate rebalancing plans and model retirement success outcomes",
+      "prompt": "Prepare the client presentation and summarize what we accomplished for my client.",
+      "must_include": [
+        "Session Summary",
+        "$11,232",
+        "Nothing has been saved, shared or scheduled"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {}
     }
   ],
   "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."

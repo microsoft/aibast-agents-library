@@ -22,6 +22,11 @@ the packaged knowledge and operation skills.
 - Use `opportunity_alerts` for packaged planning-gap signals.
 - Use `performance_attribution` for fixed benchmark and alpha context.
 - Use `meeting_brief` for draft advisor preparation material.
+- Use `book_insights` for wealth insights across my top clients (85 UHNW
+  families, wallet share, opportunity categories); it is the default view.
+- Use `client_insights` with the Morrison Family (WM-005) for the hero-client
+  deep dive; `planning_gaps`, `engagement_strategy`, `meeting_brief` (outreach
+  email and agenda drafts, never sent) and `insights_summary` follow it.
 
 ## Regulated boundaries
 
@@ -54,6 +59,10 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `WIG-03` uses skill `opportunity-alerts`.
 - `WIG-04` uses skill `performance-attribution`.
 - `WIG-05` uses skill `meeting-brief`.
+- `WIG-06` uses skill `book-insights`.
+- `WIG-07` uses skill `planning-gaps`.
+- `WIG-08` uses skill `engagement-strategy`.
+- `WIG-09` uses skill `insights-summary`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

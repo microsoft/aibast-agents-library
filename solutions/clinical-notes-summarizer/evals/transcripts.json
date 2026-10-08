@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:21:32.091076+00:00",
+  "captured_at": "2026-10-07T01:23:30.318737+00:00",
   "solution": "@aibast-agents-library/clinical-notes-summarizer",
   "onepager": "49. Clinical Notes Summarizer Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
-      "sha256": "cdc8c9be6ff879fa8c96d06da621d6f9b8ebc9f7162e719e68504fdcabad7484"
+      "sha256": "2240a9e113288df4384b03876a2cfdb14189df251711b5c6e5d35cc4a3a70ac4"
     }
   ],
   "case_file": "tests/demo_cases/clinical-notes-summarizer.json",
-  "case_file_sha256": "b8665b6ed5889c18432d796c2eda22066a637bf023e783245ffe642dfebf204a",
+  "case_file_sha256": "689298ae7aba2d4830f0b58d528c86fbe04cdc6b8eb4c5832e96cbf2cf1604d7",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,15 +22,15 @@
       "persona": "Primary Care Physician",
       "onepager_promise": "Automatically generate concise, clinically relevant patient summaries",
       "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
-      "assistant_response": "**Encounter SYN-ENC-001 Summary** (source facts only):\n\n**Visit Type:** Follow-up (2026-07-28)  \n**Chief Concern:** Knee discomfort when using stairs; no trauma documented  \n**Vitals:** BP 148/92  \n**Labs:** HbA1c 8.2%\n\n**Important:** This is synthetic demonstration data for review purposes only. A qualified clinician must verify against the authorized record. No diagnosis, treatment recommendation, or clinical interpretation has been performed\u2014human review is required before any clinical action.",
+      "assistant_response": "Here's the source-grounded summary for **SYN-ENC-001** (Synthetic Patient Alpha, 2026-07-28):\n\n- **Visit type:** Follow-up\n- **Reported concern:** Knee discomfort with stairs; no trauma noted\n- **Recorded vitals/labs:** BP 148/92; HbA1c 8.2%\n- No clinical interpretation was made \u2014 this is raw source data only, pending clinician review.\n\nThis is synthetic demo data, not a real patient record.",
       "agent_logs": "[ClinicalNotesSummarizerAgent] # Source-Grounded Encounter Summary\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001) \u2014 2026-07-28\n- Source text: Follow-up visit. Patient reports knee discomfort with stairs. No trauma recorded.\n- Source observations: blood pressure field: 148/92; laboratory field: HbA1c 8.2%\n- Clinical interpretation: not performed; clinician review required.\n",
       "expected_agent": "ClinicalNotesSummarizerAgent",
       "must_include": [
         "SYN-ENC-001",
         "Clinical interpretation: not performed"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,15 +38,15 @@
       "persona": "Anesthesia Clinician",
       "onepager_promise": "Surface key risks, comorbidities, and medication considerations",
       "prompt": "List the source-recorded medications for SYN-ENC-001 for reconciliation.",
-      "assistant_response": "Here are the source-recorded medications for **SYN-ENC-001**:\n\n1. **Metformin** \u2014 1000 mg twice daily\n2. **Lisinopril** \u2014 20 mg daily\n\nThese are as documented in the source record. A clinician or pharmacist should verify against the patient's current medication use and check for interactions or recent changes.",
+      "assistant_response": "Here's the source-recorded medication list for SYN-ENC-001 (Synthetic Patient Alpha):\n\n- **Metformin** 1000 mg twice daily\n- **Lisinopril** 20 mg daily\n\nThis is a read-only draft pulled from synthetic demo data \u2014 a clinician/pharmacist still needs to review it against the authorized record for accuracy, interactions, and any needed changes.",
       "agent_logs": "[ClinicalNotesSummarizerAgent] # Medication Source Inventory\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001)\n- Source-recorded: Metformin 1000 mg twice daily\n- Source-recorded: Lisinopril 20 mg daily\n- Reconciliation, interactions, and changes require clinician/pharmacist review.\n",
       "expected_agent": "ClinicalNotesSummarizerAgent",
       "must_include": [
         "Metformin 1000 mg twice daily",
         "clinician/pharmacist review"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -54,15 +54,15 @@
       "persona": "Surgeon",
       "onepager_promise": "Standardize documentation to support smoother surgical and anesthesia workflows",
       "prompt": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
-      "assistant_response": "I've extracted the source-coded problems from SYN-ENC-001. The record lists:\n\n- Type 2 diabetes\n- Hypertension  \n- Knee discomfort\n\nThese are as they appear in the source\u2014no clinical confirmation or diagnosis has been added. A qualified clinician should review against the authorized record.",
+      "assistant_response": "Here's the source-coded problem list for SYN-ENC-001 (Synthetic Patient Alpha), as recorded in the source \u2014 these are not confirmed or validated diagnoses:\n\n- Source-coded type 2 diabetes\n- Source-coded hypertension\n- Knee discomfort\n\nThis is a read-only extract for reconciliation; it needs clinician review against the authorized record before any clinical use.",
       "agent_logs": "[ClinicalNotesSummarizerAgent] # Problem-List Source Extract\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001)\n- source-coded type 2 diabetes\n- source-coded hypertension\n- knee discomfort\n- No diagnosis was added, confirmed, or changed.\n",
       "expected_agent": "ClinicalNotesSummarizerAgent",
       "must_include": [
         "source-coded type 2 diabetes",
         "No diagnosis was added"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +70,134 @@
       "persona": "Primary Care Physician",
       "onepager_promise": "Send summaries through EHR and secure messaging systems",
       "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
-      "assistant_response": "For **SYN-ENC-001**, the referral context shows:\n\n**Recorded Context:**  \nAn Orthopedics referral draft has been recorded, but its status is unconfirmed.\n\n**Action Not Taken:**  \n**No referral was actually placed, scheduled, or changed.** This is a draft only \u2014 it requires authorized clinician review and action to move forward.\n\nThis is synthetic demonstration data, so a clinician must verify against the authorized record before any referral action proceeds.",
+      "assistant_response": "For SYN-ENC-001, the source record notes a draft **orthopedics referral**, but its status is unconfirmed \u2014 and importantly, **no referral has actually been placed, scheduled, or changed**. That requires clinician/staff review and action.",
       "agent_logs": "[ClinicalNotesSummarizerAgent] # Referral Context Extract\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001)\n- Source-recorded context: Orthopedics referral draft recorded; status not confirmed.\n- No referral was placed, scheduled, or changed.\n- Authorized clinician/staff review is required.\n",
       "expected_agent": "ClinicalNotesSummarizerAgent",
       "must_include": [
         "Orthopedics referral draft",
         "No referral was placed"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-05",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Automatically generate concise, clinically relevant patient summaries",
+      "prompt": "I need a pre-op clearance summary for Patient ID 78392.",
+      "assistant_response": "Here's the pre-op snapshot for patient 78392 (John Martinez, 67M \u2014 synthetic data):\n\n- **Procedure:** Right eye phacoemulsification, Dr. Amanda Chen (Ophthalmology), surgery Nov 2\n- **ASA Class:** III (severe systemic disease, source-recorded)\n- Based on 14 encounters over the past 12 months\n\n\u26a0\ufe0f This is a draft from synthetic records \u2014 needs clinician review before use; it is not a medical clearance.\n\nWant me to pull the next pieces \u2014 cardiopulmonary review, medication reconciliation, anesthesia considerations, risk factors, or re-evaluation criteria?",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Pre-Op Clearance Summary\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\nReviewed 14 encounters over the past 12 months from the synthetic record to assemble the pre-operative snapshot.\n\n| Detail | Value |\n|---|---|\n| Patient | John Martinez, 67yo male |\n| MRN | 78392 |\n| Procedure | Right eye phacoemulsification |\n| Surgeon | Dr. Amanda Chen (Ophthalmology) |\n| Surgery date | Next week, November 2 |\n| ASA class | III (severe systemic disease) (source-recorded) |\n\n**Data sources:** Recent labs, medication list, encounter notes, problem list integrated.\n**Next:** see the cardiac and respiratory assessment?",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "John Martinez",
+        "Right eye phacoemulsification",
+        "ASA class"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-06",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Surface key risks, comorbidities, and medication considerations",
+      "prompt": "Show me his cardiac and respiratory status with recent testing.",
+      "assistant_response": "Here's the source-recorded cardiopulmonary picture (synthetic draft, needs clinician sign-off):\n\n**Cardiac \u2014 Stable**\n- Chest pain 2 months ago, MI ruled out\n- ECG yesterday: normal sinus rhythm, 82 bpm\n- Cardiology noted low risk for MAC anesthesia\n\n**Respiratory \u2014 Moderate risk**\n- COPD Stage 2, FEV1 68% predicted\n- Last exacerbation 6 weeks ago, resolved\n- On Symbicort BID\n- O2 sat 94% room air (acceptable)\n\n**Labs:** Cr 1.1, eGFR 67, K 4.2 \u2014 all within range\n\nWant me to pull the medication review next to flag any surgical concerns?",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Cardiopulmonary Assessment\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\nSource-recorded findings: stable cardiac status, moderate respiratory risk requiring attention.\n\n**Cardiac Assessment - Stable**\n\n| Finding | Status |\n|---|---|\n| Chest pain event | 2 months ago - MI ruled out |\n| ECG | Normal sinus 82 bpm (yesterday) |\n| Cardiac risk | Low for MAC anesthesia (source-recorded cardiology assessment) |\n\n**Respiratory - Moderate Risk**\n\n| Finding | Status |\n|---|---|\n| COPD stage | Stage 2, FEV1 68% predicted |\n| Last exacerbation | 6 weeks ago (resolved) |\n| Current therapy | Symbicort inhaler BID |\n| O2 saturation | 94% room air (acceptable) |\n\n**Lab Results:** Cr 1.1, eGFR 67, K 4.2 - all within the acceptable range\n**Next:** check the medication list for surgical concerns?",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "82 bpm",
+        "FEV1 68%",
+        "eGFR 67"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-07",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Surface key risks, comorbidities, and medication considerations",
+      "prompt": "Review his medications and flag any surgical concerns.",
+      "assistant_response": "Here's the med review for patient 78392 (12 active meds), flagged per the synthetic pre-op protocol:\n\n**Surgical concerns:**\n- **Tamsulosin 0.4mg** \u2014 \u26a0\ufe0f Critical: risk of intraoperative floppy iris syndrome; anesthesia team must be notified\n- **Lisinopril 10mg** \u2014 hold morning of surgery\n- **Metformin 1000mg BID** \u2014 hold 24 hours before surgery\n- **Aspirin 81mg** \u2014 continue, per ophthalmology\n\n**Continue as-is:** Metoprolol, Symbicort inhaler (use morning of surgery)\n\n**No concerns:** Atorvastatin, Omeprazole, Vitamin D3, Docusate, Acetaminophen, Fluticasone nasal spray\n\nThis is a draft reconciliation only \u2014 the prescriber needs to confirm every hold/continue decision before surgery. Want me to pull the anesthesia considerations next, since the tamsulosin flag is the big one for the anesthesia team?",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Medications - 12 Active\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\nSource-recorded medications with the synthetic perioperative protocol flag; the prescriber confirms every change.\n\n| Medication | Surgical plan (per protocol) |\n|---|---|\n| Metoprolol 50mg BID | Continue through surgery |\n| Lisinopril 10mg daily | HOLD morning of surgery |\n| Metformin 1000mg BID | HOLD 24 hours before |\n| Symbicort inhaler | Continue - use AM of surgery |\n| Tamsulosin 0.4mg | ALERT: Floppy iris risk |\n| Aspirin 81mg | Continue per ophthalmology |\n\n**Critical Alert:** Tamsulosin causes intraoperative floppy iris syndrome - anesthesia team must be notified\n**Other Meds:** 6 additional medications reconciled with no surgical concerns (Atorvastatin 40mg daily; Omeprazole 20mg daily; Vitamin D3 1000 IU daily; Docusate 100mg daily; Acetaminophen 500mg as needed; Fluticasone nasal spray daily).\n**Next:** see anesthesia considerations?",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "Lisinopril 10mg daily",
+        "Floppy iris",
+        "12 Active"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-08",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "prompt": "Give me anesthesia and monitoring considerations for his eye surgery.",
+      "assistant_response": "Here's what the pre-op protocol flags for the eye surgery (synthetic demo data \u2014 needs clinician sign-off):\n\n**Anesthesia plan**\n- MAC (monitored anesthesia care) preferred over general anesthesia \u2014 lower respiratory risk, well-suited given COPD Stage 2, and adequate for phacoemulsification.\n\n**Monitoring**\n- Extended PACU recovery (2\u20133 hrs) with continuous pulse oximetry\n- Respiratory precautions due to COPD history\n- Floppy iris alert \u2014 anesthesia team should be notified in advance\n- Afternoon time slot preferred, to allow morning bronchodilator therapy first\n\nThis is a draft requiring physician review, not a clearance. Want me to pull up the ASA risk factors or draft the formal clearance note next?",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Anesthesia and Monitoring Considerations\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\nProtocol-matched considerations for the anesthesiologist and the physician's clearance decision.\n\n**Anesthesia plan:** MAC preferred (monitored anesthesia care)\n- Lower respiratory risk vs general anesthesia\n- Better for COPD Stage 2 patients\n- Adequate for phacoemulsification\n\n**Post-op monitoring:**\n- Extended PACU - 2-3 hours with continuous pulse oximetry\n- Respiratory precautions - due to COPD history\n- Floppy iris alert - anesthesia team notification required\n- Afternoon slot - allows morning bronchodilator therapy\n\n**Clearance status:** Ready for physician sign-off with documented precautions (the clearance decision is the physician's).\n**Next:** generate the formal clearance note draft?",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "MAC preferred",
+        "Extended PACU",
+        "Afternoon slot"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-09",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Surface key risks, comorbidities, and medication considerations",
+      "prompt": "Explain his ASA class III and the factors behind it.",
+      "assistant_response": "Based on the source-recorded data, ASA Class III reflects **severe systemic disease that isn't life-threatening**, driven by:\n\n- **COPD Stage 2** (FEV1 68%) \u2014 functionally limiting lung disease\n- **Recent exacerbation** 6 weeks ago \u2014 raises respiratory risk to moderate\n- **CAD history** \u2014 controlled, but present as a comorbidity\n- **HTN** \u2014 well-managed on medication\n- **Age 67** \u2014 contributing risk factor\n\nNet result: cardiac risk is low (Goldman <1%), but respiratory risk is moderate, pulling overall classification to III rather than II. Mitigation noted in the record: MAC anesthesia, extended PACU monitoring, afternoon surgical slot for optimal respiratory status.\n\n\u26a0\ufe0f This is a synthetic/demo summary \u2014 requires clinician verification against the actual chart, not a clearance decision. Want me to pull the re-evaluation criteria (what would bump this up/down)?",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # ASA Class III Justification\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\nASA classification factors from the source-recorded systemic diseases.\n\n| Factor | Classification impact |\n|---|---|\n| COPD Stage 2 | Severe systemic disease |\n| FEV1 68% | Functionally limited |\n| CAD history | Controlled but present |\n| HTN | Well-controlled on meds |\n| Recent exacerbation | 6 weeks ago |\n| Age 67 | Risk factor consideration |\n\n**Risk assessment (source-recorded calculators):**\n- Cardiac risk: Low (Goldman <1%)\n- Respiratory risk: Moderate (COPD, recent exacerbation)\n- Overall surgical risk: Moderate\n\n**Mitigation:** MAC anesthesia, extended PACU, afternoon slot for optimal respiratory status\n**Next:** see what would change the recommendation?",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "ASA Class III Justification",
+        "Goldman <1%",
+        "FEV1 68%"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-10",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "prompt": "What would change the recommendation, and when should I reconsider clearance?",
+      "assistant_response": "Via the pre-op clearance walkthrough (synthetic data), here's what would change the recommendation and prompt reconsideration:\n\n**Immediate red flags:**\n- COPD exacerbation within 2 weeks\n- Acute cardiac symptoms\n- O2 sat <90% on room air\n- BP >180/100 uncontrolled\n\n**Timing-related delays:**\n- Active URI/bronchitis \u2192 delay 2-4 weeks\n- Any medication changes \u2192 reassess stability first\n- New cardiac symptoms \u2192 needs cardiology consult\n\n**If plan shifts to general anesthesia** (vs. current MAC plan):\n- Mandatory pulmonology consult\n- Formal PFTs recommended\n- Bump to higher ASA class (consider IV)\n- Confirm ICU bed availability\n\n**Current status:** no trigger present in the record \u2014 plan stands as documented, pending physician sign-off.\n\nWant me to draft the clearance note next?",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Clearance Re-evaluation Criteria\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\nCriteria for reconsidering clearance and alternative scenarios (synthetic protocol reference).\n\n**Immediate concerns:**\n- COPD exacerbation <2 weeks\n- Acute cardiac symptoms\n- O2 sat <90% on room air\n- Uncontrolled blood pressure >180/100\n\n**Timing considerations:**\n- Active URI or bronchitis - delay 2-4 weeks\n- Medication changes - reassess stability\n- New cardiac symptoms - cardiology consult\n\n**If general anesthesia required:**\n- Pulmonology consult mandatory\n- Formal PFTs recommended\n- Higher ASA class (consider IV)\n- ICU bed availability check\n\n**Current status:** No re-evaluation trigger is present in the record; plan as documented with MAC, pending the physician's clearance decision.\n**Next:** generate the clearance note draft?",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "COPD exacerbation <2 weeks",
+        "delay 2-4 weeks",
+        "ICU bed availability"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-11",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Send summaries through EHR and secure messaging systems",
+      "prompt": "Generate the clearance note and send it to ophthalmology.",
+      "assistant_response": "Here's the draft clearance note for John Martinez (MRN 78392) \u2014 right eye phaco scheduled Nov 2:\n\n- **ASA Class III** \u2014 stable CAD, controlled HTN\n- **Pulmonary:** optimized on current bronchodilator therapy\n- **Meds:** hold instructions noted for lisinopril/metformin\n- **Anesthesia alert:** floppy iris syndrome risk flagged, MAC recommended\n- Post-op monitoring requirements included\n\nProposed routing (Dr. Amanda Chen/Ophthalmology, anesthesia pre-op clinic, surgical scheduling) is listed, but **nothing has actually been sent or signed** \u2014 this agent can't send messages or clear patients. It's sitting as a draft ready for the physician's e-signature. Once signed, you'll need to send it through your normal channel.",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Pre-Operative Clearance Note - Draft\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\nDraft note for John Martinez (MRN 78392), Right eye phacoemulsification, Next week, November 2.\n\n**Note components:**\n- ASA Class III status documented\n- Cardiac clearance - stable CAD, controlled HTN\n- Pulmonary optimization - current bronchodilator therapy\n- Medication instructions - lisinopril, metformin holds\n- Anesthesia alert - floppy iris syndrome risk\n- MAC anesthesia recommendation\n- Post-op monitoring requirements\n\n**Proposed distribution (sent after physician signature):**\n- Dr. Amanda Chen (Ophthalmology) - secure message\n- Anesthesia pre-op clinic - EHR notification\n- Surgical scheduling - clearance confirmation\n\n**Status:** Draft ready for physician e-signature, to file under 'Pre-Op Evaluation'. Not signed, not filed, and nothing was sent.",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "Dr. Amanda Chen",
+        "Draft ready for physician e-signature",
+        "nothing was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

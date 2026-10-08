@@ -39,9 +39,12 @@ OPERATIONS = {
 }
 
 KNOWLEDGE_CONSTANTS = {
-    "asset-maintenance-forecast": ["ASSETS", "BUDGET_RATES"],
+    "asset-maintenance-forecast": ["FLEET", "ASSETS", "MOBILIZATION", "BUNDLE_WINDOW"],
     "permit-license-management": [
+        "AS_OF",
+        "PORTFOLIO",
         "PERMITS",
+        "STAKEHOLDERS",
         "APPLICATIONS",
         "REGULATORY_REQUIREMENTS",
     ],
@@ -49,12 +52,27 @@ KNOWLEDGE_CONSTANTS = {
         "REGULATORY_REPORTS",
         "DATA_VALIDATION_RULES",
         "AUDIT_FINDINGS",
+        "EMISSIONS_QUARTER",
+        "SUBMISSION_PACKAGE",
+        "COMPLIANCE_RISKS",
     ],
-    "emission-tracking": ["FACILITIES", "CARBON_OFFSETS", "REGULATIONS"],
+    "emission-tracking": [
+        "FACILITIES",
+        "PRIOR_YEAR_QUARTER",
+        "REGIONAL_SCREENING",
+        "REDUCTION_ACTIONS",
+        "CARBON_OFFSETS",
+    ],
     "field-service-dispatch": [
-        "TECHNICIANS",
-        "SERVICE_REQUESTS",
-        "GEOGRAPHIC_ZONES",
+        "CREWS",
+        "CERT_LABELS",
+        "JOBS",
+        "SCHEDULE_BASELINE",
+        "OUTAGE",
+        "LIVE_STATUS",
+        "INCIDENT_REVIEW",
+        "WORK_ORDERS",
+        "MONTHLY_OPS",
     ],
     "utility-billing-assistance": [
         "UTILITY_ACCOUNTS",
@@ -62,6 +80,10 @@ KNOWLEDGE_CONSTANTS = {
         "RATE_STRUCTURES",
         "ASSISTANCE_PROGRAMS",
         "LEAK_ADJUSTMENT_POLICY",
+        "DAILY_USAGE",
+        "AREA_MEDIAN_INCOME",
+        "APPLICATION_TERMS",
+        "REPAIR_PROGRAM",
     ],
     "supply-chain-disruption-alert": [
         "SUPPLY_ROUTES",
@@ -69,6 +91,18 @@ KNOWLEDGE_CONSTANTS = {
         "RISK_SCORES",
         "MITIGATION_PLAYBOOKS",
         "ALTERNATIVE_SUPPLIERS",
+        "DC_INCIDENT",
+        "NORTHWEST_STORES",
+        "AFFECTED_CATEGORIES",
+        "EMERGENCY_OPTIONS",
+        "EXPANSION",
+        "TRANSFER_PLAN",
+        "SHIPMENT_STATUS",
+        "DC_RECOVERY",
+        "BACKLOG",
+        "PREVENTION",
+        "RESPONSE_PERFORMANCE",
+        "LESSONS_LEARNED",
     ],
 }
 
@@ -359,13 +393,20 @@ def test_operation_skills_point_to_substantive_locked_evidence():
         package = ROOT / "solutions" / slug
         cases = read_json(ROOT / "tests/demo_cases" / f"{slug}.json")
         for case in cases["cases"]:
-            skill = (
-                package
-                / "manual"
-                / "skills"
-                / f"aibast_{case['operation'].replace('_', '-')}"
-                / "SKILL.md"
-            ).read_text(encoding="utf-8")
+            skill_dirs = sorted(
+                (package / "manual" / "skills").glob(
+                    f"aibast_{case['operation'].replace('_', '-')}*"
+                )
+            )
+            skill_dirs = [
+                path for path in skill_dirs
+                if re.fullmatch(
+                    rf"aibast_{re.escape(case['operation'].replace('_', '-'))}(_\d+)?",
+                    path.name,
+                )
+            ]
+            assert len(skill_dirs) == 1, (slug, case["operation"])
+            skill = (skill_dirs[0] / "SKILL.md").read_text(encoding="utf-8")
             assert case["prompt"] in skill
             assert case["operation"] in skill
             assert "Read the synthetic knowledge records and controls." in skill

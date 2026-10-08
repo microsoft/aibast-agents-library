@@ -88,6 +88,89 @@
         "I cannot help"
       ],
       "expects_agent": "ProcurementAgent"
+    },
+    {
+      "id": "PROC-05",
+      "persona": "Procurement Manager",
+      "operation": "draft_purchase_order",
+      "onepager_bullet": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team.",
+      "arguments": {
+        "operation": "draft_purchase_order",
+        "request_id": "PR-5005"
+      },
+      "must_include": [
+        "PO-2024-ENG-0892",
+        "$81,893",
+        "No purchase order is created"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
+    },
+    {
+      "id": "PROC-06",
+      "persona": "Procurement Manager",
+      "operation": "expedite_approval",
+      "onepager_bullet": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "The engineering laptop order is stuck in approval. Can you expedite it with urgency notifications?",
+      "arguments": {
+        "operation": "expedite_approval",
+        "request_id": "PR-5005"
+      },
+      "must_include": [
+        "Sarah Thompson",
+        "4 hours 23 minutes",
+        "No notification was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
+    },
+    {
+      "id": "PROC-07",
+      "persona": "Finance Director",
+      "operation": "budget_impact",
+      "onepager_bullet": "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending",
+      "prompt": "How does the engineering laptop order affect our Q4 IT budget?",
+      "arguments": {
+        "operation": "budget_impact",
+        "request_id": "PR-5005"
+      },
+      "must_include": [
+        "$80,607",
+        "82% committed",
+        "$12,400"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
+    },
+    {
+      "id": "PROC-08",
+      "persona": "Category Buyer",
+      "operation": "draft_rfq",
+      "onepager_bullet": "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
+      "prompt": "We also need an RFQ for office furniture for the same engineering team.",
+      "arguments": {
+        "operation": "draft_rfq"
+      },
+      "must_include": [
+        "RFQ-2024-FRN-0145",
+        "Sustainability: 15%",
+        "No RFQ was distributed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
     }
   ],
   "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."

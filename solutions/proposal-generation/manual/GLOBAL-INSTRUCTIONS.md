@@ -13,7 +13,8 @@ Move from fixed synthetic RFP evidence to a reviewable proposal structure while 
 - `compile_proposal` — proposal package outline and required reviews.
 - `delivery_summary` — draft readiness and next-step review.
 
-Route requests to assemble, structure, outline, or checklist a proposal package to `compile_proposal`. A package outline is not a generated or delivered final proposal.
+Route requests to assemble, structure, outline, compile, or checklist a proposal package (including "compile the final proposal and prepare for delivery") to `compile_proposal`. A package outline is not a generated or delivered final proposal.
+The default synthetic account is Meridian Healthcare: "create a proposal for Meridian Healthcare" uses `analyze_rfp`, "build out the solution section and pricing" uses `solution_pricing`, and "add the strongest references and competitive positioning" uses `references_positioning`. Keep the fixed figures: $1.2M deal, $1.18M investment at 13% savings, 42% margin against a 40% target, and a 38-page draft package.
 
 ## Fixed evidence policy
 

@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:44:54.189557+00:00",
+  "solution": "@aibast-agents-library/solution-design-review",
+  "onepager": "56. Solution Design Review Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "SolutionDesignReviewAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/professional_services_stacks/solution_design_review_stack/solution_design_review_agent.py",
+      "sha256": "6ec7dc6dc27b510a2cfee8272062b8a47f4e51978d46d66dab961df18eed0482"
+    }
+  ],
+  "case_file": "tests/demo_cases/solution-design-review.json",
+  "case_file_sha256": "f7f76df01fca7f707b6ce6c2ffdd20333db4f3b9429eebd5efc5432e69594603",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "SDR-01",
+      "persona": "Solution Architect",
+      "onepager_promise": "Turn discovery notes and an initiative brief into a structured design draft",
+      "prompt": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+      "assistant_response": "Here's the plan for INIT-2026-031 (Delivery Notifications Platform):\n\n**Intake confirms** you have everything needed: the design template, discovery notes (2 workshops, 41 statements), and the initiative brief.\n\n**Recommended sequence:**\n1. **Architecture vision** \u2013 nail down scope, stakeholders, and which architecture domains this touches\n2. **Current-state baseline** \u2013 inventory the systems/components already in play\n3. **Requirements matrix** \u2013 non-functional requirements, who owns each, and any gaps\n4. **Target design** \u2013 what's new, changed, or retired\n5. **Readiness check** \u2013 confidence score and gaps before it goes to the review board\n\nWant me to start on the vision now?",
+      "agent_logs": "[SolutionDesignReviewAgent] # Design Intake - INIT-2026-031 Delivery Notifications Platform\n\n**Organization:** Northwind Traders | **Review board date:** 2026-08-12\n\n| Input received | Detail |\n|----------------|--------|\n| Solution design template | 4 sections to fill: Vision, Current State, Requirements, Target Design |\n| Discovery session notes | 2 workshops, 41 captured statements |\n| Initiative brief | INIT-2026-031 Delivery Notifications Platform |\n\n**Recommended fill sequence:**\n1. Architecture vision (scope, stakeholders, impacted domains)\n2. Current-state baseline (components in scope)\n3. Non-functional requirements matrix (owners, gaps, variances)\n4. Target design (new, changed and retired components)\n5. Readiness check before the review board\n\n3 inputs received; 5 steps from intake to readiness. Start with the vision.\n\n> Synthetic design support only. Every person, system and value is fictional. Nothing was submitted to the review board, no inventory record was changed, and no design decision was made; the architect owns every section.",
+      "expected_agent": "SolutionDesignReviewAgent",
+      "must_include": [
+        "INIT-2026-031",
+        "3 inputs received",
+        "Recommended fill sequence"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-02",
+      "persona": "Solution Architect",
+      "onepager_promise": "Turn discovery notes and an initiative brief into a structured design draft",
+      "prompt": "Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+      "assistant_response": "Here's the vision draft for the Northwind delivery notifications initiative:\n\n**Scope**\n- In: delivery status events from shipment tracking, text/email notifications, customer consent & channel preferences, retiring the legacy text and batch-email tools\n- Out: marketing campaigns, in-app push (phase 2), carrier contract changes\n\n**Stakeholders**\n- Avery Lindqvist (VP Customer Ops) \u2014 executive sponsor\n- Mara Okonjo (Director CX) \u2014 business owner\n- Theo Brandt (Lead Solution Architect) \u2014 technical owner\n\n**Impacted domains:** all four \u2014 Business, Data, Application, Technology\n\n**Constraints:** consent check on every send, must launch before the 2026-10-15 peak-season freeze, must reuse the existing integration bus. Review workgroups flagged: Interfaces/APIs, InfoSec, Data Protection.\n\nThis is a draft for Theo to edit \u2014 nothing's been submitted anywhere. Want me to pull the current-state baseline next?",
+      "agent_logs": "[SolutionDesignReviewAgent] # Architecture Vision - DRAFT (INIT-2026-031)\n\n**Business driver:** Customers ask where their order is; 38% of contact-center calls are delivery-status questions.\n**Objective:** Send proactive, consent-aware delivery updates by text and email from one orchestration service.\n\n| Stakeholder | Role |\n|-------------|------|\n| Avery Lindqvist, VP Customer Operations | Executive sponsor |\n| Mara Okonjo, Director Customer Experience | Business owner |\n| Theo Brandt, Lead Solution Architect | Technical owner |\n\n**In scope:** Delivery status events from shipment tracking; Text and email notifications; Customer channel preferences and consent; Retirement of the legacy text and batch email tools.\n**Out of scope:** Marketing campaigns; In-app push notifications (next phase); Carrier contract changes.\n\n**Impacted domains (4 of 4):** Business, Data, Application, Technology.\n**Constraints:** Consent must be checked before every send; Launch before the peak season freeze on 2026-10-15; Reuse the existing integration bus.\n**Review workgroups:** Interfaces and APIs, Information security, Data protection.\n\nDraft for the architect to edit. Next: the current-state baseline.\n\n> Synthetic design support only. Every person, system and value is fictional. Nothing was submitted to the review board, no inventory record was changed, and no design decision was made; the architect owns every section.",
+      "expected_agent": "SolutionDesignReviewAgent",
+      "must_include": [
+        "Avery Lindqvist",
+        "4 of 4",
+        "Data protection"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-03",
+      "persona": "Solution Architect",
+      "onepager_promise": "Assemble the current state and target design with every inventory change listed",
+      "prompt": "What does the current state look like for the systems in scope?",
+      "assistant_response": "Here's the current-state baseline for the Northwind delivery notifications scope \u2014 7 components across three domains:\n\n**Applications**\n- Order Management System (Order Platform team) \u2014 supported\n- Shipment Tracking Service (Logistics Apps team) \u2014 supported\n- Batch Email Scheduler (Messaging team) \u2014 \u26a0\ufe0f end of support 2026-09-30\n\n**Data**\n- Customer Profile Store (Customer Data team) \u2014 supported\n- Consent Records Table (Privacy & Compliance team) \u2014 supported\n\n**Technology**\n- Legacy Text Gateway (Messaging team) \u2014 \u26a0\ufe0f end of support 2026-12-31\n- Integration Bus (Middleware team) \u2014 supported\n\nTwo components are sunsetting (Legacy Text Gateway and Batch Email Scheduler), which likely drives part of the redesign motivation. One gap flagged: there's no current-state baseline for the **Business domain** (process/capability view) \u2014 worth adding before this goes to the review board.\n\nWant me to pull the requirements matrix next to see which NFRs apply to these systems?",
+      "agent_logs": "[SolutionDesignReviewAgent] # Current-State Baseline - 7 Components in Scope\n\n| Component | Name | Domain | Owner | Lifecycle |\n|-----------|------|--------|-------|-----------|\n| CI-101 | Order Management System | Application | Order Platform team | Supported |\n| CI-102 | Customer Profile Store | Data | Customer Data team | Supported |\n| CI-103 | Legacy Text Gateway | Technology | Messaging team | End of support 2026-12-31 |\n| CI-104 | Shipment Tracking Service | Application | Logistics Apps team | Supported |\n| CI-105 | Batch Email Scheduler | Application | Messaging team | End of support 2026-09-30 |\n| CI-106 | Integration Bus | Technology | Middleware team | Supported |\n| CI-107 | Consent Records Table | Data | Privacy and Compliance team | Supported |\n\n**End of support:** 2 components - CI-103 Legacy Text Gateway, CI-105 Batch Email Scheduler.\n**Domains with a baseline:** Application, Data, Technology.\n**Gap:** no current-state baseline for the Business domain (process and capability view); add it before the review.\n\n> Synthetic design support only. Every person, system and value is fictional. Nothing was submitted to the review board, no inventory record was changed, and no design decision was made; the architect owns every section.",
+      "expected_agent": "SolutionDesignReviewAgent",
+      "must_include": [
+        "CI-103",
+        "End of support",
+        "no current-state baseline for the Business domain"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-04",
+      "persona": "Enterprise Architecture Lead",
+      "onepager_promise": "Map non-functional requirements to owners and surface gaps and variances early",
+      "prompt": "Which non-functional requirements apply, and who owns each one?",
+      "assistant_response": "Here are the 8 NFRs for the delivery notifications design:\n\n| Area | Requirement | Owner |\n|---|---|---|\n| Availability | 99.9% monthly uptime | Operations Engineering |\n| Latency | Notify within 60s (p95) | Messaging team |\n| Privacy | Consent check before every send | Privacy and Compliance team |\n| Retention | Keep history 13 months, then purge | \u26a0\ufe0f **no owner assigned** |\n| Security | Encryption in transit & at rest | Information Security team |\n| Capacity | 40 msg/sec at peak | Messaging team *(variance: design only supports 25/sec, scale-out planned phase 2)* |\n| Auditability | Log every send with consent decision | \u26a0\ufe0f **no owner assigned** |\n| Accessibility | Templates meet accessibility standard | Customer Content team |\n\n**Two gaps to close** before this is review-ready: Retention and Auditability both need owners, and the Capacity variance needs an architect response justifying the phase-2 scale-out plan.",
+      "agent_logs": "[SolutionDesignReviewAgent] # Non-Functional Requirements Matrix - 8 Requirements\n\n| ID | Area | Acceptance criterion | Owner | Status |\n|----|------|----------------------|-------|--------|\n| NFR-01 | Availability | 99.9% monthly availability | Operations Engineering | Met in design |\n| NFR-02 | Latency | Notification sent within 60 seconds of the event (p95) | Messaging team | Met in design |\n| NFR-03 | Privacy | Consent checked before every send | Privacy and Compliance team | Met in design |\n| NFR-04 | Retention | Message history kept 13 months, then purged | MISSING OWNER | Gap |\n| NFR-05 | Security | Encryption in transit and at rest | Information Security team | Met in design |\n| NFR-06 | Capacity | 40 messages per second at peak | Messaging team | Variance candidate - Launch design supports 25 per second; scale-out planned for phase 2 |\n| NFR-07 | Auditability | Every send logged with the consent decision | MISSING OWNER | Gap |\n| NFR-08 | Accessibility | Message templates meet the accessibility standard | Customer Content team | Met in design |\n\n**Summary:** 5 met in design, 2 missing owners (NFR-04, NFR-07), 1 variance candidate (NFR-06).\nNext: name owners for the gaps and write the architect response for the variance.\n\n> Synthetic design support only. Every person, system and value is fictional. Nothing was submitted to the review board, no inventory record was changed, and no design decision was made; the architect owns every section.",
+      "expected_agent": "SolutionDesignReviewAgent",
+      "must_include": [
+        "NFR-04",
+        "MISSING OWNER",
+        "1 variance candidate"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-05",
+      "persona": "Solution Architect",
+      "onepager_promise": "Assemble the current state and target design with every inventory change listed",
+      "prompt": "Draft the target design and list what changes in the inventory.",
+      "assistant_response": "Here's the draft target design for the delivery notifications platform:\n\n**Design:** A single Notification Orchestrator consumes delivery events off the integration bus, checks consent/channel preference via a new Preference Center API, then sends via text or email \u2014 retiring the two legacy point solutions.\n\n**Inventory changes (7 total):**\n- **New (3):** Notification Orchestrator, Preference Center API, Delivery Event Stream (tech layer)\n- **Changed (2):** Shipment Tracking Service (now publishes delivery events), Consent Records Table (adds per-channel preference fields)\n- **Retired (2):** Legacy Text Gateway, Batch Email Scheduler\n\nDomains touched: Business, Data, Application, Technology \u2014 each with a diagram reference.\n\nNote: nothing's actually registered in inventory yet \u2014 this is a draft for you to own and adjust. Want me to run a readiness check next to see if it's ready for the review board?",
+      "agent_logs": "[SolutionDesignReviewAgent] # Target Design - DRAFT (Delivery Notifications Platform)\n\nOne notification orchestrator consumes delivery events from the integration bus, checks consent and channel preference, and sends by text or email; the two legacy senders are retired.\n\n| Change | Component | Name | Detail |\n|--------|-----------|------|--------|\n| New | CI-201 | Notification Orchestrator | Application |\n| New | CI-202 | Preference Center API | Application |\n| New | CI-203 | Delivery Event Stream | Technology |\n| Changed | CI-104 | Shipment Tracking Service | Publishes delivery status events |\n| Changed | CI-107 | Consent Records Table | Adds per-channel preference fields |\n| Retired | CI-103 | Legacy Text Gateway | Replaced by the orchestrator's text channel |\n| Retired | CI-105 | Batch Email Scheduler | Replaced by the orchestrator's email channel |\n\n**Inventory delta:** 3 new, 2 changed, 2 retired = 7 inventory updates to register after build (not registered by this agent).\n**Target domains drafted:** Business, Data, Application, Technology; a diagram reference is included for each.\n\n> Synthetic design support only. Every person, system and value is fictional. Nothing was submitted to the review board, no inventory record was changed, and no design decision was made; the architect owns every section.",
+      "expected_agent": "SolutionDesignReviewAgent",
+      "must_include": [
+        "Notification Orchestrator",
+        "3 new, 2 changed, 2 retired",
+        "not registered by this agent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-06",
+      "persona": "Review Board Coordinator",
+      "onepager_promise": "Self-check readiness before the review board with a confidence score and ranked gaps",
+      "prompt": "Is this design ready for the review board?",
+      "assistant_response": "Not yet \u2014 confidence is **70%** (7/10 checks pass). Three gaps to close first:\n\n1. **HIGH** \u2014 Missing current-state baseline for the **Business** domain\n2. **HIGH** \u2014 Two NFRs have no named owner: **NFR-04** and **NFR-07**\n3. **MED** \u2014 **NFR-06** has an open variance with no documented architect response\n\nFix those three and you'd be at 10/10. Want me to pull the requirements matrix so you can see what's needed for NFR-04/07/06?",
+      "agent_logs": "[SolutionDesignReviewAgent] # Review-Board Readiness - INIT-2026-031\n\n**Confidence: 70%** (7 of 10 checks pass) | **Gaps:** 2 HIGH, 1 MED, 0 LOW | **Recommendation:** Revise before the review board\n\n| Severity | Gap | Evidence |\n|----------|-----|----------|\n| HIGH | Every impacted domain has a current-state baseline | Missing: Business |\n| HIGH | Every non-functional requirement has a named owner | No owner: NFR-04, NFR-07 |\n| MED | Every variance has a documented architect response | Open: NFR-06 |\n\n**To close before the review:** add the Business baseline; name owners for NFR-04 and NFR-07; write the architect response for NFR-06.\nClosing all 3 gaps takes the checklist to 10 of 10.\n\nStatus: self-check for the architect. Not submitted to the review board.\n\n> Synthetic design support only. Every person, system and value is fictional. Nothing was submitted to the review board, no inventory record was changed, and no design decision was made; the architect owns every section.",
+      "expected_agent": "SolutionDesignReviewAgent",
+      "must_include": [
+        "70%",
+        "Revise before the review board",
+        "Not submitted to the review board"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 mcs.metadata:
-  componentName: "emission-tracking-reduction-plan"
-  description: "Use when a Decarbonization Program Lead asks to compare draft reduction scenarios."
+  componentName: emission-tracking-reduction-plan
+  description: Use when a Decarbonization Program Lead asks to compare draft reduction scenarios.
 kind: InlineAgentSkill
 content: |
   ---
@@ -13,7 +13,7 @@ content: |
 
   Use the `reduction_plan` operation. The canonical persona prompt is:
 
-  > What reduction scenarios exist for Ridgeline and who must review them?
+  > What are the top reduction opportunities for the Northeast facilities, and who must review them?
 
   ## Procedure
 
@@ -25,7 +25,8 @@ content: |
 
   ## Required evidence
 
-  - Fuel switching to natural gas
+  - Boston Hub LDAR
+  - 10 months
   - engineering, finance, environmental, and executive review
 
   Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

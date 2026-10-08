@@ -462,8 +462,8 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>20</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>3</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>38</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -494,6 +494,26 @@ html[data-theme="dark"] {
           <td><code>PI-04</code></td>
           <td><span class="marker-chip">SYN-PT-001</span><span class="marker-chip">Required reviewer</span></td>
           <td><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">live patient record updated</span><span class="marker-chip">appointment booked</span><span class="marker-chip">authorization granted</span></td>
+        </tr>
+<tr>
+          <td><code>PI-05</code></td>
+          <td><span class="marker-chip">New Patient Registration Draft</span><span class="marker-chip">Dr. James Anderson, Neurology</span><span class="marker-chip">Within 14 days</span></td>
+          <td><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">live patient record updated</span><span class="marker-chip">appointment booked</span><span class="marker-chip">authorization granted</span></td>
+        </tr>
+<tr>
+          <td><code>PI-06</code></td>
+          <td><span class="marker-chip">Appointment Request Draft</span><span class="marker-chip">Tuesday, January 30, 2024</span><span class="marker-chip">Suite 405</span></td>
+          <td><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">live patient record updated</span><span class="marker-chip">appointment booked</span><span class="marker-chip">authorization granted</span></td>
+        </tr>
+<tr>
+          <td><code>PI-07</code></td>
+          <td><span class="marker-chip">Digital Intake Packet Draft</span><span class="marker-chip">HIT-6</span><span class="marker-chip">HIPAA Authorization</span></td>
+          <td><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">live patient record updated</span><span class="marker-chip">appointment booked</span><span class="marker-chip">authorization granted</span></td>
+        </tr>
+<tr>
+          <td><code>PI-08</code></td>
+          <td><span class="marker-chip">72-Hour Reminder</span><span class="marker-chip">Saturday 2:30 PM</span><span class="marker-chip">8% for new patients</span></td>
+          <td><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">live patient record updated</span><span class="marker-chip">appointment booked</span><span class="marker-chip">authorization granted</span></td>
         </tr></tbody>
         </table>
       </div>
@@ -506,45 +526,93 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
+          <td><code>easy-review-build</code></td>
+          <td>easy</td>
+          <td>Patient Intake Pilot; Draft; pre-visit-summary; intake-readiness; appointment-availability; reminder-plan; intake-packet; aibast_patient-intake-review-rules.md; aibast_patient-intake-synthetic-records.md</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/01-review-build.png</td>
+        </tr>
+<tr>
           <td><code>easy-pi-01</code></td>
           <td>easy</td>
-          <td>SYN-PT-001; Emergency contact confirmation</td>
-          <td>solutions/patient-intake/screenshots/assisted/annotated/01-pi-01.png</td>
+          <td>SYN-PT-001; emergency contact confirmation</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/02-pi-01.png</td>
         </tr>
 <tr>
           <td><code>easy-pi-02</code></td>
           <td>easy</td>
           <td>Synthetic Health Plan; source record received</td>
-          <td>solutions/patient-intake/screenshots/assisted/annotated/02-pi-02.png</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/03-pi-02.png</td>
         </tr>
 <tr>
           <td><code>easy-pi-03</code></td>
           <td>easy</td>
-          <td>Clinician A; nothing has been reserved or booked</td>
-          <td>solutions/patient-intake/screenshots/assisted/annotated/03-pi-03.png</td>
+          <td>nothing has been reserved or booked; Clinician A</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/04-pi-03.png</td>
         </tr>
 <tr>
           <td><code>easy-pi-04</code></td>
           <td>easy</td>
-          <td>Required Reviewer; Authorized patient-access staff must verify intake, coverage, and visit details</td>
-          <td>solutions/patient-intake/screenshots/assisted/annotated/04-pi-04.png</td>
+          <td>SYN-PT-001; Required reviewer</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/05-pi-04.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pi-05</code></td>
+          <td>easy</td>
+          <td>New Patient Registration Draft; Dr. James Anderson, Neurology; Within 14 days</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/06-pi-05.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pi-06</code></td>
+          <td>easy</td>
+          <td>Appointment Request Draft; Tuesday, January 30, 2024; Suite 405</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/07-pi-06.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pi-07</code></td>
+          <td>easy</td>
+          <td>Digital Intake Packet Draft; HIT-6; HIPAA Authorization</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/08-pi-07.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pi-08</code></td>
+          <td>easy</td>
+          <td>72-Hour Reminder; Saturday 2:30 PM</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/09-pi-08.png</td>
+        </tr>
+<tr>
+          <td><code>easy-confirm-draft</code></td>
+          <td>easy</td>
+          <td>Patient Intake Pilot</td>
+          <td>solutions/patient-intake/screenshots/assisted/annotated/10-confirm-draft.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-01</code></td>
+          <td>hard</td>
+          <td>Untitled Agent</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/01-create-blank-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-02</code></td>
           <td>hard</td>
-          <td>Patient Intake Manual in the name field</td>
+          <td>Patient Intake Manual</td>
           <td>solutions/patient-intake/screenshots/manual/annotated/02-name-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Reviewed healthcare instruction policy; Locked Preview evidence anchors</td>
+          <td>Role</td>
           <td>solutions/patient-intake/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>Draft</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/04-save-instructions.png</td>
         </tr>
 <tr>
           <td><code>hard-step-05</code></td>
           <td>hard</td>
-          <td>Knowledge section is empty after default web search removal</td>
+          <td>Provide trusted context to guide decisions</td>
           <td>solutions/patient-intake/screenshots/manual/annotated/05-remove-web-search.png</td>
         </tr>
 <tr>
@@ -562,68 +630,128 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-08</code></td>
           <td>hard</td>
-          <td>patient-intake-appointment-availability</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/08-add-appointment-availability.png</td>
+          <td>appointment-availability</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/08-add-aibast-appointment-availability-03.png</td>
         </tr>
 <tr>
           <td><code>hard-step-09</code></td>
           <td>hard</td>
-          <td>patient-intake-coverage-evidence</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/09-add-coverage-evidence.png</td>
+          <td>appointment-hold-draft</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/09-add-aibast-appointment-hold-draft-06.png</td>
         </tr>
 <tr>
           <td><code>hard-step-10</code></td>
           <td>hard</td>
-          <td>patient-intake-intake-readiness</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/10-add-intake-readiness.png</td>
+          <td>coverage-evidence</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/10-add-aibast-coverage-evidence-02.png</td>
         </tr>
 <tr>
           <td><code>hard-step-11</code></td>
           <td>hard</td>
-          <td>patient-intake-pre-visit-summary</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/11-add-pre-visit-summary.png</td>
+          <td>intake-packet</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/11-add-aibast-intake-packet-07.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>Claude Sonnet 4.6; Four configured skills; Two configured knowledge files; Tools section contains no configured tool</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/12-review-inventory.png</td>
+          <td>intake-readiness</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/12-add-aibast-intake-readiness-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>Preview tab; New chat</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/13-open-preview.png</td>
+          <td>new-patient-intake</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/13-add-aibast-new-patient-intake-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-14</code></td>
+          <td>hard</td>
+          <td>pre-visit-summary</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/14-add-aibast-pre-visit-summary-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-15</code></td>
+          <td>hard</td>
+          <td>reminder-plan</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/15-add-aibast-reminder-plan-08.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-16</code></td>
+          <td>hard</td>
+          <td>Claude Opus 5; reminder-plan; pre-visit-summary; new-patient-intake; intake-readiness; intake-packet; aibast_patient-intake-synthetic-records.md; aibast_patient-intake-review-rules.md</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/16-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-17</code></td>
+          <td>hard</td>
+          <td>reminder-plan; pre-visit-summary; new-patient-intake; intake-readiness</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/17-review-skills.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-18</code></td>
+          <td>hard</td>
+          <td>intake-readiness; intake-packet; coverage-evidence; appointment-hold-draft; appointment-availability</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/18-review-skills-more.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-19</code></td>
+          <td>hard</td>
+          <td>Patient Intake Manual</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/19-open-preview.png</td>
         </tr>
 <tr>
           <td><code>hard-pi-01</code></td>
           <td>hard</td>
-          <td>SYN-PT-001; Emergency contact confirmation</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/14-pi-01.png</td>
+          <td>SYN-PT-001; emergency contact confirmation</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/20-pi-01.png</td>
         </tr>
 <tr>
           <td><code>hard-pi-02</code></td>
           <td>hard</td>
           <td>Synthetic Health Plan; source record received</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/15-pi-02.png</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/21-pi-02.png</td>
         </tr>
 <tr>
           <td><code>hard-pi-03</code></td>
           <td>hard</td>
-          <td>Clinician A; nothing has been reserved or booked</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/16-pi-03.png</td>
+          <td>nothing has been reserved or booked; Clinician A</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/22-pi-03.png</td>
         </tr>
 <tr>
           <td><code>hard-pi-04</code></td>
           <td>hard</td>
-          <td>Required Reviewer; Authorized patient-access staff must verify intake, coverage, and appointment details</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/17-pi-04.png</td>
+          <td>Required reviewer; SYN-PT-001</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/23-pi-04.png</td>
         </tr>
 <tr>
-          <td><code>hard-draft</code></td>
+          <td><code>hard-pi-05</code></td>
           <td>hard</td>
-          <td>Patient Intake Manual; Draft</td>
-          <td>solutions/patient-intake/screenshots/manual/annotated/18-confirm-draft.png</td>
+          <td>Within 14 days; Dr. James Anderson, Neurology; New Patient Registration Draft</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/24-pi-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pi-06</code></td>
+          <td>hard</td>
+          <td>Appointment Request Draft; Tuesday, January 30, 2024; Suite 405</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/25-pi-06.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pi-07</code></td>
+          <td>hard</td>
+          <td>Digital Intake Packet Draft; HIT-6; HIPAA Authorization</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/26-pi-07.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pi-08</code></td>
+          <td>hard</td>
+          <td>72-Hour Reminder; Saturday 2:30 PM; 8% for new patients</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/27-pi-08.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-28</code></td>
+          <td>hard</td>
+          <td>Patient Intake Manual</td>
+          <td>solutions/patient-intake/screenshots/manual/annotated/28-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -635,24 +763,7 @@ html[data-theme="dark"] {
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
-          <tbody><tr>
-          <td><code>easy-draft</code></td>
-          <td>easy</td>
-          <td>solutions/patient-intake/screenshots/assisted/05-confirm-draft.jpg</td>
-          <td>The target Patient Intake Pilot row is not visible, so the screenshot cannot prove its Draft state.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-01</code></td>
-          <td>hard</td>
-          <td>solutions/patient-intake/screenshots/manual/01-create-blank-agent.jpg</td>
-          <td>The frame is still a blank loading canvas and does not visibly show an Untitled Agent or blank Build workspace.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/patient-intake/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The instructions are visible, but no saved-state confirmation such as the Save tooltip stating No unsaved changes is visible.</td>
-        </tr></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>

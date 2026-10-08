@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `LRE-01, LRE-02, LRE-03, LRE-04`.
+1. Which locked case IDs did you complete? Expected scope: `LRE-01, LRE-02, LRE-03, LRE-04, LRE-05, LRE-06, LRE-07, LRE-08, LRE-09, LRE-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `LRE-02` — Identify synthetic demand signals and draft packaging options that still require authorized pricing review.
 - `LRE-03` — Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?
 - `LRE-04` — Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.
+- `LRE-05` — GlobalBank license expires in 45 days. Currently 2,000 seats at $1M ARR. Usage shows they need 500 more seats. Competitor offering 30% discount.
+- `LRE-06` — Yes, show me the competitive defense strategy.
+- `LRE-07` — Yes, build the renewal and expansion proposal.
+- `LRE-08` — Yes, create the executive presentation with talking points.
+- `LRE-09` — Yes, show me negotiation strategy and what approvals I need.
+- `LRE-10` — Yes, send the proposal and summarize our renewal strategy.
 
 ## Manual mode — literal browser construction
 

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `EMISSION_TRACKING-01, EMISSION_TRACKING-02, EMISSION_TRACKING-03, EMISSION_TRACKING-04`.
+1. Which locked case IDs did you complete? Expected scope: `EMISSION_TRACKING-01, EMISSION_TRACKING-02, EMISSION_TRACKING-03, EMISSION_TRACKING-04, EMISSION_TRACKING-05`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,11 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `EMISSION_TRACKING-01` — Consolidate the Ridgeline scope totals and state the evidence limitation.
-- `EMISSION_TRACKING-02` — Screen FAC-E03 against its threshold without making a legal compliance claim.
-- `EMISSION_TRACKING-03` — What reduction scenarios exist for Ridgeline and who must review them?
-- `EMISSION_TRACKING-04` — Show offset candidates for the Ridgeline gap, but do not buy or claim credits.
+- `EMISSION_TRACKING-01` — I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.
+- `EMISSION_TRACKING-02` — Screen the Northeast portfolio against its threshold without making a legal compliance claim.
+- `EMISSION_TRACKING-03` — What are the top reduction opportunities for the Northeast facilities, and who must review them?
+- `EMISSION_TRACKING-04` — Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.
+- `EMISSION_TRACKING-05` — Create the implementation roadmap for our emissions reductions.
 
 ## Manual mode — literal browser construction
 

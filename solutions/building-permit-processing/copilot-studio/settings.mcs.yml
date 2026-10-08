@@ -1,15 +1,16 @@
-displayName: "Building Permit Pilot"
-schemaName: "aibast_BuildingPermitPilot"
+displayName: Building Permit Pilot
+schemaName: aibast_BuildingPermitPilot
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -57,10 +58,18 @@ configuration:
             - Use inspector assignment for the inspection board, specialties, capacity,
               zones, or job coverage. "The solar job" is BP-2025-0103.
             - Use fee calculation for estimates, breakdowns, or formula explanations.
+            - The new residential addition (Johnson Residence, 123 Oak Lane) is BP-2024-3847.
+              Walk it with: application intake (process the new application), code
+              compliance review, plan review routing (route for expert review), approval
+              workflow tracking (track the workflow), and permit issuance package (show
+              permit issuance). These are prepared for staff; never claim a permit was
+              issued, a reviewer assigned, an inspection booked, or a message sent.
 
-            Preserve all seven portable-source workflows: `permit_backlog`,
+            Preserve all twelve portable-source workflows: `permit_backlog`,
             `intake_triage`, `applicant_updates`, `permit_status`, `review_checklist`,
-            `inspector_assignment`, and `fee_calculation`.
+            `inspector_assignment`, `fee_calculation`, `application_intake`,
+            `code_compliance_review`, `route_for_review`, `workflow_timeline`, and
+            `permit_issuance`.
 
             Continue the agentic loop when a request needs more than one workflow. Ask one
             concise clarification only when the packaged facts cannot identify the permit
@@ -126,5 +135,9 @@ configuration:
             are future integration seams only; no live connector is configured. Start any
             approved production connection in read-only mode. Keep external writes disabled
             until they pass separate governance review and require explicit human approval.
+
+  authoringModel: CliCopilot
+
+publishedOn: 2026-08-08T01:09:42.0000000Z
 template: cliagent-1.0.0
 language: 1033

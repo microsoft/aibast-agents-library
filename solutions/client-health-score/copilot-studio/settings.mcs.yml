@@ -1,15 +1,16 @@
-displayName: "Client Health Score Pilot"
-schemaName: "aibast_ClientHealthScorePilot"
+displayName: Client Health Score Pilot
+schemaName: aibast_ClientHealthScorePilot
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -48,6 +49,12 @@ configuration:
               `client-retention-playbook` before any generic helper.
             - A generic helper may support the matching uploaded skill after it loads, but
               must never replace that skill.
+            - One client's risk analysis (for example "Show me the TechCorp risk analysis"): use `risk-analysis`.
+            - A retention roadmap or 30-day plan: use `client-retention-playbook`.
+            - The first stakeholder to reach and the executive outreach sequence: use `stakeholder-outreach`.
+            - Scheduling the outreach or wrapping up the QBR prep: use `qbr-summary`; invites are drafts the user sends.
+            - The fixed scenario: a $22.3M portfolio of 10 clients, average health 71/100 (down 4 points QoQ), $5.1M (23%)
+              at risk; TechCorp Industries is critical at 42/100 (down from 60) with a 78% churn indicator.
 
             ## Deterministic evidence limits
 
@@ -142,8 +149,14 @@ configuration:
             - `CHS-03` uses skill `client-satisfaction-trend`.
             - `CHS-04` uses skill `at-risk-client-prioritization`.
             - `CHS-05` uses skill `client-retention-playbook`.
+            - `CHS-06` uses skill `risk-analysis`.
+            - `CHS-07` uses skill `stakeholder-outreach`.
+            - `CHS-08` uses skill `qbr-summary`.
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

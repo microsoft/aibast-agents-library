@@ -7,576 +7,1536 @@
     "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
-  "release_review": {
-    "status": "approved",
-    "reviewer": "workshop-builder:financial-advisor-copilot",
-    "reviewed_at": "2026-08-10T00:00:00Z",
-    "method": "GPT-5.6 Sol inspected the real assisted and manual captures, kept FAC-03 withheld because its final answer is not visible, and verified the locked case through passed manual Preview evidence.",
-    "notes": "FAC-03 is machine-proven rather than visually claimed. The workshop still exceeds the required approved visual coverage and never presents the routing-only frame as proof."
-  },
   "summary": {
-    "total_existing_captures": 29,
-    "reusable": 18,
-    "reshoot_required": 11
+    "total_existing_captures": 50,
+    "reusable": 50,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-fac-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "FAC-01",
-      "source": "solutions/financial-advisor-copilot/screenshots/assisted/01-fac-01.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/01-fac-01.png",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "CLI-3001",
-        "No identity",
-        "Identity verification required before routing"
+        "Financial Advisor Pilot",
+        "Draft",
+        "plan-research",
+        "enrollment-checklist",
+        "risk-assessment",
+        "account-onboarding",
+        "schedule-followup",
+        "aibast_financial-advisor-copilot-synthetic-recor",
+        "aibast_financial-advisor-copilot-controls-and-re"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 145,
-          "width": 940,
-          "height": 72,
-          "label": "Client and identity gate"
+          "x": 84,
+          "y": 20,
+          "width": 171,
+          "height": 20,
+          "label": "Financial Advisor Pilot"
+        },
+        {
+          "x": 266,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "plan-research"
+        },
+        {
+          "x": 1209,
+          "y": 197,
+          "width": 136,
+          "height": 19,
+          "label": "enrollment-checklist"
+        },
+        {
+          "x": 1058,
+          "y": 238,
+          "width": 108,
+          "height": 18,
+          "label": "risk-assessment"
+        },
+        {
+          "x": 1222,
+          "y": 237,
+          "width": 137,
+          "height": 22,
+          "label": "account-onboarding"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 124,
+          "height": 22,
+          "label": "schedule-followup"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_financial-advisor-copilot-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_financial-advisor-copilot-controls-and-re"
+        }
+      ]
+    },
+    {
+      "id": "easy-fac-01",
+      "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/02-fac-01.jpg",
+      "caption": "FAC-01 · Branch Banker: Who is waiting, what do they need, and where should I route them after identity checks?",
+      "case_id": "FAC-01",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/02-fac-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CLI-3001",
+        "No identity"
+      ],
+      "boxes": [
+        {
+          "x": 430,
+          "y": 575,
+          "width": 82,
+          "height": 22,
+          "label": "CLI-3001"
+        },
+        {
+          "x": 310,
+          "y": 830,
+          "width": 93,
+          "height": 24,
+          "label": "No identity"
         }
       ]
     },
     {
       "id": "easy-fac-02",
       "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/03-fac-02.jpg",
+      "caption": "FAC-02 · Advisory Director: Summarize the advisor book and show which client is already retired.",
       "case_id": "FAC-02",
-      "source": "solutions/financial-advisor-copilot/screenshots/assisted/02-fac-02.jpg",
-      "status": "reshoot_required",
-      "reason": "Only internal retrieval reasoning is visible. It says the source details are missing and proposes constructing an answer from locked anchors; no final user-facing response proves the case."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/03-fac-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Retired",
+        "CLI-3003"
+      ],
+      "boxes": [
+        {
+          "x": 1098,
+          "y": 526,
+          "width": 91,
+          "height": 20,
+          "label": "Retired"
+        },
+        {
+          "x": 481,
+          "y": 570,
+          "width": 80,
+          "height": 22,
+          "label": "CLI-3003"
+        }
+      ]
     },
     {
       "id": "easy-fac-03",
       "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/04-fac-03.jpg",
+      "caption": "FAC-03 · Financial Advisor: Show the Whitfield allocation drift before our review meeting.",
       "case_id": "FAC-03",
-      "source": "solutions/financial-advisor-copilot/screenshots/assisted/03-fac-03.jpg",
-      "status": "reshoot_required",
-      "reason": "Missing-source blocker: the only assisted FAC-03 browserfilm frame ends during internal routing and knowledge search. No final user-facing portfolio response is visible, and browserfilm.json provides no alternate FAC-03 source frame to approve or annotate."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/04-fac-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Robert & Susan Whitfield",
+        "Cash & Equivalents"
+      ],
+      "boxes": [
+        {
+          "x": 589,
+          "y": 450,
+          "width": 193,
+          "height": 21,
+          "label": "Robert & Susan Whitfield"
+        },
+        {
+          "x": 298,
+          "y": 774,
+          "width": 149,
+          "height": 24,
+          "label": "Cash & Equivalents"
+        }
+      ]
     },
     {
       "id": "easy-fac-04",
       "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/05-fac-04.jpg",
+      "caption": "FAC-04 · Financial Advisor: Prepare discussion candidates for Angela without giving advice or creating an order.",
       "case_id": "FAC-04",
-      "source": "solutions/financial-advisor-copilot/screenshots/assisted/04-fac-04.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows internal reasoning that the detailed record is missing and repeats locked anchors. No final user-facing answer is visible."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/05-fac-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Angela Martinez",
+        "not recommendations"
+      ],
+      "boxes": [
+        {
+          "x": 626,
+          "y": 417,
+          "width": 131,
+          "height": 24,
+          "label": "Angela Martinez"
+        },
+        {
+          "x": 543,
+          "y": 1435,
+          "width": 171,
+          "height": 21,
+          "label": "not recommendations"
+        }
+      ]
     },
     {
       "id": "easy-fac-05",
       "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/06-fac-05.jpg",
+      "caption": "FAC-05 · Compliance Officer: Which client requires senior-investor controls, and what other checkpoints apply?",
       "case_id": "FAC-05",
-      "source": "solutions/financial-advisor-copilot/screenshots/assisted/05-fac-05.jpg",
-      "status": "reshoot_required",
-      "reason": "Only routing and knowledge-search progress are visible. The final response and its required senior-investor evidence are absent."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/06-fac-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CLI-3003",
+        "Senior investor"
+      ],
+      "boxes": [
+        {
+          "x": 616,
+          "y": 483,
+          "width": 85,
+          "height": 23,
+          "label": "CLI-3003"
+        },
+        {
+          "x": 299,
+          "y": 938,
+          "width": 120,
+          "height": 20,
+          "label": "Senior investor"
+        }
+      ]
     },
     {
       "id": "easy-fac-06",
       "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/07-fac-06.jpg",
+      "caption": "FAC-06 · Branch Banker: Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
       "case_id": "FAC-06",
-      "source": "solutions/financial-advisor-copilot/screenshots/assisted/06-fac-06.jpg",
-      "status": "reshoot_required",
-      "reason": "Only internal retrieval reasoning is visible, including references to locked anchors. No final handoff response is shown."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/07-fac-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Robert & Susan Whitfield",
+        "no case transfer"
+      ],
+      "boxes": [
+        {
+          "x": 593,
+          "y": 472,
+          "width": 239,
+          "height": 24,
+          "label": "Robert & Susan Whitfield"
+        },
+        {
+          "x": 310,
+          "y": 2316,
+          "width": 129,
+          "height": 20,
+          "label": "no case transfer"
+        }
+      ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-fac-07",
       "mode": "easy",
-      "source": "solutions/financial-advisor-copilot/screenshots/assisted/07-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Financial Advisor Pilot row is not visible, so the target Draft identity is not proven.",
-      "draft": true
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/08-fac-07.jpg",
+      "caption": "FAC-07 · Branch Customer: I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can",
+      "case_id": "FAC-07",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/08-fac-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "California ScholarShare 529",
+        "~$65,730",
+        "~31%"
+      ],
+      "boxes": [
+        {
+          "x": 909,
+          "y": 444,
+          "width": 80,
+          "height": 23,
+          "label": "California ScholarShare 529"
+        },
+        {
+          "x": 602,
+          "y": 1049,
+          "width": 78,
+          "height": 24,
+          "label": "~$65,730"
+        },
+        {
+          "x": 602,
+          "y": 1137,
+          "width": 50,
+          "height": 20,
+          "label": "~31%"
+        }
+      ]
+    },
+    {
+      "id": "easy-fac-08",
+      "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/09-fac-08.jpg",
+      "caption": "FAC-08 · Branch Customer: Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents.",
+      "case_id": "FAC-08",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/09-fac-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$1,000 initial deposit",
+        "Proof of address",
+        "20-30 minutes"
+      ],
+      "boxes": [
+        {
+          "x": 526,
+          "y": 730,
+          "width": 155,
+          "height": 25,
+          "label": "$1,000 initial deposit"
+        },
+        {
+          "x": 310,
+          "y": 993,
+          "width": 129,
+          "height": 21,
+          "label": "Proof of address"
+        },
+        {
+          "x": 419,
+          "y": 1054,
+          "width": 114,
+          "height": 20,
+          "label": "20-30 minutes"
+        }
+      ]
+    },
+    {
+      "id": "easy-fac-09",
+      "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/10-fac-09.jpg",
+      "caption": "FAC-09 · Branch Customer: Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 ",
+      "case_id": "FAC-09",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/10-fac-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "VS1-8609E7B8",
+        "Not Submitted",
+        "no account was opened"
+      ],
+      "boxes": [
+        {
+          "x": 630,
+          "y": 500,
+          "width": 140,
+          "height": 23,
+          "label": "VS1-8609E7B8"
+        },
+        {
+          "x": 339,
+          "y": 532,
+          "width": 117,
+          "height": 21,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 471,
+          "y": 533,
+          "width": 94,
+          "height": 20,
+          "label": "no account was opened"
+        }
+      ]
+    },
+    {
+      "id": "easy-fac-10",
+      "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/11-fac-10.jpg",
+      "caption": "FAC-10 · Branch Customer: Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough.",
+      "case_id": "FAC-10",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/11-fac-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "~$210,740",
+        "~$145,010",
+        "$950/month"
+      ],
+      "boxes": [
+        {
+          "x": 617,
+          "y": 990,
+          "width": 85,
+          "height": 24,
+          "label": "~$210,740"
+        },
+        {
+          "x": 618,
+          "y": 1077,
+          "width": 82,
+          "height": 23,
+          "label": "~$145,010"
+        },
+        {
+          "x": 618,
+          "y": 1120,
+          "width": 111,
+          "height": 23,
+          "label": "$950/month"
+        }
+      ]
+    },
+    {
+      "id": "easy-fac-11",
+      "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/12-fac-11.jpg",
+      "caption": "FAC-11 · Branch Customer: I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic invest",
+      "case_id": "FAC-11",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/12-fac-11.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Conservative (Score: 45/100)",
+        "35% equities",
+        "advisor review"
+      ],
+      "boxes": [
+        {
+          "x": 374,
+          "y": 963,
+          "width": 153,
+          "height": 20,
+          "label": "Conservative (Score: 45/100)"
+        },
+        {
+          "x": 490,
+          "y": 1003,
+          "width": 103,
+          "height": 23,
+          "label": "35% equities"
+        },
+        {
+          "x": 492,
+          "y": 1184,
+          "width": 116,
+          "height": 20,
+          "label": "advisor review"
+        }
+      ]
+    },
+    {
+      "id": "easy-fac-12",
+      "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/13-fac-12.jpg",
+      "caption": "FAC-12 · Branch Customer: I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we se",
+      "case_id": "FAC-12",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/13-fac-12.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tuesday, September 10, 2024",
+        "Sarah King",
+        "no invite was sent"
+      ],
+      "boxes": [
+        {
+          "x": 444,
+          "y": 671,
+          "width": 216,
+          "height": 24,
+          "label": "Tuesday, September 10, 2024"
+        },
+        {
+          "x": 445,
+          "y": 757,
+          "width": 86,
+          "height": 24,
+          "label": "Sarah King"
+        },
+        {
+          "x": 310,
+          "y": 1140,
+          "width": 143,
+          "height": 20,
+          "label": "no invite was sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/financial-advisor-copilot/screenshots/assisted/14-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 14 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/14-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Financial Advisor Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 169,
+          "height": 21,
+          "label": "Financial Advisor Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is an empty loading canvas. No blank agent name or Build workspace is visible."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Financial Advisor Manual",
+      "step": 2,
       "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Financial Advisor Manual in the name field"
+        "Financial Advisor Manual"
       ],
       "boxes": [
         {
-          "x": 164,
-          "y": 99,
-          "width": 818,
-          "height": 52,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 191,
+          "height": 20,
+          "label": "Financial Advisor Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Reviewed instruction policy",
-        "Locked Preview evidence anchors",
-        "FAC-01 through FAC-06 anchors"
+        "Financial Advisor Agent — Manual Global Instruct"
       ],
       "boxes": [
         {
-          "x": 82,
-          "y": 218,
-          "width": 898,
-          "height": 610,
-          "label": "Reviewed instructions"
+          "x": 204,
+          "y": 131,
+          "width": 266,
+          "height": 32,
+          "label": "Financial Advisor Agent — Manual Global Instruct"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instructions remain visible in the editor, but no saved-state confirmation or no-unsaved-changes indicator is visible."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The Knowledge panel still visibly contains Search all websites, directly contradicting the removal checkpoint."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/06-add-aibast-financial-advisor-copilot-controls-and-review.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_financial-advisor-copilot-controls-and-review.md",
+      "step": 6,
       "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/06-add-aibast-financial-advisor-copilot-controls-and-review.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge chip begins aibast_financial-advisor-copilot-controls-and"
-      ],
-      "full_filename_not_visibly_proven": [
-        "The review.md suffix is truncated by the Copilot Studio chip."
+        "aibast_financial-advisor-copilot-controls-and-re"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 309,
-          "width": 371,
-          "height": 44,
-          "label": "Controls knowledge added"
+          "x": 1058,
+          "y": 314,
+          "width": 314,
+          "height": 33,
+          "label": "aibast_financial-advisor-copilot-controls-and-re"
         }
-      ],
-      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/07-add-aibast-financial-advisor-copilot-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_financial-advisor-copilot-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/07-add-aibast-financial-advisor-copilot-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge chip begins aibast_financial-advisor-copilot-synthetic-re",
-        "Two knowledge chips are visible"
-      ],
-      "full_filename_not_visibly_proven": [
-        "The cords.md suffix is truncated by the Copilot Studio chip."
+        "aibast_financial-advisor-copilot-synthetic-recor"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 309,
-          "width": 371,
-          "height": 44,
-          "label": "Synthetic records added"
+          "x": 1057,
+          "y": 321,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_financial-advisor-copilot-synthetic-recor"
         }
-      ],
-      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/08-add-aibast-account-onboarding-09.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_account-onboarding_09",
       "step": 8,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/08-add-aibast-advisor-handoff-06.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/08-add-aibast-advisor-handoff-06.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/08-add-aibast-account-onboarding-09.png",
       "status": "reusable",
       "visible_anchors": [
-        "advisor-handoff skill"
+        "account-onboarding"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 184,
-          "width": 194,
-          "height": 43,
-          "label": "Advisor handoff skill"
+          "x": 1057,
+          "y": 197,
+          "width": 137,
+          "height": 22,
+          "label": "account-onboarding"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/09-add-aibast-advisor-handoff-06.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_advisor-handoff_06",
       "step": 9,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/09-add-aibast-client-review-02.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/09-add-aibast-client-review-02.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/09-add-aibast-advisor-handoff-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "client-review skill",
-        "advisor-handoff skill"
+        "advisor-handoff"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 184,
-          "width": 337,
-          "height": 43,
-          "label": "Client review skill"
+          "x": 1057,
+          "y": 197,
+          "width": 109,
+          "height": 19,
+          "label": "advisor-handoff"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/10-add-aibast-client-review-02.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_client-review_02",
       "step": 10,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/10-add-aibast-compliance-check-05.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/10-add-aibast-compliance-check-05.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/10-add-aibast-client-review-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "compliance-check skill"
+        "client-review"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 184,
-          "width": 195,
-          "height": 43,
-          "label": "Compliance skill"
+          "x": 1057,
+          "y": 197,
+          "width": 90,
+          "height": 19,
+          "label": "client-review"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/11-add-aibast-college-cost-projection-10.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_college-cost-projection_10",
       "step": 11,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/11-add-aibast-portfolio-summary-03.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/11-add-aibast-portfolio-summary-03.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/11-add-aibast-college-cost-projection-10.png",
       "status": "reusable",
       "visible_anchors": [
-        "portfolio-summary skill"
+        "college-cost-projection"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 184,
-          "width": 195,
-          "height": 43,
-          "label": "Portfolio skill"
+          "x": 1057,
+          "y": 197,
+          "width": 155,
+          "height": 22,
+          "label": "college-cost-projection"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/12-add-aibast-compliance-check-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_compliance-check_05",
       "step": 12,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/12-add-aibast-recommendation-engine-04.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/12-add-aibast-recommendation-engine-04.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/12-add-aibast-compliance-check-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "recommendation-engine skill"
+        "compliance-check"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 184,
-          "width": 223,
-          "height": 43,
-          "label": "Recommendation skill"
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/13-add-aibast-enrollment-checklist-08.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_enrollment-checklist_08",
       "step": 13,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/13-add-aibast-service-intake-01.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/13-add-aibast-service-intake-01.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/13-add-aibast-enrollment-checklist-08.png",
       "status": "reusable",
       "visible_anchors": [
-        "service-intake skill",
-        "Five named skills plus one additional skill"
+        "enrollment-checklist"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 184,
-          "width": 195,
-          "height": 43,
-          "label": "Service intake skill"
+          "x": 1057,
+          "y": 197,
+          "width": 137,
+          "height": 19,
+          "label": "enrollment-checklist"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/14-add-aibast-plan-research-07.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_plan-research_07",
       "step": 14,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/14-review-inventory.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/14-review-inventory.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/14-add-aibast-plan-research-07.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Five named skills plus one additional skill",
-        "Two knowledge chips",
-        "Tools section contains no configured tool"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "One of the six skill names is collapsed behind +1.",
-        "Both knowledge filenames are truncated by the Copilot Studio chips."
+        "plan-research"
       ],
       "boxes": [
         {
-          "x": 1204,
-          "y": 85,
-          "width": 193,
-          "height": 39,
-          "label": "Required model"
-        },
-        {
-          "x": 1026,
-          "y": 184,
-          "width": 343,
-          "height": 162,
-          "label": "Six configured skills"
-        },
-        {
-          "x": 1023,
-          "y": 393,
-          "width": 374,
-          "height": 28,
-          "label": "No configured tools"
-        },
-        {
-          "x": 1025,
-          "y": 467,
-          "width": 371,
-          "height": 86,
-          "label": "Two knowledge items"
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "plan-research"
         }
-      ],
-      "note": "Several label pills covered helper text in the Skills/Tools/Knowledge panel; regenerated with the pills moved into clear whitespace 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/15-add-aibast-portfolio-summary-03.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_portfolio-summary_03",
       "step": 15,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/15-open-preview.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/15-open-preview.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/15-add-aibast-portfolio-summary-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat"
+        "portfolio-summary"
       ],
       "boxes": [
         {
-          "x": 566,
-          "y": 10,
-          "width": 182,
-          "height": 43,
-          "label": "Preview selected"
+          "x": 1058,
+          "y": 197,
+          "width": 127,
+          "height": 22,
+          "label": "portfolio-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/16-add-aibast-recommendation-engine-04.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_recommendation-engine_04",
+      "step": 16,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/16-add-aibast-recommendation-engine-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "recommendation-engine"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 164,
+          "height": 22,
+          "label": "recommendation-engine"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/17-add-aibast-risk-assessment-11.jpg",
+      "caption": "Manual step 17 · Add skill: aibast_risk-assessment_11",
+      "step": 17,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/17-add-aibast-risk-assessment-11.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "risk-assessment"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 198,
+          "width": 108,
+          "height": 18,
+          "label": "risk-assessment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/18-add-aibast-schedule-followup-12.jpg",
+      "caption": "Manual step 18 · Add skill: aibast_schedule-followup_12",
+      "step": 18,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/18-add-aibast-schedule-followup-12.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "schedule-followup"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 124,
+          "height": 22,
+          "label": "schedule-followup"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/19-add-aibast-service-intake-01.jpg",
+      "caption": "Manual step 19 · Add skill: aibast_service-intake_01",
+      "step": 19,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/19-add-aibast-service-intake-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "service-intake"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 96,
+          "height": 19,
+          "label": "service-intake"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/20-review-inventory.jpg",
+      "caption": "Manual step 20 · Review model, skills, knowledge, and safety boundaries",
+      "step": 20,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/20-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "service-intake",
+        "schedule-followup",
+        "risk-assessment",
+        "recommendation-engine",
+        "portfolio-summary",
+        "aibast_financial-advisor-copilot-synthetic-recor",
+        "aibast_financial-advisor-copilot-controls-and-re"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 836,
-          "y": 91,
+          "x": 1057,
+          "y": 197,
+          "width": 96,
+          "height": 19,
+          "label": "service-intake"
+        },
+        {
+          "x": 1210,
+          "y": 197,
+          "width": 125,
+          "height": 22,
+          "label": "schedule-followup"
+        },
+        {
+          "x": 1058,
+          "y": 238,
           "width": 108,
-          "height": 38,
-          "label": "Fresh chat control"
+          "height": 18,
+          "label": "risk-assessment"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 164,
+          "height": 22,
+          "label": "recommendation-engine"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 127,
+          "height": 22,
+          "label": "portfolio-summary"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_financial-advisor-copilot-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_financial-advisor-copilot-controls-and-re"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/21-review-skills.jpg",
+      "caption": "Manual step 21 · Review the skill list (12 skills)",
+      "step": 21,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/21-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "service-intake",
+        "schedule-followup",
+        "risk-assessment"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 96,
+          "height": 19,
+          "label": "service-intake"
+        },
+        {
+          "x": 1055,
+          "y": 254,
+          "width": 125,
+          "height": 23,
+          "label": "schedule-followup"
+        },
+        {
+          "x": 1055,
+          "y": 413,
+          "width": 108,
+          "height": 19,
+          "label": "risk-assessment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/22-review-skills-more.jpg",
+      "caption": "Manual step 22 · Review the rest of the skill list",
+      "step": 22,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/22-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "compliance-check",
+        "college-cost-projection",
+        "client-review",
+        "advisor-handoff",
+        "account-onboarding"
+      ],
+      "boxes": [
+        {
+          "x": 1096,
+          "y": 68,
+          "width": 72,
+          "height": 18,
+          "label": "compliance-check"
+        },
+        {
+          "x": 1055,
+          "y": 122,
+          "width": 155,
+          "height": 22,
+          "label": "college-cost-projection"
+        },
+        {
+          "x": 1055,
+          "y": 240,
+          "width": 90,
+          "height": 19,
+          "label": "client-review"
+        },
+        {
+          "x": 1055,
+          "y": 318,
+          "width": 110,
+          "height": 19,
+          "label": "advisor-handoff"
+        },
+        {
+          "x": 1055,
+          "y": 396,
+          "width": 138,
+          "height": 22,
+          "label": "account-onboarding"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-23",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/23-open-preview.jpg",
+      "caption": "Manual step 23 · Open a fresh Preview conversation",
+      "step": 23,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/23-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Financial Advisor Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 191,
+          "height": 20,
+          "label": "Financial Advisor Manual"
         }
       ]
     },
     {
       "id": "hard-fac-01",
       "mode": "hard",
-      "step": 16,
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/24-fac-01.jpg",
+      "caption": "FAC-01 · Branch Banker: Who is waiting, what do they need, and where should I route them after identity checks?",
+      "step": 24,
       "case_id": "FAC-01",
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/16-fac-01.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/16-fac-01.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/24-fac-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Robert & Susan Whitfield (CLI-3001)",
-        "No identity verified",
-        "No identity has been verified"
+        "CLI-3001",
+        "No identity"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 119,
-          "width": 940,
-          "height": 43,
-          "label": "CLI-3001 identity state"
+          "x": 424,
+          "y": 558,
+          "width": 83,
+          "height": 22,
+          "label": "CLI-3001"
         },
         {
-          "x": 286,
-          "y": 304,
-          "width": 940,
-          "height": 62,
-          "label": "Identity remains unverified"
+          "x": 310,
+          "y": 990,
+          "width": 90,
+          "height": 24,
+          "label": "No identity"
         }
       ]
     },
     {
       "id": "hard-fac-02",
       "mode": "hard",
-      "step": 17,
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/25-fac-02.jpg",
+      "caption": "FAC-02 · Advisory Director: Summarize the advisor book and show which client is already retired.",
+      "step": 25,
       "case_id": "FAC-02",
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/17-fac-02.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/17-fac-02.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/25-fac-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "CLI-3003",
-        "only retired client in the book",
-        "Age 72"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact capitalized marker Retired is outside the captured viewport."
+        "Retired",
+        "CLI-3003"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 218,
-          "width": 520,
-          "height": 35,
-          "label": "Age 72"
+          "x": 346,
+          "y": 488,
+          "width": 62,
+          "height": 21,
+          "label": "Retired"
         },
         {
-          "x": 285,
-          "y": 320,
-          "width": 940,
-          "height": 62,
-          "label": "CLI-3003 retired status"
+          "x": 542,
+          "y": 489,
+          "width": 85,
+          "height": 22,
+          "label": "CLI-3003"
         }
       ]
     },
     {
       "id": "hard-fac-03",
       "mode": "hard",
-      "step": 18,
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/26-fac-03.jpg",
+      "caption": "FAC-03 · Financial Advisor: Show the Whitfield allocation drift before our review meeting.",
+      "step": 26,
       "case_id": "FAC-03",
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/18-fac-03.jpg",
-      "status": "reshoot_required",
-      "reason": "Missing-source blocker: the only manual FAC-03 browserfilm frame ends during internal routing and knowledge search. No final user-facing portfolio response is visible, and browserfilm.json provides no alternate FAC-03 source frame to approve or annotate."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/26-fac-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Robert & Susan Whitfield",
+        "Cash & Equivalents"
+      ],
+      "boxes": [
+        {
+          "x": 504,
+          "y": 499,
+          "width": 283,
+          "height": 27,
+          "label": "Robert & Susan Whitfield"
+        },
+        {
+          "x": 299,
+          "y": 1119,
+          "width": 145,
+          "height": 23,
+          "label": "Cash & Equivalents"
+        }
+      ]
     },
     {
       "id": "hard-fac-04",
       "mode": "hard",
-      "step": 19,
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/27-fac-04.jpg",
+      "caption": "FAC-04 · Financial Advisor: Prepare discussion candidates for Angela without giving advice or creating an order.",
+      "step": 27,
       "case_id": "FAC-04",
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/19-fac-04.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/19-fac-04.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/27-fac-04.png",
       "status": "reusable",
       "visible_anchors": [
         "Angela Martinez",
-        "discussion candidates, not recommendations or orders"
+        "not recommendations"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 362,
-          "width": 955,
-          "height": 62,
-          "label": "Angela compliance state"
+          "x": 634,
+          "y": 582,
+          "width": 190,
+          "height": 32,
+          "label": "Angela Martinez"
         },
         {
-          "x": 286,
-          "y": 428,
-          "width": 955,
-          "height": 62,
-          "label": "Not recommendations"
+          "x": 547,
+          "y": 1323,
+          "width": 171,
+          "height": 21,
+          "label": "not recommendations"
         }
       ]
     },
     {
       "id": "hard-fac-05",
       "mode": "hard",
-      "step": 20,
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/28-fac-05.jpg",
+      "caption": "FAC-05 · Compliance Officer: Which client requires senior-investor controls, and what other checkpoints apply?",
+      "step": 28,
       "case_id": "FAC-05",
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/20-fac-05.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/20-fac-05.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/28-fac-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Client Requiring Senior-Investor Controls",
-        "William Chen Trust \u2014 CLI-3003"
-      ],
-      "full_case_not_visibly_proven": [
-        "The remaining compliance checkpoints continue below the captured viewport."
+        "CLI-3003",
+        "Senior investor"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 607,
-          "width": 940,
-          "height": 70,
-          "label": "CLI-3003 senior controls"
+          "x": 426,
+          "y": 534,
+          "width": 85,
+          "height": 23,
+          "label": "CLI-3003"
+        },
+        {
+          "x": 348,
+          "y": 573,
+          "width": 116,
+          "height": 20,
+          "label": "Senior investor"
         }
       ]
     },
     {
       "id": "hard-fac-06",
       "mode": "hard",
-      "step": 21,
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/29-fac-06.jpg",
+      "caption": "FAC-06 · Branch Banker: Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
+      "step": 29,
       "case_id": "FAC-06",
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/21-fac-06.jpg",
-      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/21-fac-06.png",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/29-fac-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "No case transfer has occurred",
         "Robert & Susan Whitfield",
-        "draft preparation document only"
+        "no case transfer"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 411,
-          "width": 938,
-          "height": 100,
-          "label": "No case transfer"
+          "x": 655,
+          "y": 554,
+          "width": 283,
+          "height": 27,
+          "label": "Robert & Susan Whitfield"
+        },
+        {
+          "x": 721,
+          "y": 2074,
+          "width": 122,
+          "height": 20,
+          "label": "no case transfer"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-fac-07",
       "mode": "hard",
-      "step": 22,
-      "source": "solutions/financial-advisor-copilot/screenshots/manual/22-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents page is still a loading skeleton and reports 0 items. Financial Advisor Manual and its Draft status are not visible."
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/30-fac-07.jpg",
+      "caption": "FAC-07 · Branch Customer: I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can",
+      "step": 30,
+      "case_id": "FAC-07",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/30-fac-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "California ScholarShare 529",
+        "~$65,730",
+        "~31%"
+      ],
+      "boxes": [
+        {
+          "x": 1090,
+          "y": 609,
+          "width": 115,
+          "height": 27,
+          "label": "California ScholarShare 529"
+        },
+        {
+          "x": 594,
+          "y": 1112,
+          "width": 76,
+          "height": 23,
+          "label": "~$65,730"
+        },
+        {
+          "x": 594,
+          "y": 1200,
+          "width": 49,
+          "height": 20,
+          "label": "~31%"
+        }
+      ]
+    },
+    {
+      "id": "hard-fac-08",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/31-fac-08.jpg",
+      "caption": "FAC-08 · Branch Customer: Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents.",
+      "step": 31,
+      "case_id": "FAC-08",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/31-fac-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$1,000 initial deposit",
+        "Proof of address",
+        "20-30 minutes"
+      ],
+      "boxes": [
+        {
+          "x": 526,
+          "y": 911,
+          "width": 155,
+          "height": 25,
+          "label": "$1,000 initial deposit"
+        },
+        {
+          "x": 310,
+          "y": 1185,
+          "width": 129,
+          "height": 20,
+          "label": "Proof of address"
+        },
+        {
+          "x": 426,
+          "y": 1292,
+          "width": 112,
+          "height": 20,
+          "label": "20-30 minutes"
+        }
+      ]
+    },
+    {
+      "id": "hard-fac-09",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/32-fac-09.jpg",
+      "caption": "FAC-09 · Branch Customer: Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 ",
+      "step": 32,
+      "case_id": "FAC-09",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/32-fac-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "no account was opened"
+      ],
+      "boxes": [
+        {
+          "x": 754,
+          "y": 581,
+          "width": 171,
+          "height": 27,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 444,
+          "y": 1379,
+          "width": 314,
+          "height": 24,
+          "label": "no account was opened"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "VS1-8609E7B8 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-fac-10",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/33-fac-10.jpg",
+      "caption": "FAC-10 · Branch Customer: Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough.",
+      "step": 33,
+      "case_id": "FAC-10",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/33-fac-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "~$210,740",
+        "~$145,010",
+        "$950/month"
+      ],
+      "boxes": [
+        {
+          "x": 844,
+          "y": 697,
+          "width": 83,
+          "height": 23,
+          "label": "~$210,740"
+        },
+        {
+          "x": 690,
+          "y": 1220,
+          "width": 80,
+          "height": 23,
+          "label": "~$145,010"
+        },
+        {
+          "x": 983,
+          "y": 1325,
+          "width": 104,
+          "height": 22,
+          "label": "$950/month"
+        }
+      ]
+    },
+    {
+      "id": "hard-fac-11",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/34-fac-11.jpg",
+      "caption": "FAC-11 · Branch Customer: I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic invest",
+      "step": 34,
+      "case_id": "FAC-11",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/34-fac-11.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Conservative (Score: 45/100)",
+        "35% equities",
+        "advisor review"
+      ],
+      "boxes": [
+        {
+          "x": 340,
+          "y": 556,
+          "width": 217,
+          "height": 23,
+          "label": "Conservative (Score: 45/100)"
+        },
+        {
+          "x": 474,
+          "y": 1188,
+          "width": 103,
+          "height": 24,
+          "label": "35% equities"
+        },
+        {
+          "x": 403,
+          "y": 1516,
+          "width": 118,
+          "height": 22,
+          "label": "advisor review"
+        }
+      ]
+    },
+    {
+      "id": "hard-fac-12",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/35-fac-12.jpg",
+      "caption": "FAC-12 · Branch Customer: I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we se",
+      "step": 35,
+      "case_id": "FAC-12",
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/35-fac-12.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tuesday, September 10, 2024",
+        "Sarah King",
+        "no invite was sent"
+      ],
+      "boxes": [
+        {
+          "x": 417,
+          "y": 738,
+          "width": 236,
+          "height": 24,
+          "label": "Tuesday, September 10, 2024"
+        },
+        {
+          "x": 560,
+          "y": 825,
+          "width": 89,
+          "height": 24,
+          "label": "Sarah King"
+        },
+        {
+          "x": 725,
+          "y": 1400,
+          "width": 143,
+          "height": 22,
+          "label": "no invite was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-36",
+      "mode": "hard",
+      "source": "solutions/financial-advisor-copilot/screenshots/manual/36-confirm-draft.jpg",
+      "caption": "Manual step 36 · Confirm Draft and stop before publish",
+      "step": 36,
+      "draft": true,
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/36-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Financial Advisor Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 189,
+          "height": 21,
+          "label": "Financial Advisor Manual"
+        }
+      ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy FAC-02 through FAC-06 with each final user-facing response visible.",
-      "Easy Draft gate filtered to Financial Advisor Pilot with Draft visible.",
-      "Manual step 1 after the blank agent workspace finishes loading.",
-      "Manual step 4 with an explicit saved-state confirmation visible.",
-      "Manual step 5 after Search all websites is visibly removed.",
-      "Manual FAC-03 with the final portfolio response visible.",
-      "Manual Draft gate after Financial Advisor Manual and Draft are visible."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:48:21.368791+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

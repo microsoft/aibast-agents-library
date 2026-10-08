@@ -1,0 +1,7 @@
+---
+name: top-at-risk-member-profiles
+description: Shows a Marketing Leader the top at-risk members, their points and last purchase, and the lead member profile and trigger without contacting them.
+---
+# Top at-risk member profiles
+
+List Linda M., Kevin R., and Sarah T. with points and days since last purchase ($48K combined annual value), then Linda M.'s profile and trigger. Never contact a member or change a balance.

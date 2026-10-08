@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PSA-01, PSA-02, PSA-03, PSA-04`.
+1. Which locked case IDs did you complete? Expected scope: `PSA-01, PSA-02, PSA-03, PSA-04, PSA-05, PSA-06`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,12 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `PSA-01` — As Personal Shopper, suggest transparent options for Synthetic Shopper A using only stated preferences.
+- `PSA-01` — As Personal Shopper, Jennifer needs an outfit for a business dinner with clients; suggest transparent options using only her stated preferences.
 - `PSA-02` — As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.
-- `PSA-03` — As Retail Manager, show the synthetic size-level availability and verification gate for SKU-1003.
+- `PSA-03` — As Retail Manager, show the synthetic size-level availability and verification gate for SKU-2003.
 - `PSA-04` — As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.
+- `PSA-05` — As Personal Shopper, what is the best offer I can give Jennifer with her loyalty benefits?
+- `PSA-06` — As Clienteling Specialist, wrap up Jennifer's styling session and prepare the updates for her profile.
 
 ## Manual mode — literal browser construction
 

@@ -16,6 +16,27 @@
     ],
     "referral_context": [
       "CN-04"
+    ],
+    "preop_snapshot": [
+      "CN-05"
+    ],
+    "cardiopulmonary_review": [
+      "CN-06"
+    ],
+    "perioperative_medication_review": [
+      "CN-07"
+    ],
+    "anesthesia_considerations": [
+      "CN-08"
+    ],
+    "risk_factor_summary": [
+      "CN-09"
+    ],
+    "reevaluation_criteria": [
+      "CN-10"
+    ],
+    "clearance_note_draft": [
+      "CN-11"
     ]
   },
   "defects_fixed": [
@@ -33,6 +54,11 @@
       "area": "surgeon persona routing",
       "before": "The live model did not select the clinical-notes tool for a source-coded problem-list extraction request.",
       "after": "Tool and operation descriptions now map the exact persona intent to problem_list_extract, preserving source-coded type 2 diabetes and No diagnosis was added in the deterministic output."
+    },
+    {
+      "area": "collateral alignment (demo video)",
+      "before": "The demo video walks a pre-op clearance for patient 78392 (John Martinez, right eye phacoemulsification): snapshot, cardiopulmonary findings, a 12-medication perioperative review with the floppy-iris alert, anesthesia and monitoring considerations, ASA III factors, re-evaluation criteria, and a clearance note sent to ophthalmology; the agent had only two anonymous encounters and none of these workflows.",
+      "after": "Added PREOP_PATIENT and the cardiopulmonary, medication, anesthesia, ASA, re-evaluation and note constants and seven read-only operations (CN-05 to CN-11). The video's 'Clearance Status: APPROVED', 'Cleared as planned', e-signature, EHR filing and secure messages are returned as physician-decision wording and a draft note with a proposed distribution; nothing is signed, filed or sent."
     }
   ],
   "claim_audit": [

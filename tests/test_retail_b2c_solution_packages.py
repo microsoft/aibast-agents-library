@@ -18,7 +18,7 @@ PACKAGES = {
         "onepager": "Personalized Marketing Agent one-pager.pptx",
         "sha": "23919bc754c1151fb7d83ca300caeea6b6dadd4372733ceb8da30c859e222d50",
         "slot": 14,
-        "operations": ["customer_segmentation", "campaign_design", "content_personalization", "performance_analysis"],
+        "operations": ["customer_segmentation", "campaign_design", "content_personalization", "performance_analysis", "campaign_workflow", "revenue_projection", "executive_brief"],
         "personas": ["Marketing Director", "Campaign Manager"],
     },
     "store-associate-copilot": {
@@ -29,7 +29,7 @@ PACKAGES = {
         "onepager": "24. Retail Store Associate Copilot one-pager.pptx",
         "sha": "2d63f12e857eeb0e2cc65c0e84e92814621f60d15a15f760e0ba45ab5ed42c9b",
         "slot": 21,
-        "operations": ["product_lookup", "customer_assist", "task_checklist", "performance_dashboard"],
+        "operations": ["product_lookup", "customer_assist", "task_checklist", "performance_dashboard", "accessory_recommendations", "product_compare", "prepare_transaction"],
         "personas": ["Store Associate", "Sales Manager", "Floor Specialist"],
     },
     "cart-abandonment-recovery": {
@@ -40,7 +40,7 @@ PACKAGES = {
         "onepager": "25. Cart Abandonment Recovery Agent one-pager.pptx",
         "sha": "725f5bde43dc70a3642cd14fe182fc9bc852c1fde193ec06934bd21e163f9b75",
         "slot": 22,
-        "operations": ["abandonment_analysis", "recovery_campaign", "incentive_optimization", "conversion_tracking"],
+        "operations": ["abandonment_analysis", "recovery_campaign", "incentive_optimization", "conversion_tracking", "recovery_strategies", "recovery_forecast", "optimization_recommendations"],
         "personas": ["Marketing Manager", "Digital Marketing Lead", "Growth Manager"],
     },
     "omnichannel-engagement": {
@@ -51,7 +51,7 @@ PACKAGES = {
         "onepager": "30. Omnichannel Engagement Agent one-pager.pptx",
         "sha": "20e386757fdbe988502bfae46e4da93f4bbecc4f21fee54b98efc5b7cf14f55b",
         "slot": 27,
-        "operations": ["channel_performance", "journey_analysis", "engagement_optimization", "campaign_attribution"],
+        "operations": ["channel_performance", "journey_analysis", "engagement_optimization", "campaign_attribution", "customer_journey", "unresolved_issues", "channel_recommendation", "proactive_plan", "handoff_package"],
         "personas": ["Customer Experience Leader", "Digital Engagement Manager", "Contact Center Supervisor"],
     },
     "inventory-visibility": {
@@ -62,7 +62,7 @@ PACKAGES = {
         "onepager": "34. Inventory Visibility Agent one-pager.pptx",
         "sha": "7b1a45e0f07c66822200638cabe6e21fa7f150bf410a135d1835aa8db94182a6",
         "slot": 31,
-        "operations": ["inventory_dashboard", "stock_alerts", "replenishment_plan", "channel_allocation"],
+        "operations": ["inventory_dashboard", "stock_alerts", "replenishment_plan", "channel_allocation", "transfer_plan", "network_health", "automation_recommendations", "investment_proposal"],
         "personas": ["Inventory Planner", "Store Manager", "Category Manager"],
     },
     "personalized-shopping-assistant": {
@@ -73,7 +73,7 @@ PACKAGES = {
         "onepager": "41. Personalized Shopping Agent one-pager.pptx",
         "sha": "2e9d0648f0eddddc95ce8cf68c520f39f7c88990c50302d7f2b454c133bad7da",
         "slot": 38,
-        "operations": ["product_recommendations", "style_profile", "inventory_check", "outfit_builder"],
+        "operations": ["product_recommendations", "style_profile", "inventory_check", "outfit_builder", "pricing_offer", "session_summary"],
         "personas": ["Personal Shopper", "Clienteling Specialist", "Retail Manager"],
     },
     "returns-complaints-resolution": {
@@ -84,8 +84,8 @@ PACKAGES = {
         "onepager": "51. Returns and Complaints Resolution Agent one-pager 2026 02 23.pptx",
         "sha": "25a7b558af80dff03229fe225fec4b045ba2ce0093730094d9d98b6fba4d23c8",
         "slot": 41,
-        "operations": ["return_processing", "complaint_classification", "resolution_recommendation", "trend_analysis"],
-        "personas": ["Customer Service Agent", "Quality Team", "Loss Prevention Team"],
+        "operations": ["return_processing", "complaint_classification", "resolution_recommendation", "trend_analysis", "escalation_snapshot", "recovery_tiers", "resolution_execution_plan", "follow_up_plan", "recovery_performance", "executive_summary"],
+        "personas": ["Customer Service Agent", "Quality Team", "Loss Prevention Team", "Service Manager"],
     },
     "customer-loyalty-rewards": {
         "name": "@aibast-agents-library/customer-loyalty-rewards",
@@ -95,7 +95,7 @@ PACKAGES = {
         "onepager": "45. Customer Loyalty and Rewards Agent one-pager.pptx",
         "sha": "2487138b852c55f0aeb77a7a4e0a9f186caba5a4d28bc54b1852542abfc25ad3",
         "slot": 43,
-        "operations": ["loyalty_dashboard", "points_summary", "reward_recommendations", "tier_analysis"],
+        "operations": ["loyalty_dashboard", "points_summary", "reward_recommendations", "tier_analysis", "churn_risk_segments", "top_at_risk_members", "winback_offers", "campaign_plan", "program_improvements", "campaign_summary"],
         "personas": ["Loyalty Program Director", "CRM Manager", "Marketing Leader"],
     },
 }
@@ -103,7 +103,12 @@ PACKAGES = {
 KNOWLEDGE_CONSTANTS = {
     "personalized-marketing": [
         "CUSTOMER_SEGMENTS",
-        "CAMPAIGN_TEMPLATES",
+        "HOLIDAY_WAVES",
+        "CAMPAIGN_ECONOMICS",
+        "VIP_VARIANTS",
+        "AB_TEST_SETUP",
+        "AUTOMATION_WORKFLOW",
+        "REVENUE_SCENARIOS",
         "AB_TEST_RESULTS",
         "CONTENT_BLOCKS",
     ],
@@ -113,17 +118,32 @@ KNOWLEDGE_CONSTANTS = {
         "DAILY_TASK_LIST",
         "ASSOCIATE_PERFORMANCE",
         "COMPLEMENTARY_PRODUCTS",
+        "COMMISSION_RATES_BP",
+        "CHECKOUT_TERMS",
+        "ADDON_BUNDLES",
     ],
     "cart-abandonment-recovery": [
         "ABANDONED_CARTS",
         "RECOVERY_CAMPAIGNS",
         "INCENTIVE_OPTIONS",
         "CONVERSION_METRICS",
+        "TODAY_SEGMENTS",
+        "ABANDON_REASONS",
+        "RECOVERY_STRATEGIES",
+        "CAMPAIGN_AUDIENCES",
+        "MULTI_TOUCH_SEQUENCES",
+        "BENCHMARKS",
+        "OPTIMIZATIONS",
+        "OPTIMIZATION_NOTES",
     ],
     "omnichannel-engagement": [
         "CHANNELS",
         "CUSTOMER_JOURNEYS",
         "CAMPAIGN_RESULTS",
+        "CUSTOMERS",
+        "PRODUCT_FACTS",
+        "PROACTIVE_PLAN",
+        "HANDOFF_CONTEXT",
     ],
     "inventory-visibility": [
         "STORES",
@@ -134,23 +154,44 @@ KNOWLEDGE_CONSTANTS = {
         "LEAD_TIMES_DAYS",
         "CHANNEL_DEMAND",
         "DAILY_SELL_THROUGH",
+        "NETWORK_ROLLUP",
+        "NEAREST_SOURCE",
+        "TRANSFER_PHASES",
+        "NETWORK_HEALTH",
+        "IMBALANCES",
+        "AUTOMATION_OPTIONS",
+        "INVENTORY_ACCURACY",
     ],
     "personalized-shopping-assistant": [
         "PRODUCT_CATALOG",
         "CUSTOMER_PREFERENCES",
+        "OCCASIONS",
         "OUTFIT_TEMPLATES",
+        "LOYALTY_PROGRAM",
+        "FOLLOW_UP_TRIGGERS",
     ],
     "returns-complaints-resolution": [
         "RETURN_REQUESTS",
         "COMPLAINT_CATEGORIES",
         "RESOLUTION_PLAYBOOKS",
         "TREND_DATA",
+        "ESCALATED_CASES",
+        "RECOVERY_TIERS",
+        "FOLLOW_UP_PLAN",
+        "FOLLOW_UP_MONITORING",
+        "RECOVERY_PROGRAM",
     ],
     "customer-loyalty-rewards": [
         "LOYALTY_MEMBERS",
         "TIER_STRUCTURE",
         "REDEMPTION_CATALOG",
         "ENGAGEMENT_ACTIVITIES",
+        "PROGRAM_SEGMENTS",
+        "AT_RISK_SUMMARY",
+        "AT_RISK_MEMBERS",
+        "WINBACK_SEGMENTS",
+        "CAMPAIGN_PROJECTION",
+        "PROGRAM_IMPROVEMENTS",
     ],
 }
 
@@ -207,7 +248,9 @@ def test_packages_match_approved_slides_and_deterministic_source():
         assert row["slot"] == config["slot"]
         assert row["onepager"] == config["onepager"]
         assert promise_map["source_slide_sha256"] == config["sha"]
-        assert promise_map["source_audit"] == {
+        source_audit = dict(promise_map["source_audit"])
+        assert source_audit.pop("implemented_operations", config["operations"]) == config["operations"]
+        assert source_audit == {
             "approved_slide_hash_match": True,
             "deterministic_source": "solutions.json",
             "deterministic_slot": config["slot"],
@@ -256,7 +299,7 @@ def test_packages_include_complete_educational_surfaces():
         skills = sorted((folder / "manual" / "skills").glob("*/SKILL.md"))
         assert len(knowledge) == 2, slug
         assert len(skills) == len(config["operations"]), slug
-        assert {path.parent.name.replace("-", "_") for path in skills} == set(config["operations"])
+        assert {re.sub(r"^aibast_|_\d+$", "", path.parent.name).replace("-", "_") for path in skills} == set(config["operations"])
         export_manifest = read_json(folder / "export-manifest.json")
         assert all(item["status"] == "ready" for item in export_manifest["files"])
         source_package = (ROOT / config["source"]).parent
@@ -279,11 +322,11 @@ def test_deployment_and_skills_preserve_draft_only_safety():
         assert recipe["manual_instructions"] == "manual/GLOBAL-INSTRUCTIONS.md"
         assert recipe["manual_authoring"] == {
             "knowledge_files": 2,
-            "skills": 4,
+            "skills": len(config["operations"]),
             "status": "source-assets-only",
             "publish": False,
         }
-        assert recipe["manual_skill_count"] == 4
+        assert recipe["manual_skill_count"] == len(config["operations"])
         assert len(recipe["manual_knowledge_files"]) == 2
         assert recipe["write_controls"]["local_demo_performs_writes"] is False
         assert recipe["write_controls"]["explicit_human_approval_required"] is True
@@ -292,7 +335,7 @@ def test_deployment_and_skills_preserve_draft_only_safety():
         assert studio["status"] == "not_initialized"
         assert studio["operations"] == config["operations"]
         assert len(studio["manual_knowledge_files"]) == 2
-        assert studio["manual_skill_count"] == 4
+        assert studio["manual_skill_count"] == len(config["operations"])
         assert studio["publish_requires_confirmation"] is True
         assert "never" in recipe["safety_boundary"].lower()
         assert recipe["safety"]["mode"] in {

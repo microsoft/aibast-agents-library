@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T09:23:51.321Z",
+  "captured_at": "2026-10-07T06:05:45.245953Z",
   "solution": "@aibast-agents-library/cart-abandonment-recovery",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Cart Abandonment Manual",
-    "bot_id": "4dc05a07-6ff0-4b84-84ec-6adaec965a14",
+    "bot_id": "d811f511-49f9-48b3-a2d0-cf4c3b58bdf0",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 7,
+      "confirmed": 7
     },
     "tools": {
       "expected": 0,
@@ -46,7 +46,7 @@
         "no shopper is contacted"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-car-01.jpg",
+      "expected_screenshot": "19-car-01.jpg",
       "passed": true
     },
     {
@@ -58,7 +58,7 @@
         "not deployed"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-car-02.jpg",
+      "expected_screenshot": "20-car-02.jpg",
       "passed": true
     },
     {
@@ -70,7 +70,7 @@
         "Scenario for approval"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-car-03.jpg",
+      "expected_screenshot": "21-car-03.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,43 @@
         "no cart or purchase is changed"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-car-04.jpg",
+      "expected_screenshot": "22-car-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CAR-05",
+      "prompt": "As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers?",
+      "must_include": [
+        "Personalized Recovery Strategies",
+        "Sarah M.",
+        "Point Expiry (12,000)"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "23-car-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CAR-06",
+      "prompt": "As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry?",
+      "must_include": [
+        "Recovery Forecast (48 hours)",
+        "$37,940",
+        "+$56K/month"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "24-car-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CAR-07",
+      "prompt": "As Growth Manager, what else could we change to lift our recovery rate further?",
+      "must_include": [
+        "Recovery Optimization Recommendations",
+        "Exit intent popup",
+        "Quick Win"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "25-car-07.jpg",
       "passed": true
     }
   ],
@@ -95,6 +131,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "26-confirm-draft.jpg"
   }
 }

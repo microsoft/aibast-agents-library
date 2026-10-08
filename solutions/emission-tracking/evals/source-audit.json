@@ -38,11 +38,20 @@
       "operation": "carbon_offset_analysis",
       "persona": "Sustainability Lead",
       "purpose": "Prepare an offset due-diligence shortlist."
+    },
+    {
+      "operation": "implementation_roadmap",
+      "persona": "Environmental Manager",
+      "purpose": "Sequences the synthetic reduction opportunities into an 18-month roadmap with cost, reduction and payback, without committing spend."
     }
   ],
   "interface_schema": {
     "status": "fixed",
     "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
   },
-  "advertised_vs_local_limitation": "The local source aggregates synthetic figures only; verified inventory factors, attestations, disclosures, and registry actions require production controls."
+  "advertised_vs_local_limitation": "The local source aggregates synthetic figures only; verified inventory factors, attestations, disclosures, and registry actions require production controls.",
+  "collateral_alignment": {
+    "status": "fixed",
+    "finding": "The Energy Operations Suite film's Emissions Tracking segment (12 Northeast facilities, 47,340 MT by scope with YoY, 8% buffer, Boston Hub methane alert, LDAR action, 18-month roadmap with 27% projected reduction) did not exist: the agent had four CA/TX/CO plants, no region, no alerts and flat per-plant action lists. Replaced the inventory with the film's Northeast portfolio, reworked reduction_plan, added implementation_roadmap, fixed the like-for-like baseline and not-found behavior; screening stays non-legal and no credits are bought."
+  }
 }

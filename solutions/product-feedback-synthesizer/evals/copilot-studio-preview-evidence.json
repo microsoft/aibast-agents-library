@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T20:33:38.468Z",
+  "captured_at": "2026-10-08T05:53:56.340214Z",
   "solution": "@aibast-agents-library/product-feedback-synthesizer",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -10,13 +10,13 @@
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "PFS-01",
       "must_include": [
-        "Total Feedback Entries",
-        "6",
+        "Total Feedback Items",
+        "10,150",
         "No roadmap commitment"
       ],
       "must_not_include": [
@@ -28,7 +28,7 @@
     {
       "case_id": "PFS-02",
       "must_include": [
-        "Workflow Automation Builder",
+        "Advanced Reporting & Analytics",
         "candidate_for_review",
         "No roadmap commitment"
       ],
@@ -57,6 +57,32 @@
         "Review Candidates",
         "RBAC",
         "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PFS-05",
+      "must_include": [
+        "Top Customer Pain Points",
+        "Performance & Load Times (27%)",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PFS-06",
+      "must_include": [
+        "Jira Ticket Drafts (Not Created)",
+        "P0: Performance & Load Time Optimization",
+        "no Jira ticket was created"
       ],
       "must_not_include": [
         "I do not have access",

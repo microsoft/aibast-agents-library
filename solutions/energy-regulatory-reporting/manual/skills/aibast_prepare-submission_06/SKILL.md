@@ -1,0 +1,27 @@
+---
+name: energy-regulatory-reporting-prepare-submission
+description: "Use when a Regulatory Affairs Director asks for the draft epa submission package."
+---
+# Regulatory Reporting Agent: Prepare Submission
+
+## Route
+
+Use the `prepare_submission` operation. The canonical persona prompt is:
+
+> Generate the EPA submission file for the quarter and show me any compliance risks.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `prepare_submission` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- EPA_Q1_Emissions_Report.xml
+- 6 sections incomplete
+- No regulator filing
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

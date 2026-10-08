@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:40:59.260972+00:00",
+  "captured_at": "2026-10-07T01:18:22.833487+00:00",
   "solution": "@aibast-agents-library/financial-advisor-copilot",
   "onepager": "50. Financial Advisor Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
-      "sha256": "b69a30049be7f2ec22efbae99bc4e5bd4bff20e35c47cf6bbd8b553b606cbf85"
+      "sha256": "79bee42d7de48881912c677a0bb842299343c9cfa0af19ba63f8d7727ff06e13"
     }
   ],
   "case_file": "tests/demo_cases/financial-advisor-copilot.json",
-  "case_file_sha256": "17843dcf1e9885039f45c75a8f5d6060941c2e72b6b84fdc9b3406c6763a46bc",
+  "case_file_sha256": "7d1adc8c2c26a794d5079eb0f25328c69236cbea0d5ea26e20b35d09dfd5da7e",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,15 +22,15 @@
       "persona": "Branch Banker",
       "onepager_promise": "Coordinate check-in, identity verification, and service routing",
       "prompt": "Who is waiting, what do they need, and where should I route them after identity checks?",
-      "assistant_response": "**Three clients waiting** (all identity checks pending):\n\n1. **Robert & Susan Whitfield (CLI-3001)**  \n   Need: Retirement Review  \n   Route: Financial Advisor\n\n2. **Angela Martinez (CLI-3002)**  \n   Need: Portfolio Review  \n   Route: Financial Advisor\n\n3. **William Chen Trust (CLI-3003)**  \n   Need: Trust Distribution Question  \n   Route: Senior Advisor\n\nOnce you've completed authorized identity checks on each, route the Whitfields and Angela to a financial advisor, and the Chen Trust to a senior advisor for the distribution matter. Let me know when you've verified them and need compliance flags or advisor handoff details.",
-      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Branch Service Intake and Routing Preparation\n\n| Client | Request | Identity Check | Proposed Route |\n|---|---|---|---|\n| Robert & Susan Whitfield (CLI-3001) | Retirement Review | Pending Authorized Check | Financial Advisor |\n| Angela Martinez (CLI-3002) | Portfolio Review | Pending Authorized Check | Financial Advisor |\n| William Chen Trust (CLI-3003) | Trust Distribution Question | Pending Authorized Check | Senior Advisor |\n\nNo identity has been verified and no service has been assigned. Follow approved customer-identification and routing procedures before proceeding.",
+      "assistant_response": "Here's who's waiting (synthetic demo data, identity unverified):\n\n| Client | Need | Route (once ID verified) |\n|---|---|---|\n| Jennifer Martinez | 529 Education Savings Account | Education Planning Specialist (Sarah King) |\n| Robert & Susan Whitfield | Retirement Review | Financial Advisor |\n| Angela Martinez | Portfolio Review | Financial Advisor |\n| William Chen Trust | Trust Distribution Question | Senior Advisor |\n\nAll four show **identity checks pending** \u2014 no one's been verified yet. Run your standard customer-ID procedure first, then route per the table above. None of this has been authorized for actual servicing yet; that's a licensed-staff step.",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Branch Service Intake and Routing Preparation\n\n| Client | Request | Identity Check | Proposed Route |\n|---|---|---|---|\n| Jennifer Martinez (CLI-3004) | 529 Education Savings Account | Pending Authorized Check | Education Planning Specialist (Sarah King) |\n| Robert & Susan Whitfield (CLI-3001) | Retirement Review | Pending Authorized Check | Financial Advisor |\n| Angela Martinez (CLI-3002) | Portfolio Review | Pending Authorized Check | Financial Advisor |\n| William Chen Trust (CLI-3003) | Trust Distribution Question | Pending Authorized Check | Senior Advisor |\n\nNo identity has been verified and no service has been assigned. Follow approved customer-identification and routing procedures before proceeding.",
       "expected_agent": "FinancialAdvisorCopilotAgent",
       "must_include": [
         "CLI-3001",
         "No identity"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,15 +38,15 @@
       "persona": "Advisory Director",
       "onepager_promise": "Guide bankers through advisory, onboarding, and transaction workflows",
       "prompt": "Summarize the advisor book and show which client is already retired.",
-      "assistant_response": "## Advisor Book Summary\n\n**Total AUM:** $6.47M across 3 clients managed by James Morrison (CFP) and Patricia Lane (CFA).\n\n**Key highlights:**\n- **Robert & Susan Whitfield** (age 58, moderate risk): $1.85M, retiring in ~9 years\n- **Angela Martinez** (age 34, aggressive risk): $420K, 26 years to retirement\n- **William Chen Trust** (age 72, conservative risk): $4.2M, **already retired**\n\n**Retired client:** **William Chen Trust** \u2014 conservative allocation, managed by Patricia Lane, last reviewed 2025-02-10.",
+      "assistant_response": "Here's the advisor book (synthetic demo data \u2014 not financial advice):\n\n| Client | Advisor | Risk | Assets | Age | Status |\n|---|---|---|---|---|---|\n| Robert & Susan Whitfield | James Morrison, CFP | Moderate | $1.85M | 58 | Retiring in 9 yrs |\n| Angela Martinez | James Morrison, CFP | Aggressive | $420K | 34 | Retiring in 26 yrs |\n| William Chen Trust | Patricia Lane, CFA | Conservative | $4.2M | 72 | **Retired** |\n\n**Total AUM:** $6.47M across 3 clients.\n\n**Already retired:** William Chen Trust (age 72, conservative profile, $4.2M \u2014 largest account in the book).",
       "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Client Review Summary\n\n| Client | Advisor | Risk | Assets | Age | Retirement In | Last Review |\n|---|---|---|---|---|---|---|\n| Robert & Susan Whitfield (CLI-3001) | James Morrison, CFP | Moderate | $1,850,000 | 58 | 9 yrs | 2024-12-15 |\n| Angela Martinez (CLI-3002) | James Morrison, CFP | Aggressive | $420,000 | 34 | 26 yrs | 2025-01-20 |\n| William Chen Trust (CLI-3003) | Patricia Lane, CFA | Conservative | $4,200,000 | 72 | Retired | 2025-02-10 |\n\n**Total AUM:** $6,470,000\n**Clients:** 3",
       "expected_agent": "FinancialAdvisorCopilotAgent",
       "must_include": [
         "CLI-3003",
         "Retired"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -54,15 +54,15 @@
       "persona": "Financial Advisor",
       "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
       "prompt": "Show the Whitfield allocation drift before our review meeting.",
-      "assistant_response": "**Whitfield Portfolio Drift Summary:**\n\nThe portfolio is at **maximum drift** on three positions:\n- **US & International Equities are underweight** (\u22125.0% each combined ~$740K underfunded)\n- **Fixed Income is overweight** (+5.0% | $37.5K excess)\n- **Cash is elevated** (+5.0% | $92.5K excess)\n\n**For your review meeting:** They've accumulated cash and bonds, which suggests a defensive posture. This could be due to recent market conditions, income reinvestment, or a prior risk conversation. Rebalancing into equities or discussing intent before any adjustment would be prudent given their moderate risk profile.",
+      "assistant_response": "Here's the Whitfield drift snapshot (via portfolio summary) ahead of your review:\n\n**Robert & Susan Whitfield** \u2014 Moderate risk, $1.85M total assets, max allowed drift 5.0%\n\n| Asset Class | Current % | Target % | Drift |\n|---|---|---|---|\n| US Equities | 30.0% | 35.0% | **-5.0%** |\n| Intl Equities | 10.0% | 15.0% | **-5.0%** |\n| Fixed Income | 35.0% | 30.0% | **+5.0%** |\n| Real Estate | 10.0% | 10.0% | 0.0% |\n| Alternatives | 5.0% | 5.0% | 0.0% |\n| Cash | 10.0% | 5.0% | **+5.0%** |\n\nThey're sitting right at the max drift threshold in four categories \u2014 underweight equities, overweight fixed income and cash. Worth flagging as a rebalancing discussion point. Want me to pull discussion candidates or run a compliance check before the meeting?",
       "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Portfolio Summary: Robert & Susan Whitfield\n\n- **Risk Profile:** Moderate\n- **Total Assets:** $1,850,000\n- **Annual Contributions:** $45,000\n- **Max Allocation Drift:** 5.0%\n\n## Holdings\n\n| Asset Class | Value | Current % | Target % | Drift |\n|---|---|---|---|---|\n| US Equities | $555,000 | 30.0% | 35.0% | -5.0% |\n| International Equities | $185,000 | 10.0% | 15.0% | -5.0% |\n| Fixed Income | $647,500 | 35.0% | 30.0% | +5.0% |\n| Real Estate (REITs) | $185,000 | 10.0% | 10.0% | 0.0% |\n| Alternatives | $92,500 | 5.0% | 5.0% | 0.0% |\n| Cash & Equivalents | $185,000 | 10.0% | 5.0% | +5.0% |",
       "expected_agent": "FinancialAdvisorCopilotAgent",
       "must_include": [
         "Robert & Susan Whitfield",
         "Cash & Equivalents"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +70,15 @@
       "persona": "Financial Advisor",
       "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
       "prompt": "Prepare discussion candidates for Angela without giving advice or creating an order.",
-      "assistant_response": "Done. Here are the discussion candidates for Angela Martinez:\n\n**Three areas to explore with her:**\n\n1. **Emerging markets** \u2014 currently 12%, target is 15%. Long 26-year horizon supports this move.\n2. **Small-cap tilt** \u2014 her aggressive profile and time horizon can absorb the volatility.\n3. **Cash reserve** \u2014 build to 5% for rebalancing flexibility (currently at 3%).\n\nThe table shows illustrative allocation shifts if these are pursued. This is raw input for a licensed advisor conversation\u2014no advice given, no order placed. Validate suitability, tax impact, and her current goals before moving forward.",
+      "assistant_response": "Here are discussion candidates for Angela Martinez (CLI-3002) \u2014 for advisor review only, not advice or an order:\n\n**Profile:** Aggressive risk tolerance, 26 years to retirement\n\n**Candidates to discuss:**\n1. **Increase emerging markets** \u2014 currently below target; long-term growth case\n2. **Consider small-cap tilt** \u2014 long horizon supports higher-volatility exposure\n3. **Build cash reserve to 5%** \u2014 slightly underweight for rebalancing flexibility\n\n**Illustrative allocation gaps:**\n| Asset | Current | Target | Direction | Amount |\n|---|---|---|---|---|\n| US Equities | 50% | 45% | Reduce candidate | $21,000 |\n| Emerging Markets | 12% | 15% | Increase candidate | $12,600 |\n| Cash | 3% | 5% | Increase candidate | $8,400 |\n\nThese require licensed-advisor validation of objectives, suitability, tax impact, and client consent before any action \u2014 no order has been placed.",
       "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Advisor-Review Considerations: Angela Martinez\n\n**Risk Profile:** Aggressive\n**Years to Retirement:** 26\n\n## Discussion Candidates\n\n### 1. Increase emerging markets allocation\n\n**Rationale:** Below target; favorable long-term growth outlook\n\n### 2. Consider small-cap tilt\n\n**Rationale:** Long time horizon supports higher-volatility allocations\n\n### 3. Build cash reserve to target 5%\n\n**Rationale:** Slightly underweight cash for opportunistic rebalancing\n\n## Illustrative Allocation Differences\n\n| Asset Class | Current | Target | Review Direction | Illustrative Amount |\n|---|---|---|---|---|\n| US Equities | 50.0% | 45.0% | Reduce candidate | $21,000 |\n| Emerging Markets | 12.0% | 15.0% | Increase candidate | $12,600 |\n| Cash & Equivalents | 3.0% | 5.0% | Increase candidate | $8,400 |\n\nThese are discussion candidates, not recommendations or orders. Validate objectives, risk tolerance, suitability, tax consequences, disclosures, and client consent.",
       "expected_agent": "FinancialAdvisorCopilotAgent",
       "must_include": [
         "Angela Martinez",
         "not recommendations"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -86,15 +86,15 @@
       "persona": "Compliance Officer",
       "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
       "prompt": "Which client requires senior-investor controls, and what other checkpoints apply?",
-      "assistant_response": "**William Chen Trust (CLI-3003)** requires senior-investor controls. Here's what applies:\n\n| Checkpoint | Status |\n|---|---|\n| **Senior Investor Protection** | \u2713 Triggered \u2014 enhanced controls required |\n| **Concentration Limit** | 10% max per position across all clients |\n| **Suitability Obligation** | Ensure recommendations fit Chen's profile |\n| **Regulation Best Interest** | Standard for all accounts |\n| **Form CRS Delivery** | Annual delivery required |\n\nFor Chen specifically: verify age 65+ status in the account record, document suitability rationale before any recommendation, and flag any concentration drift during portfolio reviews.\n\nNeed a deeper look at Chen's allocation or a handoff template with compliance flags?",
+      "assistant_response": "The **William Chen Trust (CLI-3003)** is the one flagged for senior-investor protections (age 65+ enhanced safeguards).\n\nOther checkpoints that apply across all clients, including Chen Trust:\n- **Regulation Best Interest** \u2014 recommendations must serve the client's best interest\n- **Form CRS Delivery** \u2014 relationship summary provided at opening and annually\n- **Suitability Obligation** \u2014 investments must fit the client's profile\n- **Concentration Limit** \u2014 no single position over 10% of the portfolio\n\nRobert & Susan Whitfield and Angela Martinez show no automated flags but still need a normal compliance review. Full compliance sign-off requires licensed-advisor and compliance review \u2014 this is a synthetic data check, not a final determination.",
       "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Compliance Check Report\n\n## Regulatory Requirements\n\n| Rule | Description | Applies To |\n|---|---|---|\n| Regulation Best Interest | Ensure recommendations are in client's best interest | All |\n| Form CRS Delivery | Relationship summary delivered at account opening and annually | All |\n| Suitability Obligation | Investment recommendations suitable for client profile | All |\n| Concentration Limit | No single position exceeds 10% of portfolio | All |\n| Senior Investor Protection | Enhanced protections for clients age 65+ | Seniors |\n\n## Client Compliance Status\n\n### Robert & Susan Whitfield (CLI-3001) \u2014 No Automated Flags\n\n- No automated flags detected; complete normal compliance review\n\n### Angela Martinez (CLI-3002) \u2014 No Automated Flags\n\n- No automated flags detected; complete normal compliance review\n\n### William Chen Trust (CLI-3003) \u2014 Review Flags Found\n\n- **Flag:** Senior investor protections apply\n",
       "expected_agent": "FinancialAdvisorCopilotAgent",
       "must_include": [
         "CLI-3003",
         "Senior investor"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -102,15 +102,117 @@
       "persona": "Branch Banker",
       "onepager_promise": "Guide bankers through advisory, onboarding, and transaction workflows",
       "prompt": "Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
-      "assistant_response": "**Draft Whitfield Handoff Summary:**\n\n| Field | Status |\n|-------|--------|\n| **Request** | Retirement review |\n| **Identity** | Pending authorized check |\n| **Route** | Financial Advisor |\n| **Risk Profile** | Moderate |\n| **Portfolio Drift** | 5.0% |\n| **Compliance Flags** | None automated |\n\n**Next steps:**\n1. Complete authorized identity verification\n2. Run standard policy compliance checks  \n3. Confirm consent and source records\n4. Execute handoff to assigned Financial Advisor\n\nThis is a draft only \u2014 no customer communication or case transfer has occurred yet. All confirmations must happen in your approved systems before routing.",
+      "assistant_response": "Here's the draft handoff for Robert & Susan Whitfield:\n\n**Request:** Retirement review\n**Identity status:** Pending authorized check (not yet verified)\n**Risk profile:** Moderate\n**Portfolio drift:** 5.0% (within normal tolerance)\n**Compliance flags:** None triggered \u2014 standard policy checks still required\n\n\u26a0\ufe0f This is a draft only \u2014 synthetic demo data. Identity must be verified through proper channels and compliance must sign off before any actual case transfer or client communication happens.",
       "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Draft Banker-to-Advisor Handoff: Robert & Susan Whitfield\n\n- **Requested service:** retirement review\n- **Identity status:** pending authorized check\n- **Proposed route:** Financial Advisor\n- **Risk profile on synthetic record:** Moderate\n- **Portfolio drift:** 5.0%\n\n## Compliance Context\n\n- No automated flag; complete normal policy checks\n\nDraft only. Confirm identity, consent, source records, and routing in approved systems; no case transfer or customer communication has occurred.",
       "expected_agent": "FinancialAdvisorCopilotAgent",
       "must_include": [
         "Robert & Susan Whitfield",
         "no case transfer"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-07",
+      "persona": "Branch Customer",
+      "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month.",
+      "assistant_response": "Here's the rundown for Emma (age 5, California), via the plan research tool:\n\n**California ScholarShare 529** \u2014 the top in-state option:\n- No account fee, low ~0.25% expense ratio\n- Broad fund menu (index, socially responsible, actively managed)\n- No CA state tax deduction, but growth/withdrawals are federally tax-free for qualified expenses\n\n**Your $300/month scenario:**\n- 13 years until college\n- Projected value at 18: ~$65,730 (5% conservative growth)\n- Projected in-state 4-year cost by then: ~$210,740\n- That covers about **31%**\n\n**Portfolio styles to choose from:**\n1. Age-based aggressive (starts ~90% equities)\n2. Age-based conservative (starts ~75% equities)\n3. Static (you set/maintain allocation)\n4. Single-fund/custom\n\nSince $300/month only covers ~31%, you may want to explore a higher contribution or compare against other state plans. Want me to run the college cost projection in more detail, check a different monthly amount, or pull the enrollment checklist to see what's needed to open an account?",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# 529 Plan Options: Jennifer Martinez \u2014 Emma Martinez (age 5), California\n\n## Top Recommendation for Review \u2014 California ScholarShare 529\n\n- No account opening fee and a low expense ratio (~0.25%)\n- Age-based portfolios automatically shift from growth (equities) to conservative as college approaches\n- Broad menu: low-cost index funds, socially responsible options, actively managed portfolios\n\n## State-Specific Benefits\n\n- California does not offer a state income tax deduction for 529 contributions\n- Federal: Growth is tax-deferred and withdrawals for qualified education expenses are federally tax-free\n\n## Your Contribution Scenario\n\n| Item | Value |\n|---|---|\n| Monthly contribution | $300 |\n| Time until college | 13 years (156 months) |\n| Estimated return (conservative growth) | 5% annually |\n| Projected value at age 18 | ~$65,730 |\n| Projected in-state 4-year cost (2037) | ~$210,740 |\n| Coverage | ~31% |\n\nAssumes steady monthly contributions and no lump-sum deposits.\n\n## Portfolio Choices\n\n1. **Age-Based Aggressive** \u2014 starts ~90% equities, reduces over time\n2. **Age-Based Conservative** \u2014 starts ~75% equities, reduces quickly (fits a conservative approach)\n3. **Static Portfolios** \u2014 you choose and maintain the allocation\n4. **Single-Fund Options** \u2014 for custom building\n\n**Next step:** model higher contribution levels or a different risk track to raise the ~31% coverage; a licensed advisor confirms suitability before enrollment.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "California ScholarShare 529",
+        "~$65,730",
+        "~31%"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-08",
+      "persona": "Branch Customer",
+      "onepager_promise": "Guide bankers through advisory, onboarding, and transaction workflows",
+      "prompt": "Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents.",
+      "assistant_response": "Here's your 529 enrollment checklist for Emma (ran through the branch's enrollment checklist tool):\n\n**Already done:**\n- \u2705 Risk profile complete\n- \u2705 Investment choice selected (Age-Based Conservative)\n\n**Still needed:**\n\n**1. Documents to bring:**\n- Your (account owner) ID \u2014 driver's license or passport\n- Emma's full SSN (you have the last four on file already)\n- Emma's certified birth certificate\n- Proof of your address \u2014 utility bill or bank statement\n\n**2. Funding setup:**\n- Method for the $1,000 initial deposit\n- Account info for the $300/month automatic contribution\n\n**3. Final step:**\n- Complete the form, acknowledge the risk profile/disclosures, and sign (electronically or in-branch)\n\nEstimated time once you have everything: 20\u201330 minutes.\n\nNote: this is demo/synthetic data for Jennifer Martinez \u2014 actual enrollment requires a licensed advisor and identity verification in branch. Want me to prep the draft application next, or schedule a follow-up with an advisor to finalize it?",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# 529 Enrollment Checklist: Jennifer Martinez for Emma Martinez\n\n| Step | Item | Status |\n|---|---|---|\n| 1 | Risk profile | Complete |\n| 2 | Investment choice: Age-Based Conservative | Complete |\n| 3 | Gather required documents (below) | Needed |\n| 4 | Funding setup: $1,000 initial deposit method + account for $300/month automatic contribution | Needed |\n| 5 | Submit & acknowledge: complete the form, acknowledge risk profile and disclosures, sign electronically or in-branch | Needed |\n\n## Step 3 \u2014 Required Documents\n\n1. **Account owner ID** \u2014 Driver's license or passport\n2. **Beneficiary's SSN** \u2014 You've provided Emma's last four; keep the full SSN handy\n3. **Proof of beneficiary's birth** \u2014 Certified birth certificate\n4. **Proof of address** \u2014 Utility bill, bank statement, or other acceptable document\n\n**Estimated time:** 20-30 minutes once documents are ready.\n**Your status:** risk profile complete, investment choice made \u2014 finalize forms and present documents.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "Proof of address",
+        "$1,000 initial deposit",
+        "20-30 minutes"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-09",
+      "persona": "Branch Customer",
+      "onepager_promise": "Guide bankers through advisory, onboarding, and transaction workflows",
+      "prompt": "Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution.",
+      "assistant_response": "Here's the draft \u2014 ready, not submitted:\n\n**529 Application Draft (VS1-8609E7B8)**\n- Owner: Jennifer Martinez | Beneficiary: Emma Martinez (DOB 3/15/2019, SSN ...4321)\n- Plan: California ScholarShare 529, Conservative Age-Based\n- Initial deposit: $1,000 | Monthly contribution: $300\n- All beneficiary info matches, eligibility confirmed\n\nImportant: this is a prefilled draft only \u2014 **no account has actually been opened and no money has moved**. A licensed banker/advisor needs to review and submit it, with identity verification completed in person or through your branch's KYC process.\n\nWant me to schedule a follow-up with your advisor (Sarah King) to finalize and submit it?",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# 529 Account Application \u2014 Prefilled Draft, Not Submitted\n\n| Field | Value |\n|---|---|\n| Draft reference | VS1-8609E7B8 |\n| Owner | Jennifer Martinez |\n| Beneficiary | Emma Martinez (age 5, born March 15, 2019, SSN ending 4321) |\n| Time to college start | 13 years |\n| Plan | California ScholarShare 529 (Conservative, Age-Based Allocation) |\n| Initial deposit | $1,000 \u2014 ready to fund at submission |\n| Monthly contribution | $300 \u2014 schedule prefilled |\n\n## Pre-checks\n\n| Check | Result |\n|---|---|\n| Required application fields | Complete |\n| Beneficiary DOB and SSN last four match the customer record | Match (March 15, 2019, 4321) |\n| Beneficiary eligibility (under 18, US resident) | Eligible on record |\n| KYC / identity verification | Ready for banker verification with the documents listed |\n\nThe application is ready for you and the banker to submit. Not submitted: no account was opened and no deposit was processed. **Next:** schedule the investment review with Sarah King to fine-tune the portfolio mix.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "VS1-8609E7B8",
+        "Not Submitted",
+        "no account was opened"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-10",
+      "persona": "Branch Customer",
+      "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough.",
+      "assistant_response": "Here's the picture for Emma (projecting to 2037, assuming 5% tuition inflation):\n\n**Projected 4-year costs:**\n- In-state public: ~$210,740\n- Out-of-state public: ~$360,640\n- Private nonprofit: ~$471,380\n\n**Your $300/month plan** (plus a $1,000 starting deposit, 13 years, 5% growth):\n- Grows to ~$65,730\n- Covers about **31%** of in-state public costs\n- Shortfall: ~$145,000\n\n**Bottom line:** $300/month isn't quite enough to fully fund even in-state public college \u2014 you'd need roughly $950/month to cover that full amount. Options to close the gap include increasing contributions over time, targeting scholarships, or planning for some loans.\n\nWant me to check what a higher monthly contribution (or a different target school type) would look like, or set up a follow-up with an advisor to go over the options?",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Projected College Costs in 2037 \u2014 Emma Martinez at 18\n\nBased on historical averages and 5% annual tuition inflation; tuition, fees, room & board.\n\n| School Type | Today's Avg. Annual Cost | 2037 Projected Annual | 4-Year Total |\n|---|---|---|---|\n| In-State Public | $25,707 | ~$52,685 | ~$210,740 |\n| Out-of-State Public | $44,014 | ~$90,160 | ~$360,640 |\n| Private Nonprofit | $57,570 | ~$117,845 | ~$471,380 |\n\n## Your $300/Month Plan \u2014 Projection\n\n| Item | Value |\n|---|---|\n| Initial deposit | $1,000 |\n| Monthly contribution | $300 |\n| Time to college | 13 years |\n| Assumed growth (Age-Based Conservative portfolio) | 5% annually |\n| Value at 18 from monthly contributions | ~$65,730 |\n| Covers | ~31% of the in-state 4-year cost |\n| Shortfall | ~$145,010 |\n\nThe $1,000 initial deposit is extra buffer on top (about $1,910 by 2037); it is not counted in the coverage above.\n\n**Is $300/month enough?** Not for the full in-state cost: fully funding ~$210,740 by 2037 takes about $950/month. The shortfall could be covered by increasing contributions, scholarships, or loans; an advisor can model the options.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "~$210,740",
+        "~$145,010",
+        "$950/month"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-11",
+      "persona": "Branch Customer",
+      "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000.",
+      "assistant_response": "Based on your profile, here's the snapshot:\n\n**Risk score: 45/100 (Conservative)**\n- Your personal comfort level suggests ~35% equities / 65% fixed income \u2014 fairly cautious, which fits basic investing experience and a $300K mortgage\n- For an education-savings goal like a 529 for a child, age-based plans run more aggressive early (e.g., ~75% equities at age 5) since the timeline is long and tuition risk compounds \u2014 these auto-shift to bonds as college nears\n\n**Quick math check:**\n- Your $50K in liquid savings is healthy (40% of income) \u2014 good emergency buffer, no red flags\n- If you're contributing ~$300/month toward a 529, that covers roughly 31% of a projected in-state 4-year cost; you'd need closer to $950/month to fully fund it\n\nOne flag: if you're carrying any high-interest debt beyond the mortgage, paying that down should come before increasing investment contributions.\n\nThis is a synthetic/demo assessment \u2014 a licensed advisor needs to confirm anything before you act on it. Want me to run a college cost projection or check 529 plan options next?",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Risk Assessment: Jennifer Martinez\n\n**Profile:** Conservative (Score: 45/100)  \n**Investment experience:** Basic  \n**Income & liquidity:** $125,000 household income, $50,000 in liquid savings  \n**Debt:** $300,000 mortgage (no red flags unless high-interest)  \n**Suitability status:** Consistent with an age-based 529 \u2014 for licensed-advisor confirmation\n\n| Questionnaire factor | Points |\n|---|---|\n| Time horizon (age 35) | 15 |\n| Household income $125,000 | 10 |\n| Liquid savings $50,000 (40% of income) | 10 |\n| Debt: $300,000 mortgage, high-interest debt none reported | 5 |\n| Investment experience: Basic | 5 |\n| **Total** | **45** |\n\n## Allocation Guidance\n\n- Your personal comfort level: 35% equities / 65% fixed income (lower volatility)\n- Age-based 529 track for Emma Martinez (age 5): ~75% equities now, shifting to bonds by college\n- Why the difference? The education timeline is fixed and age-based plans front-load growth to offset rising tuition, then de-risk automatically.\n\n## 529 Funding Check\n\n- Fully funding the in-state 4-year cost (~$210,740 by 2037) takes about $950/month\n- Your planned $300/month covers ~31%; the $50,000 in savings stays available as an emergency fund\n\n**Key note:** if any debt beyond the mortgage is high-interest, reduce it before increasing contributions.\n\nThis is a questionnaire summary for advisor review, not investment advice.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "Conservative (Score: 45/100)",
+        "35% equities",
+        "advisor review"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-12",
+      "persona": "Branch Customer",
+      "onepager_promise": "Coordinate check-in, identity verification, and service routing",
+      "prompt": "I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call.",
+      "assistant_response": "Here's the draft I've set up for Jennifer Martinez:\n\n**Proposed meeting**\n- **Tuesday, Sept 10, 3:30 PM PT** (30 min) \u2014 Teams call\n- With Sarah King, Education Planning Specialist\n- Reminders at 24hr, 1hr, 15min out\n\n**Context queued for the advisor:**\n- Reviewing the 529 plan for Emma (age 5), California ScholarShare 529 \u2014 Age-Based Conservative\n- Current plan: $1,000 initial + $300/month, projected ~$65,730 by college (covers ~31% of est. $210,740 cost)\n- Risk profile: Conservative, basic investing experience\n- Open items to discuss: contribution increase scenarios, portfolio mix comfort level\n\nThis is a draft invite only \u2014 nothing has been sent yet, and your identity still needs to be verified before the advisor can act on anything. Want me to go ahead and have this invite sent, or adjust the time/details first?",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Proposed Investment Review \u2014 Draft Invite, Not Sent\n\n| Detail | Value |\n|---|---|\n| Date / time | Tuesday, September 10, 2024 \u2014 3:30 PM PT (30 minutes) |\n| Type | Investment Review |\n| Participants | Jennifer Martinez & Sarah King, Education Planning Specialist |\n| Location | Microsoft Teams (join link created when the invite is sent) |\n| Reminders | 24 hours, 1 hour, and 15 minutes before the meeting |\n\n## Context Passed to the Advisor (draft handoff)\n\n- **Customer:** Jennifer Martinez (CLI-3004), age 35, California\n- **Requested service:** 529 education savings account\n- **Identity status:** pending authorized check\n- **Goal:** Emma's college savings (college start 2037); beneficiary Emma Martinez (age 5)\n- **Plan chosen:** California ScholarShare 529 (Age-Based Conservative); $1,000 initial + $300/month\n- **Projection:** ~$65,730 at 18 covers ~31% of the ~$210,740 in-state 4-year cost; shortfall ~$145,010\n- **Risk questionnaire:** Conservative (45/100), experience Basic\n- **Draft application reference:** VS1-8609E7B8 (not submitted)\n- **Open questions:** contribution increase scenarios; portfolio mix (comfort 35/65 vs ~75% equities in the age-based track)\n\nThe Outlook / Teams invite is ready for you to send; no invite was sent and no case transfer or customer communication has occurred. **Next:** prepare a portfolio comparison report before the call.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "Tuesday, September 10, 2024",
+        "Sarah King",
+        "no invite was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

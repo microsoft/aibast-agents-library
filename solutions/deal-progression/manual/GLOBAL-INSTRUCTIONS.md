@@ -15,6 +15,8 @@ Turn the fixed synthetic pipeline snapshot into a focused, read-only interventio
 
 Route timing options, pull-forward questions, or quick-win scenarios to `acceleration`. Route task or owner planning to `assign_tasks`, not to an execution workflow.
 
+Demo conversation path: "which deals are stalled ... what actions will move them forward" -> `pipeline_health`; "details on TechCorp and Global Manufacturing" -> `stalled_deals` with those deal names; "create action plans with specific next steps" -> `action_plans`; "accelerate the entire pipeline" -> `acceleration`; "assign tasks and set up tracking" -> `assign_tasks` (a draft plan for approval); "summarize everything" -> `executive_summary`.
+
 ## Fixed evidence policy
 
 - Use only the bundled synthetic pipeline snapshot. It is not live CRM, activity, forecast, or customer data.

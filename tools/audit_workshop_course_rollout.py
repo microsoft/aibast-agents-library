@@ -31,7 +31,7 @@ except ModuleNotFoundError:
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = "aibast-workshop-course-rollout-audit/1.0"
-EXPECTED_WORKSHOPS = 51
+EXPECTED_WORKSHOPS = 66
 VISUAL_SCHEMA = "aibast-visual-checkpoints/1.0"
 BROWSERFILM_SCHEMA = "rapp-browserfilm/1.0"
 RAW_SUFFIXES = {".md", ".json", ".py"}
@@ -1988,7 +1988,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(report, indent=2, sort_keys=False))
     else:
         print_human(report)
-    expected_total = 1 if args.slug else 51
+    expected_total = 1 if args.slug else EXPECTED_WORKSHOPS
     return 0 if report["total"] == expected_total and report["failed"] == 0 else 1
 
 

@@ -1,0 +1,1140 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/payments-operations",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 35,
+    "reusable": 35,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Payments Operations Pilot",
+        "payment-status",
+        "release-risk-review",
+        "reconcile-settlement",
+        "daily-kpi-brief",
+        "queue-overview",
+        "aibast_payments-operations-synthetic-records.md",
+        "aibast_payments-operations-rules-and-guardrails."
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 203,
+          "height": 24,
+          "label": "Payments Operations Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 198,
+          "width": 107,
+          "height": 20,
+          "label": "payment-status"
+        },
+        {
+          "x": 1222,
+          "y": 197,
+          "width": 126,
+          "height": 19,
+          "label": "release-risk-review"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 137,
+          "height": 19,
+          "label": "reconcile-settlement"
+        },
+        {
+          "x": 1252,
+          "y": 237,
+          "width": 98,
+          "height": 22,
+          "label": "daily-kpi-brief"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 110,
+          "height": 22,
+          "label": "queue-overview"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_payments-operations-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_payments-operations-rules-and-guardrails."
+        }
+      ]
+    },
+    {
+      "id": "easy-po-01",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/02-po-01.jpg",
+      "caption": "PO-01 · Payments Operations Lead: What's in this morning's payment release queue, and which payments need attention?",
+      "case_id": "PO-01",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/02-po-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Release Queue",
+        "PAY-3105",
+        "Needs attention"
+      ],
+      "boxes": [
+        {
+          "x": 443,
+          "y": 418,
+          "width": 109,
+          "height": 23,
+          "label": "Release Queue"
+        },
+        {
+          "x": 299,
+          "y": 574,
+          "width": 71,
+          "height": 20,
+          "label": "PAY-3105"
+        },
+        {
+          "x": 312,
+          "y": 1407,
+          "width": 158,
+          "height": 24,
+          "label": "Needs attention"
+        }
+      ]
+    },
+    {
+      "id": "easy-po-02",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/03-po-02.jpg",
+      "caption": "PO-02 · Payments Analyst: Why did payment PAY-3105 fail validation?",
+      "case_id": "PO-02",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/03-po-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Scheme Rule",
+        "BENEFICIARY_ACCOUNT_MISSING",
+        "AMOUNT_OVER_RAIL_LIMIT"
+      ],
+      "boxes": [
+        {
+          "x": 433,
+          "y": 461,
+          "width": 105,
+          "height": 21,
+          "label": "Scheme Rule"
+        },
+        {
+          "x": 299,
+          "y": 612,
+          "width": 88,
+          "height": 24,
+          "label": "BENEFICIARY_ACCOUNT_MISSING"
+        },
+        {
+          "x": 315,
+          "y": 1159,
+          "width": 202,
+          "height": 21,
+          "label": "AMOUNT_OVER_RAIL_LIMIT"
+        }
+      ]
+    },
+    {
+      "id": "easy-po-03",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/04-po-03.jpg",
+      "caption": "PO-03 · Payments Repair Analyst: What's the repair plan for PAY-3105? Don't change anything yet.",
+      "case_id": "PO-03",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/04-po-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Executed",
+        "Domestic High-Value",
+        "Draft for analyst review"
+      ],
+      "boxes": [
+        {
+          "x": 563,
+          "y": 472,
+          "width": 131,
+          "height": 24,
+          "label": "Not Executed"
+        },
+        {
+          "x": 606,
+          "y": 662,
+          "width": 77,
+          "height": 20,
+          "label": "Domestic High-Value"
+        },
+        {
+          "x": 339,
+          "y": 1211,
+          "width": 183,
+          "height": 24,
+          "label": "Draft for analyst review"
+        }
+      ]
+    },
+    {
+      "id": "easy-po-04",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/05-po-04.jpg",
+      "caption": "PO-04 · Payments Analyst: Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
+      "case_id": "PO-04",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/05-po-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Watchlist screening",
+        "Risk band"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 660,
+          "width": 148,
+          "height": 24,
+          "label": "Watchlist screening"
+        },
+        {
+          "x": 299,
+          "y": 746,
+          "width": 78,
+          "height": 21,
+          "label": "Risk band"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "8.9 times not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-po-05",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/06-po-05.jpg",
+      "caption": "PO-05 · Reconciliation Analyst: Reconcile yesterday's USD settlement account. Which breaks are still open?",
+      "case_id": "PO-05",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/06-po-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "WGB-SETTLE-USD-01",
+        "9,846.90",
+        "BRK-02"
+      ],
+      "boxes": [
+        {
+          "x": 548,
+          "y": 473,
+          "width": 201,
+          "height": 23,
+          "label": "WGB-SETTLE-USD-01"
+        },
+        {
+          "x": 480,
+          "y": 743,
+          "width": 75,
+          "height": 22,
+          "label": "9,846.90"
+        },
+        {
+          "x": 299,
+          "y": 981,
+          "width": 58,
+          "height": 20,
+          "label": "BRK-02"
+        }
+      ]
+    },
+    {
+      "id": "easy-po-06",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/07-po-06.jpg",
+      "caption": "PO-06 · Payments Operations Lead: A relationship manager is asking where PAY-3103 is. What should I tell them?",
+      "case_id": "PO-06",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/07-po-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Scheme acknowledged",
+        "15:00",
+        "not sent"
+      ],
+      "boxes": [
+        {
+          "x": 491,
+          "y": 585,
+          "width": 173,
+          "height": 24,
+          "label": "Scheme acknowledged"
+        },
+        {
+          "x": 512,
+          "y": 758,
+          "width": 46,
+          "height": 20,
+          "label": "15:00"
+        },
+        {
+          "x": 574,
+          "y": 1245,
+          "width": 84,
+          "height": 23,
+          "label": "not sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-po-07",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/08-po-07.jpg",
+      "caption": "PO-07 · Head of Payments Operations: Give me yesterday's payments KPI brief by rail.",
+      "case_id": "PO-07",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/08-po-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Border Wire",
+        "99.07%"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 703,
+          "width": 140,
+          "height": 21,
+          "label": "Cross-Border Wire"
+        },
+        {
+          "x": 708,
+          "y": 747,
+          "width": 64,
+          "height": 20,
+          "label": "99.07%"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "nothing was distributed not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Payments Operations Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 202,
+          "height": 24,
+          "label": "Payments Operations Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Payments Operations Manual",
+      "step": 2,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Payments Operations Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 223,
+          "height": 24,
+          "label": "Payments Operations Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Payments Operations Agent — Manual Global Instru"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 331,
+          "height": 39,
+          "label": "Payments Operations Agent — Manual Global Instru"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 319,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/06-add-aibast-payments-operations-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_payments-operations-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/06-add-aibast-payments-operations-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_payments-operations-rules-and-guardrails."
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 316,
+          "height": 22,
+          "label": "aibast_payments-operations-rules-and-guardrails."
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/07-add-aibast-payments-operations-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_payments-operations-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/07-add-aibast-payments-operations-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_payments-operations-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_payments-operations-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/08-add-aibast-daily-kpi-brief-07.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_daily-kpi-brief_07",
+      "step": 8,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-daily-kpi-brief-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "daily-kpi-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 98,
+          "height": 22,
+          "label": "daily-kpi-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/09-add-aibast-payment-status-06.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_payment-status_06",
+      "step": 9,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-payment-status-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "payment-status"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 198,
+          "width": 107,
+          "height": 20,
+          "label": "payment-status"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/10-add-aibast-queue-overview-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_queue-overview_01",
+      "step": 10,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-queue-overview-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "queue-overview"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 110,
+          "height": 22,
+          "label": "queue-overview"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/11-add-aibast-reconcile-settlement-05.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_reconcile-settlement_05",
+      "step": 11,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-reconcile-settlement-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "reconcile-settlement"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 137,
+          "height": 19,
+          "label": "reconcile-settlement"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/12-add-aibast-release-risk-review-04.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_release-risk-review_04",
+      "step": 12,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-release-risk-review-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "release-risk-review"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 126,
+          "height": 19,
+          "label": "release-risk-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/13-add-aibast-repair-plan-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_repair-plan_03",
+      "step": 13,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-repair-plan-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "repair-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 78,
+          "height": 22,
+          "label": "repair-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/14-add-aibast-validate-payment-02.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_validate-payment_02",
+      "step": 14,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-validate-payment-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "validate-payment"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 119,
+          "height": 22,
+          "label": "validate-payment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "validate-payment",
+        "repair-plan",
+        "release-risk-review",
+        "reconcile-settlement",
+        "queue-overview",
+        "aibast_payments-operations-synthetic-records.md",
+        "aibast_payments-operations-rules-and-guardrails."
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 119,
+          "height": 22,
+          "label": "validate-payment"
+        },
+        {
+          "x": 1233,
+          "y": 197,
+          "width": 78,
+          "height": 22,
+          "label": "repair-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 126,
+          "height": 19,
+          "label": "release-risk-review"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 137,
+          "height": 19,
+          "label": "reconcile-settlement"
+        },
+        {
+          "x": 1252,
+          "y": 277,
+          "width": 110,
+          "height": 22,
+          "label": "queue-overview"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_payments-operations-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_payments-operations-rules-and-guardrails."
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "validate-payment",
+        "repair-plan",
+        "release-risk-review",
+        "reconcile-settlement"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 120,
+          "height": 22,
+          "label": "validate-payment"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 78,
+          "height": 22,
+          "label": "repair-plan"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 126,
+          "height": 19,
+          "label": "release-risk-review"
+        },
+        {
+          "x": 1055,
+          "y": 491,
+          "width": 138,
+          "height": 19,
+          "label": "reconcile-settlement"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "reconcile-settlement",
+        "queue-overview",
+        "payment-status",
+        "daily-kpi-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 142,
+          "width": 138,
+          "height": 19,
+          "label": "reconcile-settlement"
+        },
+        {
+          "x": 1055,
+          "y": 240,
+          "width": 110,
+          "height": 22,
+          "label": "queue-overview"
+        },
+        {
+          "x": 1055,
+          "y": 339,
+          "width": 107,
+          "height": 21,
+          "label": "payment-status"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 99,
+          "height": 22,
+          "label": "daily-kpi-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Payments Operations Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 223,
+          "height": 24,
+          "label": "Payments Operations Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-01",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/19-po-01.jpg",
+      "caption": "PO-01 · Payments Operations Lead: What's in this morning's payment release queue, and which payments need attention?",
+      "step": 19,
+      "case_id": "PO-01",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/19-po-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Release Queue",
+        "PAY-3105",
+        "Needs attention"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 462,
+          "width": 121,
+          "height": 22,
+          "label": "Release Queue"
+        },
+        {
+          "x": 299,
+          "y": 570,
+          "width": 71,
+          "height": 20,
+          "label": "PAY-3105"
+        },
+        {
+          "x": 286,
+          "y": 1327,
+          "width": 127,
+          "height": 20,
+          "label": "Needs attention"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-02",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/20-po-02.jpg",
+      "caption": "PO-02 · Payments Analyst: Why did payment PAY-3105 fail validation?",
+      "step": 20,
+      "case_id": "PO-02",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/20-po-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Scheme Rule",
+        "BENEFICIARY_ACCOUNT_MISSING",
+        "AMOUNT_OVER_RAIL_LIMIT"
+      ],
+      "boxes": [
+        {
+          "x": 564,
+          "y": 527,
+          "width": 104,
+          "height": 20,
+          "label": "Scheme Rule"
+        },
+        {
+          "x": 299,
+          "y": 613,
+          "width": 87,
+          "height": 24,
+          "label": "BENEFICIARY_ACCOUNT_MISSING"
+        },
+        {
+          "x": 315,
+          "y": 805,
+          "width": 202,
+          "height": 21,
+          "label": "AMOUNT_OVER_RAIL_LIMIT"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-03",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/21-po-03.jpg",
+      "caption": "PO-03 · Payments Repair Analyst: What's the repair plan for PAY-3105? Don't change anything yet.",
+      "step": 21,
+      "case_id": "PO-03",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/21-po-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Executed",
+        "Domestic High-Value",
+        "Draft for analyst review"
+      ],
+      "boxes": [
+        {
+          "x": 508,
+          "y": 462,
+          "width": 107,
+          "height": 21,
+          "label": "Not Executed"
+        },
+        {
+          "x": 620,
+          "y": 657,
+          "width": 76,
+          "height": 20,
+          "label": "Domestic High-Value"
+        },
+        {
+          "x": 286,
+          "y": 968,
+          "width": 476,
+          "height": 21,
+          "label": "Draft for analyst review"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-04",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/22-po-04.jpg",
+      "caption": "PO-04 · Payments Analyst: Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
+      "step": 22,
+      "case_id": "PO-04",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/22-po-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Risk band",
+        "Watchlist screening",
+        "8.9 times"
+      ],
+      "boxes": [
+        {
+          "x": 375,
+          "y": 462,
+          "width": 264,
+          "height": 21,
+          "label": "Risk band"
+        },
+        {
+          "x": 298,
+          "y": 656,
+          "width": 148,
+          "height": 24,
+          "label": "Watchlist screening"
+        },
+        {
+          "x": 386,
+          "y": 848,
+          "width": 74,
+          "height": 20,
+          "label": "8.9 times"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-05",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/23-po-05.jpg",
+      "caption": "PO-05 · Reconciliation Analyst: Reconcile yesterday's USD settlement account. Which breaks are still open?",
+      "step": 23,
+      "case_id": "PO-05",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/23-po-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "WGB-SETTLE-USD-01",
+        "9,846.90",
+        "BRK-02"
+      ],
+      "boxes": [
+        {
+          "x": 469,
+          "y": 463,
+          "width": 164,
+          "height": 20,
+          "label": "WGB-SETTLE-USD-01"
+        },
+        {
+          "x": 1038,
+          "y": 463,
+          "width": 82,
+          "height": 22,
+          "label": "9,846.90"
+        },
+        {
+          "x": 573,
+          "y": 653,
+          "width": 59,
+          "height": 20,
+          "label": "BRK-02"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-06",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/24-po-06.jpg",
+      "caption": "PO-06 · Payments Operations Lead: A relationship manager is asking where PAY-3103 is. What should I tell them?",
+      "step": 24,
+      "case_id": "PO-06",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/24-po-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Scheme acknowledged",
+        "15:00",
+        "not sent"
+      ],
+      "boxes": [
+        {
+          "x": 434,
+          "y": 462,
+          "width": 191,
+          "height": 24,
+          "label": "Scheme acknowledged"
+        },
+        {
+          "x": 813,
+          "y": 463,
+          "width": 48,
+          "height": 19,
+          "label": "15:00"
+        },
+        {
+          "x": 574,
+          "y": 1197,
+          "width": 84,
+          "height": 22,
+          "label": "not sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-07",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/25-po-07.jpg",
+      "caption": "PO-07 · Head of Payments Operations: Give me yesterday's payments KPI brief by rail.",
+      "step": 25,
+      "case_id": "PO-07",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/25-po-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "99.07%",
+        "Cross-Border Wire"
+      ],
+      "boxes": [
+        {
+          "x": 924,
+          "y": 463,
+          "width": 63,
+          "height": 20,
+          "label": "99.07%"
+        },
+        {
+          "x": 299,
+          "y": 727,
+          "width": 140,
+          "height": 20,
+          "label": "Cross-Border Wire"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "nothing was distributed not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Payments Operations Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 222,
+          "height": 24,
+          "label": "Payments Operations Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:50:22.043642+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

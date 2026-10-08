@@ -1,10 +1,38 @@
 {
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/returns-complaints-resolution",
-  "approved_source": {"onepager": "51. Returns and Complaints Resolution Agent one-pager 2026 02 23.pptx", "sha256": "25a7b558af80dff03229fe225fec4b045ba2ce0093730094d9d98b6fba4d23c8", "snapshot": "state/onepager_content.json", "hash_match": true},
-  "deterministic_source": {"path": "solutions.json", "slot": 41, "canonical_name": "Returns and Complaints Resolution Agent", "matches": true},
-  "routing": {"status": "fixed", "finding": "Return review, classification, option drafting, and trend analysis each have a locked case."},
-  "interface_schema": {"status": "fixed", "finding": "Service, quality, and loss-prevention personas are explicit and identifiers are validated."},
-  "behavior": {"status": "fixed", "finding": "Named customers were replaced with anonymous cases and execution steps were rewritten as approval-gated review steps."},
-  "safety": {"status": "fixed", "finding": "No return, refund, credit, replacement, shipment, reservation, account change, or message is performed."}
+  "approved_source": {
+    "onepager": "51. Returns and Complaints Resolution Agent one-pager 2026 02 23.pptx",
+    "sha256": "25a7b558af80dff03229fe225fec4b045ba2ce0093730094d9d98b6fba4d23c8",
+    "snapshot": "state/onepager_content.json",
+    "hash_match": true
+  },
+  "deterministic_source": {
+    "path": "solutions.json",
+    "slot": 41,
+    "canonical_name": "Returns and Complaints Resolution Agent",
+    "matches": true
+  },
+  "routing": {
+    "status": "fixed",
+    "finding": "Return review, classification, option drafting, and trend analysis each have a locked case."
+  },
+  "interface_schema": {
+    "status": "fixed",
+    "finding": "Service, quality, and loss-prevention personas are explicit and identifiers are validated."
+  },
+  "behavior": {
+    "status": "fixed",
+    "finding": "Named customers were replaced with anonymous cases and execution steps were rewritten as approval-gated review steps."
+  },
+  "safety": {
+    "status": "fixed",
+    "finding": "No return, refund, credit, replacement, shipment, reservation, account change, or message is performed."
+  },
+  "fixes": [
+    "Aligned to the demo video: synthetic case CMP-5001 (David Chen, Diamond VIP, $18,400 LTV, ProBook laptop) with six new operations (escalation_snapshot, recovery_tiers with computed $540 cost and 34:1 ROI, resolution_execution_plan ready for authorized execution, follow_up_plan, recovery_performance with $4.67M net program value, executive_summary); Service Manager persona; calendar-correct day counts; trend insight computed from data. Nothing is dispatched, credited, scheduled or sent."
+  ],
+  "alignment_findings": [
+    "Collateral alignment (demo video + one-pager): the agent covered anonymous returns only; the video's escalated VIP complaint (customer profile, value-based recovery tiers, execution plan with talking points, follow-up plan, recovery performance, executive summary) was missing; days-since-purchase used 30-day months and the trend insight claimed an 8% improvement the data does not show."
+  ]
 }

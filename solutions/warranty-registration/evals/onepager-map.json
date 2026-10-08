@@ -1,0 +1,167 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/warranty-registration",
+  "onepager": "64. Warranty and Registration Agent one-pager.pptx",
+  "source_slide_sha256": "cd206400e6bca5d0c32f8b040ab79de2194fbbe93b29cce495de705aa0969905",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/manufacturing_stacks/warranty_registration_stack/warranty_registration_agent.py",
+    "implemented_operations": [
+      "coverage_overview",
+      "claim_precheck",
+      "unit_record",
+      "validate_serial",
+      "registration_draft",
+      "extension_offers"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Checks warranty coverage and claim eligibility before a repair starts",
+      "operations": [
+        "coverage_overview",
+        "claim_precheck",
+        "unit_record"
+      ],
+      "demo_cases": [
+        "WAR-01",
+        "WAR-02",
+        "WAR-03"
+      ],
+      "synthetic_evidence": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration",
+        "Eligible for claim review",
+        "Labor covered",
+        "No claim was filed",
+        "Expired (ended 16 days ago)",
+        "CLM-25-0044",
+        "Claim history"
+      ]
+    },
+    {
+      "advertised_promise": "Validates serials and prepares product registrations inside the registration window",
+      "operations": [
+        "validate_serial",
+        "registration_draft"
+      ],
+      "demo_cases": [
+        "WAR-04",
+        "WAR-05"
+      ],
+      "synthetic_evidence": [
+        "Ready to register",
+        "Already registered",
+        "2026-03-22",
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ]
+    },
+    {
+      "advertised_promise": "Surfaces expiring coverage and drafts extended-coverage offers",
+      "operations": [
+        "coverage_overview",
+        "extension_offers"
+      ],
+      "demo_cases": [
+        "WAR-01",
+        "WAR-06"
+      ],
+      "synthetic_evidence": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration",
+        "$191.25",
+        "BG-08-2290",
+        "No offer was sent"
+      ]
+    },
+    {
+      "advertised_promise": "Shows every registered unit's coverage, what is expiring and what still needs registering in one view",
+      "operations": [
+        "coverage_overview"
+      ],
+      "demo_cases": [
+        "WAR-01"
+      ],
+      "synthetic_evidence": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration"
+      ]
+    },
+    {
+      "advertised_promise": "Pre-checks whether a repair is covered before work starts, so claims are not rejected later",
+      "operations": [
+        "claim_precheck"
+      ],
+      "demo_cases": [
+        "WAR-02"
+      ],
+      "synthetic_evidence": [
+        "Eligible for claim review",
+        "Labor covered",
+        "No claim was filed"
+      ]
+    },
+    {
+      "advertised_promise": "Pulls a unit's full warranty record and claim history in seconds",
+      "operations": [
+        "unit_record"
+      ],
+      "demo_cases": [
+        "WAR-03"
+      ],
+      "synthetic_evidence": [
+        "Expired (ended 16 days ago)",
+        "CLM-25-0044",
+        "Claim history"
+      ]
+    },
+    {
+      "advertised_promise": "Validates serials against the catalog and catches duplicates before registration",
+      "operations": [
+        "validate_serial"
+      ],
+      "demo_cases": [
+        "WAR-04"
+      ],
+      "synthetic_evidence": [
+        "Ready to register",
+        "Already registered",
+        "2026-03-22"
+      ]
+    },
+    {
+      "advertised_promise": "Prepares product registrations as drafts so no sold unit misses its registration window",
+      "operations": [
+        "registration_draft"
+      ],
+      "demo_cases": [
+        "WAR-05"
+      ],
+      "synthetic_evidence": [
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ]
+    },
+    {
+      "advertised_promise": "Finds units whose coverage is ending and drafts extended-coverage offers before it lapses",
+      "operations": [
+        "extension_offers"
+      ],
+      "demo_cases": [
+        "WAR-06"
+      ],
+      "synthetic_evidence": [
+        "$191.25",
+        "BG-08-2290",
+        "No offer was sent"
+      ]
+    }
+  ]
+}

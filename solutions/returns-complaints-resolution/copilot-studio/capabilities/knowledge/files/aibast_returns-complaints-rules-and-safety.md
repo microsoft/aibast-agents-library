@@ -12,6 +12,7 @@
 | Customer Service Agent | empathetic review summaries and clear human-approval next steps |
 | Quality Team | aggregate defect patterns and product-quality evidence |
 | Loss Prevention Team | policy exceptions and suspicious aggregate patterns without accusation |
+| Service Manager | VIP escalations, recovery options, and follow-up plans for approval |
 
 ## Exact routing and evidence contract
 
@@ -21,6 +22,12 @@
 | `RCR-02` | `complaint_classification` | Customer Service Agent | `{"complaint_text":"The synthetic item stopped working after a week."}` | `Draft Complaint Classification`; `Product Quality`; `no return, refund` |
 | `RCR-03` | `resolution_recommendation` | Customer Service Agent | `{"return_id":"RET-4001"}` | `Draft Resolution Options`; `Option for authorized review`; `no return` |
 | `RCR-04` | `trend_analysis` | Quality Team | `{}` | `Prepared for:** Quality Team`; `Synthetic Returns & Complaints Trend Analysis`; `Key Insights` |
+| `RCR-05` | `escalation_snapshot` | Service Manager | `{"case_id":"CMP-5001"}` | `David Chen`; `$18,400`; `Churn Risk:** 87%` |
+| `RCR-06` | `recovery_tiers` | Service Manager | `{"case_id":"CMP-5001"}` | `Premium Recovery`; `$540`; `34:1 ROI` |
+| `RCR-07` | `resolution_execution_plan` | Service Manager | `{"case_id":"CMP-5001"}` | `ready for authorized execution`; `ProBook Elite Plus`; `Talking Points` |
+| `RCR-08` | `follow_up_plan` | Service Manager | `{"case_id":"CMP-5001"}` | `Day 30`; `delivery confirmation SMS`; `Nothing has been scheduled` |
+| `RCR-09` | `recovery_performance` | Service Manager | `{"case_id":"CMP-5001"}` | `4.2 hours`; `$127,000`; `$4.67M` |
+| `RCR-10` | `executive_summary` | Service Manager | `{"case_id":"CMP-5001"}` | `Executive Summary`; `87% churn risk`; `Business Value` |
 
 Routing rules:
 
@@ -62,11 +69,11 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 | Return ID | Synthetic Case | Product | Reason | Condition | Days | Status |
 |-----------|----------|---------|--------|-----------|------|--------|
-| RET-4001 | Synthetic size-mismatch case | Classic Denim Jacket | wrong size | unworn tags attached | 18 | pending review |
-| RET-4002 | Synthetic device-defect case | Smart Fitness Tracker | defective | non functional | 50 | policy match candidate |
-| RET-4003 | Synthetic description-mismatch case | Premium Running Shoes | not as described | lightly used | 10 | pending review |
+| RET-4001 | Synthetic size-mismatch case | Classic Denim Jacket | wrong size | unworn tags attached | 16 | pending review |
+| RET-4002 | Synthetic device-defect case | Smart Fitness Tracker | defective | non functional | 49 | policy match candidate |
+| RET-4003 | Synthetic description-mismatch case | Premium Running Shoes | not as described | lightly used | 8 | pending review |
 | RET-4004 | Synthetic changed-mind case | Wireless Earbuds Pro | changed mind | opened unused | 11 | pending review |
-| RET-4005 | Synthetic warranty-escalation case | Leather Crossbody Bag | defective | damaged | 91 | escalated |
+| RET-4005 | Synthetic warranty-escalation case | Leather Crossbody Bag | defective | damaged | 86 | escalated |
 | RET-4006 | Synthetic wrong-item case | UV Protection Sunglasses | wrong item | unopened | 10 | policy match candidate |
 
 ### RET-4001 — Classic Denim Jacket
@@ -261,6 +268,282 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 - Holiday season (Dec) drove a 44% spike in returns, primarily changed-mind returns
 - Wrong-size returns consistently highest — consider enhanced size guide implementation
-- Resolution time improved 8% over the period despite volume increases
+- Resolution time is 3.2% slower than at the start of the period (28.5h -> 29.4h)
 - CSAT recovered to 4.1 after post-holiday dip to 3.6
+```
+
+### `RCR-05` — `escalation_snapshot`
+
+- Persona: **Service Manager**
+- Prompt: As Service Manager, I have an escalated customer complaint about a defective laptop and the customer is very upset; help me resolve it quickly.
+- Exact arguments: `{"case_id":"CMP-5001"}`
+
+```markdown
+[returns-complaints-resolution-agent] **Prepared for:** Service Manager
+**Role focus:** VIP escalations, recovery options, and follow-up plans for approval
+
+> Synthetic case data. Decision support and draft language only; no return, refund, credit, replacement, shipment, reservation, account change, or customer message is approved, created, or sent.
+
+# Escalated Complaint CMP-5001: David Chen
+
+David Chen is a Diamond VIP customer with $18,400 lifetime value. Immediate resolution recommended.
+
+**Customer Profile:**
+
+| Detail | Information |
+|---|---|
+| Name | David Chen |
+| Tier | Diamond VIP |
+| Lifetime value | $18,400 (47 purchases) |
+| Issue | Laptop defect (day 3) |
+| Frustration level | High - 2 failed support calls |
+
+**Purchase Details:**
+
+- Product: ProBook Elite 15" ($1,899)
+- Purchased: 3 days ago
+- Issue: Display flickering, won't boot
+- Warranty: Active (2-year standard)
+
+**Previous Support:**
+
+- Call 1: 45 min hold, transferred 3 times
+- Call 2: Troubleshooting failed, no resolution
+
+**Churn Risk:** 87% (elevated due to poor service experience)
+
+Source: [CRM + Support History + Purchase Records] (synthetic)
+
+**Next step:** prepare resolution options for this customer?
+[returns-complaints-resolution-agent] **Prepared for:** Service Manager
+**Role focus:** VIP escalations, recovery options, and follow-up plans for approval
+
+> Synthetic case data. Decision support and draft language only; no return, refund, credit, replacement, shipment, reservation, account change, or customer message is approved, created, or sent.
+
+# Resolution Options: David Chen (CMP-5001)
+
+Three resolution tiers; Tier 1 recommended for this Diamond VIP customer to protect retention.
+
+## Tier 1: Premium Recovery (Recommended)
+
+- Upgrade to ProBook Elite Plus ($2,299 value)
+- Same-day courier delivery
+- $200 store credit for inconvenience
+- 90-day return extension
+- Cost to company: $540 | Retention value: $18,400
+
+## Tier 2: Standard Plus
+
+- Same model replacement
+- 2-day shipping
+- $100 store credit for inconvenience
+- Cost: $180 | Retention: 65%
+
+## Tier 3: Standard
+
+- Same model replacement only
+- Standard shipping (5 days)
+- Cost: $0 | Retention: 35%
+
+**Recommendation:** Tier 1 protects $18.4K customer lifetime value for a $540 investment (34:1 ROI).
+
+Source: [Customer Analytics + Inventory + Retention Models] (synthetic)
+
+**Next step:** approve the Tier 1 resolution?
+```
+
+### `RCR-06` — `recovery_tiers`
+
+- Persona: **Service Manager**
+- Prompt: As Service Manager, show me resolution options that will keep this VIP customer satisfied.
+- Exact arguments: `{"case_id":"CMP-5001"}`
+
+```markdown
+[returns-complaints-resolution-agent] **Prepared for:** Service Manager
+**Role focus:** VIP escalations, recovery options, and follow-up plans for approval
+
+> Synthetic case data. Decision support and draft language only; no return, refund, credit, replacement, shipment, reservation, account change, or customer message is approved, created, or sent.
+
+# Resolution Options: David Chen (CMP-5001)
+
+Three resolution tiers; Tier 1 recommended for this Diamond VIP customer to protect retention.
+
+## Tier 1: Premium Recovery (Recommended)
+
+- Upgrade to ProBook Elite Plus ($2,299 value)
+- Same-day courier delivery
+- $200 store credit for inconvenience
+- 90-day return extension
+- Cost to company: $540 | Retention value: $18,400
+
+## Tier 2: Standard Plus
+
+- Same model replacement
+- 2-day shipping
+- $100 store credit for inconvenience
+- Cost: $180 | Retention: 65%
+
+## Tier 3: Standard
+
+- Same model replacement only
+- Standard shipping (5 days)
+- Cost: $0 | Retention: 35%
+
+**Recommendation:** Tier 1 protects $18.4K customer lifetime value for a $540 investment (34:1 ROI).
+
+Source: [Customer Analytics + Inventory + Retention Models] (synthetic)
+
+**Next step:** approve the Tier 1 resolution?
+```
+
+### `RCR-07` — `resolution_execution_plan`
+
+- Persona: **Service Manager**
+- Prompt: As Service Manager, Tier 1 is approved; get it ready and prepare my talking points for the call.
+- Exact arguments: `{"case_id":"CMP-5001"}`
+
+```markdown
+[returns-complaints-resolution-agent] **Prepared for:** Service Manager
+**Role focus:** VIP escalations, recovery options, and follow-up plans for approval
+
+> Synthetic case data. Decision support and draft language only; no return, refund, credit, replacement, shipment, reservation, account change, or customer message is approved, created, or sent.
+
+# Tier 1 Resolution — ready for authorized execution (CMP-5001)
+
+Approved option prepared. Each action below is ready for you to execute in the order, shipping and loyalty systems; the agent has not dispatched, credited or generated anything.
+
+| Action | Detail | Status |
+|---|---|---|
+| Dispatch upgrade | ProBook Elite Plus ($2,299 value) | Ready to dispatch |
+| Courier | Same-day delivery, expected 4:30 PM today (about 4 hours) | Ready to book |
+| Store credit | $200 to the customer account | Ready to apply |
+| Return label | For the defective unit | Ready to generate |
+| Return extension | 90 days | Ready to activate |
+
+**Your Talking Points:**
+
+1. Apologize sincerely - "I'm sorry for your experience, David. We failed your expectations."
+2. Acknowledge VIP status - "As a Diamond member with 47 purchases, you deserve better."
+3. Present upgrade - "We're sending the Elite Plus model - better processor, more RAM."
+4. Emphasize speed - "Courier delivers in 4 hours, not days."
+5. Highlight credit - "$200 store credit for the inconvenience."
+6. Show commitment - "I'm personally overseeing this. Here's my direct line."
+
+Source: [Service Recovery Playbook + CRM] (synthetic)
+
+**Next step:** make the call once the actions are confirmed.
+```
+
+### `RCR-08` — `follow_up_plan`
+
+- Persona: **Service Manager**
+- Prompt: As Service Manager, the call went well and the customer accepted; what is our follow-up plan?
+- Exact arguments: `{"case_id":"CMP-5001"}`
+
+```markdown
+[returns-complaints-resolution-agent] **Prepared for:** Service Manager
+**Role focus:** VIP escalations, recovery options, and follow-up plans for approval
+
+> Synthetic case data. Decision support and draft language only; no return, refund, credit, replacement, shipment, reservation, account change, or customer message is approved, created, or sent.
+
+# Follow-Up Plan: David Chen (CMP-5001)
+
+Proposed touchpoints to confirm satisfaction and prevent future issues; ready for you to schedule.
+
+**Today (post-delivery):**
+- 6:00 PM: automated delivery confirmation SMS
+- 7:00 PM: "How's your new laptop?" email from you
+**Day 3:**
+- Check-in call from the customer success team
+- Satisfaction survey (track NPS score)
+**Day 7:**
+- "Tech tips for your Elite Plus" email series begins
+- Exclusive VIP promotion (accessories 25% off)
+**Day 30:**
+- Relationship health check
+- Invitation to VIP appreciation event
+
+**Monitoring to activate:**
+
+- Support ticket auto-priority for 90 days
+- Churn risk score tracking
+- Purchase behavior analysis
+
+Nothing has been scheduled or sent by the agent.
+
+Source: [Customer Success Automation + CRM] (synthetic)
+
+**Next step:** see the service recovery metrics?
+```
+
+### `RCR-09` — `recovery_performance`
+
+- Persona: **Service Manager**
+- Prompt: As Service Manager, show me the service recovery performance and financial impact.
+- Exact arguments: `{"case_id":"CMP-5001"}`
+
+```markdown
+[returns-complaints-resolution-agent] **Prepared for:** Service Manager
+**Role focus:** VIP escalations, recovery options, and follow-up plans for approval
+
+> Synthetic case data. Decision support and draft language only; no return, refund, credit, replacement, shipment, reservation, account change, or customer message is approved, created, or sent.
+
+# Service Recovery Performance and Financial Impact
+
+**Program Performance (last quarter):**
+
+| Metric | Result | Industry Avg |
+|---|---|---|
+| Resolution time | 4.2 hours | 3-5 days |
+| Customer retention | 94% | 68% |
+| NPS recovery | +47 points | +18 points |
+| Repeat purchase rate | 76% (6 months) | 34% |
+
+**Financial Impact - This Case (CMP-5001):**
+
+- Investment: $540 (upgrade $300 + credit $200 + courier $40)
+- Customer lifetime value protected: $18,400
+- Expected next 12-month revenue: $3,200
+- ROI: 34:1 on retention, 6:1 on near-term revenue
+
+**Program Economics:**
+
+- Quarterly recovery investment: $127,000
+- Revenue protected: $4.8M
+- Net value: $4.67M
+
+Source: [Service Analytics + Financial Data] (synthetic)
+
+**Next step:** generate the executive summary for leadership?
+```
+
+### `RCR-10` — `executive_summary`
+
+- Persona: **Service Manager**
+- Prompt: As Service Manager, create the executive summary and recap what we accomplished.
+- Exact arguments: `{"case_id":"CMP-5001"}`
+
+```markdown
+[returns-complaints-resolution-agent] **Prepared for:** Service Manager
+**Role focus:** VIP escalations, recovery options, and follow-up plans for approval
+
+> Synthetic case data. Decision support and draft language only; no return, refund, credit, replacement, shipment, reservation, account change, or customer message is approved, created, or sent.
+
+# Executive Summary: Service Recovery CMP-5001 (draft for leadership)
+
+What this 12-minute session prepared:
+
+- Customer analysis — David Chen: Diamond VIP, $18.4K lifetime value, 87% churn risk
+- Solution designed — Tier 1 premium recovery: upgrade + same-day delivery + $200 credit
+- Execution — ProBook Elite Plus dispatch and 4-hour courier prepared for authorized execution
+- Call support — talking points, apology framework, commitment statements
+- Follow-up — 30-day touchpoint series, satisfaction tracking, VIP monitoring (proposed)
+- Performance — 94% retention, 34:1 ROI, $4.67M quarterly program value
+
+**Customer Outcome:** issue resolved in about 4 hours vs the 3-5 day standard once the actions are executed; upgraded product, $200 credit, personal manager relationship.
+**Business Value:** $18,400 customer retained for a $540 investment, 34:1 ROI model.
+
+Draft summary ready for you to share in Teams; nothing has been sent.
+
+Source: [All connected systems] (synthetic)
 ```

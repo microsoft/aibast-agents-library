@@ -12,10 +12,10 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 
 ## Routing
 
-- Use **maintenance forecast** for Plant Manager questions like: “Which asset is most likely to interrupt operations next, and what evidence supports that?”
-- Use **asset health** for Reliability Engineer questions like: “Show me the weakest asset condition and whether this is an operating authorization.”
-- Use **budget projection** for Finance Business Partner questions like: “What maintenance funding should I reserve for the transformer risk?”
-- Use **work order plan** for Maintenance Planner questions like: “Draft the maintenance queue for AST-X002, but do not create any work orders.”
+- Use **maintenance forecast** first for “I need immediate analysis on our wind farm turbines” and for the Plant Manager question: “I need immediate analysis on our wind farm turbines”.
+- Use **asset health** for Reliability Engineer questions like: “Show me the weakest turbine condition and whether this is an operating authorization.”
+- Use **budget projection** for Finance Business Partner questions like: “What maintenance funding should I reserve for the at-risk turbines?”
+- Use **work order plan** for “yes, show the bundled maintenance plan” and Maintenance Planner questions like: “Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.”
 
 ## Response contract
 

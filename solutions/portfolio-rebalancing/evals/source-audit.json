@@ -2,7 +2,7 @@
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/portfolio-rebalancing",
   "audited_source": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
-  "source_sha256": "76086d7010b614eee9b9600e10aef69923d0360968e983fab1355c41884e7a2a",
+  "source_sha256": "0c22d8185e82d91cd34ec848031de12f55c437824964e19b9686167e4ac3ce61",
   "case_file": "tests/demo_cases/portfolio-rebalancing.json",
   "onepager": "Portfolio Rebalancing Agent one-pager.pptx",
   "operations": {
@@ -23,6 +23,12 @@
     ],
     "execution_plan": [
       "PRB-06"
+    ],
+    "risk_comparison": [
+      "PRB-07"
+    ],
+    "client_summary": [
+      "PRB-08"
     ]
   },
   "defects_fixed": [
@@ -30,12 +36,13 @@
     "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
     "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
     "Rejected unknown record identifiers instead of silently substituting another fictional record.",
-    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture.",
+    "Aligned with the demo video: the pre-retiree client CLIENT-001 ($2M now $1.74M, 80/18/2 vs 65/30/5, age 55, 32% bracket) is the default record, with computed rebalancing trades (sells $261,000 = bonds $208,800 + cash $52,200), tax-loss harvesting ($35,100 x 32% = $11,232), 4-week timeline ($847 costs, $10,385 net), 10-year projection, risk comparison and session summary; PORT-5001/PORT-5002 views unchanged."
   ],
   "unresolved_defects": [],
   "routing_result": {
-    "cases_passed": 6,
-    "cases_total": 6,
+    "cases_passed": 8,
+    "cases_total": 8,
     "strict_isolation": true,
     "loaded_tool": "PortfolioRebalancingAgent"
   }

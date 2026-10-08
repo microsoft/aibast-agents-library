@@ -64,11 +64,11 @@ and knowledge and does not reproduce the manual build.
 | Source bundle | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip` |
 | Manual evidence | `solutions/fs-customer-onboarding/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — not current source | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip` |
+| Copilot Studio solution ZIP | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-solution-export.json` |
 
-**Scaffold status:** 74 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Current manual Preview and saved-instruction verification remain pending.
+**Scaffold status:** 143 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

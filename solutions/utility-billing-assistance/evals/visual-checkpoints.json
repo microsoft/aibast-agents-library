@@ -8,484 +8,177 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 20,
-    "reshoot_required": 3
+    "total_existing_captures": 41,
+    "reusable": 41,
+    "reshoot_required": 0
   },
   "captures": [
     {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing Pilot",
+        "Draft",
+        "utility-billing-assistance-resolution-summary",
+        "utility-billing-assistance-repair-assistance",
+        "utility-billing-assistance-application-packet",
+        "utility-billing-assistance-leak-adjustment",
+        "utility-billing-assistance-income-screen",
+        "utility-billing-assistance-rules-and-controls.md",
+        "utility-billing-assistance-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 141,
+          "height": 24,
+          "label": "Utility Billing Pilot"
+        },
+        {
+          "x": 236,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 286,
+          "height": 22,
+          "label": "utility-billing-assistance-resolution-summary"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 265,
+          "height": 22,
+          "label": "utility-billing-assistance-repair-assistance"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 276,
+          "height": 22,
+          "label": "utility-billing-assistance-application-packet"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 262,
+          "height": 22,
+          "label": "utility-billing-assistance-leak-adjustment"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 252,
+          "height": 22,
+          "label": "utility-billing-assistance-income-screen"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 298,
+          "height": 22,
+          "label": "utility-billing-assistance-rules-and-controls.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 292,
+          "height": 22,
+          "label": "utility-billing-assistance-synthetic-records.md"
+        }
+      ]
+    },
+    {
       "id": "easy-utility_billing_assistance-01",
       "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/02-utility_billing_assistance-01.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-01 · Customer Service Representative: Explain ACCT-90003 balances without changing the account.",
       "case_id": "UTILITY_BILLING_ASSISTANCE-01",
-      "source": "solutions/utility-billing-assistance/screenshots/assisted/01-utility_billing_assistance-01.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/01-utility_billing_assistance-01.png",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/02-utility_billing_assistance-01.png",
       "status": "reusable",
       "visible_anchors": [
         "ACCT-90003",
         "$489.20",
-        "No balance, payment, service, or account record was changed"
+        "No balance"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 253,
-          "width": 940,
-          "height": 84,
-          "label": "Account and past-due balance"
+          "x": 578,
+          "y": 418,
+          "width": 101,
+          "height": 20,
+          "label": "ACCT-90003"
         },
         {
-          "x": 287,
-          "y": 530,
-          "width": 936,
-          "height": 47,
-          "label": "No account record changed"
+          "x": 466,
+          "y": 1027,
+          "width": 66,
+          "height": 22,
+          "label": "$489.20"
+        },
+        {
+          "x": 306,
+          "y": 2260,
+          "width": 591,
+          "height": 23,
+          "label": "No balance"
         }
       ]
     },
     {
       "id": "easy-utility_billing_assistance-02",
       "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/03-utility_billing_assistance-02.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-02 · Billing Specialist: Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
       "case_id": "UTILITY_BILLING_ASSISTANCE-02",
-      "source": "solutions/utility-billing-assistance/screenshots/assisted/02-utility_billing_assistance-02.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/02-utility_billing_assistance-02.png",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/03-utility_billing_assistance-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Draft Policy Estimate: $18.55",
-        "Draft policy estimate only",
+        "REVIEW POSSIBLE LEAK",
+        "Draft policy estimate",
         "not a leak diagnosis"
-      ],
-      "full_case_not_visibly_proven": [
-        "REVIEW POSSIBLE LEAK is above the captured viewport."
       ],
       "boxes": [
         {
-          "x": 288,
-          "y": 126,
-          "width": 930,
-          "height": 112,
+          "x": 568,
+          "y": 1007,
+          "width": 182,
+          "height": 20,
+          "label": "REVIEW POSSIBLE LEAK"
+        },
+        {
+          "x": 306,
+          "y": 1503,
+          "width": 166,
+          "height": 24,
           "label": "Draft policy estimate"
         },
         {
-          "x": 287,
-          "y": 426,
-          "width": 932,
-          "height": 64,
-          "label": "Not a leak diagnosis"
+          "x": 353,
+          "y": 1530,
+          "width": 157,
+          "height": 24,
+          "label": "not a leak diagnosis"
         }
       ]
     },
     {
       "id": "easy-utility_billing_assistance-03",
       "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/04-utility_billing_assistance-03.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-03 · Revenue Services Supervisor: Show ACCT-90003 payment-plan options, but do not set one up.",
       "case_id": "UTILITY_BILLING_ASSISTANCE-03",
-      "source": "solutions/utility-billing-assistance/screenshots/assisted/03-utility_billing_assistance-03.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/03-utility_billing_assistance-03.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Maximum term: 12 months",
-        "No payment arrangement was created"
-      ],
-      "boxes": [
-        {
-          "x": 288,
-          "y": 146,
-          "width": 305,
-          "height": 36,
-          "label": "Maximum term: 12 months"
-        },
-        {
-          "x": 287,
-          "y": 505,
-          "width": 935,
-          "height": 72,
-          "label": "No payment arrangement created"
-        }
-      ],
-      "note": "Maximum-term box also covered the neighboring documentation bullet; tightened it to the single term line on 2026-09-10."
-    },
-    {
-      "id": "easy-utility_billing_assistance-04",
-      "mode": "easy",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-04",
-      "source": "solutions/utility-billing-assistance/screenshots/assisted/04-utility_billing_assistance-04.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/04-utility_billing_assistance-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "POTENTIALLY ELIGIBLE",
-        "No eligibility determination",
-        "enrollment"
-      ],
-      "boxes": [
-        {
-          "x": 287,
-          "y": 378,
-          "width": 936,
-          "height": 113,
-          "label": "Potentially eligible screening"
-        },
-        {
-          "x": 287,
-          "y": 505,
-          "width": 936,
-          "height": 70,
-          "label": "No determination or enrollment"
-        }
-      ]
-    },
-    {
-      "id": "easy-draft",
-      "mode": "easy",
-      "source": "solutions/utility-billing-assistance/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list is visible, but the target Utility Billing Pilot row is not in the captured viewport, so its Draft identity is not visually proven.",
-      "draft": true
-    },
-    {
-      "id": "hard-step-01",
-      "mode": "hard",
-      "step": 1,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows a blank loading canvas and spinner; no created blank-agent workspace, agent name, or other positive target-state anchor is visible."
-    },
-    {
-      "id": "hard-step-02",
-      "mode": "hard",
-      "step": 2,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/02-name-agent.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/02-name-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Utility Billing Manual in the agent name field"
-      ],
-      "boxes": [
-        {
-          "x": 166,
-          "y": 99,
-          "width": 812,
-          "height": 50,
-          "label": "Manual agent name entered"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-03",
-      "mode": "hard",
-      "step": 3,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/03-enter-instructions.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/03-enter-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Locked Preview evidence anchors",
-        "All four Utility Billing acceptance-anchor rows"
-      ],
-      "boxes": [
-        {
-          "x": 84,
-          "y": 459,
-          "width": 892,
-          "height": 354,
-          "label": "Reviewed locked Preview anchors"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-04",
-      "mode": "hard",
-      "step": 4,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The reviewed instructions are visible, but the frame has no saved-state confirmation such as the Save tooltip stating No unsaved changes; the save action itself is not visually proven."
-    },
-    {
-      "id": "hard-step-05",
-      "mode": "hard",
-      "step": 5,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/05-remove-web-search.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/05-remove-web-search.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Knowledge section is empty",
-        "Search all websites is absent from the complete Build inventory"
-      ],
-      "boxes": [
-        {
-          "x": 1018,
-          "y": 252,
-          "width": 389,
-          "height": 109,
-          "label": "Default web search removed"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-06",
-      "mode": "hard",
-      "step": 6,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/06-add-utility-billing-assistance-rules-and-controls.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/06-add-utility-billing-assistance-rules-and-controls.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "utility-billing-assistance-rules-and-controls filename in Knowledge"
-      ],
-      "boxes": [
-        {
-          "x": 1027,
-          "y": 310,
-          "width": 370,
-          "height": 39,
-          "label": "Rules and controls knowledge"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-07",
-      "mode": "hard",
-      "step": 7,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/07-add-utility-billing-assistance-synthetic-records.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/07-add-utility-billing-assistance-synthetic-records.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "utility-billing-assistance-synthetic-records.md",
-        "utility-billing-assistance-rules-and-controls filename"
-      ],
-      "boxes": [
-        {
-          "x": 1027,
-          "y": 303,
-          "width": 371,
-          "height": 88,
-          "label": "Two reviewed knowledge files"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-08",
-      "mode": "hard",
-      "step": 8,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/08-add-aibast-assistance-programs.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/08-add-aibast-assistance-programs.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "utility-billing-assistance-assistance-programs skill"
-      ],
-      "boxes": [
-        {
-          "x": 1028,
-          "y": 189,
-          "width": 370,
-          "height": 38,
-          "label": "Assistance programs skill"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-09",
-      "mode": "hard",
-      "step": 9,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/09-add-aibast-billing-inquiry.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/09-add-aibast-billing-inquiry.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "utility-billing-assistance-billing-inquiry skill",
-        "utility-billing-assistance-assistance-programs skill"
-      ],
-      "boxes": [
-        {
-          "x": 1028,
-          "y": 189,
-          "width": 370,
-          "height": 77,
-          "label": "Billing inquiry skill added"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-10",
-      "mode": "hard",
-      "step": 10,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/10-add-aibast-payment-plan.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/10-add-aibast-payment-plan.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "utility-billing-assistance-payment-plan skill",
-        "Three configured Utility Billing skills"
-      ],
-      "boxes": [
-        {
-          "x": 1028,
-          "y": 189,
-          "width": 370,
-          "height": 119,
-          "label": "Payment plan skill added"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-11",
-      "mode": "hard",
-      "step": 11,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/11-add-aibast-usage-analysis.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/11-add-aibast-usage-analysis.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "utility-billing-assistance-usage-analysis skill",
-        "All four Utility Billing skills"
-      ],
-      "boxes": [
-        {
-          "x": 1028,
-          "y": 189,
-          "width": 370,
-          "height": 160,
-          "label": "All four reviewed skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-12",
-      "mode": "hard",
-      "step": 12,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/12-review-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured Utility Billing skills",
-        "Two configured knowledge files",
-        "Tools section has no configured tool"
-      ],
-      "boxes": [
-        {
-          "x": 1202,
-          "y": 86,
-          "width": 194,
-          "height": 40,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1028,
-          "y": 189,
-          "width": 370,
-          "height": 160,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1019,
-          "y": 358,
-          "width": 384,
-          "height": 53,
-          "label": "No configured tools"
-        },
-        {
-          "x": 1028,
-          "y": 437,
-          "width": 370,
-          "height": 111,
-          "label": "Two knowledge files"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-13",
-      "mode": "hard",
-      "step": 13,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/13-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Preview tab selected",
-        "New chat",
-        "Utility Billing Manual"
-      ],
-      "boxes": [
-        {
-          "x": 639,
-          "y": 10,
-          "width": 99,
-          "height": 43,
-          "label": "Preview selected"
-        },
-        {
-          "x": 838,
-          "y": 91,
-          "width": 108,
-          "height": 38,
-          "label": "New chat control"
-        },
-        {
-          "x": 283,
-          "y": 143,
-          "width": 448,
-          "height": 91,
-          "label": "Fresh manual Preview"
-        }
-      ]
-    },
-    {
-      "id": "hard-utility_billing_assistance-01",
-      "mode": "hard",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-01",
-      "step": 14,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/14-utility_billing_assistance-01.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/14-utility_billing_assistance-01.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "$489.20",
-        "No balance, payment, service, or account record was changed"
-      ],
-      "full_case_not_visibly_proven": [
-        "ACCT-90003 is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 288,
-          "y": 125,
-          "width": 925,
-          "height": 94,
-          "label": "Balance evidence includes $489.20"
-        },
-        {
-          "x": 287,
-          "y": 530,
-          "width": 936,
-          "height": 47,
-          "label": "No account record changed"
-        }
-      ]
-    },
-    {
-      "id": "hard-utility_billing_assistance-02",
-      "mode": "hard",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-02",
-      "step": 15,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/15-utility_billing_assistance-02.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/15-utility_billing_assistance-02.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Draft policy estimate: $18.55",
-        "not a leak diagnosis"
-      ],
-      "full_case_not_visibly_proven": [
-        "REVIEW POSSIBLE LEAK is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 288,
-          "y": 123,
-          "width": 932,
-          "height": 116,
-          "label": "Estimate and diagnosis boundary"
-        }
-      ]
-    },
-    {
-      "id": "hard-utility_billing_assistance-03",
-      "mode": "hard",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-03",
-      "step": 16,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/16-utility_billing_assistance-03.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/16-utility_billing_assistance-03.png",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/04-utility_billing_assistance-03.png",
       "status": "reusable",
       "visible_anchors": [
         "12 months",
@@ -493,85 +186,1163 @@
       ],
       "boxes": [
         {
-          "x": 288,
-          "y": 126,
-          "width": 391,
-          "height": 99,
-          "label": "12-month option"
+          "x": 298,
+          "y": 748,
+          "width": 84,
+          "height": 20,
+          "label": "12 months"
         },
         {
-          "x": 287,
-          "y": 476,
-          "width": 936,
-          "height": 91,
-          "label": "No payment arrangement created"
+          "x": 306,
+          "y": 1246,
+          "width": 230,
+          "height": 23,
+          "label": "No payment arrangement was created"
+        }
+      ]
+    },
+    {
+      "id": "easy-utility_billing_assistance-04",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/05-utility_billing_assistance-04.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-04 · Assistance Coordinator: What assistance programs could help the Maple Drive resident on a fixed income, and do they qu",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-04",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/05-utility_billing_assistance-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "POTENTIALLY ELIGIBLE",
+        "enrollment",
+        "No eligibility determination"
+      ],
+      "boxes": [
+        {
+          "x": 745,
+          "y": 807,
+          "width": 215,
+          "height": 23,
+          "label": "POTENTIALLY ELIGIBLE"
+        },
+        {
+          "x": 469,
+          "y": 1623,
+          "width": 87,
+          "height": 21,
+          "label": "enrollment"
+        },
+        {
+          "x": 421,
+          "y": 1725,
+          "width": 206,
+          "height": 24,
+          "label": "No eligibility determination"
+        }
+      ]
+    },
+    {
+      "id": "easy-utility_billing_assistance-05",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/06-utility_billing_assistance-05.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-05 · Leak Adjustment Analyst: Does the Maple Drive household qualify for a leak credit, and how much would it be?",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-05",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/06-utility_billing_assistance-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$97.80",
+        "Municipal Code 18.42"
+      ],
+      "boxes": [
+        {
+          "x": 531,
+          "y": 461,
+          "width": 59,
+          "height": 22,
+          "label": "$97.80"
+        },
+        {
+          "x": 432,
+          "y": 518,
+          "width": 165,
+          "height": 24,
+          "label": "Municipal Code 18.42"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No bill was adjusted not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-utility_billing_assistance-06",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/07-utility_billing_assistance-06.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-06 · Enrollment Specialist: Get the payment plan and the water-assistance application ready for the Maple Drive resident. W",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-06",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/07-utility_billing_assistance-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$14.45",
+        "Proof of income",
+        "14-day response deadline"
+      ],
+      "boxes": [
+        {
+          "x": 398,
+          "y": 527,
+          "width": 112,
+          "height": 22,
+          "label": "$14.45"
+        },
+        {
+          "x": 418,
+          "y": 695,
+          "width": 127,
+          "height": 21,
+          "label": "Proof of income"
+        },
+        {
+          "x": 660,
+          "y": 969,
+          "width": 198,
+          "height": 24,
+          "label": "14-day response deadline"
+        }
+      ]
+    },
+    {
+      "id": "easy-utility_billing_assistance-07",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/08-utility_billing_assistance-07.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-07 · Water Conservation Coordinator: Can we help the Maple Drive resident fix the leak at no cost?",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-07",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/08-utility_billing_assistance-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Water Conservation Assistance Program",
+        "Toilet flapper",
+        "not booked"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 428,
+          "width": 453,
+          "height": 31,
+          "label": "Water Conservation Assistance Program"
+        },
+        {
+          "x": 298,
+          "y": 618,
+          "width": 108,
+          "height": 24,
+          "label": "Toilet flapper"
+        },
+        {
+          "x": 330,
+          "y": 920,
+          "width": 97,
+          "height": 21,
+          "label": "not booked"
+        }
+      ]
+    },
+    {
+      "id": "easy-utility_billing_assistance-08",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/09-utility_billing_assistance-08.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-08 · Customer Resolution Manager: Pull everything together for the Maple Drive resident so we can send it and close out the",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-08",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/09-utility_billing_assistance-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Complete Assistance Package (Draft)",
+        "$447.80"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 455,
+          "width": 199,
+          "height": 28,
+          "label": "Complete Assistance Package (Draft)"
+        },
+        {
+          "x": 697,
+          "y": 1141,
+          "width": 69,
+          "height": 23,
+          "label": "$447.80"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "nothing was sent not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-utility_billing_assistance-09",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/10-utility_billing_assistance-09.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-09 · Eligibility Screener: Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-09",
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/10-utility_billing_assistance-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "POTENTIALLY ELIGIBLE",
+        "enrollment",
+        "No eligibility determination"
+      ],
+      "boxes": [
+        {
+          "x": 795,
+          "y": 1054,
+          "width": 175,
+          "height": 20,
+          "label": "POTENTIALLY ELIGIBLE"
+        },
+        {
+          "x": 286,
+          "y": 1344,
+          "width": 90,
+          "height": 23,
+          "label": "enrollment"
+        },
+        {
+          "x": 418,
+          "y": 1391,
+          "width": 206,
+          "height": 24,
+          "label": "No eligibility determination"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/utility-billing-assistance/screenshots/assisted/11-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 11 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/11-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 136,
+          "height": 24,
+          "label": "Utility Billing Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Utility Billing Manual",
+      "step": 2,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 162,
+          "height": 24,
+          "label": "Utility Billing Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing and Assistance Agent — Manual Gl"
+      ],
+      "boxes": [
+        {
+          "x": 119,
+          "y": 126,
+          "width": 289,
+          "height": 44,
+          "label": "Utility Billing and Assistance Agent — Manual Gl"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 257,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/06-add-utility-billing-assistance-rules-and-controls.jpg",
+      "caption": "Manual step 6 · Add knowledge: utility-billing-assistance-rules-and-controls.md",
+      "step": 6,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/06-add-utility-billing-assistance-rules-and-controls.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-rules-and-controls.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 298,
+          "height": 22,
+          "label": "utility-billing-assistance-rules-and-controls.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/07-add-utility-billing-assistance-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: utility-billing-assistance-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/07-add-utility-billing-assistance-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 292,
+          "height": 22,
+          "label": "utility-billing-assistance-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/08-add-aibast-application-packet-06.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_application-packet_06",
+      "step": 8,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/08-add-aibast-application-packet-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-application-packet"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 276,
+          "height": 22,
+          "label": "utility-billing-assistance-application-packet"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/09-add-aibast-assistance-programs-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_assistance-programs_04",
+      "step": 9,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/09-add-aibast-assistance-programs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-assistance-programs"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 289,
+          "height": 22,
+          "label": "utility-billing-assistance-assistance-programs"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/10-add-aibast-billing-inquiry-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_billing-inquiry_01",
+      "step": 10,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/10-add-aibast-billing-inquiry-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-billing-inquiry"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 248,
+          "height": 22,
+          "label": "utility-billing-assistance-billing-inquiry"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/11-add-aibast-income-screen-09.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_income-screen_09",
+      "step": 11,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/11-add-aibast-income-screen-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-income-screen"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 252,
+          "height": 22,
+          "label": "utility-billing-assistance-income-screen"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/12-add-aibast-leak-adjustment-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_leak-adjustment_05",
+      "step": 12,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/12-add-aibast-leak-adjustment-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-leak-adjustment"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 262,
+          "height": 22,
+          "label": "utility-billing-assistance-leak-adjustment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/13-add-aibast-payment-plan-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_payment-plan_03",
+      "step": 13,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/13-add-aibast-payment-plan-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-payment-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 248,
+          "height": 22,
+          "label": "utility-billing-assistance-payment-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/14-add-aibast-repair-assistance-07.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_repair-assistance_07",
+      "step": 14,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/14-add-aibast-repair-assistance-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-repair-assistance"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 265,
+          "height": 22,
+          "label": "utility-billing-assistance-repair-assistance"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/15-add-aibast-resolution-summary-08.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_resolution-summary_08",
+      "step": 15,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/15-add-aibast-resolution-summary-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-resolution-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 286,
+          "height": 22,
+          "label": "utility-billing-assistance-resolution-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/16-add-aibast-usage-analysis-02.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_usage-analysis_02",
+      "step": 16,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/16-add-aibast-usage-analysis-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-usage-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 251,
+          "height": 22,
+          "label": "utility-billing-assistance-usage-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/17-review-inventory.jpg",
+      "caption": "Manual step 17 · Review model, skills, knowledge, and safety boundaries",
+      "step": 17,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/17-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "utility-billing-assistance-usage-analysis",
+        "utility-billing-assistance-resolution-summary",
+        "utility-billing-assistance-repair-assistance",
+        "utility-billing-assistance-payment-plan",
+        "utility-billing-assistance-leak-adjustment",
+        "utility-billing-assistance-synthetic-records.md",
+        "utility-billing-assistance-rules-and-controls.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 251,
+          "height": 22,
+          "label": "utility-billing-assistance-usage-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 286,
+          "height": 22,
+          "label": "utility-billing-assistance-resolution-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 265,
+          "height": 22,
+          "label": "utility-billing-assistance-repair-assistance"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 248,
+          "height": 22,
+          "label": "utility-billing-assistance-payment-plan"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 262,
+          "height": 22,
+          "label": "utility-billing-assistance-leak-adjustment"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 292,
+          "height": 22,
+          "label": "utility-billing-assistance-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 298,
+          "height": 22,
+          "label": "utility-billing-assistance-rules-and-controls.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/18-review-skills.jpg",
+      "caption": "Manual step 18 · Review the skill list (9 skills)",
+      "step": 18,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/18-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-usage-analysis",
+        "utility-billing-assistance-resolution-summary",
+        "utility-billing-assistance-repair-assistance",
+        "utility-billing-assistance-payment-plan",
+        "utility-billing-assistance-leak-adjustment"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 251,
+          "height": 22,
+          "label": "utility-billing-assistance-usage-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 273,
+          "height": 22,
+          "label": "utility-billing-assistance-resolution-summary"
+        },
+        {
+          "x": 1180,
+          "y": 298,
+          "width": 64,
+          "height": 17,
+          "label": "utility-billing-assistance-repair-assistance"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 248,
+          "height": 22,
+          "label": "utility-billing-assistance-payment-plan"
+        },
+        {
+          "x": 1055,
+          "y": 509,
+          "width": 262,
+          "height": 22,
+          "label": "utility-billing-assistance-leak-adjustment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/19-review-skills-more.jpg",
+      "caption": "Manual step 19 · Review the rest of the skill list",
+      "step": 19,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/19-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-leak-adjustment",
+        "utility-billing-assistance-income-screen",
+        "utility-billing-assistance-billing-inquiry",
+        "utility-billing-assistance-assistance-programs",
+        "utility-billing-assistance-repair-assistance",
+        "utility-billing-assistance-application-packet"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 84,
+          "width": 262,
+          "height": 22,
+          "label": "utility-billing-assistance-leak-adjustment"
+        },
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 253,
+          "height": 22,
+          "label": "utility-billing-assistance-income-screen"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 248,
+          "height": 22,
+          "label": "utility-billing-assistance-billing-inquiry"
+        },
+        {
+          "x": 1055,
+          "y": 338,
+          "width": 274,
+          "height": 22,
+          "label": "utility-billing-assistance-assistance-programs"
+        },
+        {
+          "x": 1125,
+          "y": 361,
+          "width": 66,
+          "height": 17,
+          "label": "utility-billing-assistance-repair-assistance"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 277,
+          "height": 22,
+          "label": "utility-billing-assistance-application-packet"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/20-open-preview.jpg",
+      "caption": "Manual step 20 · Open a fresh Preview conversation",
+      "step": 20,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/20-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 161,
+          "height": 24,
+          "label": "Utility Billing Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-utility_billing_assistance-01",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/21-utility_billing_assistance-01.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-01 · Customer Service Representative: Explain ACCT-90003 balances without changing the account.",
+      "step": 21,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-01",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/21-utility_billing_assistance-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ACCT-90003",
+        "$489.20",
+        "No balance"
+      ],
+      "boxes": [
+        {
+          "x": 448,
+          "y": 473,
+          "width": 147,
+          "height": 26,
+          "label": "ACCT-90003"
+        },
+        {
+          "x": 381,
+          "y": 693,
+          "width": 67,
+          "height": 23,
+          "label": "$489.20"
+        },
+        {
+          "x": 549,
+          "y": 1746,
+          "width": 93,
+          "height": 22,
+          "label": "No balance"
+        }
+      ]
+    },
+    {
+      "id": "hard-utility_billing_assistance-02",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/22-utility_billing_assistance-02.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-02 · Billing Specialist: Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+      "step": 22,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-02",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/22-utility_billing_assistance-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "REVIEW POSSIBLE LEAK",
+        "Draft policy estimate",
+        "not a leak diagnosis"
+      ],
+      "boxes": [
+        {
+          "x": 452,
+          "y": 994,
+          "width": 176,
+          "height": 20,
+          "label": "REVIEW POSSIBLE LEAK"
+        },
+        {
+          "x": 310,
+          "y": 1087,
+          "width": 166,
+          "height": 24,
+          "label": "Draft policy estimate"
+        },
+        {
+          "x": 465,
+          "y": 1539,
+          "width": 153,
+          "height": 24,
+          "label": "not a leak diagnosis"
+        }
+      ]
+    },
+    {
+      "id": "hard-utility_billing_assistance-03",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/23-utility_billing_assistance-03.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-03 · Revenue Services Supervisor: Show ACCT-90003 payment-plan options, but do not set one up.",
+      "step": 23,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-03",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/23-utility_billing_assistance-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "12 months",
+        "No payment arrangement was created"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 849,
+          "width": 84,
+          "height": 21,
+          "label": "12 months"
+        },
+        {
+          "x": 404,
+          "y": 1394,
+          "width": 284,
+          "height": 24,
+          "label": "No payment arrangement was created"
         }
       ]
     },
     {
       "id": "hard-utility_billing_assistance-04",
       "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/24-utility_billing_assistance-04.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-04 · Assistance Coordinator: What assistance programs could help the Maple Drive resident on a fixed income, and do they qu",
+      "step": 24,
       "case_id": "UTILITY_BILLING_ASSISTANCE-04",
-      "step": 17,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/17-utility_billing_assistance-04.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/17-utility_billing_assistance-04.png",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/24-utility_billing_assistance-04.png",
       "status": "reusable",
       "visible_anchors": [
         "POTENTIALLY ELIGIBLE",
-        "No eligibility determination",
         "enrollment"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 351,
-          "width": 936,
-          "height": 80,
-          "label": "Potentially eligible screening"
+          "x": 408,
+          "y": 534,
+          "width": 175,
+          "height": 20,
+          "label": "POTENTIALLY ELIGIBLE"
         },
         {
-          "x": 287,
-          "y": 505,
-          "width": 936,
-          "height": 70,
-          "label": "No determination or enrollment"
+          "x": 704,
+          "y": 1399,
+          "width": 90,
+          "height": 23,
+          "label": "enrollment"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No eligibility determination not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-utility_billing_assistance-05",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/25-utility_billing_assistance-05.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-05 · Leak Adjustment Analyst: Does the Maple Drive household qualify for a leak credit, and how much would it be?",
+      "step": 25,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-05",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/25-utility_billing_assistance-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Municipal Code 18.42",
+        "$97.80",
+        "No bill was adjusted"
+      ],
+      "boxes": [
+        {
+          "x": 453,
+          "y": 506,
+          "width": 165,
+          "height": 24,
+          "label": "Municipal Code 18.42"
+        },
+        {
+          "x": 782,
+          "y": 1002,
+          "width": 59,
+          "height": 23,
+          "label": "$97.80"
+        },
+        {
+          "x": 531,
+          "y": 1547,
+          "width": 160,
+          "height": 24,
+          "label": "No bill was adjusted"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-utility_billing_assistance-06",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/utility-billing-assistance/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/26-utility_billing_assistance-06.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-06 · Enrollment Specialist: Get the payment plan and the water-assistance application ready for the Maple Drive resident. W",
+      "step": 26,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-06",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/26-utility_billing_assistance-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Utility Billing Manual",
-        "Draft"
+        "$14.45",
+        "Proof of income",
+        "14-day response deadline"
       ],
       "boxes": [
         {
-          "x": 105,
-          "y": 248,
-          "width": 654,
-          "height": 50,
-          "label": "Target manual agent remains Draft"
+          "x": 398,
+          "y": 572,
+          "width": 112,
+          "height": 23,
+          "label": "$14.45"
+        },
+        {
+          "x": 310,
+          "y": 709,
+          "width": 127,
+          "height": 21,
+          "label": "Proof of income"
+        },
+        {
+          "x": 631,
+          "y": 881,
+          "width": 199,
+          "height": 24,
+          "label": "14-day response deadline"
+        }
+      ]
+    },
+    {
+      "id": "hard-utility_billing_assistance-07",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/27-utility_billing_assistance-07.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-07 · Water Conservation Coordinator: Can we help the Maple Drive resident fix the leak at no cost?",
+      "step": 27,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-07",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/27-utility_billing_assistance-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Water Conservation Assistance Program",
+        "Toilet flapper",
+        "not booked"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 428,
+          "width": 453,
+          "height": 31,
+          "label": "Water Conservation Assistance Program"
+        },
+        {
+          "x": 465,
+          "y": 500,
+          "width": 106,
+          "height": 24,
+          "label": "Toilet flapper"
+        },
+        {
+          "x": 1047,
+          "y": 563,
+          "width": 104,
+          "height": 23,
+          "label": "not booked"
+        }
+      ]
+    },
+    {
+      "id": "hard-utility_billing_assistance-08",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/28-utility_billing_assistance-08.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-08 · Customer Resolution Manager: Pull everything together for the Maple Drive resident so we can send it and close out the",
+      "step": 28,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-08",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/28-utility_billing_assistance-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Complete Assistance Package (Draft)",
+        "$447.80",
+        "nothing was sent"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 454,
+          "width": 416,
+          "height": 32,
+          "label": "Complete Assistance Package (Draft)"
+        },
+        {
+          "x": 508,
+          "y": 781,
+          "width": 68,
+          "height": 22,
+          "label": "$447.80"
+        },
+        {
+          "x": 416,
+          "y": 1230,
+          "width": 100,
+          "height": 24,
+          "label": "nothing was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-utility_billing_assistance-09",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/29-utility_billing_assistance-09.jpg",
+      "caption": "UTILITY_BILLING_ASSISTANCE-09 · Eligibility Screener: Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "step": 29,
+      "case_id": "UTILITY_BILLING_ASSISTANCE-09",
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/29-utility_billing_assistance-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "POTENTIALLY ELIGIBLE",
+        "enrollment",
+        "No eligibility determination"
+      ],
+      "boxes": [
+        {
+          "x": 542,
+          "y": 904,
+          "width": 175,
+          "height": 20,
+          "label": "POTENTIALLY ELIGIBLE"
+        },
+        {
+          "x": 536,
+          "y": 1221,
+          "width": 90,
+          "height": 22,
+          "label": "enrollment"
+        },
+        {
+          "x": 418,
+          "y": 1421,
+          "width": 206,
+          "height": 24,
+          "label": "No eligibility determination"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-30",
+      "mode": "hard",
+      "source": "solutions/utility-billing-assistance/screenshots/manual/30-confirm-draft.jpg",
+      "caption": "Manual step 30 · Confirm Draft and stop before publish",
+      "step": 30,
+      "draft": true,
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/30-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 157,
+          "height": 24,
+          "label": "Utility Billing Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered so Utility Billing Pilot and Draft are visible in the same frame.",
-      "Manual step 1 after the blank agent workspace finishes loading.",
-      "Manual step 4 with the Save tooltip visibly stating No unsaved changes."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:utility-billing-assistance",
-    "reviewed_at": "2026-08-10T00:27:58.196935+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:53:01.663680+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

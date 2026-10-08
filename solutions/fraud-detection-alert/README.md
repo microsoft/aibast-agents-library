@@ -49,7 +49,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot Studio deployment settings | `solutions/fraud-detection-alert/exports/fraud-detection-alert-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fraud-detection-alert/exports/fraud-detection-alert-solution-export.json` |
 
-**Scaffold status:** 91 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

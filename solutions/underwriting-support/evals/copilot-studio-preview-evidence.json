@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T22:37:29.037Z",
+  "captured_at": "2026-10-07T06:34:59.771687Z",
   "solution": "@aibast-agents-library/underwriting-support",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Underwriting Support Pilot",
   "schema_name": "aibast_UnderwritingSupportPilot",
   "bot_id": "7a806127-f4c5-458f-8d2d-c599ee06b000",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 8 change(s) pushed.",
   "cases": [
     {
       "case_id": "UWS-01",
@@ -59,6 +59,81 @@
       "must_include": [
         "UW-2025-103",
         "No approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-05",
+      "must_include": [
+        "Midwest Manufacturing Inc.",
+        "95% complete",
+        "68/100 (Moderate)"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-06",
+      "must_include": [
+        "Industry hazard",
+        "$237K",
+        "0.42 vs class 0.58"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-07",
+      "must_include": [
+        "Equipment breakdown",
+        "$5K deductible",
+        "$8.2M total"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-08",
+      "must_include": [
+        "Within $10M limit",
+        "OH rates filed",
+        "30 days"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-09",
+      "must_include": [
+        "Approve with conditions",
+        "$88,100",
+        "drafted for you to issue"
       ],
       "must_not_include": [
         "I do not have access",

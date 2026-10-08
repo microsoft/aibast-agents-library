@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CSC-01, CSC-02, CSC-03, CSC-04`.
+1. Which locked case IDs did you complete? Expected scope: `CSC-01, CSC-02, CSC-03, CSC-04, CSC-05, CSC-06`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,12 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `CSC-01` — What are customers telling us across channels, and which relationship needs attention first?
-- `CSC-02` — Who should my team review first today, and what evidence drove the priority?
+- `CSC-01` — Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.
+- `CSC-02` — Show me profiles of our highest-value at-risk customers.
 - `CSC-03` — Prepare options for Marcus that I can review before anyone contacts him or changes a fee.
 - `CSC-04` — Which segment is under its experience benchmark, and what should we investigate?
+- `CSC-05` — Yes, what are the early warning signals we should watch for?
+- `CSC-06` — Yes, assign the outreach and set up tracking.
 
 ## Manual mode — literal browser construction
 

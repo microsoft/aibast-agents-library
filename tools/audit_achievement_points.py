@@ -77,8 +77,8 @@ def workshop_catalog(root: Path, failures: Failures) -> list[dict[str, Any]]:
         failures.add(f"registry workshop scope cannot be resolved ({exc})")
         return []
     slugs = {row.get("slug") for row in catalog}
-    if len(catalog) != 51:
-        failures.add(f"expected 51 canonical workshops, found {len(catalog)}")
+    if len(catalog) != 66:
+        failures.add(f"expected 66 canonical workshops, found {len(catalog)}")
     if "grid-outage-response" in slugs:
         failures.add("Grid Outage must remain outside the canonical workshop scope")
     return catalog
@@ -334,7 +334,7 @@ def audit_snapshot(
     expected_slugs = {row["slug"] for row in catalog}
     rows = achievements.get("workshops", [])
     if {row.get("slug") for row in rows} != expected_slugs:
-        failures.add("state/metrics.json: achievement workshop scope does not match 51")
+        failures.add("state/metrics.json: achievement workshop scope does not match 66")
     profiles = achievements.get("profiles", [])
     if any(set(profile) != PROFILE_KEYS for profile in profiles):
         failures.add("state/metrics.json: public achievement profile fields are unsafe")

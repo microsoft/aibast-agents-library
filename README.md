@@ -91,7 +91,7 @@ class WeatherAgent(BasicAgent):
 
 ### Browse the AIBAST Agent Library
 
-The [**Microsoft AI Academy**](academy.html) is an experimental learning surface for **51 certified workshops** and their packaged, reusable skills. Progress stays private in local browser storage by default; learners may optionally publish GitHub-attributed proof. The workshop path starts in GitHub Copilot and the local RAPP Brainstem, then carries the same skills into Copilot Studio, Teams, and Microsoft 365 Copilot. Academy completion is not an official credential or certification, and the Academy is not a replacement for Microsoft Learn.
+The [**Microsoft AI Academy**](academy.html) is an experimental learning surface for **66 certified workshops** and their packaged, reusable skills. Progress stays private in local browser storage by default; learners may optionally publish GitHub-attributed proof. The workshop path starts in GitHub Copilot and the local RAPP Brainstem, then carries the same skills into Copilot Studio, Teams, and Microsoft 365 Copilot. Academy completion is not an official credential or certification, and the Academy is not a replacement for Microsoft Learn.
 
 The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/) is the browsable catalog: search across every industry template, filter by vertical, and copy the install command for one agent or a whole stack. Industry groups have shareable deep links, such as [Financial Services](https://microsoft.github.io/aibast-agents-library/?industry=financial-services#library), so recipients land on the preselected group instead of choosing it manually. The library reads `registry.json`, which `build_registry.py` regenerates from the agent manifests on every push.
 

@@ -23,6 +23,11 @@ not supplied, not permission to invent a fact or complete an action.
    with a `48 hours` SLA.
 4. `spend_analysis` uses `spend-analysis` for all five categories, portfolio
    totals, availability, utilization, overspend and alerts.
+5. The engineering laptop order is `PR-5005`: `vendor_comparison` with category
+   IT equipment for approved IT vendors; `draft_purchase_order` for the
+   PO-2024-ENG-0892 draft; `expedite_approval` for draft urgency notifications;
+   `budget_impact` for the Q4 2024 IT budget effect; `draft_rfq` for the
+   office-furniture RFQ draft for the same team.
 
 ## Approval threshold rule
 
@@ -30,6 +35,8 @@ Choose the first threshold whose inclusive upper bound covers the request
 amount. Retain its cap and the `Unlimited` / `CEO + Board` tier.
 Use the source approver and SLA; do not turn a capped tier into an open-ended
 rule. Do not invent dollar-only lower bounds or serial approval chains.
+The only packaged workflow is the PR-5005 purchase-order draft (Dept Manager,
+Finance Director, CFO above $75,000).
 The SLA is a source label, not evidence that a review clock or approval started.
 It is not a promise of approval.
 
@@ -81,7 +88,9 @@ purchase order. Never select, rank as winner, contact, notify, or commit to a
 supplier. Never accept terms, request a quote, reserve inventory, renew a
 contract, allocate budget, commit funds or claim savings. Never transmit a
 request, notify a person or publish. Never claim an approval or external record
-change occurred.
+change occurred. Purchase-order, notification and RFQ drafts are returned as
+text for an authorized buyer to review and submit; none is created, sent or
+distributed by the agent.
 
 ## Human and authorization gates
 

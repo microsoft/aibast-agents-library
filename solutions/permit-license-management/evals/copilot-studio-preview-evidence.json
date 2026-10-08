@@ -1,23 +1,23 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T20:02:01.797Z",
+  "captured_at": "2026-10-07T17:12:38.406277Z",
   "solution": "@aibast-agents-library/permit-license-management",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Permit Management Pilot",
   "schema_name": "aibast_PermitManagementPilot",
   "bot_id": "c104a2f2-e93b-4496-af84-642b8f580621",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 8 change(s) pushed.",
   "cases": [
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
       "must_include": [
-        "PRM-6002",
-        "EXPIRED",
-        "Verify status"
+        "240 active permits",
+        "Imperial Valley Solar",
+        "$47M"
       ],
       "must_not_include": [],
       "passed": true
@@ -25,8 +25,8 @@
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
       "must_include": [
-        "NPDES Stormwater Discharge Permit",
-        "2026-03-01",
+        "Reno Wind Farm",
+        "MISSED",
         "No renewal"
       ],
       "must_not_include": [],
@@ -35,7 +35,7 @@
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
       "must_include": [
-        "expired_permit",
+        "renewal_lead_time_missed",
         "CRITICAL",
         "not legal advice"
       ],
@@ -45,9 +45,19 @@
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
       "must_include": [
-        "APP-7002",
+        "APP-7102",
         "public_comment",
         "cannot submit"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-05",
+      "must_include": [
+        "$685,000",
+        "$13.8M",
+        "No application was submitted"
       ],
       "must_not_include": [],
       "passed": true

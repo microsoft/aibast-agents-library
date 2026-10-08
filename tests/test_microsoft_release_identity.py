@@ -51,7 +51,8 @@ def test_immutable_delivery_aliases_keep_content_addressed_microsoft_urls():
         ("procurement-agent", "manual-inputs-r3.json"),
         ("prior-authorization", "manual-inputs-r4.json"),
     ):
-        path = ROOT / "solutions" / slug / "evals" / filename
+        # Superseded by the 2026-10-08 re-shoot; kept as dated history.
+        path = ROOT / "solutions" / slug / "evals" / "history" / "2026-10-08-pre-reshoot" / filename
         inventory = json.loads(path.read_text(encoding="utf-8"))
         for item in inventory["inputs"]:
             assert item["public_url"] == (

@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:37:18.559277+00:00",
+  "captured_at": "2026-10-07T02:06:44.761455+00:00",
   "solution": "@aibast-agents-library/procurement-agent",
   "onepager": "Procurement Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
-      "sha256": "eda05784ae535846d91d21df09f72a53458ed7972d6351edb17f05ed0dff641d"
+      "sha256": "8af304158ace05343a37275edc58fe2bcf5cd03f4f5d3dcf12939ad5d623e61a"
     }
   ],
   "case_file": "tests/demo_cases/procurement-agent.json",
-  "case_file_sha256": "30c70a4e75fe85ba0cad7f716256693e1987f75459bdc99664488b518048928e",
+  "case_file_sha256": "8d39b80e8da592813dd68d83db5b617ec9017058ca069da06c7964f00721ac6e",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,16 +22,16 @@
       "persona": "Procurement Manager",
       "onepager_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
       "prompt": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
-      "assistant_response": "Here's what you need to know:\n\n**The Request (PR-5001):**\n- **What:** Cloud Infrastructure Upgrade via AWS\n- **Amount:** $125,000\n- **Why:** Current system at 92% capacity; Q1 growth requires scaling\n- **Requester:** Sarah Chen (IT)\n\n**The Approval Chain:**\nYour $125,000 request sits in the **$100K\u2013$500K band**, which means **the CFO must review and approve it** before anything proceeds. The SLA is **48 hours**.\n\n**Before that happens:** If you want to speed things up, VP Finance can fast-track an initial review (24-hour SLA), but the final gate is still CFO sign-off.\n\n**Bottom line:** Get this to the CFO's desk. Once they approve, procurement can move to vendor selection and contract negotiation.",
-      "agent_logs": "[ProcurementAgent] **Purchase Request Review: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Title | Cloud Infrastructure Upgrade |\n| Requester | Sarah Chen (IT) |\n| Category | Technology |\n| Amount | $125,000 |\n| Priority | High |\n| Status | Pending Approval |\n| Preferred Vendor | AWS |\n| Budget Code | IT-INFRA-2025 |\n| Required Approver | CFO |\n\n**Justification:** Current infrastructure at 92% capacity, scaling needed for Q1 growth\n\n**Approval gate:** Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Procurement Snapshot]\nAgents: ProcurementAgent\n[ProcurementAgent] **Approval Routing: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Request | Cloud Infrastructure Upgrade |\n| Amount | $125,000 |\n| Required Approver | CFO |\n| Approval SLA | 48 hours |\n| Current Status | Pending Approval |\n\n**Approval Thresholds:**\n\n| Amount Limit | Approver | SLA |\n|---|---|---|\n| Up to $5,000 | Direct Manager | 4h |\n| Up to $25,000 | Department Head | 8h |\n| Up to $100,000 | VP Finance | 24h |\n| Up to $500,000 | CFO | 48h | <-- This request\n| Up to Unlimited | CEO + Board | 120h |\n\n\nRouting is a recommendation and does not record an approval. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Approval Rules]\nAgents: ProcurementAgent",
+      "assistant_response": "Here's PR-5001, the cloud-upgrade request:\n\n- **What**: Cloud infrastructure upgrade, preferred vendor AWS\n- **Why**: Current systems at 92% capacity, needed for Q1 growth\n- **Amount**: $125,000 (High priority)\n- **Requester**: Sarah Chen (IT)\n- **Budget code**: IT-INFRA-2025\n- **Status**: Pending Approval\n\n**Whose review it needs**: this one requires **CFO sign-off** before anything moves \u2014 the dollar amount puts it above standard IT approval thresholds. Nothing gets purchased, vendors contacted, or funds committed until that happens; this is decision support only.\n\nWant me to pull the recommended approval routing/SLA for this, or check it against Q4 budget pressure?",
+      "agent_logs": "[ProcurementAgent] **Purchase Request Review: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Title | Cloud Infrastructure Upgrade |\n| Requester | Sarah Chen (IT) |\n| Category | Technology |\n| Amount | $125,000 |\n| Priority | High |\n| Status | Pending Approval |\n| Preferred Vendor | AWS |\n| Budget Code | IT-INFRA-2025 |\n| Required Approver | CFO |\n\n**Justification:** Current infrastructure at 92% capacity, scaling needed for Q1 growth\n\n**Approval gate:** Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Procurement Snapshot]\nAgents: ProcurementAgent",
       "expected_agent": "ProcurementAgent",
       "must_include": [
         "PR-5001",
         "$125,000",
         "CFO"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -39,16 +39,16 @@
       "persona": "Category Buyer",
       "onepager_promise": "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
       "prompt": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
-      "assistant_response": "Here's your neutral vendor snapshot for cloud infrastructure:\n\n**Strategic Tier (approved, high-volume partners):**\n- **AWS**: 4.7/5 rating | $890K annual spend | Net 30 terms\n- **Azure**: 4.6/5 rating | $650K annual spend | Net 30 terms\n\nBoth are established strategic vendors with comparable ratings and payment terms. AWS has higher annual volume; Azure sits at a solid second. Both offer the support level and pricing controls you'd expect at this tier\u2014no standout difference in terms or reliability from this data.\n\n**The comparison is evidence only.** Use it to inform your selection process, but the decision stays with your procurement team based on your specific requirements (workload fit, integration needs, cost structure for your use case).",
-      "agent_logs": "[ProcurementAgent] **Vendor Comparison**\n\n| ID | Vendor | Category | Tier | Rating | Annual Spend | Terms |\n|---|---|---|---|---|---|---|\n| VND-001 | AWS | Cloud Infrastructure | Strategic | 4.7/5 | $890,000 | Net 30 |\n| VND-002 | Salesforce | CRM Software | Strategic | 4.5/5 | $430,000 | Annual Prepay |\n| VND-003 | Steelcase | Office Furniture | Preferred | 4.3/5 | $125,000 | Net 45 |\n| VND-004 | Herman Miller | Office Furniture | Approved | 4.6/5 | $85,000 | Net 30 |\n| VND-005 | Azure | Cloud Infrastructure | Strategic | 4.6/5 | $650,000 | Net 30 |\n| VND-006 | FranklinCovey | Training Services | Approved | 4.2/5 | $45,000 | Net 30 |\n\n**Vendor Tiers:**\n- Strategic: Long-term partners, best pricing, dedicated support\n- Preferred: Competitive pricing, standard support, pre-approved\n- Approved: Vetted and available, standard terms\n\nRatings and terms are comparison evidence, not a supplier award. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Vendor Management Snapshot]\nAgents: ProcurementAgent",
+      "assistant_response": "Here's the neutral comparison of approved **Cloud Infrastructure** vendors \u2014 no recommendation implied:\n\n| Vendor | Tier | Rating | Annual Spend | Terms |\n|---|---|---|---|---|\n| AWS | Strategic | 4.7/5 | $890,000 | Net 30 |\n| Azure | Strategic | 4.6/5 | $650,000 | Net 30 |\n\nBoth sit at the top \"Strategic\" tier (long-term partners, best pricing, dedicated support), and both carry Net 30 terms. AWS has a slightly higher rating and larger existing spend footprint; Azure's rating is close behind with lower current spend.\n\nThis is comparison data only \u2014 no vendor is selected, contacted, or committed to anything. Let me know if you want budget impact or an RFQ drafted once a direction is chosen.",
+      "agent_logs": "[ProcurementAgent] **Vendor Comparison**\n\n| ID | Vendor | Category | Tier | Rating | Annual Spend | Terms |\n|---|---|---|---|---|---|---|\n| VND-001 | AWS | Cloud Infrastructure | Strategic | 4.7/5 | $890,000 | Net 30 |\n| VND-002 | Salesforce | CRM Software | Strategic | 4.5/5 | $430,000 | Annual Prepay |\n| VND-003 | Steelcase | Office Furniture | Preferred | 4.3/5 | $125,000 | Net 45 |\n| VND-004 | Herman Miller | Office Furniture | Approved | 4.6/5 | $85,000 | Net 30 |\n| VND-005 | Azure | Cloud Infrastructure | Strategic | 4.6/5 | $650,000 | Net 30 |\n| VND-006 | FranklinCovey | Training Services | Approved | 4.2/5 | $45,000 | Net 30 |\n| VND-007 | TechPro Solutions | IT Equipment | Preferred | 4.8/5 | $166,750 | Net 30 |\n| VND-008 | Global IT Supply | IT Equipment | Approved | 4.4/5 | $63,250 | Net 30 |\n| VND-009 | CompuDirect | IT Equipment | Approved | 4.1/5 | $57,500 | Net 45 |\n\n**Vendor Tiers:**\n- Strategic: Long-term partners, best pricing, dedicated support\n- Preferred: Competitive pricing, standard support, pre-approved\n- Approved: Vetted and available, standard terms\n\nRatings and terms are comparison evidence, not a supplier award. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Vendor Management Snapshot]\nAgents: ProcurementAgent",
       "expected_agent": "ProcurementAgent",
       "must_include": [
         "AWS",
         "Azure",
         "not a supplier award"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -56,16 +56,16 @@
       "persona": "Department Approver",
       "onepager_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
       "prompt": "This infrastructure request landed in my queue. What is the recommended approval path?",
-      "assistant_response": "**For PR-5001 (Cloud Infrastructure Upgrade at $125,000):** \n\nThe approval needs to go to **CFO** with a **48-hour SLA**. This request exceeds the VP Finance threshold ($100K limit), so it escalates to CFO-level review.\n\nDo you need me to check the vendor options, budget headroom, or anything else before it goes up?",
-      "agent_logs": "[ProcurementAgent] **Approval Routing: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Request | Cloud Infrastructure Upgrade |\n| Amount | $125,000 |\n| Required Approver | CFO |\n| Approval SLA | 48 hours |\n| Current Status | Pending Approval |\n\n**Approval Thresholds:**\n\n| Amount Limit | Approver | SLA |\n|---|---|---|\n| Up to $5,000 | Direct Manager | 4h |\n| Up to $25,000 | Department Head | 8h |\n| Up to $100,000 | VP Finance | 24h |\n| Up to $500,000 | CFO | 48h | <-- This request\n| Up to Unlimited | CEO + Board | 120h |\n\n\nRouting is a recommendation and does not record an approval. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Approval Rules]\nAgents: ProcurementAgent",
+      "assistant_response": "Here's the routing for PR-5001 (Cloud Infrastructure Upgrade, $125,000):\n\n- **Required approver:** CFO (falls in the $75,000\u2013$500,000 tier)\n- **SLA:** 48 hours\n- **Status:** Pending approval\n\nThis is a recommendation only \u2014 no approval is recorded and nothing is committed. Let me know if you want to expedite it or check the current spend/budget pressure context before it moves up the chain.",
+      "agent_logs": "[ProcurementAgent] **Approval Routing: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Request | Cloud Infrastructure Upgrade |\n| Amount | $125,000 |\n| Required Approver | CFO |\n| Approval SLA | 48 hours |\n| Current Status | Pending Approval |\n\n**Approval Thresholds:**\n\n| Amount Limit | Approver | SLA |\n|---|---|---|\n| Up to $5,000 | Direct Manager | 4h |\n| Up to $25,000 | Dept Manager | 8h |\n| Up to $75,000 | Finance Director | 24h |\n| Up to $500,000 | CFO | 48h | <-- This request\n| Above $500,000 | CEO + Board | 120h |\n\n\nRouting is a recommendation and does not record an approval. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Approval Rules]\nAgents: ProcurementAgent",
       "expected_agent": "ProcurementAgent",
       "must_include": [
         "CFO",
         "48 hours",
         "does not record an approval"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -73,16 +73,84 @@
       "persona": "Finance Director",
       "onepager_promise": "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending",
       "prompt": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
-      "assistant_response": "**Budget pressure summary:**\n\n**\ud83d\udea9 Critical \u2014 Software (OVER by $60K)**\n- 73% spent + committed already exceeds your $800K allocation\n- Growing 18% YoY; this is structural overspend\n- **Before approving more:** Review active software contracts for consolidation, renegotiation, or sunset candidates\n\n**\u26a0\ufe0f At Risk \u2014 Technology ($285K remaining)**\n- 73% spent on $2.5M; 12% YoY growth\n- Committed spend is tight against remaining budget\n- **Before approving more:** Prioritize only critical purchases; defer discretionary infrastructure/tooling\n\n**On Track \u2014 Professional Services, Travel, Office Supplies**\n- These have breathing room for the rest of the period\n\n**Key questions to answer before next approval:**\n1. Can any Software licenses be renegotiated or consolidated?\n2. Are there Technology commitments that can be deferred to next fiscal year?\n3. Is the 18% Software growth driven by headcount, new products, or contract creep?\n\nWant me to help evaluate a specific purchase request against these constraints, or dig into approval routing for a spend decision?",
-      "agent_logs": "[ProcurementAgent] **Spend Analysis**\n\n| Metric | Value |\n|---|---|\n| Total Budget | $4,350,000 |\n| Spent YTD | $3,197,000 (73%) |\n| Committed | $656,500 |\n| Available | $496,500 |\n\n**By Category:**\n\n| Category | Budget | Spent YTD | Committed | Available | Status | Trend |\n|---|---|---|---|---|---|---|\n| Technology | $2,500,000 | $1,875,000 | $340,000 | $285,000 | At Risk | +12% YoY |\n| Software | $800,000 | $645,000 | $215,000 | $-60,000 | Over Budget | +18% YoY |\n| Office Supplies | $350,000 | $210,000 | $48,500 | $91,500 | On Track | -5% YoY |\n| Professional Services | $500,000 | $325,000 | $35,000 | $140,000 | On Track | +8% YoY |\n| Travel | $200,000 | $142,000 | $18,000 | $40,000 | On Track | -15% YoY |\n\n**Alerts:**\n- Software category over budget by $60,000 - requires reallocation\n- Technology committed spend approaching budget limit\n\nAnalysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic ERP + Finance Snapshot]\nAgents: ProcurementAgent",
+      "assistant_response": "Here's the pressure map:\n\n**Where it's tight:**\n- **Software: over budget by $60K** (18% YoY growth) \u2014 needs reallocation before anything new is approved\n- **Technology: 89% of budget committed** ($2.5M budget, only $285K left) \u2014 flagged \"At Risk\"\n- Overall: 73% of the $4.35M total budget already spent/committed, leaving just ~$496K free\n\n**On track:** Office Supplies, Professional Services, Travel \u2014 room to breathe there.\n\n**Before approving more spend, review:**\n1. The $60K software overage \u2014 figure out where to reallocate from\n2. $12,400 in duplicate software licenses flagged \u2014 easy savings, worth clawing back first\n3. Any new Technology-category request (like the 50-laptop PR) against that shrinking $285K buffer \u2014 it could tip the category over\n\nWant me to pull the budget impact of the pending laptop order (PR-5005) against this Technology headroom?",
+      "agent_logs": "[ProcurementAgent] **Spend Analysis**\n\n| Metric | Value |\n|---|---|\n| Total Budget | $4,350,000 |\n| Spent YTD | $3,197,000 (73%) |\n| Committed | $656,500 |\n| Available | $496,500 |\n\n**By Category:**\n\n| Category | Budget | Spent YTD | Committed | Available | Status | Trend |\n|---|---|---|---|---|---|---|\n| Technology | $2,500,000 | $1,875,000 | $340,000 | $285,000 | At Risk | +12% YoY |\n| Software | $800,000 | $645,000 | $215,000 | $-60,000 | Over Budget | +18% YoY |\n| Office Supplies | $350,000 | $210,000 | $48,500 | $91,500 | On Track | -5% YoY |\n| Professional Services | $500,000 | $325,000 | $35,000 | $140,000 | On Track | +8% YoY |\n| Travel | $200,000 | $142,000 | $18,000 | $40,000 | On Track | -15% YoY |\n\n**Alerts:**\n- Technology committed spend approaching budget limit (89% used)\n- Software category over budget by $60,000 - requires reallocation\n- $12,400 in duplicate software licenses identified in the IT budget - potential savings\n\nAnalysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic ERP + Finance Snapshot]\nAgents: ProcurementAgent",
       "expected_agent": "ProcurementAgent",
       "must_include": [
         "Software",
         "$60,000",
         "No purchase order is created"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-05",
+      "persona": "Procurement Manager",
+      "onepager_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team.",
+      "assistant_response": "Here's the draft (via ProcurementAgent):\n\n**PO-2024-ENG-0892** \u2014 50 Dell Latitude 7440s with TechPro Solutions\n- Laptops: $62,500 | Warranty: $9,450 | Docking stations: $7,500\n- 5% volume discount: -$3,973\n- Tax: $6,416\n- **Total: $81,893**\n\nSince it's over $75K, it'll need Finance Director Sarah Thompson and CFO Michael Roberts to sign off once submitted. This is a draft only \u2014 an authorized buyer needs to submit it; I can't commit funds or select the vendor myself.\n\nWant me to draft expedite-approval notifications to speed things along?",
+      "agent_logs": "[ProcurementAgent] Purchase order drafted with TechPro Solutions, ready for you to submit for approval. Volume discount applied - saving $3,973.\n\n**PO-2024-ENG-0892 (draft)** for PR-5005\n\n| Item | Qty | Unit Price | Total |\n|---|---|---|---|\n| Dell Latitude 7440 (i7, 32GB, 1TB) - engineering configuration | 50 | $1,250 | $62,500 |\n| 3-Year Warranty | 50 | $189 | $9,450 |\n| Docking Stations | 50 | $150 | $7,500 |\n\n**Financial Summary:**\n- Subtotal: $79,450\n- Volume Discount (5%): -$3,973\n- Tax (8.5%): $6,416\n- Total: $81,893\n\n**Approval Workflow (once submitted):**\n- Dept Manager: Auto-approved (within department budget)\n- Finance Director (Sarah Thompson): Pending\n- CFO (Michael Roberts): Required (order >$75,000)\n\nDraft only. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Finance + Approval Rules]\nAgents: ProcurementAgent\n\nWant me to prepare urgency notifications to expedite the approval?",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "PO-2024-ENG-0892",
+        "$81,893",
+        "No purchase order is created"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-06",
+      "persona": "Procurement Manager",
+      "onepager_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "The engineering laptop order is stuck in approval. Can you expedite it with urgency notifications?",
+      "assistant_response": "Here's the status via ProcurementAgent on PO-2024-ENG-0892 ($81,893):\n\n**Current state:**\n- Queued 4h23m; Finance Director typically responds in ~6h\n- Escalation path opens automatically after 24h if still stuck\n\n**Draft urgency notifications ready for you to send (not sent yet):**\n1. **Sarah Thompson (Finance Director)** \u2014 HIGH priority, Finance Approvals channel: \"URGENT: Engineering laptop PO needs approval \u2014 team starts Monday.\"\n2. **Michael Roberts (CFO)** \u2014 pre-notification since it's over the $75K threshold: \"New hire equipment \u2014 time sensitive.\"\n\n**If it still stalls:**\n- 12 similar laptops sitting in IT inventory as a stopgap\n- 45-day rental option available\n- Note: splitting the order to dodge the CFO threshold isn't offered \u2014 that'd bypass the approval control, not actually expedite it.\n\nThese are drafts only \u2014 nothing's been sent, and no funds are committed. You'd fire them off from Teams yourself.\n\nWant me to check the Q4 budget impact of this order next?",
+      "agent_logs": "[ProcurementAgent] Urgency notifications drafted for both approvers, ready for you to send in Teams.\n\n**Approval Status (PO-2024-ENG-0892, $81,893):**\n- Current queue time: 4 hours 23 minutes\n- Finance Director avg response: 6 hours\n- Escalation available: after 24 hours\n\n**Draft Teams notifications:**\n1. To Sarah Thompson (Finance Director) - Priority: HIGH - Channel: Finance Approvals - \"URGENT: Engineering laptop PO needs approval - team starts Monday.\"\n2. To Michael Roberts (CFO) - pre-notification for the >$75,000 threshold - \"New hire equipment - time sensitive.\"\n\n**Alternative Options If Delayed:**\n- 12 similar laptops available in IT inventory\n- 45-day rental option while awaiting delivery\n- Splitting the order to stay under the CFO threshold is not offered: it would circumvent the approval control.\n\nNo notification was sent. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Approval Workflow]\nAgents: ProcurementAgent\n\nWant to see how this affects your Q4 budget?",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "Sarah Thompson",
+        "4 hours 23 minutes",
+        "No notification was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-07",
+      "persona": "Finance Director",
+      "onepager_promise": "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending",
+      "prompt": "How does the engineering laptop order affect our Q4 IT budget?",
+      "assistant_response": "Here's the impact (via ProcurementAgent):\n\n- **PR-5005 cost:** $81,893 (18.2% of the $450K Q4 IT budget)\n- **After this PO:** 82% of budget committed, only $80,607 left for the quarter\n- **Risk level:** Medium \u2014 laptops already dominate spend (69% of category), and vendor concentration is heavy on TechPro Solutions (58%)\n- **Bonus find:** $12,400 in duplicate software licenses sitting unused \u2014 worth reclaiming before approving new spend\n\nBottom line: the order fits but leaves little slack for Q4 surprises. Want me to pull the approval routing or check for cheaper vendor alternatives?",
+      "agent_logs": "[ProcurementAgent] Q4 2024 IT budget analysis shows you'll be at 82% committed after this purchase - medium risk level.\n\n**Q4 2024 IT Budget Status ($450,000)**\n\n| Category | Amount | % of Budget |\n|---|---|---|\n| Spent to Date | $287,500 | 63.9% |\n| This PO (PR-5005) | $81,893 | 18.2% |\n| Remaining | $80,607 | 17.9% |\n\n**Spending by Category:**\n- Laptops/Desktops: $198,400 (69%)\n- Software Licenses: $42,300 (15%)\n- Networking: $28,900 (10%)\n- Accessories: $17,900 (6%)\n\n**Vendor Concentration:**\n- TechPro Solutions: 58% of spend\n- Global IT Supply: 22% of spend\n- CompuDirect: 20% of spend\n\n**Alert:** $12,400 in duplicate software licenses identified - potential savings (Design suite seats assigned twice (18 x $400); Overlapping project-tool licenses (13 x $400)).\n\nAnalysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Finance + Budget Analytics]\nAgents: ProcurementAgent\n\nNeed an RFQ for office furniture for the same team?",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "$80,607",
+        "82% committed",
+        "$12,400"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-08",
+      "persona": "Category Buyer",
+      "onepager_promise": "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
+      "prompt": "We also need an RFQ for office furniture for the same engineering team.",
+      "assistant_response": "I drafted RFQ-2024-FRN-0145 for the 50-person engineering team: standing desks, ergonomic chairs, and monitor arms, total budget range **$67,500\u2013$85,000**, inviting WorkSpace Plus, Office Innovations, and Commercial Interiors with a 48-hour response window. It's ready for an authorized buyer to send \u2014 nothing's been sent yet. Want me to pull together everything we've prepared for this team (laptops + furniture) into one summary?",
+      "agent_logs": "[ProcurementAgent] RFQ drafted for your top 3 furniture vendors with a 48-hour response deadline, ready for you to send.\n\n**RFQ-2024-FRN-0145 (draft)** for the new engineering team (50 people)\n\n| Item | Est. Budget |\n|---|---|\n| Standing Desks (60\" adjustable) | $35,000-$45,000 |\n| Ergonomic Chairs (lumbar support) | $25,000-$30,000 |\n| Dual Monitor Arms | $7,500-$10,000 |\n| **Total** | **$67,500-$85,000** |\n\n**Vendors to invite:** WorkSpace Plus, Office Innovations, Commercial Interiors\n\n**Evaluation Criteria:** Price: 40% | Delivery: 25% | Warranty: 20% | Sustainability: 15% (total 100%)\n\n**Timeline:** responses due 48 hours after you send it; decision by end of week.\n\nNo RFQ was distributed. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic RFQ Templates + Vendor Portal]\nAgents: ProcurementAgent\n\nWant a summary of everything we prepared?",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "RFQ-2024-FRN-0145",
+        "Sustainability: 15%",
+        "No RFQ was distributed"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

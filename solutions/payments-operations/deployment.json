@@ -1,0 +1,104 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/payments-operations",
+  "display_name": "Payments Operations Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
+  "source_path": "agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
+  "target_filename": "payments_operations_agent.py",
+  "expected_tool": "PaymentsOperationsAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "What's in this morning's payment release queue, and which payments need attention?",
+    "arguments": {
+      "operation": "queue_overview"
+    },
+    "must_call": "PaymentsOperationsAgent",
+    "must_include": [
+      "Release Queue",
+      "PAY-3105"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "queue_overview",
+      "validate_payment",
+      "repair_plan",
+      "release_risk_review",
+      "reconcile_settlement",
+      "payment_status",
+      "daily_kpi_brief"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_payments-operations-synthetic-records.md",
+      "manual/knowledge/aibast_payments-operations-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 7,
+    "required_connections": [
+      "Approved payments hub (read-only)",
+      "Approved screening and fraud-scoring results (read-only)",
+      "Settlement ledger and bank statements (read-only)"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Payments Operations Manual",
+      "bot_id": "ebb2e7ed-5297-4012-a710-34396b9c5c07",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 7,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Payments Operations Pilot",
+      "bot_id": "95dd2c5d-f6f5-4989-bc75-1a3d85aa6977",
+      "schema_name": "aibast_PaymentsOperationsPilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Payments Operations Manual",
+      "schema_name": "cr2bf_paymentsoperationsmanual_PLGz0G",
+      "solution_unique_name": "aibast_PaymentsOperationsManualBuild",
+      "bot_id": "ebb2e7ed-5297-4012-a710-34396b9c5c07",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "payments-operations-queue-overview",
+    "payments-operations-validate-payment",
+    "payments-operations-repair-plan",
+    "payments-operations-release-risk-review",
+    "payments-operations-reconcile-settlement",
+    "payments-operations-payment-status",
+    "payments-operations-daily-kpi-brief"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

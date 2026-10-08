@@ -39,28 +39,31 @@
       "capacity_forecast",
       "bench_analysis",
       "staffing_recommendation",
-      "workforce_plan"
+      "workforce_plan",
+      "optimization_plan",
+      "financial_impact",
+      "executive_summary"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_resource-synthetic-roster.md",
       "manual/knowledge/aibast_resource-pipeline-and-workforce-rules.md"
     ],
-    "manual_skill_count": 5,
+    "manual_skill_count": 8,
     "publish_requires_confirmation": true,
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Resource Utilization Manual",
-      "bot_id": "92e50540-5dd8-49ff-898e-ab716c930b04",
+      "bot_id": "27326d87-b624-4011-9b95-fffa966386cf",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 5,
+      "skills": 8,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
     },
     "validated_pilot": {
       "display_name": "Resource Utilization Pilot",
@@ -69,13 +72,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 5,
+      "skills": 8,
       "knowledge_files": 2,
       "changes_pushed": 8,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
     }
   },
   "demo_scenarios": [

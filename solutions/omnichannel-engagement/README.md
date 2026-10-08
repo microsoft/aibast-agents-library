@@ -38,7 +38,7 @@ message, offer, reward, or purchase action occurs.
 | Copilot Studio deployment settings | `solutions/omnichannel-engagement/exports/omnichannel-engagement-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/omnichannel-engagement/exports/omnichannel-engagement-solution-export.json` |
 
-**Scaffold status:** 91 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 142 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

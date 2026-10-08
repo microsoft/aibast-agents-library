@@ -32,6 +32,12 @@ SOLUTIONS = {
             "rebalance_recommendation": ["SKU-4402", "SLOW-MOVING"],
             "transfer_plan": ["SKU-4401", "No inventory has been reserved"],
             "cost_analysis": ["Total annual holding cost", "synthetic planning estimates"],
+            "portfolio_analysis": ["$1.5M tied up", "$675K", "Excess safety stock"],
+            "recovery_plan": ["Phase 1: Immediate Actions", "$225K", "$1.2M in 90 days"],
+            "warehouse_impact": ["New Utilization", "65%", "$2.8M"],
+            "financial_impact": ["$640K", "$3.12M", "7,329%"],
+            "execution_timeline": ["$307K", "$465K", "Day 45"],
+            "monitoring_plan": ["60 days no movement", "Inventory turns", "Success Metrics"],
         },
         "onepager": "Inventory Rebalancing Agent one-pager.pptx",
         "forbidden_claims": ["inventory has been moved", "transfer was executed"],
@@ -46,21 +52,27 @@ SOLUTIONS = {
         "constants": [
             "EQUIPMENT",
             "SENSOR_READINGS",
-            "FAILURE_PROBABILITIES",
+            "REPAIR_PLANS",
+            "PRODUCTION_ORDERS",
+            "MAINTENANCE_WINDOWS",
             "TECHNICIANS",
-            "MAINTENANCE_HISTORY",
-            "DOWNTIME_COST_PER_HOUR",
-            "PARTS_READINESS",
-            "BACKUP_READINESS",
+            "COST_MODEL",
+            "CALENDAR_30_DAYS",
+            "EFFICIENCY",
+            "OPTIMIZATION",
         ],
         "operations": {
-            "schedule_overview": ["EQ-INJ-01", "Technician Availability"],
-            "predictive_alerts": ["EQ-INJ-01", "Barrel heater band failure"],
-            "work_order_plan": ["EQ-INJ-01", "No work order is created or dispatched"],
+            "schedule_overview": ["IM-07", "Technician Availability"],
+            "predictive_alerts": ["Screw wear at 78%", "120 operating hours", "50,000 units"],
+            "work_order_plan": ["Saturday 6 AM - 10 AM", "104%", "No work order is created or dispatched"],
             "downtime_analysis": [
                 "Modeled avoided-cost opportunity",
                 "synthetic planning estimates",
+                "478%",
             ],
+            "work_order_draft": ["WO-2024-3847", "Bin 12-A", "No work order is created or dispatched"],
+            "maintenance_calendar": ["Machine #12", "87% planned", "+34%"],
+            "optimization_plan": ["Quick Wins", "$124K", "Run pilot on Line 3"],
         },
         "onepager": "Maintenance Scheduling Agent one-pager.pptx",
         "forbidden_claims": ["technician assigned", "work order dispatched"],
@@ -76,12 +88,20 @@ SOLUTIONS = {
             "SUPPLIERS",
             "RECENT_INCIDENTS",
             "BACKUP_SUPPLIERS",
+            "MITIGATION_PLANS",
+            "MITIGATION_COSTS",
+            "ROADMAP",
+            "MONITORING_DESIGN",
         ],
         "operations": {
-            "risk_dashboard": ["TechnoCore Semiconductor", "CRITICAL"],
+            "risk_dashboard": ["TechnoCore Semiconductor", "HIGH RISK"],
             "supplier_scorecard": ["SUP-101", "Geopolitical"],
             "disruption_alerts": ["SUP-104", "force majeure"],
-            "alternative_sourcing": ["Murata Electronics", "No supplier was contacted"],
+            "alternative_sourcing": ["Kansai Passive Components", "No supplier was contacted"],
+            "mitigation_plan": ["Increase safety stock", "MONITOR CLOSELY", "OPPORTUNITY"],
+            "financial_impact": ["$1.098M", "65% reduction", "Break-even"],
+            "implementation_roadmap": ["Phase 1 (Months 1-3)", "60% Taiwan / 40% Korea", "Risk score target"],
+            "monitoring_plan": ["Alert Thresholds", "Automated Actions", "Early warning"],
         },
         "onepager": "Supply Risk Monitoring Agent one-pager.pptx",
         "forbidden_claims": ["we contacted the supplier", "we selected the supplier"],
@@ -98,12 +118,17 @@ SOLUTIONS = {
             "SHIPMENTS",
             "DELAY_REASONS",
             "CUSTOMER_CONTACTS",
+            "QUALITY_PLANS",
+            "ACCOUNT_METRICS",
         ],
         "operations": {
-            "order_lookup": ["ORD-7813", "DELAYED"],
+            "order_lookup": ["PO #F2024-3847", "ORD-7813", "DELAYED"],
             "shipment_tracking": ["ORD-7812", "XPO-884291047"],
-            "delay_notification": ["ORD-7813", "Recorded synthetic recovery options"],
-            "customer_update": ["Customer Update Drafts", "No email, EDI message"],
+            "delay_notification": ["Midwest Casting", "Recorded synthetic recovery options", "$8,400"],
+            "customer_update": ["Customer Update Drafts", "No email, EDI message", "James Mitchell"],
+            "engagement_plan": ["EDI 856 ASN", "Today 2 PM EST", "Ready to send"],
+            "quality_validation": ["PPAP Level 3", "99.8%"],
+            "performance_dashboard": ["96.2%", "$14.2M", "Lessons learned"],
         },
         "onepager": "44. Order Status Communications Agent one-pager.pptx",
         "forbidden_claims": ["customer update was sent", "email was sent"],
@@ -254,13 +279,13 @@ def test_knowledge_and_skills_reproduce_locked_transcript_evidence(slug, config)
         for evidence in case["must_include"]:
             assert evidence in knowledge
 
-        skill = (
-            package
-            / "manual"
-            / "skills"
-            / f"aibast_{case['operation']}"
-            / "SKILL.md"
-        ).read_text(encoding="utf-8")
+        skill_dir = next(
+            path
+            for path in (package / "manual" / "skills").iterdir()
+            if re.sub(r"^aibast_|_\d+$", "", path.name).replace("-", "_")
+            == case["operation"]
+        )
+        skill = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
         assert case["prompt"] in skill
         assert all(evidence in skill for evidence in case["must_include"])
         assert "external action that was not performed" in skill

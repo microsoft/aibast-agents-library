@@ -6,21 +6,79 @@
   "promises": [
     {
       "advertised_promise": "Process time entries intelligently to enforce billing rules and accelerate invoice generation",
-      "operations": ["unbilled_report", "invoice_preparation"],
-      "demo_cases": ["TEB-01", "TEB-04"],
-      "synthetic_evidence": ["TE-9004 and TE-9011 remain outside the invoice package until evidence and approval are present", "Approved T&M entries are grouped by project while fixed-fee work is held for milestone evidence"]
+      "operations": [
+        "unbilled_report",
+        "invoice_preparation",
+        "month_end_close"
+      ],
+      "demo_cases": [
+        "TEB-01",
+        "TEB-04",
+        "TEB-06"
+      ],
+      "synthetic_evidence": [
+        "TE-9004 and TE-9011 remain outside the invoice package until evidence and approval are present",
+        "Approved T&M entries are grouped by project while fixed-fee work is held for milestone evidence",
+        "15,247",
+        "$2,847,500",
+        "267 hours"
+      ]
     },
     {
       "advertised_promise": "Automate risk and compliance checks to reduce errors and maintain audit-ready documentation",
-      "operations": ["billing_summary", "time_entry_audit"],
-      "demo_cases": ["TEB-02", "TEB-03"],
-      "synthetic_evidence": ["Twelve fictional entries are summarized by project and consultant", "Missing narrative, excess-hours, rate, approval, and budget conditions remain visible in the audit trail"]
+      "operations": [
+        "billing_summary",
+        "time_entry_audit",
+        "flagged_review",
+        "final_invoices"
+      ],
+      "demo_cases": [
+        "TEB-02",
+        "TEB-03",
+        "TEB-07",
+        "TEB-09"
+      ],
+      "synthetic_evidence": [
+        "Twelve fictional entries are summarized by project and consultant",
+        "Missing narrative, excess-hours, rate, approval, and budget conditions remain visible in the audit trail",
+        "MegaCorp Systems",
+        "$892K",
+        "5 projects over 95% budget consumed",
+        "$2,839,300",
+        "$157,800",
+        "Deferred: $427,000"
+      ]
     },
     {
       "advertised_promise": "Provide dispute resolution intelligence to help protect revenue and preserve client relationships",
-      "operations": ["dispute_resolution"],
-      "demo_cases": ["TEB-05"],
-      "synthetic_evidence": ["DSP-301 separates missing narrative and approval evidence", "DSP-302 requires written premium-work authorization and billing-manager sign-off before invoicing"]
+      "operations": [
+        "dispute_resolution",
+        "budget_overruns"
+      ],
+      "demo_cases": [
+        "TEB-05",
+        "TEB-08"
+      ],
+      "synthetic_evidence": [
+        "DSP-301 separates missing narrative and approval evidence",
+        "DSP-302 requires written premium-work authorization and billing-manager sign-off before invoicing",
+        "FinanceHub",
+        "RetailCo",
+        "$47K recoverable"
+      ]
     }
-  ]
+  ],
+  "source_audit": {
+    "implemented_operations": [
+      "unbilled_report",
+      "billing_summary",
+      "time_entry_audit",
+      "invoice_preparation",
+      "dispute_resolution",
+      "month_end_close",
+      "flagged_review",
+      "budget_overruns",
+      "final_invoices"
+    ]
+  }
 }

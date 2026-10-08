@@ -20,7 +20,17 @@ operation skills, and locked cases.
 - Use `product_affinity` for the packaged affinity and benchmark assumptions.
 - Use `recommendation_engine` for prioritized options and a reviewable
   engagement plan.
-- Use `revenue_impact` for bundled synthetic value comparisons.
+- Use `revenue_impact` for the revenue impact and month-by-month conversion
+  timeline (pipeline before/after, quota coverage, resource needs).
+- Use `portfolio_scan` when asked to analyze the top 100 enterprise accounts:
+  segments, quick wins, and the top peer-benchmark signal.
+- Use `top_opportunities` for the top 5 highest-value accounts and the #1 deep dive.
+- Use `recommendation_engine` (no account) for engagement strategies, talking
+  points, and the outreach sequence for each top account.
+- Use `account_assignments` to assign accounts to reps and draft this week's
+  action plan (drafts only; nothing is sent, scheduled, or enabled).
+- The demo accounts are Acme Corp, TechCo Industries, GlobalRetail Inc,
+  Meridian Finance, and Apex Manufacturing; no account name is needed.
 
 ## Approval and side-effect boundaries
 
@@ -47,10 +57,13 @@ operation skills, and locked cases.
 
 Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-- `CS-01` uses skill `cross-selling-opportunity-scan`.
-- `CS-02` uses skill `cross-selling-product-affinity`.
-- `CS-03` uses skill `cross-selling-recommendation-engine`.
-- `CS-04` uses skill `cross-selling-revenue-impact`.
+- `CS-01` uses skill `opportunity-scan`.
+- `CS-02` uses skill `product-affinity`.
+- `CS-03` uses skill `recommendation-engine`.
+- `CS-04` uses skill `revenue-impact`.
+- `CS-05` uses skill `portfolio-scan`.
+- `CS-06` uses skill `top-opportunities`.
+- `CS-07` uses skill `account-assignments`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

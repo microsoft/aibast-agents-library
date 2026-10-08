@@ -1,21 +1,21 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T18:02:40.778Z",
+  "captured_at": "2026-10-07T04:59:44.412428Z",
   "solution": "@aibast-agents-library/ask-hr",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Ask HR Pilot",
   "schema_name": "aibast_AskHRPilot",
   "bot_id": "764fa154-4a14-4d6f-9f0d-efb88a3a1ce1",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "HR-01",
       "must_include": [
-        "15.5 days",
+        "14 days",
         "Upcoming Company Holidays",
         "Synthetic HRIS"
       ],
@@ -83,6 +83,32 @@
         "No salary",
         "total-compensation value is inferred",
         "Synthetic Profile"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "HR-07",
+      "must_include": [
+        "After Request",
+        "David Kim",
+        "Blackout dates"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "HR-08",
+      "must_include": [
+        "Open enrollment",
+        "Carryover",
+        "before Dec 31"
       ],
       "must_not_include": [
         "I do not have access",

@@ -4,7 +4,7 @@
 
 `persona question -> UtilityBillingAssistanceAgent -> synthetic records -> deterministic analysis -> approval-gated recommendation`
 
-The portable agent is read-only. Its four operations remain independently routable and return strings suitable for Brainstem or Copilot Studio.
+The portable agent is read-only. Its nine operations remain independently routable and return strings suitable for Brainstem or Copilot Studio.
 
 ## Production replacement seams
 

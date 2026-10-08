@@ -8,48 +8,73 @@
       "advertised_promise": "Analyze applications, documents, and loss history to identify key risk factors and underwriting concerns",
       "operations": [
         "risk_evaluation",
-        "guideline_check"
+        "guideline_check",
+        "submission_review"
       ],
       "demo_cases": [
         "UWS-01",
-        "UWS-03"
+        "UWS-03",
+        "UWS-05"
       ],
       "synthetic_evidence": [
         "Submission risk evaluation returns deterministic fictional identifiers and review context",
         "Guideline and document alignment returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Midwest Manufacturing Inc.",
+        "95% complete",
+        "68/100 (Moderate)"
       ]
     },
     {
       "advertised_promise": "Generate standardized risk assessments, scoring, and pricing recommendations",
       "operations": [
         "risk_evaluation",
-        "pricing_recommendation"
+        "pricing_recommendation",
+        "risk_assessment",
+        "underwriting_summary"
       ],
       "demo_cases": [
         "UWS-01",
-        "UWS-02"
+        "UWS-02",
+        "UWS-06",
+        "UWS-09"
       ],
       "synthetic_evidence": [
         "Submission risk evaluation returns deterministic fictional identifiers and review context",
         "Illustrative pricing-factor review returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Industry hazard",
+        "$237K",
+        "0.42 vs class 0.58",
+        "Approve with conditions",
+        "$88,100",
+        "drafted for you to issue"
       ]
     },
     {
       "advertised_promise": "Validate coverage structure and compliance requirements",
       "operations": [
         "guideline_check",
-        "exception_review"
+        "exception_review",
+        "coverage_structure",
+        "compliance_check"
       ],
       "demo_cases": [
         "UWS-03",
-        "UWS-04"
+        "UWS-04",
+        "UWS-07",
+        "UWS-08"
       ],
       "synthetic_evidence": [
         "Guideline and document alignment returns deterministic fictional identifiers and review context",
         "Exception review queue returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Equipment breakdown",
+        "$5K deductible",
+        "$8.2M total",
+        "Within $10M limit",
+        "OH rates filed",
+        "30 days"
       ]
     }
   ]

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PROC-01, PROC-02, PROC-03, PROC-04`.
+1. Which locked case IDs did you complete? Expected scope: `PROC-01, PROC-02, PROC-03, PROC-04, PROC-05, PROC-06, PROC-07, PROC-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -208,7 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `PROC-02` — Give me a neutral comparison of the approved cloud vendors; do not pick a winner.
 - `PROC-03` — This infrastructure request landed in my queue. What is the recommended approval path?
 - `PROC-04` — Where is the purchasing budget under pressure, and what should we review before approving more spend?
+- `PROC-05` — Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team.
+- `PROC-06` — The engineering laptop order is stuck in approval. Can you expedite it with urgency notifications?
+- `PROC-07` — How does the engineering laptop order affect our Q4 IT budget?
+- `PROC-08` — We also need an RFQ for office furniture for the same engineering team.
 
 ## Manual mode — literal browser construction
 
@@ -263,9 +267,3 @@ an approved production tool returns evidence that it succeeded.
   part of scaffolding.
 - **Customer gate:** replacement connections, governance, telemetry, support,
   and success measures are agreed before production.
-
-## Pending evidence
-
-- solutions/procurement-agent/evals/manual-build-evidence.json does not record passed manual Preview evidence
-
-Pending items are not proof and must not be described as captured.

@@ -8,558 +8,1039 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 22,
-    "reshoot_required": 1
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-csc-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "CSC-01",
-      "source": "solutions/customer-sentiment-churn/screenshots/assisted/01-csc-01.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/01-csc-01.png",
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Negative sentiment",
-        "4 interactions",
-        "40.0% share"
-      ],
-      "full_case_not_visibly_proven": [
-        "CUST-8002 is outside the captured viewport."
+        "Customer Sentiment Pilot",
+        "Draft",
+        "outreach-plan",
+        "early-warning-signals",
+        "churn-prediction",
+        "sentiment-dashboard",
+        "segment-analysis",
+        "aibast_customer-sentiment-churn-controls-and-rev",
+        "aibast_customer-sentiment-churn-synthetic-record"
       ],
       "boxes": [
         {
-          "x": 288,
-          "y": 542,
-          "width": 365,
-          "height": 52,
-          "label": "Negative sentiment anchor"
+          "x": 84,
+          "y": 20,
+          "width": 197,
+          "height": 20,
+          "label": "Customer Sentiment Pilot"
+        },
+        {
+          "x": 292,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 98,
+          "height": 22,
+          "label": "outreach-plan"
+        },
+        {
+          "x": 1212,
+          "y": 197,
+          "width": 143,
+          "height": 22,
+          "label": "early-warning-signals"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 114,
+          "height": 22,
+          "label": "churn-prediction"
+        },
+        {
+          "x": 1229,
+          "y": 237,
+          "width": 144,
+          "height": 19,
+          "label": "sentiment-dashboard"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 117,
+          "height": 22,
+          "label": "segment-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 313,
+          "height": 21,
+          "label": "aibast_customer-sentiment-churn-controls-and-rev"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_customer-sentiment-churn-synthetic-record"
+        }
+      ]
+    },
+    {
+      "id": "easy-csc-01",
+      "mode": "easy",
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/02-csc-01.jpg",
+      "caption": "CSC-01 · Customer Success Lead: Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
+      "case_id": "CSC-01",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/02-csc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "180K customers analyzed",
+        "$8.2M",
+        "Negative sentiment up 18%"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 588,
+          "width": 196,
+          "height": 24,
+          "label": "180K customers analyzed"
+        },
+        {
+          "x": 811,
+          "y": 587,
+          "width": 56,
+          "height": 23,
+          "label": "$8.2M"
+        },
+        {
+          "x": 350,
+          "y": 879,
+          "width": 176,
+          "height": 24,
+          "label": "Negative sentiment up 18%"
         }
       ]
     },
     {
       "id": "easy-csc-02",
       "mode": "easy",
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/03-csc-02.jpg",
+      "caption": "CSC-02 · Retention Specialist: Show me profiles of our highest-value at-risk customers.",
       "case_id": "CSC-02",
-      "source": "solutions/customer-sentiment-churn/screenshots/assisted/02-csc-02.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/02-csc-02.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/03-csc-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "CUST-8004",
-        "top candidate for human review"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact phrase prioritize review is not visible."
+        "prioritize review",
+        "Robert Martinez",
+        "$2.18M"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 137,
-          "width": 950,
-          "height": 82,
-          "label": "CUST-8004 review priority"
+          "x": 1016,
+          "y": 437,
+          "width": 100,
+          "height": 24,
+          "label": "prioritize review"
+        },
+        {
+          "x": 422,
+          "y": 616,
+          "width": 158,
+          "height": 23,
+          "label": "Robert Martinez"
+        },
+        {
+          "x": 623,
+          "y": 4498,
+          "width": 62,
+          "height": 22,
+          "label": "$2.18M"
         }
       ]
     },
     {
       "id": "easy-csc-03",
       "mode": "easy",
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/04-csc-03.jpg",
+      "caption": "CSC-03 · Relationship Manager: Prepare options for Marcus that I can review before anyone contacts him or changes a fee.",
       "case_id": "CSC-03",
-      "source": "solutions/customer-sentiment-churn/screenshots/assisted/03-csc-03.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/03-csc-03.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/04-csc-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "No customer was contacted",
-        "no fee was changed",
-        "no account or CRM record was altered"
-      ],
-      "full_case_not_visibly_proven": [
-        "Marcus Johnson is outside the captured viewport."
+        "Marcus Johnson",
+        "No customer was contacted"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 454,
-          "width": 940,
-          "height": 92,
-          "label": "No customer action occurred"
-        }
-      ],
-      "note": "Label pill covered approval-gate text above the boxed sentence; moved the pill below the box and kept the evidence box aligned 2026-09-10."
-    },
-    {
-      "id": "easy-csc-04",
-      "mode": "easy",
-      "case_id": "CSC-04",
-      "source": "solutions/customer-sentiment-churn/screenshots/assisted/04-csc-04.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/04-csc-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Mass Market",
-        "benchmark of 2.0",
-        "20 transactions/month segment average"
-      ],
-      "boxes": [
+          "x": 508,
+          "y": 780,
+          "width": 125,
+          "height": 21,
+          "label": "Marcus Johnson"
+        },
         {
-          "x": 286,
-          "y": 120,
-          "width": 944,
-          "height": 260,
-          "label": "Mass Market benchmark evidence"
+          "x": 306,
+          "y": 2542,
+          "width": 136,
+          "height": 20,
+          "label": "No customer was contacted"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-csc-04",
       "mode": "easy",
-      "source": "solutions/customer-sentiment-churn/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Customer Sentiment Pilot row is not visible, so the screenshot cannot prove that the validated assisted agent remains Draft.",
-      "draft": true
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/05-csc-04.jpg",
+      "caption": "CSC-04 · Head of Customer Experience: Which segment is under its experience benchmark, and what should we investigate?",
+      "case_id": "CSC-04",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/05-csc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "benchmark",
+        "Mass Market"
+      ],
+      "boxes": [
+        {
+          "x": 373,
+          "y": 564,
+          "width": 120,
+          "height": 23,
+          "label": "benchmark"
+        },
+        {
+          "x": 299,
+          "y": 751,
+          "width": 104,
+          "height": 21,
+          "label": "Mass Market"
+        }
+      ]
+    },
+    {
+      "id": "easy-csc-05",
+      "mode": "easy",
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/06-csc-05.jpg",
+      "caption": "CSC-05 · Retention Specialist: Yes, what are the early warning signals we should watch for?",
+      "case_id": "CSC-05",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/06-csc-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reduced logins",
+        "89% churn",
+        "Robert Martinez"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 668,
+          "width": 118,
+          "height": 24,
+          "label": "Reduced logins"
+        },
+        {
+          "x": 578,
+          "y": 963,
+          "width": 88,
+          "height": 21,
+          "label": "89% churn"
+        },
+        {
+          "x": 299,
+          "y": 1463,
+          "width": 124,
+          "height": 21,
+          "label": "Robert Martinez"
+        }
+      ]
+    },
+    {
+      "id": "easy-csc-06",
+      "mode": "easy",
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/07-csc-06.jpg",
+      "caption": "CSC-06 · Customer Success Lead: Yes, assign the outreach and set up tracking.",
+      "case_id": "CSC-06",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/07-csc-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "VP Chen",
+        "Escalation Rules",
+        "No customer was contacted"
+      ],
+      "boxes": [
+        {
+          "x": 622,
+          "y": 700,
+          "width": 73,
+          "height": 21,
+          "label": "VP Chen"
+        },
+        {
+          "x": 286,
+          "y": 1318,
+          "width": 155,
+          "height": 23,
+          "label": "Escalation Rules"
+        },
+        {
+          "x": 621,
+          "y": 1541,
+          "width": 102,
+          "height": 20,
+          "label": "No customer was contacted"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/customer-sentiment-churn/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Sentiment Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 196,
+          "height": 21,
+          "label": "Customer Sentiment Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 158,
-          "y": 88,
-          "width": 825,
-          "height": 70,
-          "label": "Blank agent workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Customer Sentiment Manual",
+      "step": 2,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Customer Sentiment Manual in the name field"
+        "Customer Sentiment Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 90,
-          "width": 824,
-          "height": 70,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 218,
+          "height": 20,
+          "label": "Customer Sentiment Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "CSC-01 through CSC-04 anchors"
+        "Customer Sentiment and Churn Prediction Agent — "
       ],
       "boxes": [
         {
-          "x": 70,
-          "y": 184,
-          "width": 910,
-          "height": 645,
-          "label": "Reviewed instructions and locked anchors"
+          "x": 203,
+          "y": 131,
+          "width": 322,
+          "height": 32,
+          "label": "Customer Sentiment and Churn Prediction Agent — "
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/04-save-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Customer Sentiment and Churn Prediction Agent — Global Instructions",
-        "Role",
-        "Allowed operations"
-      ],
-      "full_step_not_visibly_proven": [
-        "No explicit save-complete tooltip is visible; the checkpoint proves the reviewed policy is present after the save action."
+        "Draft"
       ],
       "boxes": [
         {
-          "x": 74,
-          "y": 214,
-          "width": 910,
-          "height": 420,
-          "label": "Reviewed policy visible after save"
+          "x": 313,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
         }
       ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/05-remove-web-search.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge section contains no Search all websites chip",
-        "Tools section contains no configured tool"
+        "Provide trusted context to guide decisions"
       ],
       "boxes": [
         {
-          "x": 1016,
-          "y": 178,
-          "width": 385,
-          "height": 178,
-          "label": "Default web search removed"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
       ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/06-add-aibast-customer-sentiment-churn-controls-and-review.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_customer-sentiment-churn-controls-and-review.md",
+      "step": 6,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/06-add-aibast-customer-sentiment-churn-controls-and-review.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_customer-sentiment-churn-controls-a… knowledge chip"
-      ],
-      "full_filename_not_visibly_proven": [
-        "The end of the reviewed controls-and-review filename is truncated by the Copilot Studio chip."
+        "aibast_customer-sentiment-churn-controls-and-rev"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 294,
-          "width": 372,
-          "height": 60,
-          "label": "Controls knowledge added"
+          "x": 1058,
+          "y": 315,
+          "width": 302,
+          "height": 35,
+          "label": "aibast_customer-sentiment-churn-controls-and-rev"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/07-add-aibast-customer-sentiment-churn-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_customer-sentiment-churn-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/07-add-aibast-customer-sentiment-churn-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_customer-sentiment-churn-synthetic-… knowledge chip",
-        "aibast_customer-sentiment-churn-controls-a… knowledge chip"
-      ],
-      "full_filename_not_visibly_proven": [
-        "Both reviewed filenames are truncated by the Copilot Studio chips."
+        "aibast_customer-sentiment-churn-synthetic-record"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 294,
-          "width": 372,
-          "height": 103,
-          "label": "Two reviewed knowledge sources"
+          "x": 1058,
+          "y": 308,
+          "width": 308,
+          "height": 39,
+          "label": "aibast_customer-sentiment-churn-synthetic-record"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "step": 8,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/08-add-aibast-churn-prediction-02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_churn-prediction_02",
+      "step": 8,
       "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/08-add-aibast-churn-prediction-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "churn-prediction skill"
+        "churn-prediction"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 176,
-          "width": 190,
-          "height": 58,
-          "label": "Churn prediction skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 114,
+          "height": 22,
+          "label": "churn-prediction"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/09-add-aibast-early-warning-signals-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_early-warning-signals_05",
       "step": 9,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/09-add-aibast-retention-actions-03.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/09-add-aibast-retention-actions-03.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/09-add-aibast-early-warning-signals-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "retention-actions skill"
+        "early-warning-signals"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 176,
-          "width": 190,
-          "height": 58,
-          "label": "Retention actions skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 143,
+          "height": 22,
+          "label": "early-warning-signals"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/10-add-aibast-outreach-plan-06.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_outreach-plan_06",
       "step": 10,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/10-add-aibast-segment-analysis-04.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/10-add-aibast-segment-analysis-04.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/10-add-aibast-outreach-plan-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "segment-analysis skill"
+        "outreach-plan"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 176,
-          "width": 190,
-          "height": 58,
-          "label": "Segment analysis skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 98,
+          "height": 22,
+          "label": "outreach-plan"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/11-add-aibast-retention-actions-03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_retention-actions_03",
       "step": 11,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/11-add-aibast-sentiment-dashboard-01.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/11-add-aibast-sentiment-dashboard-01.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/11-add-aibast-retention-actions-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "sentiment-dashboard skill",
-        "four configured skills"
+        "retention-actions"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 176,
-          "width": 220,
-          "height": 58,
-          "label": "Sentiment dashboard skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 19,
+          "label": "retention-actions"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/12-add-aibast-segment-analysis-04.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_segment-analysis_04",
       "step": 12,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/12-add-aibast-segment-analysis-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "four configured skills",
-        "two knowledge files",
-        "Tools section contains no configured tool"
+        "segment-analysis"
       ],
       "boxes": [
         {
-          "x": 1202,
-          "y": 84,
-          "width": 195,
-          "height": 48,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1024,
-          "y": 176,
-          "width": 374,
-          "height": 137,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1018,
-          "y": 315,
-          "width": 382,
-          "height": 202,
-          "label": "No tools and two knowledge sources"
+          "x": 1057,
+          "y": 197,
+          "width": 117,
+          "height": 22,
+          "label": "segment-analysis"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/13-add-aibast-sentiment-dashboard-01.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_sentiment-dashboard_01",
       "step": 13,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/13-add-aibast-sentiment-dashboard-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Customer Sentiment Manual greeting"
+        "sentiment-dashboard"
       ],
       "boxes": [
         {
-          "x": 636,
-          "y": 6,
-          "width": 108,
-          "height": 52,
-          "label": "Preview selected"
+          "x": 1057,
+          "y": 197,
+          "width": 143,
+          "height": 19,
+          "label": "sentiment-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "sentiment-dashboard",
+        "segment-analysis",
+        "retention-actions",
+        "outreach-plan",
+        "early-warning-signals",
+        "aibast_customer-sentiment-churn-synthetic-record",
+        "aibast_customer-sentiment-churn-controls-and-rev"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 834,
-          "y": 84,
-          "width": 115,
-          "height": 50,
-          "label": "Fresh chat control"
+          "x": 1057,
+          "y": 197,
+          "width": 143,
+          "height": 19,
+          "label": "sentiment-dashboard"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 117,
+          "height": 22,
+          "label": "segment-analysis"
+        },
+        {
+          "x": 1232,
+          "y": 237,
+          "width": 116,
+          "height": 19,
+          "label": "retention-actions"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 98,
+          "height": 22,
+          "label": "outreach-plan"
+        },
+        {
+          "x": 1212,
+          "y": 277,
+          "width": 143,
+          "height": 22,
+          "label": "early-warning-signals"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_customer-sentiment-churn-synthetic-record"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 302,
+          "height": 21,
+          "label": "aibast_customer-sentiment-churn-controls-and-rev"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sentiment-dashboard",
+        "churn-prediction",
+        "segment-analysis",
+        "retention-actions",
+        "outreach-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 143,
+          "height": 19,
+          "label": "sentiment-dashboard"
+        },
+        {
+          "x": 1246,
+          "y": 220,
+          "width": 64,
+          "height": 17,
+          "label": "churn-prediction"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 118,
+          "height": 22,
+          "label": "segment-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 117,
+          "height": 19,
+          "label": "retention-actions"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 98,
+          "height": 22,
+          "label": "outreach-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sentiment-dashboard",
+        "churn-prediction",
+        "retention-actions",
+        "outreach-plan",
+        "early-warning-signals"
+      ],
+      "boxes": [
+        {
+          "x": 1110,
+          "y": 107,
+          "width": 65,
+          "height": 17,
+          "label": "sentiment-dashboard"
+        },
+        {
+          "x": 1226,
+          "y": 107,
+          "width": 64,
+          "height": 17,
+          "label": "churn-prediction"
+        },
+        {
+          "x": 1055,
+          "y": 162,
+          "width": 117,
+          "height": 19,
+          "label": "retention-actions"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 98,
+          "height": 22,
+          "label": "outreach-plan"
+        },
+        {
+          "x": 1055,
+          "y": 338,
+          "width": 144,
+          "height": 22,
+          "label": "early-warning-signals"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Sentiment Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 217,
+          "height": 20,
+          "label": "Customer Sentiment Manual"
         }
       ]
     },
     {
       "id": "hard-csc-01",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/18-csc-01.jpg",
+      "caption": "CSC-01 · Customer Success Lead: Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
+      "step": 18,
       "case_id": "CSC-01",
-      "step": 14,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/14-csc-01.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/14-csc-01.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/18-csc-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Marcus Johnson (CUST-8002)",
-        "3 consecutive Negative interactions"
+        "180K customers analyzed",
+        "$8.2M",
+        "Negative sentiment up 18%"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 266,
-          "width": 720,
-          "height": 72,
-          "label": "CUST-8002 relationship priority"
+          "x": 285,
+          "y": 657,
+          "width": 121,
+          "height": 20,
+          "label": "180K customers analyzed"
         },
         {
-          "x": 288,
-          "y": 400,
-          "width": 920,
-          "height": 80,
-          "label": "Negative interaction evidence"
+          "x": 714,
+          "y": 656,
+          "width": 55,
+          "height": 22,
+          "label": "$8.2M"
+        },
+        {
+          "x": 317,
+          "y": 1026,
+          "width": 73,
+          "height": 24,
+          "label": "Negative sentiment up 18%"
         }
       ]
     },
     {
       "id": "hard-csc-02",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/19-csc-02.jpg",
+      "caption": "CSC-02 · Retention Specialist: Show me profiles of our highest-value at-risk customers.",
+      "step": 19,
       "case_id": "CSC-02",
-      "step": 15,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/15-csc-02.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/15-csc-02.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/19-csc-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Gerald Thompson (CUST-8004)",
-        "prioritize human review"
+        "prioritize review",
+        "Robert Martinez",
+        "$2.18M"
       ],
       "boxes": [
         {
-          "x": 404,
-          "y": 139,
-          "width": 580,
-          "height": 58,
-          "label": "CUST-8004 ranked first"
+          "x": 1016,
+          "y": 482,
+          "width": 100,
+          "height": 23,
+          "label": "prioritize review"
         },
         {
           "x": 286,
-          "y": 424,
-          "width": 940,
-          "height": 104,
-          "label": "Prioritize human review"
+          "y": 688,
+          "width": 129,
+          "height": 20,
+          "label": "Robert Martinez"
+        },
+        {
+          "x": 399,
+          "y": 1799,
+          "width": 60,
+          "height": 22,
+          "label": "$2.18M"
         }
       ]
     },
     {
       "id": "hard-csc-03",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/20-csc-03.jpg",
+      "caption": "CSC-03 · Relationship Manager: Prepare options for Marcus that I can review before anyone contacts him or changes a fee.",
+      "step": 20,
       "case_id": "CSC-03",
-      "step": 16,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/16-csc-03.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/16-csc-03.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/20-csc-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "No customer was contacted",
-        "no fee was changed",
-        "no offer was made"
-      ],
-      "full_case_not_visibly_proven": [
-        "Marcus Johnson is outside the captured viewport."
+        "Marcus Johnson",
+        "No customer was contacted"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 462,
-          "width": 944,
-          "height": 110,
-          "label": "No customer action occurred"
+          "x": 917,
+          "y": 544,
+          "width": 124,
+          "height": 20,
+          "label": "Marcus Johnson"
+        },
+        {
+          "x": 434,
+          "y": 1594,
+          "width": 207,
+          "height": 20,
+          "label": "No customer was contacted"
         }
       ]
     },
     {
       "id": "hard-csc-04",
       "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/21-csc-04.jpg",
+      "caption": "CSC-04 · Head of Customer Experience: Which segment is under its experience benchmark, and what should we investigate?",
+      "step": 21,
       "case_id": "CSC-04",
-      "step": 17,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/17-csc-04.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/17-csc-04.png",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/21-csc-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Mass Market benchmark is 20 transactions/month",
-        "average NPS of 3.5 against a 6.5 benchmark"
+        "benchmark",
+        "Mass Market"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 300,
-          "width": 940,
-          "height": 130,
-          "label": "Mass Market benchmark gaps"
+          "x": 967,
+          "y": 512,
+          "width": 96,
+          "height": 20,
+          "label": "benchmark"
+        },
+        {
+          "x": 299,
+          "y": 745,
+          "width": 101,
+          "height": 20,
+          "label": "Mass Market"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-csc-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/customer-sentiment-churn/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/22-csc-05.jpg",
+      "caption": "CSC-05 · Retention Specialist: Yes, what are the early warning signals we should watch for?",
+      "step": 22,
+      "case_id": "CSC-05",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/22-csc-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Customer Sentiment Manual",
-        "Draft"
+        "Reduced logins",
+        "89% churn",
+        "Robert Martinez"
       ],
       "boxes": [
         {
-          "x": 104,
-          "y": 232,
-          "width": 680,
-          "height": 72,
-          "label": "Target manual agent remains Draft"
+          "x": 299,
+          "y": 711,
+          "width": 118,
+          "height": 24,
+          "label": "Reduced logins"
+        },
+        {
+          "x": 558,
+          "y": 950,
+          "width": 87,
+          "height": 21,
+          "label": "89% churn"
+        },
+        {
+          "x": 428,
+          "y": 1182,
+          "width": 124,
+          "height": 20,
+          "label": "Robert Martinez"
+        }
+      ]
+    },
+    {
+      "id": "hard-csc-06",
+      "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/23-csc-06.jpg",
+      "caption": "CSC-06 · Customer Success Lead: Yes, assign the outreach and set up tracking.",
+      "step": 23,
+      "case_id": "CSC-06",
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/23-csc-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Escalation Rules",
+        "VP Chen"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 1129,
+          "width": 126,
+          "height": 20,
+          "label": "Escalation Rules"
+        },
+        {
+          "x": 645,
+          "y": 1329,
+          "width": 79,
+          "height": 23,
+          "label": "VP Chen"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No customer was contacted not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/customer-sentiment-churn/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Sentiment Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 216,
+          "height": 21,
+          "label": "Customer Sentiment Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Customer Sentiment Pilot with the target row and Draft status visible."
-    ],
+    "replacement_captures": [],
     "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:customer-sentiment-churn",
-    "reviewed_at": "2026-08-10T00:27:58.138732+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:47:51.982581+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

@@ -136,11 +136,11 @@ No credentials, tokens, customer data, or patient information included: yes/no
 | Source bundle | `solutions/care-gap-closure/exports/care-gap-closure-source.zip` |
 | Manual evidence | `solutions/care-gap-closure/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/care-gap-closure/screenshots/manual/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — not current source | `solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip` |
+| Copilot Studio solution ZIP | `solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/care-gap-closure/exports/care-gap-closure-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/care-gap-closure/exports/care-gap-closure-solution-export.json` |
 
-**Scaffold status:** 91 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Current manual Preview and saved-instruction verification remain pending.
+**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

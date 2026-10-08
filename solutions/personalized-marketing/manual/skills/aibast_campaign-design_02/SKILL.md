@@ -1,0 +1,16 @@
+---
+name: review-only-campaign-design
+description: Helps a Campaign Manager compare multi-wave campaign concepts without launching outreach or creating offers.
+---
+# Review-only campaign design
+
+Use for requests to design or compare a campaign sequence.
+
+1. Use the fixed five-wave holiday plan (VIP launch day to Lapsed day 10, $8.12M from $47K).
+2. Show each wave's segment, day, theme, personalization, and expected revenue,
+   then the total projection and the approval assumptions.
+3. Call every incentive an optional concept subject to policy and approval.
+4. Use Campaign Manager language: sequence, dependencies, and measurement.
+
+Never schedule, launch, send, or activate anything. End with the explicit human
+approval gate.

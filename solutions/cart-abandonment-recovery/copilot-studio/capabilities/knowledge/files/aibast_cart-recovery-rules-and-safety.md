@@ -21,6 +21,9 @@
 | `CAR-02` | `recovery_campaign` | Digital Marketing Lead | `{}` | `Prepared for:** Digital Marketing Lead`; `Draft Recovery Campaign Dashboard`; `not deployed` |
 | `CAR-03` | `incentive_optimization` | Growth Manager | `{}` | `Prepared for:** Growth Manager`; `Draft Incentive Scenario Comparison`; `Scenario for approval` |
 | `CAR-04` | `conversion_tracking` | Growth Manager | `{}` | `Synthetic Conversion Tracking`; `Recovery Rate`; `no cart or purchase is changed` |
+| `CAR-05` | `recovery_strategies` | Marketing Manager | `{}` | `Personalized Recovery Strategies`; `Sarah M.`; `Point Expiry (12,000)` |
+| `CAR-06` | `recovery_forecast` | Growth Manager | `{}` | `Recovery Forecast (48 hours)`; `$37,940`; `+$56K/month` |
+| `CAR-07` | `optimization_recommendations` | Growth Manager | `{}` | `Recovery Optimization Recommendations`; `Exit intent popup`; `Quick Win` |
 
 Routing rules:
 
@@ -53,32 +56,27 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 - Exact arguments: `{}`
 
 ```markdown
-[CartAbandonmentRecoveryAgent] **Prepared for:** Marketing Manager
-**Role focus:** margin-aware recovery planning and approval gates
-
-> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+[CartAbandonmentRecoveryAgent] **Prepared for:** Marketing Manager (margin-aware recovery planning and approval gates)
 
 # Synthetic Cart Abandonment Analysis
 
-**Abandoned Carts:** 4
-**Total Abandoned Value:** $2,494.90
-**Abandonment Rate:** 71.4%
+Analyzed 847 abandoned carts worth $127K today.
 
-## Abandoned Carts Detail
+| Segment | Carts | Value | Recovery |
+|---|---|---|---|
+| VIP | 34 | $18K | 45% |
+| Repeat buyers | 89 | $24K | 38% |
+| New visitors | 412 | $53K | 22% |
+| Other shoppers | 312 | $32K | 28% |
 
-| Cart ID | Customer | Segment | Value | Exit Page | Device | Status |
-|---|---|---|---|---|---|---|
-| CART-20001 | Synthetic returning-shopper cart | Returning Shopper | $284.98 | Shipping Options | Mobile | Draft Stage 1 Ready |
-| CART-20002 | Synthetic first-session cart | New Visitor | $299.97 | Account Creation | Desktop | Not Contacted |
-| CART-20003 | Synthetic established-shopper cart | Established Shopper | $1,779.96 | Payment | Desktop | Not Contacted |
-| CART-20004 | Synthetic guest cart | Guest | $129.99 | Cart Page | Mobile | Unrecoverable |
+**Top Opportunities:** Sarah M ($892), James K ($647), Emily R ($534)
+**Why Abandoning:** 42% shipping cost, 28% comparison shopping, 18% payment friction
 
-## Exit Page Breakdown
+Source: [Commerce analytics + Cart events] (synthetic)
 
-- Shipping Options: 1
-- Account Creation: 1
-- Payment: 1
-- Cart Page: 1
+Want personalized recovery strategies?
+
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
 ```
 
 ### `CAR-02` — `recovery_campaign`
@@ -88,30 +86,26 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 - Exact arguments: `{}`
 
 ```markdown
-[CartAbandonmentRecoveryAgent] **Prepared for:** Digital Marketing Lead
-**Role focus:** channel sequencing, consent, and draft content
-
-> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+[CartAbandonmentRecoveryAgent] **Prepared for:** Digital Marketing Lead (channel sequencing, consent, and draft content)
 
 # Draft Recovery Campaign Dashboard
 
-## Proposed Sequence (not deployed)
+Recovery program ready to launch (draft, not deployed - launch it from your marketing platform after approval):
 
-| Campaign | Delay | Subject | Incentive | Open Rate | Conversion |
-|---|---|---|---|---|---|
-| Draft Email Reminder | 1h | Draft: neutral cart reminder | None | 45.2% | 8.5% |
-| Draft Follow-Up | 24h | Draft: availability-neutral follow-up | None | 38.1% | 5.2% |
-| Draft Value Option | 72h | Draft: approved value option, if eligible | Optional incentive concept | 42.8% | 12.1% |
-| Draft SMS Reminder | 2h | Draft: concise cart reminder | None | 98.0% | 4.8% |
-| Draft Retargeting Concept | 6h | Draft: consented product reminder concept | None | 0% | 2.1% |
+| Campaign | Members |
+|---|---|
+| High-value win-back | 8,400 |
+| Point expiry alert | 12,000 |
+| Lapsed browser | 13,600 |
 
-## Carts Pending Recovery
+**Multi-Touch Sequences:**
+- VIP: Personal note -> SMS 1hr -> Express shipping 4hr -> Call 24hr ($500+)
+- Repeat: Points reminder -> Push 2hr -> Free shipping hint 12hr
+- New: Welcome 10% off -> Retargeting -> Social proof 24hr
 
-- **CART-20001** (Synthetic returning-shopper cart): $284.98 — Draft status: Draft Stage 1 Ready
-- **CART-20002** (Synthetic first-session cart): $299.97 — Draft status: Not Contacted
-- **CART-20003** (Synthetic established-shopper cart): $1,779.96 — Draft status: Not Contacted
+See real-time tracking?
 
-**No consented contact path in synthetic record:** 1
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
 ```
 
 ### `CAR-03` — `incentive_optimization`
@@ -121,45 +115,45 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 - Exact arguments: `{}`
 
 ```markdown
-[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager
-**Role focus:** aggregate conversion scenarios and experiment design
-
-> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager (aggregate conversion scenarios and experiment design)
 
 # Draft Incentive Scenario Comparison
 
 ## Available Incentives
 
-| Incentive | Description | Margin Impact | Conversion Lift |
+| Incentive | Description | Cost | Conversion Lift |
 |---|---|---|---|
-| Percent Off 10 | 10% off cart total | 10.0% | +35.0% |
-| Percent Off 15 | 15% off cart total | 15.0% | +48.0% |
-| Free Shipping | Free standard shipping | 5.5% | +28.0% |
-| Dollar Off 20 | $20 off orders over $150 | 8.0% | +22.0% |
-| Gift With Purchase | Free accessory with order | 6.0% | +18.0% |
+| Percent Off 10 | 10% off cart total | 10.0% of cart | +35.0% |
+| Percent Off 15 | 15% off cart total | 15.0% of cart | +48.0% |
+| Free Shipping | Free standard shipping | $12 flat | +28.0% |
+| Dollar Off 20 | $20 off orders over $150 | $20 flat | +22.0% |
+| Gift With Purchase | Free accessory with order | 6.0% of cart | +18.0% |
 
 ## Recommended Incentives by Cart
 
-### CART-20001: Synthetic returning-shopper cart ($284.98)
+### CART-20001: Sarah M ($892.00)
 
-- **Segment:** Returning Shopper
+- **Segment:** Vip
 - **Scenario for approval:** Free standard shipping
 - **Expected Lift:** +28.0%
-- **Net Recovery Value:** $269.31
+- **Net Recovery Value:** $880.00
 
-### CART-20002: Synthetic first-session cart ($299.97)
+### CART-20002: James K ($647.00)
 
-- **Segment:** New Visitor
-- **Scenario for approval:** 15% off cart total
-- **Expected Lift:** +48.0%
-- **Net Recovery Value:** $254.97
-
-### CART-20003: Synthetic established-shopper cart ($1,779.96)
-
-- **Segment:** Established Shopper
+- **Segment:** Repeat Buyer
 - **Scenario for approval:** 10% off cart total
 - **Expected Lift:** +35.0%
-- **Net Recovery Value:** $1,601.96
+- **Net Recovery Value:** $582.30
+
+### CART-20003: Emily R ($534.00)
+
+- **Segment:** Repeat Buyer
+- **Scenario for approval:** 10% off cart total
+- **Expected Lift:** +35.0%
+- **Net Recovery Value:** $480.60
+
+
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
 ```
 
 ### `CAR-04` — `conversion_tracking`
@@ -169,36 +163,7 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 - Exact arguments: `{}`
 
 ```markdown
-[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager
-**Role focus:** aggregate conversion scenarios and experiment design
-
-> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
-
-# Synthetic Cart Abandonment Analysis
-
-**Abandoned Carts:** 4
-**Total Abandoned Value:** $2,494.90
-**Abandonment Rate:** 71.4%
-
-## Abandoned Carts Detail
-
-| Cart ID | Customer | Segment | Value | Exit Page | Device | Status |
-|---|---|---|---|---|---|---|
-| CART-20001 | Synthetic returning-shopper cart | Returning Shopper | $284.98 | Shipping Options | Mobile | Draft Stage 1 Ready |
-| CART-20002 | Synthetic first-session cart | New Visitor | $299.97 | Account Creation | Desktop | Not Contacted |
-| CART-20003 | Synthetic established-shopper cart | Established Shopper | $1,779.96 | Payment | Desktop | Not Contacted |
-| CART-20004 | Synthetic guest cart | Guest | $129.99 | Cart Page | Mobile | Unrecoverable |
-
-## Exit Page Breakdown
-
-- Shipping Options: 1
-- Account Creation: 1
-- Payment: 1
-- Cart Page: 1
-[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager
-**Role focus:** aggregate conversion scenarios and experiment design
-
-> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager (aggregate conversion scenarios and experiment design)
 
 # Synthetic Conversion Tracking (30-Day)
 
@@ -209,15 +174,124 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 - **Total Recovered:** 544
 - **Recovered Revenue:** $102,000
 
-## Campaign Performance
+## Campaign Performance (recovered revenue allocated by conversion share)
 
 | Campaign | Open Rate | Conversion | Est. Recovered |
 |---|---|---|---|
-| Draft Email Reminder | 45.2% | 8.5% | $67,734 |
-| Draft Follow-Up | 38.1% | 5.2% | $41,438 |
-| Draft Value Option | 42.8% | 12.1% | $96,422 |
-| Draft SMS Reminder | 98.0% | 4.8% | $38,250 |
-| Draft Retargeting Concept | 0% | 2.1% | $16,734 |
+| Draft Email Reminder | 45.2% | 8.5% | $26,514 |
+| Draft SMS Reminder | 98.0% | 4.8% | $14,972 |
+| Draft Retargeting Concept | 0% | 2.1% | $6,550 |
+| Draft Follow-Up | 38.1% | 5.2% | $16,220 |
+| Draft Value Option | 42.8% | 12.1% | $37,743 |
 
-**Current Active Cart Value at Risk:** $2,494.90
+**Recoverable Sample Cart Value (contactable carts only):** $2,073.00
+
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager (aggregate conversion scenarios and experiment design)
+
+# Recovery Forecast (48 hours)
+
+| Segment | Recovery | Revenue |
+|---|---|---|
+| VIP | 45% | $8,280 |
+| Repeat buyers | 38% | $9,196 |
+| New visitors | 22% | $11,616 |
+| Other shoppers | 28% | $8,848 |
+| **Total** | **30%** | **$37,940** |
+
+**Benchmark:** Industry 18% -> Your target 27%
+**Monthly Impact:** Current $172K -> Optimized $228K (+$56K/month)
+
+Modeled forecast from synthetic segment recovery rates; not measured results.
+
+Generate optimization recommendations?
+
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+```
+
+### `CAR-05` — `recovery_strategies`
+
+- Persona: **Marketing Manager**
+- Prompt: As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers?
+- Exact arguments: `{}`
+
+```markdown
+[CartAbandonmentRecoveryAgent] **Prepared for:** Marketing Manager (margin-aware recovery planning and approval gates)
+
+# Personalized Recovery Strategies (Proposed)
+
+Personalized strategies by segment, proposed for your approval:
+
+| Audience | Offer | Channel |
+|---|---|---|
+| Sarah M. ($892 VIP) | "Your favorite bags are 40% off" + double points | Email + SMS |
+| High-Value (8,400) | VIP early access + 3X points | Email |
+| Point Expiry (12,000) | "Use before they expire" + 25% bonus | Email + push |
+| Lapsed Browsers (13,600) | Items viewed + 20% off + free shipping | Email + retargeting |
+
+Offers stay within the approved discount guardrails; nothing is sent until you approve and launch.
+
+Launch campaigns?
+
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+```
+
+### `CAR-06` — `recovery_forecast`
+
+- Persona: **Growth Manager**
+- Prompt: As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry?
+- Exact arguments: `{}`
+
+```markdown
+[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager (aggregate conversion scenarios and experiment design)
+
+# Recovery Forecast (48 hours)
+
+| Segment | Recovery | Revenue |
+|---|---|---|
+| VIP | 45% | $8,280 |
+| Repeat buyers | 38% | $9,196 |
+| New visitors | 22% | $11,616 |
+| Other shoppers | 28% | $8,848 |
+| **Total** | **30%** | **$37,940** |
+
+**Benchmark:** Industry 18% -> Your target 27%
+**Monthly Impact:** Current $172K -> Optimized $228K (+$56K/month)
+
+Modeled forecast from synthetic segment recovery rates; not measured results.
+
+Generate optimization recommendations?
+
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
+```
+
+### `CAR-07` — `optimization_recommendations`
+
+- Persona: **Growth Manager**
+- Prompt: As Growth Manager, what else could we change to lift our recovery rate further?
+- Exact arguments: `{}`
+
+```markdown
+[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager (aggregate conversion scenarios and experiment design)
+
+# Recovery Optimization Recommendations
+
+5 optimizations to push recovery 27% -> 35%:
+
+| Opportunity | Impact |
+|---|---|
+| Exit intent popup | +$18K/mo |
+| SMS all segments | +$12K/mo |
+| Dynamic pricing | +$8K/mo |
+| Lower shipping ($75>$65) | +$6K/mo |
+| Express wallet checkout | +$4K/mo |
+
+**Quick Win:** Exit intent popup - "Wait! 10% off" - 8-12% conversion, same-day implementation
+**Insight:** 42% abandon at shipping reveal - lower threshold or flat $5 rate
+
+Each change is a recommendation for approval; nothing is changed on the site.
+
+Summarize complete strategy?
+
+> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.
 ```

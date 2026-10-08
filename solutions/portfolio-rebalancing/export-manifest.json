@@ -5,26 +5,9 @@
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/portfolio-rebalancing",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
-    "label": "Portfolio Rebalancing r5 manual inputs",
+    "label": "Complete Portfolio Rebalancing Agent source bundle",
     "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-source.zip",
-    "kind": "manual-inputs",
-    "native_importable": false,
-    "standalone_guide": false,
-    "description": "Exactly nine frozen r5 manual inputs, their public SHA256 inventory and the export README. No HTML guide, screenshot, native import archive, runtime, tenant binding or raw browser log is included. Use the separately published guides and reviewed PNG reference set; this ZIP is deliberately not a standalone workshop.",
-    "include_paths": [
-      "solutions/portfolio-rebalancing/manual/GLOBAL-INSTRUCTIONS.md",
-      "solutions/portfolio-rebalancing/manual/skills/aibast_execution-plan_06/SKILL.md",
-      "solutions/portfolio-rebalancing/manual/skills/aibast_portfolio-analysis_01/SKILL.md",
-      "solutions/portfolio-rebalancing/manual/skills/aibast_rebalance-recommendation_02/SKILL.md",
-      "solutions/portfolio-rebalancing/manual/skills/aibast_retirement-scenario_05/SKILL.md",
-      "solutions/portfolio-rebalancing/manual/skills/aibast_tax-impact_03/SKILL.md",
-      "solutions/portfolio-rebalancing/manual/skills/aibast_tax-loss-harvest_04/SKILL.md",
-      "solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-controls-and-review.md",
-      "solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-synthetic-records.md",
-      "solutions/portfolio-rebalancing/evals/manual-inputs-r5.json",
-      "solutions/portfolio-rebalancing/exports/README.md"
-    ]
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-source.zip"
   },
   "files": [
     {
@@ -33,8 +16,7 @@
       "path": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "deployment-recipe",
@@ -42,17 +24,15 @@
       "path": "solutions/portfolio-rebalancing/deployment.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/deployment.json",
       "use": "Easy-mode deployment contract",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "copilot-studio-solution",
-      "label": "Historical Copilot Studio solution \u2014 not current source",
+      "label": "Importable Copilot Studio solution",
       "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip",
-      "use": "Historical 2026-08-09 unmanaged export, preserved byte-for-byte. Its five entries contain settings/instructions but zero manual skills and zero knowledge files; it cannot reproduce the six-skill/two-file r5 Manual build. Withheld from current reproduction downloads. No new export, import or publication is claimed.",
-      "status": "ready",
-      "included_in_bundle": false
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
     },
     {
       "id": "copilot-studio-deployment-settings",
@@ -60,8 +40,7 @@
       "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json",
       "use": "Connection-reference, environment-variable, and agent import settings",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "copilot-studio-export-metadata",
@@ -69,8 +48,7 @@
       "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-solution-export.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-solution-export.json",
       "use": "Export identity, integrity hash, source environment, and import caveats",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "field-guide",
@@ -78,8 +56,7 @@
       "path": "solutions/portfolio-rebalancing/field-guide.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/field-guide.html",
       "use": "Styled facilitation, evidence boundaries, gates, and recovery",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "field-guide-source",
@@ -87,8 +64,7 @@
       "path": "solutions/portfolio-rebalancing/FIELD-GUIDE.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/FIELD-GUIDE.md",
       "use": "Markdown source retained for audit and export",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "facilitator-cohort-form",
@@ -96,8 +72,7 @@
       "path": "solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
       "use": "Private Microsoft Forms Quick Import template for SE identity, MSIX, and cohort registration",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "badge-qualification-form",
@@ -105,8 +80,7 @@
       "path": "solutions/_shared/AIBAST-Badge-Qualification.docx",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/AIBAST-Badge-Qualification.docx",
       "use": "Private Microsoft Forms Quick Import template for consent, module test, and reviewer matching",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-personless-guide",
@@ -114,8 +88,7 @@
       "path": "solutions/portfolio-rebalancing/EASY-MODE-PERSONLESS.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/EASY-MODE-PERSONLESS.md",
       "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-copilot-chat-prompts",
@@ -123,8 +96,7 @@
       "path": "solutions/portfolio-rebalancing/EASY-MODE-COPILOT-CHAT.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/EASY-MODE-COPILOT-CHAT.md",
       "use": "Copilot-only lane skill attachment and the same two workshop messages",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-mode-brainstem-skill",
@@ -132,8 +104,7 @@
       "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
       "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-mode-copilot-skill",
@@ -141,8 +112,7 @@
       "path": "skills/aibast-easy-mode-copilot/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
       "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "generic-workshop-agent",
@@ -150,8 +120,7 @@
       "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
       "use": "Registry-driven Brainstem engine shared by every packaged solution",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-instructions",
@@ -159,8 +128,7 @@
       "path": "solutions/portfolio-rebalancing/manual/GLOBAL-INSTRUCTIONS.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "settings",
@@ -168,8 +136,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/settings.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "agent-sync",
@@ -177,8 +144,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/agent.sync.yaml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "knowledge-aibast-portfolio-rebalancing-controls-and-review",
@@ -186,8 +152,7 @@
       "path": "solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-controls-and-review.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-controls-and-review.md",
       "use": "Manual knowledge upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "knowledge-aibast-portfolio-rebalancing-synthetic-records",
@@ -195,8 +160,15 @@
       "path": "solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-synthetic-records.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-synthetic-records.md",
       "use": "Manual knowledge upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-client-summary-08",
+      "label": "Capability card: aibast client summary 08",
+      "path": "solutions/portfolio-rebalancing/manual/skills/aibast_client-summary_08/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_client-summary_08/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
     },
     {
       "id": "skill-aibast-execution-plan-06",
@@ -204,8 +176,7 @@
       "path": "solutions/portfolio-rebalancing/manual/skills/aibast_execution-plan_06/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_execution-plan_06/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "skill-aibast-portfolio-analysis-01",
@@ -213,8 +184,7 @@
       "path": "solutions/portfolio-rebalancing/manual/skills/aibast_portfolio-analysis_01/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_portfolio-analysis_01/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "skill-aibast-rebalance-recommendation-02",
@@ -222,8 +192,7 @@
       "path": "solutions/portfolio-rebalancing/manual/skills/aibast_rebalance-recommendation_02/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_rebalance-recommendation_02/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "skill-aibast-retirement-scenario-05",
@@ -231,8 +200,15 @@
       "path": "solutions/portfolio-rebalancing/manual/skills/aibast_retirement-scenario_05/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_retirement-scenario_05/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-risk-comparison-07",
+      "label": "Capability card: aibast risk comparison 07",
+      "path": "solutions/portfolio-rebalancing/manual/skills/aibast_risk-comparison_07/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_risk-comparison_07/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
     },
     {
       "id": "skill-aibast-tax-impact-03",
@@ -240,8 +216,7 @@
       "path": "solutions/portfolio-rebalancing/manual/skills/aibast_tax-impact_03/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_tax-impact_03/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "skill-aibast-tax-loss-harvest-04",
@@ -249,8 +224,7 @@
       "path": "solutions/portfolio-rebalancing/manual/skills/aibast_tax-loss-harvest_04/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual/skills/aibast_tax-loss-harvest_04/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-portfolio-rebalancing-controls-and-review",
@@ -258,8 +232,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-controls-and-review.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-controls-and-review.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-portfolio-rebalancing-controls-and-review-md-mcs",
@@ -267,8 +240,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-controls-and-review.md.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-controls-and-review.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-portfolio-rebalancing-synthetic-records",
@@ -276,8 +248,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-synthetic-records.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-synthetic-records.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-portfolio-rebalancing-synthetic-records-md-mcs",
@@ -285,8 +256,15 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-synthetic-records.md.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-synthetic-records.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-client-summary-mcs",
+      "label": "Aibast Client Summary.Mcs",
+      "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_client-summary.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_client-summary.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-execution-plan-mcs",
@@ -294,8 +272,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_execution-plan.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_execution-plan.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-portfolio-analysis-mcs",
@@ -303,8 +280,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_portfolio-analysis.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_portfolio-analysis.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-rebalance-recommendation-mcs",
@@ -312,8 +288,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_rebalance-recommendation.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_rebalance-recommendation.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-retirement-scenario-mcs",
@@ -321,8 +296,15 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_retirement-scenario.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_retirement-scenario.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-risk-comparison-mcs",
+      "label": "Aibast Risk Comparison.Mcs",
+      "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_risk-comparison.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_risk-comparison.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-tax-impact-mcs",
@@ -330,8 +312,7 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_tax-impact.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_tax-impact.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-tax-loss-harvest-mcs",
@@ -339,26 +320,23 @@
       "path": "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_tax-loss-harvest.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_tax-loss-harvest.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-evidence-copilot-studio-preview-evidence",
       "label": "Copilot Studio Preview Evidence",
       "path": "solutions/portfolio-rebalancing/evals/copilot-studio-preview-evidence.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/copilot-studio-preview-evidence.json",
-      "use": "Historical source/assisted evidence, not current native Manual acceptance",
-      "status": "ready",
-      "included_in_bundle": false
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
     },
     {
       "id": "easy-evidence-dataverse-draft-evidence",
       "label": "Dataverse Draft Evidence",
       "path": "solutions/portfolio-rebalancing/evals/dataverse-draft-evidence.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/dataverse-draft-evidence.json",
-      "use": "Historical source/assisted evidence, not current native Manual acceptance",
-      "status": "ready",
-      "included_in_bundle": false
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
     },
     {
       "id": "manual-evidence",
@@ -366,17 +344,7 @@
       "path": "solutions/portfolio-rebalancing/evals/manual-build-evidence.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
-      "status": "ready",
-      "included_in_bundle": false
-    },
-    {
-      "id": "manual-input-inventory",
-      "label": "Frozen manual input inventory",
-      "path": "solutions/portfolio-rebalancing/evals/manual-inputs-r5.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/manual-inputs-r5.json",
-      "use": "Exact byte lengths and SHA256 hashes for the reviewed Manual build",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "manual-pilot-review",
@@ -384,8 +352,7 @@
       "path": "solutions/portfolio-rebalancing/evals/manual-pilot-review.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/manual-pilot-review.json",
       "use": "Non-certifying response findings, discrepancies and open gates",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "onepager-map",
@@ -393,8 +360,7 @@
       "path": "solutions/portfolio-rebalancing/evals/onepager-map.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-evidence-source-audit",
@@ -402,17 +368,15 @@
       "path": "solutions/portfolio-rebalancing/evals/source-audit.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/source-audit.json",
       "use": "Easy-mode deployment or Preview evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/portfolio-rebalancing/evals/transcripts.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/transcripts.json",
-      "use": "Historical source/assisted evidence, not current native Manual acceptance",
-      "status": "ready",
-      "included_in_bundle": false
+      "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
     },
     {
       "id": "easy-evidence-visual-checkpoints",
@@ -420,134 +384,559 @@
       "path": "solutions/portfolio-rebalancing/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evals/visual-checkpoints.json",
       "use": "Reviewed image scope, media format, provenance and open student steps",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-ui-name-readback",
-      "label": "Reviewed visual reference: manual-r5-step-02",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-name-readback.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-name-readback.png",
-      "use": "Post-reopen readback of the exact saved agent name. It verifies the name value only, not a new naming action or blank-agent creation.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-01-review-build",
+      "label": "Annotated visual checkpoint: easy-review-build",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/01-review-build.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/01-review-build.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-ui-persisted-policy-board",
-      "label": "Reviewed visual reference: manual-r5-step-03",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-persisted-policy-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-persisted-policy-board.png",
-      "use": "Four labeled actual scroll views of the complete saved global policy after reopening the same r5 Draft. A separate full-body comparison matched all 5,098 normalized characters at 05:50:53.904Z. This is saved instruction readback, not a new paste action, upload or test answer.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-02-prb-01",
+      "label": "Annotated visual checkpoint: easy-prb-01",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/02-prb-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/02-prb-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-ui-empty-tools",
-      "label": "Reviewed visual reference: manual-r5-step-05",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-empty-tools.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-empty-tools.png",
-      "use": "The complete empty configured-Tools section on the same saved r5 Draft; default web search is absent. No new removal action is claimed.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-03-prb-02",
+      "label": "Annotated visual checkpoint: easy-prb-02",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/03-prb-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/03-prb-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-ui-controls-upload-ready-board",
-      "label": "Reviewed visual reference: manual-r5-step-06",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-controls-upload-ready-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-controls-upload-ready-board.png",
-      "use": "Two actual native captures: the r5 controls file staged before its single Add to agent action, and the same complete filename reporting Ready at 06:23:19.447Z after ingestion. This supports that controls upload only, not the other uploads; the later view did not re-upload or change the file.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-04-prb-03",
+      "label": "Annotated visual checkpoint: easy-prb-03",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/04-prb-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/04-prb-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-ui-saved-configuration-board",
-      "label": "Reviewed visual reference: manual-r5-step-14",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-saved-configuration-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-saved-configuration-board.png",
-      "use": "Three labeled views from two actual UI captures of the same reopened Draft. Full saved-body comparisons are separately recorded; this inventory is not evidence of steps 1-13.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-05-prb-04",
+      "label": "Annotated visual checkpoint: easy-prb-04",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/05-prb-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/05-prb-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-ui-fresh-preview",
-      "label": "Reviewed visual reference: manual-r5-step-15",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-fresh-preview.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-fresh-preview.png",
-      "use": "The actual greeting-only Preview before PRB-01. This image alone does not prove any submission or case pass.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-06-prb-05",
+      "label": "Annotated visual checkpoint: easy-prb-05",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/06-prb-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/06-prb-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-prb-01-response-board",
-      "label": "Reviewed visual reference: manual-r5-prb-01",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-01-response-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-01-response-board.png",
-      "use": "Multiple labeled crops of actual native final-answer views for one fresh r5 case. Not a continuous capture, build/upload evidence or debug-reasoning pass.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-07-prb-06",
+      "label": "Annotated visual checkpoint: easy-prb-06",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/07-prb-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/07-prb-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-prb-02-response-board",
-      "label": "Reviewed visual reference: manual-r5-prb-02",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-02-response-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-02-response-board.png",
-      "use": "Multiple labeled crops of actual native final-answer views for one fresh r5 case. Not a continuous capture, build/upload evidence or debug-reasoning pass.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-08-prb-07",
+      "label": "Annotated visual checkpoint: easy-prb-07",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/08-prb-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/08-prb-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-prb-03-response-board",
-      "label": "Reviewed visual reference: manual-r5-prb-03",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-03-response-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-03-response-board.png",
-      "use": "Multiple labeled crops of actual native final-answer views for one fresh r5 case. Not a continuous capture, build/upload evidence or debug-reasoning pass.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-09-prb-08",
+      "label": "Annotated visual checkpoint: easy-prb-08",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/09-prb-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/09-prb-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-prb-04-response-board",
-      "label": "Reviewed visual reference: manual-r5-prb-04",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-04-response-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-04-response-board.png",
-      "use": "Multiple labeled crops of actual native final-answer views for one fresh r5 case. Not a continuous capture, build/upload evidence or debug-reasoning pass.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-10-confirm-draft",
+      "label": "Annotated visual checkpoint: easy-confirm-draft",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/10-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/annotated/10-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-prb-05-response-board",
-      "label": "Reviewed visual reference: manual-r5-prb-05",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-05-response-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-05-response-board.png",
-      "use": "Multiple labeled crops of actual native final-answer views for one fresh r5 case. Not a continuous capture, build/upload evidence or debug-reasoning pass.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-prb-06-response-board",
-      "label": "Reviewed visual reference: manual-r5-prb-06",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-06-response-board.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/PRB-06-response-board.png",
-      "use": "Multiple labeled crops of actual native final-answer views for one fresh r5 case. Not a continuous capture, build/upload evidence or debug-reasoning pass.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
-      "id": "annotated-evidence-ui-final-draft",
-      "label": "Reviewed visual reference: manual-r5-step-22",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-final-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/UI-final-draft.png",
-      "use": "Post-regression exact-name search and Draft badge. Opening that single result correlated the tested identity, name/model and inactive Save; no GUID is claimed visible in the image.",
-      "status": "ready",
-      "included_in_bundle": false
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/04-save-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-portfolio-rebalancing-controls-and-review",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/06-add-aibast-portfolio-rebalancing-controls-and-review.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/06-add-aibast-portfolio-rebalancing-controls-and-review.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-portfolio-rebalancing-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/07-add-aibast-portfolio-rebalancing-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/07-add-aibast-portfolio-rebalancing-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-client-summary-08",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/08-add-aibast-client-summary-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/08-add-aibast-client-summary-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-execution-plan-06",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/09-add-aibast-execution-plan-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/09-add-aibast-execution-plan-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-portfolio-analysis-01",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/10-add-aibast-portfolio-analysis-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/10-add-aibast-portfolio-analysis-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-aibast-rebalance-recommendation-02",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/11-add-aibast-rebalance-recommendation-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/11-add-aibast-rebalance-recommendation-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-aibast-retirement-scenario-05",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/12-add-aibast-retirement-scenario-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/12-add-aibast-retirement-scenario-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-aibast-risk-comparison-07",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/13-add-aibast-risk-comparison-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/13-add-aibast-risk-comparison-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-add-aibast-tax-impact-03",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/14-add-aibast-tax-impact-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/14-add-aibast-tax-impact-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-add-aibast-tax-loss-harvest-04",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/15-add-aibast-tax-loss-harvest-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/15-add-aibast-tax-loss-harvest-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/16-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/16-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-review-skills",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/17-review-skills.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/17-review-skills.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-review-skills-more",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/18-review-skills-more.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/18-review-skills-more.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/19-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/19-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-prb-01",
+      "label": "Annotated visual checkpoint: hard-prb-01",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/20-prb-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/20-prb-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-prb-02",
+      "label": "Annotated visual checkpoint: hard-prb-02",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/21-prb-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/21-prb-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-prb-03",
+      "label": "Annotated visual checkpoint: hard-prb-03",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/22-prb-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/22-prb-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-prb-04",
+      "label": "Annotated visual checkpoint: hard-prb-04",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/23-prb-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/23-prb-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-24-prb-05",
+      "label": "Annotated visual checkpoint: hard-prb-05",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/24-prb-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/24-prb-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-25-prb-06",
+      "label": "Annotated visual checkpoint: hard-prb-06",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/25-prb-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/25-prb-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-26-prb-07",
+      "label": "Annotated visual checkpoint: hard-prb-07",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/26-prb-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/26-prb-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-27-prb-08",
+      "label": "Annotated visual checkpoint: hard-prb-08",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/27-prb-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/27-prb-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-28-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-28",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/annotated/28-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/annotated/28-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
       "id": "manual-browserfilm-manifest",
-      "label": "Manual reviewed reference-set manifest",
-      "path": "solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/repaired-r5/browserfilm.json",
-      "use": "Ordered student steps with explicit gaps; not a continuous film",
-      "status": "ready",
-      "included_in_bundle": false
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name Portfolio Rebalancing Manual",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/02-name-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/03-enter-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction policy",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/04-save-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Remove default web search",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/05-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Add knowledge: aibast_portfolio-rebalancing-controls-and-review.md",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/06-add-aibast-portfolio-rebalancing-controls-and-review.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/06-add-aibast-portfolio-rebalancing-controls-and-review.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Add knowledge: aibast_portfolio-rebalancing-synthetic-records.md",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/07-add-aibast-portfolio-rebalancing-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/07-add-aibast-portfolio-rebalancing-synthetic-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Add skill: aibast_client-summary_08",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/08-add-aibast-client-summary-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/08-add-aibast-client-summary-08.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Add skill: aibast_execution-plan_06",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/09-add-aibast-execution-plan-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/09-add-aibast-execution-plan-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Add skill: aibast_portfolio-analysis_01",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/10-add-aibast-portfolio-analysis-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/10-add-aibast-portfolio-analysis-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Add skill: aibast_rebalance-recommendation_02",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/11-add-aibast-rebalance-recommendation-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/11-add-aibast-rebalance-recommendation-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Add skill: aibast_retirement-scenario_05",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/12-add-aibast-retirement-scenario-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/12-add-aibast-retirement-scenario-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Add skill: aibast_risk-comparison_07",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/13-add-aibast-risk-comparison-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/13-add-aibast-risk-comparison-07.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Add skill: aibast_tax-impact_03",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/14-add-aibast-tax-impact-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/14-add-aibast-tax-impact-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Add skill: aibast_tax-loss-harvest_04",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/15-add-aibast-tax-loss-harvest-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/15-add-aibast-tax-loss-harvest-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/16-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/16-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Review the skill list (8 skills)",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/17-review-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/17-review-skills.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Review the rest of the skill list",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/18-review-skills-more.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/18-review-skills-more.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/19-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/19-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Pass PRB-01: Portfolio Manager",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/20-prb-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/20-prb-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Pass PRB-02: Financial Advisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/21-prb-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/21-prb-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Pass PRB-03: Paraplanner",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/22-prb-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/22-prb-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Pass PRB-04: Tax-Aware Portfolio Manager",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/23-prb-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/23-prb-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-24",
+      "label": "Pass PRB-05: Retirement Planning Specialist",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/24-prb-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/24-prb-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-25",
+      "label": "Pass PRB-06: Trading Supervisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/25-prb-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/25-prb-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-26",
+      "label": "Pass PRB-07: Financial Advisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/26-prb-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/26-prb-07.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-27",
+      "label": "Pass PRB-08: Financial Advisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/27-prb-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/27-prb-08.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-28",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/28-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/28-confirm-draft.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual browserfilm",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual contact sheet",
+      "path": "solutions/portfolio-rebalancing/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
+      "status": "ready"
     },
     {
       "id": "assisted-browserfilm-manifest",
@@ -555,8 +944,7 @@
       "path": "solutions/portfolio-rebalancing/screenshots/assisted/browserfilm.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-browserfilm",
@@ -564,8 +952,7 @@
       "path": "solutions/portfolio-rebalancing/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-contact-sheet",
@@ -573,71 +960,87 @@
       "path": "solutions/portfolio-rebalancing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-01",
-      "label": "Pass PRB-01: Portfolio Manager",
-      "path": "solutions/portfolio-rebalancing/screenshots/assisted/01-prb-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/01-prb-01.jpg",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-02",
-      "label": "Pass PRB-02: Financial Advisor",
-      "path": "solutions/portfolio-rebalancing/screenshots/assisted/02-prb-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/02-prb-02.jpg",
+      "label": "Pass PRB-01: Portfolio Manager",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/02-prb-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/02-prb-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-03",
-      "label": "Pass PRB-03: Paraplanner",
-      "path": "solutions/portfolio-rebalancing/screenshots/assisted/03-prb-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/03-prb-03.jpg",
+      "label": "Pass PRB-02: Financial Advisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/03-prb-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/03-prb-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-04",
-      "label": "Pass PRB-04: Tax-Aware Portfolio Manager",
-      "path": "solutions/portfolio-rebalancing/screenshots/assisted/04-prb-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/04-prb-04.jpg",
+      "label": "Pass PRB-03: Paraplanner",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/04-prb-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/04-prb-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-05",
-      "label": "Pass PRB-05: Retirement Planning Specialist",
-      "path": "solutions/portfolio-rebalancing/screenshots/assisted/05-prb-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/05-prb-05.jpg",
+      "label": "Pass PRB-04: Tax-Aware Portfolio Manager",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/05-prb-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/05-prb-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-06",
-      "label": "Pass PRB-06: Trading Supervisor",
-      "path": "solutions/portfolio-rebalancing/screenshots/assisted/06-prb-06.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/06-prb-06.jpg",
+      "label": "Pass PRB-05: Retirement Planning Specialist",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/06-prb-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/06-prb-05.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-07",
-      "label": "Confirm the validated agent remains Draft",
-      "path": "solutions/portfolio-rebalancing/screenshots/assisted/07-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/07-confirm-draft.jpg",
+      "label": "Pass PRB-06: Trading Supervisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/07-prb-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/07-prb-06.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-08",
+      "label": "Pass PRB-07: Financial Advisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/08-prb-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/08-prb-07.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-09",
+      "label": "Pass PRB-08: Financial Advisor",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/09-prb-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/09-prb-08.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-10",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/portfolio-rebalancing/screenshots/assisted/10-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/10-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
     },
     {
       "id": "workshop-settings",
@@ -645,8 +1048,7 @@
       "path": "solutions/_shared/workshop-settings.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
       "use": "Site-wide persisted Easy-mode harness preference",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "evidence-report",
@@ -654,8 +1056,7 @@
       "path": "solutions/portfolio-rebalancing/evidence-report.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/evidence-report.html",
       "use": "Learner-safe HTML summary of deterministic and visual evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "quest",
@@ -663,8 +1064,7 @@
       "path": "solutions/portfolio-rebalancing/quest.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/quest.html",
       "use": "Resumable Easy/Manual customer journey",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-tutorial",
@@ -672,8 +1072,7 @@
       "path": "solutions/portfolio-rebalancing/manual-tutorial.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/manual-tutorial.html",
       "use": "Student actions, source downloads, reviewed references and explicit evidence gaps",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "screenshots-readme",
@@ -681,8 +1080,7 @@
       "path": "solutions/portfolio-rebalancing/screenshots/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-screenshots-readme",
@@ -690,8 +1088,7 @@
       "path": "solutions/portfolio-rebalancing/screenshots/manual/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "exports-readme",
@@ -699,8 +1096,7 @@
       "path": "solutions/portfolio-rebalancing/exports/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/README.md",
       "use": "Bundle build instructions",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "assisted-screenshots-readme",
@@ -708,18 +1104,18 @@
       "path": "solutions/portfolio-rebalancing/screenshots/assisted/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     }
   ],
   "copilot_studio_solution": {
-    "label": "Historical Portfolio Rebalancing Agent Copilot Studio solution \u2014 not current source",
-    "status": "stale_source",
+    "label": "Importable Portfolio Rebalancing Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_PortfolioRebalancingPilot",
     "zip": {
       "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip",
-      "sha256": "a8563232136a44717647e858fcee2b5d2cba9d78100201278ea5beac592b69a8",
-      "bytes": 3983
+      "sha256": "2994c7f974ec7f49e9c0b9cc1ef570b8d53241f227111edb69d08acd655a8ea7",
+      "bytes": 39023
     },
     "deployment_settings": {
       "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json",
@@ -735,7 +1131,6 @@
       "Import as an unmanaged solution for manual review.",
       "Map connection references and environment variables before enabling integrations.",
       "The exported agent remains unpublished unless the target administrator explicitly publishes it."
-    ],
-    "source_contract_note": "Historical 2026-08-09 unmanaged export, preserved byte-for-byte. Its five entries contain settings/instructions but zero manual skills and zero knowledge files; it cannot reproduce the six-skill/two-file r5 Manual build. Withheld from current reproduction downloads. No new export, import or publication is claimed."
+    ]
   }
 }

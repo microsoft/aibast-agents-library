@@ -1,15 +1,16 @@
-displayName: "Asset Maintenance Pilot"
-schemaName: "aibast_AssetMaintenanceForecastPil"
+displayName: Asset Maintenance Pilot
+schemaName: aibast_AssetMaintenanceForecastPil
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -28,10 +29,10 @@ configuration:
 
             ## Routing
 
-            - Use **maintenance forecast** for Plant Manager questions like: “Which asset is most likely to interrupt operations next, and what evidence supports that?”
-            - Use **asset health** for Reliability Engineer questions like: “Show me the weakest asset condition and whether this is an operating authorization.”
-            - Use **budget projection** for Finance Business Partner questions like: “What maintenance funding should I reserve for the transformer risk?”
-            - Use **work order plan** for Maintenance Planner questions like: “Draft the maintenance queue for AST-X002, but do not create any work orders.”
+            - Use **maintenance forecast** first for “I need immediate analysis on our wind farm turbines” and for the Plant Manager question: “I need immediate analysis on our wind farm turbines”.
+            - Use **asset health** for Reliability Engineer questions like: “Show me the weakest turbine condition and whether this is an operating authorization.”
+            - Use **budget projection** for Finance Business Partner questions like: “What maintenance funding should I reserve for the at-risk turbines?”
+            - Use **work order plan** for “yes, show the bundled maintenance plan” and Maintenance Planner questions like: “Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.”
 
             ## Response contract
 
@@ -53,5 +54,8 @@ configuration:
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

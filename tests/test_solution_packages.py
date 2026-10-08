@@ -131,7 +131,7 @@ def test_solution_assets_are_packaged_under_solutions():
     assert (permit / "quest.html").exists()
     assert (permit / "copilot-studio" / "settings.mcs.yml").exists()
     assert not (permit / "copilot-studio" / ".mcs").exists()
-    assert len(list((permit / "copilot-studio" / "behaviors").glob("*.mcs.yml"))) == 7
+    assert len(list((permit / "copilot-studio" / "behaviors").glob("*.mcs.yml"))) == 12
     assert (permit / "evals" / "deployment-evidence.json").exists()
 
 
@@ -238,14 +238,42 @@ def test_published_copilot_studio_corpus_matches_every_permit_case():
     package = PACKAGES["@aibast-agents-library/building-permit-processing"]
     folder = ROOT / "solutions" / package["slug"]
     cases = read_json(package["case_file"])["cases"]
-    artifact = read_json(folder / "evals" / "copilot-studio-transcripts.json")
+    # Current Copilot Studio proof: the re-shot Preview evidence covers every
+    # locked case on an unpublished Draft.
+    preview = read_json(folder / "evals" / "copilot-studio-preview-evidence.json")
+    assert preview["environment_id"] == "ee67a404-325c-e726-a18a-886fe708ca0b"
+    assert preview["schema_name"] == "aibast_BuildingPermitPilot"
+    assert preview["status"] == "Draft"
+    assert preview["published"] is False
+    current = {item["case_id"]: item for item in preview["cases"]}
+    assert set(current) == {case["id"] for case in cases}
+    for case in cases:
+        item = current[case["id"]]
+        assert item["passed"] is True
+        assert item["must_include"] == case["must_include"]
+        assert item["must_not_include"] == case["must_not_include"]
+
+    # The August 5-case response-text corpus predates the 10 locked cases, so
+    # it may not sit in evals/ as current proof; a current corpus there must
+    # cover every locked case. The archived copy must still agree with every
+    # case it holds.
+    current_corpus = folder / "evals" / "copilot-studio-transcripts.json"
+    if current_corpus.exists():
+        current_artifact = read_json(current_corpus)
+        assert {item["case_id"] for item in current_artifact["transcripts"]} == {
+            case["id"] for case in cases
+        }
+    artifact = read_json(
+        folder / "evals" / "history" / "2026-10-08-pre-reshoot"
+        / "copilot-studio-transcripts.json"
+    )
     assert artifact["environment_id"] == "ee67a404-325c-e726-a18a-886fe708ca0b"
     assert artifact["agent_schema_name"] == "aibast_BuildingPermitPilot"
-    assert artifact["strict_case_parity"] is True
+    by_id = {case["id"]: case for case in cases}
     captured = {item["case_id"]: item for item in artifact["transcripts"]}
-    assert set(captured) == {case["id"] for case in cases}
-    for case in cases:
-        item = captured[case["id"]]
+    assert captured and set(captured) <= set(by_id)
+    for case_id, item in captured.items():
+        case = by_id[case_id]
         assert item["prompt"] == case["prompt"]
         assert item["passed"] is True
         for value in case["must_include"]:
@@ -364,13 +392,18 @@ def test_manual_build_evidence_records_preview_parity():
     cases = read_json(
         ROOT / "tests" / "demo_cases" / "building-permit-processing.json"
     )["cases"]
-    assert evidence["status"] == "draft"
-    assert evidence["manual_components"]["knowledge_files"] == 2
-    assert evidence["manual_components"]["skills"] == 7
-    assert evidence["canonical_preview"]["prompt"] == cases[0]["prompt"]
-    assert evidence["canonical_preview"]["must_include"] == cases[0]["must_include"]
-    assert evidence["canonical_preview"]["passed"] is True
-    assert evidence["publication"]["published"] is False
+    assert evidence["status"] == "passed"
+    assert evidence["manual_components"]["knowledge_files"] == {"expected": 2, "confirmed": 2}
+    assert evidence["manual_components"]["skills"] == {"expected": 12, "confirmed": 12}
+    preview = evidence["canonical_preview"]
+    assert [item["case_id"] for item in preview] == [case["id"] for case in cases]
+    for item, case in zip(preview, cases):
+        assert item["prompt"] == case["prompt"]
+        assert item["must_include"] == case["must_include"]
+        assert item["must_not_include"] == case["must_not_include"]
+        assert item["passed"] is True
+    assert evidence["publication_gate"]["required_state"] == "Draft"
+    assert evidence["publication_gate"]["published"] is False
     report = (package / "evidence-report.html").read_text(encoding="utf-8").lower()
     for case in cases:
         assert case["id"].lower() in report

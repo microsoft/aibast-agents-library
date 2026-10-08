@@ -941,7 +941,7 @@ def test_mutation_catches_incomplete_tab_keyboard_semantics(tmp_path):
     assert_failure(audit_fixture(tmp_path), "mode tabs lack ArrowRight")
 
 
-def test_time_entry_billing_reference_passes_with_withheld_reshoots():
+def test_time_entry_billing_reference_passes_with_reshot_captures():
     assert shutil.which("node"), "node is required by the acceptance gate"
     checker = AUDIT.ScriptChecker()
     global_failures = AUDIT.audit_global(ROOT, checker)
@@ -953,16 +953,22 @@ def test_time_entry_billing_reference_passes_with_withheld_reshoots():
     )
     assert result["passed"] is True
     assert result["failures"] == []
-    assert result["metrics"]["visual_reusable"] == 13
-    assert result["metrics"]["visual_reshoot_required"] == 13
-    assert result["metrics"]["visual_reference_only_displayed"] == 0
+    # Every manual and assisted frame was re-shot in the real Copilot Studio
+    # UI: 30 manual frames + 11 assisted frames, none withheld for reshoot.
+    metrics = result["metrics"]
+    assert metrics["manual_frames"] == 30
+    assert metrics["assisted_frames"] == 11
+    assert metrics["visual_captures"] == 41
+    assert metrics["visual_reusable"] == metrics["visual_captures"]
+    assert metrics["visual_reshoot_required"] == 0
+    assert metrics["visual_reference_only_displayed"] == 0
 
 
 def test_repository_course_scope_uses_catalog_truth():
     failures = AUDIT.Failures()
     slugs, exclusions = AUDIT.course_scope(ROOT, failures)
     assert failures.items == []
-    assert len(slugs) == 51
+    assert len(slugs) == 66
     assert "time-entry-billing" in slugs
     assert "grid-outage-response" not in slugs
     assert [(item["slug"], item["status"]) for item in exclusions] == [
@@ -991,7 +997,7 @@ def test_playwright_academy_gate_is_exact_and_fail_closed():
     ).read_text(encoding="utf-8")
 
     assert package["scripts"]["academy"] == "node academy-course-audit.mjs"
-    assert "const expectedWorkshops = 51;" in source
+    assert "const expectedWorkshops = 66;" in source
     assert "const viewportWidths = [320, 360, 375];" in source
     assert 'const auditedPages = ["quest.html", "evidence-report.html"];' in source
     assert "attempts === expectedWorkshops * auditedPages.length" in source

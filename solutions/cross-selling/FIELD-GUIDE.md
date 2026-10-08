@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CS-01, CS-02, CS-03, CS-04`.
+1. Which locked case IDs did you complete? Expected scope: `CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,13 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `CS-01` — Scan synthetic customer CUST-001 for product gaps, usage signals, buying signals, and budget timing.
+- `CS-01` — Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing.
 - `CS-02` — Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.
-- `CS-03` — Draft prioritized product recommendations and a reviewable engagement plan for synthetic customer CUST-001 without sending outreach.
-- `CS-04` — Compare the bundled portfolio synthetic value scenarios without making conversion, revenue, or margin claims.
+- `CS-03` — Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.
+- `CS-04` — Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.
+- `CS-05` — Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.
+- `CS-06` — Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.
+- `CS-07` — Assign the opportunity accounts to reps by expertise and draft this week's action plan.
 
 ## Manual mode — literal browser construction
 

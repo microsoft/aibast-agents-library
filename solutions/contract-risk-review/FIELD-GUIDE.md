@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CRR-01, CRR-02, CRR-03, CRR-04`.
+1. Which locked case IDs did you complete? Expected scope: `CRR-01, CRR-02, CRR-03, CRR-04, CRR-05, CRR-06, CRR-07, CRR-08, CRR-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,11 @@ Both Easy lanes preserve every recorded case prompt:
 - `CRR-02` — Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.
 - `CRR-03` — Compare the available contract evidence with our internal policy and tell me where the file is incomplete.
 - `CRR-04` — Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.
+- `CRR-05` — Legal just sent over the NovaTech Systems master services agreement. Can you review it before our signing meeting tomorrow?
+- `CRR-06` — What specifically is wrong with the liability provisions in the NovaTech agreement?
+- `CRR-07` — Show me the IP ownership problems in the NovaTech agreement.
+- `CRR-08` — What other risk factors did you find beyond liability and IP?
+- `CRR-09` — Generate the redline and an executive summary for our legal team.
 
 ## Manual mode — literal browser construction
 

@@ -462,8 +462,8 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>17</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>6</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>32</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -477,7 +477,7 @@ html[data-theme="dark"] {
           <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
           <tbody><tr>
           <td><code>PSA-01</code></td>
-          <td><span class="marker-chip">Prepared for:** Personal Shopper</span><span class="marker-chip">Draft Product Recommendations</span><span class="marker-chip">no sensitive traits are inferred</span></td>
+          <td><span class="marker-chip">Prepared for:** Personal Shopper</span><span class="marker-chip">Draft Product Recommendations</span><span class="marker-chip">Wool crepe blazer</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
@@ -492,7 +492,17 @@ html[data-theme="dark"] {
         </tr>
 <tr>
           <td><code>PSA-04</code></td>
-          <td><span class="marker-chip">Draft Outfit Builder</span><span class="marker-chip">Business Casual</span><span class="marker-chip">no return, refund, order, or purchase</span></td>
+          <td><span class="marker-chip">Draft Outfit Builder</span><span class="marker-chip">Power Suiting</span><span class="marker-chip">no return, refund, order, or purchase</span></td>
+          <td><span class="marker-chip">No unsupported side effect</span></td>
+        </tr>
+<tr>
+          <td><code>PSA-05</code></td>
+          <td><span class="marker-chip">$1,322</span><span class="marker-chip">$273 (17%)</span><span class="marker-chip">Bundle bonus</span></td>
+          <td><span class="marker-chip">No unsupported side effect</span></td>
+        </tr>
+<tr>
+          <td><code>PSA-06</code></td>
+          <td><span class="marker-chip">Business Dinner Look</span><span class="marker-chip">Stuart Weitzman</span><span class="marker-chip">not scheduled</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr></tbody>
         </table>
@@ -506,106 +516,196 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
+          <td><code>easy-review-build</code></td>
+          <td>easy</td>
+          <td>Personalized Shopping Pilot; Draft; session-summary; pricing-offer; opt-in-style-profile-summary; transparent-product-recommendations; review-only-outfit-builder; aibast_shopping-assistant-synthetic-records.md; aibast_shopping-assistant-rules-and-safety.md</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/01-review-build.png</td>
+        </tr>
+<tr>
+          <td><code>easy-psa-01</code></td>
+          <td>easy</td>
+          <td>Draft Product Recommendations; Wool crepe blazer</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/02-psa-01.png</td>
+        </tr>
+<tr>
           <td><code>easy-psa-02</code></td>
           <td>easy</td>
-          <td>Casual, outdoor, athletic stated style; S tops, 30 bottoms, and 8 footwear; $30-$175 planning budget; Stated preferences only with no identity, health, body, wealth, or eligibility inference</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/02-psa-02.png</td>
+          <td>Synthetic Shopper B; Opt-In Style Profile</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/03-psa-02.png</td>
+        </tr>
+<tr>
+          <td><code>easy-psa-03</code></td>
+          <td>easy</td>
+          <td>Inventory Snapshot; inventory is not reserved</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/04-psa-03.png</td>
         </tr>
 <tr>
           <td><code>easy-psa-04</code></td>
           <td>easy</td>
-          <td>Coordinated top, bottom, and footwear roles; Illustrative total within the stated planning range; No body, health, or identity traits inferred; Outfit Option 4 — Evening</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/04-psa-04.png</td>
+          <td>Power Suiting</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/05-psa-04.png</td>
+        </tr>
+<tr>
+          <td><code>easy-psa-05</code></td>
+          <td>easy</td>
+          <td>Bundle bonus; $1,322</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/06-psa-05.png</td>
+        </tr>
+<tr>
+          <td><code>easy-psa-06</code></td>
+          <td>easy</td>
+          <td>Business Dinner Look; Stuart Weitzman; not scheduled</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/07-psa-06.png</td>
+        </tr>
+<tr>
+          <td><code>easy-confirm-draft</code></td>
+          <td>easy</td>
+          <td>Personalized Shopping Pilot</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/assisted/annotated/08-confirm-draft.png</td>
         </tr>
 <tr>
           <td><code>hard-step-01</code></td>
           <td>hard</td>
-          <td>Untitled Agent; Blank Build workspace</td>
+          <td>Untitled Agent</td>
           <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/01-create-blank-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-02</code></td>
           <td>hard</td>
-          <td>Personalized Shopping Manual in the name field</td>
+          <td>Personalized Shopping Manual</td>
           <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/02-name-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Personalized Shopping Agent — Manual Global Instructions; Locked Preview evidence anchors; Reviewed recommendation and no-side-effect boundaries</td>
+          <td>Personalized Shopping Agent — Manual Global Inst</td>
           <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>Draft</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/04-save-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>Provide trusted context to guide decisions</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/05-remove-web-search.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-06</code></td>
+          <td>hard</td>
+          <td>aibast_shopping-assistant-rules-and-safety.md</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/06-add-aibast-shopping-assistant-rules-and-safety.png</td>
         </tr>
 <tr>
           <td><code>hard-step-07</code></td>
           <td>hard</td>
-          <td>aibast_shopping-assistant-synthetic-records knowledge file; aibast_shopping-assistant-rules-and-safety knowledge file</td>
+          <td>aibast_shopping-assistant-synthetic-records.md</td>
           <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/07-add-aibast-shopping-assistant-synthetic-records.png</td>
         </tr>
 <tr>
           <td><code>hard-step-08</code></td>
           <td>hard</td>
-          <td>read-only-shopping-inventory-check skill</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/08-add-inventory-check.png</td>
+          <td>read-only-shopping-inventory-check</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/08-add-aibast-inventory-check-03.png</td>
         </tr>
 <tr>
           <td><code>hard-step-09</code></td>
           <td>hard</td>
-          <td>review-only-outfit-builder skill; read-only-shopping-inventory-check skill</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/09-add-outfit-builder.png</td>
+          <td>review-only-outfit-builder</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/09-add-aibast-outfit-builder-04.png</td>
         </tr>
 <tr>
           <td><code>hard-step-10</code></td>
           <td>hard</td>
-          <td>transparent-product-recommendations skill; review-only-outfit-builder skill; read-only-shopping-inventory-check skill</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/10-add-product-recommendations.png</td>
+          <td>pricing-offer</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/10-add-aibast-pricing-offer-05.png</td>
         </tr>
 <tr>
           <td><code>hard-step-11</code></td>
           <td>hard</td>
-          <td>opt-in-style-profile-summary skill; transparent-product-recommendations skill; review-only-outfit-builder skill; read-only-shopping-inventory-check skill</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/11-add-style-profile.png</td>
+          <td>transparent-product-recommendations</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/11-add-aibast-product-recommendations-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>Claude Sonnet 4.6; Four configured skills; Tools section contains no configured tool; Two configured knowledge files; Save tooltip states No unsaved changes</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/12-review-inventory.png</td>
+          <td>session-summary</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/12-add-aibast-session-summary-06.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>Preview tab; New chat; Personalized Shopping Manual greeting</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/13-open-preview.png</td>
+          <td>opt-in-style-profile-summary</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/13-add-aibast-style-profile-02.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-14</code></td>
+          <td>hard</td>
+          <td>Claude Opus 5; opt-in-style-profile-summary; session-summary; transparent-product-recommendations; pricing-offer; review-only-outfit-builder; aibast_shopping-assistant-synthetic-records.md; aibast_shopping-assistant-rules-and-safety.md</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/14-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-15</code></td>
+          <td>hard</td>
+          <td>opt-in-style-profile-summary; session-summary; transparent-product-recommendations; pricing-offer</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/15-review-skills.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-16</code></td>
+          <td>hard</td>
+          <td>transparent-product-recommendations; pricing-offer; review-only-outfit-builder; read-only-shopping-inventory-check</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/16-review-skills-more.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-17</code></td>
+          <td>hard</td>
+          <td>Personalized Shopping Manual</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/17-open-preview.png</td>
         </tr>
 <tr>
           <td><code>hard-psa-01</code></td>
           <td>hard</td>
-          <td>SKU-1008 Linen Blazer recommendation with price, rating, color, and stock; Why it matches tradeoffs; Not Recommended with Reasons</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/14-psa-01.png</td>
+          <td>Wool crepe blazer</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/18-psa-01.png</td>
         </tr>
 <tr>
           <td><code>hard-psa-02</code></td>
           <td>hard</td>
-          <td>Synthetic Shopper B sizes, style, brand, color, budget, and purchase history; Explicitly opted in to share; No sensitive traits are inferred</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/15-psa-02.png</td>
+          <td>Prepared for:** Clienteling Specialist; Synthetic Shopper B; Opt-In Style Profile</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/19-psa-02.png</td>
         </tr>
 <tr>
           <td><code>hard-psa-03</code></td>
           <td>hard</td>
-          <td>Size-Level Availability; S, M, L, and XL units on hand with stock status; Verification Gate; Units are not reserved, promised, allocated, or committed</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/16-psa-03.png</td>
+          <td>Prepared for:** Retail Manager; Inventory Snapshot; inventory is not reserved</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/20-psa-03.png</td>
         </tr>
 <tr>
           <td><code>hard-psa-04</code></td>
           <td>hard</td>
-          <td>Illustrative total of $255.00; Outfit 4 — Evening Out; Specific SKUs, items, and prices; Illustrative total of $420.00 for new items</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/17-psa-04.png</td>
+          <td>no return, refund, order, or purchase; Draft Outfit Builder; Power Suiting</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/21-psa-04.png</td>
         </tr>
 <tr>
-          <td><code>hard-draft</code></td>
+          <td><code>hard-psa-05</code></td>
           <td>hard</td>
-          <td>Personalized Shopping Manual; Draft</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/18-confirm-draft.png</td>
+          <td>Bundle bonus; $1,322; $273 (17%)</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/22-psa-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-psa-06</code></td>
+          <td>hard</td>
+          <td>Business Dinner Look; Stuart Weitzman; not scheduled</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/23-psa-06.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-24</code></td>
+          <td>hard</td>
+          <td>Personalized Shopping Manual</td>
+          <td>solutions/personalized-shopping-assistant/screenshots/manual/annotated/24-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -617,42 +717,7 @@ html[data-theme="dark"] {
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
-          <tbody><tr>
-          <td><code>easy-psa-01</code></td>
-          <td>easy</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/assisted/01-psa-01.jpg</td>
-          <td>The visible response ends with a note that the uploaded file did not contain the full per-SKU detail needed for an itemized recommendation list. That grounding blocker defeats the product-recommendation checkpoint even though a safety caveat is visible.</td>
-        </tr>
-<tr>
-          <td><code>easy-psa-03</code></td>
-          <td>easy</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/assisted/03-psa-03.jpg</td>
-          <td>The response says the complete synthetic records file must be uploaded before it can show the full size-level breakdown. The required size-level availability is absent, so the visible verification language cannot prove the case.</td>
-        </tr>
-<tr>
-          <td><code>easy-draft</code></td>
-          <td>easy</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/assisted/05-confirm-draft.jpg</td>
-          <td>The target Personalized Shopping Pilot row is not visible, so this capture cannot prove its Draft identity.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The instruction text is visible, but there is no saved-state message, disabled-save explanation, or other positive visual anchor proving that the instruction policy was saved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-05</code></td>
-          <td>hard</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/05-remove-web-search.jpg</td>
-          <td>Search all websites is still visibly configured in Knowledge, so the requested web-search removal state is not present.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-06</code></td>
-          <td>hard</td>
-          <td>solutions/personalized-shopping-assistant/screenshots/manual/06-add-aibast-shopping-assistant-rules-and-safety.jpg</td>
-          <td>Knowledge is empty in the capture and the aibast_shopping-assistant-rules-and-safety filename is not visible.</td>
-        </tr></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>

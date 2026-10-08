@@ -8,464 +8,1172 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 24,
-    "reusable": 11,
-    "reshoot_required": 13
+    "total_existing_captures": 35,
+    "reusable": 35,
+    "reshoot_required": 0
   },
   "captures": [
     {
       "id": "easy-review-build",
       "mode": "easy",
-      "draft": true,
       "source": "solutions/maintenance-scheduling/screenshots/assisted/01-review-build.jpg",
-      "status": "reshoot_required",
-      "reason": "The configuration is visible, but no Draft status indicator appears; this frame cannot prove the target remains an unpublished Draft."
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Maintenance Scheduling Pilot",
+        "Draft",
+        "work-order-draft",
+        "optimization-plan",
+        "maintenance-calendar",
+        "downtime-analysis",
+        "schedule-overview",
+        "aibast_maintenance-scheduling-synthetic-records.",
+        "aibast_maintenance-scheduling-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 227,
+          "height": 24,
+          "label": "Maintenance Scheduling Pilot"
+        },
+        {
+          "x": 322,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 19,
+          "label": "work-order-draft"
+        },
+        {
+          "x": 1229,
+          "y": 197,
+          "width": 120,
+          "height": 22,
+          "label": "optimization-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 148,
+          "height": 19,
+          "label": "maintenance-calendar"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 126,
+          "height": 22,
+          "label": "downtime-analysis"
+        },
+        {
+          "x": 1240,
+          "y": 277,
+          "width": 126,
+          "height": 19,
+          "label": "schedule-overview"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_maintenance-scheduling-synthetic-records."
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_maintenance-scheduling-review-rules.md"
+        }
+      ]
     },
     {
       "id": "easy-ms-01",
       "mode": "easy",
-      "case_id": "MS-01",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/02-ms-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The viewport shows parts, backup, and authorization boundaries, but neither EQ-INJ-01 nor the Technician Availability capacity picture is visible."
+      "caption": "MS-01 · Maintenance Manager: Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.",
+      "case_id": "MS-01",
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/02-ms-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "IM-07",
+        "Technician Availability",
+        "Marcus Chen"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 720,
+          "width": 52,
+          "height": 20,
+          "label": "IM-07"
+        },
+        {
+          "x": 285,
+          "y": 1214,
+          "width": 171,
+          "height": 24,
+          "label": "Technician Availability"
+        },
+        {
+          "x": 299,
+          "y": 1314,
+          "width": 103,
+          "height": 20,
+          "label": "Marcus Chen"
+        }
+      ]
     },
     {
       "id": "easy-ms-02",
       "mode": "easy",
-      "case_id": "MS-02",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/03-ms-02.jpg",
+      "caption": "MS-02 · Production Supervisor: Machine #7 on Line 3 is showing wear indicators and we have a big order next week. What does the condition data say?",
+      "case_id": "MS-02",
       "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/03-ms-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Priority 3 \u2014 Monitor; No Immediate Intervention Indicated",
-        "EQ-CNC-01",
-        "Spindle bearing wear"
-      ],
-      "full_case_not_visibly_proven": [
-        "The critical EQ-INJ-01 and Barrel heater band failure evidence is above the captured viewport."
+        "Screw wear at 78%",
+        "120 operating hours",
+        "50,000 units"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 220,
-          "width": 940,
-          "height": 190,
-          "label": "Visible ranked asset signal"
+          "x": 299,
+          "y": 687,
+          "width": 91,
+          "height": 20,
+          "label": "Screw wear at 78%"
+        },
+        {
+          "x": 495,
+          "y": 773,
+          "width": 156,
+          "height": 24,
+          "label": "120 operating hours"
+        },
+        {
+          "x": 509,
+          "y": 1049,
+          "width": 96,
+          "height": 22,
+          "label": "50,000 units"
         }
       ]
     },
     {
       "id": "easy-ms-03",
       "mode": "easy",
-      "case_id": "MS-03",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/04-ms-03.jpg",
+      "caption": "MS-03 · Maintenance Manager: Show me the lowest-impact maintenance window for machine #7 with coverage, crew, parts and backup, but do not create or d",
+      "case_id": "MS-03",
       "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/04-ms-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Required Authorization Before Any Action",
-        "No work order is created or dispatched"
-      ],
-      "full_case_not_visibly_proven": [
-        "EQ-INJ-01 and the crew, parts, and backup candidate table are above the captured viewport."
+        "No work order is created or dispatched",
+        "Saturday 6 AM - 10 AM",
+        "104%"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 236,
-          "width": 944,
-          "height": 225,
-          "label": "Required human authorization"
+          "x": 684,
+          "y": 500,
+          "width": 205,
+          "height": 21,
+          "label": "No work order is created or dispatched"
         },
         {
-          "x": 282,
-          "y": 465,
-          "width": 944,
-          "height": 112,
-          "label": "No work order side effect"
+          "x": 488,
+          "y": 592,
+          "width": 179,
+          "height": 24,
+          "label": "Saturday 6 AM - 10 AM"
+        },
+        {
+          "x": 657,
+          "y": 1153,
+          "width": 50,
+          "height": 20,
+          "label": "104%"
         }
       ]
     },
     {
       "id": "easy-ms-04",
       "mode": "easy",
-      "case_id": "MS-04",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/05-ms-04.jpg",
+      "caption": "MS-04 · Operations Leader: What does preventive maintenance on machine #7 cost compared with a breakdown, and what is the ROI?",
+      "case_id": "MS-04",
       "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/05-ms-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preventive trade-offs for parts, technician demand, production impact, and recovery duration",
-        "EQ-INJ-01 represents the most acute case"
-      ],
-      "full_case_not_visibly_proven": [
-        "Modeled avoided-cost opportunity and the exact synthetic planning estimates phrase are above the captured viewport."
+        "$3,200",
+        "$18,500",
+        "478%"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 124,
-          "width": 710,
-          "height": 182,
-          "label": "Preventive trade-off table"
+          "x": 505,
+          "y": 537,
+          "width": 59,
+          "height": 23,
+          "label": "$3,200"
         },
         {
-          "x": 282,
-          "y": 328,
-          "width": 944,
-          "height": 62,
-          "label": "Most acute exposure"
+          "x": 445,
+          "y": 862,
+          "width": 66,
+          "height": 22,
+          "label": "$18,500"
+        },
+        {
+          "x": 740,
+          "y": 1346,
+          "width": 52,
+          "height": 20,
+          "label": "478%"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-ms-05",
       "mode": "easy",
-      "source": "solutions/maintenance-scheduling/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list does not visibly contain Maintenance Scheduling Pilot, so it cannot prove the validated target remains Draft.",
-      "draft": true
+      "source": "solutions/maintenance-scheduling/screenshots/assisted/06-ms-05.jpg",
+      "caption": "MS-05 · Maintenance Manager: Line up the crew and parts for the machine #7 overhaul so I can approve it.",
+      "case_id": "MS-05",
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/06-ms-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "WO-2024-3847",
+        "No work order is created or dispatched",
+        "Bin 12-A"
+      ],
+      "boxes": [
+        {
+          "x": 490,
+          "y": 418,
+          "width": 123,
+          "height": 20,
+          "label": "WO-2024-3847"
+        },
+        {
+          "x": 456,
+          "y": 517,
+          "width": 204,
+          "height": 21,
+          "label": "No work order is created or dispatched"
+        },
+        {
+          "x": 621,
+          "y": 1071,
+          "width": 71,
+          "height": 20,
+          "label": "Bin 12-A"
+        }
+      ]
+    },
+    {
+      "id": "easy-ms-06",
+      "mode": "easy",
+      "source": "solutions/maintenance-scheduling/screenshots/assisted/07-ms-06.jpg",
+      "caption": "MS-06 · Operations Leader: What does the maintenance calendar look like for the next 30 days?",
+      "case_id": "MS-06",
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/07-ms-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Calibration",
+        "Machine #12",
+        "87% planned"
+      ],
+      "boxes": [
+        {
+          "x": 577,
+          "y": 794,
+          "width": 87,
+          "height": 21,
+          "label": "Calibration"
+        },
+        {
+          "x": 299,
+          "y": 1016,
+          "width": 101,
+          "height": 21,
+          "label": "Machine #12"
+        },
+        {
+          "x": 546,
+          "y": 1353,
+          "width": 105,
+          "height": 24,
+          "label": "87% planned"
+        }
+      ]
+    },
+    {
+      "id": "easy-ms-07",
+      "mode": "easy",
+      "source": "solutions/maintenance-scheduling/screenshots/assisted/08-ms-07.jpg",
+      "caption": "MS-07 · Operations Leader: What long-term changes would cut our maintenance cost and unplanned downtime?",
+      "case_id": "MS-07",
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/08-ms-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Quick Wins",
+        "$124K",
+        "Run pilot on Line 3"
+      ],
+      "boxes": [
+        {
+          "x": 306,
+          "y": 565,
+          "width": 93,
+          "height": 22,
+          "label": "Quick Wins"
+        },
+        {
+          "x": 725,
+          "y": 1012,
+          "width": 43,
+          "height": 22,
+          "label": "$124K"
+        },
+        {
+          "x": 310,
+          "y": 1604,
+          "width": 99,
+          "height": 24,
+          "label": "Run pilot on Line 3"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/maintenance-scheduling/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Maintenance Scheduling Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 225,
+          "height": 24,
+          "label": "Maintenance Scheduling Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/maintenance-scheduling/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot is an empty loading surface with a spinner; no blank agent workspace, Untitled Agent label, or other positive creation anchor is visible."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/maintenance-scheduling/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Maintenance Scheduling Manual",
+      "step": 2,
       "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Maintenance Scheduling Manual in the name field"
+        "Maintenance Scheduling Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 92,
-          "width": 826,
-          "height": 60,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 247,
+          "height": 24,
+          "label": "Maintenance Scheduling Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/maintenance-scheduling/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Maintenance Scheduling Agent \u2014 Manual Global Instructions",
-        "Locked Preview evidence anchors",
-        "MS-01 through MS-04 acceptance anchors"
+        "Maintenance Scheduling Agent — Manual Global Ins"
       ],
       "boxes": [
         {
-          "x": 78,
-          "y": 218,
-          "width": 900,
-          "height": 158,
-          "label": "Reviewed instruction policy"
-        },
-        {
-          "x": 78,
-          "y": 495,
-          "width": 900,
-          "height": 318,
-          "label": "Locked Preview anchors"
+          "x": 204,
+          "y": 131,
+          "width": 379,
+          "height": 39,
+          "label": "Maintenance Scheduling Agent — Manual Global Ins"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/maintenance-scheduling/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction policy is visible, but the screenshot contains no saved-state tooltip or other positive confirmation that the save completed."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 343,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/maintenance-scheduling/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is byte-for-byte identical to steps 6-11 and shows a later completed inventory rather than a distinct positive capture of the web-search removal."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/maintenance-scheduling/screenshots/manual/06-add-aibast-maintenance-scheduling-review-rules.jpg",
-      "status": "reshoot_required",
-      "reason": "The review-rules chip is visible, but this frame is byte-for-byte identical to steps 5 and 7-11, so it records the completed inventory rather than the distinct knowledge-add checkpoint."
+      "caption": "Manual step 6 · Add knowledge: aibast_maintenance-scheduling-review-rules.md",
+      "step": 6,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/06-add-aibast-maintenance-scheduling-review-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_maintenance-scheduling-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_maintenance-scheduling-review-rules.md"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/maintenance-scheduling/screenshots/manual/07-add-aibast-maintenance-scheduling-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "The synthetic-records chip is visible, but this frame is byte-for-byte identical to steps 5-6 and 8-11, so it records the completed inventory rather than the distinct knowledge-add checkpoint."
+      "caption": "Manual step 7 · Add knowledge: aibast_maintenance-scheduling-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/07-add-aibast-maintenance-scheduling-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_maintenance-scheduling-synthetic-records."
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_maintenance-scheduling-synthetic-records."
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/08-add-aibast-downtime-analysis-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_downtime-analysis_04",
       "step": 8,
-      "source": "solutions/maintenance-scheduling/screenshots/manual/08-add-aibast-downtime-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is byte-for-byte identical to steps 5-7 and 9-11 and shows all four final skills rather than isolating the downtime-analysis addition."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/08-add-aibast-downtime-analysis-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "downtime-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 126,
+          "height": 22,
+          "label": "downtime-analysis"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/09-add-aibast-maintenance-calendar-06.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_maintenance-calendar_06",
       "step": 9,
-      "source": "solutions/maintenance-scheduling/screenshots/manual/09-add-aibast-predictive-alerts.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is byte-for-byte identical to steps 5-8 and 10-11 and shows all four final skills rather than isolating the predictive-alerts addition."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/09-add-aibast-maintenance-calendar-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "maintenance-calendar"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 148,
+          "height": 19,
+          "label": "maintenance-calendar"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/10-add-aibast-optimization-plan-07.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_optimization-plan_07",
       "step": 10,
-      "source": "solutions/maintenance-scheduling/screenshots/manual/10-add-aibast-schedule-overview.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is byte-for-byte identical to steps 5-9 and 11 and shows all four final skills rather than isolating the schedule-overview addition."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/10-add-aibast-optimization-plan-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "optimization-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 121,
+          "height": 22,
+          "label": "optimization-plan"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/11-add-aibast-predictive-alerts-02.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_predictive-alerts_02",
       "step": 11,
-      "source": "solutions/maintenance-scheduling/screenshots/manual/11-add-aibast-work-order-plan.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is byte-for-byte identical to steps 5-10 and shows all four final skills rather than isolating the work-order-plan addition."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/11-add-aibast-predictive-alerts-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "predictive-alerts"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 110,
+          "height": 22,
+          "label": "predictive-alerts"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/12-add-aibast-schedule-overview-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_schedule-overview_01",
       "step": 12,
-      "source": "solutions/maintenance-scheduling/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/12-add-aibast-schedule-overview-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Save tooltip states No unsaved changes",
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Two configured knowledge files"
+        "schedule-overview"
       ],
       "boxes": [
         {
-          "x": 1046,
-          "y": 45,
-          "width": 207,
-          "height": 56,
-          "label": "No unsaved changes"
-        },
-        {
-          "x": 1198,
-          "y": 84,
-          "width": 202,
-          "height": 42,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1020,
-          "y": 137,
-          "width": 382,
-          "height": 144,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1020,
-          "y": 382,
-          "width": 382,
-          "height": 105,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 197,
+          "width": 126,
+          "height": 19,
+          "label": "schedule-overview"
         }
-      ],
-      "note": "Sidebar label pills were obscuring helper text in the review inventory screenshot; regenerated them in whitespace while preserving the measured boxes 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/13-add-aibast-work-order-draft-05.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_work-order-draft_05",
       "step": 13,
-      "source": "solutions/maintenance-scheduling/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/13-add-aibast-work-order-draft-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Maintenance Scheduling Manual greeting"
+        "work-order-draft"
       ],
       "boxes": [
         {
-          "x": 640,
-          "y": 3,
-          "width": 98,
-          "height": 55,
-          "label": "Preview selected"
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 19,
+          "label": "work-order-draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/14-add-aibast-work-order-plan-03.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_work-order-plan_03",
+      "step": 14,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/14-add-aibast-work-order-plan-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "work-order-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 113,
+          "height": 22,
+          "label": "work-order-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "work-order-plan",
+        "work-order-draft",
+        "schedule-overview",
+        "predictive-alerts",
+        "optimization-plan",
+        "aibast_maintenance-scheduling-synthetic-records.",
+        "aibast_maintenance-scheduling-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 833,
+          "x": 1057,
+          "y": 197,
+          "width": 113,
+          "height": 22,
+          "label": "work-order-plan"
+        },
+        {
+          "x": 1226,
+          "y": 197,
+          "width": 115,
+          "height": 19,
+          "label": "work-order-draft"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 126,
+          "height": 19,
+          "label": "schedule-overview"
+        },
+        {
+          "x": 1241,
+          "y": 237,
+          "width": 110,
+          "height": 22,
+          "label": "predictive-alerts"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 121,
+          "height": 22,
+          "label": "optimization-plan"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_maintenance-scheduling-synthetic-records."
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_maintenance-scheduling-review-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "work-order-plan",
+        "maintenance-calendar",
+        "work-order-draft",
+        "schedule-overview",
+        "predictive-alerts"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 113,
+          "height": 22,
+          "label": "work-order-plan"
+        },
+        {
+          "x": 1119,
+          "y": 200,
+          "width": 79,
+          "height": 17,
+          "label": "maintenance-calendar"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 116,
+          "height": 19,
+          "label": "work-order-draft"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 126,
+          "height": 19,
+          "label": "schedule-overview"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 110,
+          "height": 22,
+          "label": "predictive-alerts"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "schedule-overview",
+        "maintenance-calendar",
+        "predictive-alerts",
+        "optimization-plan",
+        "downtime-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
           "y": 84,
-          "width": 112,
-          "height": 45,
-          "label": "Fresh chat control"
+          "width": 126,
+          "height": 19,
+          "label": "schedule-overview"
         },
         {
-          "x": 258,
-          "y": 144,
-          "width": 535,
-          "height": 100,
-          "label": "Manual agent greeting"
+          "x": 1119,
+          "y": 107,
+          "width": 79,
+          "height": 17,
+          "label": "maintenance-calendar"
+        },
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 110,
+          "height": 22,
+          "label": "predictive-alerts"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 121,
+          "height": 22,
+          "label": "optimization-plan"
+        },
+        {
+          "x": 1234,
+          "y": 322,
+          "width": 69,
+          "height": 17,
+          "label": "downtime-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Maintenance Scheduling Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 247,
+          "height": 24,
+          "label": "Maintenance Scheduling Manual"
         }
       ]
     },
     {
       "id": "hard-ms-01",
       "mode": "hard",
-      "step": 14,
+      "source": "solutions/maintenance-scheduling/screenshots/manual/19-ms-01.jpg",
+      "caption": "MS-01 · Maintenance Manager: Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.",
+      "step": 19,
       "case_id": "MS-01",
-      "source": "solutions/maintenance-scheduling/screenshots/manual/14-ms-01.jpg",
-      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/14-ms-01.png",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/19-ms-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Technician candidates based on synthetic certifications and available hours",
-        "Confirm technician availability through the connected scheduling system",
-        "Parts & Backup Readiness"
-      ],
-      "full_case_not_visibly_proven": [
-        "EQ-INJ-01 and the Technician Availability heading are above the captured viewport."
+        "IM-07",
+        "Technician Availability",
+        "Marcus Chen"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 118,
-          "width": 944,
-          "height": 74,
-          "label": "Technician capacity evidence"
+          "x": 299,
+          "y": 693,
+          "width": 52,
+          "height": 20,
+          "label": "IM-07"
         },
         {
-          "x": 282,
-          "y": 202,
-          "width": 944,
-          "height": 136,
-          "label": "Parts and backup readiness"
+          "x": 285,
+          "y": 1116,
+          "width": 171,
+          "height": 24,
+          "label": "Technician Availability"
         },
         {
-          "x": 282,
-          "y": 350,
-          "width": 944,
-          "height": 228,
-          "label": "Authorization and availability gate"
+          "x": 299,
+          "y": 1217,
+          "width": 103,
+          "height": 20,
+          "label": "Marcus Chen"
         }
       ]
     },
     {
       "id": "hard-ms-02",
       "mode": "hard",
-      "step": 15,
+      "source": "solutions/maintenance-scheduling/screenshots/manual/20-ms-02.jpg",
+      "caption": "MS-02 · Production Supervisor: Machine #7 on Line 3 is showing wear indicators and we have a big order next week. What does the condition data say?",
+      "step": 20,
       "case_id": "MS-02",
-      "source": "solutions/maintenance-scheduling/screenshots/manual/15-ms-02.jpg",
-      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/15-ms-02.png",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/20-ms-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Priority 3 \u2014 Monitor; Review at Next Maintenance Window",
-        "EQ-CNC-01",
-        "Spindle bearing wear"
-      ],
-      "full_case_not_visibly_proven": [
-        "The critical EQ-INJ-01 and Barrel heater band failure evidence is above the captured viewport."
+        "Screw wear at 78%",
+        "120 operating hours",
+        "50,000 units"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 154,
-          "width": 944,
-          "height": 215,
-          "label": "Visible ranked asset signal"
+          "x": 310,
+          "y": 723,
+          "width": 146,
+          "height": 22,
+          "label": "Screw wear at 78%"
+        },
+        {
+          "x": 489,
+          "y": 753,
+          "width": 156,
+          "height": 24,
+          "label": "120 operating hours"
+        },
+        {
+          "x": 509,
+          "y": 950,
+          "width": 99,
+          "height": 22,
+          "label": "50,000 units"
         }
       ]
     },
     {
       "id": "hard-ms-03",
       "mode": "hard",
-      "step": 16,
+      "source": "solutions/maintenance-scheduling/screenshots/manual/21-ms-03.jpg",
+      "caption": "MS-03 · Maintenance Manager: Show me the lowest-impact maintenance window for machine #7 with coverage, crew, parts and backup, but do not create or d",
+      "step": 21,
       "case_id": "MS-03",
-      "source": "solutions/maintenance-scheduling/screenshots/manual/16-ms-03.jpg",
-      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/16-ms-03.png",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/21-ms-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "EQ-INJ-01",
-        "Injection Molder",
-        "Barrel heater band failure",
-        "Maintenance Window Proposal"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact No work order is created or dispatched boundary is outside the captured viewport."
+        "No work order is created or dispatched",
+        "Saturday 6 AM - 10 AM",
+        "104%"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 205,
-          "width": 760,
-          "height": 270,
-          "label": "Maintenance candidate evidence"
+          "x": 584,
+          "y": 500,
+          "width": 205,
+          "height": 21,
+          "label": "No work order is created or dispatched"
         },
         {
-          "x": 282,
-          "y": 575,
-          "width": 944,
-          "height": 104,
-          "label": "Proposed maintenance window"
+          "x": 452,
+          "y": 607,
+          "width": 232,
+          "height": 24,
+          "label": "Saturday 6 AM - 10 AM"
+        },
+        {
+          "x": 876,
+          "y": 1377,
+          "width": 48,
+          "height": 20,
+          "label": "104%"
         }
       ]
     },
     {
       "id": "hard-ms-04",
       "mode": "hard",
-      "step": 17,
+      "source": "solutions/maintenance-scheduling/screenshots/manual/22-ms-04.jpg",
+      "caption": "MS-04 · Operations Leader: What does preventive maintenance on machine #7 cost compared with a breakdown, and what is the ROI?",
+      "step": 22,
       "case_id": "MS-04",
-      "source": "solutions/maintenance-scheduling/screenshots/manual/17-ms-04.jpg",
-      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/17-ms-04.png",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/22-ms-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Key Trade-Off Principles (Synthetic Planning Estimates)",
-        "Unplanned Failure Path",
-        "Preventive Intervention Path"
-      ],
-      "full_case_not_visibly_proven": [
-        "Modeled avoided-cost opportunity is outside the captured viewport."
+        "$3,200",
+        "$18,500",
+        "478%"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 336,
-          "width": 735,
-          "height": 316,
-          "label": "Synthetic preventive trade-offs"
+          "x": 353,
+          "y": 753,
+          "width": 59,
+          "height": 23,
+          "label": "$3,200"
+        },
+        {
+          "x": 423,
+          "y": 890,
+          "width": 66,
+          "height": 23,
+          "label": "$18,500"
+        },
+        {
+          "x": 320,
+          "y": 926,
+          "width": 51,
+          "height": 20,
+          "label": "478%"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-ms-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/maintenance-scheduling/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list does not visibly contain Maintenance Scheduling Manual, so it cannot prove that the validated manual agent remains Draft."
+      "source": "solutions/maintenance-scheduling/screenshots/manual/23-ms-05.jpg",
+      "caption": "MS-05 · Maintenance Manager: Line up the crew and parts for the machine #7 overhaul so I can approve it.",
+      "step": 23,
+      "case_id": "MS-05",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/23-ms-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No work order is created or dispatched",
+        "WO-2024-3847",
+        "Bin 12-A"
+      ],
+      "boxes": [
+        {
+          "x": 451,
+          "y": 473,
+          "width": 289,
+          "height": 24,
+          "label": "No work order is created or dispatched"
+        },
+        {
+          "x": 421,
+          "y": 548,
+          "width": 119,
+          "height": 20,
+          "label": "WO-2024-3847"
+        },
+        {
+          "x": 561,
+          "y": 791,
+          "width": 68,
+          "height": 20,
+          "label": "Bin 12-A"
+        }
+      ]
+    },
+    {
+      "id": "hard-ms-06",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/24-ms-06.jpg",
+      "caption": "MS-06 · Operations Leader: What does the maintenance calendar look like for the next 30 days?",
+      "step": 24,
+      "case_id": "MS-06",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/24-ms-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Calibration",
+        "Machine #12",
+        "87% planned"
+      ],
+      "boxes": [
+        {
+          "x": 547,
+          "y": 750,
+          "width": 87,
+          "height": 21,
+          "label": "Calibration"
+        },
+        {
+          "x": 310,
+          "y": 860,
+          "width": 105,
+          "height": 20,
+          "label": "Machine #12"
+        },
+        {
+          "x": 455,
+          "y": 993,
+          "width": 105,
+          "height": 24,
+          "label": "87% planned"
+        }
+      ]
+    },
+    {
+      "id": "hard-ms-07",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/25-ms-07.jpg",
+      "caption": "MS-07 · Operations Leader: What long-term changes would cut our maintenance cost and unplanned downtime?",
+      "step": 25,
+      "case_id": "MS-07",
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/25-ms-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Quick Wins",
+        "$124K",
+        "Run pilot on Line 3"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 566,
+          "width": 92,
+          "height": 22,
+          "label": "Quick Wins"
+        },
+        {
+          "x": 449,
+          "y": 730,
+          "width": 45,
+          "height": 23,
+          "label": "$124K"
+        },
+        {
+          "x": 372,
+          "y": 1128,
+          "width": 146,
+          "height": 24,
+          "label": "Run pilot on Line 3"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/maintenance-scheduling/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Maintenance Scheduling Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 245,
+          "height": 24,
+          "label": "Maintenance Scheduling Manual"
+        }
+      ]
     }
   ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:maintenance-scheduling",
-    "reviewed_at": "2026-08-10T00:27:58.156577+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:49:40.678895+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

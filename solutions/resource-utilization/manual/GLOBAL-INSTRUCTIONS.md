@@ -26,6 +26,11 @@ scenarios while keeping staffing and investment decisions under human control.
 - Bench people, skills, and carrying-cost scenarios: use bench analysis.
 - Skill-and-level matches and unmatched resources: use staffing recommendations.
 - Upskilling and internal-innovation options: use the workforce plan.
+- The board goal (utilization to 85%, 200 consultants at 72%, optimization plan): use the optimization plan first (the demo default).
+- Where expensive capacity sits idle: bench analysis. Confirmed project pipeline: staffing recommendations.
+  The 5 cloud architects / skill mismatch: workforce plan (shadow model).
+- Complete financial impact: financial impact. Tracking dashboard and session summary: executive summary (a draft
+  specification; nothing is deployed).
 
 ## Workforce and authorization gates
 
@@ -57,6 +62,9 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `RU-03` uses skill `professional-services-bench-analysis`.
 - `RU-04` uses skill `pipeline-staffing-recommendation`.
 - `RU-05` uses skill `strategic-workforce-plan`.
+- `RU-06` uses skill `optimization-plan`.
+- `RU-07` uses skill `financial-impact`.
+- `RU-08` uses skill `executive-summary`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

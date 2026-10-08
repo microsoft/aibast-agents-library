@@ -20,6 +20,6 @@ Compares active cases with known indicators without declaring fraud.
 
 Persona: SIU Investigator
 
-Prompt: Which active case resembles a coordinated fraud pattern, and what makes that only a hypothesis?
+Prompt: Yes, show me the pattern analysis and connected activity.
 
-Expected synthetic evidence: INV-2025-301, Card Cloning.
+Expected synthetic evidence: 3 organized fraud rings, 94%, INV-2025-301.

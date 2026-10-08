@@ -88,6 +88,111 @@
       "min_words": 20,
       "expects_agent": "UnderwritingSupportAgent",
       "arguments": {}
+    },
+    {
+      "id": "UWS-05",
+      "persona": "Underwriter",
+      "operation": "submission_review",
+      "onepager_bullet": "Analyze applications, documents, and loss history to identify key risk factors and underwriting concerns",
+      "prompt": "Help me evaluate this commercial insurance application and tell me what is missing.",
+      "must_include": [
+        "Midwest Manufacturing Inc.",
+        "95% complete",
+        "68/100 (Moderate)"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "UnderwritingSupportAgent",
+      "arguments": {}
+    },
+    {
+      "id": "UWS-06",
+      "persona": "Risk Analyst",
+      "operation": "risk_assessment",
+      "onepager_bullet": "Generate standardized risk assessments, scoring, and pricing recommendations",
+      "prompt": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+      "must_include": [
+        "Industry hazard",
+        "$237K",
+        "0.42 vs class 0.58"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "UnderwritingSupportAgent",
+      "arguments": {}
+    },
+    {
+      "id": "UWS-07",
+      "persona": "Underwriter",
+      "operation": "coverage_structure",
+      "onepager_bullet": "Validate coverage structure and compliance requirements",
+      "prompt": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+      "must_include": [
+        "Equipment breakdown",
+        "$5K deductible",
+        "$8.2M total"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "UnderwritingSupportAgent",
+      "arguments": {}
+    },
+    {
+      "id": "UWS-08",
+      "persona": "Senior Underwriter",
+      "operation": "compliance_check",
+      "onepager_bullet": "Validate coverage structure and compliance requirements",
+      "prompt": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+      "must_include": [
+        "Within $10M limit",
+        "OH rates filed",
+        "30 days"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "UnderwritingSupportAgent",
+      "arguments": {}
+    },
+    {
+      "id": "UWS-09",
+      "persona": "Senior Underwriter",
+      "operation": "underwriting_summary",
+      "onepager_bullet": "Generate standardized risk assessments, scoring, and pricing recommendations",
+      "prompt": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+      "must_include": [
+        "Approve with conditions",
+        "$88,100",
+        "drafted for you to issue"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "UnderwritingSupportAgent",
+      "arguments": {}
     }
   ],
   "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."

@@ -1,0 +1,27 @@
+---
+name: field-service-dispatch-incident-status
+description: "Use when a Control Room Operator asks for the live outage status."
+---
+# Field Service Dispatch Agent: Live outage status
+
+## Route
+
+Use the `incident_status` operation. The canonical persona prompt is:
+
+> Yes, give me live updates and customer impact
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `incident_status` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- Phase B insulator
+- $12,400
+- 93 min
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

@@ -13,6 +13,10 @@ Make qualification consistent before outreach begins by reviewing the fixed synt
 - `setup_tracking` — draft SLA and escalation plan.
 - `qualification_report` — synthetic pipeline and assumption summary.
 
+The demo snapshot is 45 inbound conference leads: 8 Hot (80+, $800K), 15 Warm (60-79, $450K), 22 Nurture;
+top hot leads TechFlow Industries (94), Meridian Corp (91), Apex Solutions (88); hot leads route to Mike
+Rodriguez, Sarah Kim, James Chen and Lisa Park. Short follow-ups ("yes, assign to AEs") continue the workflow.
+
 Route outreach wording to `create_outreach`, routing questions to `assign_leads`, and SLA or alert planning to `setup_tracking`. None of these operations executes an action.
 
 ## Fixed evidence policy

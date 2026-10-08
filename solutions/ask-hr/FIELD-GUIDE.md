@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `HR-01, HR-02, HR-03, HR-04, HR-05, HR-06`.
+1. Which locked case IDs did you complete? Expected scope: `HR-01, HR-02, HR-03, HR-04, HR-05, HR-06, HR-07, HR-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -218,6 +218,8 @@ Both Easy lanes preserve every recorded case prompt:
 - `HR-04` — Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.
 - `HR-05` — What does the sample remote-work policy say, without inferring why an employee asked?
 - `HR-06` — Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.
+- `HR-07` — I want to take 5 days off next month for a family trip. Is that okay with my balance and the policy?
+- `HR-08` — Is there anything else I should know about my benefits or time off before the end of the year?
 
 ## Manual mode — literal browser construction
 

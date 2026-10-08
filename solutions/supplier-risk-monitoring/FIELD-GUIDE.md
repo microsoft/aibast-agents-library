@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `SR-01, SR-02, SR-03, SR-04`.
+1. Which locked case IDs did you complete? Expected scope: `SR-01, SR-02, SR-03, SR-04, SR-05, SR-06, SR-07, SR-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `SR-02` — Explain why TechnoCore is elevated and show me the evidence by risk dimension.
 - `SR-03` — Which recorded disruptions could threaten continuity, and what exposure should we validate?
 - `SR-04` — Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.
+- `SR-05` — What mitigation strategies do you recommend for each of our semiconductor suppliers?
+- `SR-06` — What would those mitigations cost us, and is the investment worth it?
+- `SR-07` — Lay out a twelve-month plan for putting these protections in place.
+- `SR-08` — How would we keep watching these suppliers after the plan is in place?
 
 ## Manual mode — literal browser construction
 

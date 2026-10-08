@@ -46,7 +46,7 @@ passing.
 | Copilot Studio deployment settings | `solutions/client-health-score/exports/client-health-score-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/client-health-score/exports/client-health-score-solution-export.json` |
 
-**Scaffold status:** 96 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 133 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -6,68 +6,45 @@
 
 ## Transaction-reporting checks
 
-Check the synthetic records for:
-
-1. required MiFID II RTS 22 fields;
-2. venue admission against the instrument reference record;
-3. a recorded Approved Reporting Mechanism submission by the pilot's T+1
-   threshold; and
-4. execution quality against arrival price and VWAP.
-
-The required field labels used in the pilot include:
-
-- field 7 — Buyer identification code;
-- field 36 — Venue;
-- field 57 — Investment decision within firm; and
-- field 59 — Execution within firm.
-
-Do not invent a missing correction value. A correction can be staged only when
-the synthetic source record supplies the value. A venue correction must use the
-verified execution venue, not an arbitrary venue from the admitted list.
+Check each transaction report for venue ID against the instrument's admitted
+venues, counterparty LEI presence and validity, and timestamp format (ISO 8601
+UTC). Venue, LEI and timestamp issues are auto-fixable from source records; an
+expired counterparty LEI needs the client's updated LEI and goes to manual
+review. Reporting compliance = reports filed on time / trades executed.
 
 ## Best-execution control
 
-The synthetic tolerance is 5 basis points worse than arrival price. Present an
-outlier as evidence for review, not as a legal conclusion. Keep transaction
-reporting defects separate from best-execution and documentation obligations.
+Compare the quarter's client trades with the benchmarks: within best bid/offer
+(95%), optimal venue selection (90%), average slippage (below 3 bps) and
+execution speed (below 100 ms). Rank venues by execution quality. Present an
+RTS 28 report only as a draft for review before client distribution.
 
 ## Algorithm-documentation control
 
-A complete documentation pack contains:
-
-- strategy description;
-- risk controls;
-- kill-switch test; and
-- conformance test.
-
-Validation is current for 365 days. Block an upcoming go-live when validation
-is absent or the required pack is incomplete. Escalate an already-live
-algorithm when its validation is expired.
+A complete documentation pack contains pre-trade testing, stress scenarios, a
+kill-switch test and an audit trail. A strategy with a missing item cannot be
+deployed until documentation is filed; go-live requires Quant sign-off and
+authorized review.
 
 ## Certification control
 
-The look-ahead window is 90 days. A certification with a date before the fixed
-snapshot is lapsed, and the affected trader must be stood down in the pilot.
-Show the role-based supervisor and the next available session. Never claim a
-real enrollment or notification was completed.
+The look-ahead window is 30 days: 15 days or less is Urgent, 30 days or less is
+Soon, later is Current; a past expiry is lapsed and the trader must stop
+trading pending authorized review. Enrollments and reminders are prepared for
+the desk supervisor; never claim a real enrollment or notification.
 
 ## Remediation and submission control
 
-The manual pilot may:
-
-- stage source-backed field corrections;
-- prepare a new submission for an unreported trade;
-- prepare a correction report for a previously reported trade; and
-- summarize the projected synthetic state after approval.
-
-It must not claim that a record was changed or a filing was transmitted.
-Production transmission requires an authenticated ARM connector and explicit
-approval from an authorized compliance reviewer.
+The pilot may stage correction reports for auto-fixable trades and a new
+submission once a missing value (such as an updated LEI) is supplied. It is a
+synthetic dry run: it must not claim that a record was changed or a filing was
+transmitted. Production transmission requires an authenticated ARM connector
+and explicit approval from an authorized compliance reviewer.
 
 ## Response policy
 
-- Lead with the specific record or person requiring action.
-- Distinguish deterministic synthetic evidence from qualitative business value.
-- Avoid promises about audit outcomes, penalty avoidance, or customer KPI
-  improvement.
-- State when the result is a dry run or requires human approval.
+- Lead with the specific figure, record or person requiring action.
+- Identify at-risk areas and control gaps only; never state that an audit will
+  pass or fail and never present the result as legal or regulatory advice.
+- Penalty-exposure figures are modeled estimates, not promises.
+- State when the result is a draft, a dry run, or requires human approval.

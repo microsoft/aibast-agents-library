@@ -7,57 +7,77 @@
     {
       "advertised_promise": "Verify insurance, referrals, and network status during patient intake",
       "operations": [
-        "intake_readiness"
+        "intake_readiness",
+        "new_patient_intake"
       ],
       "demo_cases": [
-        "PI-01"
+        "PI-01",
+        "PI-05"
       ],
       "disposition": "bounded",
       "synthetic_evidence": [
         "Summarizes present and missing synthetic intake evidence for staff confirmation.",
-        "Coverage evidence is transcribed; live eligibility, referral, and network determinations remain in approved source systems."
+        "Coverage evidence is transcribed; live eligibility, referral, and network determinations remain in approved source systems.",
+        "New Patient Registration Draft",
+        "Dr. James Anderson, Neurology",
+        "Within 14 days"
       ]
     },
     {
       "advertised_promise": "Deliver tailored digital packets with all required pre-visit forms",
       "operations": [
-        "coverage_evidence"
+        "coverage_evidence",
+        "intake_packet"
       ],
       "demo_cases": [
-        "PI-02"
+        "PI-02",
+        "PI-07"
       ],
       "disposition": "bounded",
       "synthetic_evidence": [
         "Transcribes source-recorded synthetic coverage evidence without determining eligibility.",
-        "The agent produces a missing-item inventory but does not deliver packets or write records."
+        "The agent produces a missing-item inventory but does not deliver packets or write records.",
+        "Digital Intake Packet Draft",
+        "HIT-6",
+        "HIPAA Authorization"
       ]
     },
     {
       "advertised_promise": "Automate reminders across multiple scheduled touchpoints",
       "operations": [
-        "appointment_availability"
+        "appointment_availability",
+        "reminder_plan"
       ],
       "demo_cases": [
-        "PI-03"
+        "PI-03",
+        "PI-08"
       ],
-      "disposition": "excluded",
+      "disposition": "bounded",
       "synthetic_evidence": [
         "Shows candidate synthetic source slots without holding, booking, or changing an appointment.",
-        "No outbound communication or scheduling mutation is configured."
+        "Reminder schedules are recommended drafts computed from the slot; no outbound communication or scheduling mutation is configured.",
+        "72-Hour Reminder",
+        "Saturday 2:30 PM",
+        "8% for new patients"
       ]
     },
     {
-      "advertised_promise": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "advertised_promise": "Ensure clinicians’ availability and readiness through up-to-date scheduling data",
       "operations": [
-        "pre_visit_summary"
+        "pre_visit_summary",
+        "appointment_hold_draft"
       ],
       "demo_cases": [
-        "PI-04"
+        "PI-04",
+        "PI-06"
       ],
       "disposition": "bounded",
       "synthetic_evidence": [
         "Drafts a minimum-necessary readiness handoff for authorized patient-access review.",
-        "Candidate synthetic source slots are displayed without booking or freshness claims."
+        "Candidate synthetic source slots are displayed without booking or freshness claims.",
+        "Appointment Request Draft",
+        "Tuesday, January 30, 2024",
+        "Suite 405"
       ]
     }
   ]

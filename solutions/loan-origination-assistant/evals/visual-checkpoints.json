@@ -8,545 +8,987 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 26,
-    "reusable": 19,
-    "reshoot_required": 7
+    "total_existing_captures": 38,
+    "reusable": 38,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-loa-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "LOA-01",
-      "source": "solutions/loan-origination-assistant/screenshots/assisted/01-loa-01.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/01-loa-01.png",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "FHA 30Yr",
-        "$265,375",
-        "Employment verification, FHA case number, and Final appraisal remain open",
-        "Authorized human review required"
-      ],
-      "full_case_not_visibly_proven": [
-        "LA-2025-4002 and Document Review are above the captured viewport."
+        "Loan Origination Pilot",
+        "Draft",
+        "processing-summary",
+        "program-comparison",
+        "application-intake",
+        "decision-recommendation",
+        "application-review",
+        "aibast_loan-origination-assistant-synthetic-reco",
+        "aibast_loan-origination-assistant-controls-and-r"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 142,
-          "width": 430,
-          "height": 190,
-          "label": "FHA application details"
+          "x": 84,
+          "y": 20,
+          "width": 169,
+          "height": 24,
+          "label": "Loan Origination Pilot"
         },
         {
-          "x": 286,
-          "y": 332,
-          "width": 430,
-          "height": 114,
-          "label": "Open conditions"
+          "x": 265,
+          "y": 22,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
         },
         {
-          "x": 286,
-          "y": 506,
-          "width": 945,
-          "height": 75,
-          "label": "Human-review boundary"
+          "x": 1057,
+          "y": 197,
+          "width": 140,
+          "height": 21,
+          "label": "processing-summary"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 142,
+          "height": 21,
+          "label": "program-comparison"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 122,
+          "height": 22,
+          "label": "application-intake"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 173,
+          "height": 19,
+          "label": "decision-recommendation"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 124,
+          "height": 22,
+          "label": "application-review"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_loan-origination-assistant-synthetic-reco"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_loan-origination-assistant-controls-and-r"
+        }
+      ]
+    },
+    {
+      "id": "easy-loa-01",
+      "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/02-loa-01.jpg",
+      "caption": "LOA-01 · Loan Officer: What is in my mortgage pipeline, and which application is still in document review?",
+      "case_id": "LOA-01",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/02-loa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "LA-2025-4002",
+        "Document Review"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 575,
+          "width": 107,
+          "height": 20,
+          "label": "LA-2025-4002"
+        },
+        {
+          "x": 1021,
+          "y": 617,
+          "width": 141,
+          "height": 21,
+          "label": "Document Review"
         }
       ]
     },
     {
       "id": "easy-loa-02",
       "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/03-loa-02.jpg",
+      "caption": "LOA-02 · Underwriter: Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.",
       "case_id": "LOA-02",
-      "source": "solutions/loan-origination-assistant/screenshots/assisted/02-loa-02.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/02-loa-02.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/03-loa-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "DTI 45.3%",
-        "LTV 96.5%",
-        "Credit Score, DTI, and LTV are marked Pass against FHA requirements"
-      ],
-      "full_case_not_visibly_proven": [
-        "LA-2025-4002 is above the captured viewport."
+        "LA-2025-4002",
+        "DTI"
       ],
       "boxes": [
         {
-          "x": 288,
-          "y": 128,
-          "width": 845,
-          "height": 195,
-          "label": "Calculated ratios"
+          "x": 711,
+          "y": 418,
+          "width": 117,
+          "height": 20,
+          "label": "LA-2025-4002"
         },
         {
-          "x": 288,
-          "y": 429,
-          "width": 530,
-          "height": 218,
-          "label": "FHA criteria passes"
+          "x": 370,
+          "y": 1203,
+          "width": 34,
+          "height": 20,
+          "label": "DTI"
         }
       ]
     },
     {
       "id": "easy-loa-03",
       "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/04-loa-03.jpg",
+      "caption": "LOA-03 · Processor: Build the VA document checklist for Sandra so I can verify the file.",
       "case_id": "LOA-03",
-      "source": "solutions/loan-origination-assistant/screenshots/assisted/03-loa-03.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame stops at routing and retrieval reasoning plus a generic safety banner; no final checklist answer is visible. Reasoning text cannot prove LA-2025-4004 or Certificate of Eligibility."
-    },
-    {
-      "id": "easy-loa-04",
-      "mode": "easy",
-      "case_id": "LOA-04",
-      "source": "solutions/loan-origination-assistant/screenshots/assisted/04-loa-04.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows only routing and retrieval reasoning. No final answer visibly states the limited-criteria result or that no lending decision was made."
-    },
-    {
-      "id": "easy-loa-05",
-      "mode": "easy",
-      "case_id": "LOA-05",
-      "source": "solutions/loan-origination-assistant/screenshots/assisted/05-loa-05.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/05-loa-05.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/04-loa-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "LA-2025-4003 (Westfield Properties LLC)",
-        "Environmental Phase I",
-        "Current Rent Roll",
-        "Both conditions are Open"
-      ],
-      "full_case_not_visibly_proven": [
-        "The no-closing-date boundary is below the captured viewport."
+        "LA-2025-4004",
+        "Certificate of Eligibility"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 247,
-          "width": 940,
-          "height": 105,
-          "label": "Commercial refinance identity"
+          "x": 542,
+          "y": 528,
+          "width": 165,
+          "height": 25,
+          "label": "LA-2025-4004"
         },
         {
-          "x": 288,
-          "y": 447,
-          "width": 430,
-          "height": 132,
-          "label": "Two open conditions"
+          "x": 418,
+          "y": 1816,
+          "width": 176,
+          "height": 24,
+          "label": "Certificate of Eligibility"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-loa-04",
       "mode": "easy",
-      "source": "solutions/loan-origination-assistant/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list shows other Draft rows, but the target Loan Origination Pilot row is not visible.",
-      "draft": true
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/05-loa-04.jpg",
+      "caption": "LOA-04 · Senior Underwriter: Which files meet the limited criteria, and did the assistant approve any loan?",
+      "case_id": "LOA-04",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/05-loa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "LA-2025-4001",
+        "No lending decision"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 669,
+          "width": 110,
+          "height": 20,
+          "label": "LA-2025-4001"
+        },
+        {
+          "x": 286,
+          "y": 1173,
+          "width": 345,
+          "height": 24,
+          "label": "No lending decision"
+        }
+      ]
+    },
+    {
+      "id": "easy-loa-05",
+      "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/06-loa-05.jpg",
+      "caption": "LOA-05 · Closing Coordinator: Which conditions are still open on the commercial refinance, and is a closing date promised?",
+      "case_id": "LOA-05",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/06-loa-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "LA-2025-4003",
+        "Environmental Phase I"
+      ],
+      "boxes": [
+        {
+          "x": 416,
+          "y": 500,
+          "width": 138,
+          "height": 23,
+          "label": "LA-2025-4003"
+        },
+        {
+          "x": 299,
+          "y": 679,
+          "width": 353,
+          "height": 24,
+          "label": "Environmental Phase I"
+        }
+      ]
+    },
+    {
+      "id": "easy-loa-06",
+      "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/07-loa-06.jpg",
+      "caption": "LOA-06 · Loan Officer: Process the Martinez mortgage application and give me an eligibility assessment with documentation status.",
+      "case_id": "LOA-06",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/07-loa-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "92% documentation complete",
+        "1234 Oak Lane",
+        "missing 1 paystub"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 588,
+          "width": 233,
+          "height": 24,
+          "label": "92% documentation complete"
+        },
+        {
+          "x": 417,
+          "y": 788,
+          "width": 113,
+          "height": 20,
+          "label": "1234 Oak Lane"
+        },
+        {
+          "x": 810,
+          "y": 1198,
+          "width": 135,
+          "height": 24,
+          "label": "missing 1 paystub"
+        }
+      ]
+    },
+    {
+      "id": "easy-loa-07",
+      "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/08-loa-07.jpg",
+      "caption": "LOA-07 · Loan Officer: Which loan programs are the Martinezes eligible for, and which one do you recommend?",
+      "case_id": "LOA-07",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/08-loa-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Conventional 15-yr",
+        "$2,549",
+        "9.2 months"
+      ],
+      "boxes": [
+        {
+          "x": 466,
+          "y": 461,
+          "width": 107,
+          "height": 21,
+          "label": "Conventional 15-yr"
+        },
+        {
+          "x": 839,
+          "y": 617,
+          "width": 57,
+          "height": 23,
+          "label": "$2,549"
+        },
+        {
+          "x": 463,
+          "y": 1342,
+          "width": 90,
+          "height": 20,
+          "label": "9.2 months"
+        }
+      ]
+    },
+    {
+      "id": "easy-loa-08",
+      "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/09-loa-08.jpg",
+      "caption": "LOA-08 · Loan Officer: Give me the complete loan processing summary for the Martinez file.",
+      "case_id": "LOA-08",
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/09-loa-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2 outstanding",
+        "67% faster"
+      ],
+      "boxes": [
+        {
+          "x": 476,
+          "y": 798,
+          "width": 112,
+          "height": 24,
+          "label": "2 outstanding"
+        },
+        {
+          "x": 567,
+          "y": 841,
+          "width": 90,
+          "height": 23,
+          "label": "67% faster"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "$3,954 PITI not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/loan-origination-assistant/screenshots/assisted/10-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 10 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/loan-origination-assistant/screenshots/assisted/annotated/10-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Loan Origination Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 166,
+          "height": 24,
+          "label": "Loan Origination Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/loan-origination-assistant/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 82,
-          "y": 88,
-          "width": 905,
-          "height": 70,
-          "label": "Blank agent workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/loan-origination-assistant/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Loan Origination Manual",
+      "step": 2,
       "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Loan Origination Manual in the name field"
+        "Loan Origination Manual"
       ],
       "boxes": [
         {
-          "x": 165,
-          "y": 94,
-          "width": 825,
-          "height": 65,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 190,
+          "height": 24,
+          "label": "Loan Origination Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/loan-origination-assistant/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "LOA-01 through LOA-05 acceptance anchors"
+        "Loan Origination Assistant — Manual Global Instr"
       ],
       "boxes": [
         {
-          "x": 80,
-          "y": 220,
-          "width": 900,
-          "height": 265,
-          "label": "Reviewed response policy"
-        },
-        {
-          "x": 80,
-          "y": 493,
-          "width": 900,
-          "height": 305,
-          "label": "Locked Preview anchors"
+          "x": 204,
+          "y": 131,
+          "width": 259,
+          "height": 39,
+          "label": "Loan Origination Assistant — Manual Global Instr"
         }
-      ],
-      "note": "Label pills were sitting over nearby instruction text; regenerated pills in whitespace while keeping the measured evidence boxes 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/loan-origination-assistant/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction content is visible, but no saved-state confirmation such as No unsaved changes is shown. The screenshot does not positively prove that the save completed."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/loan-origination-assistant/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
       "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/05-remove-web-search.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge section is visibly empty after the Search all websites source is removed"
+        "Provide trusted context to guide decisions"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 260,
-          "width": 380,
-          "height": 68,
-          "label": "Web search removed"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
       ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/loan-origination-assistant/screenshots/manual/06-add-aibast-loan-origination-assistant-controls-and-review.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_loan-origination-assistant-controls-and-review.md",
+      "step": 6,
       "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/06-add-aibast-loan-origination-assistant-controls-and-review.png",
       "status": "reusable",
       "visible_anchors": [
-        "The controls-and-review knowledge chip is visible with its unique aibast_loan-origination-assistant-controls-an... prefix"
+        "aibast_loan-origination-assistant-controls-and-r"
       ],
       "boxes": [
         {
-          "x": 1020,
-          "y": 300,
-          "width": 378,
-          "height": 52,
-          "label": "Controls knowledge added"
+          "x": 1057,
+          "y": 321,
+          "width": 316,
+          "height": 22,
+          "label": "aibast_loan-origination-assistant-controls-and-r"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/loan-origination-assistant/screenshots/manual/07-add-aibast-loan-origination-assistant-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_loan-origination-assistant-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/07-add-aibast-loan-origination-assistant-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "Synthetic-records knowledge chip",
-        "Controls-and-review knowledge chip",
-        "Two knowledge sources are visible"
+        "aibast_loan-origination-assistant-synthetic-reco"
       ],
       "boxes": [
         {
-          "x": 1020,
-          "y": 300,
-          "width": 378,
-          "height": 100,
-          "label": "Two knowledge sources"
+          "x": 1058,
+          "y": 314,
+          "width": 308,
+          "height": 33,
+          "label": "aibast_loan-origination-assistant-synthetic-reco"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/08-add-aibast-application-intake-06.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_application-intake_06",
       "step": 8,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/08-add-aibast-application-review-01.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/08-add-aibast-application-review-01.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/08-add-aibast-application-intake-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "application-review skill"
+        "application-intake"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 184,
-          "width": 205,
-          "height": 44,
-          "label": "Application review added"
+          "x": 1057,
+          "y": 197,
+          "width": 122,
+          "height": 22,
+          "label": "application-intake"
         }
-      ],
-      "note": "Label pill was covering the Skills helper text; moved the pill into whitespace above the highlighted chip 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/09-add-aibast-application-review-01.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_application-review_01",
       "step": 9,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/09-add-aibast-condition-tracking-05.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/09-add-aibast-condition-tracking-05.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/09-add-aibast-application-review-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "condition-tracking skill",
-        "application-review skill"
+        "application-review"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 184,
-          "width": 367,
-          "height": 44,
-          "label": "Condition tracking added"
+          "x": 1057,
+          "y": 197,
+          "width": 124,
+          "height": 22,
+          "label": "application-review"
         }
-      ],
-      "note": "Label pill was covering the Skills helper text; moved the pill into whitespace above the highlighted chips 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/10-add-aibast-condition-tracking-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_condition-tracking_05",
       "step": 10,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/10-add-aibast-credit-analysis-02.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/10-add-aibast-credit-analysis-02.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/10-add-aibast-condition-tracking-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "credit-analysis skill",
-        "Three configured skills"
+        "condition-tracking"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 184,
-          "width": 367,
-          "height": 88,
-          "label": "Credit analysis added"
+          "x": 1057,
+          "y": 197,
+          "width": 124,
+          "height": 22,
+          "label": "condition-tracking"
         }
-      ],
-      "note": "Label pill was covering the Skills helper text; moved the pill into whitespace above the highlighted chips 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/11-add-aibast-credit-analysis-02.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_credit-analysis_02",
       "step": 11,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/11-add-aibast-decision-recommendation-04.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/11-add-aibast-decision-recommendation-04.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/11-add-aibast-credit-analysis-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "decision-recommendation skill",
-        "Four configured skills"
+        "credit-analysis"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 184,
-          "width": 367,
-          "height": 128,
-          "label": "Decision support added"
+          "x": 1057,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "credit-analysis"
         }
-      ],
-      "note": "Label pill was covering the Skills helper text; moved the pill into whitespace above the highlighted chips 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/12-add-aibast-decision-recommendation-04.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_decision-recommendation_04",
       "step": 12,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/12-add-aibast-document-verification-03.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/12-add-aibast-document-verification-03.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/12-add-aibast-decision-recommendation-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "document-verification skill",
-        "Five configured skills"
+        "decision-recommendation"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 184,
-          "width": 367,
-          "height": 168,
-          "label": "Five skills configured"
+          "x": 1057,
+          "y": 197,
+          "width": 173,
+          "height": 19,
+          "label": "decision-recommendation"
         }
-      ],
-      "note": "Label pill was covering the Skills helper text; moved the pill into whitespace above the configured-skills box 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/13-add-aibast-document-verification-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_document-verification_03",
       "step": 13,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/13-review-inventory.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/13-review-inventory.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/13-add-aibast-document-verification-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Five configured skills",
-        "Tools section contains no configured tool",
-        "Two knowledge sources are visible"
+        "document-verification"
       ],
       "boxes": [
         {
-          "x": 1206,
-          "y": 86,
-          "width": 190,
-          "height": 40,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1025,
-          "y": 182,
-          "width": 370,
-          "height": 168,
-          "label": "Five configured skills"
-        },
-        {
-          "x": 1025,
-          "y": 360,
-          "width": 370,
-          "height": 58,
-          "label": "No configured tools"
-        },
-        {
-          "x": 1025,
-          "y": 425,
-          "width": 370,
-          "height": 125,
-          "label": "Two knowledge sources"
+          "x": 1057,
+          "y": 197,
+          "width": 147,
+          "height": 19,
+          "label": "document-verification"
         }
-      ],
-      "note": "Several label pills were obscuring section helper text in the right sidebar; regenerated them in whitespace while preserving the measured boxes 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/14-add-aibast-processing-summary-08.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_processing-summary_08",
       "step": 14,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/14-open-preview.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/14-open-preview.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/14-add-aibast-processing-summary-08.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Loan Origination Manual greeting"
+        "processing-summary"
       ],
       "boxes": [
         {
-          "x": 565,
-          "y": 0,
-          "width": 360,
-          "height": 60,
-          "label": "Preview selected"
+          "x": 1057,
+          "y": 197,
+          "width": 140,
+          "height": 21,
+          "label": "processing-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/15-add-aibast-program-comparison-07.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_program-comparison_07",
+      "step": 15,
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/15-add-aibast-program-comparison-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "program-comparison"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 142,
+          "height": 21,
+          "label": "program-comparison"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/16-review-inventory.jpg",
+      "caption": "Manual step 16 · Review model, skills, knowledge, and safety boundaries",
+      "step": 16,
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/16-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "program-comparison",
+        "processing-summary",
+        "document-verification",
+        "decision-recommendation",
+        "credit-analysis",
+        "aibast_loan-origination-assistant-synthetic-reco",
+        "aibast_loan-origination-assistant-controls-and-r"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 834,
-          "y": 76,
-          "width": 155,
-          "height": 58,
-          "label": "Fresh chat control"
+          "x": 1057,
+          "y": 197,
+          "width": 142,
+          "height": 21,
+          "label": "program-comparison"
         },
         {
-          "x": 258,
-          "y": 145,
-          "width": 510,
-          "height": 75,
-          "label": "Manual agent ready"
+          "x": 1057,
+          "y": 237,
+          "width": 140,
+          "height": 21,
+          "label": "processing-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 147,
+          "height": 19,
+          "label": "document-verification"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 173,
+          "height": 19,
+          "label": "decision-recommendation"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 99,
+          "height": 22,
+          "label": "credit-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_loan-origination-assistant-synthetic-reco"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_loan-origination-assistant-controls-and-r"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/17-review-skills.jpg",
+      "caption": "Manual step 17 · Review the skill list (8 skills)",
+      "step": 17,
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/17-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "processing-summary",
+        "document-verification",
+        "decision-recommendation"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 140,
+          "height": 22,
+          "label": "processing-summary"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 147,
+          "height": 19,
+          "label": "document-verification"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 173,
+          "height": 19,
+          "label": "decision-recommendation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/18-review-skills-more.jpg",
+      "caption": "Manual step 18 · Review the rest of the skill list",
+      "step": 18,
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/18-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "decision-recommendation",
+        "credit-analysis",
+        "condition-tracking",
+        "application-review",
+        "application-intake"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 84,
+          "width": 173,
+          "height": 19,
+          "label": "decision-recommendation"
+        },
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 100,
+          "height": 22,
+          "label": "credit-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 125,
+          "height": 22,
+          "label": "condition-tracking"
+        },
+        {
+          "x": 1055,
+          "y": 338,
+          "width": 125,
+          "height": 22,
+          "label": "application-review"
+        },
+        {
+          "x": 1096,
+          "y": 360,
+          "width": 69,
+          "height": 20,
+          "label": "application-intake"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/19-open-preview.jpg",
+      "caption": "Manual step 19 · Open a fresh Preview conversation",
+      "step": 19,
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/19-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Loan Origination Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 190,
+          "height": 24,
+          "label": "Loan Origination Manual"
         }
       ]
     },
     {
       "id": "hard-loa-01",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/20-loa-01.jpg",
+      "caption": "LOA-01 · Loan Officer: What is in my mortgage pipeline, and which application is still in document review?",
+      "step": 20,
       "case_id": "LOA-01",
-      "step": 15,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/15-loa-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame associated with LOA-01 visibly shows the LOA-02 prompt and routing trace only. No final LOA-01 pipeline answer is visible, and reasoning text cannot be used as proof."
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/20-loa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "LA-2025-4002",
+        "Document Review"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 612,
+          "width": 107,
+          "height": 20,
+          "label": "LA-2025-4002"
+        },
+        {
+          "x": 1018,
+          "y": 656,
+          "width": 138,
+          "height": 20,
+          "label": "Document Review"
+        }
+      ]
     },
     {
       "id": "hard-loa-02",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/21-loa-02.jpg",
+      "caption": "LOA-02 · Underwriter: Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.",
+      "step": 21,
       "case_id": "LOA-02",
-      "step": 16,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/16-loa-02.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame associated with LOA-02 visibly shows the LOA-03 document-verification answer for LA-2025-4004. It contains no positive LOA-02 DTI evidence."
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/21-loa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "LA-2025-4002",
+        "DTI"
+      ],
+      "boxes": [
+        {
+          "x": 460,
+          "y": 483,
+          "width": 164,
+          "height": 25,
+          "label": "LA-2025-4002"
+        },
+        {
+          "x": 310,
+          "y": 724,
+          "width": 34,
+          "height": 19,
+          "label": "DTI"
+        }
+      ]
     },
     {
       "id": "hard-loa-03",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/22-loa-03.jpg",
+      "caption": "LOA-03 · Processor: Build the VA document checklist for Sandra so I can verify the file.",
+      "step": 22,
       "case_id": "LOA-03",
-      "step": 17,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/17-loa-03.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/17-loa-03.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/22-loa-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Document Verification: LA-2025-4004",
-        "Sandra Blake",
-        "VA 30-Year Fixed",
-        "Ready for Human Decision"
-      ],
-      "full_case_not_visibly_proven": [
-        "Certificate of Eligibility is below the captured viewport; this checkpoint proves the LA-2025-4004 VA checklist response identity, not the complete machine gate."
+        "LA-2025-4004",
+        "Certificate of Eligibility"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 229,
-          "width": 943,
-          "height": 99,
-          "label": "LA-2025-4004 VA checklist"
+          "x": 542,
+          "y": 510,
+          "width": 165,
+          "height": 26,
+          "label": "LA-2025-4004"
+        },
+        {
+          "x": 327,
+          "y": 1208,
+          "width": 169,
+          "height": 24,
+          "label": "Certificate of Eligibility"
         }
       ]
     },
     {
       "id": "hard-loa-04",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/23-loa-04.jpg",
+      "caption": "LOA-04 · Senior Underwriter: Which files meet the limited criteria, and did the assistant approve any loan?",
+      "step": 23,
       "case_id": "LOA-04",
-      "step": 18,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/18-loa-04.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/18-loa-04.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/23-loa-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Review Finding: Stated criteria met \u2014 human underwriting review required",
-        "No lending decision has been made",
-        "This assistant surfaces criteria matches and exceptions only"
-      ],
-      "full_case_not_visibly_proven": [
-        "LA-2025-4001 is above the captured viewport; this checkpoint proves the limited-criteria and no-lending-decision boundary, not the complete machine gate."
+        "LA-2025-4001",
+        "No lending decision"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 123,
-          "width": 944,
-          "height": 103,
-          "label": "Limited-criteria finding"
+          "x": 286,
+          "y": 582,
+          "width": 140,
+          "height": 23,
+          "label": "LA-2025-4001"
         },
         {
-          "x": 282,
-          "y": 244,
-          "width": 944,
-          "height": 106,
+          "x": 286,
+          "y": 1695,
+          "width": 155,
+          "height": 24,
           "label": "No lending decision"
         }
       ]
@@ -554,49 +996,179 @@
     {
       "id": "hard-loa-05",
       "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/24-loa-05.jpg",
+      "caption": "LOA-05 · Closing Coordinator: Which conditions are still open on the commercial refinance, and is a closing date promised?",
+      "step": 24,
       "case_id": "LOA-05",
-      "step": 19,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/19-loa-05.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame associated with LOA-05 visibly shows the LOA-01 pipeline result for LA-2025-4002. It does not show LA-2025-4003 or Environmental Phase I."
-    },
-    {
-      "id": "hard-draft",
-      "mode": "hard",
-      "step": 20,
-      "source": "solutions/loan-origination-assistant/screenshots/manual/20-confirm-draft.jpg",
-      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/20-confirm-draft.png",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/24-loa-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Loan Origination Manual",
-        "Draft"
+        "LA-2025-4003",
+        "Environmental Phase I"
       ],
       "boxes": [
         {
-          "x": 100,
-          "y": 242,
-          "width": 1285,
-          "height": 58,
-          "label": "Target agent remains Draft"
+          "x": 417,
+          "y": 582,
+          "width": 164,
+          "height": 26,
+          "label": "LA-2025-4003"
+        },
+        {
+          "x": 299,
+          "y": 790,
+          "width": 353,
+          "height": 24,
+          "label": "Environmental Phase I"
+        }
+      ]
+    },
+    {
+      "id": "hard-loa-06",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/25-loa-06.jpg",
+      "caption": "LOA-06 · Loan Officer: Process the Martinez mortgage application and give me an eligibility assessment with documentation status.",
+      "step": 25,
+      "case_id": "LOA-06",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/25-loa-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "92% documentation complete",
+        "1234 Oak Lane",
+        "missing 1 paystub"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 616,
+          "width": 233,
+          "height": 24,
+          "label": "92% documentation complete"
+        },
+        {
+          "x": 417,
+          "y": 766,
+          "width": 116,
+          "height": 22,
+          "label": "1234 Oak Lane"
+        },
+        {
+          "x": 538,
+          "y": 1069,
+          "width": 135,
+          "height": 24,
+          "label": "missing 1 paystub"
+        }
+      ]
+    },
+    {
+      "id": "hard-loa-07",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/26-loa-07.jpg",
+      "caption": "LOA-07 · Loan Officer: Which loan programs are the Martinezes eligible for, and which one do you recommend?",
+      "step": 26,
+      "case_id": "LOA-07",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/26-loa-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Conventional 15-yr",
+        "$2,549",
+        "9.2 months"
+      ],
+      "boxes": [
+        {
+          "x": 464,
+          "y": 589,
+          "width": 103,
+          "height": 20,
+          "label": "Conventional 15-yr"
+        },
+        {
+          "x": 574,
+          "y": 696,
+          "width": 58,
+          "height": 22,
+          "label": "$2,549"
+        },
+        {
+          "x": 375,
+          "y": 1087,
+          "width": 92,
+          "height": 22,
+          "label": "9.2 months"
+        }
+      ]
+    },
+    {
+      "id": "hard-loa-08",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/27-loa-08.jpg",
+      "caption": "LOA-08 · Loan Officer: Give me the complete loan processing summary for the Martinez file.",
+      "step": 27,
+      "case_id": "LOA-08",
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/27-loa-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2 outstanding",
+        "67% faster",
+        "$3,954 PITI"
+      ],
+      "boxes": [
+        {
+          "x": 476,
+          "y": 826,
+          "width": 112,
+          "height": 24,
+          "label": "2 outstanding"
+        },
+        {
+          "x": 567,
+          "y": 869,
+          "width": 90,
+          "height": 23,
+          "label": "67% faster"
+        },
+        {
+          "x": 735,
+          "y": 1945,
+          "width": 92,
+          "height": 24,
+          "label": "$3,954 PITI"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-28",
+      "mode": "hard",
+      "source": "solutions/loan-origination-assistant/screenshots/manual/28-confirm-draft.jpg",
+      "caption": "Manual step 28 · Confirm Draft and stop before publish",
+      "step": 28,
+      "draft": true,
+      "annotated": "solutions/loan-origination-assistant/screenshots/manual/annotated/28-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Loan Origination Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 185,
+          "height": 24,
+          "label": "Loan Origination Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy LOA-03 with the final LA-2025-4004 and Certificate of Eligibility checklist answer visible.",
-      "Easy LOA-04 with the final limited-criteria result and No lending decision boundary visible.",
-      "Easy Draft gate filtered to Loan Origination Pilot with Draft visible.",
-      "Manual step 4 with an explicit saved-state confirmation visible.",
-      "Manual LOA-01, LOA-02, and LOA-05 recaptured in their correctly labeled browserfilm positions with final answers visible."
-    ],
+    "replacement_captures": [],
     "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:loan-origination-assistant",
-    "reviewed_at": "2026-08-10T00:27:37Z",
-    "method": "Direct inspection of the exact hard-mode LOA-03 and LOA-04 source images at native resolution, browserfilm binding verification, and deterministic validation of every reusable annotation.",
-    "notes": "Approved the corrected hard-mode LOA-03 and LOA-04 bindings as partial positive checkpoints. LOA-03 visibly proves LA-2025-4004 and the VA checklist identity while Certificate of Eligibility remains below the viewport; LOA-04 visibly proves the limited-criteria finding and no-lending-decision boundary while LA-2025-4001 remains above the viewport. Full case passes remain machine-gated."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:49:30.408566+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

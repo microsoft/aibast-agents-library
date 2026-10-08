@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `IV-01, IV-02, IV-03, IV-04`.
+1. Which locked case IDs did you complete? Expected scope: `IV-01, IV-02, IV-03, IV-04, IV-05, IV-06, IV-07, IV-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `IV-02` — As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.
 - `IV-03` — As Inventory Planner, show the fourteen-day replenishment scenario and its assumptions.
 - `IV-04` — As Category Manager, compare the channel planning scenario without reserving any stock.
+- `IV-05` — Yes, create the reallocation plan with cost and timing details.
+- `IV-06` — Approved. Execute both phases and show me system-wide inventory health.
+- `IV-07` — Yes, optimize all 8 and show me the warehouse automation recommendations.
+- `IV-08` — Yes, create the investment proposal with 3-year financial projections.
 
 ## Manual mode — literal browser construction
 

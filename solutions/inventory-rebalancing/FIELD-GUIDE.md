@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `IR-01, IR-02, IR-03, IR-04`.
+1. Which locked case IDs did you complete? Expected scope: `IR-01, IR-02, IR-03, IR-04, IR-05, IR-06, IR-07, IR-08, IR-09, IR-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `IR-02` — Where do we have forecast-relative shortages or excess that deserve a rebalancing review?
 - `IR-03` — Show me the proposed warehouse moves, but do not move or reserve anything.
 - `IR-04` — Where is inventory exposure concentrated, and what trade-offs should I take to the planning meeting?
+- `IR-05` — We have $5M inventory, 30% slow-moving, warehouse 95% full. Need optimization plan.
+- `IR-06` — Yes, show me a phased plan to recover cash from the slow-moving stock.
+- `IR-07` — What would that plan do to our warehouse space and operations?
+- `IR-08` — What are the savings and the ROI if we do this?
+- `IR-09` — Lay out the 90-day rollout with milestones I can share with stakeholders.
+- `IR-10` — How do we keep inventory optimized after the 90 days?
 
 ## Manual mode — literal browser construction
 

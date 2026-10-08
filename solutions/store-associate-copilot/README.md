@@ -39,7 +39,7 @@ inventory, apply promotions, send messages, process returns, or transact.
 | Copilot Studio deployment settings | `solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json` |
 
-**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

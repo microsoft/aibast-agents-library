@@ -22,6 +22,12 @@
 | `RCR-02` | Customer Service Agent | `complaint_classification` | `{"complaint_text":"The synthetic item stopped working after a week."}` |
 | `RCR-03` | Customer Service Agent | `resolution_recommendation` | `{"return_id":"RET-4001"}` |
 | `RCR-04` | Quality Team | `trend_analysis` | `{}` |
+| `RCR-05` | Service Manager | `escalation_snapshot` | `{"case_id":"CMP-5001"}` |
+| `RCR-06` | Service Manager | `recovery_tiers` | `{"case_id":"CMP-5001"}` |
+| `RCR-07` | Service Manager | `resolution_execution_plan` | `{"case_id":"CMP-5001"}` |
+| `RCR-08` | Service Manager | `follow_up_plan` | `{"case_id":"CMP-5001"}` |
+| `RCR-09` | Service Manager | `recovery_performance` | `{"case_id":"CMP-5001"}` |
+| `RCR-10` | Service Manager | `executive_summary` | `{"case_id":"CMP-5001"}` |
 
 ## Complete deterministic record sets
 
@@ -385,6 +391,187 @@
     19650.0,
     22100.0
   ]
+}
+```
+
+### `ESCALATED_CASES`
+
+```json
+{
+  "CMP-5001": {
+    "customer": "David Chen",
+    "alias": "chen",
+    "tier": "Diamond VIP",
+    "lifetime_value": 18400,
+    "purchases": 47,
+    "expected_next_12m_revenue": 3200,
+    "churn_risk_pct": 87,
+    "churn_driver": "elevated due to poor service experience",
+    "frustration": "High - 2 failed support calls",
+    "product": "ProBook Elite 15\"",
+    "price": 1899,
+    "days_since_purchase": 3,
+    "issue": "Display flickering, won't boot",
+    "warranty": "Active (2-year standard)",
+    "support_history": [
+      "Call 1: 45 min hold, transferred 3 times",
+      "Call 2: Troubleshooting failed, no resolution"
+    ],
+    "upgrade_model": "ProBook Elite Plus",
+    "upgrade_value": 2299,
+    "courier_eta": "4:30 PM today (about 4 hours)",
+    "talking_points": [
+      [
+        "Apologize sincerely",
+        "I'm sorry for your experience, David. We failed your expectations."
+      ],
+      [
+        "Acknowledge VIP status",
+        "As a Diamond member with 47 purchases, you deserve better."
+      ],
+      [
+        "Present upgrade",
+        "We're sending the Elite Plus model - better processor, more RAM."
+      ],
+      [
+        "Emphasize speed",
+        "Courier delivers in 4 hours, not days."
+      ],
+      [
+        "Highlight credit",
+        "$200 store credit for the inconvenience."
+      ],
+      [
+        "Show commitment",
+        "I'm personally overseeing this. Here's my direct line."
+      ]
+    ]
+  }
+}
+```
+
+### `RECOVERY_TIERS`
+
+```json
+[
+  {
+    "tier": 1,
+    "name": "Premium Recovery",
+    "replacement": "Upgrade to ProBook Elite Plus ($2,299 value)",
+    "delivery": "Same-day courier delivery",
+    "credit": 200,
+    "return_extension_days": 90,
+    "upgrade_cost": 300,
+    "delivery_cost": 40,
+    "retention_pct": 94,
+    "min_tier": "Diamond VIP"
+  },
+  {
+    "tier": 2,
+    "name": "Standard Plus",
+    "replacement": "Same model replacement",
+    "delivery": "2-day shipping",
+    "credit": 100,
+    "return_extension_days": 0,
+    "upgrade_cost": 0,
+    "delivery_cost": 80,
+    "retention_pct": 65,
+    "min_tier": "Gold"
+  },
+  {
+    "tier": 3,
+    "name": "Standard",
+    "replacement": "Same model replacement only",
+    "delivery": "Standard shipping (5 days)",
+    "credit": 0,
+    "return_extension_days": 0,
+    "upgrade_cost": 0,
+    "delivery_cost": 0,
+    "retention_pct": 35,
+    "min_tier": "Any"
+  }
+]
+```
+
+### `FOLLOW_UP_PLAN`
+
+```json
+[
+  [
+    "Today (post-delivery)",
+    "6:00 PM: automated delivery confirmation SMS"
+  ],
+  [
+    "Today (post-delivery)",
+    "7:00 PM: \"How's your new laptop?\" email from you"
+  ],
+  [
+    "Day 3",
+    "Check-in call from the customer success team"
+  ],
+  [
+    "Day 3",
+    "Satisfaction survey (track NPS score)"
+  ],
+  [
+    "Day 7",
+    "\"Tech tips for your Elite Plus\" email series begins"
+  ],
+  [
+    "Day 7",
+    "Exclusive VIP promotion (accessories 25% off)"
+  ],
+  [
+    "Day 30",
+    "Relationship health check"
+  ],
+  [
+    "Day 30",
+    "Invitation to VIP appreciation event"
+  ]
+]
+```
+
+### `FOLLOW_UP_MONITORING`
+
+```json
+[
+  "Support ticket auto-priority for 90 days",
+  "Churn risk score tracking",
+  "Purchase behavior analysis"
+]
+```
+
+### `RECOVERY_PROGRAM`
+
+```json
+{
+  "period": "last quarter",
+  "metrics": [
+    [
+      "Resolution time",
+      "4.2 hours",
+      "3-5 days"
+    ],
+    [
+      "Customer retention",
+      "94%",
+      "68%"
+    ],
+    [
+      "NPS recovery",
+      "+47 points",
+      "+18 points"
+    ],
+    [
+      "Repeat purchase rate",
+      "76% (6 months)",
+      "34%"
+    ]
+  ],
+  "quarterly_investment": 127000,
+  "revenue_protected": 4800000,
+  "session_minutes": 12
 }
 ```
 

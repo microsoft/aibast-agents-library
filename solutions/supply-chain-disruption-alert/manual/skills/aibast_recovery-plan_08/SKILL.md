@@ -1,0 +1,27 @@
+---
+name: recovery-plan
+description: "Use when a Distribution Center Manager asks Activate tracking and show me the Portland DC recovery plan."
+---
+# Supply Chain Disruption Alert Agent: Recovery Plan
+
+## Route
+
+Use the `recovery_plan` operation. The canonical persona prompt is:
+
+> Activate tracking and show me the Portland DC recovery plan.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `recovery_plan` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- Conveyor repair
+- 340 pending orders
+- Friday noon
+
+Never imply that a live system, transfer, notification, report distribution, supplier, shipment, or inventory position was changed; approvals return a draft ready for the owner to release.

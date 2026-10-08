@@ -2,7 +2,7 @@
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/wealth-insights-generator",
   "audited_source": "agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack/wealth_insights_generator_agent.py",
-  "source_sha256": "aec5aca3409747d4df2364772c4e92a0a7ae4f94f650d4a0bd7dcd55a5ca2355",
+  "source_sha256": "230447b12117df1be4b4a2c6327d924a2b243139a896e8335cd4aaf885cc0109",
   "case_file": "tests/demo_cases/wealth-insights-generator.json",
   "onepager": "42. Wealth Insights Generator Agent one-pager.pptx",
   "operations": {
@@ -20,6 +20,18 @@
     ],
     "meeting_brief": [
       "WIG-05"
+    ],
+    "book_insights": [
+      "WIG-06"
+    ],
+    "planning_gaps": [
+      "WIG-07"
+    ],
+    "engagement_strategy": [
+      "WIG-08"
+    ],
+    "insights_summary": [
+      "WIG-09"
     ]
   },
   "defects_fixed": [
@@ -27,13 +39,17 @@
     "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
     "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
     "Rejected unknown record identifiers instead of silently substituting another fictional record.",
-    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture.",
+    "Aligned to the demo video: BOOK_SUMMARY/OPPORTUNITY_CATEGORIES (wallet share computed 37%, $8.1M pipeline), Morrison Family WM-005 as hero and largest held-away client, new book_insights (default), planning_gaps, engagement_strategy, insights_summary; meeting_brief returns the outreach email and 60-minute agenda as drafts (never sent); signals ranked by readiness and impact; Chen and Thompson records added; dates are relative labels, no calendar dependence."
   ],
   "unresolved_defects": [],
   "routing_result": {
-    "cases_passed": 5,
-    "cases_total": 5,
+    "cases_passed": 9,
+    "cases_total": 9,
     "strict_isolation": true,
     "loaded_tool": "WealthInsightsGeneratorAgent"
-  }
+  },
+  "alignment_findings": [
+    "Collateral alignment (demo video + one-pager): the agent led with a market snapshot and had a different book and hero client; it lacked the video's 85-family book view, Morrison Family deep dive, planning gaps, engagement strategy, outreach email/agenda and summary; next-review dates were hard-coded in 2025."
+  ]
 }

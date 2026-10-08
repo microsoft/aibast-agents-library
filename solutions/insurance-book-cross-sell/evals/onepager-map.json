@@ -1,0 +1,111 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/insurance-book-cross-sell",
+  "onepager": "52. Book of Business Cross-Sell Agent one-pager.pptx",
+  "source_slide_sha256": "879cd8507f963763fc00689344551fb6824779fd36eb657aee007c10ce3aa476",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/financial_services_stacks/insurance_book_cross_sell_stack/insurance_book_cross_sell_agent.py",
+    "implemented_operations": [
+      "book_summary",
+      "classify_lines",
+      "appetite_match",
+      "unit_confirmation",
+      "broker_confirmation",
+      "routing_plan"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Ingests a broker's book of business and profiles every account, line, premium and expiration in seconds",
+      "operations": [
+        "book_summary"
+      ],
+      "demo_cases": [
+        "XS-01"
+      ],
+      "synthetic_evidence": [
+        "10 policy lines",
+        "$363,000 total premium",
+        "Fabrikam Insurance Brokers"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Resolves an industry class for every line and flags the ones it cannot classify instead of guessing",
+      "operations": [
+        "classify_lines"
+      ],
+      "demo_cases": [
+        "XS-02"
+      ],
+      "synthetic_evidence": [
+        "Resolved 6 of 7 accounts",
+        "Foxglove Studio",
+        "Legacy code L-2051 crosswalk"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Matches every line to the underwriting units with appetite and surfaces the white space on each account",
+      "operations": [
+        "appetite_match"
+      ],
+      "demo_cases": [
+        "XS-03"
+      ],
+      "synthetic_evidence": [
+        "7 competing-market lines",
+        "5 white-space lines",
+        "unavailable in AZ"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Drafts the appetite-confirmation note for each underwriting unit with its shortlist before anything is routed",
+      "operations": [
+        "unit_confirmation"
+      ],
+      "demo_cases": [
+        "XS-04"
+      ],
+      "synthetic_evidence": [
+        "Not Sent",
+        "12 opportunities across 5 units",
+        "Elena Ruiz"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Drafts the broker confirmation so dead or already-placed accounts drop out before routing",
+      "operations": [
+        "broker_confirmation"
+      ],
+      "demo_cases": [
+        "XS-05"
+      ],
+      "synthetic_evidence": [
+        "Broker Confirmation Draft",
+        "Priya Natarajan",
+        "out of business or already placed elsewhere"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Lays out a routing plan for each unit's sellers with follow-up dates timed ahead of each renewal",
+      "operations": [
+        "routing_plan"
+      ],
+      "demo_cases": [
+        "XS-06"
+      ],
+      "synthetic_evidence": [
+        "9 opportunities ready to route",
+        "renewed early with its current market",
+        "Follow-Up By"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

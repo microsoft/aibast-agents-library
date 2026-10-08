@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T11:12:33.652Z",
+  "captured_at": "2026-10-07T18:02:39.255447Z",
   "solution": "@aibast-agents-library/order-status-communication",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Order Status Manual",
-    "bot_id": "99ce350e-deff-4186-b49c-ec37731e42f0",
+    "bot_id": "5b0cefd5-d3a9-4d8b-9036-f6aaadfb3fb9",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 7,
+      "confirmed": 7
     },
     "tools": {
       "expected": 0,
@@ -47,7 +47,7 @@
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "14-os-01.jpg",
+      "expected_screenshot": "19-os-01.jpg",
       "passed": true
     },
     {
@@ -60,20 +60,20 @@
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "15-os-02.jpg",
+      "expected_screenshot": "20-os-02.jpg",
       "passed": true
     },
     {
       "case_id": "OS-03",
-      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
+      "prompt": "Prepare the internal delay and recovery review for the E-Cars Corp transmission housing order without changing any schedule.",
       "must_include": [
-        "ORD-7813",
+        "Midwest Casting",
         "Recorded synthetic recovery options"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "16-os-03.jpg",
+      "expected_screenshot": "21-os-03.jpg",
       "passed": true
     },
     {
@@ -86,7 +86,49 @@
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "17-os-04.jpg",
+      "expected_screenshot": "22-os-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "OS-05",
+      "prompt": "Show the customer touchpoints planned for the E-Cars Corp delay across email, EDI, portal and the follow-up call.",
+      "must_include": [
+        "EDI 856 ASN",
+        "Today 2 PM EST",
+        "Ready to send"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "23-os-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "OS-06",
+      "prompt": "What quality assurance and validation is in place for the E-Cars Corp housings from the alternative supplier?",
+      "must_include": [
+        "PPAP Level 3",
+        "99.8%",
+        "Metallurgical testing"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "24-os-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "OS-07",
+      "prompt": "Show the performance dashboard for the E-Cars Corp account and this order.",
+      "must_include": [
+        "96.2%",
+        "$14.2M",
+        "Lessons learned"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "25-os-07.jpg",
       "passed": true
     }
   ],
@@ -99,6 +141,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "26-confirm-draft.jpg"
   }
 }

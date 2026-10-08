@@ -28,10 +28,10 @@
     },
     {
       "id": "copilot-studio-solution",
-      "label": "Historical Copilot Studio solution \u2014 not current source",
+      "label": "Importable Copilot Studio solution",
       "path": "solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
-      "use": "Historical export predates the SYN-COL \u2014 182 records repair. Do not use it as the repaired source; synchronize the reviewed native files, rerun Preview, and create a fresh unmanaged export before import.",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
       "status": "ready"
     },
     {
@@ -163,34 +163,82 @@
       "status": "ready"
     },
     {
-      "id": "skill-cohort-review",
-      "label": "Capability card: cohort review",
-      "path": "solutions/care-gap-closure/manual/skills/cohort-review/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/cohort-review/SKILL.md",
+      "id": "skill-aibast-campaign-projection-09",
+      "label": "Capability card: aibast campaign projection 09",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_campaign-projection_09/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_campaign-projection_09/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
     {
-      "id": "skill-gap-analysis",
-      "label": "Capability card: gap analysis",
-      "path": "solutions/care-gap-closure/manual/skills/gap-analysis/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/gap-analysis/SKILL.md",
+      "id": "skill-aibast-cohort-review-02",
+      "label": "Capability card: aibast cohort review 02",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_cohort-review_02/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_cohort-review_02/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
     {
-      "id": "skill-outreach-draft",
-      "label": "Capability card: outreach draft",
-      "path": "solutions/care-gap-closure/manual/skills/outreach-draft/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/outreach-draft/SKILL.md",
+      "id": "skill-aibast-gap-analysis-01",
+      "label": "Capability card: aibast gap analysis 01",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_gap-analysis_01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_gap-analysis_01/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
     {
-      "id": "skill-quality-dashboard",
-      "label": "Capability card: quality dashboard",
-      "path": "solutions/care-gap-closure/manual/skills/quality-dashboard/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/quality-dashboard/SKILL.md",
+      "id": "skill-aibast-hedis-status-05",
+      "label": "Capability card: aibast hedis status 05",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_hedis-status_05/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_hedis-status_05/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-monitoring-plan-10",
+      "label": "Capability card: aibast monitoring plan 10",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_monitoring-plan_10/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_monitoring-plan_10/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-outreach-draft-03",
+      "label": "Capability card: aibast outreach draft 03",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_outreach-draft_03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_outreach-draft_03/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-outreach-strategy-08",
+      "label": "Capability card: aibast outreach strategy 08",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_outreach-strategy_08/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_outreach-strategy_08/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-quality-dashboard-04",
+      "label": "Capability card: aibast quality dashboard 04",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_quality-dashboard_04/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_quality-dashboard_04/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-risk-stratification-07",
+      "label": "Capability card: aibast risk stratification 07",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_risk-stratification_07/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_risk-stratification_07/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-top-gaps-06",
+      "label": "Capability card: aibast top gaps 06",
+      "path": "solutions/care-gap-closure/manual/skills/aibast_top-gaps_06/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/manual/skills/aibast_top-gaps_06/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -227,6 +275,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-skill-aibast-campaign-projection-mcs",
+      "label": "Aibast Campaign Projection.Mcs",
+      "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_campaign-projection.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/copilot-studio/behaviors/aibast_campaign-projection.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
       "id": "easy-skill-aibast-care-gap-closure-cohort-review-mcs",
       "label": "Aibast Care Gap Closure Cohort Review.Mcs",
       "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_care-gap-closure-cohort-review.mcs.yml",
@@ -255,6 +311,46 @@
       "label": "Aibast Care Gap Closure Quality Dashboard.Mcs",
       "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_care-gap-closure-quality-dashboard.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/copilot-studio/behaviors/aibast_care-gap-closure-quality-dashboard.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-hedis-status-mcs",
+      "label": "Aibast Hedis Status.Mcs",
+      "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_hedis-status.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/copilot-studio/behaviors/aibast_hedis-status.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-monitoring-plan-mcs",
+      "label": "Aibast Monitoring Plan.Mcs",
+      "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_monitoring-plan.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/copilot-studio/behaviors/aibast_monitoring-plan.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-outreach-strategy-mcs",
+      "label": "Aibast Outreach Strategy.Mcs",
+      "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_outreach-strategy.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/copilot-studio/behaviors/aibast_outreach-strategy.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-risk-stratification-mcs",
+      "label": "Aibast Risk Stratification.Mcs",
+      "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_risk-stratification.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/copilot-studio/behaviors/aibast_risk-stratification.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-top-gaps-mcs",
+      "label": "Aibast Top Gaps.Mcs",
+      "path": "solutions/care-gap-closure/copilot-studio/behaviors/aibast_top-gaps.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/copilot-studio/behaviors/aibast_top-gaps.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -315,6 +411,22 @@
       "status": "ready"
     },
     {
+      "id": "annotated-evidence-01-review-build",
+      "label": "Annotated visual checkpoint: easy-review-build",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/01-review-build.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/01-review-build.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-cg-01",
+      "label": "Annotated visual checkpoint: easy-cg-01",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/02-cg-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/02-cg-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
       "id": "annotated-evidence-03-cg-02",
       "label": "Annotated visual checkpoint: easy-cg-02",
       "path": "solutions/care-gap-closure/screenshots/assisted/annotated/03-cg-02.png",
@@ -331,10 +443,66 @@
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-06-confirm-draft",
-      "label": "Annotated visual checkpoint: easy-draft",
-      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/06-confirm-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/06-confirm-draft.png",
+      "id": "annotated-evidence-05-cg-04",
+      "label": "Annotated visual checkpoint: easy-cg-04",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/05-cg-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/05-cg-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-cg-05",
+      "label": "Annotated visual checkpoint: easy-cg-05",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/06-cg-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/06-cg-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-cg-06",
+      "label": "Annotated visual checkpoint: easy-cg-06",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/07-cg-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/07-cg-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-cg-07",
+      "label": "Annotated visual checkpoint: easy-cg-07",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/08-cg-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/08-cg-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-cg-08",
+      "label": "Annotated visual checkpoint: easy-cg-08",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/09-cg-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/09-cg-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-cg-09",
+      "label": "Annotated visual checkpoint: easy-cg-09",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/10-cg-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/10-cg-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-cg-10",
+      "label": "Annotated visual checkpoint: easy-cg-10",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/11-cg-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/11-cg-10.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-confirm-draft",
+      "label": "Annotated visual checkpoint: easy-confirm-draft",
+      "path": "solutions/care-gap-closure/screenshots/assisted/annotated/12-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/annotated/12-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -351,6 +519,22 @@
       "label": "Annotated visual checkpoint: hard-step-02",
       "path": "solutions/care-gap-closure/screenshots/manual/annotated/02-name-agent.png",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/04-save-instructions.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -379,82 +563,202 @@
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-08-add-cohort-review",
+      "id": "annotated-evidence-08-add-aibast-campaign-projection-09",
       "label": "Annotated visual checkpoint: hard-step-08",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/08-add-cohort-review.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/08-add-cohort-review.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/08-add-aibast-campaign-projection-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/08-add-aibast-campaign-projection-09.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-09-add-gap-analysis",
+      "id": "annotated-evidence-09-add-aibast-cohort-review-02",
       "label": "Annotated visual checkpoint: hard-step-09",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/09-add-gap-analysis.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/09-add-gap-analysis.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/09-add-aibast-cohort-review-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/09-add-aibast-cohort-review-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-10-add-outreach-draft",
+      "id": "annotated-evidence-10-add-aibast-gap-analysis-01",
       "label": "Annotated visual checkpoint: hard-step-10",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/10-add-outreach-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/10-add-outreach-draft.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/10-add-aibast-gap-analysis-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/10-add-aibast-gap-analysis-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-11-add-quality-dashboard",
+      "id": "annotated-evidence-11-add-aibast-hedis-status-05",
       "label": "Annotated visual checkpoint: hard-step-11",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/11-add-quality-dashboard.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/11-add-quality-dashboard.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/11-add-aibast-hedis-status-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/11-add-aibast-hedis-status-05.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-12-review-inventory",
+      "id": "annotated-evidence-12-add-aibast-monitoring-plan-10",
       "label": "Annotated visual checkpoint: hard-step-12",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/12-review-inventory.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/12-review-inventory.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/12-add-aibast-monitoring-plan-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/12-add-aibast-monitoring-plan-10.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-13-open-preview",
+      "id": "annotated-evidence-13-add-aibast-outreach-draft-03",
       "label": "Annotated visual checkpoint: hard-step-13",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/13-open-preview.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/13-open-preview.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/13-add-aibast-outreach-draft-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/13-add-aibast-outreach-draft-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-15-cg-02",
+      "id": "annotated-evidence-14-add-aibast-outreach-strategy-08",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/14-add-aibast-outreach-strategy-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/14-add-aibast-outreach-strategy-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-add-aibast-quality-dashboard-04",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/15-add-aibast-quality-dashboard-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/15-add-aibast-quality-dashboard-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-add-aibast-risk-stratification-07",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/16-add-aibast-risk-stratification-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/16-add-aibast-risk-stratification-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-add-aibast-top-gaps-06",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/17-add-aibast-top-gaps-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/17-add-aibast-top-gaps-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/18-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/18-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-review-skills",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/19-review-skills.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/19-review-skills.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-review-skills-more",
+      "label": "Annotated visual checkpoint: hard-step-20",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/20-review-skills-more.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/20-review-skills-more.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-21",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/21-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/21-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-cg-01",
+      "label": "Annotated visual checkpoint: hard-cg-01",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/22-cg-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/22-cg-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-cg-02",
       "label": "Annotated visual checkpoint: hard-cg-02",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/15-cg-02.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/15-cg-02.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/23-cg-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/23-cg-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-16-cg-03",
+      "id": "annotated-evidence-24-cg-03",
       "label": "Annotated visual checkpoint: hard-cg-03",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/16-cg-03.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/16-cg-03.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/24-cg-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/24-cg-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-17-cg-04",
+      "id": "annotated-evidence-25-cg-04",
       "label": "Annotated visual checkpoint: hard-cg-04",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/17-cg-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/17-cg-04.png",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/25-cg-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/25-cg-04.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-18-confirm-draft",
-      "label": "Annotated visual checkpoint: hard-draft",
-      "path": "solutions/care-gap-closure/screenshots/manual/annotated/18-confirm-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/18-confirm-draft.png",
+      "id": "annotated-evidence-26-cg-05",
+      "label": "Annotated visual checkpoint: hard-cg-05",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/26-cg-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/26-cg-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-27-cg-06",
+      "label": "Annotated visual checkpoint: hard-cg-06",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/27-cg-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/27-cg-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-28-cg-07",
+      "label": "Annotated visual checkpoint: hard-cg-07",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/28-cg-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/28-cg-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-29-cg-08",
+      "label": "Annotated visual checkpoint: hard-cg-08",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/29-cg-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/29-cg-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-30-cg-09",
+      "label": "Annotated visual checkpoint: hard-cg-09",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/30-cg-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/30-cg-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-31-cg-10",
+      "label": "Annotated visual checkpoint: hard-cg-10",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/31-cg-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/31-cg-10.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-32-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-32",
+      "path": "solutions/care-gap-closure/screenshots/manual/annotated/32-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/annotated/32-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -524,89 +828,201 @@
     },
     {
       "id": "manual-frame-08",
-      "label": "Add skill: cohort-review",
-      "path": "solutions/care-gap-closure/screenshots/manual/08-add-cohort-review.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/08-add-cohort-review.jpg",
+      "label": "Add skill: aibast_campaign-projection_09",
+      "path": "solutions/care-gap-closure/screenshots/manual/08-add-aibast-campaign-projection-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/08-add-aibast-campaign-projection-09.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-09",
-      "label": "Add skill: gap-analysis",
-      "path": "solutions/care-gap-closure/screenshots/manual/09-add-gap-analysis.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/09-add-gap-analysis.jpg",
+      "label": "Add skill: aibast_cohort-review_02",
+      "path": "solutions/care-gap-closure/screenshots/manual/09-add-aibast-cohort-review-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/09-add-aibast-cohort-review-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-10",
-      "label": "Add skill: outreach-draft",
-      "path": "solutions/care-gap-closure/screenshots/manual/10-add-outreach-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/10-add-outreach-draft.jpg",
+      "label": "Add skill: aibast_gap-analysis_01",
+      "path": "solutions/care-gap-closure/screenshots/manual/10-add-aibast-gap-analysis-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/10-add-aibast-gap-analysis-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-11",
-      "label": "Add skill: quality-dashboard",
-      "path": "solutions/care-gap-closure/screenshots/manual/11-add-quality-dashboard.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/11-add-quality-dashboard.jpg",
+      "label": "Add skill: aibast_hedis-status_05",
+      "path": "solutions/care-gap-closure/screenshots/manual/11-add-aibast-hedis-status-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/11-add-aibast-hedis-status-05.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-12",
-      "label": "Review model, skills, knowledge, and safety boundaries",
-      "path": "solutions/care-gap-closure/screenshots/manual/12-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/12-review-inventory.jpg",
+      "label": "Add skill: aibast_monitoring-plan_10",
+      "path": "solutions/care-gap-closure/screenshots/manual/12-add-aibast-monitoring-plan-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/12-add-aibast-monitoring-plan-10.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-13",
-      "label": "Open a fresh Preview conversation",
-      "path": "solutions/care-gap-closure/screenshots/manual/13-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/13-open-preview.jpg",
+      "label": "Add skill: aibast_outreach-draft_03",
+      "path": "solutions/care-gap-closure/screenshots/manual/13-add-aibast-outreach-draft-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/13-add-aibast-outreach-draft-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-14",
-      "label": "Pass CG-01: Quality Manager",
-      "path": "solutions/care-gap-closure/screenshots/manual/14-cg-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/14-cg-01.jpg",
+      "label": "Add skill: aibast_outreach-strategy_08",
+      "path": "solutions/care-gap-closure/screenshots/manual/14-add-aibast-outreach-strategy-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/14-add-aibast-outreach-strategy-08.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-15",
-      "label": "Pass CG-02: Care Coordinator",
-      "path": "solutions/care-gap-closure/screenshots/manual/15-cg-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/15-cg-02.jpg",
+      "label": "Add skill: aibast_quality-dashboard_04",
+      "path": "solutions/care-gap-closure/screenshots/manual/15-add-aibast-quality-dashboard-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/15-add-aibast-quality-dashboard-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-16",
-      "label": "Pass CG-03: Care Coordinator",
-      "path": "solutions/care-gap-closure/screenshots/manual/16-cg-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/16-cg-03.jpg",
+      "label": "Add skill: aibast_risk-stratification_07",
+      "path": "solutions/care-gap-closure/screenshots/manual/16-add-aibast-risk-stratification-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/16-add-aibast-risk-stratification-07.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-17",
-      "label": "Pass CG-04: Clinical Operations Lead",
-      "path": "solutions/care-gap-closure/screenshots/manual/17-cg-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/17-cg-04.jpg",
+      "label": "Add skill: aibast_top-gaps_06",
+      "path": "solutions/care-gap-closure/screenshots/manual/17-add-aibast-top-gaps-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/17-add-aibast-top-gaps-06.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-18",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/care-gap-closure/screenshots/manual/18-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/18-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Review the skill list (10 skills)",
+      "path": "solutions/care-gap-closure/screenshots/manual/19-review-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/19-review-skills.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Review the rest of the skill list",
+      "path": "solutions/care-gap-closure/screenshots/manual/20-review-skills-more.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/20-review-skills-more.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/care-gap-closure/screenshots/manual/21-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/21-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Pass CG-01: Quality Manager",
+      "path": "solutions/care-gap-closure/screenshots/manual/22-cg-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/22-cg-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Pass CG-02: Care Coordinator",
+      "path": "solutions/care-gap-closure/screenshots/manual/23-cg-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/23-cg-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-24",
+      "label": "Pass CG-03: Care Coordinator",
+      "path": "solutions/care-gap-closure/screenshots/manual/24-cg-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/24-cg-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-25",
+      "label": "Pass CG-04: Clinical Operations Lead",
+      "path": "solutions/care-gap-closure/screenshots/manual/25-cg-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/25-cg-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-26",
+      "label": "Pass CG-05: Quality Manager",
+      "path": "solutions/care-gap-closure/screenshots/manual/26-cg-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/26-cg-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-27",
+      "label": "Pass CG-06: Quality Manager",
+      "path": "solutions/care-gap-closure/screenshots/manual/27-cg-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/27-cg-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-28",
+      "label": "Pass CG-07: Care Coordinator",
+      "path": "solutions/care-gap-closure/screenshots/manual/28-cg-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/28-cg-07.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-29",
+      "label": "Pass CG-08: Care Coordinator",
+      "path": "solutions/care-gap-closure/screenshots/manual/29-cg-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/29-cg-08.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-30",
+      "label": "Pass CG-09: Clinical Operations Lead",
+      "path": "solutions/care-gap-closure/screenshots/manual/30-cg-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/30-cg-09.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-31",
+      "label": "Pass CG-10: Clinical Operations Lead",
+      "path": "solutions/care-gap-closure/screenshots/manual/31-cg-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/31-cg-10.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-32",
       "label": "Confirm Draft and stop before publish",
-      "path": "solutions/care-gap-closure/screenshots/manual/18-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/18-confirm-draft.jpg",
+      "path": "solutions/care-gap-closure/screenshots/manual/32-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/manual/32-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -652,6 +1068,14 @@
     },
     {
       "id": "assisted-frame-01",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/care-gap-closure/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/01-review-build.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
       "label": "Pass CG-01: Quality Manager",
       "path": "solutions/care-gap-closure/screenshots/assisted/02-cg-01.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/02-cg-01.jpg",
@@ -659,7 +1083,7 @@
       "status": "ready"
     },
     {
-      "id": "assisted-frame-02",
+      "id": "assisted-frame-03",
       "label": "Pass CG-02: Care Coordinator",
       "path": "solutions/care-gap-closure/screenshots/assisted/03-cg-02.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/03-cg-02.jpg",
@@ -667,7 +1091,7 @@
       "status": "ready"
     },
     {
-      "id": "assisted-frame-03",
+      "id": "assisted-frame-04",
       "label": "Pass CG-03: Care Coordinator",
       "path": "solutions/care-gap-closure/screenshots/assisted/04-cg-03.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/04-cg-03.jpg",
@@ -675,7 +1099,7 @@
       "status": "ready"
     },
     {
-      "id": "assisted-frame-04",
+      "id": "assisted-frame-05",
       "label": "Pass CG-04: Clinical Operations Lead",
       "path": "solutions/care-gap-closure/screenshots/assisted/05-cg-04.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/05-cg-04.jpg",
@@ -683,10 +1107,58 @@
       "status": "ready"
     },
     {
-      "id": "assisted-frame-05",
-      "label": "Confirm the validated agent remains Draft",
-      "path": "solutions/care-gap-closure/screenshots/assisted/06-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/06-confirm-draft.jpg",
+      "id": "assisted-frame-06",
+      "label": "Pass CG-05: Quality Manager",
+      "path": "solutions/care-gap-closure/screenshots/assisted/06-cg-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/06-cg-05.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-07",
+      "label": "Pass CG-06: Quality Manager",
+      "path": "solutions/care-gap-closure/screenshots/assisted/07-cg-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/07-cg-06.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-08",
+      "label": "Pass CG-07: Care Coordinator",
+      "path": "solutions/care-gap-closure/screenshots/assisted/08-cg-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/08-cg-07.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-09",
+      "label": "Pass CG-08: Care Coordinator",
+      "path": "solutions/care-gap-closure/screenshots/assisted/09-cg-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/09-cg-08.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-10",
+      "label": "Pass CG-09: Clinical Operations Lead",
+      "path": "solutions/care-gap-closure/screenshots/assisted/10-cg-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/10-cg-09.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-11",
+      "label": "Pass CG-10: Clinical Operations Lead",
+      "path": "solutions/care-gap-closure/screenshots/assisted/11-cg-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/11-cg-10.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-12",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/care-gap-closure/screenshots/assisted/12-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/screenshots/assisted/12-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -756,14 +1228,14 @@
     }
   ],
   "copilot_studio_solution": {
-    "label": "Historical Care Gap Closure Agent Copilot Studio solution \u2014 not current source",
-    "status": "stale_source",
+    "label": "Importable Care Gap Closure Agent Copilot Studio solution",
+    "status": "exported",
     "solution_unique_name": "aibast_CareGapClosurePilot",
     "zip": {
       "path": "solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
-      "sha256": "dd5fdcdc5fb7c484ad923464709d62587a1eca23ca8d497b4ddc72a7142681a0",
-      "bytes": 4136
+      "sha256": "161377db8b1b3ec72401974ac9e84194eb12ef9da7d233500c33f6a6e0273852",
+      "bytes": 26302
     },
     "deployment_settings": {
       "path": "solutions/care-gap-closure/exports/care-gap-closure-deployment-settings.json",
@@ -779,7 +1251,6 @@
       "Import as an unmanaged solution for manual review.",
       "Map connection references and environment variables before enabling integrations.",
       "The exported agent remains unpublished unless the target administrator explicitly publishes it."
-    ],
-    "source_contract_note": "Historical export predates the SYN-COL \u2014 182 records repair. Do not use it as the repaired source; synchronize the reviewed native files, rerun Preview, and create a fresh unmanaged export before import."
+    ]
   }
 }

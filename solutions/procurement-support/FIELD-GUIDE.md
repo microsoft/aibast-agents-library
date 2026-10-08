@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `DISC-01, DISC-02, DISC-03, DISC-04`.
+1. Which locked case IDs did you complete? Expected scope: `DISC-01, DISC-02, DISC-03, DISC-04, DISC-05, DISC-06`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,12 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `DISC-01` — Scan the upcoming healthcare purchases and show me which savings signals are worth validating.
-- `DISC-02` — Which pricing notices expire first, and what evidence should I verify before I act?
-- `DISC-03` — Are our facilities buying the same categories separately enough to justify a sourcing review?
-- `DISC-04` — Sequence the renewal, volume-tier, and price-change reviews without placing anything.
+- `DISC-01` — I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.
+- `DISC-02` — Which IT equipment deals expire this week, and what should we lock in immediately?
+- `DISC-03` — Model the office-supply bulk order strategy and the total savings projection for the quarter.
+- `DISC-04` — Create the implementation plan with the deadlines and the savings at risk, without placing anything.
+- `DISC-05` — Prepare the Dell laptop and monitor PO for my approval and show the software license savings.
+- `DISC-06` — Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?
 
 ## Manual mode — literal browser construction
 

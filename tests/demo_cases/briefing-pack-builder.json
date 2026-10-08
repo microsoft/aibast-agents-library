@@ -1,0 +1,139 @@
+{
+  "solution": "Briefing Pack Builder Agent",
+  "agent": "@aibast-agents-library/briefing-pack-builder",
+  "onepager": "66. Briefing Pack Builder Agent one-pager.pptx",
+  "agent_files": [
+    "briefing_pack_builder_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries. New wave-2 template distilled from a field workflow pattern; all records are fictional.",
+  "cases": [
+    {
+      "id": "BPB-01",
+      "persona": "Briefing Coordinator",
+      "operation": "list_templates",
+      "onepager_bullet": "Lists every briefing format with its audience and sections so the right template is chosen first",
+      "prompt": "What briefing formats can you build for us?",
+      "arguments": {
+        "operation": "list_templates"
+      },
+      "must_include": [
+        "Budget Hearing Brief",
+        "Council Question Brief",
+        "8 documents indexed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BriefingPackBuilderAgent"
+    },
+    {
+      "id": "BPB-02",
+      "persona": "Budget Analyst",
+      "operation": "content_scan",
+      "onepager_bullet": "Shows what the governed content set holds on a topic, document by document",
+      "prompt": "What do we hold on the Elm Street Bridge Replacement?",
+      "arguments": {
+        "operation": "content_scan",
+        "topic": "elm_street_bridge"
+      },
+      "must_include": [
+        "8 passages on topic",
+        "Quarterly Capital Status Report",
+        "Measures with conflicting values"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BriefingPackBuilderAgent"
+    },
+    {
+      "id": "BPB-03",
+      "persona": "Budget Analyst",
+      "operation": "figure_check",
+      "onepager_bullet": "Flags measures that carry different values in different documents before they reach a brief",
+      "prompt": "Before I draft anything, do any of the figures disagree?",
+      "arguments": {
+        "operation": "figure_check",
+        "topic": "elm_street_bridge"
+      },
+      "must_include": [
+        "$51.3 million",
+        "Conflict - confirm before use",
+        "does not choose between them"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BriefingPackBuilderAgent"
+    },
+    {
+      "id": "BPB-04",
+      "persona": "Briefing Coordinator",
+      "operation": "draft_brief",
+      "onepager_bullet": "Drafts the brief in the chosen template with a cited source behind every section",
+      "prompt": "Draft the budget hearing brief on the Elm Street bridge.",
+      "arguments": {
+        "operation": "draft_brief",
+        "template": "budget_hearing",
+        "topic": "elm_street_bridge"
+      },
+      "must_include": [
+        "DRAFT - not approved",
+        "Figures needing confirmation",
+        "Talking points"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BriefingPackBuilderAgent"
+    },
+    {
+      "id": "BPB-05",
+      "persona": "Briefing Coordinator",
+      "operation": "gap_report",
+      "onepager_bullet": "Names the sections with no supporting content so input is requested early",
+      "prompt": "Which sections of that brief still need input?",
+      "arguments": {
+        "operation": "gap_report",
+        "template": "budget_hearing",
+        "topic": "elm_street_bridge"
+      },
+      "must_include": [
+        "1 of 8 sections need input",
+        "Gap - needs input",
+        "Communications and the project director"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BriefingPackBuilderAgent"
+    },
+    {
+      "id": "BPB-06",
+      "persona": "Department Director",
+      "operation": "approval_route",
+      "onepager_bullet": "Shows who reviews and approves each format and how long sign-off takes",
+      "prompt": "Who signs this brief off, and how long does it take?",
+      "arguments": {
+        "operation": "approval_route",
+        "template": "budget_hearing"
+      },
+      "must_include": [
+        "Deputy City Manager",
+        "8 working days",
+        "No brief was sent for approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BriefingPackBuilderAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

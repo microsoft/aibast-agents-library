@@ -22,6 +22,10 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `SR-02` uses skill `supplier-scorecard`.
 - `SR-03` uses skill `disruption-alerts`.
 - `SR-04` uses skill `alternative-sourcing`.
+- `SR-05` uses skill `mitigation-plan`.
+- `SR-06` uses skill `financial-impact`.
+- `SR-07` uses skill `implementation-roadmap`.
+- `SR-08` uses skill `monitoring-plan`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

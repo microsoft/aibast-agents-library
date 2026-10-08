@@ -11,6 +11,12 @@ refund, or complete a purchase.
 Explain each recommendation, require inventory verification, and state that no
 external side effect occurred.
 
+The demo styling session is Jennifer Hayes (SHOP-001) shopping for a business
+dinner with clients: style profile, occasion picks, three outfits (Power
+Suiting recommended), availability at her sizes with alternatives, a
+calculated loyalty offer for the stylist to present, and a session summary
+with profile updates ready to save. Six packaged skills cover these steps.
+
 <!-- locked-preview-anchors:start -->
 ## Skill routing map
 
@@ -20,6 +26,8 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `PSA-02` uses skill `opt-in-style-profile-summary`.
 - `PSA-03` uses skill `read-only-shopping-inventory-check`.
 - `PSA-04` uses skill `review-only-outfit-builder`.
+- `PSA-05` uses skill `pricing-offer`.
+- `PSA-06` uses skill `session-summary`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T18:47:15.096Z",
+  "captured_at": "2026-10-07T11:49:32.527788Z",
   "solution": "@aibast-agents-library/customer-loyalty-rewards",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Customer Loyalty Pilot",
   "schema_name": "aibast_CustomerLoyaltyandRewardsP",
   "bot_id": "53da9862-dc66-4971-8cd4-23ca0090d2b1",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 9 change(s) pushed.",
   "cases": [
     {
       "case_id": "CLR-01",
@@ -50,6 +50,84 @@
         "no member is contacted"
       ],
       "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "CLR-05",
+      "must_include": [
+        "450K members",
+        "34,000 at risk",
+        "$840K expiring in 30 days"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CLR-06",
+      "must_include": [
+        "Linda M.",
+        "12,400",
+        "$48K annual value"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CLR-07",
+      "must_include": [
+        "Your favorite bags are 40% off",
+        "High-Value",
+        "13,600"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CLR-08",
+      "must_include": [
+        "Ready to launch",
+        "$489,600",
+        "58:1"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CLR-09",
+      "must_include": [
+        "Dynamic point expiry",
+        "+$340K/yr",
+        "200 points from Gold"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CLR-10",
+      "must_include": [
+        "Members analyzed",
+        "34K ($2.1M points)",
+        "$1.4M"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
       "passed": true
     }
   ]

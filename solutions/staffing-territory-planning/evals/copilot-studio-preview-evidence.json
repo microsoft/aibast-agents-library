@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T05:33:38.832019Z",
+  "solution": "@aibast-agents-library/staffing-territory-planning",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Staffing Territory Planning",
+  "schema_name": "aibast_StaffingTerritoryPlanning",
+  "bot_id": "919711c0-7f58-436f-a36e-a8bba6da6565",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 9 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "STP-01",
+      "must_include": [
+        "$241.0M",
+        "Granite Ridge",
+        "Spend per recruiter"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "STP-02",
+      "must_include": [
+        "Market Sizing: Granite Ridge",
+        "$44.6M",
+        "Largest open spend"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "STP-03",
+      "must_include": [
+        "5 gaps",
+        "$81.7M open spend",
+        "IT and Engineering"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "STP-04",
+      "must_include": [
+        "Fabrikam Workforce",
+        "4 of 4",
+        "Litware Talent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "STP-05",
+      "must_include": [
+        "31 days",
+        "+11%",
+        "Planning implication"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "STP-06",
+      "must_include": [
+        "Priority action",
+        "Top 3 opportunities",
+        "no headcount, quota or account change was made"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

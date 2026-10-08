@@ -1,0 +1,27 @@
+---
+name: permit-license-management-permit-inventory
+description: "Use when a Facility Manager asks to summarize the permit portfolio, permits expiring within 120 days, and the critical permits under 30 days"
+---
+# Permit Management Agent: Permit Inventory
+
+## Route
+
+Use the `permit_inventory` operation. The canonical persona prompt is:
+
+> Show me our permit status and any expiring soon
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `permit_inventory` operation behavior; it has demo defaults, so call it before asking anything.
+3. Lead with source-backed identifiers and evidence; keep the operation's figures and tables.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- 240 active permits
+- Imperial Valley Solar
+- $47M
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

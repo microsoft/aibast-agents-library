@@ -16,6 +16,8 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 - Use **data validation** for Data Analyst questions like: “Which report data is incomplete or below quality threshold?”
 - Use **submission tracker** for Compliance Manager questions like: “Show filing state and confirm you did not transmit anything.”
 - Use **audit readiness** for Internal Auditor questions like: “What high-severity reporting evidence is still open?”
+- Use **emissions summary** for Environmental Manager questions like: “I need to prepare our quarterly EPA emissions report. Can you pull the data?”
+- Use **prepare submission** for Regulatory Affairs Director questions like: “Yes, generate the submission file and show me any compliance risks.” The file is a draft for authorized upload.
 
 ## Response contract
 
@@ -34,6 +36,8 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `ENERGY_REGULATORY_REPORTING-02` uses skill `energy-regulatory-reporting-data-validation`.
 - `ENERGY_REGULATORY_REPORTING-03` uses skill `energy-regulatory-reporting-submission-tracker`.
 - `ENERGY_REGULATORY_REPORTING-04` uses skill `energy-regulatory-reporting-audit-readiness`.
+- `ENERGY_REGULATORY_REPORTING-05` uses skill `energy-regulatory-reporting-emissions-summary`.
+- `ENERGY_REGULATORY_REPORTING-06` uses skill `energy-regulatory-reporting-prepare-submission`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `FDA-01, FDA-02, FDA-03, FDA-04`.
+1. Which locked case IDs did you complete? Expected scope: `FDA-01, FDA-02, FDA-03, FDA-04, FDA-05, FDA-06`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,12 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `FDA-01` — What is the most urgent alert in the overnight queue, and what evidence makes it urgent?
-- `FDA-02` — Show me the account activity behind the Dubai alert so I can investigate the sequence.
-- `FDA-03` — Which active case resembles a coordinated fraud pattern, and what makes that only a hypothesis?
-- `FDA-04` — Prepare the critical wire case for SIU review and tell me what actions actually occurred.
+- `FDA-01` — Review overnight fraud activity and show me what needs immediate attention.
+- `FDA-02` — Yes, investigate the account takeover ring and show me the accounts.
+- `FDA-03` — Yes, show me the pattern analysis and connected activity.
+- `FDA-04` — Yes, create investigation cases and take protective action.
+- `FDA-05` — Yes, show me our fraud prevention performance and any concerning trends.
+- `FDA-06` — Yes, summarize everything and give me the action items.
 
 ## Manual mode — literal browser construction
 

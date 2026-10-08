@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "enrollment-checklist"
+  description: "\"Use when a branch customer asks something like \\\"Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: enrollment-checklist
+  description: "Use when a branch customer asks something like \"Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents\""
+  ---
+  <!-- bic:source=blank -->
+  # Enrollment checklist
+  
+  Use when a branch customer asks something like "Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `Proof of address`
+  - `$1,000 initial deposit`
+  - `20-30 minutes`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

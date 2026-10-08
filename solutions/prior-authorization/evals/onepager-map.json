@@ -59,6 +59,60 @@
         "Prepares a minimum-necessary outline without filing or recommending an appeal.",
         "Surfaces missing source fields and drafts a reconsideration outline without filing or recommending an appeal."
       ]
+    },
+    {
+      "advertised_promise": "Pull payer-specific requirements and match them with EHR data",
+      "operations": [
+        "patient_auth_request",
+        "payer_requirements_check"
+      ],
+      "demo_cases": [
+        "PA-05",
+        "PA-06"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "PA-05: MR-489327; 72148; Dr. James Thompson",
+        "PA-06: PT x6 weeks; Red flag screening; All required criteria met",
+        "Video walkthrough for Robert Chen and the Medicare denial; packets, notifications and tracking are drafts, never submitted or sent."
+      ]
+    },
+    {
+      "advertised_promise": "Submit requests directly to payer portals and send real-time updates",
+      "operations": [
+        "submission_packet",
+        "tracking_plan",
+        "portfolio_status"
+      ],
+      "demo_cases": [
+        "PA-07",
+        "PA-09",
+        "PA-10"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "PA-07: PA-2024-892741; Case #4729183; Not submitted",
+        "PA-09: every 4 hours; 48 hours; Teams channel post drafted",
+        "PA-10: Martinez, Ana; Pending: 3 authorizations; 91% this month",
+        "Video walkthrough for Robert Chen and the Medicare denial; packets, notifications and tracking are drafts, never submitted or sent."
+      ]
+    },
+    {
+      "advertised_promise": "Flag cases requiring additional documentation and prepare appeal materials proactively",
+      "operations": [
+        "approval_outlook",
+        "denial_review"
+      ],
+      "demo_cases": [
+        "PA-08",
+        "PA-11"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "PA-08: 94% for similar cases; Peer-to-peer review with radiologist; Complete documentation package",
+        "PA-11: Epworth Sleepiness Scale; tomorrow 2 PM; 5 business days",
+        "Video walkthrough for Robert Chen and the Medicare denial; packets, notifications and tracking are drafts, never submitted or sent."
+      ]
     }
   ]
 }

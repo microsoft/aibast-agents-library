@@ -1,6 +1,8 @@
-# Historical assisted Easy-mode evidence
+# Copilot-assisted easy-mode evidence
 
-`browserfilm.json` records 7 historical frames; `copilot-assisted-walkthrough.gif` and `copilot-assisted-contact-sheet.jpg`
-remain historical summaries. They are not the current native Manual reference set.
+`browserfilm.json` is the ordered authority for 10 real browser frames.
+`copilot-assisted-walkthrough.gif` and `copilot-assisted-contact-sheet.jpg` summarize those frames when the files are present.
 
-Historical assisted/Easy and deterministic Brainstem evidence is retained separately; it is not native Manual r5 final-answer acceptance. No current Easy-lane regression or fresh-from-empty Manual construction is certified.
+Do not replace a missing capture with a generated image or describe a pending
+asset as evidence. The package uses synthetic inputs and qualitative language;
+no frame is a customer KPI, production result, or publication approval.

@@ -15,150 +15,132 @@
 
 `value_messaging` and `executive_briefing` are not interchangeable. Talking-point and objection requests must use `value_messaging`.
 
-## Health calculation
+## Account health values
 
-Use the source formulas exactly:
+Account health comes from the fixed CRM fields in the records file; nothing is recalculated:
 
-- `total_meetings = sum(stakeholder meetings)` = 30
-- `positive_ratio = positive stakeholders / all stakeholders` = 3 / 8
-- `product_depth = products owned / 3` = 2 / 3
-- `engagement = min(100, int(total_meetings * 3.5))` = 100
-- `adoption = int(product_depth * 100)` = 66
-- `sentiment_score = int(positive_ratio * 100)` = 37
-- `renewal_risk_pct = max(5, 50 - total_meetings * 2 - int(positive_ratio * 30))` = 5
-- `overall = int(engagement * 0.3 + adoption * 0.2 + sentiment_score * 0.3 + (100 - renewal_risk_pct) * 0.2)` = 73
-- `touchpoints_30d = total_meetings` = 30
-- `csat = round(3.0 + positive_ratio * 2, 1)` = 3.8
+- Health score: 78/100
+- Feature adoption: 67%
+- CSAT: 4.2/5
+- Touchpoints in the last 30 days: 30
+- Renewal risk: 5%
+- Win probability (CRM opportunity): 68%
+- Close target: 21 days
+
+Money is shown in short form: `$2,800,000,000` -> `$2.8B`, `$1,200,000` -> `$1.2M`, `$2,400,000` -> `$2.4M`.
 
 ### Account Overview evidence contract
 
 The Acme response must be able to state:
 
-- **Account Overview: Acme Corporation**
-- Industry: Manufacturing
-- Revenue: $2,800,000,000
-- Employees: 12,400 globally
-- HQ: Chicago, IL
-- Current spend: $1,200,000/year
-- Opportunity: $2,400,000 expansion
-- **Account Health Score: 73/100**
-- Engagement: 100% (30 touchpoints last 30 days)
-- Product adoption: 66% feature utilization
-- Support sentiment: 3.8/5 CSAT
-- Renewal risk: 5%
+- **Account Overview: Acme Corporation** (intelligence briefing)
+- Revenue: $2.8B
+- Current spend: $1.2M/year
+- Opportunity: $2.4M expansion
+- Health Score: 78/100
+- Industry: Manufacturing (12,400 employees, HQ Chicago, IL)
+- **Account Health Score: 78/100**
+- Key Signals: New CTO hired 6 weeks ago (opportunity); CEO mentioned digital transformation; 67% feature adoption, 4.2/5 CSAT
 - All three fixed recent-activity headlines and ages
+- Next step offered: want to see the stakeholder map?
 
-## Stakeholder calculation and output contract
+## Stakeholder output contract
 
-Emit all eight stakeholder records exactly as recorded. Engagement is rendered as `<meetings> meetings` when meetings are greater than zero; otherwise render `Schedule intro`.
+Emit all eight stakeholder records with Name, Role, Influence, Influence Score and Status, in record order.
 
-The source relationship-gap rule selects a stakeholder only when:
+The headline is computed:
 
-- meetings equal 0; and
-- influence is `Decision Maker`, `Economic Buyer`, or `Executive Sponsor`.
+- `8 stakeholders mapped.` (count of records)
+- `Champion strong` when a Champion with Positive sentiment exists (James Miller)
+- `need CFO alignment.` when the Economic Buyer is not Positive (Lisa Park, Neutral)
 
-For Acme this yields:
+Relationship Gaps are the stakeholders' recorded gap notes, in record order:
 
-- Sarah Chen (CTO): New hire from AWS, 6 weeks ago. Controls tech budget.
-- Tom Bradley (CEO): Mentioned digital transformation in earnings call.
+- CTO controls tech budget (no relationship)
+- CFO wants business case
 
-The positive champion rule yields:
+Action: `Get CTO intro through James before meeting` (the stakeholder whose status is `Need intro`, introduced
+through the Champion).
 
-- James Miller — Promoted to VP last quarter. Advocated for 3 vendor decisions.
-
-The response must include **Stakeholder Map** and **Relationship Gaps**.
+The response must include **Stakeholder Map**, **Relationship Gaps** and the **Influence** column. Next step offered:
+want competitive positioning?
 
 ## Competitive output contract
+
+Headline: `Two competitors active. You lead on fit, they're aggressive on price.` (a competitor priced at a discount
+makes the price clause appear.)
 
 The exact comparison is:
 
 | Factor | You | CompetitorA | CompetitorB |
 | --- | --- | --- | --- |
-| Relationship depth | Strong | Medium | Weak |
 | Product fit | 94% | 78% | 82% |
-| Pricing | Market rate | -15% below market | +10% above market |
 | Implementation | 8 weeks | 14 weeks | 10 weeks |
+| Pricing | Market | 15% discount | 10% premium |
 
-Include the two exact competitor activity records, all three synthetic advantages, and the risk alert:
+Your Advantages: ERP integration (3-week head start), champion relationship, manufacturing references.
 
-`CompetitorA's discount may appeal to economic buyer.`
+Risk: `CompetitorA's discount may appeal to CFO`
 
-The response must include **Competitive Intelligence** and **Competitor Activity**.
+Include the two exact competitor activity records. The response must include **Competitive Intelligence** and
+**Competitor Activity**. Next step offered: prepare counter-positioning?
 
 ## Value messaging output contract
 
-Return **Draft Meeting Talking Points (human review required)** for these exact synthetic stakeholders:
+Return **Draft Meeting Talking Points (human review required)** — tailored talking points by stakeholder, in this
+order (Decision Maker, Economic Buyer, Champion):
 
-### Sarah Chen — CTO — Tech Vision
+- **CTO Sarah:** API-first ERP integration, 3 CTO references available
+- **CFO Lisa:** $4.2M savings over 3 years, 8-week vs 14-week implementation, 90-day risk-free pilot
+- **Champion James:** Positions ops team as transformation leaders
 
-- `Platform aligns with digital transformation roadmap`
-- `API-first architecture integrates with existing systems`
-- `3 Manufacturing CTO references available for peer conversation`
-
-### James Miller — VP Operations — Internal Positioning
-
-- `Positions your team as transformation leaders`
-- `Executive visibility on project success metrics`
-- `Co-innovation partnership opportunity`
-
-### Lisa Park — CFO — ROI
-
-The savings value is calculated as:
-
-`$2,400,000 opportunity value * 1.75 = $4,200,000`
-
-Use these exact points:
-
-- `$4,200,000 projected savings over 3 years`
-- `8-week implementation vs competitor's longer timeline`
-- `Risk-free pilot: 90-day proof of value before full commitment`
+The savings value is calculated as `$2,400,000 opportunity value * 1.75 = $4,200,000` (shown as $4.2M). The
+competitor implementation figure is the longest competitor implementation (CompetitorA, 14 weeks).
 
 ### Objection Handling
 
-- Price concern: `Total cost of ownership is 23% lower when factoring implementation and support`
-- Risk concern: `The synthetic reference set includes comparable examples; validate approved references and outcomes before use`
+- Price: `TCO is 23% lower with implementation/support`
+- Risk: `47 similar deployments, 94% success rate` (synthetic reference set; validate approved references before use)
 
-These are synthetic draft statements, not validated customer claims. The response must include **Draft Meeting Talking Points** and **Objection Handling**.
+These are synthetic draft statements, not validated customer claims. The response must include **Draft Meeting
+Talking Points** and **Objection Handling**. Next step offered: want the deal risk assessment?
 
-## Risk calculation and output contract
+## Risk output contract
 
-The source emits these exact synthetic risks:
+Headline: **Deal Risk Assessment: Acme Corporation** — 4 risks identified, 2 need action before tomorrow (High
+severity counts as needing action).
 
-| Risk | Severity | Mitigation label | Owner label |
-| --- | --- | --- | --- |
-| No relationship with CTO (Sarah Chen) | High | Champion intro this week | You |
-| CompetitorA pricing pressure (-15% below market) | High | TCO analysis showing lower total cost | You |
-| CFO needs ROI validation | Medium | Send customized ROI calculator | Finance |
+| Risk | Severity | Mitigation |
+| --- | --- | --- |
+| No CTO relationship | High | Champion intro today |
+| Competitor pricing | High | TCO analysis ready |
+| Budget timing | Medium | Q1 confirmed |
+| CFO business case | Medium | ROI calculator drafted |
 
-`Send customized ROI calculator` is preserved as an exact source label only. It is a draft option and does not authorize sending anything.
+**Immediate Actions (before the meeting):**
 
-The synthetic win-probability indicator is calculated as:
+1. Call James for CTO intro
+2. Send CFO ROI calculator
 
-`min(95, max(20, 50 + 1 positive champion * 15 - 2 high blockers * 10 + 8 stakeholders * 2)) = 61`
+These are the seller's to-dos; the agent does not call, send or schedule anything.
 
 Required evidence:
 
-- **Deal Risk Assessment: Acme Corporation**
-- **Synthetic Win-Probability Indicator: 61%**
-- **Opportunity Value: $2,400,000**
-- **Immediate Actions** containing the two high-severity mitigation labels
+- **Win probability:** 68% | **Close target:** 21 days
+- **Opportunity Value:** $2.4M
+- Next step offered: generate the briefing document?
 
 ## Executive briefing output contract
 
 The briefing must include:
 
-- **Account Intelligence Briefing: Acme Corporation**
-- Deal value: $2,400,000 (expansion from $1,200,000 current)
-- Synthetic win-probability indicator: 61%
-- Account health: 73/100
-- Account health finding: 100% engagement, 66% adoption, 5% churn risk
-- Stakeholders: 8 mapped, 3 need intro, 1 champion
-- The briefing's three zero-meeting introductions are Sarah Chen, Maria Lopez, and Tom Bradley; this count is intentionally broader than the two-person `Relationship Gaps` rule.
-- Competition: 2 active, you lead on fit/speed
-- Risks: 3 identified, 2 critical
-- **Pre-Meeting Checklist**
-- Champion intro this week
-- TCO analysis showing lower total cost
+- **Account Intelligence Briefing: Acme Corporation** — briefing complete.
+- Deal value: $2.4M
+- Win probability: 68%
+- Stakeholders: 8 mapped
+- Risks: 4 (2 critical)
+- **Pre-Meeting Checklist**: Call James for CTO intro; Send CFO ROI calculator; Review competitor counter-strategy
+- Closing line: You're prepared with full account intelligence, stakeholder insights, and competitive positioning.
 
 ## Evidence-first response contract
 

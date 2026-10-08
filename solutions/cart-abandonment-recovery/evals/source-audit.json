@@ -1,10 +1,37 @@
 {
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/cart-abandonment-recovery",
-  "approved_source": {"onepager": "25. Cart Abandonment Recovery Agent one-pager.pptx", "sha256": "725f5bde43dc70a3642cd14fe182fc9bc852c1fde193ec06934bd21e163f9b75", "snapshot": "state/onepager_content.json", "hash_match": true},
-  "deterministic_source": {"path": "solutions.json", "slot": 22, "canonical_name": "Abandoned Cart Recovery Agent", "matches": true},
-  "routing": {"status": "fixed", "finding": "Analysis, recovery draft, incentive scenario, and conversion review each have a persona case."},
-  "interface_schema": {"status": "fixed", "finding": "Marketing, digital, and growth personas are explicit and cart identifiers are validated."},
-  "behavior": {"status": "fixed", "finding": "Names and email addresses were removed; outreach and incentive records are labeled drafts or concepts."},
-  "safety": {"status": "fixed", "finding": "No shopper is contacted and no message, offer, cart, reservation, or purchase is changed."}
+  "approved_source": {
+    "onepager": "25. Cart Abandonment Recovery Agent one-pager.pptx",
+    "sha256": "725f5bde43dc70a3642cd14fe182fc9bc852c1fde193ec06934bd21e163f9b75",
+    "snapshot": "state/onepager_content.json",
+    "hash_match": true
+  },
+  "deterministic_source": {
+    "path": "solutions.json",
+    "slot": 22,
+    "canonical_name": "Abandoned Cart Recovery Agent",
+    "matches": true
+  },
+  "routing": {
+    "status": "fixed",
+    "finding": "Analysis, recovery draft, incentive scenario, and conversion review each have a persona case."
+  },
+  "interface_schema": {
+    "status": "fixed",
+    "finding": "Marketing, digital, and growth personas are explicit and cart identifiers are validated."
+  },
+  "behavior": {
+    "status": "fixed",
+    "finding": "Names and email addresses were removed; outreach and incentive records are labeled drafts or concepts."
+  },
+  "safety": {
+    "status": "fixed",
+    "finding": "No shopper is contacted and no message, offer, cart, reservation, or purchase is changed."
+  },
+  "collateral_alignment": {
+    "status": "fixed",
+    "finding": "The demo video analyzes today's 847 abandoned carts ($127K) by segment, drafts personalized strategies and multi-touch campaigns, forecasts 48-hour recovery and monthly impact, and recommends optimizations; the agent had four anonymous carts, one generic sequence, no forecast or optimization operation, campaign attribution that summed to more than recovered revenue, and a value-at-risk total that included an unrecoverable cart.",
+    "fix": "Segments VIP/Repeat/New/Other (847 carts, $127K) with recovery likelihood, top opportunities Sarah M $892 / James K $647 / Emily R $534 and abandonment reasons; new recovery_strategies, recovery_forecast ($37,940 in 48 hours, +$56K/month) and optimization_recommendations operations; recovery_campaign returns the three audiences and sequences as a draft program ready for approval (launch requests never send); attribution allocates the $102,000 recovered; value at risk excludes unrecoverable carts; free shipping is a flat cost."
+  }
 }

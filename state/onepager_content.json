@@ -1,9 +1,9 @@
 {
   "schema": "aibast-onepager-content/1.0",
-  "generated_at": "2026-08-07T23:19:47.291575+00:00",
+  "generated_at": "2026-10-08T02:18:13.327046+00:00",
   "source": "Approved AI BAST Agents Library one-pager PowerPoint export",
   "stats": {
-    "onepagers": 48,
+    "onepagers": 63,
     "with_modules": 1
   },
   "onepagers": {
@@ -1748,6 +1748,860 @@
         "Analyze sentiment and draft personalized responses to strengthen recovery outcomes",
         "Detect product patterns to identify quality issues and reduce fraud",
         "Execute resolution actions and recommend strategies to streamline service workflows"
+      ],
+      "modules": []
+    },
+    "52. Book of Business Cross-Sell Agent one-pager.pptx": {
+      "source_file": "52. Book of Business Cross-Sell Agent one-pager.pptx",
+      "source_sha256": "879cd8507f963763fc00689344551fb6824779fd36eb657aee007c10ce3aa476",
+      "slide_count": 1,
+      "title": "Book of Business Cross-Sell Agent",
+      "executive_summary": "Turns a broker's book of business into a confirmed, routed cross-sell plan with drafted unit and broker confirmations.",
+      "industries": [
+        "Financial Services",
+        "Insurance"
+      ],
+      "personas": [
+        "Cross-Sell Managers",
+        "Underwriting Unit Leads",
+        "Broker Relationship Mgrs."
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Outlook",
+        "Microsoft Teams",
+        "Dynamics 365"
+      ],
+      "scenario_name": "A multi-unit commercial insurer",
+      "customer_challenge": {
+        "intro": "The marketplace team works each broker book by hand:",
+        "items": [
+          "Expiration lists arrive in different shapes with missing classes",
+          "Matching each line to the right underwriting unit takes days",
+          "White space on existing accounts goes unnoticed",
+          "Confirmations and routing are inconsistent and late"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Book of Business Cross-Sell Agent:",
+        "items": [
+          "Profiles and classifies every line in the book, holding what it cannot classify",
+          "Matches lines to units with appetite and surfaces the white space",
+          "Drafts unit and broker confirmations for a person to send",
+          "Lays out a routing plan with follow-up timed ahead of each renewal"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "With the agent the team:",
+        "items": [
+          "Finds white space across a full book in one pass",
+          "Confirms every opportunity before it reaches a seller",
+          "Never misses a renewal follow-up window"
+        ]
+      },
+      "opportunity_statements": [
+        "Brokers send books of business as raw expiration lists",
+        "Industry classes are missing or outdated on many lines",
+        "Cross-sell white space is found too late for the renewal",
+        "Every unit and broker confirmation is written by hand"
+      ],
+      "modules": []
+    },
+    "53. Build Materials Compliance Agent one-pager.pptx": {
+      "source_file": "53. Build Materials Compliance Agent one-pager.pptx",
+      "source_sha256": "0493051c3044c47b56198082c44c2211a3a40b79767e991fba58ab416aeb3996",
+      "slide_count": 1,
+      "title": "Build Materials Compliance Agent",
+      "executive_summary": "Keeps grant-funded construction bills of materials compliant weekly, with cited findings, alternates and audit-ready evidence.",
+      "industries": [
+        "Manufacturing",
+        "Construction",
+        "Public Infrastructure"
+      ],
+      "personas": [
+        "Compliance Leads",
+        "Buyers",
+        "Supplier Quality Managers"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "SharePoint",
+        "Microsoft Word"
+      ],
+      "scenario_name": "An infrastructure contractor",
+      "customer_challenge": {
+        "intro": "The procurement team checks compliance by hand:",
+        "items": [
+          "Weekly BOM changes are hard to track across projects",
+          "A lapsed certificate is found after the order is placed",
+          "Finding a compliant same-spec alternative takes days",
+          "Evidence packages have gaps nobody sees until the audit"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Build Materials Compliance Agent:",
+        "items": [
+          "Scans approved bills of materials and reports what changed",
+          "Flags newly non-compliant items with the cited evidence",
+          "Finds same-spec compliant alternates and sizes the switch",
+          "Keeps certificates and audit evidence current and drafts approved next steps"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "With the agent the team:",
+        "items": [
+          "Catches compliance problems before materials are ordered",
+          "Ties every finding to its evidence",
+          "Stays audit-ready every week"
+        ]
+      },
+      "opportunity_statements": [
+        "Covered materials must meet the program's sourcing rule",
+        "Vendor certificates lapse and answers change without notice",
+        "Bills of materials change every week",
+        "Audit evidence is rebuilt by hand at audit time"
+      ],
+      "modules": []
+    },
+    "54. Order Entry Validation Agent one-pager.pptx": {
+      "source_file": "54. Order Entry Validation Agent one-pager.pptx",
+      "source_sha256": "c6d72ed8955f7352fc6eec084243a6cfe2c56b83b4062fc0d9fe6402d779152e",
+      "slide_count": 1,
+      "title": "Order Entry Validation Agent",
+      "executive_summary": "Turns inbound purchase orders into validated draft sales orders, checking prices, terms and configurations against the quote before entry.",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Sales Operations Specialists",
+        "Sales Operations Managers",
+        "Configuration Analysts"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Outlook",
+        "Microsoft Teams",
+        "Dynamics 365"
+      ],
+      "scenario_name": "A manufacturer of portable instruments",
+      "customer_challenge": {
+        "intro": "Sales operations enters every order by hand:",
+        "items": [
+          "Re-keying PO fields is slow and error-prone",
+          "Price and terms mismatches against the quote are missed",
+          "Incompatible or incomplete configurations reach the ERP",
+          "Credits, rework and late shipments follow"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Order Entry Validation Agent:",
+        "items": [
+          "Reads each PO into structured fields and shows the queue",
+          "Validates the PO against the accepted quote with a per-line price tolerance",
+          "Checks the configuration and classifies the order",
+          "Prepares a draft sales order with every exception for the specialist"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "With the agent the team:",
+        "items": [
+          "Validates orders without manual re-keying",
+          "Stops errors before they reach the ERP",
+          "Enters ready orders first and routes exceptions with a reason"
+        ]
+      },
+      "opportunity_statements": [
+        "Purchase orders arrive in many formats and are re-keyed by hand",
+        "Prices and terms are checked against the quote line by line",
+        "Invalid configurations slip into the ERP",
+        "Exceptions are found after the order ships"
+      ],
+      "modules": []
+    },
+    "55. M&A Target Sourcing Agent one-pager.pptx": {
+      "source_file": "55. M&A Target Sourcing Agent one-pager.pptx",
+      "source_sha256": "ec0f9c44712874d8a22f290e3b5e631046598445e31be11c5fdb0b77529c511c",
+      "slide_count": 1,
+      "title": "M&A Target Sourcing Agent",
+      "executive_summary": "Turns an acquisition thesis into a transparent, cited target shortlist and a draft screening memo. Read-only: it never contacts targets or decides.",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Corporate Dev. Associate",
+        "Head of Corporate Dev.",
+        "Research Analyst"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Microsoft Excel"
+      ],
+      "scenario_name": "An information services firm",
+      "customer_challenge": {
+        "intro": "An information services firm planned to grow by acquisition:",
+        "items": [
+          "Building a longlist took weeks of manual research",
+          "Rankings depended on who ran the spreadsheet",
+          "Missing or stale evidence surfaced after outreach began",
+          "Committee memos were rewritten from scratch for every screen"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The corporate development team used the M&A Target Sourcing Agent to:",
+        "items": [
+          "Convert the thesis into filters and weights in one conversation",
+          "Rank the passing companies and show how each score is built",
+          "Open cited dossiers and flag thin or stale evidence as research requests",
+          "Draft the screening memo, leaving approval to the team"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "With the agent's help, the team:",
+        "items": [
+          "Moved from thesis to a ranked shortlist in a single working session",
+          "Gave the committee rankings it could audit and challenge",
+          "Started outreach only after evidence gaps were closed"
+        ]
+      },
+      "opportunity_statements": [
+        "Turn an acquisition thesis into explicit, reviewable screening criteria",
+        "Rank targets with transparent weights and test the ranking before it is trusted",
+        "Build cited dossiers and close evidence gaps before outreach",
+        "Draft the investment committee screening memo for human approval"
+      ],
+      "modules": []
+    },
+    "56. Solution Design Review Agent one-pager.pptx": {
+      "source_file": "56. Solution Design Review Agent one-pager.pptx",
+      "source_sha256": "03260e7f45e05035f9722c7eeec965f5ca59533b2da77786143302de4a6b2c4c",
+      "slide_count": 1,
+      "title": "Solution Design Review Agent",
+      "executive_summary": "Helps architects draft and self-check a solution design before the review board, with a confidence score and ranked gaps. It never approves a design.",
+      "industries": [
+        "Professional Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Solution Architect",
+        "Enterprise Architecture Lead",
+        "Review Board Coordinator"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Microsoft Word"
+      ],
+      "scenario_name": "A national distributor",
+      "customer_challenge": {
+        "intro": "A national distributor's architects were preparing designs for the review board:",
+        "items": [
+          "Architects spent days copying notes into a long template",
+          "Incomplete inventories let end-of-support systems slip through",
+          "Non-functional requirements lacked owners until review",
+          "Designs were sent back for gaps a checklist could catch"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The architecture team used the Solution Design Review Agent to:",
+        "items": [
+          "Plan the design from the template, notes and brief in one step",
+          "Draft the vision, baseline and target design with inventory changes",
+          "Build the requirements matrix with owners, gaps and variances",
+          "Run a readiness check with a confidence score before each review"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "With the agent's help, the team:",
+        "items": [
+          "Produced first drafts of design sections in hours instead of days",
+          "Arrived at review with owners named and variances answered",
+          "Reduced designs sent back for avoidable checklist gaps"
+        ]
+      },
+      "opportunity_statements": [
+        "Turn discovery notes and an initiative brief into a structured design draft",
+        "Assemble the current state and target design with every inventory change listed",
+        "Map non-functional requirements to owners and surface gaps early",
+        "Self-check readiness before review with a confidence score and ranked gaps"
+      ],
+      "modules": []
+    },
+    "57. Reporting Package Validation Agent one-pager.pptx": {
+      "source_file": "57. Reporting Package Validation Agent one-pager.pptx",
+      "source_sha256": "8c14e09afd1a14c7186678c8d29fe5008b64649d76bfcb0b388cc4deed53d174",
+      "slide_count": 1,
+      "title": "Reporting Package Validation Agent",
+      "executive_summary": "Validates month-end reporting packages before the executive pack: lineage, integrity, variance and exception checks, plus a draft summary.",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "FP&A Manager",
+        "Financial Controller",
+        "Finance Director"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Excel",
+        "Microsoft Teams"
+      ],
+      "scenario_name": "A diversified holding company",
+      "customer_challenge": {
+        "intro": "A diversified holding company closed its books every month across four divisions:",
+        "items": [
+          "Analysts spent the first days of close checking files",
+          "Missing submissions were mistaken for zeros in drafts",
+          "Offsetting division swings hid behind a flat consolidated total",
+          "Exceptions were chased by email with no clear owner or due date"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The finance team used the Reporting Package Validation Agent to:",
+        "items": [
+          "Freeze file lineage and run completeness checks on arrival",
+          "Compare divisions to budget and reconcile the driver bridge",
+          "Queue blocking, advisory and explanation items to named owners",
+          "Draft the executive summary and hold it until sign-off"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "With the agent's help, the team:",
+        "items": [
+          "Caught package defects on the day files arrived",
+          "Gave leadership commentary that explains what a flat total hides",
+          "Released packages only after every blocking exception cleared"
+        ]
+      },
+      "opportunity_statements": [
+        "Validate every reporting package with lineage and integrity checks before analysis",
+        "Explain variances and reconcile driver bridges against clear thresholds",
+        "Route exceptions to accountable owners with blocking and advisory status",
+        "Draft executive commentary that waits for finance sign-off"
+      ],
+      "modules": []
+    },
+    "58. Public Correspondence Agent one-pager.pptx": {
+      "source_file": "58. Public Correspondence Agent one-pager.pptx",
+      "source_sha256": "93daf5b048182d001f75e002f86525955f0c9a2d5b7341dd40dbbd319e55f955",
+      "slide_count": 1,
+      "title": "Public Correspondence Agent",
+      "executive_summary": "Answers every part of every resident enquiry from approved precedent, with cited drafts and gaps routed to the owning team.",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Correspondence Officer",
+        "Correspondence Team Lead",
+        "Knowledge Owner"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Outlook",
+        "Microsoft SharePoint",
+        "Microsoft Teams"
+      ],
+      "scenario_name": "A county public works team",
+      "customer_challenge": {
+        "intro": "Correspondence teams face rising volumes of multi-part enquiries:",
+        "items": [
+          "Parts of multi-part letters are missed in replies",
+          "Approved wording is hard to find and gets rewritten",
+          "New questions stall while ownership is worked out",
+          "New approved answers are not captured for reuse"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Public Correspondence Agent gives officers a cited, complete draft:",
+        "items": [
+          "Triages letters, emails, forms and phone notes into one queue",
+          "Splits multi-part enquiries so every question is answered",
+          "Finds approved past responses for each question and cites them",
+          "Routes unanswered points to the owning team with the question"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Correspondence teams respond completely and consistently:",
+        "items": [
+          "Every question in every letter is addressed in the draft",
+          "Approved wording is reused with a citation instead of rewritten",
+          "Gaps reach the right team in minutes and become precedent"
+        ]
+      },
+      "opportunity_statements": [
+        "Every resident question answered, not just the first one",
+        "Approved wording reused with citations",
+        "New questions routed to the right team in minutes",
+        "Officers keep sign-off on every reply"
+      ],
+      "modules": []
+    },
+    "59. Engineering Standards Agent one-pager.pptx": {
+      "source_file": "59. Engineering Standards Agent one-pager.pptx",
+      "source_sha256": "1c1d31db197c350ccb751d528e166f4beff713413765150e78a5e65439ec1d84",
+      "slide_count": 1,
+      "title": "Engineering Standards Agent",
+      "executive_summary": "Gives designers and field crews cited answers from engineering standards in seconds, with vetted values first.",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Design Technician",
+        "Standards Engineer",
+        "Field Engineering Lead"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft SharePoint",
+        "Microsoft Teams"
+      ],
+      "scenario_name": "An electric distribution utility",
+      "customer_challenge": {
+        "intro": "Engineering teams depend on long, frequently revised standards documents:",
+        "items": [
+          "Searching standards slows design and field work",
+          "Interpretations vary from person to person",
+          "Engineers cannot see unofficial answers in use",
+          "Quick-reference sheets drift after revisions"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Engineering Standards Agent cites every answer:",
+        "items": [
+          "Answers with vetted values and section and page citations",
+          "Labels interpretations as unvetted when no vetted value exists",
+          "Routes interpretations to a standards engineer for vetting",
+          "Gives engineers one queue of interpretations to confirm"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Engineering teams work faster with consistent guidance:",
+        "items": [
+          "Vetted values answered in seconds, with citations",
+          "Interpretations labeled unvetted and routed to an engineer",
+          "Jobs scoped against the right standards, gaps flagged"
+        ]
+      },
+      "opportunity_statements": [
+        "Cited standards answers in seconds",
+        "Vetted and unvetted answers never confused",
+        "Engineers confirm interpretations once, for everyone",
+        "Jobs scoped against the right standards"
+      ],
+      "modules": []
+    },
+    "60. Field Permit to Work Agent one-pager.pptx": {
+      "source_file": "60. Field Permit to Work Agent one-pager.pptx",
+      "source_sha256": "3076ab782f5880e99777e400ea172d54276c5427ead5585de96d47d6aa325817",
+      "slide_count": 1,
+      "title": "Field Permit to Work Agent",
+      "executive_summary": "Keeps every field permit safe and on time: drafts risk assessments, checks isolation against the live network, and tracks sign-offs and close-out.",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Permit Coordinator",
+        "Authorized Person",
+        "Crew Lead"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Power Automate"
+      ],
+      "scenario_name": "An energy network operator",
+      "customer_challenge": {
+        "intro": "Field permit-to-work processes carry high stakes and many manual steps:",
+        "items": [
+          "Risk assessments vary in quality and take time",
+          "Isolation plans can differ from the live network",
+          "Sign-offs and briefings are chased by phone",
+          "Close-out checks are rushed at the end of the day"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Field Permit to Work Agent prepares and checks every step:",
+        "items": [
+          "Shows every permit waiting today with its stage, risk and blocker",
+          "Drafts the risk assessment with hazards, controls and PPE",
+          "Checks the isolation plan against the live switching state",
+          "Tracks sign-offs so permits are ready for the planned start"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Field operations work more safely and start on time:",
+        "items": [
+          "Every crew starts on a confirmed isolation",
+          "Sign-offs are visible against each planned start",
+          "Close-out reconciles people and tools before clearance"
+        ]
+      },
+      "opportunity_statements": [
+        "Isolation confirmed before every crew briefing",
+        "Risk assessments drafted consistently",
+        "Sign-offs ready for planned start times",
+        "Close-out reconciled before clearance"
+      ],
+      "modules": []
+    },
+    "61. Payments Operations Agent one-pager.pptx": {
+      "source_file": "61. Payments Operations Agent one-pager.pptx",
+      "source_sha256": "267b79ae491039f67fe0fa2399d86a67285123536584f08b43e250cdf93529d8",
+      "slide_count": 1,
+      "title": "Payments Operations Agent",
+      "executive_summary": "Helps payments teams clear the daily release queue faster with rule checks, repairs and reconciliation, while analysts keep every release decision.",
+      "industries": [
+        "Financial Services",
+        "Banking"
+      ],
+      "personas": [
+        "Payments Operations Lead",
+        "Payments Analyst",
+        "Reconciliation Analyst"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Power Automate",
+        "Microsoft Dataverse"
+      ],
+      "scenario_name": "A regional bank",
+      "customer_challenge": {
+        "intro": "A bank's payments desk must clear a growing queue before cutoffs:",
+        "items": [
+          "Exception repairs are researched by hand while failed payments wait",
+          "Held payments wait while analysts gather screening data",
+          "Settlement breaks surface late with no ranking by value",
+          "Relationship managers chase status by email"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Payments Operations Agent gives the release desk one conversational view:",
+        "items": [
+          "Validates payments against scheme rules and plans repairs",
+          "Reviews screening and risk drivers for held payments",
+          "Reconciles settlement accounts and ranks open breaks by value",
+          "Answers payment status inquiries and builds the daily KPI brief by rail"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Payments teams move from hunting to reviewing drafts:",
+        "items": [
+          "Faster triage: failed payments arrive with a repair plan",
+          "Better releases: screening, risk and drivers in one view",
+          "Earlier break resolution: breaks are ranked by value before the cutoff"
+        ]
+      },
+      "opportunity_statements": [
+        "Clear payment exceptions before the release cutoff",
+        "Decide on held payments with evidence in one place",
+        "Rank settlement breaks by value every morning",
+        "Answer status inquiries without leaving the queue"
+      ],
+      "modules": []
+    },
+    "62. Supplier Claim Engagement Agent one-pager.pptx": {
+      "source_file": "62. Supplier Claim Engagement Agent one-pager.pptx",
+      "source_sha256": "7e782f6b2422a6949b733724e9925c32bef177b909dbb73288058a9f2e899e7b",
+      "slide_count": 1,
+      "title": "Supplier Claim Engagement Agent",
+      "executive_summary": "Helps retail claims teams recover more from suppliers with triage, evidence packs and deadline tracking, while coordinators approve every send.",
+      "industries": [
+        "Retail",
+        "Consumer Goods"
+      ],
+      "personas": [
+        "Supplier Claims Coordinator",
+        "Receiving Supervisor",
+        "Claims Team Lead"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Microsoft Outlook",
+        "Dynamics 365"
+      ],
+      "scenario_name": "A regional grocery retailer",
+      "customer_challenge": {
+        "intro": "A grocery retailer's claims team chases suppliers across email and spreadsheets:",
+        "items": [
+          "Damaged, short and off-quality deliveries are logged apart",
+          "Evidence packs are rebuilt by hand from photos and notes",
+          "Supplier response deadlines slip because nobody tracks the clock",
+          "Partial credits are accepted without checking the gap against the claim"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Supplier Claim Engagement Agent covers triage through supplier response:",
+        "items": [
+          "Triages damage, shortage, quality and pricing claims",
+          "Assembles evidence packs and drafts claim notices",
+          "Tracks response windows and drafts escalations before value is lost",
+          "Evaluates supplier responses to surface unrecovered value"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Claims teams recover more value with less manual chasing:",
+        "items": [
+          "More value recovered: every open claim and its value in one queue",
+          "Faster filing: evidence packs arrive as ready drafts",
+          "Fewer missed deadlines: at-risk claims surface early"
+        ]
+      },
+      "opportunity_statements": [
+        "See every open supplier claim and its value",
+        "File claims with complete evidence the same day",
+        "Catch missed supplier deadlines before value is lost"
+      ],
+      "modules": []
+    },
+    "63. Benefits Enrollment Agent one-pager.pptx": {
+      "source_file": "63. Benefits Enrollment Agent one-pager.pptx",
+      "source_sha256": "ed6d97e9314eb4e40b344884c82a262e3f2bc8efaa5d46424508b0a7961714c7",
+      "slide_count": 1,
+      "title": "Benefits Enrollment Agent",
+      "executive_summary": "Guides employees through open enrollment and life events, from change windows and plan costs to networks and a draft election they submit.",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Employee",
+        "Benefits Specialist",
+        "HR Operations Staff"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Microsoft 365 Copilot"
+      ],
+      "scenario_name": "A mid-size employer",
+      "customer_challenge": {
+        "intro": "Employees with a life event must change benefits quickly:",
+        "items": [
+          "Employees miss the short window after a life event",
+          "Comparing tier costs means per-paycheck math by hand",
+          "Plans are chosen before doctors are checked in network",
+          "Benefits staff field the same questions all season"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Benefits Enrollment Agent:",
+        "items": [
+          "Explains the enrollment window and change rules plainly",
+          "Compares tier costs and checks provider networks",
+          "Tracks documents and deadlines so changes are not missed",
+          "Prepares a draft election for the employee to submit"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Employees act on time with clearer choices:",
+        "items": [
+          "Fewer missed windows: each employee sees their own deadline",
+          "Clearer choices: tier costs and network gaps side by side",
+          "Lighter help desk: consistent, sourced answers"
+        ]
+      },
+      "opportunity_statements": [
+        "Never miss a life-event change window",
+        "Compare plan costs for your own coverage tier",
+        "Check your doctors before you choose a plan",
+        "Arrive at the benefits portal with a ready draft"
+      ],
+      "modules": []
+    },
+    "64. Warranty and Registration Agent one-pager.pptx": {
+      "source_file": "64. Warranty and Registration Agent one-pager.pptx",
+      "source_sha256": "cd206400e6bca5d0c32f8b040ab79de2194fbbe93b29cce495de705aa0969905",
+      "slide_count": 1,
+      "title": "Warranty and Registration Agent",
+      "executive_summary": "Gives equipment dealers one place to check warranty coverage and prepare registrations, so covered repairs move faster.",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Dealer Service Managers",
+        "Warranty Administrators",
+        "Dealer Sales Staff"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Dynamics 365 Field Service",
+        "Microsoft Outlook"
+      ],
+      "scenario_name": "A regional equipment dealer",
+      "customer_challenge": {
+        "intro": "Dealer service teams juggle warranty, catalog and registration systems:",
+        "items": [
+          "Coverage lookups span several disconnected screens",
+          "Claims are rejected for lapsed or parts-only coverage",
+          "Sold units miss their registration window",
+          "Extension opportunities expire unnoticed"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Warranty and Registration Agent gives dealers one conversation:",
+        "items": [
+          "Shows coverage, expirations and pending registrations in one view",
+          "Pre-checks repair coverage and pulls full unit records",
+          "Validates serials and drafts registrations for review",
+          "Drafts extended-coverage offers for units ending soon"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Dealers that adopt the agent can expect:",
+        "items": [
+          "Fewer rejected warranty claims",
+          "Registrations completed inside the window",
+          "More extensions sold before coverage ends"
+        ]
+      },
+      "opportunity_statements": [
+        "Check coverage before the repair, not after the claim",
+        "Register every sold unit inside its window",
+        "Offer extended coverage before it lapses"
+      ],
+      "modules": []
+    },
+    "65. Staffing Territory Planning Agent one-pager.pptx": {
+      "source_file": "65. Staffing Territory Planning Agent one-pager.pptx",
+      "source_sha256": "950a4b5b3ba64d3e49af8d3172d2404a83e2464f578608bf303fd943267f36b5",
+      "slide_count": 1,
+      "title": "Staffing Territory Planning Agent",
+      "executive_summary": "Helps staffing sales leaders size their territory, find where demand outruns recruiter coverage, and walk into the quarter with a draft plan.",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Regional Sales Directors",
+        "Branch Managers",
+        "Sales Operations Analysts"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Teams",
+        "Dynamics 365 Sales",
+        "Microsoft Excel"
+      ],
+      "scenario_name": "A regional staffing firm",
+      "customer_challenge": {
+        "intro": "Staffing sales leaders plan territories from scattered exports and reports:",
+        "items": [
+          "Territory reviews are assembled by hand",
+          "Coverage gaps are invisible until revenue misses",
+          "Competitive position is anecdotal",
+          "Plans are slow and inconsistent across regions"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Staffing Territory Planning Agent gives sales leaders a planning partner:",
+        "items": [
+          "Summarizes the territory and sizes each metro's market",
+          "Finds coverage gaps and ranks them by open spend",
+          "Shows competitor share and labor trends by line",
+          "Drafts the quarterly plan for leadership review"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Sales organizations that adopt the agent can expect:",
+        "items": [
+          "Faster, consistent territory reviews",
+          "Recruiter capacity aimed at the biggest gaps",
+          "Plans leadership can act on sooner"
+        ]
+      },
+      "opportunity_statements": [
+        "See the whole territory in one view",
+        "Aim recruiters where demand outruns coverage",
+        "Walk into the quarter with a draft plan"
+      ],
+      "modules": []
+    },
+    "66. Briefing Pack Builder Agent one-pager.pptx": {
+      "source_file": "66. Briefing Pack Builder Agent one-pager.pptx",
+      "source_sha256": "65ce2146d609480d4a2150600096a72d25143ac515ef154f1fb53c83da46116d",
+      "slide_count": 1,
+      "title": "Briefing Pack Builder Agent",
+      "executive_summary": "Turns a government team's source documents into cited, template-ready briefs in minutes, flagging conflicting figures and naming missing content.",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Briefing Coordinators",
+        "Budget Analysts",
+        "Department Directors"
+      ],
+      "agent_requirements": [
+        "Microsoft Copilot Studio"
+      ],
+      "featured_tools": [
+        "Microsoft Word",
+        "SharePoint",
+        "Microsoft Teams"
+      ],
+      "scenario_name": "A city budget office",
+      "customer_challenge": {
+        "intro": "Government briefing teams build high-stakes briefs under tight deadlines:",
+        "items": [
+          "Briefs are rebuilt by hand for every format",
+          "Superseded figures slip into briefs",
+          "Missing content surfaces only at review",
+          "Sign-off routes and timelines are unclear"
+        ]
+      },
+      "agent_actions": {
+        "intro": "The Briefing Pack Builder Agent drafts from governed content:",
+        "items": [
+          "Lists formats and scans what the content set holds",
+          "Flags figures that disagree across documents",
+          "Drafts the brief with a citation for every section",
+          "Names gaps and the review and approval route"
+        ]
+      },
+      "business_outcomes": {
+        "intro": "Briefing teams that adopt the agent can expect:",
+        "items": [
+          "Faster first drafts that specialists verify, not rebuild",
+          "Fewer wrong figures in front of decision makers",
+          "Earlier requests for missing content"
+        ]
+      },
+      "opportunity_statements": [
+        "Draft briefs from the documents you already hold",
+        "Catch conflicting figures before a hearing",
+        "Name missing content on day one",
+        "Know the sign-off route for every format"
       ],
       "modules": []
     },

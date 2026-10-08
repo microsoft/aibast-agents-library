@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/staffing-territory-planning",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "65. Staffing Territory Planning Agent one-pager.pptx",
+    "sha256": "950a4b5b3ba64d3e49af8d3172d2404a83e2464f578608bf303fd943267f36b5"
+  },
+  "source_path": "agents/@aibast-agents-library/professional_services_stacks/staffing_territory_planning_stack/staffing_territory_planning_agent.py",
+  "findings": [
+    "New wave-2 template distilled from a recurring field workflow pattern; no prior library source existed for this solution.",
+    "The field pattern relied on live systems, runtime clocks or model-generated text, which cannot be replayed deterministically or shared publicly.",
+    "The field pattern included organization-specific names, records and identifiers that must not appear in a public template.",
+    "Write-shaped steps in the pattern (submit, file, send, approve) needed an explicit human gate."
+  ],
+  "fixes": [
+    "Re-implemented the workflow as a stdlib-only single-file agent over a fixed fictional snapshot with one operation per story turn.",
+    "Replaced every name, record and identifier with invented data; boundary grep against the pattern sources returned zero hits.",
+    "Fixed the snapshot date and precomputed day counts so every output is deterministic.",
+    "Every write-shaped operation returns a draft, pre-check or recommendation and states that nothing was submitted, filed, sent or changed."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

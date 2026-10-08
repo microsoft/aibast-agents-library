@@ -18,12 +18,6 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Preservation review, not certification
-
-Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json.
-
-See [evals/manual-pilot-review.json](evals/manual-pilot-review.json).
-
 
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
@@ -74,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `FCO-01, FCO-02, FCO-03, FCO-04`.
+1. Which locked case IDs did you complete? Expected scope: `FCO-01, FCO-02, FCO-03, FCO-04, FCO-05, FCO-06, FCO-07, FCO-08, FCO-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -222,6 +216,11 @@ Both Easy lanes preserve every recorded case prompt:
 - `FCO-02` — Which approved-looking file is ready for account setup review, and what product is being prepared?
 - `FCO-03` — Give me the business onboarding document list for Blackwood before I call them.
 - `FCO-04` — Where is the onboarding queue stuck, and who owns each application?
+- `FCO-05` — I need to onboard a new corporate client, Nexus Industries, for commercial banking: treasury management, a credit line and FX. It's a high-priority relationship worth about $8M a year.
+- `FCO-06` — What about beneficial ownership on the Nexus file? We need to be compliant with FinCEN rules.
+- `FCO-07` — When can Nexus actually start using the account? What's the timeline?
+- `FCO-08` — Are there any risks or red flags I should be aware of for Nexus Industries?
+- `FCO-09` — Send me a status summary for the Nexus onboarding.
 
 ## Manual mode — literal browser construction
 
@@ -273,9 +272,3 @@ an approved production tool returns evidence that it succeeded.
   part of scaffolding.
 - **Customer gate:** replacement connections, governance, telemetry, support,
   and success measures are agreed before production.
-
-## Pending evidence
-
-- solutions/fs-customer-onboarding/evals/manual-build-evidence.json does not record passed manual Preview evidence
-
-Pending items are not proof and must not be described as captured.

@@ -22,7 +22,7 @@ Sales Leader
 1. Confirm that the request matches `board_presentation`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Board Presentation`, `Decision for authorized leaders`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Board Presentation`, `Decision for authorized leaders`, `32% Q4 win rate`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.
 
 ## Expected evidence marker
-The response must include `Board Presentation`, `Decision for authorized leaders`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Board Presentation`, `Decision for authorized leaders`, `32% Q4 win rate`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

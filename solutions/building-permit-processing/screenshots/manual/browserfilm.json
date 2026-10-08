@@ -1,55 +1,215 @@
 {
   "schema": "rapp-browserfilm/1.0",
-  "title": "Building Permit Manual Build — AI Skeptic Manual Mode",
-  "watermark": "rapp-browserfilm · manual build · kodyv8",
+  "title": "Building Permit Manual Build — Manual Mode",
+  "status": "captured",
+  "watermark": "rapp-browserfilm · building-permit-processing · kodyv8",
   "raw_base_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/",
-  "width": 1280,
-  "height": 780,
-  "capture_note": "Historical sequence: the step-16 failure and step-17 retry captures, their annotations, the GIF, and the contact sheet are preserved byte-for-byte. They do not require a validation error or prove the current upload outcome. Follow the frame tutorial contracts and record what Copilot Studio actually does. Never corrupt a valid skill or manufacture an error. Fresh outcome and inventory captures are required for steps 16 and 17.",
+  "width": 1424,
+  "height": 863,
   "frames": [
-    {"file": "01-create-blank-agent.jpg", "label": "1 · Create a blank Copilot Studio agent", "duration_ms": 1300},
-    {"file": "02-name-agent.jpg", "label": "2 · Name the manual agent", "duration_ms": 1200},
-    {"file": "03-enter-instructions.jpg", "label": "3 · Enter the full global instruction policy", "duration_ms": 1700},
-    {"file": "04-save-instructions.jpg", "label": "4 · Save the instruction changes", "duration_ms": 1100},
-    {"file": "05-open-knowledge-upload.jpg", "label": "5 · Open the knowledge-source picker", "duration_ms": 1300},
-    {"file": "06-select-records-file.jpg", "label": "6 · Upload the synthetic permit records", "duration_ms": 1300},
-    {"file": "07-records-file-added.jpg", "label": "7 · Wait for Dataverse ingestion", "duration_ms": 1300},
-    {"file": "08-select-rules-file.jpg", "label": "8 · Upload the rules and schedules", "duration_ms": 1300},
-    {"file": "09-two-knowledge-files-added.jpg", "label": "9 · Verify both knowledge sources", "duration_ms": 1300},
-    {"file": "10-open-skill-upload.jpg", "label": "10 · Open the SKILL.md uploader", "duration_ms": 1200},
-    {"file": "11-add-backlog-skill.jpg", "label": "11 · Add backlog and complaint-risk logic", "duration_ms": 1200},
-    {"file": "12-add-intake-skill.jpg", "label": "12 · Add intake triage and routing", "duration_ms": 1200},
-    {"file": "13-add-applicant-updates-skill.jpg", "label": "13 · Add proactive applicant updates", "duration_ms": 1200},
-    {"file": "14-add-permit-status-skill.jpg", "label": "14 · Add permit status and zoning detail", "duration_ms": 1200},
-    {"file": "15-add-checklist-skill.jpg", "label": "15 · Add the review checklist", "duration_ms": 1200},
     {
-      "file": "16-inspector-skill-validation-error.jpg",
-      "label": "16 · Historical SKILL.md validation failure",
-      "duration_ms": 1600,
-      "tutorial": {
-        "title": "Upload inspector coverage and record validation",
-        "action": "Upload the complete reviewed inspector-board-and-coverage SKILL.md unchanged, including its name and description frontmatter. If validation succeeds, record the successful accepted upload and continue to step 17 without editing the skill. If Copilot Studio reports an authentic validation error, capture the exact message and use step 17 to fix the reported problem and retry. Never corrupt a valid skill or manufacture an error to match a historical screenshot.",
-        "expected_result": "The actual validation outcome is recorded: either a successful accepted upload of inspector-board-and-coverage or an authentic validation error captured for correction in step 17. A frontmatter failure is not required.",
-        "source": "manual/skills/aibast_inspector-assignment_bp06/SKILL.md"
-      }
+      "file": "01-create-blank-agent.jpg",
+      "label": "Create a blank Copilot Studio agent",
+      "duration_ms": 1400,
+      "captured": true
     },
     {
-      "file": "17-retry-inspector-skill.jpg",
-      "label": "17 · Historical inspector skill retry",
-      "duration_ms": 1300,
-      "tutorial": {
-        "title": "Confirm inspector coverage; retry only after a real error",
-        "action": "Only if step 16 recorded an authentic validation error, fix the reported problem in the complete skill source, retry the upload visibly, and capture acceptance. If step 16 succeeded, do not edit or re-upload the skill. For either path, verify inspector-board-and-coverage in the Skills inventory, record whether a retry actually occurred, and continue to step 18.",
-        "expected_result": "inspector-board-and-coverage is accepted and visible in the Skills inventory, either after the unchanged initial upload or after a documented correction and retry. Do not claim a retry when the first upload succeeded, and do not mark this step complete while an unresolved error remains.",
-        "source": "manual/skills/aibast_inspector-assignment_bp06/SKILL.md"
-      }
+      "file": "02-name-agent.jpg",
+      "label": "Name Building Permit Manual Build",
+      "duration_ms": 1400,
+      "captured": true
     },
-    {"file": "18-add-fee-skill.jpg", "label": "18 · Add deterministic fee estimates", "duration_ms": 1300},
-    {"file": "19-open-model-picker.jpg", "label": "19 · Review the available model choices", "duration_ms": 1500},
-    {"file": "20-select-sonnet-model.jpg", "label": "20 · Match the Easy-mode model", "duration_ms": 1200},
-    {"file": "21-review-all-skills.jpg", "label": "21 · Audit every skill description", "duration_ms": 1500},
-    {"file": "22-open-preview.jpg", "label": "22 · Open Preview", "duration_ms": 1100},
-    {"file": "23-run-canonical-prompt.jpg", "label": "23 · Run the canonical backlog prompt", "duration_ms": 1400},
-    {"file": "24-verify-preview-result.jpg", "label": "24 · Verify the same permit and decision", "duration_ms": 2300}
+    {
+      "file": "03-enter-instructions.jpg",
+      "label": "Enter the reviewed global instructions",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "04-save-instructions.jpg",
+      "label": "Save the instruction policy",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "05-remove-web-search.jpg",
+      "label": "Remove default web search",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "06-add-aibast-permit-rules-and-schedules.jpg",
+      "label": "Add knowledge: aibast_permit-rules-and-schedules.md",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "07-add-aibast-building-permit-synthetic-records.jpg",
+      "label": "Add knowledge: aibast_building-permit-synthetic-records.md",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "08-add-aibast-applicant-updates-bp03.jpg",
+      "label": "Add skill: aibast_applicant-updates_bp03",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "09-add-aibast-application-intake-bp08.jpg",
+      "label": "Add skill: aibast_application-intake_bp08",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "10-add-aibast-code-compliance-review-bp09.jpg",
+      "label": "Add skill: aibast_code-compliance-review_bp09",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "11-add-aibast-fee-calculation-bp07.jpg",
+      "label": "Add skill: aibast_fee-calculation_bp07",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "12-add-aibast-inspector-assignment-bp06.jpg",
+      "label": "Add skill: aibast_inspector-assignment_bp06",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "13-add-aibast-intake-triage-bp02.jpg",
+      "label": "Add skill: aibast_intake-triage_bp02",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "14-add-aibast-permit-backlog-bp01.jpg",
+      "label": "Add skill: aibast_permit-backlog_bp01",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "15-add-aibast-permit-issuance-bp12.jpg",
+      "label": "Add skill: aibast_permit-issuance_bp12",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "16-add-aibast-permit-status-bp04.jpg",
+      "label": "Add skill: aibast_permit-status_bp04",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "17-add-aibast-review-checklist-bp05.jpg",
+      "label": "Add skill: aibast_review-checklist_bp05",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "18-add-aibast-route-for-review-bp10.jpg",
+      "label": "Add skill: aibast_route-for-review_bp10",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "19-add-aibast-workflow-timeline-bp11.jpg",
+      "label": "Add skill: aibast_workflow-timeline_bp11",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "20-review-inventory.jpg",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "21-review-skills.jpg",
+      "label": "Review the skill list (12 skills)",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "22-review-skills-more.jpg",
+      "label": "Review the rest of the skill list",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "23-open-preview.jpg",
+      "label": "Open a fresh Preview conversation",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "24-bpp-01.jpg",
+      "label": "Pass BPP-01: Development Services Director",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "25-bpp-02.jpg",
+      "label": "Pass BPP-02: Permit Technician",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "26-bpp-03.jpg",
+      "label": "Pass BPP-03: Permit Technician",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "27-bpp-04.jpg",
+      "label": "Pass BPP-04: Customer Service Lead",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "28-bpp-05.jpg",
+      "label": "Pass BPP-05: Chief Building Inspector",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "29-bpp-06.jpg",
+      "label": "Pass BPP-06: Permitting Supervisor",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "30-bpp-07.jpg",
+      "label": "Pass BPP-07: Permitting Supervisor",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "31-bpp-08.jpg",
+      "label": "Pass BPP-08: Permitting Supervisor",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "32-bpp-09.jpg",
+      "label": "Pass BPP-09: Permitting Supervisor",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "33-bpp-10.jpg",
+      "label": "Pass BPP-10: Permitting Supervisor",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "34-confirm-draft.jpg",
+      "label": "Confirm Draft and stop before publish",
+      "duration_ms": 1400,
+      "captured": true
+    }
   ]
 }

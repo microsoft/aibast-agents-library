@@ -23,14 +23,16 @@ def test_portfolio_manual_and_native_source_contracts_match():
         parse_yaml_scalar(settings, "schemaName"),
         (manual / "GLOBAL-INSTRUCTIONS.md").read_text(encoding="utf-8"),
     )
-    assert settings == normalized(expected)
+    # The re-shot native source keeps indentation on blank lines inside YAML
+    # block scalars; the instruction contract itself must still match exactly.
+    assert normalized(settings) == normalized(expected)
 
     skills = sorted((manual / "skills").glob("*/SKILL.md"))
-    assert len(skills) == 6
+    assert len(skills) == 8  # six repaired skills + risk-comparison and client-summary (demo-video alignment)
     for path in skills:
         content, fields = render_skill(path)
         mirror = native / "behaviors" / f"aibast_{fields['name']}.mcs.yml"
-        assert mirror.read_text(encoding="utf-8") == normalized(content)
+        assert normalized(mirror.read_text(encoding="utf-8")) == normalized(content)
 
     knowledge = sorted((manual / "knowledge").glob("*.md"))
     assert len(knowledge) == 2

@@ -21,7 +21,7 @@ def expected_agents():
 def test_level2_catalog_covers_every_existing_level1_architecture():
     document = json.loads(CATALOG.read_text(encoding="utf-8"))
     assert document["schema"] == "aibast-architecture-l2-catalog/1.0"
-    assert document["count"] == 51
+    assert document["count"] == 66
     assert set(document["solutions"]) == expected_agents()
 
     domain_limits = {

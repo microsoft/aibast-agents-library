@@ -212,7 +212,7 @@ const mutations = [
     assert: ({ status, stderr }) => (
       status !== 0
       && (
-        stderr.includes("Expected 51 catalog workshops")
+        stderr.includes("Expected 66 catalog workshops")
         || stderr.includes("Registry-only solution lacks exclusion proof")
       )
     ),

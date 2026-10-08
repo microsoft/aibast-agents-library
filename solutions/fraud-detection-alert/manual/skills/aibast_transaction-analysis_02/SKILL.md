@@ -20,6 +20,6 @@ Summarizes monitored transactions and account-level activity for investigation.
 
 Persona: Fraud Analyst
 
-Prompt: Show me the account activity behind the Dubai alert so I can investigate the sequence.
+Prompt: Yes, investigate the account takeover ring and show me the accounts.
 
-Expected synthetic evidence: 4532-XXXX-8891, TXN-90002.
+Expected synthetic evidence: ***4521, 2:34 AM, $340K.

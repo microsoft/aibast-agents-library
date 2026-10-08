@@ -8,267 +8,498 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 29,
-    "reusable": 25,
-    "reshoot_required": 4
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-sq-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "SQ-01",
-      "source": "solutions/sales-qualification/screenshots/assisted/01-sq-01.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/01-sq-01.png",
+      "source": "solutions/sales-qualification/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "synthetic planning evidence",
-        "no CRM record was changed"
-      ],
-      "full_case_not_visibly_proven": [
-        "Lead Qualification Summary and Top Hot Leads are above the captured viewport."
+        "Sales Qualification Pilot",
+        "Draft",
+        "sales-qualification-setup-tracking",
+        "sales-qualification-bant-analysis",
+        "sales-qualification-create-outreach",
+        "sales-qualification-score-leads",
+        "sales-qualification-qualification-report",
+        "aibast_sales-qualification-synthetic-records.md",
+        "aibast_sales-qualification-operating-rules.md"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 421,
-          "width": 950,
-          "height": 160,
-          "label": "SQ-01 evidence boundary"
+          "x": 84,
+          "y": 20,
+          "width": 182,
+          "height": 22,
+          "label": "Sales Qualification Pilot"
+        },
+        {
+          "x": 277,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 216,
+          "height": 22,
+          "label": "sales-qualification-setup-tracking"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 208,
+          "height": 22,
+          "label": "sales-qualification-bant-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 225,
+          "height": 22,
+          "label": "sales-qualification-create-outreach"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 198,
+          "height": 22,
+          "label": "sales-qualification-score-leads"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 247,
+          "height": 22,
+          "label": "sales-qualification-qualification-report"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 300,
+          "height": 22,
+          "label": "aibast_sales-qualification-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 288,
+          "height": 22,
+          "label": "aibast_sales-qualification-operating-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-sq-01",
+      "mode": "easy",
+      "source": "solutions/sales-qualification/screenshots/assisted/02-sq-01.jpg",
+      "caption": "SQ-01 · Sales Manager: Which bundled synthetic leads should my team review first, and why did they score that way?",
+      "case_id": "SQ-01",
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/02-sq-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Lead Qualification Summary",
+        "Top 3 Hot Leads",
+        "Hot (80+)",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 455,
+          "width": 267,
+          "height": 28,
+          "label": "Lead Qualification Summary"
+        },
+        {
+          "x": 285,
+          "y": 803,
+          "width": 157,
+          "height": 28,
+          "label": "Top 3 Hot Leads"
+        },
+        {
+          "x": 286,
+          "y": 1084,
+          "width": 98,
+          "height": 26,
+          "label": "Hot (80+)"
+        },
+        {
+          "x": 306,
+          "y": 1898,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-sq-02",
       "mode": "easy",
+      "source": "solutions/sales-qualification/screenshots/assisted/03-sq-02.jpg",
+      "caption": "SQ-02 · Business Development Rep.: Show the BANT evidence and missing qualification details for the strongest synthetic leads.",
       "case_id": "SQ-02",
-      "source": "solutions/sales-qualification/screenshots/assisted/02-sq-02.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/02-sq-02.png",
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/03-sq-02.png",
       "status": "reusable",
       "visible_anchors": [
+        "BANT Analysis",
         "Evidence boundary",
-        "synthetic planning evidence only",
-        "authorized manager review"
-      ],
-      "full_case_not_visibly_proven": [
-        "BANT Analysis and Strongest Engagement Signals are above the captured viewport."
+        "Strongest Engagement Signals",
+        "$200K"
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 450,
-          "width": 940,
-          "height": 126,
-          "label": "SQ-02 evidence boundary"
+          "y": 428,
+          "width": 141,
+          "height": 28,
+          "label": "BANT Analysis"
+        },
+        {
+          "x": 451,
+          "y": 461,
+          "width": 73,
+          "height": 21,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 569,
+          "y": 463,
+          "width": 77,
+          "height": 22,
+          "label": "Strongest Engagement Signals"
+        },
+        {
+          "x": 517,
+          "y": 569,
+          "width": 57,
+          "height": 22,
+          "label": "$200K"
         }
       ]
     },
     {
       "id": "easy-sq-03",
       "mode": "easy",
+      "source": "solutions/sales-qualification/screenshots/assisted/04-sq-03.jpg",
+      "caption": "SQ-03 · Business Development Rep.: Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.",
       "case_id": "SQ-03",
-      "source": "solutions/sales-qualification/screenshots/assisted/03-sq-03.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/03-sq-03.png",
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/04-sq-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "No outreach was sent",
-        "no sequence was activated"
-      ],
-      "full_case_not_visibly_proven": [
-        "Personalized Outreach and Draft Sequence Cadence are above the captured viewport."
+        "Connecting 12 data sources in weeks",
+        "Draft Sequence Cadence",
+        "Personalized Outreach",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 283,
-          "y": 474,
-          "width": 946,
-          "height": 104,
-          "label": "SQ-03 evidence boundary"
+          "x": 736,
+          "y": 645,
+          "width": 209,
+          "height": 24,
+          "label": "Connecting 12 data sources in weeks"
+        },
+        {
+          "x": 286,
+          "y": 1042,
+          "width": 189,
+          "height": 24,
+          "label": "Draft Sequence Cadence"
+        },
+        {
+          "x": 538,
+          "y": 1181,
+          "width": 98,
+          "height": 20,
+          "label": "Personalized Outreach"
+        },
+        {
+          "x": 306,
+          "y": 1968,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-sq-04",
       "mode": "easy",
+      "source": "solutions/sales-qualification/screenshots/assisted/05-sq-04.jpg",
+      "caption": "SQ-04 · Sales Manager: Recommend synthetic lead routing for manager review without assigning CRM owners.",
       "case_id": "SQ-04",
-      "source": "solutions/sales-qualification/screenshots/assisted/04-sq-04.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/04-sq-04.png",
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/05-sq-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "read-only decision support",
-        "No lead was assigned"
-      ],
-      "full_case_not_visibly_proven": [
-        "Recommended Lead Routing and Handoff Package are above the captured viewport."
+        "Recommended Lead Routing",
+        "$470K",
+        "Handoff Package",
+        "Evidence boundary"
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 449,
-          "width": 940,
-          "height": 128,
-          "label": "SQ-04 evidence boundary"
+          "y": 428,
+          "width": 271,
+          "height": 28,
+          "label": "Recommended Lead Routing"
+        },
+        {
+          "x": 550,
+          "y": 645,
+          "width": 56,
+          "height": 23,
+          "label": "$470K"
+        },
+        {
+          "x": 286,
+          "y": 1557,
+          "width": 134,
+          "height": 24,
+          "label": "Handoff Package"
+        },
+        {
+          "x": 286,
+          "y": 2342,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-sq-05",
       "mode": "easy",
+      "source": "solutions/sales-qualification/screenshots/assisted/06-sq-05.jpg",
+      "caption": "SQ-05 · Sales Manager: Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.",
       "case_id": "SQ-05",
-      "source": "solutions/sales-qualification/screenshots/assisted/05-sq-05.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/05-sq-05.png",
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/06-sq-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "synthetic planning evidence",
-        "monitoring items are drafts"
-      ],
-      "full_case_not_visibly_proven": [
-        "Draft SLA Tracking Plan and Proposed Monitoring are above the captured viewport."
+        "Draft SLA Tracking Plan",
+        "Targets",
+        "$800K pipeline",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 452,
-          "width": 946,
-          "height": 126,
-          "label": "SQ-05 evidence boundary"
+          "x": 561,
+          "y": 276,
+          "width": 99,
+          "height": 20,
+          "label": "Draft SLA Tracking Plan"
+        },
+        {
+          "x": 302,
+          "y": 1684,
+          "width": 64,
+          "height": 24,
+          "label": "Targets"
+        },
+        {
+          "x": 299,
+          "y": 1912,
+          "width": 118,
+          "height": 25,
+          "label": "$800K pipeline"
+        },
+        {
+          "x": 286,
+          "y": 3057,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-sq-06",
       "mode": "easy",
+      "source": "solutions/sales-qualification/screenshots/assisted/07-sq-06.jpg",
+      "caption": "SQ-06 · Account Executive: Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.",
       "case_id": "SQ-06",
-      "source": "solutions/sales-qualification/screenshots/assisted/06-sq-06.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/06-sq-06.png",
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/07-sq-06.png",
       "status": "reusable",
       "visible_anchors": [
+        "Qualification Report",
         "Evidence boundary",
-        "synthetic test evidence only",
-        "read-only decision support"
-      ],
-      "full_case_not_visibly_proven": [
-        "Qualification Report and Synthetic Conversion Assumptions are above the captured viewport."
+        "$1.25M",
+        "Action plan"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 454,
-          "width": 946,
-          "height": 127,
-          "label": "SQ-06 evidence boundary"
+          "x": 286,
+          "y": 455,
+          "width": 193,
+          "height": 28,
+          "label": "Qualification Report"
+        },
+        {
+          "x": 798,
+          "y": 500,
+          "width": 73,
+          "height": 21,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 391,
+          "y": 1017,
+          "width": 62,
+          "height": 22,
+          "label": "$1.25M"
+        },
+        {
+          "x": 958,
+          "y": 2422,
+          "width": 267,
+          "height": 24,
+          "label": "Action plan"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-confirm-draft",
       "mode": "easy",
-      "source": "solutions/sales-qualification/screenshots/assisted/07-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list shows other Draft rows, but the target Sales Qualification Pilot row is not visible.",
-      "draft": true
+      "source": "solutions/sales-qualification/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sales Qualification Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 181,
+          "height": 22,
+          "label": "Sales Qualification Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/sales-qualification/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 168,
-          "y": 97,
-          "width": 230,
-          "height": 55,
-          "label": "Blank agent \u2014 Untitled Agent"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible Untitled Agent text and tightened the annotation to the exact anchor 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/sales-qualification/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Sales Qualification Manual",
+      "step": 2,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Sales Qualification Manual in the name field"
+        "Sales Qualification Manual"
       ],
       "boxes": [
         {
-          "x": 170,
-          "y": 106,
-          "width": 404,
-          "height": 37,
+          "x": 84,
+          "y": 20,
+          "width": 202,
+          "height": 22,
           "label": "Sales Qualification Manual"
         }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible agent name text and tightened the annotation to the exact anchor 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/sales-qualification/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "SQ-01 through SQ-06 acceptance anchors"
+        "Sales Qualification Agent — Global Instructions"
       ],
       "boxes": [
         {
-          "x": 76,
-          "y": 211,
-          "width": 906,
-          "height": 625,
-          "label": "Reviewed instruction policy"
+          "x": 203,
+          "y": 131,
+          "width": 287,
+          "height": 36,
+          "label": "Sales Qualification Agent — Global Instructions"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/sales-qualification/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction text is visible, but no saved-state tooltip or other visible confirmation proves that the save action completed."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/sales-qualification/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/05-remove-web-search.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge section contains no Search all websites source"
+        "Provide trusted context to guide decisions"
       ],
       "boxes": [
         {
-          "x": 1017,
-          "y": 251,
-          "width": 382,
-          "height": 80,
-          "label": "Web search source removed"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
       ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/sales-qualification/screenshots/manual/06-add-aibast-sales-qualification-operating-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_sales-qualification-operating-rules.md",
+      "step": 6,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/06-add-aibast-sales-qualification-operating-rules.png",
       "status": "reusable",
       "visible_anchors": [
@@ -276,40 +507,41 @@
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 306,
-          "width": 370,
-          "height": 43,
-          "label": "Operating rules knowledge"
+          "x": 1057,
+          "y": 321,
+          "width": 288,
+          "height": 22,
+          "label": "aibast_sales-qualification-operating-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/sales-qualification/screenshots/manual/07-add-aibast-sales-qualification-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_sales-qualification-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/07-add-aibast-sales-qualification-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_sales-qualification-synthetic-records... unique filename prefix",
-        "aibast_sales-qualification-operating-rules.md"
+        "aibast_sales-qualification-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 305,
-          "width": 370,
-          "height": 86,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 321,
+          "width": 300,
+          "height": 22,
+          "label": "aibast_sales-qualification-synthetic-records.md"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "step": 8,
       "source": "solutions/sales-qualification/screenshots/manual/08-add-assign-leads.jpg",
+      "caption": "Manual step 8 · Add skill: assign-leads",
+      "step": 8,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/08-add-assign-leads.png",
       "status": "reusable",
       "visible_anchors": [
@@ -317,19 +549,20 @@
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 185,
-          "width": 320,
-          "height": 43,
-          "label": "Assign-leads skill"
+          "x": 1057,
+          "y": 197,
+          "width": 203,
+          "height": 22,
+          "label": "sales-qualification-assign-leads"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
-      "step": 9,
       "source": "solutions/sales-qualification/screenshots/manual/09-add-bant-analysis.jpg",
+      "caption": "Manual step 9 · Add skill: bant-analysis",
+      "step": 9,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/09-add-bant-analysis.png",
       "status": "reusable",
       "visible_anchors": [
@@ -337,19 +570,20 @@
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 185,
-          "width": 320,
-          "height": 43,
-          "label": "BANT-analysis skill"
+          "x": 1057,
+          "y": 197,
+          "width": 208,
+          "height": 22,
+          "label": "sales-qualification-bant-analysis"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
-      "step": 10,
       "source": "solutions/sales-qualification/screenshots/manual/10-add-create-outreach.jpg",
+      "caption": "Manual step 10 · Add skill: create-outreach",
+      "step": 10,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/10-add-create-outreach.png",
       "status": "reusable",
       "visible_anchors": [
@@ -357,19 +591,20 @@
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 185,
-          "width": 335,
-          "height": 43,
-          "label": "Create-outreach skill"
+          "x": 1057,
+          "y": 197,
+          "width": 225,
+          "height": 22,
+          "label": "sales-qualification-create-outreach"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
-      "step": 11,
       "source": "solutions/sales-qualification/screenshots/manual/11-add-qualification-report.jpg",
+      "caption": "Manual step 11 · Add skill: qualification-report",
+      "step": 11,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/11-add-qualification-report.png",
       "status": "reusable",
       "visible_anchors": [
@@ -377,19 +612,20 @@
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 185,
-          "width": 350,
-          "height": 43,
-          "label": "Qualification-report skill"
+          "x": 1057,
+          "y": 197,
+          "width": 247,
+          "height": 22,
+          "label": "sales-qualification-qualification-report"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
-      "step": 12,
       "source": "solutions/sales-qualification/screenshots/manual/12-add-score-leads.jpg",
+      "caption": "Manual step 12 · Add skill: score-leads",
+      "step": 12,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/12-add-score-leads.png",
       "status": "reusable",
       "visible_anchors": [
@@ -397,19 +633,20 @@
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 185,
-          "width": 315,
-          "height": 43,
-          "label": "Score-leads skill"
+          "x": 1057,
+          "y": 197,
+          "width": 198,
+          "height": 22,
+          "label": "sales-qualification-score-leads"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
-      "step": 13,
       "source": "solutions/sales-qualification/screenshots/manual/13-add-setup-tracking.jpg",
+      "caption": "Manual step 13 · Add skill: setup-tracking",
+      "step": 13,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/13-add-setup-tracking.png",
       "status": "reusable",
       "visible_anchors": [
@@ -417,269 +654,526 @@
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 185,
-          "width": 330,
-          "height": 43,
-          "label": "Setup-tracking skill"
+          "x": 1057,
+          "y": 197,
+          "width": 216,
+          "height": 22,
+          "label": "sales-qualification-setup-tracking"
         }
       ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
-      "step": 14,
       "source": "solutions/sales-qualification/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
       "annotated": "solutions/sales-qualification/screenshots/manual/annotated/14-review-inventory.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "six configured skills",
-        "Tools section contains no configured tool",
-        "two knowledge files",
-        "No unsaved changes"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "Five skill names are visible and the +1 indicator confirms the sixth; the individual addition captures expose every exact skill name."
+        "Claude Opus 5",
+        "sales-qualification-setup-tracking",
+        "sales-qualification-score-leads",
+        "sales-qualification-qualification-report",
+        "sales-qualification-create-outreach",
+        "sales-qualification-bant-analysis",
+        "aibast_sales-qualification-synthetic-records.md",
+        "aibast_sales-qualification-operating-rules.md"
       ],
       "boxes": [
         {
-          "x": 1047,
-          "y": 43,
-          "width": 205,
-          "height": 54,
-          "label": "Saved state"
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 1201,
-          "y": 86,
+          "x": 1057,
+          "y": 197,
+          "width": 216,
+          "height": 22,
+          "label": "sales-qualification-setup-tracking"
+        },
+        {
+          "x": 1057,
+          "y": 237,
           "width": 198,
-          "height": 39,
-          "label": "Reviewed model"
+          "height": 22,
+          "label": "sales-qualification-score-leads"
         },
         {
-          "x": 1025,
-          "y": 184,
-          "width": 355,
-          "height": 203,
-          "label": "Six skills: five +1"
+          "x": 1057,
+          "y": 277,
+          "width": 247,
+          "height": 22,
+          "label": "sales-qualification-qualification-report"
         },
         {
-          "x": 1025,
-          "y": 400,
-          "width": 372,
-          "height": 64,
-          "label": "No configured tools"
+          "x": 1057,
+          "y": 317,
+          "width": 225,
+          "height": 22,
+          "label": "sales-qualification-create-outreach"
         },
         {
-          "x": 1025,
-          "y": 486,
-          "width": 372,
-          "height": 105,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 357,
+          "width": 208,
+          "height": 22,
+          "label": "sales-qualification-bant-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 300,
+          "height": 22,
+          "label": "aibast_sales-qualification-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 288,
+          "height": 22,
+          "label": "aibast_sales-qualification-operating-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
       "step": 15,
-      "source": "solutions/sales-qualification/screenshots/manual/15-open-preview.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/15-open-preview.png",
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/15-review-skills.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab selected",
-        "New chat",
-        "Sales Qualification Manual greeting"
+        "sales-qualification-setup-tracking",
+        "sales-qualification-score-leads",
+        "sales-qualification-qualification-report",
+        "sales-qualification-create-outreach",
+        "sales-qualification-bant-analysis"
       ],
       "boxes": [
         {
-          "x": 638,
-          "y": 8,
-          "width": 98,
-          "height": 45,
-          "label": "Preview selected"
+          "x": 1055,
+          "y": 177,
+          "width": 216,
+          "height": 22,
+          "label": "sales-qualification-setup-tracking"
         },
         {
-          "x": 260,
-          "y": 143,
-          "width": 560,
-          "height": 92,
-          "label": "Fresh Preview conversation"
+          "x": 1055,
+          "y": 255,
+          "width": 198,
+          "height": 22,
+          "label": "sales-qualification-score-leads"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 248,
+          "height": 22,
+          "label": "sales-qualification-qualification-report"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 225,
+          "height": 22,
+          "label": "sales-qualification-create-outreach"
+        },
+        {
+          "x": 1055,
+          "y": 509,
+          "width": 209,
+          "height": 22,
+          "label": "sales-qualification-bant-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sales-qualification-score-leads",
+        "sales-qualification-qualification-report",
+        "sales-qualification-create-outreach",
+        "sales-qualification-bant-analysis",
+        "sales-qualification-assign-leads"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 124,
+          "width": 198,
+          "height": 22,
+          "label": "sales-qualification-score-leads"
+        },
+        {
+          "x": 1055,
+          "y": 202,
+          "width": 247,
+          "height": 22,
+          "label": "sales-qualification-qualification-report"
+        },
+        {
+          "x": 1055,
+          "y": 300,
+          "width": 226,
+          "height": 22,
+          "label": "sales-qualification-create-outreach"
+        },
+        {
+          "x": 1055,
+          "y": 378,
+          "width": 209,
+          "height": 22,
+          "label": "sales-qualification-bant-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 203,
+          "height": 22,
+          "label": "sales-qualification-assign-leads"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sales Qualification Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 202,
+          "height": 22,
+          "label": "Sales Qualification Manual"
         }
       ]
     },
     {
       "id": "hard-sq-01",
       "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/18-sq-01.jpg",
+      "caption": "SQ-01 · Sales Manager: Which bundled synthetic leads should my team review first, and why did they score that way?",
+      "step": 18,
       "case_id": "SQ-01",
-      "step": 16,
-      "source": "solutions/sales-qualification/screenshots/manual/16-sq-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows scoring detail, but none of the locked SQ-01 positive markers Lead Qualification Summary, Top Hot Leads, or Evidence boundary is visible."
-    },
-    {
-      "id": "hard-sq-02",
-      "mode": "hard",
-      "case_id": "SQ-02",
-      "step": 17,
-      "source": "solutions/sales-qualification/screenshots/manual/17-sq-02.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/17-sq-02.png",
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/18-sq-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "synthetic planning evidence only",
-        "No lead was assigned"
-      ],
-      "full_case_not_visibly_proven": [
-        "BANT Analysis and Strongest Engagement Signals are above the captured viewport."
+        "Lead Qualification Summary",
+        "Hot (80+)",
+        "Top 3 Hot Leads",
+        "Evidence boundary"
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 450,
-          "width": 942,
-          "height": 128,
-          "label": "SQ-02 evidence boundary"
+          "y": 484,
+          "width": 236,
+          "height": 24,
+          "label": "Lead Qualification Summary"
+        },
+        {
+          "x": 785,
+          "y": 524,
+          "width": 72,
+          "height": 22,
+          "label": "Hot (80+)"
+        },
+        {
+          "x": 285,
+          "y": 783,
+          "width": 132,
+          "height": 24,
+          "label": "Top 3 Hot Leads"
+        },
+        {
+          "x": 372,
+          "y": 920,
+          "width": 76,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-sq-02",
+      "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/19-sq-02.jpg",
+      "caption": "SQ-02 · Business Development Rep.: Show the BANT evidence and missing qualification details for the strongest synthetic leads.",
+      "step": 19,
+      "case_id": "SQ-02",
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/19-sq-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "BANT Analysis",
+        "Strongest Engagement Signals",
+        "$200K",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 833,
+          "y": 463,
+          "width": 123,
+          "height": 23,
+          "label": "BANT Analysis"
+        },
+        {
+          "x": 1005,
+          "y": 464,
+          "width": 78,
+          "height": 22,
+          "label": "Strongest Engagement Signals"
+        },
+        {
+          "x": 470,
+          "y": 610,
+          "width": 55,
+          "height": 22,
+          "label": "$200K"
+        },
+        {
+          "x": 286,
+          "y": 1517,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "hard-sq-03",
       "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/20-sq-03.jpg",
+      "caption": "SQ-03 · Business Development Rep.: Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.",
+      "step": 20,
       "case_id": "SQ-03",
-      "step": 18,
-      "source": "solutions/sales-qualification/screenshots/manual/18-sq-03.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/18-sq-03.png",
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/20-sq-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "No outreach was sent",
-        "no sequence was activated"
-      ],
-      "full_case_not_visibly_proven": [
-        "Personalized Outreach and Draft Sequence Cadence are above the captured viewport."
+        "Connecting 12 data sources in weeks",
+        "Draft Sequence Cadence",
+        "Personalized Outreach",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 426,
-          "width": 946,
-          "height": 155,
-          "label": "SQ-03 evidence boundary"
+          "x": 732,
+          "y": 764,
+          "width": 277,
+          "height": 24,
+          "label": "Connecting 12 data sources in weeks"
+        },
+        {
+          "x": 286,
+          "y": 1225,
+          "width": 189,
+          "height": 24,
+          "label": "Draft Sequence Cadence"
+        },
+        {
+          "x": 583,
+          "y": 1225,
+          "width": 97,
+          "height": 21,
+          "label": "Personalized Outreach"
+        },
+        {
+          "x": 286,
+          "y": 1565,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "hard-sq-04",
       "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/21-sq-04.jpg",
+      "caption": "SQ-04 · Sales Manager: Recommend synthetic lead routing for manager review without assigning CRM owners.",
+      "step": 21,
       "case_id": "SQ-04",
-      "step": 19,
-      "source": "solutions/sales-qualification/screenshots/manual/19-sq-04.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/19-sq-04.png",
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/21-sq-04.png",
       "status": "reusable",
       "visible_anchors": [
+        "Recommended Lead Routing",
+        "$470K",
         "Evidence boundary",
-        "No CRM owner was assigned",
-        "no lead was routed"
-      ],
-      "full_case_not_visibly_proven": [
-        "Recommended Lead Routing and Handoff Package are above the captured viewport."
+        "Handoff Package"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 476,
-          "width": 946,
-          "height": 104,
-          "label": "SQ-04 evidence boundary"
+          "x": 286,
+          "y": 531,
+          "width": 219,
+          "height": 24,
+          "label": "Recommended Lead Routing"
+        },
+        {
+          "x": 550,
+          "y": 677,
+          "width": 54,
+          "height": 22,
+          "label": "$470K"
+        },
+        {
+          "x": 286,
+          "y": 1041,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 286,
+          "y": 1509,
+          "width": 134,
+          "height": 24,
+          "label": "Handoff Package"
         }
       ]
     },
     {
       "id": "hard-sq-05",
       "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/22-sq-05.jpg",
+      "caption": "SQ-05 · Sales Manager: Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.",
+      "step": 22,
       "case_id": "SQ-05",
-      "step": 20,
-      "source": "solutions/sales-qualification/screenshots/manual/20-sq-05.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/20-sq-05.png",
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/22-sq-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "monitoring items are drafts",
-        "no alert was activated"
-      ],
-      "full_case_not_visibly_proven": [
-        "Draft SLA Tracking Plan and Proposed Monitoring are above the captured viewport."
+        "Targets",
+        "Draft SLA Tracking Plan",
+        "$800K pipeline",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 451,
-          "width": 946,
-          "height": 126,
-          "label": "SQ-05 evidence boundary"
+          "x": 332,
+          "y": 819,
+          "width": 90,
+          "height": 21,
+          "label": "Targets"
+        },
+        {
+          "x": 286,
+          "y": 858,
+          "width": 180,
+          "height": 24,
+          "label": "Draft SLA Tracking Plan"
+        },
+        {
+          "x": 688,
+          "y": 1278,
+          "width": 119,
+          "height": 25,
+          "label": "$800K pipeline"
+        },
+        {
+          "x": 286,
+          "y": 1478,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "hard-sq-06",
       "mode": "hard",
+      "source": "solutions/sales-qualification/screenshots/manual/23-sq-06.jpg",
+      "caption": "SQ-06 · Account Executive: Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.",
+      "step": 23,
       "case_id": "SQ-06",
-      "step": 21,
-      "source": "solutions/sales-qualification/screenshots/manual/21-sq-06.jpg",
-      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/21-sq-06.png",
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/23-sq-06.png",
       "status": "reusable",
       "visible_anchors": [
+        "Qualification Report",
+        "$1.25M",
         "Evidence boundary",
-        "synthetic test evidence only",
-        "read-only decision support"
-      ],
-      "full_case_not_visibly_proven": [
-        "Qualification Report and Synthetic Conversion Assumptions are above the captured viewport."
+        "Action plan"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 450,
-          "width": 946,
-          "height": 127,
-          "label": "SQ-06 evidence boundary"
+          "x": 529,
+          "y": 490,
+          "width": 184,
+          "height": 23,
+          "label": "Qualification Report"
+        },
+        {
+          "x": 391,
+          "y": 902,
+          "width": 60,
+          "height": 22,
+          "label": "$1.25M"
+        },
+        {
+          "x": 286,
+          "y": 942,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 285,
+          "y": 1897,
+          "width": 98,
+          "height": 24,
+          "label": "Action plan"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-step-24",
       "mode": "hard",
-      "step": 22,
-      "source": "solutions/sales-qualification/screenshots/manual/22-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The source capture is blank and contains neither the Sales Qualification Manual identity nor a visible Draft status."
+      "source": "solutions/sales-qualification/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sales Qualification Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 201,
+          "height": 22,
+          "label": "Sales Qualification Manual"
+        }
+      ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Sales Qualification Pilot with Draft visible.",
-      "Manual step 4 with the Save tooltip stating No unsaved changes.",
-      "Manual SQ-01 with at least one locked positive marker visible in the final answer.",
-      "Manual Draft gate with Sales Qualification Manual and Draft visible."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 6/6 verdict.",
-      "Copilot-only local 6/6 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:sales-qualification",
-    "reviewed_at": "2026-08-10T00:27:58.182378+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:57.325759+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

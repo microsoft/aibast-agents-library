@@ -1,0 +1,132 @@
+{
+  "solution": "Solution Design Review Agent",
+  "agent": "@aibast-agents-library/solution-design-review",
+  "onepager": "56. Solution Design Review Agent one-pager.pptx",
+  "agent_files": [
+    "solution_design_review_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "assertion_principle": "Each case asserts stable synthetic evidence from the agent output, the routed tool, and the absence of stall phrases; it never asserts model wording.",
+  "cases": [
+    {
+      "id": "SDR-01",
+      "persona": "Solution Architect",
+      "operation": "design_intake",
+      "onepager_bullet": "Turn discovery notes and an initiative brief into a structured design draft",
+      "prompt": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+      "arguments": {
+        "operation": "design_intake"
+      },
+      "must_include": [
+        "INIT-2026-031",
+        "3 inputs received",
+        "Recommended fill sequence"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SolutionDesignReviewAgent"
+    },
+    {
+      "id": "SDR-02",
+      "persona": "Solution Architect",
+      "operation": "architecture_vision",
+      "onepager_bullet": "Turn discovery notes and an initiative brief into a structured design draft",
+      "prompt": "Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+      "arguments": {
+        "operation": "architecture_vision"
+      },
+      "must_include": [
+        "Avery Lindqvist",
+        "4 of 4",
+        "Data protection"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SolutionDesignReviewAgent"
+    },
+    {
+      "id": "SDR-03",
+      "persona": "Solution Architect",
+      "operation": "current_state",
+      "onepager_bullet": "Assemble the current state and target design with every inventory change listed",
+      "prompt": "What does the current state look like for the systems in scope?",
+      "arguments": {
+        "operation": "current_state"
+      },
+      "must_include": [
+        "CI-103",
+        "End of support",
+        "no current-state baseline for the Business domain"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SolutionDesignReviewAgent"
+    },
+    {
+      "id": "SDR-04",
+      "persona": "Enterprise Architecture Lead",
+      "operation": "requirements_matrix",
+      "onepager_bullet": "Map non-functional requirements to owners and surface gaps and variances early",
+      "prompt": "Which non-functional requirements apply, and who owns each one?",
+      "arguments": {
+        "operation": "requirements_matrix"
+      },
+      "must_include": [
+        "NFR-04",
+        "MISSING OWNER",
+        "1 variance candidate"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SolutionDesignReviewAgent"
+    },
+    {
+      "id": "SDR-05",
+      "persona": "Solution Architect",
+      "operation": "target_design",
+      "onepager_bullet": "Assemble the current state and target design with every inventory change listed",
+      "prompt": "Draft the target design and list what changes in the inventory.",
+      "arguments": {
+        "operation": "target_design"
+      },
+      "must_include": [
+        "Notification Orchestrator",
+        "3 new, 2 changed, 2 retired",
+        "not registered by this agent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SolutionDesignReviewAgent"
+    },
+    {
+      "id": "SDR-06",
+      "persona": "Review Board Coordinator",
+      "operation": "readiness_check",
+      "onepager_bullet": "Self-check readiness before the review board with a confidence score and ranked gaps",
+      "prompt": "Is this design ready for the review board?",
+      "arguments": {
+        "operation": "readiness_check"
+      },
+      "must_include": [
+        "70%",
+        "Revise before the review board",
+        "Not submitted to the review board"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SolutionDesignReviewAgent"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "solution": "Payments Operations Agent",
+  "agent": "@aibast-agents-library/payments-operations",
+  "onepager": "61. Payments Operations Agent one-pager.pptx",
+  "agent_files": [
+    "payments_operations_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "PO-01",
+      "persona": "Payments Operations Lead",
+      "operation": "queue_overview",
+      "onepager_bullet": "Reviews screening and pre-release risk drivers so analysts decide on held payments with evidence",
+      "prompt": "What's in this morning's payment release queue, and which payments need attention?",
+      "arguments": {
+        "operation": "queue_overview"
+      },
+      "must_include": [
+        "Release Queue",
+        "PAY-3105",
+        "Needs attention"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-02",
+      "persona": "Payments Analyst",
+      "operation": "validate_payment",
+      "onepager_bullet": "Validates payments against scheme rules and plans exception repairs before the release cutoff",
+      "prompt": "Why did payment PAY-3105 fail validation?",
+      "arguments": {
+        "operation": "validate_payment",
+        "payment_id": "PAY-3105"
+      },
+      "must_include": [
+        "AMOUNT_OVER_RAIL_LIMIT",
+        "BENEFICIARY_ACCOUNT_MISSING",
+        "Scheme Rule"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-03",
+      "persona": "Payments Repair Analyst",
+      "operation": "repair_plan",
+      "onepager_bullet": "Validates payments against scheme rules and plans exception repairs before the release cutoff",
+      "prompt": "What's the repair plan for PAY-3105? Don't change anything yet.",
+      "arguments": {
+        "operation": "repair_plan",
+        "payment_id": "PAY-3105"
+      },
+      "must_include": [
+        "Not Executed",
+        "Domestic High-Value",
+        "Draft for analyst review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-04",
+      "persona": "Payments Analyst",
+      "operation": "release_risk_review",
+      "onepager_bullet": "Reviews screening and pre-release risk drivers so analysts decide on held payments with evidence",
+      "prompt": "Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
+      "arguments": {
+        "operation": "release_risk_review",
+        "payment_id": "PAY-3104"
+      },
+      "must_include": [
+        "Risk band",
+        "8.9 times",
+        "Watchlist screening"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-05",
+      "persona": "Reconciliation Analyst",
+      "operation": "reconcile_settlement",
+      "onepager_bullet": "Reconciles settlement accounts and ranks open breaks by value",
+      "prompt": "Reconcile yesterday's USD settlement account. Which breaks are still open?",
+      "arguments": {
+        "operation": "reconcile_settlement"
+      },
+      "must_include": [
+        "WGB-SETTLE-USD-01",
+        "BRK-02",
+        "9,846.90"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-06",
+      "persona": "Payments Operations Lead",
+      "operation": "payment_status",
+      "onepager_bullet": "Answers payment status inquiries and builds the daily KPI brief by rail",
+      "prompt": "A relationship manager is asking where PAY-3103 is. What should I tell them?",
+      "arguments": {
+        "operation": "payment_status",
+        "payment_id": "PAY-3103"
+      },
+      "must_include": [
+        "Scheme acknowledged",
+        "15:00",
+        "not sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-07",
+      "persona": "Head of Payments Operations",
+      "operation": "daily_kpi_brief",
+      "onepager_bullet": "Answers payment status inquiries and builds the daily KPI brief by rail",
+      "prompt": "Give me yesterday's payments KPI brief by rail.",
+      "arguments": {
+        "operation": "daily_kpi_brief"
+      },
+      "must_include": [
+        "99.07%",
+        "Cross-Border Wire",
+        "nothing was distributed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

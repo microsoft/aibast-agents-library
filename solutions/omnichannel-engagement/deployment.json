@@ -10,12 +10,17 @@
     "channel_performance",
     "journey_analysis",
     "engagement_optimization",
-    "campaign_attribution"
+    "campaign_attribution",
+    "customer_journey",
+    "unresolved_issues",
+    "channel_recommendation",
+    "proactive_plan",
+    "handoff_package"
   ],
   "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
   "manual_authoring": {
     "knowledge_files": 2,
-    "skills": 4,
+    "skills": 9,
     "status": "source-assets-only",
     "publish": false
   },
@@ -23,7 +28,7 @@
     "manual/knowledge/aibast_omnichannel-synthetic-records.md",
     "manual/knowledge/aibast_omnichannel-rules-and-safety.md"
   ],
-  "manual_skill_count": 4,
+  "manual_skill_count": 9,
   "production_connectors": [
     "Approved aggregate CRM and commerce analytics",
     "Approved contact-center analytics"
@@ -42,13 +47,18 @@
       "channel_performance",
       "journey_analysis",
       "engagement_optimization",
-      "campaign_attribution"
+      "campaign_attribution",
+      "customer_journey",
+      "unresolved_issues",
+      "channel_recommendation",
+      "proactive_plan",
+      "handoff_package"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_omnichannel-synthetic-records.md",
       "manual/knowledge/aibast_omnichannel-rules-and-safety.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 9,
     "required_connections": [
       "Approved aggregate CRM and commerce analytics",
       "Approved contact-center analytics"
@@ -58,17 +68,17 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Omnichannel Engagement Manual",
-      "bot_id": "33afc443-1862-4116-874f-544e59025549",
+      "bot_id": "08b97579-64fc-4131-8367-bc9289c18f87",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 9,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     },
     "validated_pilot": {
       "display_name": "Omnichannel Engagement Pilot",
@@ -77,13 +87,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 9,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     }
   },
   "smoke_test": {
@@ -96,7 +106,7 @@
       "no identity stitching"
     ]
   },
-  "safety_boundary": "The agent analyzes aggregate patterns only and never stitches identities, profiles sensitive traits, sends outreach, creates an offer or reward, or completes a purchase.",
+  "safety_boundary": "The agent uses only the consented service record already linked to a customer plus aggregate patterns, and never stitches identities across devices, profiles sensitive traits, sends outreach, creates an offer or reward, transfers a customer, or completes a purchase.",
   "safety": {
     "mode": "advisory-only",
     "prohibits": [

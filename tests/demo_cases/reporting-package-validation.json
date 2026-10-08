@@ -1,0 +1,132 @@
+{
+  "solution": "Reporting Package Validation Agent",
+  "agent": "@aibast-agents-library/reporting-package-validation",
+  "onepager": "57. Reporting Package Validation Agent one-pager.pptx",
+  "agent_files": [
+    "reporting_package_validation_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "assertion_principle": "Each case asserts stable synthetic evidence from the agent output, the routed tool, and the absence of stall phrases; it never asserts model wording.",
+  "cases": [
+    {
+      "id": "RPV-01",
+      "persona": "FP&A Manager",
+      "operation": "package_intake",
+      "onepager_bullet": "Validate every reporting package with lineage and integrity checks before analysis",
+      "prompt": "The June reporting package just landed. What did we receive and where did each file come from?",
+      "arguments": {
+        "operation": "package_intake"
+      },
+      "must_include": [
+        "PKG-2026-06",
+        "6 files received",
+        "11 of 12"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ReportingPackageValidationAgent"
+    },
+    {
+      "id": "RPV-02",
+      "persona": "Financial Controller",
+      "operation": "integrity_checks",
+      "onepager_bullet": "Validate every reporting package with lineage and integrity checks before analysis",
+      "prompt": "Run the integrity checks before anyone looks at the numbers.",
+      "arguments": {
+        "operation": "integrity_checks"
+      },
+      "must_include": [
+        "2 blocking",
+        "Outdoor Forecast",
+        "A missing cell is not a zero"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ReportingPackageValidationAgent"
+    },
+    {
+      "id": "RPV-03",
+      "persona": "FP&A Manager",
+      "operation": "variance_analysis",
+      "onepager_bullet": "Explain variances and reconcile driver bridges against clear thresholds",
+      "prompt": "How did each division do against budget, and which variances need an explanation?",
+      "arguments": {
+        "operation": "variance_analysis"
+      },
+      "must_include": [
+        "+$320K",
+        "-7.6%",
+        "offset each other"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ReportingPackageValidationAgent"
+    },
+    {
+      "id": "RPV-04",
+      "persona": "FP&A Manager",
+      "operation": "driver_reconciliation",
+      "onepager_bullet": "Explain variances and reconcile driver bridges against clear thresholds",
+      "prompt": "Does the driver bridge reconcile from budget to actual?",
+      "arguments": {
+        "operation": "driver_reconciliation"
+      },
+      "must_include": [
+        "$10,760K",
+        "Unexplained residual",
+        "Does not reconcile"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ReportingPackageValidationAgent"
+    },
+    {
+      "id": "RPV-05",
+      "persona": "Financial Controller",
+      "operation": "exception_queue",
+      "onepager_bullet": "Route exceptions to accountable owners with blocking and advisory status",
+      "prompt": "Route the exceptions to the right owners.",
+      "arguments": {
+        "operation": "exception_queue"
+      },
+      "must_include": [
+        "EX-01",
+        "Consolidation lead",
+        "none has been sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ReportingPackageValidationAgent"
+    },
+    {
+      "id": "RPV-06",
+      "persona": "Finance Director",
+      "operation": "executive_summary",
+      "onepager_bullet": "Draft executive commentary that waits for finance sign-off",
+      "prompt": "Draft the executive summary for the leadership pack.",
+      "arguments": {
+        "operation": "executive_summary"
+      },
+      "must_include": [
+        "on budget overall",
+        "Industrial +$320K",
+        "not released"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ReportingPackageValidationAgent"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "solution": "Book of Business Cross-Sell Agent",
+  "agent": "@aibast-agents-library/insurance-book-cross-sell",
+  "onepager": "52. Book of Business Cross-Sell Agent one-pager.pptx",
+  "agent_files": [
+    "insurance_book_cross_sell_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. New wave-2 template distilled from a field pattern; prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "XS-01",
+      "persona": "Cross-Sell Manager",
+      "operation": "book_summary",
+      "onepager_bullet": "Ingests a broker's book of business and profiles every account, line, premium and expiration in seconds",
+      "prompt": "A broker just sent over their book of business. What's in it?",
+      "arguments": {
+        "operation": "book_summary"
+      },
+      "must_include": [
+        "10 policy lines",
+        "$363,000 total premium",
+        "Fabrikam Insurance Brokers"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BookCrossSellAgent"
+    },
+    {
+      "id": "XS-02",
+      "persona": "Cross-Sell Manager",
+      "operation": "classify_lines",
+      "onepager_bullet": "Resolves an industry class for every line and flags the ones it cannot classify instead of guessing",
+      "prompt": "Can you fill in the industry classes for those accounts and tell me which ones you couldn't figure out?",
+      "arguments": {
+        "operation": "classify_lines"
+      },
+      "must_include": [
+        "Resolved 6 of 7 accounts",
+        "Foxglove Studio",
+        "Legacy code L-2051 crosswalk"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BookCrossSellAgent"
+    },
+    {
+      "id": "XS-03",
+      "persona": "Cross-Sell Manager",
+      "operation": "appetite_match",
+      "onepager_bullet": "Matches every line to the underwriting units with appetite and surfaces the white space on each account",
+      "prompt": "Which of these accounts fit our appetite, and where's the white space?",
+      "arguments": {
+        "operation": "appetite_match"
+      },
+      "must_include": [
+        "7 competing-market lines",
+        "5 white-space lines",
+        "unavailable in AZ"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BookCrossSellAgent"
+    },
+    {
+      "id": "XS-04",
+      "persona": "Underwriting Unit Lead",
+      "operation": "unit_confirmation",
+      "onepager_bullet": "Drafts the appetite-confirmation note for each underwriting unit with its shortlist before anything is routed",
+      "prompt": "Ask our underwriting units to confirm they want these before we route anything.",
+      "arguments": {
+        "operation": "unit_confirmation",
+        "unit": "all"
+      },
+      "must_include": [
+        "Not Sent",
+        "12 opportunities across 5 units",
+        "Elena Ruiz"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BookCrossSellAgent"
+    },
+    {
+      "id": "XS-05",
+      "persona": "Broker Relationship Manager",
+      "operation": "broker_confirmation",
+      "onepager_bullet": "Drafts the broker confirmation so dead or already-placed accounts drop out before routing",
+      "prompt": "Now draft a note back to the broker to make sure none of these are dead or already placed.",
+      "arguments": {
+        "operation": "broker_confirmation"
+      },
+      "must_include": [
+        "Broker Confirmation Draft",
+        "Priya Natarajan",
+        "out of business or already placed elsewhere"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BookCrossSellAgent"
+    },
+    {
+      "id": "XS-06",
+      "persona": "Cross-Sell Manager",
+      "operation": "routing_plan",
+      "onepager_bullet": "Lays out a routing plan for each unit's sellers with follow-up dates timed ahead of each renewal",
+      "prompt": "The replies are in. Route what's left to the right sellers with follow-up dates.",
+      "arguments": {
+        "operation": "routing_plan"
+      },
+      "must_include": [
+        "9 opportunities ready to route",
+        "renewed early with its current market",
+        "Follow-Up By"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BookCrossSellAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

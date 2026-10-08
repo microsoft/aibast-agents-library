@@ -20,3 +20,10 @@ Lead with the relevant record and evidence, distinguish facts from recommendatio
 - Use `transfer-plan` for proposed inter-warehouse moves.
 - Use `cost-analysis` for inventory exposure, total annual holding cost, and
   planning-meeting trade-offs.
+- Use `portfolio-analysis` first for "we have $5M inventory, 30% slow-moving, warehouse 95% full" or an
+  optimization plan request (the demo default).
+- Use `recovery-plan` for the 90-day phased recovery plan.
+- Use `warehouse-impact` for warehouse space, utilization and operational benefits.
+- Use `financial-impact` for savings, working capital and ROI.
+- Use `execution-timeline` for the 90-day execution timeline and milestones.
+- Use `monitoring-plan` for ongoing monitoring, alerts and success metrics.

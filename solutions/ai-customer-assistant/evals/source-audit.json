@@ -11,13 +11,15 @@
     "The source covered inquiry, knowledge, routing, and satisfaction analysis but described auto-escalation without a clear execution boundary.",
     "CRM, survey comments, and source labels were not consistently marked as synthetic.",
     "Live strict isolation showed that the inherited export-error prompt could be answered without invoking the tool, and the SSO routing prompt could omit INQ-4003.",
-    "A locked rerun showed that the SSO routing output could abbreviate the matrix SLA as 2h and miss the exact 2 hours capture marker."
+    "A locked rerun showed that the SSO routing output could abbreviate the matrix SLA as 2h and miss the exact 2 hours capture marker.",
+    "Demo-video alignment: the video's case (Jennifer Adams, disputed $149 Premium Support charge, Gold 5 years, $2,400/year) and its resolve, knowledge, recommend, refund-and-credit, follow-up and summary turns had no data or operations; KB-104 said 60 days while INQ-4001 and the workaround said 30."
   ],
   "fixes": [
     "Changed routing language to a triggered rule and review recommendation.",
     "Added an explicit no-message, no-case-change, no-escalation gate to every operation and labeled all evidence synthetic.",
     "Expanded tool and operation routing language, documented canonical inquiry IDs, and made escalation routing default deterministically to INQ-4003 when no ID is supplied.",
-    "Rendered every routing-matrix SLA with the full hours unit so the deterministic contract remains exact even when a model supplies a different inquiry ID."
+    "Rendered every routing-matrix SLA with the full hours unit so the deterministic contract remains exact even when a model supplies a different inquiry ID.",
+    "Added INQ-4005 (default) and KB-105 with the video's values, plus recommend_resolution, prepare_actions (approval-pending refund REF-892341 and credit CRD-892342, nothing processed), follow_up_plan (draft email, never sent) and interaction_summary; made the account arithmetic consistent ($349 -> $200 monthly, $2,400 ARR, $12,000 LTV vs $199 = 60x); aligned KB-104 to 30 days."
   ],
   "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
   "strict_capture": "passed"

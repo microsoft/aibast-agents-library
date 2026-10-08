@@ -109,7 +109,78 @@
       ],
       "min_words": 20,
       "expects_agent": "LoanOriginationAssistantAgent",
-      "arguments": {}
+      "arguments": {
+        "application_id": "LA-2025-4003"
+      }
+    },
+    {
+      "id": "LOA-06",
+      "persona": "Loan Officer",
+      "operation": "application_intake",
+      "onepager_bullet": "Automate intake to standardize process and reduce manual processing",
+      "prompt": "Process the Martinez mortgage application and give me an eligibility assessment with documentation status.",
+      "must_include": [
+        "92% documentation complete",
+        "1234 Oak Lane",
+        "missing 1 paystub"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {
+        "application_id": "LA-2025-4001"
+      }
+    },
+    {
+      "id": "LOA-07",
+      "persona": "Loan Officer",
+      "operation": "program_comparison",
+      "onepager_bullet": "Assess program eligibility to accelerate and support better borrowing decisions",
+      "prompt": "Which loan programs are the Martinezes eligible for, and which one do you recommend?",
+      "must_include": [
+        "Conventional 15-yr",
+        "$2,549",
+        "9.2 months"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {
+        "application_id": "LA-2025-4001"
+      }
+    },
+    {
+      "id": "LOA-08",
+      "persona": "Loan Officer",
+      "operation": "processing_summary",
+      "onepager_bullet": "Track conditions and timelines to speed closing and minimize delays",
+      "prompt": "Give me the complete loan processing summary for the Martinez file.",
+      "must_include": [
+        "67% faster",
+        "2 outstanding",
+        "$3,954 PITI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {
+        "application_id": "LA-2025-4001"
+      }
     }
   ],
   "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."

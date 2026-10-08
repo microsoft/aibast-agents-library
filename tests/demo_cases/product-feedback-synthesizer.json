@@ -17,8 +17,8 @@
         "operation": "feedback_summary"
       },
       "must_include": [
-        "Total Feedback Entries",
-        "6",
+        "Total Feedback Items",
+        "10,150",
         "No roadmap commitment"
       ],
       "must_not_include": [
@@ -37,7 +37,7 @@
         "operation": "feature_requests"
       },
       "must_include": [
-        "Workflow Automation Builder",
+        "Advanced Reporting & Analytics",
         "candidate_for_review",
         "No roadmap commitment"
       ],
@@ -80,6 +80,46 @@
         "Review Candidates",
         "RBAC",
         "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProductFeedbackSynthesizerAgent"
+    },
+    {
+      "id": "PFS-05",
+      "persona": "Product Manager",
+      "operation": "pain_points",
+      "onepager_bullet": "Apply AI-driven sentiment and pattern recognition to identify critical pain points and feature requests",
+      "prompt": "What are the biggest problems customers keep running into with the product?",
+      "arguments": {
+        "operation": "pain_points"
+      },
+      "must_include": [
+        "Top Customer Pain Points",
+        "Performance & Load Times (27%)",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProductFeedbackSynthesizerAgent"
+    },
+    {
+      "id": "PFS-06",
+      "persona": "Engineering Lead",
+      "operation": "draft_jira_tickets",
+      "onepager_bullet": "Automate prioritization and workflow orchestration to convert insights into engineering actions and roadmap updates",
+      "prompt": "Write up engineering tickets for the most urgent fixes and a heads-up message for the team.",
+      "arguments": {
+        "operation": "draft_jira_tickets"
+      },
+      "must_include": [
+        "Jira Ticket Drafts (Not Created)",
+        "P0: Performance & Load Time Optimization",
+        "no Jira ticket was created"
       ],
       "must_not_include": [
         "I do not have access",

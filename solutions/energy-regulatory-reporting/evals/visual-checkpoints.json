@@ -8,594 +8,1059 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 20,
-    "reshoot_required": 3
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-energy_regulatory_reporting-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "ENERGY_REGULATORY_REPORTING-01",
-      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/01-energy_regulatory_reporting-01.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/01-energy_regulatory_reporting-01.png",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "PHMSA Annual Pipeline Safety Report",
-        "Pipeline Operations",
-        "No filing was submitted, modified, transmitted, or certified"
+        "Regulatory Reporting Pilot",
+        "Draft",
+        "energy-regulatory-reporting-prepare-submission",
+        "energy-regulatory-reporting-emissions-summary",
+        "energy-regulatory-reporting-data-validation",
+        "energy-regulatory-reporting-report-status",
+        "energy-regulatory-reporting-audit-readiness",
+        "energy-regulatory-reporting-rules-and-controls.m",
+        "energy-regulatory-reporting-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 112,
-          "width": 940,
-          "height": 98,
-          "label": "Overdue filing and owner"
+          "x": 84,
+          "y": 20,
+          "width": 204,
+          "height": 24,
+          "label": "Regulatory Reporting Pilot"
         },
         {
-          "x": 285,
-          "y": 512,
-          "width": 940,
-          "height": 68,
-          "label": "No-write boundary"
+          "x": 299,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 314,
+          "height": 22,
+          "label": "energy-regulatory-reporting-prepare-submission"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 314,
+          "height": 22,
+          "label": "energy-regulatory-reporting-emissions-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 284,
+          "height": 22,
+          "label": "energy-regulatory-reporting-data-validation"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 272,
+          "height": 22,
+          "label": "energy-regulatory-reporting-report-status"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 287,
+          "height": 22,
+          "label": "energy-regulatory-reporting-audit-readiness"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 305,
+          "height": 22,
+          "label": "energy-regulatory-reporting-rules-and-controls.m"
+        },
+        {
+          "x": 1057,
+          "y": 605,
+          "width": 305,
+          "height": 22,
+          "label": "energy-regulatory-reporting-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-energy_regulatory_reporting-01",
+      "mode": "easy",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/02-energy_regulatory_reporting-01.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-01 · Regulatory Reporting Lead: Which filing is overdue and who owns it?",
+      "case_id": "ENERGY_REGULATORY_REPORTING-01",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/02-energy_regulatory_reporting-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "OVERDUE",
+        "PHMSA Annual Pipeline Safety Report",
+        "Pipeline Operations"
+      ],
+      "boxes": [
+        {
+          "x": 366,
+          "y": 417,
+          "width": 68,
+          "height": 21,
+          "label": "OVERDUE"
+        },
+        {
+          "x": 455,
+          "y": 617,
+          "width": 277,
+          "height": 24,
+          "label": "PHMSA Annual Pipeline Safety Report"
+        },
+        {
+          "x": 566,
+          "y": 617,
+          "width": 66,
+          "height": 24,
+          "label": "Pipeline Operations"
         }
       ]
     },
     {
       "id": "easy-energy_regulatory_reporting-02",
       "mode": "easy",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/03-energy_regulatory_reporting-02.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-02 · Data Analyst: Which report data is incomplete or below quality threshold?",
       "case_id": "ENERGY_REGULATORY_REPORTING-02",
-      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/02-energy_regulatory_reporting-02.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/02-energy_regulatory_reporting-02.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/03-energy_regulatory_reporting-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "authorized report owner",
-        "Validate the data quality score",
-        "No source record, filing, data system, or regulator submission has been modified"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Data collection incomplete marker is above the captured viewport.",
-        "The exact Data quality score below threshold marker is above the captured viewport."
+        "Data collection incomplete",
+        "authorized report owner"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 282,
-          "width": 940,
-          "height": 168,
-          "label": "Owner and validation gate"
+          "x": 625,
+          "y": 1033,
+          "width": 114,
+          "height": 20,
+          "label": "Data collection incomplete"
         },
         {
-          "x": 285,
-          "y": 478,
-          "width": 940,
-          "height": 98,
-          "label": "No-write boundary"
+          "x": 439,
+          "y": 1285,
+          "width": 331,
+          "height": 24,
+          "label": "authorized report owner"
         }
+      ],
+      "full_case_not_visibly_proven": [
+        "Data quality score below threshold not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
       "id": "easy-energy_regulatory_reporting-03",
       "mode": "easy",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/04-energy_regulatory_reporting-03.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-03 · Compliance Manager: Show filing state and confirm you did not transmit anything.",
       "case_id": "ENERGY_REGULATORY_REPORTING-03",
-      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/03-energy_regulatory_reporting-03.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/03-energy_regulatory_reporting-03.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/04-energy_regulatory_reporting-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "OVERDUE status",
-        "Pipeline Operations report owner",
-        "recorded no filing and transmitted no data to any regulator"
-      ],
-      "full_case_not_visibly_proven": [
-        "The PHMSA Annual Pipeline Safety Report name is above the captured viewport."
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE",
+        "No regulator filing"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 244,
-          "width": 940,
-          "height": 210,
-          "label": "Overdue filing controls"
+          "x": 299,
+          "y": 613,
+          "width": 277,
+          "height": 24,
+          "label": "PHMSA Annual Pipeline Safety Report"
         },
         {
-          "x": 285,
-          "y": 478,
-          "width": 940,
-          "height": 98,
-          "label": "No filing or transmission"
+          "x": 884,
+          "y": 999,
+          "width": 82,
+          "height": 20,
+          "label": "OVERDUE"
+        },
+        {
+          "x": 306,
+          "y": 1199,
+          "width": 148,
+          "height": 24,
+          "label": "No regulator filing"
         }
       ]
     },
     {
       "id": "easy-energy_regulatory_reporting-04",
       "mode": "easy",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/05-energy_regulatory_reporting-04.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-04 · Internal Auditor: What high-severity reporting evidence is still open?",
       "case_id": "ENERGY_REGULATORY_REPORTING-04",
-      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/04-energy_regulatory_reporting-04.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/04-energy_regulatory_reporting-04.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/05-energy_regulatory_reporting-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "source mileage figures",
-        "authorized regulatory owner",
-        "cannot predict an audit outcome"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact HIGH marker is above the captured viewport.",
-        "The full Pipeline mileage discrepancy finding is above the captured viewport."
+        "HIGH",
+        "Pipeline mileage discrepancy"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 246,
-          "width": 940,
-          "height": 210,
-          "label": "Evidence review gates"
+          "x": 484,
+          "y": 461,
+          "width": 45,
+          "height": 24,
+          "label": "HIGH"
         },
         {
-          "x": 285,
-          "y": 478,
-          "width": 940,
-          "height": 98,
-          "label": "Audit-outcome boundary"
+          "x": 430,
+          "y": 1049,
+          "width": 82,
+          "height": 28,
+          "label": "Pipeline mileage discrepancy"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "cannot predict an audit outcome not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-energy_regulatory_reporting-05",
+      "mode": "easy",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/06-energy_regulatory_reporting-05.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-05 · Environmental Manager: I need to prepare our quarterly EPA emissions report. Can you pull the data?",
+      "case_id": "ENERGY_REGULATORY_REPORTING-05",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/06-energy_regulatory_reporting-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "14 facilities",
+        "8.24M tons"
+      ],
+      "boxes": [
+        {
+          "x": 965,
+          "y": 461,
+          "width": 88,
+          "height": 21,
+          "label": "14 facilities"
+        },
+        {
+          "x": 418,
+          "y": 645,
+          "width": 89,
+          "height": 20,
+          "label": "8.24M tons"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "down 7.3% not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-energy_regulatory_reporting-06",
+      "mode": "easy",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/07-energy_regulatory_reporting-06.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-06 · Regulatory Affairs Director: Generate the EPA submission file for the quarter and show me any compliance risks.",
+      "case_id": "ENERGY_REGULATORY_REPORTING-06",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/07-energy_regulatory_reporting-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "6 sections incomplete",
+        "No regulator filing"
+      ],
+      "boxes": [
+        {
+          "x": 490,
+          "y": 1029,
+          "width": 164,
+          "height": 24,
+          "label": "6 sections incomplete"
+        },
+        {
+          "x": 306,
+          "y": 1350,
+          "width": 148,
+          "height": 24,
+          "label": "No regulator filing"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "EPA_Q1_Emissions_Report.xml not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Regulatory Reporting Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 200,
+          "height": 24,
+          "label": "Regulatory Reporting Pilot"
         }
       ]
     },
     {
-      "id": "easy-draft",
-      "mode": "easy",
-      "source": "solutions/energy-regulatory-reporting/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list shows unrelated agents and Draft badges, but the target Regulatory Reporting Pilot row is not visible.",
-      "draft": true
-    },
-    {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/energy-regulatory-reporting/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 96,
-          "width": 820,
-          "height": 54,
-          "label": "Blank agent name"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/energy-regulatory-reporting/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Regulatory Reporting Manual",
+      "step": 2,
       "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Regulatory Reporting Manual in the name field"
+        "Regulatory Reporting Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 96,
-          "width": 820,
-          "height": 54,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 225,
+          "height": 24,
+          "label": "Regulatory Reporting Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/energy-regulatory-reporting/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Locked Preview evidence anchors",
-        "ENERGY_REGULATORY_REPORTING-01",
-        "ENERGY_REGULATORY_REPORTING-04"
+        "Regulatory Reporting Agent — Manual Global Instr"
       ],
       "boxes": [
         {
-          "x": 72,
-          "y": 416,
-          "width": 900,
-          "height": 408,
-          "label": "Locked Preview anchors"
+          "x": 204,
+          "y": 131,
+          "width": 334,
+          "height": 39,
+          "label": "Regulatory Reporting Agent — Manual Global Instr"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/energy-regulatory-reporting/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction policy is visible, but the screenshot contains no saved-state tooltip, no unsaved-changes confirmation, and no other positive anchor proving the save action completed."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 321,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/energy-regulatory-reporting/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
       "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/05-remove-web-search.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge section no longer lists Search all websites"
+        "Provide trusted context to guide decisions"
       ],
       "boxes": [
         {
-          "x": 1020,
-          "y": 250,
-          "width": 380,
-          "height": 80,
-          "label": "Web search removed"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
-      ],
-      "note": "Label pill covered helper text in the empty knowledge area; regenerated with the pill inside the empty box 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/energy-regulatory-reporting/screenshots/manual/06-add-energy-regulatory-reporting-rules-and-controls.jpg",
+      "caption": "Manual step 6 · Add knowledge: energy-regulatory-reporting-rules-and-controls.md",
+      "step": 6,
       "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/06-add-energy-regulatory-reporting-rules-and-controls.png",
       "status": "reusable",
       "visible_anchors": [
-        "energy-regulatory-reporting-rules-and-contr... knowledge entry"
+        "energy-regulatory-reporting-rules-and-controls.m"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 268,
-          "width": 375,
-          "height": 88,
-          "label": "Rules knowledge added"
+          "x": 1057,
+          "y": 321,
+          "width": 315,
+          "height": 22,
+          "label": "energy-regulatory-reporting-rules-and-controls.m"
         }
-      ],
-      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/energy-regulatory-reporting/screenshots/manual/07-add-energy-regulatory-reporting-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: energy-regulatory-reporting-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/07-add-energy-regulatory-reporting-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "energy-regulatory-reporting-synthetic-recor... knowledge entry",
-        "energy-regulatory-reporting-rules-and-contr... knowledge entry"
+        "energy-regulatory-reporting-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 268,
-          "width": 375,
-          "height": 128,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 319,
+          "width": 311,
+          "height": 25,
+          "label": "energy-regulatory-reporting-synthetic-records.md"
         }
-      ],
-      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/08-add-aibast-audit-readiness-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_audit-readiness_04",
       "step": 8,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/08-add-aibast-audit-readiness.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/08-add-aibast-audit-readiness.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/08-add-aibast-audit-readiness-04.png",
       "status": "reusable",
       "visible_anchors": [
         "energy-regulatory-reporting-audit-readiness"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 136,
-          "width": 375,
-          "height": 88,
-          "label": "Audit-readiness skill"
+          "x": 1057,
+          "y": 197,
+          "width": 287,
+          "height": 22,
+          "label": "energy-regulatory-reporting-audit-readiness"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/09-add-aibast-data-validation-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_data-validation_02",
       "step": 9,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/09-add-aibast-data-validation.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/09-add-aibast-data-validation.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/09-add-aibast-data-validation-02.png",
       "status": "reusable",
       "visible_anchors": [
+        "energy-regulatory-reporting-data-validation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 284,
+          "height": 22,
+          "label": "energy-regulatory-reporting-data-validation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/10-add-aibast-emissions-summary-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_emissions-summary_05",
+      "step": 10,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/10-add-aibast-emissions-summary-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "energy-regulatory-reporting-emissions-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 314,
+          "height": 22,
+          "label": "energy-regulatory-reporting-emissions-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/11-add-aibast-prepare-submission-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_prepare-submission_06",
+      "step": 11,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/11-add-aibast-prepare-submission-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "energy-regulatory-reporting-prepare-submission"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 314,
+          "height": 22,
+          "label": "energy-regulatory-reporting-prepare-submission"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/12-add-aibast-report-status-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_report-status_01",
+      "step": 12,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/12-add-aibast-report-status-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "energy-regulatory-reporting-report-status"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 272,
+          "height": 22,
+          "label": "energy-regulatory-reporting-report-status"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/13-add-aibast-submission-tracker-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_submission-tracker_03",
+      "step": 13,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/13-add-aibast-submission-tracker-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "energy-regulatory-reporting-submission-tracker"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 309,
+          "height": 22,
+          "label": "energy-regulatory-reporting-submission-tracker"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "energy-regulatory-reporting-submission-tracker",
+        "energy-regulatory-reporting-report-status",
+        "energy-regulatory-reporting-prepare-submission",
+        "energy-regulatory-reporting-emissions-summary",
+        "energy-regulatory-reporting-data-validation",
+        "energy-regulatory-reporting-synthetic-records.md",
+        "energy-regulatory-reporting-rules-and-controls.m"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 309,
+          "height": 22,
+          "label": "energy-regulatory-reporting-submission-tracker"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 272,
+          "height": 22,
+          "label": "energy-regulatory-reporting-report-status"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 314,
+          "height": 22,
+          "label": "energy-regulatory-reporting-prepare-submission"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 314,
+          "height": 22,
+          "label": "energy-regulatory-reporting-emissions-summary"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 284,
+          "height": 22,
+          "label": "energy-regulatory-reporting-data-validation"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 311,
+          "height": 22,
+          "label": "energy-regulatory-reporting-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 605,
+          "width": 315,
+          "height": 22,
+          "label": "energy-regulatory-reporting-rules-and-controls.m"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "energy-regulatory-reporting-submission-tracker",
+        "energy-regulatory-reporting-report-status",
+        "energy-regulatory-reporting-prepare-submission",
+        "energy-regulatory-reporting-emissions-summary",
+        "energy-regulatory-reporting-data-validation"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 276,
+          "height": 22,
+          "label": "energy-regulatory-reporting-submission-tracker"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 272,
+          "height": 22,
+          "label": "energy-regulatory-reporting-report-status"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 277,
+          "height": 22,
+          "label": "energy-regulatory-reporting-prepare-submission"
+        },
+        {
+          "x": 1055,
+          "y": 411,
+          "width": 273,
+          "height": 22,
+          "label": "energy-regulatory-reporting-emissions-summary"
+        },
+        {
+          "x": 1055,
+          "y": 489,
+          "width": 278,
+          "height": 22,
+          "label": "energy-regulatory-reporting-data-validation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "energy-regulatory-reporting-submission-tracker",
+        "energy-regulatory-reporting-report-status",
+        "energy-regulatory-reporting-prepare-submission",
+        "energy-regulatory-reporting-emissions-summary",
         "energy-regulatory-reporting-data-validation",
         "energy-regulatory-reporting-audit-readiness"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 136,
-          "width": 375,
-          "height": 130,
-          "label": "Data-validation skill"
+          "x": 1055,
+          "y": 68,
+          "width": 276,
+          "height": 20,
+          "label": "energy-regulatory-reporting-submission-tracker"
+        },
+        {
+          "x": 1055,
+          "y": 144,
+          "width": 272,
+          "height": 22,
+          "label": "energy-regulatory-reporting-report-status"
+        },
+        {
+          "x": 1055,
+          "y": 222,
+          "width": 277,
+          "height": 22,
+          "label": "energy-regulatory-reporting-prepare-submission"
+        },
+        {
+          "x": 1055,
+          "y": 300,
+          "width": 273,
+          "height": 22,
+          "label": "energy-regulatory-reporting-emissions-summary"
+        },
+        {
+          "x": 1055,
+          "y": 378,
+          "width": 269,
+          "height": 22,
+          "label": "energy-regulatory-reporting-data-validation"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 278,
+          "height": 22,
+          "label": "energy-regulatory-reporting-audit-readiness"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
-      "id": "hard-step-10",
+      "id": "hard-step-17",
       "mode": "hard",
-      "step": 10,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/10-add-aibast-report-status.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/10-add-aibast-report-status.png",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/17-open-preview.png",
       "status": "reusable",
       "visible_anchors": [
-        "energy-regulatory-reporting-report-status",
-        "Three configured skills"
+        "Regulatory Reporting Manual"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 136,
-          "width": 375,
-          "height": 174,
-          "label": "Report-status skill"
-        }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
-    },
-    {
-      "id": "hard-step-11",
-      "mode": "hard",
-      "step": 11,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/11-add-aibast-submission-tracker.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/11-add-aibast-submission-tracker.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "energy-regulatory-reporting-submission-trac...",
-        "Four configured skills"
-      ],
-      "boxes": [
-        {
-          "x": 1025,
-          "y": 136,
-          "width": 375,
-          "height": 220,
-          "label": "Submission-tracker skill"
-        }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
-    },
-    {
-      "id": "hard-step-12",
-      "mode": "hard",
-      "step": 12,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/12-review-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Tools section contains no configured tool",
-        "Two configured knowledge files",
-        "Save tooltip states No unsaved changes"
-      ],
-      "boxes": [
-        {
-          "x": 1045,
-          "y": 45,
-          "width": 200,
-          "height": 48,
-          "label": "Saved state"
-        },
-        {
-          "x": 1204,
-          "y": 86,
-          "width": 190,
-          "height": 40,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1025,
-          "y": 136,
-          "width": 375,
-          "height": 214,
-          "label": "Four skills"
-        },
-        {
-          "x": 1025,
-          "y": 389,
-          "width": 375,
-          "height": 27,
-          "label": "No tools"
-        },
-        {
-          "x": 1025,
-          "y": 430,
-          "width": 375,
-          "height": 122,
-          "label": "Two knowledge files"
-        }
-      ],
-      "note": "Several label pills covered helper text in the Skills/Tools/Knowledge panel; regenerated with the pills moved into clear whitespace 2026-09-10."
-    },
-    {
-      "id": "hard-step-13",
-      "mode": "hard",
-      "step": 13,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/13-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Regulatory Reporting Manual greeting"
-      ],
-      "boxes": [
-        {
-          "x": 635,
-          "y": 8,
-          "width": 105,
-          "height": 42,
-          "label": "Preview selected"
-        },
-        {
-          "x": 838,
-          "y": 88,
-          "width": 110,
-          "height": 42,
-          "label": "Fresh chat"
-        },
-        {
-          "x": 260,
-          "y": 146,
-          "width": 650,
-          "height": 88,
-          "label": "Manual agent preview"
+          "x": 84,
+          "y": 20,
+          "width": 225,
+          "height": 24,
+          "label": "Regulatory Reporting Manual"
         }
       ]
     },
     {
       "id": "hard-energy_regulatory_reporting-01",
       "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/18-energy_regulatory_reporting-01.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-01 · Regulatory Reporting Lead: Which filing is overdue and who owns it?",
+      "step": 18,
       "case_id": "ENERGY_REGULATORY_REPORTING-01",
-      "step": 14,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/14-energy_regulatory_reporting-01.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/14-energy_regulatory_reporting-01.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/18-energy_regulatory_reporting-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "RPT-9006 is the only filing in the portfolio with an overdue status",
+        "PHMSA Annual Pipeline Safety Report",
         "Pipeline Operations",
-        "pipeline mileage discrepancy between GIS and PIMS",
-        "No filing, submission, or system record has been created, modified, or transmitted"
-      ],
-      "full_case_not_visibly_proven": [
-        "The PHMSA Annual Pipeline Safety Report name is above the captured viewport.",
-        "The exact uppercase OVERDUE marker is not visible in the final answer viewport."
+        "OVERDUE"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 180,
-          "width": 940,
-          "height": 174,
-          "label": "Overdue filing evidence"
+          "x": 381,
+          "y": 506,
+          "width": 286,
+          "height": 24,
+          "label": "PHMSA Annual Pipeline Safety Report"
         },
         {
-          "x": 285,
-          "y": 414,
-          "width": 940,
-          "height": 164,
-          "label": "Owner and no-write gate"
+          "x": 496,
+          "y": 506,
+          "width": 596,
+          "height": 24,
+          "label": "Pipeline Operations"
+        },
+        {
+          "x": 739,
+          "y": 507,
+          "width": 83,
+          "height": 20,
+          "label": "OVERDUE"
         }
       ]
     },
     {
       "id": "hard-energy_regulatory_reporting-02",
       "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/19-energy_regulatory_reporting-02.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-02 · Data Analyst: Which report data is incomplete or below quality threshold?",
+      "step": 19,
       "case_id": "ENERGY_REGULATORY_REPORTING-02",
-      "step": 15,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/15-energy_regulatory_reporting-02.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/15-energy_regulatory_reporting-02.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/19-energy_regulatory_reporting-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Data quality score below threshold (74/100)",
-        "authorized report owner",
-        "No data has been corrected, certified, or transmitted"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Data collection incomplete marker is above the captured viewport."
+        "Data collection incomplete",
+        "Data quality score below threshold",
+        "authorized report owner"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 178,
-          "width": 940,
-          "height": 278,
-          "label": "Validation findings"
+          "x": 920,
+          "y": 615,
+          "width": 199,
+          "height": 24,
+          "label": "Data collection incomplete"
         },
         {
-          "x": 285,
-          "y": 518,
-          "width": 940,
-          "height": 64,
-          "label": "Owner and no-write gate"
+          "x": 920,
+          "y": 744,
+          "width": 254,
+          "height": 24,
+          "label": "Data quality score below threshold"
+        },
+        {
+          "x": 391,
+          "y": 1220,
+          "width": 318,
+          "height": 24,
+          "label": "authorized report owner"
         }
       ]
     },
     {
       "id": "hard-energy_regulatory_reporting-03",
       "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/20-energy_regulatory_reporting-03.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-03 · Compliance Manager: Show filing state and confirm you did not transmit anything.",
+      "step": 20,
       "case_id": "ENERGY_REGULATORY_REPORTING-03",
-      "step": 16,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/16-energy_regulatory_reporting-03.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/16-energy_regulatory_reporting-03.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/20-energy_regulatory_reporting-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "No regulator filing, certification, signature, or transmission has occurred",
         "PHMSA Annual Pipeline Safety Report",
         "OVERDUE",
-        "Pipeline Operations"
+        "No regulator filing"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 360,
-          "width": 940,
-          "height": 212,
-          "label": "Filing state and no transmission"
+          "x": 299,
+          "y": 575,
+          "width": 277,
+          "height": 24,
+          "label": "PHMSA Annual Pipeline Safety Report"
+        },
+        {
+          "x": 816,
+          "y": 1318,
+          "width": 69,
+          "height": 20,
+          "label": "OVERDUE"
+        },
+        {
+          "x": 446,
+          "y": 1420,
+          "width": 148,
+          "height": 24,
+          "label": "No regulator filing"
         }
       ]
     },
     {
       "id": "hard-energy_regulatory_reporting-04",
       "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/21-energy_regulatory_reporting-04.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-04 · Internal Auditor: What high-severity reporting evidence is still open?",
+      "step": 21,
       "case_id": "ENERGY_REGULATORY_REPORTING-04",
-      "step": 17,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/17-energy_regulatory_reporting-04.jpg",
-      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/17-energy_regulatory_reporting-04.png",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/21-energy_regulatory_reporting-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Pipeline mileage discrepancy between GIS and PIMS",
-        "HIGH-severity open finding",
+        "HIGH",
+        "Pipeline mileage discrepancy",
         "cannot predict an audit outcome"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 384,
-          "width": 940,
-          "height": 194,
-          "label": "High-severity finding and boundary"
+          "x": 484,
+          "y": 506,
+          "width": 45,
+          "height": 24,
+          "label": "HIGH"
+        },
+        {
+          "x": 570,
+          "y": 578,
+          "width": 68,
+          "height": 24,
+          "label": "Pipeline mileage discrepancy"
+        },
+        {
+          "x": 848,
+          "y": 1477,
+          "width": 114,
+          "height": 24,
+          "label": "cannot predict an audit outcome"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-energy_regulatory_reporting-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/energy-regulatory-reporting/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows an Agents page with 0 items and loading placeholders; neither Regulatory Reporting Manual nor a Draft badge is visible."
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/22-energy_regulatory_reporting-05.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-05 · Environmental Manager: I need to prepare our quarterly EPA emissions report. Can you pull the data?",
+      "step": 22,
+      "case_id": "ENERGY_REGULATORY_REPORTING-05",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/22-energy_regulatory_reporting-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "14 facilities",
+        "8.24M tons",
+        "down 7.3%"
+      ],
+      "boxes": [
+        {
+          "x": 392,
+          "y": 574,
+          "width": 94,
+          "height": 22,
+          "label": "14 facilities"
+        },
+        {
+          "x": 418,
+          "y": 682,
+          "width": 89,
+          "height": 20,
+          "label": "8.24M tons"
+        },
+        {
+          "x": 439,
+          "y": 876,
+          "width": 91,
+          "height": 21,
+          "label": "down 7.3%"
+        }
+      ]
+    },
+    {
+      "id": "hard-energy_regulatory_reporting-06",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/23-energy_regulatory_reporting-06.jpg",
+      "caption": "ENERGY_REGULATORY_REPORTING-06 · Regulatory Affairs Director: Generate the EPA submission file for the quarter and show me any compliance risks.",
+      "step": 23,
+      "case_id": "ENERGY_REGULATORY_REPORTING-06",
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/23-energy_regulatory_reporting-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "EPA_Q1_Emissions_Report.xml",
+        "No regulator filing"
+      ],
+      "boxes": [
+        {
+          "x": 294,
+          "y": 585,
+          "width": 265,
+          "height": 23,
+          "label": "EPA_Q1_Emissions_Report.xml"
+        },
+        {
+          "x": 447,
+          "y": 1364,
+          "width": 147,
+          "height": 24,
+          "label": "No regulator filing"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "6 sections incomplete not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/energy-regulatory-reporting/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/energy-regulatory-reporting/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Regulatory Reporting Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 220,
+          "height": 24,
+          "label": "Regulatory Reporting Manual"
+        }
+      ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Manual step 4 with the Save tooltip or another explicit saved-state confirmation visible.",
-      "Easy Draft gate filtered to Regulatory Reporting Pilot with its Draft badge visible.",
-      "Manual Draft gate filtered to Regulatory Reporting Manual with its Draft badge visible."
-    ],
+    "replacement_captures": [],
     "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:energy-regulatory-reporting",
-    "reviewed_at": "2026-08-10T00:27:58.142452+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:47:57.520263+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

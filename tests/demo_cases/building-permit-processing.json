@@ -92,6 +92,96 @@
    ],
    "min_words": 15,
    "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-06",
+   "persona": "Permitting Supervisor",
+   "operation": "application_intake",
+   "onepager_bullet": "Classify and validate permit applications at intake",
+   "prompt": "A new residential addition application just came in. Process it and tell me if it is complete.",
+   "must_include": [
+    "Johnson Residence",
+    "HOA approval",
+    "$847"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "which permit"
+   ],
+   "min_words": 20,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-07",
+   "persona": "Permitting Supervisor",
+   "operation": "code_compliance_review",
+   "onepager_bullet": "Classify and validate permit applications at intake",
+   "prompt": "Run the code compliance check on the Johnson addition plans.",
+   "must_include": [
+    "247 code requirements",
+    "NEC 210.8",
+    "1-2 days"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "which permit"
+   ],
+   "min_words": 20,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-08",
+   "persona": "Permitting Supervisor",
+   "operation": "route_for_review",
+   "onepager_bullet": "Route requests automatically to the correct review teams",
+   "prompt": "Route the Johnson addition for expert plan review.",
+   "must_include": [
+    "Mike Chen",
+    "Sarah Martinez",
+    "David Park"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "which permit"
+   ],
+   "min_words": 20,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-09",
+   "persona": "Permitting Supervisor",
+   "operation": "workflow_timeline",
+   "onepager_bullet": "Centralize communication and provide instant updates to applicants",
+   "prompt": "Track the approval workflow for the Johnson addition.",
+   "must_include": [
+    "Day 3 of Processing",
+    "Both corrections addressed",
+    "tomorrow 9 AM"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "which permit"
+   ],
+   "min_words": 20,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-10",
+   "persona": "Permitting Supervisor",
+   "operation": "permit_issuance",
+   "onepager_bullet": "Provide inspectors with mobile access and real-time assignments",
+   "prompt": "Show me the permit issuance package for the Johnson addition.",
+   "must_include": [
+    "4.5 days",
+    "Foundation",
+    "Draft Citizen Notification"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "which permit"
+   ],
+   "min_words": 20,
+   "expects_agent": "BuildingPermitProcessingAgent"
   }
  ],
  "assertion_principle": "The tool description and parameters are the ONLY context the Brainstem has about this agent. So: expects_agent proves the description was sufficient to route; must_include is asserted against the agent's own output (deterministic, never the model's prose); must_not_include catches stalls that prove the agent was never called. A routing failure is a defect in the description, not flakiness."

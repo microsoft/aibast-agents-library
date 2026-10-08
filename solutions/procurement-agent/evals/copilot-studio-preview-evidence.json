@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T20:26:07.583Z",
+  "captured_at": "2026-10-08T03:50:05.067017Z",
   "solution": "@aibast-agents-library/procurement-agent",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -22,16 +22,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "captured_must_include": [
-        "PR-5001",
-        "$125,000",
-        "CFO"
-      ],
-      "prompt": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
-      "status": "reshoot_required",
-      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
+      "passed": true
     },
     {
       "case_id": "PROC-02",
@@ -44,16 +35,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "captured_must_include": [
-        "AWS",
-        "Azure",
-        "not a supplier award"
-      ],
-      "prompt": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
-      "status": "reshoot_required",
-      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
+      "passed": true
     },
     {
       "case_id": "PROC-03",
@@ -66,16 +48,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "captured_must_include": [
-        "CFO",
-        "48 hours",
-        "does not record an approval"
-      ],
-      "prompt": "This infrastructure request landed in my queue. What is the recommended approval path?",
-      "status": "reshoot_required",
-      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
+      "passed": true
     },
     {
       "case_id": "PROC-04",
@@ -88,21 +61,60 @@
         "I do not have access",
         "I cannot help"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "captured_must_include": [
-        "Software",
-        "$60,000",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-05",
+      "must_include": [
+        "PO-2024-ENG-0892",
+        "$81,893",
         "No purchase order is created"
       ],
-      "prompt": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
-      "status": "reshoot_required",
-      "reason": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending."
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PROC-06",
+      "must_include": [
+        "Sarah Thompson",
+        "4 hours 23 minutes",
+        "No notification was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PROC-07",
+      "must_include": [
+        "$80,607",
+        "82% committed",
+        "$12,400"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PROC-08",
+      "must_include": [
+        "RFQ-2024-FRN-0145",
+        "Sustainability: 15%",
+        "No RFQ was distributed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
     }
   ],
-  "evidence_status": "historical_not_revalidated",
-  "source_contract_status": "reshoot_required",
-  "source_contract_note": "Historical assisted responses, identities and images are retained as history, not current grounding-r3 proof. No old pass transfers to the candidate; current native acceptance remains pending.",
-  "build_revision": "grounding-r3",
-  "captured_push_result": "Draft source synchronized with no warnings"
+  "push_result": "No local changes detected. Nothing to push."
 }

@@ -8,593 +8,178 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 26,
-    "reusable": 25,
-    "reshoot_required": 1
+    "total_existing_captures": 38,
+    "reusable": 38,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-ru-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "RU-01",
-      "source": "solutions/resource-utilization/screenshots/assisted/01-ru-01.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/01-ru-01.png",
+      "source": "solutions/resource-utilization/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "All five have been on bench 30+ days",
-        "annualized carrying cost of $888,000",
-        "Senior gap and Mid gap"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Firm utilization and Utilization by Level headings are above the captured viewport."
+        "Resource Utilization Pilot",
+        "Draft",
+        "financial-impact",
+        "executive-summary",
+        "optimization-plan",
+        "strategic-workforce-plan",
+        "workforce-capacity-forecast",
+        "aibast_resource-pipeline-and-workforce-rules.md",
+        "aibast_resource-synthetic-roster.md"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 242,
-          "width": 665,
-          "height": 45,
-          "label": "Bench exposure"
+          "x": 84,
+          "y": 20,
+          "width": 192,
+          "height": 20,
+          "label": "Resource Utilization Pilot"
         },
         {
-          "x": 285,
-          "y": 316,
-          "width": 940,
-          "height": 118,
-          "label": "Utilization gaps and bench"
+          "x": 287,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 110,
+          "height": 22,
+          "label": "financial-impact"
+        },
+        {
+          "x": 1224,
+          "y": 199,
+          "width": 132,
+          "height": 20,
+          "label": "executive-summary"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 121,
+          "height": 22,
+          "label": "optimization-plan"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 163,
+          "height": 22,
+          "label": "strategic-workforce-plan"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 184,
+          "height": 22,
+          "label": "workforce-capacity-forecast"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_resource-pipeline-and-workforce-rules.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 232,
+          "height": 22,
+          "label": "aibast_resource-synthetic-roster.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-ru-01",
+      "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/02-ru-01.jpg",
+      "caption": "RU-01 · Operations Leader: Where are we under target today, and which parts of the workforce are sitting available?",
+      "case_id": "RU-01",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/02-ru-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utilization by Level",
+        "Firm utilization",
+        "Bench"
+      ],
+      "boxes": [
+        {
+          "x": 374,
+          "y": 428,
+          "width": 102,
+          "height": 24,
+          "label": "Utilization by Level"
+        },
+        {
+          "x": 286,
+          "y": 518,
+          "width": 121,
+          "height": 20,
+          "label": "Firm utilization"
+        },
+        {
+          "x": 299,
+          "y": 705,
+          "width": 53,
+          "height": 20,
+          "label": "Bench"
         }
       ]
     },
     {
       "id": "easy-ru-02",
       "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/03-ru-02.jpg",
+      "caption": "RU-02 · Resource Manager: What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?",
       "case_id": "RU-02",
-      "source": "solutions/resource-utilization/screenshots/assisted/02-ru-02.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/02-ru-02.png",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/03-ru-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Three of 12 pipeline roles",
-        "firm utilization would move from 43.8% to 69.6%",
-        "Government Cyber Assessment and FinanceHub Cloud Migration"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Upcoming Project Endings, Pipeline Demand, and Total roles in pipeline headings are above the captured viewport."
+        "Upcoming Project Endings",
+        "Pipeline Demand",
+        "Total roles in pipeline"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 120,
-          "width": 930,
-          "height": 48,
-          "label": "Pipeline total and utilization impact"
+          "x": 286,
+          "y": 499,
+          "width": 250,
+          "height": 28,
+          "label": "Upcoming Project Endings"
+        },
+        {
+          "x": 286,
+          "y": 917,
+          "width": 163,
+          "height": 28,
+          "label": "Pipeline Demand"
         },
         {
           "x": 285,
-          "y": 188,
-          "width": 940,
-          "height": 265,
-          "label": "Demand gaps and roll-offs"
+          "y": 1253,
+          "width": 189,
+          "height": 24,
+          "label": "Total roles in pipeline"
         }
       ]
     },
     {
       "id": "easy-ru-03",
       "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/04-ru-03.jpg",
+      "caption": "RU-03 · Finance Director: Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
       "case_id": "RU-03",
-      "source": "solutions/resource-utilization/screenshots/assisted/03-ru-03.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/03-ru-03.png",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/04-ru-03.png",
       "status": "reusable",
-      "visible_anchors": [
-        "Bench headcount as 50% (5 of 10)",
-        "David Okafor",
-        "Robert Garcia"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Skill Inventory on Bench heading is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 122,
-          "width": 655,
-          "height": 44,
-          "label": "Bench headcount"
-        },
-        {
-          "x": 285,
-          "y": 191,
-          "width": 940,
-          "height": 62,
-          "label": "Utilization gap"
-        },
-        {
-          "x": 285,
-          "y": 286,
-          "width": 940,
-          "height": 194,
-          "label": "Named bench resources"
-        }
-      ]
-    },
-    {
-      "id": "easy-ru-04",
-      "mode": "easy",
-      "case_id": "RU-04",
-      "source": "solutions/resource-utilization/screenshots/assisted/04-ru-04.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/04-ru-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Robert Garcia",
-        "all three matches",
-        "both unmatched pathways"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Bench-to-Pipeline Matches and Unmatched Bench Resources headings are above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 145,
-          "width": 940,
-          "height": 88,
-          "label": "Robert Garcia unmatched pathway"
-        },
-        {
-          "x": 285,
-          "y": 373,
-          "width": 940,
-          "height": 117,
-          "label": "Matches and unmatched pathways"
-        }
-      ]
-    },
-    {
-      "id": "easy-ru-05",
-      "mode": "easy",
-      "case_id": "RU-05",
-      "source": "solutions/resource-utilization/screenshots/assisted/05-ru-05.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/05-ru-05.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Robert Garcia deployed after 4-week pathway",
-        "$3,200 cost vs. $31,200/month scenario value",
-        "D365 accelerator pathway"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Synthetic payback scenario and Innovation and Capability-Building Options headings are outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 154,
-          "width": 940,
-          "height": 219,
-          "label": "Business-case scenarios"
-        },
-        {
-          "x": 285,
-          "y": 410,
-          "width": 940,
-          "height": 145,
-          "label": "Training ROI"
-        },
-        {
-          "x": 285,
-          "y": 584,
-          "width": 940,
-          "height": 89,
-          "label": "D365 pathway review"
-        }
-      ]
-    },
-    {
-      "id": "easy-draft",
-      "mode": "easy",
-      "source": "solutions/resource-utilization/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "Easy (assisted) mode requires the local Brainstem + GitHub Copilot chat assisted-build pipeline, which is a separate out-of-scope build path from this manual-mode pilot pass (same scoping as the ai-customer-assistant pilot, PR #219).",
-      "draft": true
-    },
-    {
-      "id": "hard-step-01",
-      "mode": "hard",
-      "step": 1,
-      "source": "solutions/resource-utilization/screenshots/manual/01-create-blank-agent.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/01-create-blank-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
-      ],
-      "boxes": [
-        {
-          "x": 168,
-          "y": 97,
-          "width": 230,
-          "height": 54,
-          "label": "Blank agent \u2014 Untitled Agent"
-        }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible Untitled Agent text and tightened the annotation to the exact anchor 2026-09-10."
-    },
-    {
-      "id": "hard-step-02",
-      "mode": "hard",
-      "step": 2,
-      "source": "solutions/resource-utilization/screenshots/manual/02-name-agent.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/02-name-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Resource Utilization Manual in the name field"
-      ],
-      "boxes": [
-        {
-          "x": 170,
-          "y": 106,
-          "width": 423,
-          "height": 37,
-          "label": "Resource Utilization Manual"
-        }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible agent name text and tightened the annotation to the exact anchor 2026-09-10."
-    },
-    {
-      "id": "hard-step-03",
-      "mode": "hard",
-      "step": 3,
-      "source": "solutions/resource-utilization/screenshots/manual/03-enter-instructions.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/03-enter-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors"
-      ],
-      "boxes": [
-        {
-          "x": 70,
-          "y": 205,
-          "width": 910,
-          "height": 270,
-          "label": "Reviewed response contract"
-        },
-        {
-          "x": 70,
-          "y": 476,
-          "width": 910,
-          "height": 360,
-          "label": "Locked Preview anchors"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-04",
-      "mode": "hard",
-      "step": 4,
-      "source": "solutions/resource-utilization/screenshots/manual/04-save-instructions.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/04-save-instructions.png",
-      "visible_anchors": [
-        "Instructions saved \u2014 Save control shows 'No unsaved changes'"
-      ],
-      "boxes": [
-        {
-          "x": 1210,
-          "y": 40,
-          "width": 172,
-          "height": 45,
-          "label": "Saved state"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-05",
-      "mode": "hard",
-      "step": 5,
-      "source": "solutions/resource-utilization/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/05-remove-web-search.png",
-      "visible_anchors": [
-        "Default 'Search all websites' knowledge source removed"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 340,
-          "width": 330,
-          "height": 58,
-          "label": "Web search removed"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-06",
-      "mode": "hard",
-      "step": 6,
-      "source": "solutions/resource-utilization/screenshots/manual/06-add-aibast-resource-pipeline-and-workforce-rules.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/06-add-aibast-resource-pipeline-and-workforce-rules.png",
-      "visible_anchors": [
-        "aibast_resource-pipeline-and-workforce-rules.md added alone"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 388,
-          "width": 330,
-          "height": 25,
-          "label": "Pipeline & workforce rules added"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-07",
-      "mode": "hard",
-      "step": 7,
-      "source": "solutions/resource-utilization/screenshots/manual/07-add-aibast-resource-synthetic-roster.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/07-add-aibast-resource-synthetic-roster.png",
-      "visible_anchors": [
-        "Both knowledge files present: aibast_resource-synthetic-roster.md and aibast_resource-pipeline-and-workforce-rules.md"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 388,
-          "width": 330,
-          "height": 60,
-          "label": "Both knowledge files added"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-08",
-      "mode": "hard",
-      "step": 8,
-      "source": "solutions/resource-utilization/screenshots/manual/08-add-bench-analysis.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/08-add-bench-analysis.png",
-      "visible_anchors": [
-        "professional-services-bench-analysis skill added alone"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 280,
-          "width": 260,
-          "height": 25,
-          "label": "bench-analysis skill added"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-09",
-      "mode": "hard",
-      "step": 9,
-      "source": "solutions/resource-utilization/screenshots/manual/09-add-capacity-forecast.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/09-add-capacity-forecast.png",
-      "visible_anchors": [
-        "workforce-capacity-forecast added alongside bench-analysis"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 280,
-          "width": 260,
-          "height": 45,
-          "label": "capacity-forecast skill added"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-10",
-      "mode": "hard",
-      "step": 10,
-      "source": "solutions/resource-utilization/screenshots/manual/10-add-staffing-recommendation.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/10-add-staffing-recommendation.png",
-      "visible_anchors": [
-        "pipeline-staffing-recommendation added (3 skills present)"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 280,
-          "width": 260,
-          "height": 85,
-          "label": "staffing-recommendation skill added"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-11",
-      "mode": "hard",
-      "step": 11,
-      "source": "solutions/resource-utilization/screenshots/manual/11-add-utilization-dashboard.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/11-add-utilization-dashboard.png",
-      "visible_anchors": [
-        "workforce-utilization-dashboard added (4 skills present)"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 280,
-          "width": 260,
-          "height": 122,
-          "label": "utilization-dashboard skill added"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-12",
-      "mode": "hard",
-      "step": 12,
-      "source": "solutions/resource-utilization/screenshots/manual/12-add-workforce-plan.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/12-add-workforce-plan.png",
-      "visible_anchors": [
-        "strategic-workforce-plan added (all 5 skills present)"
-      ],
-      "boxes": [
-        {
-          "x": 1165,
-          "y": 280,
-          "width": 260,
-          "height": 160,
-          "label": "workforce-plan skill added (all 5)"
-        }
-      ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-step-13",
-      "mode": "hard",
-      "step": 13,
-      "source": "solutions/resource-utilization/screenshots/manual/13-review-inventory.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/13-review-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Five configured skills",
-        "Save tooltip states No unsaved changes",
-        "Tools section contains no configured tool"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "Knowledge files remain collapsed and require the step 6/7 reshoot."
-      ],
-      "boxes": [
-        {
-          "x": 1045,
-          "y": 48,
-          "width": 205,
-          "height": 48,
-          "label": "Saved state"
-        },
-        {
-          "x": 1202,
-          "y": 85,
-          "width": 192,
-          "height": 40,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1027,
-          "y": 184,
-          "width": 292,
-          "height": 207,
-          "label": "Five configured skills"
-        },
-        {
-          "x": 1018,
-          "y": 396,
-          "width": 380,
-          "height": 72,
-          "label": "No configured tools"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-14",
-      "mode": "hard",
-      "step": 14,
-      "source": "solutions/resource-utilization/screenshots/manual/14-open-preview.jpg",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/14-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Resource Utilization Manual greeting"
-      ],
-      "boxes": [
-        {
-          "x": 565,
-          "y": 0,
-          "width": 268,
-          "height": 62,
-          "label": "Preview selected"
-        },
-        {
-          "x": 820,
-          "y": 76,
-          "width": 150,
-          "height": 55,
-          "label": "Fresh chat control"
-        },
-        {
-          "x": 260,
-          "y": 145,
-          "width": 660,
-          "height": 92,
-          "label": "Manual agent ready"
-        }
-      ]
-    },
-    {
-      "id": "hard-ru-01",
-      "mode": "hard",
-      "case_id": "RU-01",
-      "step": 15,
-      "source": "solutions/resource-utilization/screenshots/manual/15-ru-01.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/15-ru-01.png",
-      "visible_anchors": [
-        "Firm utilization: 43.8% against a firm target of 85%",
-        "5 on bench",
-        "Utilization by Level"
-      ],
-      "boxes": [
-        {
-          "x": 386,
-          "y": 487,
-          "width": 825,
-          "height": 176,
-          "label": "RU-01: firm utilization + bench headcount"
-        }
-      ],
-      "note": "First fresh-chat attempt hallucinated a non-existent 'search-before-answer' skill and incorrectly reported the grounding files unavailable (see hard-ru-01-fail1-raw.jpg). A second fresh chat invoked the correct workforce-utilization-dashboard skill and returned the anchors with real citations. Filing as a reproducible intermittent-hallucination bug, same class as issues #204 and #218.",
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-ru-02",
-      "mode": "hard",
-      "case_id": "RU-02",
-      "step": 16,
-      "source": "solutions/resource-utilization/screenshots/manual/16-ru-02.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/16-ru-02.png",
-      "visible_anchors": [
-        "aibast_resource-pipeline-and-workforce-rules.md and aibast_resource-synthetic-roster.md citations",
-        "Uncertainty and approval dependencies"
-      ],
-      "boxes": [
-        {
-          "x": 386,
-          "y": 598,
-          "width": 825,
-          "height": 45,
-          "label": "RU-02: real citations returned"
-        }
-      ],
-      "note": "Passed cleanly on the first fresh-chat attempt: correct workforce-capacity-forecast skill invoked, real citations returned.",
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
-    },
-    {
-      "id": "hard-ru-03",
-      "mode": "hard",
-      "case_id": "RU-03",
-      "step": 17,
-      "source": "solutions/resource-utilization/screenshots/manual/17-ru-03.jpg",
-      "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/17-ru-03.png",
       "visible_anchors": [
         "David Okafor",
         "Robert Garcia",
@@ -602,24 +187,36 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 150,
-          "width": 825,
-          "height": 150,
-          "label": "RU-03: cost exposure + citations"
+          "x": 418,
+          "y": 645,
+          "width": 104,
+          "height": 20,
+          "label": "David Okafor"
+        },
+        {
+          "x": 418,
+          "y": 774,
+          "width": 106,
+          "height": 21,
+          "label": "Robert Garcia"
+        },
+        {
+          "x": 286,
+          "y": 940,
+          "width": 186,
+          "height": 24,
+          "label": "Skill Inventory on Bench"
         }
-      ],
-      "note": "First fresh-chat attempt hallucinated a non-existent 'search-before-answer' skill and incorrectly reported the grounding files unavailable (see hard-ru-03-fail1-raw.jpg). A second fresh chat invoked the correct professional-services-bench-analysis skill and returned all required anchors with real citations.",
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
+      ]
     },
     {
-      "id": "hard-ru-04",
-      "mode": "hard",
+      "id": "easy-ru-04",
+      "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/05-ru-04.jpg",
+      "caption": "RU-04 · Resource Manager: Which available consultants fit the strongest pipeline needs, and who still needs another path?",
       "case_id": "RU-04",
-      "step": 18,
-      "source": "solutions/resource-utilization/screenshots/manual/18-ru-04.jpg",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/05-ru-04.png",
       "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/18-ru-04.png",
       "visible_anchors": [
         "Bench-to-Pipeline Matches",
         "Unmatched Bench Resources",
@@ -627,24 +224,867 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 423,
-          "width": 700,
-          "height": 163,
-          "label": "RU-04: Robert Garcia unmatched"
+          "x": 286,
+          "y": 493,
+          "width": 206,
+          "height": 24,
+          "label": "Bench-to-Pipeline Matches"
+        },
+        {
+          "x": 286,
+          "y": 934,
+          "width": 220,
+          "height": 20,
+          "label": "Unmatched Bench Resources"
+        },
+        {
+          "x": 299,
+          "y": 1116,
+          "width": 106,
+          "height": 21,
+          "label": "Robert Garcia"
+        }
+      ]
+    },
+    {
+      "id": "easy-ru-05",
+      "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/06-ru-05.jpg",
+      "caption": "RU-05 · Operations Leader: Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.",
+      "case_id": "RU-05",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/06-ru-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Innovation and Capability-Building Options",
+        "D365 integration accelerator",
+        "Synthetic payback scenario"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 797,
+          "width": 325,
+          "height": 24,
+          "label": "Innovation and Capability-Building Options"
+        },
+        {
+          "x": 467,
+          "y": 833,
+          "width": 195,
+          "height": 22,
+          "label": "D365 integration accelerator"
+        },
+        {
+          "x": 306,
+          "y": 1191,
+          "width": 210,
+          "height": 24,
+          "label": "Synthetic payback scenario"
+        }
+      ]
+    },
+    {
+      "id": "easy-ru-06",
+      "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/07-ru-06.jpg",
+      "caption": "RU-06 · Operations Leader: Our board wants utilization up to 85% by next quarter. We have 200 consultants currently at 72% billable. I need an optimiz",
+      "case_id": "RU-06",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/07-ru-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "144 (72%)",
+        "$840K"
+      ],
+      "boxes": [
+        {
+          "x": 459,
+          "y": 707,
+          "width": 82,
+          "height": 23,
+          "label": "144 (72%)"
+        },
+        {
+          "x": 460,
+          "y": 793,
+          "width": 77,
+          "height": 23,
+          "label": "$840K"
         }
       ],
-      "note": "Passed cleanly on the first fresh-chat attempt: correct pipeline-staffing-recommendation skill invoked, all anchors present.",
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
+      "full_case_not_visibly_proven": [
+        "34 of the 56 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-ru-07",
+      "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/08-ru-07.jpg",
+      "caption": "RU-07 · Finance Director: What is the complete financial impact of this plan by month, quarter, and year?",
+      "case_id": "RU-07",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/08-ru-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$1.68M",
+        "$20.2M"
+      ],
+      "boxes": [
+        {
+          "x": 789,
+          "y": 696,
+          "width": 73,
+          "height": 23,
+          "label": "$1.68M"
+        },
+        {
+          "x": 598,
+          "y": 1167,
+          "width": 65,
+          "height": 23,
+          "label": "$20.2M"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "8.5% -> 14.2% not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-ru-08",
+      "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/09-ru-08.jpg",
+      "caption": "RU-08 · Operations Leader: Create a tracking dashboard and summarize what we accomplished.",
+      "case_id": "RU-08",
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/09-ru-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Dashboard Specification",
+        "Session Summary",
+        "red/yellow/green"
+      ],
+      "boxes": [
+        {
+          "x": 391,
+          "y": 815,
+          "width": 86,
+          "height": 20,
+          "label": "Dashboard Specification"
+        },
+        {
+          "x": 736,
+          "y": 871,
+          "width": 171,
+          "height": 27,
+          "label": "Session Summary"
+        },
+        {
+          "x": 720,
+          "y": 1246,
+          "width": 132,
+          "height": 24,
+          "label": "red/yellow/green"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/resource-utilization/screenshots/assisted/10-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 10 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/resource-utilization/screenshots/assisted/annotated/10-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Resource Utilization Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 191,
+          "height": 21,
+          "label": "Resource Utilization Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Resource Utilization Manual",
+      "step": 2,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Resource Utilization Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 213,
+          "height": 20,
+          "label": "Resource Utilization Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Resource Utilization Agent — Global Instructions"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 309,
+          "height": 32,
+          "label": "Resource Utilization Agent — Global Instructions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 308,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/06-add-aibast-resource-pipeline-and-workforce-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_resource-pipeline-and-workforce-rules.md",
+      "step": 6,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/06-add-aibast-resource-pipeline-and-workforce-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_resource-pipeline-and-workforce-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_resource-pipeline-and-workforce-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/07-add-aibast-resource-synthetic-roster.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_resource-synthetic-roster.md",
+      "step": 7,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/07-add-aibast-resource-synthetic-roster.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_resource-synthetic-roster.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 232,
+          "height": 22,
+          "label": "aibast_resource-synthetic-roster.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/08-add-aibast-bench-analysis-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_bench-analysis_03",
+      "step": 8,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/08-add-aibast-bench-analysis-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "professional-services-bench-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 236,
+          "height": 22,
+          "label": "professional-services-bench-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/09-add-aibast-capacity-forecast-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_capacity-forecast_02",
+      "step": 9,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/09-add-aibast-capacity-forecast-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "workforce-capacity-forecast"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 184,
+          "height": 22,
+          "label": "workforce-capacity-forecast"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/10-add-aibast-executive-summary-08.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_executive-summary_08",
+      "step": 10,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/10-add-aibast-executive-summary-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "executive-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 131,
+          "height": 21,
+          "label": "executive-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/11-add-aibast-financial-impact-07.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_financial-impact_07",
+      "step": 11,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/11-add-aibast-financial-impact-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "financial-impact"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 197,
+          "width": 109,
+          "height": 22,
+          "label": "financial-impact"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/12-add-aibast-optimization-plan-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_optimization-plan_06",
+      "step": 12,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/12-add-aibast-optimization-plan-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "optimization-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 121,
+          "height": 22,
+          "label": "optimization-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/13-add-aibast-staffing-recommendation-04.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_staffing-recommendation_04",
+      "step": 13,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/13-add-aibast-staffing-recommendation-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "pipeline-staffing-recommendation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 223,
+          "height": 22,
+          "label": "pipeline-staffing-recommendation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/14-add-aibast-utilization-dashboard-01.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_utilization-dashboard_01",
+      "step": 14,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/14-add-aibast-utilization-dashboard-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "workforce-utilization-dashboard"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 210,
+          "height": 19,
+          "label": "workforce-utilization-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/15-add-aibast-workforce-plan-05.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_workforce-plan_05",
+      "step": 15,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/15-add-aibast-workforce-plan-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "strategic-workforce-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 163,
+          "height": 22,
+          "label": "strategic-workforce-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/16-review-inventory.jpg",
+      "caption": "Manual step 16 · Review model, skills, knowledge, and safety boundaries",
+      "step": 16,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/16-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "strategic-workforce-plan",
+        "workforce-utilization-dashboard",
+        "pipeline-staffing-recommendation",
+        "optimization-plan",
+        "financial-impact",
+        "aibast_resource-synthetic-roster.md",
+        "aibast_resource-pipeline-and-workforce-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 163,
+          "height": 22,
+          "label": "strategic-workforce-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 210,
+          "height": 19,
+          "label": "workforce-utilization-dashboard"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 223,
+          "height": 22,
+          "label": "pipeline-staffing-recommendation"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 121,
+          "height": 22,
+          "label": "optimization-plan"
+        },
+        {
+          "x": 1235,
+          "y": 317,
+          "width": 110,
+          "height": 22,
+          "label": "financial-impact"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 232,
+          "height": 22,
+          "label": "aibast_resource-synthetic-roster.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_resource-pipeline-and-workforce-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/17-review-skills.jpg",
+      "caption": "Manual step 17 · Review the skill list (8 skills)",
+      "step": 17,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/17-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "strategic-workforce-plan",
+        "workforce-utilization-dashboard",
+        "pipeline-staffing-recommendation",
+        "optimization-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 163,
+          "height": 22,
+          "label": "strategic-workforce-plan"
+        },
+        {
+          "x": 1054,
+          "y": 255,
+          "width": 210,
+          "height": 19,
+          "label": "workforce-utilization-dashboard"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 223,
+          "height": 22,
+          "label": "pipeline-staffing-recommendation"
+        },
+        {
+          "x": 1055,
+          "y": 411,
+          "width": 121,
+          "height": 22,
+          "label": "optimization-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/18-review-skills-more.jpg",
+      "caption": "Manual step 18 · Review the rest of the skill list",
+      "step": 18,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/18-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "optimization-plan",
+        "financial-impact",
+        "executive-summary",
+        "workforce-utilization-dashboard",
+        "workforce-capacity-forecast",
+        "professional-services-bench-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1151,
+          "y": 126,
+          "width": 77,
+          "height": 20,
+          "label": "optimization-plan"
+        },
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 111,
+          "height": 22,
+          "label": "financial-impact"
+        },
+        {
+          "x": 1055,
+          "y": 282,
+          "width": 132,
+          "height": 20,
+          "label": "executive-summary"
+        },
+        {
+          "x": 1152,
+          "y": 322,
+          "width": 67,
+          "height": 17,
+          "label": "workforce-utilization-dashboard"
+        },
+        {
+          "x": 1055,
+          "y": 378,
+          "width": 184,
+          "height": 22,
+          "label": "workforce-capacity-forecast"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 236,
+          "height": 22,
+          "label": "professional-services-bench-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/19-open-preview.jpg",
+      "caption": "Manual step 19 · Open a fresh Preview conversation",
+      "step": 19,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/19-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Resource Utilization Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 213,
+          "height": 20,
+          "label": "Resource Utilization Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-ru-01",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/20-ru-01.jpg",
+      "caption": "RU-01 · Operations Leader: Where are we under target today, and which parts of the workforce are sitting available?",
+      "step": 20,
+      "case_id": "RU-01",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/20-ru-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utilization by Level",
+        "Firm utilization",
+        "Bench"
+      ],
+      "boxes": [
+        {
+          "x": 392,
+          "y": 427,
+          "width": 120,
+          "height": 27,
+          "label": "Utilization by Level"
+        },
+        {
+          "x": 286,
+          "y": 499,
+          "width": 145,
+          "height": 24,
+          "label": "Firm utilization"
+        },
+        {
+          "x": 531,
+          "y": 564,
+          "width": 54,
+          "height": 20,
+          "label": "Bench"
+        }
+      ]
+    },
+    {
+      "id": "hard-ru-02",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/21-ru-02.jpg",
+      "caption": "RU-02 · Resource Manager: What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?",
+      "step": 21,
+      "case_id": "RU-02",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/21-ru-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Upcoming Project Endings",
+        "Pipeline Demand",
+        "Total roles in pipeline"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 536,
+          "width": 250,
+          "height": 28,
+          "label": "Upcoming Project Endings"
+        },
+        {
+          "x": 286,
+          "y": 937,
+          "width": 163,
+          "height": 28,
+          "label": "Pipeline Demand"
+        },
+        {
+          "x": 309,
+          "y": 1242,
+          "width": 189,
+          "height": 24,
+          "label": "Total roles in pipeline"
+        }
+      ]
+    },
+    {
+      "id": "hard-ru-03",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/22-ru-03.jpg",
+      "caption": "RU-03 · Finance Director: Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+      "step": 22,
+      "case_id": "RU-03",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/22-ru-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "David Okafor",
+        "Robert Garcia",
+        "Skill Inventory on Bench"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 641,
+          "width": 103,
+          "height": 20,
+          "label": "David Okafor"
+        },
+        {
+          "x": 418,
+          "y": 770,
+          "width": 106,
+          "height": 21,
+          "label": "Robert Garcia"
+        },
+        {
+          "x": 286,
+          "y": 917,
+          "width": 168,
+          "height": 28,
+          "label": "Skill Inventory on Bench"
+        }
+      ]
+    },
+    {
+      "id": "hard-ru-04",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/23-ru-04.jpg",
+      "caption": "RU-04 · Resource Manager: Which available consultants fit the strongest pipeline needs, and who still needs another path?",
+      "step": 23,
+      "case_id": "RU-04",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/23-ru-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Bench-to-Pipeline Matches",
+        "Unmatched Bench Resources",
+        "Robert Garcia"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 491,
+          "width": 255,
+          "height": 28,
+          "label": "Bench-to-Pipeline Matches"
+        },
+        {
+          "x": 286,
+          "y": 781,
+          "width": 273,
+          "height": 23,
+          "label": "Unmatched Bench Resources"
+        },
+        {
+          "x": 299,
+          "y": 925,
+          "width": 109,
+          "height": 21,
+          "label": "Robert Garcia"
+        }
+      ]
     },
     {
       "id": "hard-ru-05",
       "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/24-ru-05.jpg",
+      "caption": "RU-05 · Operations Leader: Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.",
+      "step": 24,
       "case_id": "RU-05",
-      "step": 19,
-      "source": "solutions/resource-utilization/screenshots/manual/19-ru-05.jpg",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/24-ru-05.png",
       "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/19-ru-05.png",
       "visible_anchors": [
         "D365 integration accelerator",
         "Synthetic payback scenario",
@@ -652,64 +1092,174 @@
       ],
       "boxes": [
         {
-          "x": 386,
-          "y": 124,
-          "width": 825,
-          "height": 165,
-          "label": "RU-05: Innovation & Capability options"
+          "x": 538,
+          "y": 903,
+          "width": 212,
+          "height": 24,
+          "label": "D365 integration accelerator"
+        },
+        {
+          "x": 286,
+          "y": 1035,
+          "width": 207,
+          "height": 24,
+          "label": "Synthetic payback scenario"
+        },
+        {
+          "x": 286,
+          "y": 1132,
+          "width": 403,
+          "height": 28,
+          "label": "Innovation and Capability-Building Options"
         }
-      ],
-      "note": "Passed cleanly on the first fresh-chat attempt: correct strategic-workforce-plan skill invoked, all anchors present.",
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
+      ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-ru-06",
       "mode": "hard",
-      "step": 20,
-      "source": "solutions/resource-utilization/screenshots/manual/20-confirm-draft.jpg",
+      "source": "solutions/resource-utilization/screenshots/manual/25-ru-06.jpg",
+      "caption": "RU-06 · Operations Leader: Our board wants utilization up to 85% by next quarter. We have 200 consultants currently at 72% billable. I need an optimiz",
+      "step": 25,
+      "case_id": "RU-06",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/25-ru-06.png",
       "status": "reusable",
-      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/20-confirm-draft.png",
       "visible_anchors": [
-        "Resource Utilization Manual row with Draft status badge"
+        "144 (72%)",
+        "$840K",
+        "34 of the 56"
       ],
       "boxes": [
         {
-          "x": 143,
-          "y": 225,
-          "width": 712,
-          "height": 30,
-          "label": "Draft badge confirmed"
+          "x": 591,
+          "y": 597,
+          "width": 85,
+          "height": 22,
+          "label": "144 (72%)"
+        },
+        {
+          "x": 514,
+          "y": 658,
+          "width": 57,
+          "height": 23,
+          "label": "$840K"
+        },
+        {
+          "x": 475,
+          "y": 690,
+          "width": 97,
+          "height": 21,
+          "label": "34 of the 56"
         }
+      ]
+    },
+    {
+      "id": "hard-ru-07",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/26-ru-07.jpg",
+      "caption": "RU-07 · Finance Director: What is the complete financial impact of this plan by month, quarter, and year?",
+      "step": 26,
+      "case_id": "RU-07",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/26-ru-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$1.68M",
+        "$20.2M",
+        "8.5% -> 14.2%"
       ],
-      "captured_at": "2026-09-10T16:43:24.417004+00:00"
+      "boxes": [
+        {
+          "x": 525,
+          "y": 697,
+          "width": 63,
+          "height": 22,
+          "label": "$1.68M"
+        },
+        {
+          "x": 514,
+          "y": 904,
+          "width": 64,
+          "height": 23,
+          "label": "$20.2M"
+        },
+        {
+          "x": 945,
+          "y": 1738,
+          "width": 107,
+          "height": 20,
+          "label": "8.5% -> 14.2%"
+        }
+      ]
+    },
+    {
+      "id": "hard-ru-08",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/27-ru-08.jpg",
+      "caption": "RU-08 · Operations Leader: Create a tracking dashboard and summarize what we accomplished.",
+      "step": 27,
+      "case_id": "RU-08",
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/27-ru-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Dashboard Specification",
+        "red/yellow/green",
+        "Session Summary"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 427,
+          "width": 274,
+          "height": 32,
+          "label": "Dashboard Specification"
+        },
+        {
+          "x": 341,
+          "y": 461,
+          "width": 136,
+          "height": 24,
+          "label": "red/yellow/green"
+        },
+        {
+          "x": 286,
+          "y": 758,
+          "width": 203,
+          "height": 32,
+          "label": "Session Summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-28",
+      "mode": "hard",
+      "source": "solutions/resource-utilization/screenshots/manual/28-confirm-draft.jpg",
+      "caption": "Manual step 28 · Confirm Draft and stop before publish",
+      "step": 28,
+      "draft": true,
+      "annotated": "solutions/resource-utilization/screenshots/manual/annotated/28-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Resource Utilization Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 211,
+          "height": 21,
+          "label": "Resource Utilization Manual"
+        }
+      ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Resource Utilization Pilot with Draft visible.",
-      "Manual saved-state tooltip explicitly showing No unsaved changes.",
-      "Manual web-search removal action with the removed capability visibly absent from the active edit context.",
-      "One expanded Manual-mode Knowledge inventory showing both exact filenames; create two annotated checkpoints from it.",
-      "Five isolated Manual-mode skill-addition captures.",
-      "Manual RU-01 through RU-05 after knowledge grounding is fixed.",
-      "Manual Draft gate filtered to Resource Utilization Manual with Draft visible."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 5/5 verdict.",
-      "Copilot-only local 5/5 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-nightly-pilot:resource-utilization",
-    "reviewed_at": "2026-09-10T16:43:24.417004+00:00",
-    "method": "Live pilot: built 'Resource Utilization Manual' in Copilot Studio (manual mode), typed GLOBAL-INSTRUCTIONS.md, uploaded both knowledge files and all 5 skills one at a time for distinct evidence, then ran all 5 locked RU demo prompts in fresh Preview chats per the workshop-nightly-pilot-skill methodology.",
-    "notes": "RU-01 and RU-03 each intermittently hallucinated a non-existent skill name on first fresh-chat attempt and falsely reported the grounding files unavailable; a second fresh chat self-corrected both times with the right skill and real citations. This reproduces the same bug class as issues #204 and #218 and should be tracked as a new issue. RU-02, RU-04, RU-05 passed cleanly on the first attempt. easy-draft remains out of scope (assisted-mode build pipeline)."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:53.609319+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

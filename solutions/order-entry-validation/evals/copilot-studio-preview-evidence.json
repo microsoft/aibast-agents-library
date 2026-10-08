@@ -1,0 +1,107 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T04:12:33.451363Z",
+  "solution": "@aibast-agents-library/order-entry-validation",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Order Entry Validation Pilot",
+  "schema_name": "aibast_OrderEntryValidationPilot",
+  "bot_id": "1d718473-99b0-49e2-a260-3bf2c65175da",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 10 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "OE-01",
+      "must_include": [
+        "5 purchase orders",
+        "$221,900",
+        "Woodgrove Water Authority"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "OE-02",
+      "must_include": [
+        "1200 Reservoir Rd, Dock 3",
+        "Hannah Cole",
+        "PO total"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "OE-03",
+      "must_include": [
+        "$410 on the PO vs $395 on the quote",
+        "Price tolerance is 1%",
+        "Mismatch"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "OE-04",
+      "must_include": [
+        "SH-H2S needs KIT-SAFE",
+        "1 of 2 configuration rules pass",
+        "Never enter this order with the wrong configuration"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "OE-05",
+      "must_include": [
+        "STD-DOM",
+        "Public sector",
+        "Order Class"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "OE-06",
+      "must_include": [
+        "Not Submitted",
+        "$27,940",
+        "nothing was submitted to the ERP"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "OE-07",
+      "must_include": [
+        "1 of 5 purchase orders are ready",
+        "Lucerne Labs",
+        "Needs fix"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

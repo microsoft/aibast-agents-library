@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `SUPPLY_CHAIN_DISRUPTION_ALERT-01, SUPPLY_CHAIN_DISRUPTION_ALERT-02, SUPPLY_CHAIN_DISRUPTION_ALERT-03, SUPPLY_CHAIN_DISRUPTION_ALERT-04`.
+1. Which locked case IDs did you complete? Expected scope: `SUPPLY_CHAIN_DISRUPTION_ALERT-01, SUPPLY_CHAIN_DISRUPTION_ALERT-02, SUPPLY_CHAIN_DISRUPTION_ALERT-03, SUPPLY_CHAIN_DISRUPTION_ALERT-04, SUPPLY_CHAIN_DISRUPTION_ALERT-05, SUPPLY_CHAIN_DISRUPTION_ALERT-06, SUPPLY_CHAIN_DISRUPTION_ALERT-07, SUPPLY_CHAIN_DISRUPTION_ALERT-08, SUPPLY_CHAIN_DISRUPTION_ALERT-09, SUPPLY_CHAIN_DISRUPTION_ALERT-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `SUPPLY_CHAIN_DISRUPTION_ALERT-02` — Why is RT-APAC-01 high risk?
 - `SUPPLY_CHAIN_DISRUPTION_ALERT-03` — Draft a DISR-002 mitigation scenario without rerouting or moving inventory.
 - `SUPPLY_CHAIN_DISRUPTION_ALERT-04` — Show Electronics alternatives without activating a supplier.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-05` — I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-06` — What are our emergency options and costs?
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-07` — Approved. Execute both Seattle and the 5 additional stores.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-08` — Activate tracking and show me the Portland DC recovery plan.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-09` — Create the executive report with financial impact.
+- `SUPPLY_CHAIN_DISRUPTION_ALERT-10` — Distribute the report and summarize what we accomplished.
 
 ## Manual mode — literal browser construction
 

@@ -1,15 +1,16 @@
-displayName: "Account Intelligence Pilot"
-schemaName: "aibast_AccountIntelligencePilot"
+displayName: Account Intelligence Pilot
+schemaName: aibast_AccountIntelligencePilot
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -71,5 +72,9 @@ configuration:
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
+publishedOn: 2026-09-02T22:56:08.0000000Z
 template: cliagent-1.0.0
 language: 1033

@@ -8,65 +8,161 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 17,
-    "reshoot_required": 6
+    "total_existing_captures": 41,
+    "reusable": 41,
+    "reshoot_required": 0
   },
   "captures": [
     {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Underwriting Support Pilot",
+        "Draft",
+        "compliance-check",
+        "underwriting-summary",
+        "coverage-structure",
+        "submission-review",
+        "risk-assessment",
+        "aibast_underwriting-support-controls-and-review.",
+        "aibast_underwriting-support-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 208,
+          "height": 24,
+          "label": "Underwriting Support Pilot"
+        },
+        {
+          "x": 303,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 152,
+          "height": 22,
+          "label": "underwriting-summary"
+        },
+        {
+          "x": 1057,
+          "y": 279,
+          "width": 128,
+          "height": 20,
+          "label": "coverage-structure"
+        },
+        {
+          "x": 1242,
+          "y": 277,
+          "width": 125,
+          "height": 19,
+          "label": "submission-review"
+        },
+        {
+          "x": 1058,
+          "y": 318,
+          "width": 108,
+          "height": 18,
+          "label": "risk-assessment"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_underwriting-support-controls-and-review."
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_underwriting-support-synthetic-records.md"
+        }
+      ]
+    },
+    {
       "id": "easy-uws-01",
       "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/02-uws-01.jpg",
+      "caption": "UWS-01 · Underwriter: Which submission needs the most experienced underwriter, and why?",
       "case_id": "UWS-01",
-      "source": "solutions/underwriting-support/screenshots/assisted/01-uws-01.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/01-uws-01.png",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/02-uws-01.png",
       "status": "reusable",
       "visible_anchors": [
         "UW-2025-103",
         "Substandard"
       ],
-      "full_case_not_visibly_proven": [
-        "The captured viewport shows the deterministic anchors in the visible Copilot Studio activity trace, not a complete final answer."
-      ],
       "boxes": [
         {
           "x": 286,
-          "y": 558,
-          "width": 950,
-          "height": 130,
-          "label": "UWS-01 evidence"
+          "y": 429,
+          "width": 134,
+          "height": 23,
+          "label": "UW-2025-103"
+        },
+        {
+          "x": 732,
+          "y": 428,
+          "width": 124,
+          "height": 24,
+          "label": "Substandard"
         }
       ]
     },
     {
       "id": "easy-uws-02",
       "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/03-uws-02.jpg",
+      "caption": "UWS-02 · Pricing Analyst: Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
       "case_id": "UWS-02",
-      "source": "solutions/underwriting-support/screenshots/assisted/02-uws-02.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/02-uws-02.png",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/03-uws-02.png",
       "status": "reusable",
       "visible_anchors": [
         "UW-2025-101",
         "Indicated Premium"
       ],
-      "full_case_not_visibly_proven": [
-        "The captured viewport shows the deterministic anchors in the visible Copilot Studio activity trace, not a complete final answer."
-      ],
       "boxes": [
         {
-          "x": 310,
-          "y": 486,
-          "width": 930,
-          "height": 49,
-          "label": "UWS-02 deterministic anchors"
+          "x": 286,
+          "y": 429,
+          "width": 130,
+          "height": 23,
+          "label": "UW-2025-101"
+        },
+        {
+          "x": 286,
+          "y": 461,
+          "width": 151,
+          "height": 21,
+          "label": "Indicated Premium"
         }
       ]
     },
     {
       "id": "easy-uws-03",
       "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/04-uws-03.jpg",
+      "caption": "UWS-03 · Risk Analyst: Which applications are outside a stated guideline or missing required evidence?",
       "case_id": "UWS-03",
-      "source": "solutions/underwriting-support/screenshots/assisted/03-uws-03.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/03-uws-03.png",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/04-uws-03.png",
       "status": "reusable",
       "visible_anchors": [
         "UW-2025-103",
@@ -74,434 +170,1128 @@
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 350,
-          "width": 930,
-          "height": 186,
-          "label": "Exception submission"
+          "x": 312,
+          "y": 644,
+          "width": 138,
+          "height": 23,
+          "label": "UW-2025-103"
         },
         {
-          "x": 286,
-          "y": 548,
-          "width": 990,
-          "height": 102,
+          "x": 472,
+          "y": 870,
+          "width": 155,
+          "height": 24,
           "label": "High-Risk Specialty"
-        }
-      ],
-      "note": "Exception submission box was too short and its lower border crossed the LOB row; expanded it to cover the submission block on 2026-09-10."
-    },
-    {
-      "id": "easy-uws-04",
-      "mode": "easy",
-      "case_id": "UWS-04",
-      "source": "solutions/underwriting-support/screenshots/assisted/04-uws-04.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/04-uws-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "No approval, decline, quote, or binder has been issued",
-        "Authorized human review required"
-      ],
-      "full_case_not_visibly_proven": [
-        "UW-2025-103 is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 286,
-          "y": 404,
-          "width": 950,
-          "height": 88,
-          "label": "No approval or coverage action"
-        },
-        {
-          "x": 286,
-          "y": 515,
-          "width": 930,
-          "height": 63,
-          "label": "Human review boundary"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-uws-04",
       "mode": "easy",
-      "source": "solutions/underwriting-support/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Underwriting Support Pilot row is not visible, so the screenshot cannot prove that the validated pilot remains Draft.",
-      "draft": true
+      "source": "solutions/underwriting-support/screenshots/assisted/05-uws-04.jpg",
+      "caption": "UWS-04 · Senior Underwriter: Prepare the exception file I need to review and state whether any coverage decision was made.",
+      "case_id": "UWS-04",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/05-uws-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No approval",
+        "UW-2025-103"
+      ],
+      "boxes": [
+        {
+          "x": 622,
+          "y": 493,
+          "width": 189,
+          "height": 22,
+          "label": "No approval"
+        },
+        {
+          "x": 286,
+          "y": 591,
+          "width": 134,
+          "height": 23,
+          "label": "UW-2025-103"
+        }
+      ]
+    },
+    {
+      "id": "easy-uws-05",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/06-uws-05.jpg",
+      "caption": "UWS-05 · Underwriter: Help me evaluate this commercial insurance application and tell me what is missing.",
+      "case_id": "UWS-05",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/06-uws-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Midwest Manufacturing Inc.",
+        "68/100 (Moderate)",
+        "95% complete"
+      ],
+      "boxes": [
+        {
+          "x": 506,
+          "y": 427,
+          "width": 314,
+          "height": 32,
+          "label": "Midwest Manufacturing Inc."
+        },
+        {
+          "x": 961,
+          "y": 461,
+          "width": 140,
+          "height": 23,
+          "label": "68/100 (Moderate)"
+        },
+        {
+          "x": 476,
+          "y": 877,
+          "width": 114,
+          "height": 24,
+          "label": "95% complete"
+        }
+      ]
+    },
+    {
+      "id": "easy-uws-06",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/07-uws-06.jpg",
+      "caption": "UWS-06 · Risk Analyst: Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+      "case_id": "UWS-06",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/07-uws-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Industry hazard",
+        "$237K"
+      ],
+      "boxes": [
+        {
+          "x": 506,
+          "y": 588,
+          "width": 75,
+          "height": 24,
+          "label": "Industry hazard"
+        },
+        {
+          "x": 637,
+          "y": 1154,
+          "width": 77,
+          "height": 23,
+          "label": "$237K"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "0.42 vs class 0.58 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-uws-07",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/08-uws-07.jpg",
+      "caption": "UWS-07 · Underwriter: What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+      "case_id": "UWS-07",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/08-uws-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$5K deductible",
+        "Equipment breakdown",
+        "$8.2M total"
+      ],
+      "boxes": [
+        {
+          "x": 854,
+          "y": 965,
+          "width": 120,
+          "height": 22,
+          "label": "$5K deductible"
+        },
+        {
+          "x": 387,
+          "y": 1095,
+          "width": 89,
+          "height": 24,
+          "label": "Equipment breakdown"
+        },
+        {
+          "x": 839,
+          "y": 1695,
+          "width": 91,
+          "height": 22,
+          "label": "$8.2M total"
+        }
+      ]
+    },
+    {
+      "id": "easy-uws-08",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/09-uws-08.jpg",
+      "caption": "UWS-08 · Senior Underwriter: Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+      "case_id": "UWS-08",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/09-uws-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Within $10M limit",
+        "OH rates filed",
+        "30 days"
+      ],
+      "boxes": [
+        {
+          "x": 527,
+          "y": 874,
+          "width": 135,
+          "height": 23,
+          "label": "Within $10M limit"
+        },
+        {
+          "x": 506,
+          "y": 1003,
+          "width": 128,
+          "height": 24,
+          "label": "OH rates filed"
+        },
+        {
+          "x": 286,
+          "y": 1464,
+          "width": 66,
+          "height": 24,
+          "label": "30 days"
+        }
+      ]
+    },
+    {
+      "id": "easy-uws-09",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/10-uws-09.jpg",
+      "caption": "UWS-09 · Senior Underwriter: Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+      "case_id": "UWS-09",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/10-uws-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Approve with conditions",
+        "$88,100",
+        "drafted for you to issue"
+      ],
+      "boxes": [
+        {
+          "x": 565,
+          "y": 561,
+          "width": 190,
+          "height": 24,
+          "label": "Approve with conditions"
+        },
+        {
+          "x": 768,
+          "y": 560,
+          "width": 66,
+          "height": 23,
+          "label": "$88,100"
+        },
+        {
+          "x": 1079,
+          "y": 560,
+          "width": 91,
+          "height": 20,
+          "label": "drafted for you to issue"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/11-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 11 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/11-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Underwriting Support Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 203,
+          "height": 24,
+          "label": "Underwriting Support Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/underwriting-support/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/underwriting-support/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
           "x": 84,
-          "y": 88,
-          "width": 900,
-          "height": 72,
-          "label": "Blank agent workspace"
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/underwriting-support/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Underwriting Support Manual",
+      "step": 2,
       "annotated": "solutions/underwriting-support/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Underwriting Support Manual in the name field"
+        "Underwriting Support Manual"
       ],
       "boxes": [
         {
-          "x": 165,
-          "y": 96,
-          "width": 820,
-          "height": 64,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 228,
+          "height": 24,
+          "label": "Underwriting Support Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/underwriting-support/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/underwriting-support/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "UWS-01 through UWS-04 acceptance anchors"
+        "Underwriting Support Agent — Manual Global Instr"
       ],
       "boxes": [
         {
-          "x": 80,
-          "y": 190,
-          "width": 900,
-          "height": 620,
-          "label": "Reviewed instruction policy"
+          "x": 204,
+          "y": 131,
+          "width": 343,
+          "height": 39,
+          "label": "Underwriting Support Agent — Manual Global Instr"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/underwriting-support/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction content is visible, but the screenshot has no saved-state indicator such as No unsaved changes. The frame does not independently prove the save checkpoint."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 324,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/underwriting-support/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows a completed Build page with no web-search chip, but it contains no positive visible confirmation that Search all websites was removed. Absence alone is not sufficient proof for this action."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/underwriting-support/screenshots/manual/06-add-aibast-underwriting-support-controls-and-review.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_underwriting-support-controls-and-review.md",
+      "step": 6,
       "annotated": "solutions/underwriting-support/screenshots/manual/annotated/06-add-aibast-underwriting-support-controls-and-review.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge chip beginning aibast_underwriting-support-controls-and-re"
+        "aibast_underwriting-support-controls-and-review."
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 306,
-          "width": 370,
-          "height": 50,
-          "label": "Controls knowledge added"
+          "x": 1058,
+          "y": 314,
+          "width": 305,
+          "height": 33,
+          "label": "aibast_underwriting-support-controls-and-review."
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/underwriting-support/screenshots/manual/07-add-aibast-underwriting-support-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_underwriting-support-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/underwriting-support/screenshots/manual/annotated/07-add-aibast-underwriting-support-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge chip beginning aibast_underwriting-support-synthetic-recor",
-        "Knowledge chip beginning aibast_underwriting-support-controls-and-re"
+        "aibast_underwriting-support-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 306,
-          "width": 370,
-          "height": 92,
-          "label": "Two knowledge files added"
+          "x": 1058,
+          "y": 311,
+          "width": 295,
+          "height": 36,
+          "label": "aibast_underwriting-support-synthetic-records.md"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/08-add-aibast-compliance-check-08.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_compliance-check_08",
       "step": 8,
-      "source": "solutions/underwriting-support/screenshots/manual/08-add-aibast-exception-review-04.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/08-add-aibast-exception-review-04.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/08-add-aibast-compliance-check-08.png",
       "status": "reusable",
       "visible_anchors": [
-        "exception-review skill"
+        "compliance-check"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 182,
-          "width": 230,
-          "height": 52,
-          "label": "Exception review skill"
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/09-add-aibast-coverage-structure-07.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_coverage-structure_07",
       "step": 9,
-      "source": "solutions/underwriting-support/screenshots/manual/09-add-aibast-guideline-check-03.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/09-add-aibast-guideline-check-03.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/09-add-aibast-coverage-structure-07.png",
       "status": "reusable",
       "visible_anchors": [
-        "guideline-check skill",
-        "exception-review skill"
+        "coverage-structure"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 182,
-          "width": 360,
-          "height": 88,
-          "label": "Two skills added"
+          "x": 1057,
+          "y": 199,
+          "width": 128,
+          "height": 20,
+          "label": "coverage-structure"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/10-add-aibast-exception-review-04.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_exception-review_04",
       "step": 10,
-      "source": "solutions/underwriting-support/screenshots/manual/10-add-aibast-pricing-recommendation-02.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/10-add-aibast-pricing-recommendation-02.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/10-add-aibast-exception-review-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "pricing-recommendation skill",
-        "guideline-check skill",
-        "exception-review skill"
+        "exception-review"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 182,
-          "width": 360,
-          "height": 94,
-          "label": "Three skills added"
+          "x": 1057,
+          "y": 197,
+          "width": 117,
+          "height": 22,
+          "label": "exception-review"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/11-add-aibast-guideline-check-03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_guideline-check_03",
       "step": 11,
-      "source": "solutions/underwriting-support/screenshots/manual/11-add-aibast-risk-evaluation-01.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/11-add-aibast-risk-evaluation-01.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/11-add-aibast-guideline-check-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "risk-evaluation skill",
-        "pricing-recommendation skill",
-        "guideline-check skill",
-        "exception-review skill"
+        "guideline-check"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 182,
-          "width": 365,
-          "height": 132,
-          "label": "Four skills added"
+          "x": 1057,
+          "y": 197,
+          "width": 109,
+          "height": 22,
+          "label": "guideline-check"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/12-add-aibast-pricing-recommendation-02.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_pricing-recommendation_02",
       "step": 12,
-      "source": "solutions/underwriting-support/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/12-add-aibast-pricing-recommendation-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Two package knowledge files",
-        "Save tooltip states Reason: No unsaved changes"
+        "pricing-recommendation"
       ],
       "boxes": [
         {
-          "x": 1048,
-          "y": 48,
-          "width": 198,
-          "height": 50,
-          "label": "No unsaved changes"
-        },
-        {
-          "x": 1204,
-          "y": 86,
-          "width": 192,
-          "height": 42,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1025,
-          "y": 180,
-          "width": 368,
-          "height": 132,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1025,
-          "y": 430,
-          "width": 370,
-          "height": 92,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 197,
+          "width": 164,
+          "height": 22,
+          "label": "pricing-recommendation"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/13-add-aibast-risk-assessment-06.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_risk-assessment_06",
       "step": 13,
-      "source": "solutions/underwriting-support/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/13-add-aibast-risk-assessment-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
+        "risk-assessment"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 198,
+          "width": 108,
+          "height": 18,
+          "label": "risk-assessment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/14-add-aibast-risk-evaluation-01.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_risk-evaluation_01",
+      "step": 14,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/14-add-aibast-risk-evaluation-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "risk-evaluation"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 197,
+          "width": 101,
+          "height": 19,
+          "label": "risk-evaluation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/15-add-aibast-submission-review-05.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_submission-review_05",
+      "step": 15,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/15-add-aibast-submission-review-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "submission-review"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 125,
+          "height": 19,
+          "label": "submission-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/16-add-aibast-underwriting-summary-09.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_underwriting-summary_09",
+      "step": 16,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/16-add-aibast-underwriting-summary-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "underwriting-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 152,
+          "height": 22,
+          "label": "underwriting-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/17-review-inventory.jpg",
+      "caption": "Manual step 17 · Review model, skills, knowledge, and safety boundaries",
+      "step": 17,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/17-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "underwriting-summary",
+        "submission-review",
+        "risk-evaluation",
+        "risk-assessment",
+        "pricing-recommendation",
+        "aibast_underwriting-support-synthetic-records.md",
+        "aibast_underwriting-support-controls-and-review."
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 152,
+          "height": 22,
+          "label": "underwriting-summary"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 125,
+          "height": 19,
+          "label": "submission-review"
+        },
+        {
+          "x": 1240,
+          "y": 238,
+          "width": 101,
+          "height": 18,
+          "label": "risk-evaluation"
+        },
+        {
+          "x": 1058,
+          "y": 278,
+          "width": 108,
+          "height": 18,
+          "label": "risk-assessment"
+        },
+        {
+          "x": 1058,
+          "y": 318,
+          "width": 164,
+          "height": 21,
+          "label": "pricing-recommendation"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_underwriting-support-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_underwriting-support-controls-and-review."
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/18-review-skills.jpg",
+      "caption": "Manual step 18 · Review the skill list (9 skills)",
+      "step": 18,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/18-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "underwriting-summary",
+        "submission-review",
+        "risk-evaluation",
+        "risk-assessment"
+      ],
+      "boxes": [
+        {
+          "x": 1184,
+          "y": 220,
+          "width": 78,
+          "height": 20,
+          "label": "underwriting-summary"
+        },
+        {
+          "x": 1205,
+          "y": 240,
+          "width": 70,
+          "height": 17,
+          "label": "submission-review"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 101,
+          "height": 19,
+          "label": "risk-evaluation"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 108,
+          "height": 19,
+          "label": "risk-assessment"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/19-review-skills-more.jpg",
+      "caption": "Manual step 19 · Review the rest of the skill list",
+      "step": 19,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/19-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "underwriting-summary",
+        "guideline-check",
+        "exception-review",
+        "coverage-structure",
+        "compliance-check",
+        "pricing-recommendation"
+      ],
+      "boxes": [
+        {
+          "x": 1088,
+          "y": 87,
+          "width": 80,
+          "height": 20,
+          "label": "underwriting-summary"
+        },
+        {
+          "x": 1055,
+          "y": 122,
+          "width": 109,
+          "height": 22,
+          "label": "guideline-check"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 117,
+          "height": 22,
+          "label": "exception-review"
+        },
+        {
+          "x": 1055,
+          "y": 300,
+          "width": 128,
+          "height": 20,
+          "label": "coverage-structure"
+        },
+        {
+          "x": 1055,
+          "y": 416,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
+        },
+        {
+          "x": 1055,
+          "y": 498,
+          "width": 106,
+          "height": 17,
+          "label": "pricing-recommendation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/20-open-preview.jpg",
+      "caption": "Manual step 20 · Open a fresh Preview conversation",
+      "step": 20,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/20-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Underwriting Support Manual"
       ],
       "boxes": [
         {
-          "x": 635,
-          "y": 4,
-          "width": 108,
-          "height": 56,
-          "label": "Preview selected"
-        },
-        {
-          "x": 835,
-          "y": 84,
-          "width": 105,
-          "height": 54,
-          "label": "Fresh chat control"
+          "x": 84,
+          "y": 20,
+          "width": 228,
+          "height": 24,
+          "label": "Underwriting Support Manual"
         }
       ]
     },
     {
       "id": "hard-uws-01",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/21-uws-01.jpg",
+      "caption": "UWS-01 · Underwriter: Which submission needs the most experienced underwriter, and why?",
+      "step": 21,
       "case_id": "UWS-01",
-      "step": 14,
-      "source": "solutions/underwriting-support/screenshots/manual/14-uws-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The visible final-answer viewport does not contain either required deterministic marker UW-2025-103 or Substandard. The safety boundary alone does not prove UWS-01."
-    },
-    {
-      "id": "hard-uws-02",
-      "mode": "hard",
-      "case_id": "UWS-02",
-      "step": 15,
-      "source": "solutions/underwriting-support/screenshots/manual/15-uws-02.jpg",
-      "status": "reshoot_required",
-      "reason": "The visible final-answer viewport contains loss and review details but neither required deterministic marker UW-2025-101 nor Indicated Premium."
-    },
-    {
-      "id": "hard-uws-03",
-      "mode": "hard",
-      "case_id": "UWS-03",
-      "step": 16,
-      "source": "solutions/underwriting-support/screenshots/manual/16-uws-03.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/16-uws-03.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/21-uws-01.png",
       "status": "reusable",
       "visible_anchors": [
         "UW-2025-103",
-        "High-Risk Specialty",
-        "Senior-underwriter authority review required"
+        "Substandard"
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 278,
-          "width": 912,
-          "height": 58,
-          "label": "Guideline exception row"
+          "y": 418,
+          "width": 109,
+          "height": 20,
+          "label": "UW-2025-103"
         },
         {
-          "x": 286,
-          "y": 405,
-          "width": 930,
-          "height": 82,
-          "label": "Authorized review required"
+          "x": 410,
+          "y": 417,
+          "width": 101,
+          "height": 21,
+          "label": "Substandard"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-02",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/22-uws-02.jpg",
+      "caption": "UWS-02 · Pricing Analyst: Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
+      "step": 22,
+      "case_id": "UWS-02",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/22-uws-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UW-2025-101",
+        "Indicated Premium"
+      ],
+      "boxes": [
+        {
+          "x": 653,
+          "y": 510,
+          "width": 153,
+          "height": 26,
+          "label": "UW-2025-101"
+        },
+        {
+          "x": 401,
+          "y": 1219,
+          "width": 94,
+          "height": 23,
+          "label": "Indicated Premium"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-03",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/23-uws-03.jpg",
+      "caption": "UWS-03 · Risk Analyst: Which applications are outside a stated guideline or missing required evidence?",
+      "step": 23,
+      "case_id": "UWS-03",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/23-uws-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UW-2025-103",
+        "High-Risk Specialty"
+      ],
+      "boxes": [
+        {
+          "x": 410,
+          "y": 589,
+          "width": 109,
+          "height": 20,
+          "label": "UW-2025-103"
+        },
+        {
+          "x": 391,
+          "y": 781,
+          "width": 143,
+          "height": 24,
+          "label": "High-Risk Specialty"
         }
       ]
     },
     {
       "id": "hard-uws-04",
       "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/24-uws-04.jpg",
+      "caption": "UWS-04 · Senior Underwriter: Prepare the exception file I need to review and state whether any coverage decision was made.",
+      "step": 24,
       "case_id": "UWS-04",
-      "step": 17,
-      "source": "solutions/underwriting-support/screenshots/manual/17-uws-04.jpg",
-      "status": "reshoot_required",
-      "reason": "UW-2025-103 and No approval appear only in the model reasoning trace; no final answer is visible. Reasoning text is not learner-facing pass evidence."
-    },
-    {
-      "id": "hard-draft",
-      "mode": "hard",
-      "step": 18,
-      "source": "solutions/underwriting-support/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/18-confirm-draft.png",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/24-uws-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Underwriting Support Manual",
-        "Draft"
+        "No approval",
+        "UW-2025-103"
       ],
       "boxes": [
         {
-          "x": 110,
-          "y": 242,
-          "width": 1250,
-          "height": 58,
-          "label": "Target agent remains Draft"
+          "x": 622,
+          "y": 493,
+          "width": 189,
+          "height": 22,
+          "label": "No approval"
+        },
+        {
+          "x": 286,
+          "y": 574,
+          "width": 139,
+          "height": 23,
+          "label": "UW-2025-103"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-05",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/25-uws-05.jpg",
+      "caption": "UWS-05 · Underwriter: Help me evaluate this commercial insurance application and tell me what is missing.",
+      "step": 25,
+      "case_id": "UWS-05",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/25-uws-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Midwest Manufacturing Inc.",
+        "95% complete",
+        "68/100 (Moderate)"
+      ],
+      "boxes": [
+        {
+          "x": 506,
+          "y": 555,
+          "width": 314,
+          "height": 32,
+          "label": "Midwest Manufacturing Inc."
+        },
+        {
+          "x": 396,
+          "y": 1081,
+          "width": 114,
+          "height": 24,
+          "label": "95% complete"
+        },
+        {
+          "x": 479,
+          "y": 1285,
+          "width": 145,
+          "height": 23,
+          "label": "68/100 (Moderate)"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-06",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/26-uws-06.jpg",
+      "caption": "UWS-06 · Risk Analyst: Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+      "step": 26,
+      "case_id": "UWS-06",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/26-uws-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Industry hazard",
+        "$237K"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 723,
+          "width": 119,
+          "height": 24,
+          "label": "Industry hazard"
+        },
+        {
+          "x": 533,
+          "y": 918,
+          "width": 55,
+          "height": 22,
+          "label": "$237K"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "0.42 vs class 0.58 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-uws-07",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/27-uws-07.jpg",
+      "caption": "UWS-07 · Underwriter: What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+      "step": 27,
+      "case_id": "UWS-07",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/27-uws-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$5K deductible",
+        "$8.2M total",
+        "Equipment breakdown"
+      ],
+      "boxes": [
+        {
+          "x": 645,
+          "y": 655,
+          "width": 117,
+          "height": 22,
+          "label": "$5K deductible"
+        },
+        {
+          "x": 900,
+          "y": 655,
+          "width": 90,
+          "height": 22,
+          "label": "$8.2M total"
+        },
+        {
+          "x": 286,
+          "y": 683,
+          "width": 87,
+          "height": 23,
+          "label": "Equipment breakdown"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-08",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/28-uws-08.jpg",
+      "caption": "UWS-08 · Senior Underwriter: Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+      "step": 28,
+      "case_id": "UWS-08",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/28-uws-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Within $10M limit",
+        "OH rates filed",
+        "30 days"
+      ],
+      "boxes": [
+        {
+          "x": 479,
+          "y": 723,
+          "width": 135,
+          "height": 22,
+          "label": "Within $10M limit"
+        },
+        {
+          "x": 480,
+          "y": 853,
+          "width": 107,
+          "height": 20,
+          "label": "OH rates filed"
+        },
+        {
+          "x": 395,
+          "y": 997,
+          "width": 65,
+          "height": 23,
+          "label": "30 days"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-09",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/29-uws-09.jpg",
+      "caption": "UWS-09 · Senior Underwriter: Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+      "step": 29,
+      "case_id": "UWS-09",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/29-uws-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$88,100",
+        "Approve with conditions",
+        "drafted for you to issue"
+      ],
+      "boxes": [
+        {
+          "x": 739,
+          "y": 588,
+          "width": 66,
+          "height": 23,
+          "label": "$88,100"
+        },
+        {
+          "x": 444,
+          "y": 696,
+          "width": 183,
+          "height": 24,
+          "label": "Approve with conditions"
+        },
+        {
+          "x": 668,
+          "y": 918,
+          "width": 137,
+          "height": 24,
+          "label": "drafted for you to issue"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-30",
+      "mode": "hard",
+      "source": "solutions/underwriting-support/screenshots/manual/30-confirm-draft.jpg",
+      "caption": "Manual step 30 · Confirm Draft and stop before publish",
+      "step": 30,
+      "draft": true,
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/30-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Underwriting Support Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 223,
+          "height": 24,
+          "label": "Underwriting Support Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Underwriting Support Pilot with Draft visible.",
-      "Manual step 4 with an explicit saved-state indicator.",
-      "Manual step 5 with a positive visible web-search removal confirmation.",
-      "Manual UWS-01 with UW-2025-103 and Substandard visible in the final answer.",
-      "Manual UWS-02 with UW-2025-101 and Indicated Premium visible in the final answer.",
-      "Manual UWS-04 with UW-2025-103 and No approval visible in the final answer."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:underwriting-support",
-    "reviewed_at": "2026-08-09T20:57:29-04:00",
-    "method": "Inspected the source and regenerated annotation at native resolution, then verified the UWS-01 evidence box encloses the complete key-findings block without crossing its text.",
-    "notes": "The UWS-01 annotation now keeps UW-2025-103 and Substandard legible. Remaining reshoot-required frames stay withheld from reusable evidence."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:52:52.860131+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

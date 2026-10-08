@@ -24,6 +24,9 @@ The local agent uses fictional records and produces decision support only. It do
 - `route_optimization`
 - `technician_assignment`
 - `emergency_response`
+- `incident_status`
+- `post_incident_review`
+- `work_orders_report`
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -46,7 +49,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot Studio deployment settings | `solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json` |
 
-**Scaffold status:** 88 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

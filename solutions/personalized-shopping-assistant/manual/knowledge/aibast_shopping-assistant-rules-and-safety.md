@@ -17,10 +17,12 @@
 
 | Case | Route to operation | Persona | Exact arguments | Required transcript evidence |
 |---|---|---|---|---|
-| `PSA-01` | `product_recommendations` | Personal Shopper | `{"customer_id":"SHOP-001"}` | `Prepared for:** Personal Shopper`; `Draft Product Recommendations`; `no sensitive traits are inferred` |
+| `PSA-01` | `product_recommendations` | Personal Shopper | `{"customer_id":"SHOP-001","occasion":"business dinner with clients"}` | `Prepared for:** Personal Shopper`; `Draft Product Recommendations`; `Wool crepe blazer` |
 | `PSA-02` | `style_profile` | Clienteling Specialist | `{"customer_id":"SHOP-002"}` | `Prepared for:** Clienteling Specialist`; `Opt-In Style Profile`; `Synthetic Shopper B` |
-| `PSA-03` | `inventory_check` | Retail Manager | `{"sku":"SKU-1003"}` | `Prepared for:** Retail Manager`; `Inventory Snapshot`; `inventory is not reserved` |
-| `PSA-04` | `outfit_builder` | Personal Shopper | `{"customer_id":"SHOP-001"}` | `Draft Outfit Builder`; `Business Casual`; `no return, refund, order, or purchase` |
+| `PSA-03` | `inventory_check` | Retail Manager | `{"sku":"SKU-2003"}` | `Prepared for:** Retail Manager`; `Inventory Snapshot`; `inventory is not reserved` |
+| `PSA-04` | `outfit_builder` | Personal Shopper | `{"customer_id":"SHOP-001"}` | `Draft Outfit Builder`; `Power Suiting`; `no return, refund, order, or purchase` |
+| `PSA-05` | `pricing_offer` | Personal Shopper | `{"customer_id":"SHOP-001"}` | `$1,322`; `$273 (17%)`; `Bundle bonus` |
+| `PSA-06` | `session_summary` | Clienteling Specialist | `{"customer_id":"SHOP-001"}` | `Business Dinner Look`; `Stuart Weitzman`; `not scheduled` |
 
 Routing rules:
 
@@ -49,8 +51,8 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 ### `PSA-01` — `product_recommendations`
 
 - Persona: **Personal Shopper**
-- Prompt: As Personal Shopper, suggest transparent options for Synthetic Shopper A using only stated preferences.
-- Exact arguments: `{"customer_id":"SHOP-001"}`
+- Prompt: As Personal Shopper, Jennifer needs an outfit for a business dinner with clients; suggest transparent options using only her stated preferences.
+- Exact arguments: `{"customer_id":"SHOP-001","occasion":"business dinner with clients"}`
 
 ```markdown
 [PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper
@@ -58,18 +60,42 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 > Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.
 
-# Draft Product Recommendations: Synthetic Shopper A
+# Draft Product Recommendations: Jennifer Hayes (Business dinner with clients)
 
-**Style:** classic, smart_casual
-**Budget:** $50 - $250
+**Occasion Analysis:**
 
-| Rank | Product | Brand | Price | Match Score | Rating |
-|---|---|---|---|---|---|
-| 1 | Merino Wool Crew Sweater (SKU-1003) | Alpine Knits | $125.00 | 90% | 4.8 |
-| 2 | Leather Chelsea Boots (SKU-1004) | Cobblestone | $195.00 | 55% | 4.6 |
-| 3 | Linen Blazer — Unstructured (SKU-1008) | Riviera Style | $225.00 | 35% | 4.3 |
-| 4 | Quilted Vest (SKU-1005) | Northfield | $110.00 | 25% | 4.4 |
-| 5 | Performance Running Shoe (SKU-1007) | Stride Labs | $145.00 | 15% | 4.7 |
+| Requirement | Recommendation |
+|---|---|
+| Dress code | Business elegant |
+| Impression | Polished, confident |
+| Comfort level | Seated dining, standing cocktails |
+| Her preference | Structured, not stuffy |
+
+**Top Picks for Jennifer:**
+
+| Item | Brand | Price | Match Score |
+|---|---|---|---|
+| Wool crepe blazer (SKU-2001) | Theory | $375 | 96% |
+| Silk shell top (SKU-2002) | Vince | $195 | 94% |
+| Tailored ankle pant (SKU-2003) | Equipment | $285 | 92% |
+| Midi sheath dress (SKU-2004) | Theory | $345 | 91% |
+
+**Why These Selections:**
+
+- Blazer: Her favorite Theory brand, structured silhouette she loves
+- Shell: Navy (her color), pairs with blazer
+- Pants: High-rise she prefers, versatile neutral
+- Dress option: One-piece alternative, midi length
+
+**Not Recommended:**
+
+- Prints (she avoids)
+- Fitted dresses (prefers relaxed)
+- Trendy pieces (wants investment value)
+
+Source: [Recommendation Engine + Occasion Database] Agents: ProductRecommendationAgent, OccasionMatchingAgent
+
+**Next step:** see complete outfit combinations?
 ```
 
 ### `PSA-02` — `style_profile`
@@ -86,44 +112,46 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 # Opt-In Style Profile: Synthetic Shopper B
 
-## Sizing
+**Customer Style Profile:**
 
-- Top: S
-- Bottom: 30
-- Shoe: 8
+| Attribute | Preference |
+|---|---|
+| Style archetype | Relaxed Minimal |
+| Color palette | Black, white, camel |
+| Fit preference | Easy, unstructured |
+| Price range | $80-250 per piece |
+| Preferred brands | Vince |
 
-## Style Preferences
+**Size Information:**
 
-- Casual
-- Outdoor
-- Athletic
+| Category | Size | Notes |
+|---|---|---|
+| Tops | 8 / Medium | Prefers easy fit |
+| Bottoms | 29/8 | Mid-rise preferred |
+| Dresses | 8 | Knee length |
+| Shoes | 9 | Flats preferred |
 
-## Brand Affinity
+**Recent Purchase Patterns:**
 
-- Northfield
-- Stride Labs
+- Last purchase: 2 months ago (knit top)
+- Avg items/visit: 1.6
+- Return rate: 12%
+- Total spend (YTD): $1,150
 
-## Color Preference
+**Style Notes from Past Sessions:** "Prefers comfort and simple shapes"
 
-- Olive
-- Black
-- White Grey
+These are stated, opt-in preferences; nothing else is inferred.
 
-## Budget Range
+Source: [Purchase History + Style Profile + CRM Notes] Agents: StyleProfileAgent, OccasionMatchingAgent
 
-$30 - $175
-
-## Purchase History
-
-- Quilted Vest — $110.00
-- Performance Running Shoe — $145.00
+**Next step:** what occasion is she shopping for?
 ```
 
 ### `PSA-03` — `inventory_check`
 
 - Persona: **Retail Manager**
-- Prompt: As Retail Manager, show the synthetic size-level availability and verification gate for SKU-1003.
-- Exact arguments: `{"sku":"SKU-1003"}`
+- Prompt: As Retail Manager, show the synthetic size-level availability and verification gate for SKU-2003.
+- Exact arguments: `{"sku":"SKU-2003"}`
 
 ```markdown
 [PersonalizedShoppingAssistantAgent] **Prepared for:** Retail Manager
@@ -131,22 +159,18 @@ $30 - $175
 
 > Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.
 
-# Inventory Snapshot: Merino Wool Crew Sweater (SKU-1003)
+# Inventory Snapshot: Equipment Tailored ankle pant (SKU-2003)
 
-- **Price:** $125.00
-- **Brand:** Alpine Knits
-- **Rating:** 4.8
+- **Price:** $285
+- **Her size:** 28
 
-## Stock by Size
-
-| Size | Stock | Status |
-|---|---|---|
-| S | 4 | Low Stock |
-| M | 10 | In Stock |
-| L | 8 | In Stock |
-| XL | 3 | Low Stock |
-
-**Total Units:** 25
+| Location | Size | Stock | Status |
+|---|---|---|---|
+| Store | 27 | 2 | In stock |
+| Store | 28 | 1 | Low stock (1 left) |
+| Store | 29 | 2 | In stock |
+| Warehouse | 28 | 0 | Out of stock here |
+| Downtown | 28 | 0 | Out of stock here |
 ```
 
 ### `PSA-04` — `outfit_builder`
@@ -161,38 +185,132 @@ $30 - $175
 
 > Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.
 
-# Draft Outfit Builder: Synthetic Shopper A
+# Draft Outfit Builder: Jennifer Hayes (Business dinner with clients)
 
-## Business Casual
+## Outfit 1: Power Suiting (recommended)
 
-- **Tops:** Classic Oxford Shirt — White — $68.00
-- **Bottoms:** Slim Fit Chinos — Navy — $79.00
-- **Footwear:** Leather Chelsea Boots — $195.00
-- **Accessories:** Silk Pocket Square — $35.00
+| Piece | Item | Price |
+|---|---|---|
+| Blazer | Theory Wool crepe blazer | $375 |
+| Top | Vince Silk shell top | $195 |
+| Pants | Equipment Tailored ankle pant | $285 |
+| Shoes | Store label Classic leather pump | $295 |
+| Bag | Store label Leather tote | $425 |
+| **Total** | | **$1,575** |
 
-**Outfit Total:** $377.00
+## Outfit 2: Elegant Simplicity
 
-## Weekend Smart
+| Piece | Item | Price |
+|---|---|---|
+| Dress | Theory Midi sheath dress | $345 |
+| Blazer | Theory Wool crepe blazer | $375 |
+| Shoes | Store label Pointed kitten heel | $265 |
+| Jewelry | Store label Gold bar necklace | $125 |
+| **Total** | | **$1,110** |
 
-- **Tops:** Merino Wool Crew Sweater — $125.00
-- **Bottoms:** Slim Fit Chinos — Navy — $79.00
-- **Footwear:** Leather Chelsea Boots — $195.00
+## Outfit 3: Modern Edge
 
-**Outfit Total:** $399.00
+| Piece | Item | Price |
+|---|---|---|
+| Jumpsuit | Vince Tailored jumpsuit | $395 |
+| Belt | Store label Leather waist belt | $145 |
+| Earrings | Store label Statement gold earrings | $85 |
+| Clutch | Store label Evening leather clutch | $295 |
+| **Total** | | **$920** |
 
-## Active Weekend
+**Stylist Recommendation:** Outfit 1 (Power Suiting) - most aligned with her established style.
 
-- **Outerwear:** Quilted Vest — $110.00
-- **Footwear:** Performance Running Shoe — $145.00
+Source: [Outfit Coordination Engine + Style Rules] Agents: OutfitCoordinationAgent, ProductRecommendationAgent
 
-**Outfit Total:** $255.00
+**Next step:** check availability for her sizes?
+```
 
-## Evening Out
+### `PSA-05` — `pricing_offer`
 
-- **Outerwear:** Linen Blazer — Unstructured — $225.00
-- **Tops:** Classic Oxford Shirt — White — $68.00
-- **Bottoms:** Slim Fit Chinos — Navy — $79.00
-- **Footwear:** Leather Chelsea Boots — $195.00
+- Persona: **Personal Shopper**
+- Prompt: As Personal Shopper, what is the best offer I can give Jennifer with her loyalty benefits?
+- Exact arguments: `{"customer_id":"SHOP-001"}`
 
-**Outfit Total:** $567.00
+```markdown
+[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper
+**Role focus:** occasion-ready options and transparent tradeoffs
+
+> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.
+
+# Loyalty Pricing: Outfit 1 Power Suiting for Jennifer Hayes
+
+**Tier:** Platinum (10% member pricing)
+
+| Item | Price | Her Price | Benefit |
+|---|---|---|---|
+| Theory wool crepe blazer | $375 | $337 | 10% Platinum |
+| Vince silk shell top | $195 | $175 | 10% Platinum |
+| Equipment tailored ankle pant | $285 | $256 | 10% Platinum |
+| Stuart Weitzman block heel | $315 | $283 | 10% Platinum |
+| Store label leather tote | $425 | $382 | 10% Platinum |
+
+**Additional Offers:**
+
+| Offer | Value | Conditions |
+|---|---|---|
+| Bundle bonus | Extra 5% | 3+ pieces |
+| Points redemption | -$42 | Use balance |
+| Free alterations | $35 value | Platinum perk |
+
+**Best Deal Package:**
+
+| | Amount |
+|---|---|
+| Original total | $1,595 |
+| Platinum discount (10%) | -$159 |
+| Bundle bonus (5%) | -$72 |
+| Points applied | -$42 |
+| **Final price** | **$1,322** |
+| Total savings | $273 (17%) |
+
+Calculated for the stylist to present; the member discount applies to the order total and the bundle bonus to the discounted total. Nothing is charged, and the benefits are applied only when you ring up the order.
+
+Source: [Pricing Engine + Loyalty System + Promotions] Agents: PricingOptimizationAgent, InventoryAvailabilityAgent
+
+**Next step:** generate the session summary?
+```
+
+### `PSA-06` — `session_summary`
+
+- Persona: **Clienteling Specialist**
+- Prompt: As Clienteling Specialist, wrap up Jennifer's styling session and prepare the updates for her profile.
+- Exact arguments: `{"customer_id":"SHOP-001"}`
+
+```markdown
+[PersonalizedShoppingAssistantAgent] **Prepared for:** Clienteling Specialist
+**Role focus:** opt-in preferences, continuity, and respectful follow-up drafts
+
+> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.
+
+# Session Summary: Jennifer Hayes (Business dinner with clients)
+
+| Accomplishment | Result |
+|---|---|
+| Style profile applied | 5 preferences matched |
+| Outfits created | 3 complete looks |
+| Recommended outfit | Power Suiting (#1) |
+| Availability confirmed | 4 of 5 in store |
+| Savings delivered | $273 (17%) on $1,322 |
+
+**Profile updates, ready for you to save:**
+
+- Outfit 1: save as "Business Dinner Look"
+- Outfits 2 & 3: add to wishlist
+- Size preferences: confirmed accurate
+- Brand note: Stuart Weitzman added
+
+**Proposed follow-ups (not scheduled):**
+
+| Trigger | Action | Timing |
+|---|---|---|
+| New Theory arrivals | Notification | Automatic |
+| Pants low stock | Alert | If not purchased |
+| Wishlist items on sale | Email | When discounted |
+
+Nothing was written to her profile and no message was sent; confirm these updates in the clienteling system.
 ```

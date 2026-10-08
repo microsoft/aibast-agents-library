@@ -1,0 +1,104 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/supplier-claim-engagement",
+  "display_name": "Supplier Claim Engagement Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+  "source_path": "agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+  "target_filename": "supplier_claim_engagement_agent.py",
+  "expected_tool": "SupplierClaimEngagementAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Show me our open supplier claims and what needs attention today.",
+    "arguments": {
+      "operation": "claims_queue"
+    },
+    "must_call": "SupplierClaimEngagementAgent",
+    "must_include": [
+      "Open claim value",
+      "1,631.80"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "claims_queue",
+      "triage_claim",
+      "evidence_pack",
+      "draft_supplier_claim",
+      "sla_tracker",
+      "supplier_response",
+      "escalation_brief"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_supplier-claim-engagement-synthetic-records.md",
+      "manual/knowledge/aibast_supplier-claim-engagement-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 7,
+    "required_connections": [
+      "Approved order and receiving records (read-only)",
+      "Approved case system (read-only)",
+      "Outlook send only through an approved, human-confirmed flow"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Supplier Claim Manual",
+      "bot_id": "971ee2ca-4b8b-4540-ba22-1b0164808573",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 7,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Supplier Claim Engagement",
+      "bot_id": "4c3d6508-f6a8-4140-86be-6680343b3ce7",
+      "schema_name": "aibast_SupplierClaimEngagement",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Supplier Claim Manual",
+      "schema_name": "cr2bf_supplierclaimmanual_lDo1au",
+      "solution_unique_name": "aibast_SupplierClaimManualBuild",
+      "bot_id": "971ee2ca-4b8b-4540-ba22-1b0164808573",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "supplier-claim-engagement-claims-queue",
+    "supplier-claim-engagement-triage-claim",
+    "supplier-claim-engagement-evidence-pack",
+    "supplier-claim-engagement-draft-supplier-claim",
+    "supplier-claim-engagement-sla-tracker",
+    "supplier-claim-engagement-supplier-response",
+    "supplier-claim-engagement-escalation-brief"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

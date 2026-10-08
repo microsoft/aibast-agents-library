@@ -8,491 +8,1227 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 14,
-    "reshoot_required": 9
+    "total_existing_captures": 38,
+    "reusable": 38,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-iv-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "IV-01",
-      "source": "solutions/inventory-visibility/screenshots/assisted/01-iv-01.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/01-iv-01.png",
+      "source": "solutions/inventory-visibility/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Total Network Inventory: 26,315 units across 6 locations",
-        "Verification Boundary",
-        "All quantities are synthetic, read-only pilot data"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Inventory Visibility Snapshot heading is above the captured viewport.",
-        "The incomplete no-stock-reservation row in the source capture is intentionally outside the annotation; the full marker remains machine-gated."
+        "Inventory Visibility Pilot",
+        "Draft",
+        "network-health",
+        "transfer-plan",
+        "investment-proposal",
+        "automation-recommendations",
+        "category-channel-allocation-scenario",
+        "aibast_inventory-visibility-synthetic-records.md",
+        "aibast_inventory-visibility-rules-and-safety.md"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 406,
-          "width": 940,
-          "height": 190,
-          "label": "Complete network total and synthetic-data boundary"
+          "x": 84,
+          "y": 20,
+          "width": 184,
+          "height": 24,
+          "label": "Inventory Visibility Pilot"
+        },
+        {
+          "x": 279,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 104,
+          "height": 19,
+          "label": "network-health"
+        },
+        {
+          "x": 1219,
+          "y": 197,
+          "width": 91,
+          "height": 22,
+          "label": "transfer-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 138,
+          "height": 22,
+          "label": "investment-proposal"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 199,
+          "height": 19,
+          "label": "automation-recommendations"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 241,
+          "height": 22,
+          "label": "category-channel-allocation-scenario"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_inventory-visibility-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 295,
+          "height": 22,
+          "label": "aibast_inventory-visibility-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-iv-01",
+      "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/02-iv-01.jpg",
+      "caption": "IV-01 · Inventory Planner: As Inventory Planner, summarize the store snapshot and verification boundary.",
+      "case_id": "IV-01",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/02-iv-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Inventory Planner",
+        "Inventory Visibility Snapshot",
+        "no stock is reserved"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 417,
+          "width": 234,
+          "height": 24,
+          "label": "Prepared for:** Inventory Planner"
+        },
+        {
+          "x": 386,
+          "y": 418,
+          "width": 77,
+          "height": 23,
+          "label": "Inventory Visibility Snapshot"
+        },
+        {
+          "x": 512,
+          "y": 1681,
+          "width": 155,
+          "height": 23,
+          "label": "no stock is reserved"
         }
       ]
     },
     {
       "id": "easy-iv-02",
       "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/03-iv-02.jpg",
+      "caption": "IV-02 · Store Manager: As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.",
       "case_id": "IV-02",
-      "source": "solutions/inventory-visibility/screenshots/assisted/02-iv-02.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/02-iv-02.png",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/03-iv-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Low-Stock Warnings: 3",
-        "Michigan Ave Express has two SKUs at 1.9 days of supply",
-        "No inventory action has been taken"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Draft Stock Review heading and Review transfer candidate phrase are outside the captured viewport."
+        "Prepared for:** Store Manager",
+        "Draft Stock Review",
+        "Review transfer candidate"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 211,
-          "width": 946,
-          "height": 372,
-          "label": "Warnings, observations, and no-action boundary"
+          "x": 286,
+          "y": 444,
+          "width": 214,
+          "height": 24,
+          "label": "Prepared for:** Store Manager"
+        },
+        {
+          "x": 287,
+          "y": 581,
+          "width": 215,
+          "height": 26,
+          "label": "Draft Stock Review"
+        },
+        {
+          "x": 306,
+          "y": 875,
+          "width": 608,
+          "height": 20,
+          "label": "Review transfer candidate"
         }
       ]
     },
     {
       "id": "easy-iv-03",
       "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/04-iv-03.jpg",
+      "caption": "IV-03 · Inventory Planner: As Inventory Planner, show the fourteen-day replenishment scenario and its assumptions.",
       "case_id": "IV-03",
-      "source": "solutions/inventory-visibility/screenshots/assisted/03-iv-03.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/03-iv-03.png",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/04-iv-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Target quantity formula: 14 × daily sell-through rate",
-        "No action taken: This is a draft scenario only",
-        "Approval gate requires authorized planner review"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Draft Replenishment Plan heading and Estimated Total Replenishment Cost are outside the captured viewport."
+        "Draft Replenishment Plan",
+        "14-day supply",
+        "Estimated Total Replenishment Cost"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 151,
-          "width": 946,
-          "height": 340,
-          "label": "Fourteen-day assumptions and no-action state"
+          "x": 287,
+          "y": 554,
+          "width": 285,
+          "height": 32,
+          "label": "Draft Replenishment Plan"
         },
         {
-          "x": 284,
-          "y": 520,
-          "width": 948,
-          "height": 62,
-          "label": "Authorized planner approval gate"
+          "x": 342,
+          "y": 588,
+          "width": 105,
+          "height": 24,
+          "label": "14-day supply"
+        },
+        {
+          "x": 286,
+          "y": 2834,
+          "width": 274,
+          "height": 24,
+          "label": "Estimated Total Replenishment Cost"
         }
       ]
     },
     {
       "id": "easy-iv-04",
       "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/05-iv-04.jpg",
+      "caption": "IV-04 · Category Manager: As Category Manager, compare the channel planning scenario without reserving any stock.",
       "case_id": "IV-04",
-      "source": "solutions/inventory-visibility/screenshots/assisted/04-iv-04.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/04-iv-04.png",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/05-iv-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Allocation Recommendations",
-        "BOPIS Buffer: do not reserve units",
-        "No reservation, transfer, allocation, or purchase has been executed"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Prepared for Category Manager and Channel Allocation Scenario headings are above the captured viewport."
+        "Prepared for:** Category Manager",
+        "Channel Allocation Scenario",
+        "do not reserve units"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 151,
-          "width": 946,
-          "height": 427,
-          "label": "Allocation guidance and no-execution boundary"
+          "x": 286,
+          "y": 417,
+          "width": 242,
+          "height": 24,
+          "label": "Prepared for:** Category Manager"
+        },
+        {
+          "x": 286,
+          "y": 554,
+          "width": 316,
+          "height": 26,
+          "label": "Channel Allocation Scenario"
+        },
+        {
+          "x": 878,
+          "y": 1041,
+          "width": 152,
+          "height": 20,
+          "label": "do not reserve units"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-iv-05",
       "mode": "easy",
-      "source": "solutions/inventory-visibility/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Inventory Visibility Pilot row is not visible; unrelated agent rows and Draft badges cannot prove the validated pilot identity or its Draft state.",
-      "draft": true
+      "source": "solutions/inventory-visibility/screenshots/assisted/06-iv-05.jpg",
+      "caption": "IV-05 · Inventory Planner: Yes, create the reallocation plan with cost and timing details.",
+      "case_id": "IV-05",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/06-iv-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Reallocation Plan",
+        "$18,400",
+        "35:1"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 554,
+          "width": 263,
+          "height": 26,
+          "label": "Draft Reallocation Plan"
+        },
+        {
+          "x": 496,
+          "y": 1847,
+          "width": 64,
+          "height": 23,
+          "label": "$18,400"
+        },
+        {
+          "x": 496,
+          "y": 1892,
+          "width": 38,
+          "height": 20,
+          "label": "35:1"
+        }
+      ]
+    },
+    {
+      "id": "easy-iv-06",
+      "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/07-iv-06.jpg",
+      "caption": "IV-06 · Inventory Planner: Approved. Execute both phases and show me system-wide inventory health.",
+      "case_id": "IV-06",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/07-iv-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Stock balance score",
+        "Slow movers",
+        "$84,200"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 1076,
+          "width": 150,
+          "height": 20,
+          "label": "Stock balance score"
+        },
+        {
+          "x": 311,
+          "y": 1644,
+          "width": 127,
+          "height": 24,
+          "label": "Slow movers"
+        },
+        {
+          "x": 525,
+          "y": 2096,
+          "width": 68,
+          "height": 23,
+          "label": "$84,200"
+        }
+      ]
+    },
+    {
+      "id": "easy-iv-07",
+      "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/08-iv-07.jpg",
+      "caption": "IV-07 · Inventory Planner: Yes, optimize all 8 and show me the warehouse automation recommendations.",
+      "case_id": "IV-07",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/08-iv-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RFID Tracking",
+        "$340,000"
+      ],
+      "boxes": [
+        {
+          "x": 395,
+          "y": 1289,
+          "width": 109,
+          "height": 24,
+          "label": "RFID Tracking"
+        },
+        {
+          "x": 585,
+          "y": 1998,
+          "width": 77,
+          "height": 23,
+          "label": "$340,000"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "680 across 15 routes not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-iv-08",
+      "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/09-iv-08.jpg",
+      "caption": "IV-08 · Inventory Planner: Yes, create the investment proposal with 3-year financial projections.",
+      "case_id": "IV-08",
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/09-iv-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Investment Proposal",
+        "$858,000"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 581,
+          "width": 300,
+          "height": 32,
+          "label": "Draft Investment Proposal"
+        },
+        {
+          "x": 459,
+          "y": 1376,
+          "width": 77,
+          "height": 23,
+          "label": "$858,000"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "5.7 months not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/inventory-visibility/screenshots/assisted/10-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 10 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/10-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Inventory Visibility Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 155,
+          "width": 78,
+          "height": 23,
+          "label": "Inventory Visibility Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/inventory-visibility/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 82,
-          "y": 80,
-          "width": 902,
-          "height": 78,
-          "label": "Blank Untitled Agent workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/inventory-visibility/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Inventory Visibility Manual",
+      "step": 2,
       "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Inventory Visibility Manual in the name field"
+        "Inventory Visibility Manual"
       ],
       "boxes": [
         {
-          "x": 162,
-          "y": 98,
-          "width": 820,
-          "height": 54,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 204,
+          "height": 24,
+          "label": "Inventory Visibility Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/inventory-visibility/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Reviewed inventory visibility instruction policy",
-        "Locked Preview evidence anchors",
-        "No inventory change occurred boundary"
+        "Inventory Visibility Agent — Manual Global Instr"
       ],
       "boxes": [
         {
-          "x": 75,
-          "y": 228,
-          "width": 900,
-          "height": 595,
-          "label": "Reviewed instructions and locked anchors"
+          "x": 204,
+          "y": 131,
+          "width": 296,
+          "height": 39,
+          "label": "Inventory Visibility Agent — Manual Global Instr"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/inventory-visibility/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is byte-identical to steps 5-11 and shows the completed configuration, but it contains no save confirmation, tooltip, or other unambiguous saved-state indicator for this step."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 300,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/inventory-visibility/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is byte-identical to steps 4 and 6-11 and shows the completed configuration; it does not visibly capture Search all websites being removed."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/inventory-visibility/screenshots/manual/06-add-aibast-inventory-visibility-rules-and-safety.jpg",
-      "status": "reshoot_required",
-      "reason": "Both knowledge files are already present in a final configuration that is byte-identical to steps 4, 5, and 7-11, so the rules-and-safety upload action is not isolated."
+      "caption": "Manual step 6 · Add knowledge: aibast_inventory-visibility-rules-and-safety.md",
+      "step": 6,
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/06-add-aibast-inventory-visibility-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_inventory-visibility-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 295,
+          "height": 22,
+          "label": "aibast_inventory-visibility-rules-and-safety.md"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/inventory-visibility/screenshots/manual/07-add-aibast-inventory-visibility-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "Both knowledge files are already present, the synthetic-records filename is truncated, and the frame is byte-identical to steps 4-6 and 8-11 rather than an isolated upload state."
+      "caption": "Manual step 7 · Add knowledge: aibast_inventory-visibility-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/07-add-aibast-inventory-visibility-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_inventory-visibility-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_inventory-visibility-synthetic-records.md"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/08-add-aibast-automation-recommendations-07.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_automation-recommendations_07",
       "step": 8,
-      "source": "solutions/inventory-visibility/screenshots/manual/08-add-channel-allocation.jpg",
-      "status": "reshoot_required",
-      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-7 and 9-11; it does not isolate addition of the category-channel-allocation-scenario skill."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/08-add-aibast-automation-recommendations-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "automation-recommendations"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 199,
+          "height": 19,
+          "label": "automation-recommendations"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/09-add-aibast-channel-allocation-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_channel-allocation_04",
       "step": 9,
-      "source": "solutions/inventory-visibility/screenshots/manual/09-add-inventory-dashboard.jpg",
-      "status": "reshoot_required",
-      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-8 and 10-11; it does not isolate addition of the read-only-inventory-visibility skill."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/09-add-aibast-channel-allocation-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "category-channel-allocation-scenario"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 241,
+          "height": 22,
+          "label": "category-channel-allocation-scenario"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/10-add-aibast-inventory-dashboard-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_inventory-dashboard_01",
       "step": 10,
-      "source": "solutions/inventory-visibility/screenshots/manual/10-add-replenishment-plan.jpg",
-      "status": "reshoot_required",
-      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-9 and 11; it does not isolate addition of the draft-replenishment-scenario skill."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/10-add-aibast-inventory-dashboard-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "read-only-inventory-visibility"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 189,
+          "height": 22,
+          "label": "read-only-inventory-visibility"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/11-add-aibast-investment-proposal-08.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_investment-proposal_08",
       "step": 11,
-      "source": "solutions/inventory-visibility/screenshots/manual/11-add-stock-alerts.jpg",
-      "status": "reshoot_required",
-      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-10; it does not isolate addition of the store-stock-review-candidates skill."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/11-add-aibast-investment-proposal-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "investment-proposal"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 138,
+          "height": 22,
+          "label": "investment-proposal"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/12-add-aibast-network-health-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_network-health_06",
       "step": 12,
-      "source": "solutions/inventory-visibility/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/12-add-aibast-network-health-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Two knowledge entries",
-        "Tools section contains no configured tool"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "The synthetic-records knowledge filename is truncated in the visible chip."
+        "network-health"
       ],
       "boxes": [
         {
-          "x": 1198,
-          "y": 84,
-          "width": 198,
-          "height": 42,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1026,
-          "y": 184,
-          "width": 315,
-          "height": 158,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1020,
-          "y": 364,
-          "width": 382,
-          "height": 61,
-          "label": "No configured tools"
-        },
-        {
-          "x": 1024,
-          "y": 455,
-          "width": 377,
-          "height": 106,
-          "label": "Two knowledge entries"
+          "x": 1057,
+          "y": 197,
+          "width": 104,
+          "height": 19,
+          "label": "network-health"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/13-add-aibast-replenishment-plan-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_replenishment-plan_03",
       "step": 13,
-      "source": "solutions/inventory-visibility/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/13-add-aibast-replenishment-plan-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab selected",
-        "New chat",
-        "Inventory Visibility Manual greeting"
+        "draft-replenishment-scenario"
       ],
       "boxes": [
         {
-          "x": 637,
-          "y": 9,
-          "width": 98,
-          "height": 42,
-          "label": "Preview selected"
-        },
-        {
-          "x": 833,
-          "y": 88,
-          "width": 108,
-          "height": 42,
-          "label": "Fresh chat control"
-        },
-        {
-          "x": 258,
-          "y": 143,
-          "width": 522,
-          "height": 91,
-          "label": "Manual agent greeting"
+          "x": 1057,
+          "y": 197,
+          "width": 191,
+          "height": 22,
+          "label": "draft-replenishment-scenario"
         }
       ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/14-add-aibast-stock-alerts-02.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_stock-alerts_02",
       "step": 14,
-      "case_id": "IV-01",
-      "source": "solutions/inventory-visibility/screenshots/manual/14-iv-01.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/14-iv-01.png",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/14-add-aibast-stock-alerts-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Michigan Ave Express inventory table",
-        "Classic Denim Jacket LOW at 1.9 days of supply",
-        "Smart Fitness Tracker LOW at 1.9 days of supply"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Inventory Visibility Snapshot and no stock is reserved markers are outside the captured viewport."
+        "store-stock-review-candidates"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 205,
-          "width": 824,
-          "height": 440,
-          "label": "Store snapshot and low-stock rows"
+          "x": 1057,
+          "y": 197,
+          "width": 197,
+          "height": 19,
+          "label": "store-stock-review-candidates"
         }
       ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/15-add-aibast-transfer-plan-05.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_transfer-plan_05",
       "step": 15,
-      "case_id": "IV-02",
-      "source": "solutions/inventory-visibility/screenshots/manual/15-iv-02.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/15-iv-02.png",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/15-add-aibast-transfer-plan-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Low-Stock Warnings: 3",
-        "Michigan Ave Express is the most exposed location",
-        "No inventory changes have been made"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Draft Stock Review and Review transfer candidate markers are outside the captured viewport."
+        "transfer-plan"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 207,
-          "width": 947,
-          "height": 378,
-          "label": "Review candidates and no-change boundary"
+          "x": 1057,
+          "y": 197,
+          "width": 91,
+          "height": 22,
+          "label": "transfer-plan"
         }
       ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/16-review-inventory.jpg",
+      "caption": "Manual step 16 · Review model, skills, knowledge, and safety boundaries",
       "step": 16,
-      "case_id": "IV-03",
-      "source": "solutions/inventory-visibility/screenshots/manual/16-iv-03.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/16-iv-03.png",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/16-review-inventory.png",
       "status": "reusable",
       "visible_anchors": [
-        "Supply source WH-CENTRAL",
-        "Replenish quantity assumption",
-        "No inventory action has been taken"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Draft Replenishment Plan, 14-day supply, and Estimated Total Replenishment Cost markers are outside the captured viewport."
+        "Claude Opus 5",
+        "transfer-plan",
+        "store-stock-review-candidates",
+        "draft-replenishment-scenario",
+        "network-health",
+        "investment-proposal",
+        "aibast_inventory-visibility-synthetic-records.md",
+        "aibast_inventory-visibility-rules-and-safety.md"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 119,
-          "width": 946,
-          "height": 343,
-          "label": "Replenishment assumptions"
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 286,
-          "y": 504,
-          "width": 945,
-          "height": 77,
-          "label": "Draft-only no-action boundary"
+          "x": 1057,
+          "y": 197,
+          "width": 91,
+          "height": 22,
+          "label": "transfer-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 197,
+          "height": 19,
+          "label": "store-stock-review-candidates"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 191,
+          "height": 22,
+          "label": "draft-replenishment-scenario"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 104,
+          "height": 19,
+          "label": "network-health"
+        },
+        {
+          "x": 1219,
+          "y": 317,
+          "width": 138,
+          "height": 22,
+          "label": "investment-proposal"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_inventory-visibility-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 295,
+          "height": 22,
+          "label": "aibast_inventory-visibility-rules-and-safety.md"
         }
       ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/17-review-skills.jpg",
+      "caption": "Manual step 17 · Review the skill list (8 skills)",
       "step": 17,
-      "case_id": "IV-04",
-      "source": "solutions/inventory-visibility/screenshots/manual/17-iv-04.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/17-iv-04.png",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/17-review-skills.png",
       "status": "reusable",
       "visible_anchors": [
-        "Allocation Recommendations",
-        "BOPIS Buffer: do not reserve units",
-        "No inventory action has been taken"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Prepared for Category Manager and Channel Allocation Scenario headings are above the captured viewport."
+        "transfer-plan",
+        "store-stock-review-candidates",
+        "draft-replenishment-scenario",
+        "network-health"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 116,
-          "width": 946,
-          "height": 463,
-          "label": "Channel plan and no-action boundary"
+          "x": 1055,
+          "y": 177,
+          "width": 91,
+          "height": 22,
+          "label": "transfer-plan"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 198,
+          "height": 19,
+          "label": "store-stock-review-candidates"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 191,
+          "height": 22,
+          "label": "draft-replenishment-scenario"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 105,
+          "height": 19,
+          "label": "network-health"
         }
       ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/18-review-skills-more.jpg",
+      "caption": "Manual step 18 · Review the rest of the skill list",
       "step": 18,
-      "source": "solutions/inventory-visibility/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/18-confirm-draft.png",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/18-review-skills-more.png",
       "status": "reusable",
       "visible_anchors": [
-        "Inventory Visibility Manual",
-        "Draft"
+        "investment-proposal",
+        "read-only-inventory-visibility",
+        "category-channel-allocation-scenario",
+        "automation-recommendations"
       ],
       "boxes": [
         {
-          "x": 102,
-          "y": 245,
-          "width": 1282,
-          "height": 56,
-          "label": "Inventory Visibility Manual remains Draft"
+          "x": 1055,
+          "y": 162,
+          "width": 138,
+          "height": 22,
+          "label": "investment-proposal"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 189,
+          "height": 22,
+          "label": "read-only-inventory-visibility"
+        },
+        {
+          "x": 1055,
+          "y": 338,
+          "width": 241,
+          "height": 22,
+          "label": "category-channel-allocation-scenario"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 200,
+          "height": 19,
+          "label": "automation-recommendations"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/19-open-preview.jpg",
+      "caption": "Manual step 19 · Open a fresh Preview conversation",
+      "step": 19,
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/19-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Inventory Visibility Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 204,
+          "height": 24,
+          "label": "Inventory Visibility Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-iv-01",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/20-iv-01.jpg",
+      "caption": "IV-01 · Inventory Planner: As Inventory Planner, summarize the store snapshot and verification boundary.",
+      "step": 20,
+      "case_id": "IV-01",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/20-iv-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Inventory Planner",
+        "Inventory Visibility Snapshot"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 462,
+          "width": 234,
+          "height": 24,
+          "label": "Prepared for:** Inventory Planner"
+        },
+        {
+          "x": 386,
+          "y": 463,
+          "width": 77,
+          "height": 23,
+          "label": "Inventory Visibility Snapshot"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "no stock is reserved not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-iv-02",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/21-iv-02.jpg",
+      "caption": "IV-02 · Store Manager: As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.",
+      "step": 21,
+      "case_id": "IV-02",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/21-iv-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Store Manager",
+        "Draft Stock Review",
+        "Review transfer candidate"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 489,
+          "width": 214,
+          "height": 24,
+          "label": "Prepared for:** Store Manager"
+        },
+        {
+          "x": 287,
+          "y": 609,
+          "width": 215,
+          "height": 27,
+          "label": "Draft Stock Review"
+        },
+        {
+          "x": 1034,
+          "y": 855,
+          "width": 141,
+          "height": 20,
+          "label": "Review transfer candidate"
+        }
+      ]
+    },
+    {
+      "id": "hard-iv-03",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/22-iv-03.jpg",
+      "caption": "IV-03 · Inventory Planner: As Inventory Planner, show the fourteen-day replenishment scenario and its assumptions.",
+      "step": 22,
+      "case_id": "IV-03",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/22-iv-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Replenishment Plan",
+        "14-day supply",
+        "Estimated Total Replenishment Cost"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 582,
+          "width": 285,
+          "height": 32,
+          "label": "Draft Replenishment Plan"
+        },
+        {
+          "x": 338,
+          "y": 616,
+          "width": 109,
+          "height": 24,
+          "label": "14-day supply"
+        },
+        {
+          "x": 286,
+          "y": 2863,
+          "width": 274,
+          "height": 24,
+          "label": "Estimated Total Replenishment Cost"
+        }
+      ]
+    },
+    {
+      "id": "hard-iv-04",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/23-iv-04.jpg",
+      "caption": "IV-04 · Category Manager: As Category Manager, compare the channel planning scenario without reserving any stock.",
+      "step": 23,
+      "case_id": "IV-04",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/23-iv-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Category Manager",
+        "Channel Allocation Scenario",
+        "do not reserve units"
+      ],
+      "boxes": [
+        {
+          "x": 476,
+          "y": 462,
+          "width": 242,
+          "height": 24,
+          "label": "Prepared for:** Category Manager"
+        },
+        {
+          "x": 286,
+          "y": 582,
+          "width": 316,
+          "height": 27,
+          "label": "Channel Allocation Scenario"
+        },
+        {
+          "x": 575,
+          "y": 1025,
+          "width": 151,
+          "height": 20,
+          "label": "do not reserve units"
+        }
+      ]
+    },
+    {
+      "id": "hard-iv-05",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/24-iv-05.jpg",
+      "caption": "IV-05 · Inventory Planner: Yes, create the reallocation plan with cost and timing details.",
+      "step": 24,
+      "case_id": "IV-05",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/24-iv-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Reallocation Plan",
+        "$18,400"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 582,
+          "width": 263,
+          "height": 27,
+          "label": "Draft Reallocation Plan"
+        },
+        {
+          "x": 456,
+          "y": 1300,
+          "width": 63,
+          "height": 23,
+          "label": "$18,400"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "35:1 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-iv-06",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/25-iv-06.jpg",
+      "caption": "IV-06 · Inventory Planner: Approved. Execute both phases and show me system-wide inventory health.",
+      "step": 25,
+      "case_id": "IV-06",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/25-iv-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Stock balance score",
+        "Slow movers",
+        "$84,200"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 975,
+          "width": 150,
+          "height": 20,
+          "label": "Stock balance score"
+        },
+        {
+          "x": 286,
+          "y": 1248,
+          "width": 106,
+          "height": 21,
+          "label": "Slow movers"
+        },
+        {
+          "x": 522,
+          "y": 1648,
+          "width": 69,
+          "height": 23,
+          "label": "$84,200"
+        }
+      ]
+    },
+    {
+      "id": "hard-iv-07",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/26-iv-07.jpg",
+      "caption": "IV-07 · Inventory Planner: Yes, optimize all 8 and show me the warehouse automation recommendations.",
+      "step": 26,
+      "case_id": "IV-07",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/26-iv-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RFID Tracking",
+        "$340,000"
+      ],
+      "boxes": [
+        {
+          "x": 358,
+          "y": 1282,
+          "width": 109,
+          "height": 24,
+          "label": "RFID Tracking"
+        },
+        {
+          "x": 531,
+          "y": 1754,
+          "width": 75,
+          "height": 23,
+          "label": "$340,000"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "680 across 15 routes not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-iv-08",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/27-iv-08.jpg",
+      "caption": "IV-08 · Inventory Planner: Yes, create the investment proposal with 3-year financial projections.",
+      "step": 27,
+      "case_id": "IV-08",
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/27-iv-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Investment Proposal",
+        "$858,000",
+        "5.7 months"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 582,
+          "width": 300,
+          "height": 32,
+          "label": "Draft Investment Proposal"
+        },
+        {
+          "x": 385,
+          "y": 1112,
+          "width": 74,
+          "height": 22,
+          "label": "$858,000"
+        },
+        {
+          "x": 375,
+          "y": 1175,
+          "width": 89,
+          "height": 20,
+          "label": "5.7 months"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-28",
+      "mode": "hard",
+      "source": "solutions/inventory-visibility/screenshots/manual/28-confirm-draft.jpg",
+      "caption": "Manual step 28 · Confirm Draft and stop before publish",
+      "step": 28,
+      "draft": true,
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/28-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Inventory Visibility Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 199,
+          "height": 24,
+          "label": "Inventory Visibility Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Inventory Visibility Pilot with Draft visible.",
-      "Manual save confirmation with No unsaved changes visible.",
-      "Manual web-search removal immediately after Search all websites is removed.",
-      "Separate Manual knowledge-upload states with each exact filename visible.",
-      "Separate Manual skill-add states showing each newly added rendered skill."
-    ],
-    "new_learn_step_captures": [
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Copilot-only local 4/4 verdict.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Copilot-only final complete verdict.",
-      "Optional Brainstem equivalents when that persisted lane is selected."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:inventory-visibility",
-    "reviewed_at": "2026-08-10T00:27:58.153427+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:48:51.530856+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

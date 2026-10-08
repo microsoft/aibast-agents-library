@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T13:07:05.316Z",
+  "captured_at": "2026-10-07T08:59:00.779419Z",
   "solution": "@aibast-agents-library/supplier-risk-monitoring",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Supply Risk Monitoring Manual",
-    "bot_id": "7b548b61-63bf-4622-83ba-6ff0ad185169",
+    "bot_id": "fb7acaa6-2878-4cfe-bef8-436602d47312",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 8,
+      "confirmed": 8
     },
     "tools": {
       "expected": 0,
@@ -42,12 +42,12 @@
       "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
       "must_include": [
         "TechnoCore Semiconductor",
-        "CRITICAL"
+        "HIGH RISK"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "14-sr-01.jpg",
+      "expected_screenshot": "20-sr-01.jpg",
       "passed": true
     },
     {
@@ -60,7 +60,7 @@
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "15-sr-02.jpg",
+      "expected_screenshot": "21-sr-02.jpg",
       "passed": true
     },
     {
@@ -73,20 +73,76 @@
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "16-sr-03.jpg",
+      "expected_screenshot": "22-sr-03.jpg",
       "passed": true
     },
     {
       "case_id": "SR-04",
       "prompt": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
       "must_include": [
-        "Murata Electronics",
+        "Kansai Passive Components",
         "No supplier was contacted"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ],
-      "expected_screenshot": "17-sr-04.jpg",
+      "expected_screenshot": "23-sr-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SR-05",
+      "prompt": "What mitigation strategies do you recommend for each of our semiconductor suppliers?",
+      "must_include": [
+        "Increase safety stock",
+        "MONITOR CLOSELY",
+        "OPPORTUNITY"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "24-sr-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SR-06",
+      "prompt": "What would those mitigations cost us, and is the investment worth it?",
+      "must_include": [
+        "$1.098M",
+        "65% reduction",
+        "Break-even"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "25-sr-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SR-07",
+      "prompt": "Lay out a twelve-month plan for putting these protections in place.",
+      "must_include": [
+        "Phase 1 (Months 1-3)",
+        "60% Taiwan / 40% Korea",
+        "Risk score target"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "26-sr-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SR-08",
+      "prompt": "How would we keep watching these suppliers after the plan is in place?",
+      "must_include": [
+        "Alert Thresholds",
+        "Automated Actions",
+        "Early warning"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "27-sr-08.jpg",
       "passed": true
     }
   ],
@@ -99,6 +155,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "28-confirm-draft.jpg"
   }
 }

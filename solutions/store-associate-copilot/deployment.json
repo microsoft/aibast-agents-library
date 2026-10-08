@@ -10,12 +10,15 @@
     "product_lookup",
     "customer_assist",
     "task_checklist",
-    "performance_dashboard"
+    "performance_dashboard",
+    "accessory_recommendations",
+    "product_compare",
+    "prepare_transaction"
   ],
   "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
   "manual_authoring": {
     "knowledge_files": 2,
-    "skills": 4,
+    "skills": 7,
     "status": "source-assets-only",
     "publish": false
   },
@@ -23,7 +26,7 @@
     "manual/knowledge/aibast_store-associate-synthetic-records.md",
     "manual/knowledge/aibast_store-associate-rules-and-safety.md"
   ],
-  "manual_skill_count": 4,
+  "manual_skill_count": 7,
   "production_connectors": [
     "Approved read-only commerce catalog",
     "Approved read-only store inventory",
@@ -43,13 +46,16 @@
       "product_lookup",
       "customer_assist",
       "task_checklist",
-      "performance_dashboard"
+      "performance_dashboard",
+      "accessory_recommendations",
+      "product_compare",
+      "prepare_transaction"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_store-associate-synthetic-records.md",
       "manual/knowledge/aibast_store-associate-rules-and-safety.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 7,
     "required_connections": [
       "Approved read-only commerce catalog",
       "Approved read-only store inventory",
@@ -60,17 +66,17 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Retail Store Associate Manual",
-      "bot_id": "7308105d-3105-46e9-917a-4a80fbc3835a",
+      "bot_id": "bd51080e-fb95-42bb-b453-655f978cb2fa",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 7,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 7,
+      "preview_cases_total": 7
     },
     "validated_pilot": {
       "display_name": "Retail Store Associate Pilot",
@@ -79,13 +85,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 7,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 7,
+      "preview_cases_total": 7
     }
   },
   "smoke_test": {

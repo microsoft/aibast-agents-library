@@ -11,50 +11,70 @@
 |---|---|---|---|---|
 | OS-01 | Customer Service Representative | `order_lookup` | Which orders are on track or delayed, and where should customer service focus its review? | `ORD-7813`; `DELAYED` |
 | OS-02 | Account Manager | `shipment_tracking` | What shipment evidence is recorded for the shipped order, and what still needs carrier validation? | `ORD-7812`; `XPO-884291047` |
-| OS-03 | Operations Leader | `delay_notification` | Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule. | `ORD-7813`; `Recorded synthetic recovery options` |
+| OS-03 | Operations Leader | `delay_notification` | Prepare the internal delay and recovery review for the E-Cars Corp transmission housing order without changing any schedule. | `Midwest Casting`; `Recorded synthetic recovery options` |
 | OS-04 | Account Manager | `customer_update` | Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message. | `Customer Update Drafts`; `No email, EDI message` |
+| OS-05 | Production Manager | `engagement_plan` | Show the customer touchpoints planned for the E-Cars Corp delay across email, EDI, portal and the follow-up call. | `EDI 856 ASN`; `Today 2 PM EST`; `Ready to send` |
+| OS-06 | Production Manager | `quality_validation` | What quality assurance and validation is in place for the E-Cars Corp housings from the alternative supplier? | `PPAP Level 3`; `99.8%`; `Metallurgical testing` |
+| OS-07 | Operations Leader | `performance_dashboard` | Show the performance dashboard for the E-Cars Corp account and this order. | `96.2%`; `$14.2M`; `Lessons learned` |
 
 ## Deterministic calculation and interpretation rules
 
-- Order value is quantity multiplied by unit price.
+- Order value is quantity multiplied by unit price (E-Cars Corp: 2,500 x $168 = $420,000).
 - At-risk status is derived from the fixed delayed status or presence in the delay record.
-- Days left uses the source fixed reference date of 2026-03-17 and the implemented deterministic date arithmetic.
-- Customer drafts must use the exact synthetic contact, tier, preferred channel, account owner, order, shipment, and delay records.
-- Carrier and production facts must be validated in approved ERP, MES, carrier, and CRM systems before customer use.
+- Days use calendar arithmetic from the fixed reference date 2026-03-17: promised 2026-03-20 is 3 days, revised 2026-03-23 is 6 days; a delayed order shows days to its revised date, a shipped order shows "-".
+- Compensation = compensation percent x order value (2% x $420,000 = $8,400). Recovery cost = sum of action costs ($54,000).
+- Yield = quality passed / completed (1,847 / 1,850 = 99.8%). Remaining units = in production + queued (650).
+- Customer drafts, EDI updates, portal syncs, calls, discounts and CRM notes are prepared for an authorized person; none is sent or applied by the agent.
 
 ## Exact deterministic operation outputs
 
-### `order_lookup` — Order status dashboard
-
-Use for exact order, customer, product, quantity, value, status, completion, promise date, days left, and at-risk value.
+### `order_lookup` — Order status and situation
 
 When answering from uploaded files alone, preserve the identifiers, headings,
 measurements, amounts, dates, statuses, and authorization language in this
-canonical source output:
+canonical source output (default order):
 
 ```markdown
-## Order Status Dashboard
+## Order Status: E-Cars Corp PO #F2024-3847 (ORD-7810)
 
 > Fixed synthetic snapshot; no live ERP, MES, carrier, or CRM system was queried.
 
+**Order Details:**
+
+- Customer: E-Cars Corp - Manufacturing Plant
+- Product: 6R140 Transmission Housing
+- Quantity: 2,500 units
+- Original delivery: 3 days from now (2026-03-20)
+- Current status: 74% complete
+
+**Situation:**
+
+- Supplier delay: aluminum casting equipment failure + force majeure
+- Impact: 3-day delay (reduced from initial 7 days)
+- Recovery plan: Active
+
+**Open order book:**
+
 | Order | Customer | Product | Qty | Value | Status | Complete | Promise Date | Days Left |
 |-------|----------|---------|-----|-------|--------|----------|--------------|-----------|
-| ORD-7810 | Ford Motor Company | 6R140 Transmission Housing | 2,500 | $420,000.00 | in_production | 74% | 2026-03-20 | 3 |
-| ORD-7811 | Caterpillar Inc. | D11 Track Frame Weldment | 40 | $498,000.00 | in_production | 45% | 2026-04-10 | 23 |
-| ORD-7812 | Tesla Inc. | Model Y Rocker Panel Stampin | 8,000 | $340,000.00 | shipped | 100% | 2026-03-15 | -2 |
-| ORD-7813 | John Deere | Hydraulic Cylinder Barrel | 600 | $231,000.00 | delayed **DELAYED** | 30% | 2026-03-28 | 11 |
+| ORD-7810 | E-Cars Corp | 6R140 Transmission Housing | 2,500 | $420,000.00 | delayed **DELAYED** | 74% | 2026-03-20 | 6 |
+| ORD-7811 | Ironridge Equipment Co. | Track Frame Weldment | 40 | $498,000.00 | in_production | 45% | 2026-04-10 | 24 |
+| ORD-7812 | Voltline Motors | EV Rocker Panel Stamping | 8,000 | $340,000.00 | shipped | 100% | 2026-03-15 | - |
+| ORD-7813 | Greenfield Agri Machines | Hydraulic Cylinder Barrel | 600 | $231,000.00 | delayed **DELAYED** | 30% | 2026-03-28 | 22 |
 
 **Total order book value:** $1,489,000.00
-**At-risk order value:** $231,000.00
+**At-risk order value:** $651,000.00
+
+Source: [D365 Production + Order Management] (synthetic)
+
+**Next step:** draft the customer communication?
 ```
 
 ### `shipment_tracking` — Shipment tracking
 
-Use for exact order, carrier, tracking number, ship date, estimated delivery, route, weight, and recorded status.
-
 When answering from uploaded files alone, preserve the identifiers, headings,
 measurements, amounts, dates, statuses, and authorization language in this
-canonical source output:
+canonical source output (default order):
 
 ```markdown
 ## Shipment Tracking
@@ -67,139 +87,229 @@ canonical source output:
 
 ### Shipped Orders Detail
 
-- **ORD-7812** (Tesla Inc.): Model Y Rocker Panel Stamping -- 8,000 units, $340,000.00
+- **ORD-7812** (Voltline Motors): EV Rocker Panel Stamping -- 8,000 units, $340,000.00
+
+Carrier status still needs validation in the approved carrier system.
 ```
 
-### `delay_notification` — Internal delay review
-
-Use for exact delayed order, product, quantity, value, delay dates, reason, cost, owner, response window, channel, and recorded recovery options.
+### `delay_notification` — Recovery plan details
 
 When answering from uploaded files alone, preserve the identifiers, headings,
 measurements, amounts, dates, statuses, and authorization language in this
-canonical source output:
+canonical source output (default order):
 
 ```markdown
-## Internal Delay Review
+## Delay Mitigation & Recovery: E-Cars Corp PO #F2024-3847 (ORD-7810)
 
 > Fixed synthetic draft for authorized review. No production schedule, shipment, or customer record was changed.
 
-### ORD-7813 -- John Deere
-- **Product:** Hydraulic Cylinder Barrel
-- **Quantity:** 600 units ($231,000.00)
-- **Delay:** 11 days (2026-03-28 -> 2026-04-08)
-- **Reason:** Raw material shortage -- alloy steel bar stock delayed from supplier
-- **Cost impact:** $14,200.00
-- **Account manager:** Robert Kim
-- **SLA response window:** 4 hours
-- **Preferred channel:** email
+**Root Cause:**
 
-**Recorded synthetic recovery options:**
-- Alternate supplier qualified; first shipment arriving 2026-03-19
-- Weekend overtime shifts approved for CNC cell
-- Partial shipment of 200 units by 2026-03-28
+- Supplier: Midwest Casting (aluminum)
+- Issue: Supplier delay: aluminum casting equipment failure + force majeure
+- Initial impact: 7-day delay
 
+**Recorded synthetic recovery options (our response):**
+
+| Action | Impact | Cost |
+|---|---|---|
+| Alternative supplier | Secured material | $12K premium |
+| Weekend shifts | +150 units | $18K overtime |
+| Air freight (first 500 units) | 2-day delivery | $24K (we absorb) |
+| Daily output increase | +75 units/day | Existing capacity |
+
+**Result:** 7-day delay -> 3-day delay (recovery cost $54,000)
+
+**Compensation offer (proposed):**
+
+- 2% discount ($8,400 credit on $420,000)
+- Priority scheduling on next order
+- Dedicated quality liaison
+
+**Updated Timeline:**
+
+- Day 1-2: Complete remaining 650 units
+- Day 3: Final quality inspection
+- Day 4: Packaging complete
+- Day 5-6: Expedited shipping
+
+**Owner:** Sarah Lin; SLA response window 4 hours; preferred channel email.
+
+Source: [Recovery Planning + Logistics] (synthetic)
+
+**Next step:** show the customer touchpoints?
 ```
 
-### `customer_update` — Customer update drafts
-
-Use for exact customer, contact, tier, preferred channel, authorized owner, subject, order status, shipment evidence, delay evidence, recovery wording, and signature.
+### `customer_update` — Customer communication draft
 
 When answering from uploaded files alone, preserve the identifiers, headings,
 measurements, amounts, dates, statuses, and authorization language in this
-canonical source output:
+canonical source output (default order):
 
 ```markdown
 ## Customer Update Drafts
 
-> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent.
+> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent, and no order, shipment, or production schedule was changed.
 
-The following draft messages have been prepared for all active orders:
-
----
-### ORD-7810 -- Ford Motor Company
+### Customer Communication Draft: E-Cars Corp PO #F2024-3847
 
 **Synthetic communication profile:** Strategic tier; preferred channel email; authorized owner Sarah Lin.
 
-**Subject:** Order ORD-7810 Status Update -- 6R140 Transmission Housing
+**To:** James Mitchell (Procurement Manager)
+**CC:** Tom Bradley (Plant Manager), Sarah Chen (Quality), Logistics team
+**Subject:** PO #F2024-3847 Status Update - Revised Delivery Date
 
-Dear James Mitchell,
+Dear James,
 
-Your order is progressing on schedule.
+I'm writing to update you on PO #F2024-3847 (2,500 6R140 Transmission Housing units).
 
-- **Completion:** 74%
-- **Promised delivery:** 2026-03-20
+**Current Status:**
+- Completed: 1,850 units (74%)
+- Quality passed: 1,847 units (99.8% yield)
+- In production: 350 units
+- Queued: 300 units
 
-Please do not hesitate to reach out with any questions.
+**Delivery Update:**
+- Original: 3 days from now (2026-03-20)
+- Revised: 6 days from now (2026-03-23; 3-day delay)
 
-Best regards,
-Sarah Lin
-
----
-### ORD-7811 -- Caterpillar Inc.
-
-**Synthetic communication profile:** Strategic tier; preferred channel EDI; authorized owner Robert Kim.
-
-**Subject:** Order ORD-7811 Status Update -- D11 Track Frame Weldment
-
-Dear Rita Vasquez,
-
-Your order is progressing on schedule.
-
-- **Completion:** 45%
-- **Promised delivery:** 2026-04-10
-
-Please do not hesitate to reach out with any questions.
-
-Best regards,
-Robert Kim
-
----
-### ORD-7812 -- Tesla Inc.
-
-**Synthetic communication profile:** Priority tier; preferred channel portal; authorized owner Sarah Lin.
-
-**Subject:** Order ORD-7812 Status Update -- Model Y Rocker Panel Stamping
-
-Dear Derek Chung,
-
-Your order has shipped and is on its way.
-
-- **Carrier:** XPO Logistics
-- **Tracking:** XPO-884291047
-- **Est. delivery:** 2026-03-15
+**Recovery Actions:**
+- Alternative supplier: Secured material
+- Weekend shifts: +150 units
+- Air freight (first 500 units): 2-day delivery
+- Daily output increased: 250 -> 325 units
 
 Please do not hesitate to reach out with any questions.
 
 Best regards,
 Sarah Lin
 
----
-### ORD-7813 -- John Deere
+Ready for you to review and send from Outlook; customer updates require an approved communication tool and an authorized sender.
 
-**Synthetic communication profile:** Priority tier; preferred channel email; authorized owner Robert Kim.
+Source: [Email Template + Production Data] (synthetic)
 
-**Subject:** Order ORD-7813 Status Update -- Hydraulic Cylinder Barrel
+**Next step:** see the detailed recovery plan?
+```
 
-Dear Angela Torres,
+### `engagement_plan` — Multi-channel engagement
 
-We are writing to inform you of a revised delivery date for your order.
+When answering from uploaded files alone, preserve the identifiers, headings,
+measurements, amounts, dates, statuses, and authorization language in this
+canonical source output (default order):
 
-- **Original date:** 2026-03-28
-- **Revised date:** 2026-04-08
-- **Reason:** Raw material shortage -- alloy steel bar stock delayed from supplier
+```markdown
+## Multi-Channel Customer Engagement: E-Cars Corp PO #F2024-3847
 
-**Recovery actions underway:**
-- Alternate supplier qualified; first shipment arriving 2026-03-19
-- Weekend overtime shifts approved for CNC cell
-- Partial shipment of 200 units by 2026-03-28
+> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent, and no order, shipment, or production schedule was changed.
 
-Please do not hesitate to reach out with any questions.
+Tailored to the Strategic tier: Email, EDI 856 ASN, Supplier portal, Phone call.
 
-Best regards,
-Robert Kim
+| Channel | Prepared action | Status |
+|---|---|---|
+| Email (primary) | To James Mitchell (Procurement Manager); CC Tom Bradley (Plant Manager), Sarah Chen (Quality), Logistics team; read receipt requested | Ready to send |
+| EDI 856 ASN | Updated ship dates from the revised timeline; acknowledgment expected within 2 hours | Ready to transmit |
+| E-Cars Corp supplier portal | Status and revised date | Ready to sync |
+| Follow-up call | Today 2 PM EST with Account Manager + Production Manager; agenda: recovery plan review | Invite ready to send |
 
+**Touchpoints prepared:** 4
 
-Customer updates require an approved communication tool and an authorized sender.
+**Proactive monitoring (to switch on):** daily production updates, quality milestone alerts, shipping tracker with real-time status.
+
+**Relationship management:** 2% discount ($8,400) ready to apply on approval; account note for priority service drafted.
+
+Source: [Outlook + EDI + Supplier Portal + CRM] (synthetic)
+
+**Next step:** review quality assurance and validation?
+```
+
+### `quality_validation` — Quality assurance and validation
+
+When answering from uploaded files alone, preserve the identifiers, headings,
+measurements, amounts, dates, statuses, and authorization language in this
+canonical source output (default order):
+
+```markdown
+## Quality Assurance & Validation: E-Cars Corp PO #F2024-3847
+
+> Fixed synthetic quality record; confirm in the quality management system before sharing.
+
+**Incoming material (alternative supplier):**
+
+- 100% dimensional inspection
+- Metallurgical testing (batch samples)
+- Hardness verification
+- Chemical composition analysis
+- Certification: material test reports provided
+
+**Production quality:**
+
+- In-process inspection: every 50 units
+- Statistical process control (SPC) active
+- Coordinate measuring machine (CMM): 10% sample
+- Visual inspection: 100%
+- Current yield: 99.8% (1,847 of 1,850; spec 99.5%)
+
+**Final validation:**
+
+- Functional testing: 100%
+- Dimensional report: full first article
+- Surface finish verification
+- Packaging integrity check
+- Quality documentation: Certificate of Conformance included
+
+**E-Cars Corp-specific requirements:**
+
+- PPAP Level 3 maintained
+- Q1 supplier rating protected
+- Advanced quality planning review: complete
+
+Source: [Quality Management System] (synthetic)
+
+**Next step:** see the performance dashboard?
+```
+
+### `performance_dashboard` — Performance dashboard
+
+When answering from uploaded files alone, preserve the identifiers, headings,
+measurements, amounts, dates, statuses, and authorization language in this
+canonical source output (default order):
+
+```markdown
+## Order & Customer Performance: E-Cars Corp
+
+> Fixed synthetic metrics for internal review.
+
+**This order (PO #F2024-3847):**
+
+- On-time delivery: Recovering (revised date)
+- Quality: 99.8% (target 99.5%)
+- Communication: proactive (4 touchpoints prepared)
+- Customer satisfaction: pending (survey to send after delivery)
+
+**E-Cars Corp account (last 12 months):**
+
+| Metric | Value |
+|---|---|
+| Total orders | 47 |
+| On-time delivery | 96.2% |
+| Quality PPM | 185 (excellent) |
+| Supplier rating | Q1 (top tier) |
+| Annual revenue | $14.2M |
+
+**Delay management effectiveness:**
+
+- Average delay communication: <4 hours
+- Recovery plan implementation: 94% success
+- Customer retention after delays: 97%
+
+**Lessons learned:**
+
+- Supplier diversification accelerated
+- Safety stock policy updated
+- Communication template refined
+- Recovery playbook enhanced
+
+Source: [Power BI + CRM + Quality Systems] (synthetic)
 ```
 
 ## Authorization and no-side-effect boundary

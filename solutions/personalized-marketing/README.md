@@ -43,7 +43,7 @@ offer, launches a campaign, issues a reward, or completes a purchase.
 | Copilot Studio deployment settings | `solutions/personalized-marketing/exports/personalized-marketing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/personalized-marketing/exports/personalized-marketing-solution-export.json` |
 
-**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 125 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.
