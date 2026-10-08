@@ -44,7 +44,14 @@ jobs:
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
           METRICS_REF: ${{ github.ref_name }}
-        run: python scripts/sync_agent_discussions.py
+        # Discussion upkeep is best effort: a refused Discussion update (for
+        # example "Resource not accessible by integration") must not stop the
+        # daily snapshot, or the public metrics page freezes. The failure is
+        # still surfaced as a warning on the run.
+        run: |
+          if ! python scripts/sync_agent_discussions.py; then
+            echo "::warning title=Agent Discussions sync failed::Discussion sync failed; metrics snapshot continues with the last recorded Discussion state."
+          fi
 
       - name: Collect public metrics
         # GitHub's traffic endpoints (clones, views, popular paths) require a
