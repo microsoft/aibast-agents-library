@@ -52,12 +52,12 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Raw export manifest | `solutions/prior-authorization/export-manifest.json` |
 | Source bundle | `solutions/prior-authorization/exports/prior-authorization-source.zip` |
 | Manual evidence | `solutions/prior-authorization/evals/manual-build-evidence.json` |
-| Manual reviewed reference set | `solutions/prior-authorization/screenshots/manual/shared-grounding-r4/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — not current source | `solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip` |
+| Manual browserfilm | `solutions/prior-authorization/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/prior-authorization/exports/prior-authorization-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/prior-authorization/exports/prior-authorization-solution-export.json` |
 
-**Scaffold status:** 78 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation. Resource readiness means file availability, not workshop acceptance. On 2026-09-13, all four unchanged locked prompts passed once each in separate fresh native Preview conversations on one fully saved/reopened r4 Manual build using Claude Sonnet 4.6. The complete policy, all four definitions and both Ready sources matched. All 18 student checkpoints have personally reviewed references with their actual construction, replacement and readback scopes; they are not a continuous fresh-build film. The same agent remained Draft. No native publication, live integration or production certification is claimed.
+**Scaffold status:** 159 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

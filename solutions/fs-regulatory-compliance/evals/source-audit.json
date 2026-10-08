@@ -6,8 +6,7 @@
   "onepager": "43. Regulatory Compliance Agent one-pager.pptx",
   "operations": {
     "compliance_dashboard": [
-      "RC-01",
-      "RC-05"
+      "RC-01"
     ],
     "certification_tracker": [
       "RC-02"
@@ -18,7 +17,15 @@
     "documentation_review": [
       "RC-04"
     ],
-    "remediation_submission": []
+    "remediation_submission": [
+      "RC-05"
+    ],
+    "best_execution_analysis": [
+      "RC-06"
+    ],
+    "executive_summary": [
+      "RC-07"
+    ]
   },
   "defects_fixed": [
     {
@@ -30,6 +37,11 @@
       "area": "tool metadata and audit-readiness boundary",
       "before": "Operation prose implied that the tool could file to an ARM portal, and the dashboard did not explicitly prevent a model from predicting an audit failure.",
       "after": "Metadata states that remediation only prepares synthetic payloads for authorized review and never transmits. The dashboard classifies control gaps as at risk while explicitly disclaiming audit outcomes and legal or regulatory advice."
+    },
+    {
+      "area": "collateral alignment (demo video + one-pager)",
+      "before": "Every figure, trader and record differed from the demo video (13 sample trades, anonymous traders with lapsed certifications, ALGO-POV-NL, AT RISK headline); best-execution venue ranking, RTS 28 report and executive summary had no operation; dates depended on the current day and seven trades shared one timestamp.",
+      "after": "The agent replays the video's fixed quarter: 12,000 trades, 99.8% compliant, 24 exceptions by category (23 auto-fixable, APX-2024-8847 manual), Strategy #5 documentation gaps, best execution by venue with an RTS 28 draft, the four named traders, and an executive scorecard; new operations best_execution_analysis and executive_summary; the batch amendment is staged for approval, never transmitted; no current-date dependence."
     }
   ],
   "routing_result": {

@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T10:33:11.414Z",
+  "captured_at": "2026-10-08T03:02:09.625669Z",
   "solution": "@aibast-agents-library/financial-advisor-copilot",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Financial Advisor Manual",
-    "bot_id": "206d3ce8-c5ec-4da0-8591-51ccac160103",
+    "bot_id": "04ab2aa6-2cde-48f4-931d-1d4d88a3fd53",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 6,
-      "confirmed": 6
+      "expected": 12,
+      "confirmed": 12
     },
     "tools": {
       "expected": 0,
@@ -50,7 +50,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "16-fac-01.jpg",
+      "expected_screenshot": "24-fac-01.jpg",
       "passed": true
     },
     {
@@ -66,7 +66,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "17-fac-02.jpg",
+      "expected_screenshot": "25-fac-02.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "18-fac-03.jpg",
+      "expected_screenshot": "26-fac-03.jpg",
       "passed": true
     },
     {
@@ -98,7 +98,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "19-fac-04.jpg",
+      "expected_screenshot": "27-fac-04.jpg",
       "passed": true
     },
     {
@@ -114,7 +114,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "20-fac-05.jpg",
+      "expected_screenshot": "28-fac-05.jpg",
       "passed": true
     },
     {
@@ -130,7 +130,109 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "21-fac-06.jpg",
+      "expected_screenshot": "29-fac-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-07",
+      "prompt": "I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month.",
+      "must_include": [
+        "California ScholarShare 529",
+        "~$65,730",
+        "~31%"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "30-fac-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-08",
+      "prompt": "Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents.",
+      "must_include": [
+        "Proof of address",
+        "$1,000 initial deposit",
+        "20-30 minutes"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "31-fac-08.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-09",
+      "prompt": "Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution.",
+      "must_include": [
+        "VS1-8609E7B8",
+        "Not Submitted",
+        "no account was opened"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "32-fac-09.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-10",
+      "prompt": "Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough.",
+      "must_include": [
+        "~$210,740",
+        "~$145,010",
+        "$950/month"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "33-fac-10.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-11",
+      "prompt": "I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000.",
+      "must_include": [
+        "Conservative (Score: 45/100)",
+        "35% equities",
+        "advisor review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "34-fac-11.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-12",
+      "prompt": "I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call.",
+      "must_include": [
+        "Tuesday, September 10, 2024",
+        "Sarah King",
+        "no invite was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "35-fac-12.jpg",
       "passed": true
     }
   ],
@@ -143,6 +245,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "22-confirm-draft.jpg"
+    "confirmation_screenshot": "36-confirm-draft.jpg"
   }
 }

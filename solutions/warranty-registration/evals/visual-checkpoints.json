@@ -1,0 +1,1052 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/warranty-registration",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 31,
+    "reshoot_required": 1
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Warranty and Registration",
+        "unit-record",
+        "claim-precheck",
+        "extension-offers",
+        "validate-serial",
+        "registration-draft",
+        "aibast_warranty-registration-rules-and-guardrail",
+        "aibast_warranty-registration-synthetic-records.m"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 202,
+          "height": 24,
+          "label": "Warranty and Registration"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 80,
+          "height": 19,
+          "label": "unit-record"
+        },
+        {
+          "x": 1195,
+          "y": 197,
+          "width": 105,
+          "height": 22,
+          "label": "claim-precheck"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 111,
+          "height": 19,
+          "label": "extension-offers"
+        },
+        {
+          "x": 1225,
+          "y": 237,
+          "width": 97,
+          "height": 19,
+          "label": "validate-serial"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 116,
+          "height": 22,
+          "label": "registration-draft"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_warranty-registration-rules-and-guardrail"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 302,
+          "height": 22,
+          "label": "aibast_warranty-registration-synthetic-records.m"
+        }
+      ]
+    },
+    {
+      "id": "easy-war-01",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/02-war-01.jpg",
+      "caption": "WAR-01 · Dealer Service Manager: How does our dealership's warranty coverage look right now?",
+      "case_id": "WAR-01",
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/02-war-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 564,
+          "width": 124,
+          "height": 24,
+          "label": "Registered units"
+        },
+        {
+          "x": 299,
+          "y": 650,
+          "width": 172,
+          "height": 24,
+          "label": "Expiring within 90 days"
+        },
+        {
+          "x": 299,
+          "y": 737,
+          "width": 194,
+          "height": 24,
+          "label": "Sold, awaiting registration"
+        }
+      ]
+    },
+    {
+      "id": "easy-war-02",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/03-war-02.jpg",
+      "caption": "WAR-02 · Dealer Service Manager: A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+      "case_id": "WAR-02",
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/03-war-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Labor covered",
+        "Eligible for claim review",
+        "No claim was filed"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 768,
+          "width": 111,
+          "height": 20,
+          "label": "Labor covered"
+        },
+        {
+          "x": 411,
+          "y": 876,
+          "width": 183,
+          "height": 24,
+          "label": "Eligible for claim review"
+        },
+        {
+          "x": 286,
+          "y": 1048,
+          "width": 142,
+          "height": 21,
+          "label": "No claim was filed"
+        }
+      ]
+    },
+    {
+      "id": "easy-war-03",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/04-war-03.jpg",
+      "caption": "WAR-03 · Warranty Administrator: Pull the full warranty record for tire changer TC-90-3307.",
+      "case_id": "WAR-03",
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/04-war-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Expired (ended 16 days ago)",
+        "Claim history",
+        "CLM-25-0044"
+      ],
+      "boxes": [
+        {
+          "x": 496,
+          "y": 746,
+          "width": 213,
+          "height": 24,
+          "label": "Expired (ended 16 days ago)"
+        },
+        {
+          "x": 285,
+          "y": 928,
+          "width": 110,
+          "height": 24,
+          "label": "Claim history"
+        },
+        {
+          "x": 299,
+          "y": 1071,
+          "width": 107,
+          "height": 20,
+          "label": "CLM-25-0044"
+        }
+      ]
+    },
+    {
+      "id": "easy-war-04",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/05-war-04.jpg",
+      "caption": "WAR-04 · Dealer Sales Staff: We just sold welding station WS-25-4520. Check the serial before we register it.",
+      "case_id": "WAR-04",
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/05-war-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Already registered",
+        "2026-03-22"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 611,
+          "width": 140,
+          "height": 24,
+          "label": "Already registered"
+        },
+        {
+          "x": 496,
+          "y": 698,
+          "width": 95,
+          "height": 20,
+          "label": "2026-03-22"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Ready to register not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-war-05",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/06-war-05.jpg",
+      "caption": "WAR-05 · Dealer Sales Staff: Prepare the registration for WS-25-4520, but don't submit anything.",
+      "case_id": "WAR-05",
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/06-war-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ],
+      "boxes": [
+        {
+          "x": 612,
+          "y": 417,
+          "width": 215,
+          "height": 24,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 504,
+          "y": 888,
+          "width": 93,
+          "height": 20,
+          "label": "2028-02-20"
+        },
+        {
+          "x": 286,
+          "y": 1279,
+          "width": 99,
+          "height": 24,
+          "label": "Nothing was submitted"
+        }
+      ]
+    },
+    {
+      "id": "easy-war-06",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/07-war-06.jpg",
+      "caption": "WAR-06 · Dealer Sales Staff: Which units should we offer extended coverage to this month?",
+      "case_id": "WAR-06",
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/07-war-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "BG-08-2290",
+        "$191.25",
+        "No offer was sent"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 613,
+          "width": 97,
+          "height": 20,
+          "label": "BG-08-2290"
+        },
+        {
+          "x": 446,
+          "y": 721,
+          "width": 63,
+          "height": 22,
+          "label": "$191.25"
+        },
+        {
+          "x": 1010,
+          "y": 987,
+          "width": 134,
+          "height": 21,
+          "label": "No offer was sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/warranty-registration/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/warranty-registration/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Warranty and Registration"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 199,
+          "height": 24,
+          "label": "Warranty and Registration"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Warranty and Manual",
+      "step": 2,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Warranty and Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 168,
+          "height": 24,
+          "label": "Warranty and Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Warranty and Registration Agent — Manual Global "
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 278,
+          "width": 697,
+          "height": 32,
+          "label": "Warranty and Registration Agent — Manual Global "
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "status": "reshoot_required",
+      "reason": "No positive target-state anchor is visible in the frame."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/06-add-aibast-warranty-registration-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_warranty-registration-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/06-add-aibast-warranty-registration-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_warranty-registration-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_warranty-registration-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/07-add-aibast-warranty-registration-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_warranty-registration-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/07-add-aibast-warranty-registration-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_warranty-registration-synthetic-records.m"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_warranty-registration-synthetic-records.m"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/08-add-aibast-claim-precheck-02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_claim-precheck_02",
+      "step": 8,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/08-add-aibast-claim-precheck-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "claim-precheck"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 105,
+          "height": 22,
+          "label": "claim-precheck"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/09-add-aibast-coverage-overview-01.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_coverage-overview_01",
+      "step": 9,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/09-add-aibast-coverage-overview-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "coverage-overview"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 128,
+          "height": 22,
+          "label": "coverage-overview"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/10-add-aibast-extension-offers-06.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_extension-offers_06",
+      "step": 10,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/10-add-aibast-extension-offers-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "extension-offers"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 111,
+          "height": 19,
+          "label": "extension-offers"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/11-add-aibast-registration-draft-05.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_registration-draft_05",
+      "step": 11,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/11-add-aibast-registration-draft-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "registration-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 22,
+          "label": "registration-draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/12-add-aibast-unit-record-03.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_unit-record_03",
+      "step": 12,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/12-add-aibast-unit-record-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "unit-record"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 80,
+          "height": 19,
+          "label": "unit-record"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/13-add-aibast-validate-serial-04.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_validate-serial_04",
+      "step": 13,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/13-add-aibast-validate-serial-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "validate-serial"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 97,
+          "height": 19,
+          "label": "validate-serial"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "validate-serial",
+        "unit-record",
+        "registration-draft",
+        "extension-offers",
+        "coverage-overview",
+        "aibast_warranty-registration-synthetic-records.m",
+        "aibast_warranty-registration-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 97,
+          "height": 19,
+          "label": "validate-serial"
+        },
+        {
+          "x": 1211,
+          "y": 197,
+          "width": 80,
+          "height": 19,
+          "label": "unit-record"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 116,
+          "height": 22,
+          "label": "registration-draft"
+        },
+        {
+          "x": 1231,
+          "y": 237,
+          "width": 111,
+          "height": 19,
+          "label": "extension-offers"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 128,
+          "height": 22,
+          "label": "coverage-overview"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_warranty-registration-synthetic-records.m"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_warranty-registration-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "validate-serial",
+        "unit-record",
+        "registration-draft",
+        "extension-offers",
+        "coverage-overview"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 97,
+          "height": 19,
+          "label": "validate-serial"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 80,
+          "height": 19,
+          "label": "unit-record"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 117,
+          "height": 22,
+          "label": "registration-draft"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 111,
+          "height": 19,
+          "label": "extension-offers"
+        },
+        {
+          "x": 1263,
+          "y": 516,
+          "width": 59,
+          "height": 17,
+          "label": "coverage-overview"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "registration-draft",
+        "extension-offers",
+        "coverage-overview",
+        "claim-precheck"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 122,
+          "width": 117,
+          "height": 22,
+          "label": "registration-draft"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 111,
+          "height": 19,
+          "label": "extension-offers"
+        },
+        {
+          "x": 1263,
+          "y": 265,
+          "width": 59,
+          "height": 17,
+          "label": "coverage-overview"
+        },
+        {
+          "x": 1055,
+          "y": 415,
+          "width": 105,
+          "height": 23,
+          "label": "claim-precheck"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Warranty and Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 168,
+          "height": 24,
+          "label": "Warranty and Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-war-01",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/18-war-01.jpg",
+      "caption": "WAR-01 · Dealer Service Manager: How does our dealership's warranty coverage look right now?",
+      "step": 18,
+      "case_id": "WAR-01",
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/18-war-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 609,
+          "width": 124,
+          "height": 24,
+          "label": "Registered units"
+        },
+        {
+          "x": 299,
+          "y": 695,
+          "width": 136,
+          "height": 24,
+          "label": "Expiring within 90 days"
+        },
+        {
+          "x": 298,
+          "y": 782,
+          "width": 195,
+          "height": 24,
+          "label": "Sold, awaiting registration"
+        }
+      ]
+    },
+    {
+      "id": "hard-war-02",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/19-war-02.jpg",
+      "caption": "WAR-02 · Dealer Service Manager: A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+      "step": 19,
+      "case_id": "WAR-02",
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/19-war-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Eligible for claim review",
+        "Labor covered",
+        "No claim was filed"
+      ],
+      "boxes": [
+        {
+          "x": 719,
+          "y": 489,
+          "width": 183,
+          "height": 24,
+          "label": "Eligible for claim review"
+        },
+        {
+          "x": 299,
+          "y": 813,
+          "width": 110,
+          "height": 20,
+          "label": "Labor covered"
+        },
+        {
+          "x": 408,
+          "y": 988,
+          "width": 138,
+          "height": 20,
+          "label": "No claim was filed"
+        }
+      ]
+    },
+    {
+      "id": "hard-war-03",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/20-war-03.jpg",
+      "caption": "WAR-03 · Warranty Administrator: Pull the full warranty record for tire changer TC-90-3307.",
+      "step": 20,
+      "case_id": "WAR-03",
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/20-war-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Expired (ended 16 days ago)",
+        "Claim history",
+        "CLM-25-0044"
+      ],
+      "boxes": [
+        {
+          "x": 476,
+          "y": 743,
+          "width": 213,
+          "height": 24,
+          "label": "Expired (ended 16 days ago)"
+        },
+        {
+          "x": 286,
+          "y": 938,
+          "width": 107,
+          "height": 24,
+          "label": "Claim history"
+        },
+        {
+          "x": 299,
+          "y": 1089,
+          "width": 107,
+          "height": 20,
+          "label": "CLM-25-0044"
+        }
+      ]
+    },
+    {
+      "id": "hard-war-04",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/21-war-04.jpg",
+      "caption": "WAR-04 · Dealer Sales Staff: We just sold welding station WS-25-4520. Check the serial before we register it.",
+      "step": 21,
+      "case_id": "WAR-04",
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/21-war-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Ready to register",
+        "Already registered",
+        "2026-03-22"
+      ],
+      "boxes": [
+        {
+          "x": 498,
+          "y": 462,
+          "width": 136,
+          "height": 24,
+          "label": "Ready to register"
+        },
+        {
+          "x": 298,
+          "y": 656,
+          "width": 140,
+          "height": 24,
+          "label": "Already registered"
+        },
+        {
+          "x": 496,
+          "y": 743,
+          "width": 92,
+          "height": 20,
+          "label": "2026-03-22"
+        }
+      ]
+    },
+    {
+      "id": "hard-war-05",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/22-war-05.jpg",
+      "caption": "WAR-05 · Dealer Sales Staff: Prepare the registration for WS-25-4520, but don't submit anything.",
+      "step": 22,
+      "case_id": "WAR-05",
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/22-war-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ],
+      "boxes": [
+        {
+          "x": 501,
+          "y": 462,
+          "width": 118,
+          "height": 21,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 495,
+          "y": 873,
+          "width": 93,
+          "height": 20,
+          "label": "2028-02-20"
+        },
+        {
+          "x": 530,
+          "y": 1095,
+          "width": 99,
+          "height": 24,
+          "label": "Nothing was submitted"
+        }
+      ]
+    },
+    {
+      "id": "hard-war-06",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/23-war-06.jpg",
+      "caption": "WAR-06 · Dealer Sales Staff: Which units should we offer extended coverage to this month?",
+      "step": 23,
+      "case_id": "WAR-06",
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/23-war-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "BG-08-2290",
+        "$191.25",
+        "No offer was sent"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 570,
+          "width": 95,
+          "height": 20,
+          "label": "BG-08-2290"
+        },
+        {
+          "x": 369,
+          "y": 678,
+          "width": 61,
+          "height": 22,
+          "label": "$191.25"
+        },
+        {
+          "x": 820,
+          "y": 878,
+          "width": 99,
+          "height": 20,
+          "label": "No offer was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/warranty-registration/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/warranty-registration/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Warranty and Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 164,
+          "height": 24,
+          "label": "Warranty and Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "solutions/warranty-registration/screenshots/manual/04-save-instructions.jpg"
+    ],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "changes_requested",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:53:04.557637+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

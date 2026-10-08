@@ -39,7 +39,7 @@ replenishes, allocates, promises, or purchases inventory.
 | Copilot Studio deployment settings | `solutions/inventory-visibility/exports/inventory-visibility-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/inventory-visibility/exports/inventory-visibility-solution-export.json` |
 
-**Scaffold status:** 87 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

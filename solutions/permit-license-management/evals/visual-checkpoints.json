@@ -8,557 +8,869 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 19,
-    "reshoot_required": 4
+    "total_existing_captures": 27,
+    "reusable": 27,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-permit-license-management-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
-      "source": "solutions/permit-license-management/screenshots/assisted/01-permit_license_management-01.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/01-permit_license_management-01.png",
+      "source": "solutions/permit-license-management/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "PRM-6002",
-        "EXPIRED",
-        "Verify status"
+        "Permit Management Pilot",
+        "Draft",
+        "permit-license-management-compliance-gaps",
+        "permit-license-management-renewal-plan",
+        "permit-license-management-permit-inventory",
+        "permit-license-management-renewal-calendar",
+        "permit-license-management-application-status",
+        "permit-license-management-rules-and-controls.md",
+        "permit-license-management-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 126,
-          "width": 940,
-          "height": 106,
-          "label": "PRM-6002 is EXPIRED"
+          "x": 84,
+          "y": 20,
+          "width": 196,
+          "height": 24,
+          "label": "Permit Management Pilot"
         },
-        {
-          "x": 285,
-          "y": 244,
-          "width": 940,
-          "height": 102,
-          "label": "Verify status"
-        }
-      ]
-    },
-    {
-      "id": "easy-permit-license-management-02",
-      "mode": "easy",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
-      "source": "solutions/permit-license-management/screenshots/assisted/02-permit_license_management-02.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/02-permit_license_management-02.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "NPDES Stormwater Discharge Permit",
-        "March 1, 2026",
-        "no renewal application has been recorded"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact ISO marker 2026-03-01 is rendered as March 1, 2026 in the capture."
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 122,
-          "width": 942,
-          "height": 84,
-          "label": "Deadline and no-renewal evidence"
-        }
-      ]
-    },
-    {
-      "id": "easy-permit-license-management-03",
-      "mode": "easy",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
-      "source": "solutions/permit-license-management/screenshots/assisted/03-permit_license_management-03.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/03-permit_license_management-03.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "This is not legal advice"
-      ],
-      "full_case_not_visibly_proven": [
-        "The expired_permit and CRITICAL markers are above the captured viewport."
-      ],
-      "boxes": [
         {
           "x": 291,
-          "y": 244,
-          "width": 926,
-          "height": 57,
-          "label": "Not legal advice"
-        }
-      ],
-      "note": "Label pill was covering the Material Uncertainty bullet above the target text; remeasured the disclaimer line and moved the pill into the left margin 2026-09-10."
-    },
-    {
-      "id": "easy-permit-license-management-04",
-      "mode": "easy",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
-      "source": "solutions/permit-license-management/screenshots/assisted/04-permit_license_management-04.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/04-permit_license_management-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "public_comment",
-        "APP-7002",
-        "the local environment has no write-capable tool"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact phrase cannot submit is outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 286,
-          "y": 128,
-          "width": 940,
-          "height": 92,
-          "label": "No write-capable tool"
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
         },
         {
-          "x": 286,
-          "y": 246,
-          "width": 940,
-          "height": 54,
-          "label": "public_comment status"
+          "x": 1057,
+          "y": 196,
+          "width": 297,
+          "height": 22,
+          "label": "permit-license-management-compliance-gaps"
         },
         {
-          "x": 286,
-          "y": 438,
-          "width": 940,
-          "height": 52,
-          "label": "APP-7002 next step"
+          "x": 1057,
+          "y": 236,
+          "width": 271,
+          "height": 22,
+          "label": "permit-license-management-renewal-plan"
+        },
+        {
+          "x": 1057,
+          "y": 276,
+          "width": 296,
+          "height": 22,
+          "label": "permit-license-management-permit-inventory"
+        },
+        {
+          "x": 1057,
+          "y": 316,
+          "width": 298,
+          "height": 22,
+          "label": "permit-license-management-renewal-calendar"
+        },
+        {
+          "x": 1057,
+          "y": 356,
+          "width": 302,
+          "height": 22,
+          "label": "permit-license-management-application-status"
+        },
+        {
+          "x": 1057,
+          "y": 524,
+          "width": 305,
+          "height": 22,
+          "label": "permit-license-management-rules-and-controls.md"
+        },
+        {
+          "x": 1057,
+          "y": 564,
+          "width": 305,
+          "height": 22,
+          "label": "permit-license-management-synthetic-records.md"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-permit_license_management-01",
       "mode": "easy",
-      "source": "solutions/permit-license-management/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list does not show the target Permit Management Pilot row, so its Draft identity is not visible.",
-      "draft": true
+      "source": "solutions/permit-license-management/screenshots/assisted/02-permit_license_management-01.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-01 · Facility Manager: Show me our permit status and any expiring soon",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/02-permit_license_management-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "240 active permits",
+        "$47M",
+        "Imperial Valley Solar"
+      ],
+      "boxes": [
+        {
+          "x": 400,
+          "y": 461,
+          "width": 144,
+          "height": 24,
+          "label": "240 active permits"
+        },
+        {
+          "x": 587,
+          "y": 773,
+          "width": 52,
+          "height": 23,
+          "label": "$47M"
+        },
+        {
+          "x": 418,
+          "y": 1008,
+          "width": 153,
+          "height": 24,
+          "label": "Imperial Valley Solar"
+        }
+      ]
+    },
+    {
+      "id": "easy-permit_license_management-02",
+      "mode": "easy",
+      "source": "solutions/permit-license-management/screenshots/assisted/03-permit_license_management-02.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-02 · Permit Coordinator: Which permit renewals have already missed their lead time, and how many days are left?",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/03-permit_license_management-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "MISSED",
+        "Reno Wind Farm",
+        "No renewal"
+      ],
+      "boxes": [
+        {
+          "x": 526,
+          "y": 461,
+          "width": 60,
+          "height": 20,
+          "label": "MISSED"
+        },
+        {
+          "x": 511,
+          "y": 639,
+          "width": 127,
+          "height": 20,
+          "label": "Reno Wind Farm"
+        },
+        {
+          "x": 553,
+          "y": 1681,
+          "width": 91,
+          "height": 22,
+          "label": "No renewal"
+        }
+      ]
+    },
+    {
+      "id": "easy-permit_license_management-03",
+      "mode": "easy",
+      "source": "solutions/permit-license-management/screenshots/assisted/04-permit_license_management-03.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-03 · Compliance Manager: What permit evidence gap needs immediate authorized review?",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/04-permit_license_management-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CRITICAL",
+        "renewal_lead_time_missed",
+        "not legal advice"
+      ],
+      "boxes": [
+        {
+          "x": 390,
+          "y": 461,
+          "width": 65,
+          "height": 20,
+          "label": "CRITICAL"
+        },
+        {
+          "x": 392,
+          "y": 500,
+          "width": 217,
+          "height": 21,
+          "label": "renewal_lead_time_missed"
+        },
+        {
+          "x": 525,
+          "y": 1251,
+          "width": 128,
+          "height": 24,
+          "label": "not legal advice"
+        }
+      ]
+    },
+    {
+      "id": "easy-permit_license_management-04",
+      "mode": "easy",
+      "source": "solutions/permit-license-management/screenshots/assisted/05-permit_license_management-04.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-04 · Environmental Counsel: Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/05-permit_license_management-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "APP-7102",
+        "cannot submit"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 597,
+          "width": 78,
+          "height": 20,
+          "label": "APP-7102"
+        },
+        {
+          "x": 603,
+          "y": 1009,
+          "width": 115,
+          "height": 23,
+          "label": "cannot submit"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "public_comment not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-permit_license_management-05",
+      "mode": "easy",
+      "source": "solutions/permit-license-management/screenshots/assisted/06-permit_license_management-05.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-05 · Operations Director: Start emergency renewals for the critical permits.",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-05",
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/06-permit_license_management-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$685,000",
+        "$13.8M",
+        "No application was submitted"
+      ],
+      "boxes": [
+        {
+          "x": 444,
+          "y": 968,
+          "width": 75,
+          "height": 23,
+          "label": "$685,000"
+        },
+        {
+          "x": 836,
+          "y": 968,
+          "width": 60,
+          "height": 23,
+          "label": "$13.8M"
+        },
+        {
+          "x": 306,
+          "y": 1400,
+          "width": 371,
+          "height": 24,
+          "label": "No application was submitted"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/permit-license-management/screenshots/assisted/07-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 7 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/07-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Permit Management Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 193,
+          "height": 24,
+          "label": "Permit Management Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/permit-license-management/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/permit-license-management/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 92,
-          "width": 820,
-          "height": 66,
-          "label": "Blank agent workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/permit-license-management/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Permit Management Manual",
+      "step": 2,
       "annotated": "solutions/permit-license-management/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Permit Management Manual in the name field"
+        "Permit Management Manual"
       ],
       "boxes": [
         {
-          "x": 162,
-          "y": 98,
-          "width": 820,
-          "height": 58,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 217,
+          "height": 24,
+          "label": "Permit Management Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/permit-license-management/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/permit-license-management/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Permit Management Agent \u2014 Manual Global Instructions",
-        "Locked Preview evidence anchors",
-        "PERMIT_LICENSE_MANAGEMENT-01 through PERMIT_LICENSE_MANAGEMENT-04"
+        "Permit Management Agent — Manual Global Instruct"
       ],
       "boxes": [
         {
-          "x": 78,
-          "y": 226,
-          "width": 902,
-          "height": 608,
-          "label": "Reviewed instruction policy"
+          "x": 204,
+          "y": 131,
+          "width": 317,
+          "height": 39,
+          "label": "Permit Management Agent — Manual Global Instruct"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/permit-license-management/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction text is visible, but the frame shows no save confirmation, no saved-state tooltip, and no other visible proof that the policy was saved."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 313,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/permit-license-management/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The Knowledge section is empty, but the frame contains no affirmative UI confirmation identifying Search all websites as removed; the absence alone is ambiguous."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/permit-license-management/screenshots/manual/06-add-permit-license-management-rules-and-controls.jpg",
+      "caption": "Manual step 6 · Add knowledge: permit-license-management-rules-and-controls.md",
+      "step": 6,
       "annotated": "solutions/permit-license-management/screenshots/manual/annotated/06-add-permit-license-management-rules-and-controls.png",
       "status": "reusable",
       "visible_anchors": [
-        "permit-license-management-rules-and-contr... knowledge chip"
+        "permit-license-management-rules-and-controls.md"
       ],
       "boxes": [
         {
-          "x": 1025,
+          "x": 1058,
           "y": 308,
-          "width": 375,
-          "height": 42,
-          "label": "Rules knowledge file"
+          "width": 315,
+          "height": 38,
+          "label": "permit-license-management-rules-and-controls.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/permit-license-management/screenshots/manual/07-add-permit-license-management-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: permit-license-management-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/permit-license-management/screenshots/manual/annotated/07-add-permit-license-management-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "permit-license-management-synthetic-recor... knowledge chip",
-        "permit-license-management-rules-and-contr... knowledge chip"
+        "permit-license-management-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 1025,
+          "x": 1058,
           "y": 308,
-          "width": 375,
-          "height": 86,
-          "label": "Two knowledge files"
+          "width": 299,
+          "height": 38,
+          "label": "permit-license-management-synthetic-records.md"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/08-add-aibast-application-status-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_application-status_04",
       "step": 8,
-      "source": "solutions/permit-license-management/screenshots/manual/08-add-aibast-application-status.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/08-add-aibast-application-status.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/08-add-aibast-application-status-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "permit-license-management-application-stat... skill chip"
+        "permit-license-management-application-status"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 185,
-          "width": 375,
-          "height": 43,
-          "label": "Application-status skill"
+          "x": 1057,
+          "y": 196,
+          "width": 302,
+          "height": 22,
+          "label": "permit-license-management-application-status"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/09-add-aibast-compliance-gaps-03.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_compliance-gaps_03",
       "step": 9,
-      "source": "solutions/permit-license-management/screenshots/manual/09-add-aibast-compliance-gaps.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/09-add-aibast-compliance-gaps.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/09-add-aibast-compliance-gaps-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "permit-license-management-compliance-gaps skill chip"
+        "permit-license-management-compliance-gaps"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 185,
-          "width": 375,
-          "height": 43,
-          "label": "Compliance-gaps skill"
+          "x": 1057,
+          "y": 196,
+          "width": 297,
+          "height": 22,
+          "label": "permit-license-management-compliance-gaps"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/10-add-aibast-permit-inventory-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_permit-inventory_01",
       "step": 10,
-      "source": "solutions/permit-license-management/screenshots/manual/10-add-aibast-permit-inventory.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/10-add-aibast-permit-inventory.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/10-add-aibast-permit-inventory-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "permit-license-management-permit-inventory skill chip"
+        "permit-license-management-permit-inventory"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 185,
-          "width": 375,
-          "height": 43,
-          "label": "Permit-inventory skill"
+          "x": 1057,
+          "y": 196,
+          "width": 296,
+          "height": 22,
+          "label": "permit-license-management-permit-inventory"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/11-add-aibast-renewal-calendar-02.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_renewal-calendar_02",
       "step": 11,
-      "source": "solutions/permit-license-management/screenshots/manual/11-add-aibast-renewal-calendar.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/11-add-aibast-renewal-calendar.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/11-add-aibast-renewal-calendar-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "permit-license-management-renewal-calendar skill chip"
+        "permit-license-management-renewal-calendar"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 185,
-          "width": 375,
-          "height": 43,
-          "label": "Renewal-calendar skill"
+          "x": 1057,
+          "y": 196,
+          "width": 298,
+          "height": 22,
+          "label": "permit-license-management-renewal-calendar"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/12-add-aibast-renewal-plan-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_renewal-plan_05",
       "step": 12,
-      "source": "solutions/permit-license-management/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/12-add-aibast-renewal-plan-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "four configured permit-management skills",
-        "two configured permit-management knowledge files",
-        "Save tooltip states No unsaved changes"
+        "permit-license-management-renewal-plan"
       ],
       "boxes": [
         {
-          "x": 1048,
-          "y": 46,
-          "width": 196,
-          "height": 48,
-          "label": "Saved state"
-        },
-        {
-          "x": 1200,
-          "y": 86,
-          "width": 198,
-          "height": 38,
-          "label": "Sonnet 4.6"
-        },
-        {
-          "x": 1023,
-          "y": 181,
-          "width": 377,
-          "height": 157,
-          "label": "Four skills"
-        },
-        {
-          "x": 1023,
-          "y": 469,
-          "width": 377,
-          "height": 86,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 196,
+          "width": 271,
+          "height": 22,
+          "label": "permit-license-management-renewal-plan"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/13-review-inventory.jpg",
+      "caption": "Manual step 13 · Review model, skills, knowledge, and safety boundaries",
       "step": 13,
-      "source": "solutions/permit-license-management/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/13-review-inventory.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Permit Management Manual greeting"
+        "Claude Opus 5",
+        "permit-license-management-renewal-plan",
+        "permit-license-management-renewal-calendar",
+        "permit-license-management-permit-inventory",
+        "permit-license-management-compliance-gaps",
+        "permit-license-management-application-status",
+        "permit-license-management-synthetic-records.md",
+        "permit-license-management-rules-and-controls.md"
       ],
       "boxes": [
         {
-          "x": 635,
-          "y": 7,
-          "width": 112,
-          "height": 45,
-          "label": "Preview"
+          "x": 1251,
+          "y": 95,
+          "width": 101,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 835,
-          "y": 88,
-          "width": 116,
-          "height": 42,
-          "label": "New chat"
+          "x": 1057,
+          "y": 196,
+          "width": 271,
+          "height": 22,
+          "label": "permit-license-management-renewal-plan"
         },
         {
-          "x": 258,
-          "y": 145,
-          "width": 520,
-          "height": 80,
-          "label": "Fresh Preview"
+          "x": 1057,
+          "y": 236,
+          "width": 298,
+          "height": 22,
+          "label": "permit-license-management-renewal-calendar"
+        },
+        {
+          "x": 1057,
+          "y": 276,
+          "width": 296,
+          "height": 22,
+          "label": "permit-license-management-permit-inventory"
+        },
+        {
+          "x": 1057,
+          "y": 316,
+          "width": 297,
+          "height": 22,
+          "label": "permit-license-management-compliance-gaps"
+        },
+        {
+          "x": 1057,
+          "y": 356,
+          "width": 302,
+          "height": 22,
+          "label": "permit-license-management-application-status"
+        },
+        {
+          "x": 1057,
+          "y": 524,
+          "width": 304,
+          "height": 22,
+          "label": "permit-license-management-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 564,
+          "width": 305,
+          "height": 22,
+          "label": "permit-license-management-rules-and-controls.md"
         }
       ]
     },
     {
-      "id": "hard-permit-license-management-01",
+      "id": "hard-step-14",
       "mode": "hard",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
+      "source": "solutions/permit-license-management/screenshots/manual/14-open-preview.jpg",
+      "caption": "Manual step 14 · Open a fresh Preview conversation",
       "step": 14,
-      "source": "solutions/permit-license-management/screenshots/manual/14-permit_license_management-01.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/14-permit_license_management-01.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/14-open-preview.png",
       "status": "reusable",
       "visible_anchors": [
-        "EXPIRED",
-        "2026-03-01",
-        "verify status"
-      ],
-      "full_case_not_visibly_proven": [
-        "PRM-6002 is above the captured viewport."
+        "Permit Management Manual"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 113,
-          "width": 445,
-          "height": 258,
-          "label": "Expired permit details"
-        },
-        {
-          "x": 285,
-          "y": 399,
-          "width": 940,
-          "height": 174,
-          "label": "Verify status"
+          "x": 84,
+          "y": 20,
+          "width": 217,
+          "height": 24,
+          "label": "Permit Management Manual"
         }
       ]
     },
     {
-      "id": "hard-permit-license-management-02",
+      "id": "hard-permit_license_management-01",
       "mode": "hard",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
+      "source": "solutions/permit-license-management/screenshots/manual/15-permit_license_management-01.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-01 · Facility Manager: Show me our permit status and any expiring soon",
       "step": 15,
-      "source": "solutions/permit-license-management/screenshots/manual/15-permit_license_management-02.jpg",
-      "status": "reshoot_required",
-      "reason": "The response says a renewal application was submitted on 2025-09-01, contradicting the locked No renewal evidence required for this case."
-    },
-    {
-      "id": "hard-permit-license-management-03",
-      "mode": "hard",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
-      "step": 16,
-      "source": "solutions/permit-license-management/screenshots/manual/16-permit_license_management-03.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/16-permit_license_management-03.png",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/15-permit_license_management-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "expired_permit",
+        "240 active permits",
+        "Imperial Valley Solar",
+        "$47M"
+      ],
+      "boxes": [
+        {
+          "x": 400,
+          "y": 461,
+          "width": 144,
+          "height": 24,
+          "label": "240 active permits"
+        },
+        {
+          "x": 418,
+          "y": 628,
+          "width": 153,
+          "height": 24,
+          "label": "Imperial Valley Solar"
+        },
+        {
+          "x": 804,
+          "y": 995,
+          "width": 52,
+          "height": 21,
+          "label": "$47M"
+        }
+      ]
+    },
+    {
+      "id": "hard-permit_license_management-02",
+      "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/16-permit_license_management-02.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-02 · Permit Coordinator: Which permit renewals have already missed their lead time, and how many days are left?",
+      "step": 16,
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/16-permit_license_management-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "MISSED",
+        "Reno Wind Farm",
+        "No renewal"
+      ],
+      "boxes": [
+        {
+          "x": 416,
+          "y": 507,
+          "width": 67,
+          "height": 19,
+          "label": "MISSED"
+        },
+        {
+          "x": 511,
+          "y": 684,
+          "width": 127,
+          "height": 20,
+          "label": "Reno Wind Farm"
+        },
+        {
+          "x": 542,
+          "y": 1106,
+          "width": 660,
+          "height": 20,
+          "label": "No renewal"
+        }
+      ]
+    },
+    {
+      "id": "hard-permit_license_management-03",
+      "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/17-permit_license_management-03.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-03 · Compliance Manager: What permit evidence gap needs immediate authorized review?",
+      "step": 17,
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/17-permit_license_management-03.png",
+      "status": "reusable",
+      "visible_anchors": [
         "CRITICAL",
+        "renewal_lead_time_missed",
         "not legal advice"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 154,
-          "width": 940,
-          "height": 151,
-          "label": "Critical expired-permit gap"
+          "x": 390,
+          "y": 506,
+          "width": 65,
+          "height": 20,
+          "label": "CRITICAL"
         },
         {
-          "x": 285,
-          "y": 504,
-          "width": 940,
-          "height": 72,
-          "label": "Not legal advice"
+          "x": 631,
+          "y": 506,
+          "width": 217,
+          "height": 21,
+          "label": "renewal_lead_time_missed"
+        },
+        {
+          "x": 457,
+          "y": 1378,
+          "width": 125,
+          "height": 24,
+          "label": "not legal advice"
         }
       ]
     },
     {
-      "id": "hard-permit-license-management-04",
+      "id": "hard-permit_license_management-04",
       "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/18-permit_license_management-04.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-04 · Environmental Counsel: Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today",
+      "step": 18,
       "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
-      "step": 17,
-      "source": "solutions/permit-license-management/screenshots/manual/17-permit_license_management-04.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/17-permit_license_management-04.png",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/18-permit_license_management-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "cannot submit",
+        "APP-7102",
         "public_comment",
-        "No filing, amendment, or supplemental submission is recorded for today"
-      ],
-      "full_case_not_visibly_proven": [
-        "APP-7002 is above the captured viewport."
+        "cannot submit"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 244,
-          "width": 940,
-          "height": 92,
-          "label": "Cannot submit"
+          "x": 298,
+          "y": 642,
+          "width": 78,
+          "height": 19,
+          "label": "APP-7102"
         },
         {
-          "x": 291,
-          "y": 401,
-          "width": 928,
-          "height": 84,
-          "label": "public_comment phase"
+          "x": 1085,
+          "y": 705,
+          "width": 132,
+          "height": 23,
+          "label": "public_comment"
+        },
+        {
+          "x": 588,
+          "y": 1186,
+          "width": 115,
+          "height": 22,
+          "label": "cannot submit"
         }
-      ],
-      "note": "The public_comment box bottom border clipped the second bullet in the phase explanation; remeasured and expanded the highlight to clear the full text 2026-09-10."
+      ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-permit_license_management-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/permit-license-management/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/permit-license-management/screenshots/manual/19-permit_license_management-05.jpg",
+      "caption": "PERMIT_LICENSE_MANAGEMENT-05 · Operations Director: Start emergency renewals for the critical permits.",
+      "step": 19,
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-05",
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/19-permit_license_management-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Permit Management Manual",
-        "Draft"
+        "$685,000",
+        "$13.8M",
+        "No application was submitted"
       ],
       "boxes": [
         {
-          "x": 100,
-          "y": 246,
-          "width": 1285,
-          "height": 54,
-          "label": "Target agent remains Draft"
+          "x": 444,
+          "y": 1009,
+          "width": 75,
+          "height": 22,
+          "label": "$685,000"
+        },
+        {
+          "x": 816,
+          "y": 1008,
+          "width": 60,
+          "height": 23,
+          "label": "$13.8M"
+        },
+        {
+          "x": 502,
+          "y": 1615,
+          "width": 149,
+          "height": 24,
+          "label": "No application was submitted"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/permit-license-management/screenshots/manual/20-confirm-draft.jpg",
+      "caption": "Manual step 20 · Confirm Draft and stop before publish",
+      "step": 20,
+      "draft": true,
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/20-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Permit Management Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 213,
+          "height": 24,
+          "label": "Permit Management Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Permit Management Pilot with Draft visible.",
-      "Manual step 4 with a visible saved-state confirmation for the instruction policy.",
-      "Manual step 5 with affirmative visible proof that Search all websites was removed.",
-      "Manual PERMIT_LICENSE_MANAGEMENT-02 showing the locked NPDES deadline and No renewal evidence without a contradictory submitted-renewal claim."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:permit-license-management",
-    "reviewed_at": "2026-08-10T00:27:58.158994+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:50:27.037281+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

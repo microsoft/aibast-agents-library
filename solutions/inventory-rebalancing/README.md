@@ -19,24 +19,23 @@
 
 ## Proven now
 
-- Portable source: IR-01 through IR-04 passed in strict Brainstem isolation.
+- Portable source: IR-01 through IR-10 passed in strict Brainstem isolation.
 - Easy agent: `Inventory Rebalancing Pilot`.
 - Schema: `aibast_InventoryRebalancingPilot`.
 - Bot ID: `236a0c04-ea66-46e8-b461-1e2b68291c92`.
 - Environment: kodyv8 (`ee67a404-325c-e726-a18a-886fe708ca0b`).
 - Model: Claude Sonnet 4.6 (`Sonnet46`).
-- Easy inventory: four skills and two knowledge files; seven changes pushed.
-- Easy Preview: IR-01 through IR-04 passed (4/4).
+- Easy inventory: ten skills and two knowledge files.
+- Easy Preview: IR-01 through IR-10 passed (10/10).
 - Easy status: **Draft; not published**.
 - Manual agent: `Inventory Manual Build`, bot
-  `05b62fa7-0327-4626-b9db-8c9de02de91a`.
-- Manual inventory: web search removed, four skills, and two complete reviewed
+  `22d96642-33fd-4e0c-978f-bafca57400f2`, model Claude Opus 5.
+- Manual inventory: web search removed, ten skills, and two complete reviewed
   knowledge files.
 - Manual source parity: both knowledge downloads are byte-identical to the
   reviewed Easy knowledge, and each `SKILL.md` is the exact full `content: |`
   body from its reviewed Easy behavior YAML, including frontmatter.
-- Manual Preview: IR-01 through IR-04 passed after knowledge parity and cost
-  routing were corrected.
+- Manual Preview: IR-01 through IR-10 passed (10/10).
 - Manual status: **Draft; not published**.
 
 ## Evidence boundary
@@ -67,7 +66,7 @@ side effect.
 | Copilot Studio deployment settings | `solutions/inventory-rebalancing/exports/inventory-rebalancing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/inventory-rebalancing/exports/inventory-rebalancing-solution-export.json` |
 
-**Scaffold status:** 104 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

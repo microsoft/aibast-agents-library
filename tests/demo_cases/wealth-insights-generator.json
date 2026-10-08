@@ -34,7 +34,7 @@
       "onepager_bullet": "Analyze client portfolios and surface held-away wealth to uncover expansion opportunities",
       "prompt": "Which household has the largest held-away opportunity and what life event needs validation?",
       "must_include": [
-        "WM-003",
+        "WM-005",
         "Held Away"
       ],
       "must_not_include": [
@@ -108,6 +108,94 @@
       "arguments": {
         "client_id": "WM-003"
       }
+    },
+    {
+      "id": "WIG-06",
+      "persona": "Wealth Advisor",
+      "operation": "book_insights",
+      "onepager_bullet": "Analyze client portfolios and surface held-away wealth to uncover expansion opportunities",
+      "prompt": "Generate wealth insights for my top clients and identify opportunities to deepen relationships.",
+      "must_include": [
+        "85 families",
+        "37% (target 55%)",
+        "$4.2M/year"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {}
+    },
+    {
+      "id": "WIG-07",
+      "persona": "Wealth Advisor",
+      "operation": "planning_gaps",
+      "onepager_bullet": "Detect planning gaps and risk exposures to support proactive client conversations",
+      "prompt": "What planning gaps does the Morrison Family have?",
+      "must_include": [
+        "Outdated (8 yrs)",
+        "pre-TCJA",
+        "+$48K annual fees"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {
+        "client_id": "WM-005"
+      }
+    },
+    {
+      "id": "WIG-08",
+      "persona": "Relationship Manager",
+      "operation": "engagement_strategy",
+      "onepager_bullet": "Produce personalized engagement materials instantly",
+      "prompt": "How should I approach the Morrison relationship expansion?",
+      "must_include": [
+        "Phase 1",
+        "Retirement readiness review",
+        "Legacy goals"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {
+        "client_id": "WM-005"
+      }
+    },
+    {
+      "id": "WIG-09",
+      "persona": "Advisory Director",
+      "operation": "insights_summary",
+      "onepager_bullet": "Analyze client portfolios and surface held-away wealth to uncover expansion opportunities",
+      "prompt": "Give me the complete wealth insights summary with the immediate actions.",
+      "must_include": [
+        "$8.1M",
+        "Chen call (this week)",
+        "Thompson intro (next week)"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {}
     }
   ],
   "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."

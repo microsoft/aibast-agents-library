@@ -1,22 +1,23 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T06:03:48.928Z",
+  "captured_at": "2026-10-07T16:11:56.892529Z",
   "solution": "@aibast-agents-library/maintenance-scheduling",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Maintenance Scheduling Pilot",
   "schema_name": "aibast_MaintenanceSchedulingPilot",
   "bot_id": "b6dcbdd5-aa0b-4d72-916c-418ececa38bb",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 6 change(s) pushed.",
   "cases": [
     {
       "case_id": "MS-01",
       "must_include": [
-        "EQ-INJ-01",
-        "Technician Availability"
+        "IM-07",
+        "Technician Availability",
+        "Marcus Chen"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
@@ -26,8 +27,9 @@
     {
       "case_id": "MS-02",
       "must_include": [
-        "EQ-INJ-01",
-        "Barrel heater band failure"
+        "Screw wear at 78%",
+        "120 operating hours",
+        "50,000 units"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
@@ -37,7 +39,8 @@
     {
       "case_id": "MS-03",
       "must_include": [
-        "EQ-INJ-01",
+        "Saturday 6 AM - 10 AM",
+        "104%",
         "No work order is created or dispatched"
       ],
       "must_not_include": [
@@ -48,8 +51,45 @@
     {
       "case_id": "MS-04",
       "must_include": [
-        "Modeled avoided-cost opportunity",
-        "synthetic planning estimates"
+        "$3,200",
+        "$18,500",
+        "478%"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MS-05",
+      "must_include": [
+        "WO-2024-3847",
+        "Bin 12-A",
+        "No work order is created or dispatched"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MS-06",
+      "must_include": [
+        "Machine #12",
+        "87% planned",
+        "Calibration"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MS-07",
+      "must_include": [
+        "Quick Wins",
+        "$124K",
+        "Run pilot on Line 3"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"

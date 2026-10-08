@@ -5,177 +5,117 @@
 ## Provenance
 
 - Deterministic source: `agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py`
-- Captured source SHA-256: `6e0e25ffee2c9ddb54c1457acf87b7cc9ebcdaf357397fa2d533e01dc565fd31`
+- Captured source SHA-256: `08edd95089a4da0c81b3ec203a72424b30aeb3b80ff5110611f4102343787c09`
 - Locked case file: `tests/demo_cases/asset-maintenance-forecast.json`
-- Locked case SHA-256: `eadc4fc1b187ca684b2022c1d8115eae2a1839748ac9f1d6935654697bc5a354`
+- Locked case SHA-256: `7108dd74335db510810c4d60dca170506029c0327a3c3ff0754e45e926544965`
 - Strict isolation: `true`
 
 ## Record index
 
+- `FLEET`
 - `ASSETS`
-- `BUDGET_RATES`
+- `MOBILIZATION`
+- `BUNDLE_WINDOW`
+
+## FLEET
+
+```json
+{
+  "site": "wind farm",
+  "turbines": 45,
+  "model": "GE 2.5MW",
+  "telemetry": "Azure IoT Hub",
+  "other_units_offline": 1,
+  "other_offline_note": "Unit 41 in a scheduled blade inspection"
+}
+```
 
 ## ASSETS
 
 ```json
 {
-  "AST-T001": {
-    "name": "Wind Turbine Alpha-7",
-    "type": "wind_turbine",
-    "location": "Sweetwater Wind Farm, TX",
-    "installed_year": 2016,
-    "age_years": 10,
-    "capacity_mw": 3.2,
-    "condition_score": 68,
-    "last_major_service": "2025-06-15",
-    "operating_hours": 72480,
-    "failure_rate_annual_pct": 4.2,
-    "maintenance_history": [
-      {
-        "date": "2025-06-15",
-        "type": "major",
-        "cost": 48000,
-        "description": "Gearbox bearing replacement"
-      },
-      {
-        "date": "2025-11-20",
-        "type": "minor",
-        "cost": 8200,
-        "description": "Blade pitch calibration"
-      },
-      {
-        "date": "2026-01-10",
-        "type": "inspection",
-        "cost": 3500,
-        "description": "Annual structural inspection"
-      }
-    ],
-    "predicted_next_failure": "2026-08-15",
-    "replacement_cost": 2400000
+  "Unit 12": {
+    "risk_score": 8.7,
+    "risk_label": "Failure Imminent",
+    "failure_mode": "Main bearing end-of-life wear",
+    "repair": "bearing",
+    "days_to_failure": "18-30",
+    "emergency_cost": 227000,
+    "labor_cost": 30250,
+    "parts_cost": 28000,
+    "duration_days": 3,
+    "crew": "Crew A",
+    "dates": "March 18-20"
   },
-  "AST-X002": {
-    "name": "Substation Transformer B-12",
-    "type": "transformer",
-    "location": "Ridgeline Substation, CO",
-    "installed_year": 2008,
-    "age_years": 18,
-    "capacity_mw": 120.0,
-    "condition_score": 42,
-    "last_major_service": "2024-09-22",
-    "operating_hours": 148920,
-    "failure_rate_annual_pct": 8.7,
-    "maintenance_history": [
-      {
-        "date": "2024-09-22",
-        "type": "major",
-        "cost": 125000,
-        "description": "Oil filtration and bushing replacement"
-      },
-      {
-        "date": "2025-04-11",
-        "type": "minor",
-        "cost": 18500,
-        "description": "Cooling fan motor replacement"
-      },
-      {
-        "date": "2025-12-05",
-        "type": "inspection",
-        "cost": 6200,
-        "description": "DGA oil analysis - elevated acetylene"
-      }
-    ],
-    "predicted_next_failure": "2026-05-01",
-    "replacement_cost": 4800000
+  "Unit 23": {
+    "risk_score": 6.2,
+    "risk_label": "Elevated",
+    "failure_mode": "Gearbox oil contamination",
+    "repair": "oil",
+    "days_to_failure": "45",
+    "emergency_cost": 98000,
+    "labor_cost": 1500,
+    "parts_cost": 5000,
+    "duration_days": 2,
+    "crew": "Crew A",
+    "dates": "March 21-22"
   },
-  "AST-P003": {
-    "name": "Gas Pipeline Segment NE-14",
-    "type": "pipeline",
-    "location": "Northeast Corridor, PA",
-    "installed_year": 2012,
-    "age_years": 14,
-    "capacity_mw": 0,
-    "condition_score": 75,
-    "last_major_service": "2025-08-30",
-    "operating_hours": 0,
-    "failure_rate_annual_pct": 1.8,
-    "maintenance_history": [
-      {
-        "date": "2025-08-30",
-        "type": "major",
-        "cost": 210000,
-        "description": "Corrosion remediation and recoating"
-      },
-      {
-        "date": "2025-11-15",
-        "type": "inspection",
-        "cost": 15000,
-        "description": "Inline inspection pig run"
-      },
-      {
-        "date": "2026-02-20",
-        "type": "minor",
-        "cost": 9800,
-        "description": "Valve actuator servicing"
-      }
-    ],
-    "predicted_next_failure": "2027-03-01",
-    "replacement_cost": 12000000
-  },
-  "AST-T004": {
-    "name": "Gas Turbine GT-3A",
-    "type": "gas_turbine",
-    "location": "Riverside Generating Station, CA",
-    "installed_year": 2019,
-    "age_years": 7,
-    "capacity_mw": 85.0,
-    "condition_score": 88,
-    "last_major_service": "2025-10-12",
-    "operating_hours": 38200,
-    "failure_rate_annual_pct": 1.2,
-    "maintenance_history": [
-      {
-        "date": "2025-10-12",
-        "type": "major",
-        "cost": 340000,
-        "description": "Hot gas path inspection"
-      },
-      {
-        "date": "2026-01-28",
-        "type": "minor",
-        "cost": 22000,
-        "description": "Fuel nozzle cleaning"
-      }
-    ],
-    "predicted_next_failure": "2027-10-01",
-    "replacement_cost": 18000000
+  "Unit 37": {
+    "risk_score": 3.8,
+    "risk_label": "Watch",
+    "failure_mode": "Generator slip ring wear",
+    "repair": "slip ring",
+    "days_to_failure": "90",
+    "emergency_cost": 41000,
+    "labor_cost": 1000,
+    "parts_cost": 3000,
+    "duration_days": 1,
+    "crew": "Crew B",
+    "dates": "March 22"
   }
 }
 ```
 
-## BUDGET_RATES
+## MOBILIZATION
 
 ```json
 {
-  "major": {
-    "wind_turbine": 52000,
-    "transformer": 135000,
-    "pipeline": 225000,
-    "gas_turbine": 360000
-  },
-  "minor": {
-    "wind_turbine": 9000,
-    "transformer": 20000,
-    "pipeline": 12000,
-    "gas_turbine": 25000
-  },
-  "inspection": {
-    "wind_turbine": 4000,
-    "transformer": 7000,
-    "pipeline": 16000,
-    "gas_turbine": 15000
-  }
+  "crane_per_job": 6000,
+  "crew_travel_per_job": 850,
+  "bulk_parts_discount_pct": 15
 }
 ```
+
+## BUNDLE_WINDOW
+
+```json
+{
+  "dates": "March 18-22",
+  "days": 5,
+  "forecast": "low-wind forecast"
+}
+```
+
+## Derived planning figures (computed from the records above)
+
+| Turbine | Risk score | Status | Failure mode | Days to failure | Labor | Parts | Stand-alone planned repair | Emergency cost |
+|---|---|---|---|---|---|---|---|---|
+| Unit 12 | 8.7/10 (Failure Imminent) | CRITICAL | Main bearing end-of-life wear | 18-30 | $30,250 | $28,000 | $65,100 | $227,000 |
+| Unit 23 | 6.2/10 | WARNING | Gearbox oil contamination | 45 | $1,500 | $5,000 | $13,350 | $98,000 |
+| Unit 37 | 3.8/10 | WATCH | Generator slip ring wear | 90 | $1,000 | $3,000 | $10,850 | $41,000 |
+
+- Stand-alone planned repair = labor + parts + crane $6,000 + crew travel $850.
+- Separate Jobs: $89,300. Bundled Job (one crane, one crew trip, 15% bulk parts discount on $36,000 of parts): $70,200.
+- Savings $19,100 = single crane rental vs 3 separate $12,000 + shared crew travel $1,700 + bulk parts discount $5,400.
+- Bundle window: March 18-22 (5 days, low-wind forecast). Crew A: Unit 12 bearing March 18-20, Unit 23 oil March 21-22;
+  Crew B: Unit 37 slip ring March 22.
+- ROI Summary: investment $70,200; avoided failure $161,900 (= $227,000 - $65,100); bundling savings $19,100; total value
+  $181,000; ROI 258%.
+- Fleet availability: 45 GE 2.5MW turbines; (45 - 3) / 45 = 93.3% today -> (45 - 1) / 45 = 97.8% after the plan (Unit 41
+  remains in a scheduled blade inspection).
+- Opening analysis wording: "Analyzing your 45 GE 2.5MW turbines through Azure IoT Hub." Critical Alert - Unit 12: $227K
+  emergency cost vs $65K planned repair; recommendation: bundle all 3 units during the March 18-22 low-wind window, save
+  $19K on mobilization, avoid $227K catastrophic failure, total investment $70K.
 
 ## Record-use boundary
 

@@ -8,439 +8,1186 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 12,
-    "reshoot_required": 11
+    "total_existing_captures": 38,
+    "reusable": 38,
+    "reshoot_required": 0
   },
   "captures": [
     {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Risk Monitoring Pilot",
+        "Draft",
+        "implementation-roadmap",
+        "mitigation-plan",
+        "monitoring-plan",
+        "risk-dashboard",
+        "financial-impact",
+        "aibast_supplier-risk-monitoring-synthetic-record",
+        "aibast_supplier-risk-monitoring-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 218,
+          "height": 24,
+          "label": "Supply Risk Monitoring Pilot"
+        },
+        {
+          "x": 313,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 170,
+          "height": 22,
+          "label": "implementation-roadmap"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 106,
+          "height": 22,
+          "label": "mitigation-plan"
+        },
+        {
+          "x": 1221,
+          "y": 237,
+          "width": 112,
+          "height": 22,
+          "label": "monitoring-plan"
+        },
+        {
+          "x": 1058,
+          "y": 277,
+          "width": 103,
+          "height": 19,
+          "label": "risk-dashboard"
+        },
+        {
+          "x": 1218,
+          "y": 277,
+          "width": 110,
+          "height": 22,
+          "label": "financial-impact"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 312,
+          "height": 22,
+          "label": "aibast_supplier-risk-monitoring-synthetic-record"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 307,
+          "height": 22,
+          "label": "aibast_supplier-risk-monitoring-review-rules.md"
+        }
+      ]
+    },
+    {
       "id": "easy-sr-01",
       "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/02-sr-01.jpg",
+      "caption": "SR-01 · Supply Chain Director: Where is supplier exposure concentrated, and which relationships should leadership review first?",
       "case_id": "SR-01",
-      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/01-sr-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The learner frame exposes a Leadership Review Recommendations row whose recommended action is visibly truncated after \u201cAt\u201d. The source capture cannot show a complete meaningful recommendation, so it is withheld pending a reshoot."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/02-sr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "HIGH RISK",
+        "TechnoCore Semiconductor"
+      ],
+      "boxes": [
+        {
+          "x": 1041,
+          "y": 702,
+          "width": 108,
+          "height": 24,
+          "label": "HIGH RISK"
+        },
+        {
+          "x": 298,
+          "y": 704,
+          "width": 212,
+          "height": 20,
+          "label": "TechnoCore Semiconductor"
+        }
+      ]
     },
     {
       "id": "easy-sr-02",
       "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/03-sr-02.jpg",
+      "caption": "SR-02 · Procurement Manager: Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
       "case_id": "SR-02",
-      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/02-sr-02.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/02-sr-02.png",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/03-sr-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Geopolitical score of 42/100",
-        "Cross-strait military exercises caused a 5-day port closure"
-      ],
-      "full_case_not_visibly_proven": [
-        "SUP-101 is outside the captured viewport."
+        "SUP-101",
+        "Geopolitical"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 126,
-          "width": 945,
-          "height": 104,
-          "label": "Geopolitical evidence"
+          "x": 712,
+          "y": 473,
+          "width": 95,
+          "height": 26,
+          "label": "SUP-101"
+        },
+        {
+          "x": 298,
+          "y": 709,
+          "width": 98,
+          "height": 24,
+          "label": "Geopolitical"
         }
       ]
     },
     {
       "id": "easy-sr-03",
       "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/04-sr-03.jpg",
+      "caption": "SR-03 · Supply Chain Director: Which recorded disruptions could threaten continuity, and what exposure should we validate?",
       "case_id": "SR-03",
-      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/03-sr-03.jpg",
-      "status": "reshoot_required",
-      "reason": "SUP-104 and force majeure appear only in the visible reasoning trace. The final answer has only begun and contains no deterministic result anchor; reasoning text is not visual proof."
-    },
-    {
-      "id": "easy-sr-04",
-      "mode": "easy",
-      "case_id": "SR-04",
-      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/04-sr-04.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/04-sr-04.png",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/04-sr-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "No supplier was contacted",
-        "All sourcing actions require authorized procurement owners"
-      ],
-      "full_case_not_visibly_proven": [
-        "Murata Electronics is outside the captured viewport."
+        "SUP-104",
+        "force majeure"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 438,
-          "width": 950,
-          "height": 140,
-          "label": "No supplier action and authorization gate"
+          "x": 809,
+          "y": 617,
+          "width": 75,
+          "height": 22,
+          "label": "SUP-104"
+        },
+        {
+          "x": 676,
+          "y": 659,
+          "width": 538,
+          "height": 24,
+          "label": "force majeure"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-sr-04",
       "mode": "easy",
-      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Supply Risk Monitoring Pilot row is not visible.",
-      "draft": true
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/05-sr-04.jpg",
+      "caption": "SR-04 · Procurement Manager: Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+      "case_id": "SR-04",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/05-sr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No supplier was contacted",
+        "Kansai Passive Components"
+      ],
+      "boxes": [
+        {
+          "x": 1118,
+          "y": 444,
+          "width": 95,
+          "height": 24,
+          "label": "No supplier was contacted"
+        },
+        {
+          "x": 299,
+          "y": 1087,
+          "width": 211,
+          "height": 24,
+          "label": "Kansai Passive Components"
+        }
+      ]
+    },
+    {
+      "id": "easy-sr-05",
+      "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/06-sr-05.jpg",
+      "caption": "SR-05 · Procurement Manager: What mitigation strategies do you recommend for each of our semiconductor suppliers?",
+      "case_id": "SR-05",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/06-sr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Increase safety stock",
+        "MONITOR CLOSELY",
+        "OPPORTUNITY"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 652,
+          "width": 161,
+          "height": 24,
+          "label": "Increase safety stock"
+        },
+        {
+          "x": 342,
+          "y": 1002,
+          "width": 152,
+          "height": 20,
+          "label": "MONITOR CLOSELY"
+        },
+        {
+          "x": 342,
+          "y": 1459,
+          "width": 118,
+          "height": 20,
+          "label": "OPPORTUNITY"
+        }
+      ]
+    },
+    {
+      "id": "easy-sr-06",
+      "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/07-sr-06.jpg",
+      "caption": "SR-06 · Supply Chain Director: What would those mitigations cost us, and is the investment worth it?",
+      "case_id": "SR-06",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/07-sr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$1.098M",
+        "Break-even"
+      ],
+      "boxes": [
+        {
+          "x": 473,
+          "y": 509,
+          "width": 71,
+          "height": 23,
+          "label": "$1.098M"
+        },
+        {
+          "x": 299,
+          "y": 1260,
+          "width": 91,
+          "height": 20,
+          "label": "Break-even"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "65% reduction not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-sr-07",
+      "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/08-sr-07.jpg",
+      "caption": "SR-07 · Supply Chain Director: Lay out a twelve-month plan for putting these protections in place.",
+      "case_id": "SR-07",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/08-sr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Risk score target",
+        "Phase 1 (Months 1-3)",
+        "60% Taiwan / 40% Korea"
+      ],
+      "boxes": [
+        {
+          "x": 348,
+          "y": 505,
+          "width": 462,
+          "height": 24,
+          "label": "Risk score target"
+        },
+        {
+          "x": 286,
+          "y": 562,
+          "width": 165,
+          "height": 23,
+          "label": "Phase 1 (Months 1-3)"
+        },
+        {
+          "x": 460,
+          "y": 1587,
+          "width": 188,
+          "height": 22,
+          "label": "60% Taiwan / 40% Korea"
+        }
+      ]
+    },
+    {
+      "id": "easy-sr-08",
+      "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/09-sr-08.jpg",
+      "caption": "SR-08 · Procurement Manager: How would we keep watching these suppliers after the plan is in place?",
+      "case_id": "SR-08",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/09-sr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Automated Actions",
+        "Alert Thresholds",
+        "Early warning"
+      ],
+      "boxes": [
+        {
+          "x": 845,
+          "y": 517,
+          "width": 135,
+          "height": 21,
+          "label": "Automated Actions"
+        },
+        {
+          "x": 305,
+          "y": 977,
+          "width": 131,
+          "height": 20,
+          "label": "Alert Thresholds"
+        },
+        {
+          "x": 299,
+          "y": 1768,
+          "width": 108,
+          "height": 24,
+          "label": "Early warning"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/supplier-risk-monitoring/screenshots/assisted/10-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 10 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/10-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Risk Monitoring Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 213,
+          "height": 24,
+          "label": "Supply Risk Monitoring Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 168,
-          "y": 97,
-          "width": 230,
-          "height": 55,
-          "label": "Blank agent \u2014 Untitled Agent"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible Untitled Agent text and tightened the annotation to the exact anchor 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Supply Risk Monitoring Manual",
+      "step": 2,
       "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Supply Risk Monitoring Manual in the name field"
+        "Supply Risk Monitoring Manual"
       ],
       "boxes": [
         {
-          "x": 170,
-          "y": 106,
-          "width": 467,
-          "height": 42,
+          "x": 84,
+          "y": 20,
+          "width": 238,
+          "height": 24,
           "label": "Supply Risk Monitoring Manual"
         }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible agent name text and tightened the annotation to the exact anchor 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Reviewed supplier-action boundaries",
-        "Locked Preview evidence anchors",
-        "TechnoCore Semiconductor, CRITICAL",
-        "SUP-104, force majeure"
+        "Supply Risk Monitoring Agent — Manual Global Ins"
       ],
       "boxes": [
         {
-          "x": 72,
-          "y": 218,
-          "width": 905,
-          "height": 250,
-          "label": "Reviewed instruction boundaries"
-        },
-        {
-          "x": 72,
-          "y": 500,
-          "width": 905,
-          "height": 300,
-          "label": "Locked Preview anchors"
+          "x": 203,
+          "y": 131,
+          "width": 363,
+          "height": 39,
+          "label": "Supply Risk Monitoring Agent — Manual Global Ins"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 5-11 and does not show the Save tooltip or any other visible confirmation that no unsaved changes remain."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 334,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4 and 6-11 and shows the completed inventory rather than the web-search removal action."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/06-add-aibast-supplier-risk-monitoring-review-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_supplier-risk-monitoring-review-rules.md",
+      "step": 6,
       "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/06-add-aibast-supplier-risk-monitoring-review-rules.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_supplier-risk-monitoring-review-rules... in Knowledge"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "The Copilot Studio chip truncates the filename extension."
+        "aibast_supplier-risk-monitoring-review-rules.md"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 430,
-          "width": 375,
-          "height": 52,
-          "label": "Review-rules knowledge file"
+          "x": 1058,
+          "y": 311,
+          "width": 307,
+          "height": 39,
+          "label": "aibast_supplier-risk-monitoring-review-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/07-add-aibast-supplier-risk-monitoring-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "full_inventory_not_visibly_proven": [
-        "The Copilot Studio chip truncates the filename ending and extension."
+      "caption": "Manual step 7 · Add knowledge: aibast_supplier-risk-monitoring-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/07-add-aibast-supplier-risk-monitoring-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_supplier-risk-monitoring-synthetic-record"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 302,
+          "height": 33,
+          "label": "aibast_supplier-risk-monitoring-synthetic-record"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/08-add-aibast-alternative-sourcing-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_alternative-sourcing_04",
       "step": 8,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/08-add-aibast-alternative-sourcing.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the alternative-sourcing addition."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/08-add-aibast-alternative-sourcing-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "alternative-sourcing"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 133,
+          "height": 22,
+          "label": "alternative-sourcing"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/09-add-aibast-disruption-alerts-03.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_disruption-alerts_03",
       "step": 9,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/09-add-aibast-disruption-alerts.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the disruption-alerts addition."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/09-add-aibast-disruption-alerts-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "disruption-alerts"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 113,
+          "height": 22,
+          "label": "disruption-alerts"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/10-add-aibast-financial-impact-06.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_financial-impact_06",
       "step": 10,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/10-add-aibast-risk-dashboard.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the risk-dashboard addition."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/10-add-aibast-financial-impact-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "financial-impact"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 197,
+          "width": 109,
+          "height": 22,
+          "label": "financial-impact"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/11-add-aibast-implementation-roadmap-07.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_implementation-roadmap_07",
       "step": 11,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/11-add-aibast-supplier-scorecard.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the supplier-scorecard addition."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/11-add-aibast-implementation-roadmap-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "implementation-roadmap"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 170,
+          "height": 22,
+          "label": "implementation-roadmap"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/12-add-aibast-mitigation-plan-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_mitigation-plan_05",
       "step": 12,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/12-add-aibast-mitigation-plan-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Two configured knowledge files",
-        "Tools section contains no configured tool",
-        "No unsaved changes"
+        "mitigation-plan"
       ],
       "boxes": [
         {
-          "x": 1048,
-          "y": 45,
-          "width": 205,
-          "height": 52,
-          "label": "Saved: no unsaved changes"
-        },
-        {
-          "x": 1200,
-          "y": 85,
-          "width": 198,
-          "height": 42,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1025,
-          "y": 178,
-          "width": 375,
-          "height": 92,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1025,
-          "y": 390,
-          "width": 375,
-          "height": 95,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 197,
+          "width": 106,
+          "height": 22,
+          "label": "mitigation-plan"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/13-add-aibast-monitoring-plan-08.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_monitoring-plan_08",
       "step": 13,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/13-add-aibast-monitoring-plan-08.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
+        "monitoring-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 112,
+          "height": 22,
+          "label": "monitoring-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/14-add-aibast-risk-dashboard-01.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_risk-dashboard_01",
+      "step": 14,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/14-add-aibast-risk-dashboard-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "risk-dashboard"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 197,
+          "width": 103,
+          "height": 19,
+          "label": "risk-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/15-add-aibast-supplier-scorecard-02.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_supplier-scorecard_02",
+      "step": 15,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/15-add-aibast-supplier-scorecard-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supplier-scorecard"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 125,
+          "height": 22,
+          "label": "supplier-scorecard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/16-review-inventory.jpg",
+      "caption": "Manual step 16 · Review model, skills, knowledge, and safety boundaries",
+      "step": 16,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/16-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "supplier-scorecard",
+        "risk-dashboard",
+        "monitoring-plan",
+        "mitigation-plan",
+        "implementation-roadmap",
+        "aibast_supplier-risk-monitoring-synthetic-record",
+        "aibast_supplier-risk-monitoring-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 125,
+          "height": 22,
+          "label": "supplier-scorecard"
+        },
+        {
+          "x": 1240,
+          "y": 197,
+          "width": 102,
+          "height": 19,
+          "label": "risk-dashboard"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 112,
+          "height": 22,
+          "label": "monitoring-plan"
+        },
+        {
+          "x": 1226,
+          "y": 237,
+          "width": 106,
+          "height": 22,
+          "label": "mitigation-plan"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 170,
+          "height": 22,
+          "label": "implementation-roadmap"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 312,
+          "height": 22,
+          "label": "aibast_supplier-risk-monitoring-synthetic-record"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 307,
+          "height": 22,
+          "label": "aibast_supplier-risk-monitoring-review-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/17-review-skills.jpg",
+      "caption": "Manual step 17 · Review the skill list (8 skills)",
+      "step": 17,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/17-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supplier-scorecard",
+        "risk-dashboard",
+        "monitoring-plan",
+        "mitigation-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 125,
+          "height": 22,
+          "label": "supplier-scorecard"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 103,
+          "height": 19,
+          "label": "risk-dashboard"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 112,
+          "height": 22,
+          "label": "monitoring-plan"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 106,
+          "height": 22,
+          "label": "mitigation-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/18-review-skills-more.jpg",
+      "caption": "Manual step 18 · Review the rest of the skill list",
+      "step": 18,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/18-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "implementation-roadmap",
+        "financial-impact",
+        "disruption-alerts",
+        "supplier-scorecard",
+        "alternative-sourcing"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 122,
+          "width": 170,
+          "height": 22,
+          "label": "implementation-roadmap"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 111,
+          "height": 22,
+          "label": "financial-impact"
+        },
+        {
+          "x": 1055,
+          "y": 318,
+          "width": 113,
+          "height": 22,
+          "label": "disruption-alerts"
+        },
+        {
+          "x": 1203,
+          "y": 341,
+          "width": 53,
+          "height": 19,
+          "label": "supplier-scorecard"
+        },
+        {
+          "x": 1055,
+          "y": 416,
+          "width": 134,
+          "height": 22,
+          "label": "alternative-sourcing"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/19-open-preview.jpg",
+      "caption": "Manual step 19 · Open a fresh Preview conversation",
+      "step": 19,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/19-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Supply Risk Monitoring Manual"
       ],
       "boxes": [
         {
-          "x": 570,
-          "y": 0,
-          "width": 170,
-          "height": 60,
-          "label": "Preview selected"
-        },
-        {
-          "x": 835,
-          "y": 82,
-          "width": 125,
-          "height": 52,
-          "label": "Fresh chat control"
+          "x": 84,
+          "y": 20,
+          "width": 238,
+          "height": 24,
+          "label": "Supply Risk Monitoring Manual"
         }
       ]
     },
     {
       "id": "hard-sr-01",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/20-sr-01.jpg",
+      "caption": "SR-01 · Supply Chain Director: Where is supplier exposure concentrated, and which relationships should leadership review first?",
+      "step": 20,
       "case_id": "SR-01",
-      "step": 14,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/14-sr-01.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/14-sr-01.png",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/20-sr-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "TechnoCore Semiconductor (Taiwan)",
-        "CRITICAL, Review First",
-        "Geopolitical at 42/100"
+        "TechnoCore Semiconductor",
+        "HIGH RISK"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 128,
-          "width": 955,
-          "height": 285,
-          "label": "Critical relationship and evidence"
+          "x": 508,
+          "y": 653,
+          "width": 104,
+          "height": 23,
+          "label": "TechnoCore Semiconductor"
+        },
+        {
+          "x": 1096,
+          "y": 898,
+          "width": 87,
+          "height": 20,
+          "label": "HIGH RISK"
         }
       ]
     },
     {
       "id": "hard-sr-02",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/21-sr-02.jpg",
+      "caption": "SR-02 · Procurement Manager: Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+      "step": 21,
       "case_id": "SR-02",
-      "step": 15,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/15-sr-02.jpg",
-      "status": "reshoot_required",
-      "reason": "The visible final response shows secondary pressures and backup options, but neither SUP-101 nor Geopolitical is visible."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/21-sr-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SUP-101",
+        "Geopolitical"
+      ],
+      "boxes": [
+        {
+          "x": 712,
+          "y": 429,
+          "width": 95,
+          "height": 26,
+          "label": "SUP-101"
+        },
+        {
+          "x": 522,
+          "y": 642,
+          "width": 92,
+          "height": 24,
+          "label": "Geopolitical"
+        }
+      ]
     },
     {
       "id": "hard-sr-03",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/22-sr-03.jpg",
+      "caption": "SR-03 · Supply Chain Director: Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+      "step": 22,
       "case_id": "SR-03",
-      "step": 16,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/16-sr-03.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/16-sr-03.png",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/22-sr-03.png",
       "status": "reusable",
       "visible_anchors": [
         "SUP-104",
-        "force majeure at Midwest Casting & Forge",
-        "No supplier was contacted"
+        "force majeure"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 440,
-          "width": 955,
-          "height": 145,
-          "label": "Continuity risk and authorization gate"
+          "x": 798,
+          "y": 617,
+          "width": 75,
+          "height": 22,
+          "label": "SUP-104"
+        },
+        {
+          "x": 676,
+          "y": 659,
+          "width": 524,
+          "height": 24,
+          "label": "force majeure"
         }
       ]
     },
     {
       "id": "hard-sr-04",
       "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/23-sr-04.jpg",
+      "caption": "SR-04 · Procurement Manager: Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+      "step": 23,
       "case_id": "SR-04",
-      "step": 17,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/17-sr-04.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/17-sr-04.png",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/23-sr-04.png",
       "status": "reusable",
       "visible_anchors": [
         "No supplier was contacted",
-        "authorized procurement owners"
-      ],
-      "full_case_not_visibly_proven": [
-        "Murata Electronics is outside the captured viewport."
+        "Kansai Passive Components"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 465,
-          "width": 955,
-          "height": 125,
-          "label": "No supplier action and authorization gate"
+          "x": 538,
+          "y": 500,
+          "width": 123,
+          "height": 24,
+          "label": "No supplier was contacted"
+        },
+        {
+          "x": 299,
+          "y": 1122,
+          "width": 205,
+          "height": 24,
+          "label": "Kansai Passive Components"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-sr-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/supplier-risk-monitoring/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/24-sr-05.jpg",
+      "caption": "SR-05 · Procurement Manager: What mitigation strategies do you recommend for each of our semiconductor suppliers?",
+      "step": 24,
+      "case_id": "SR-05",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/24-sr-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Supply Risk Monitoring Manual",
-        "Draft"
+        "Increase safety stock",
+        "MONITOR CLOSELY",
+        "OPPORTUNITY"
       ],
       "boxes": [
         {
-          "x": 105,
-          "y": 235,
-          "width": 1280,
-          "height": 66,
-          "label": "Target agent remains Draft"
+          "x": 310,
+          "y": 637,
+          "width": 159,
+          "height": 24,
+          "label": "Increase safety stock"
+        },
+        {
+          "x": 519,
+          "y": 771,
+          "width": 152,
+          "height": 20,
+          "label": "MONITOR CLOSELY"
+        },
+        {
+          "x": 518,
+          "y": 975,
+          "width": 119,
+          "height": 20,
+          "label": "OPPORTUNITY"
+        }
+      ]
+    },
+    {
+      "id": "hard-sr-06",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/25-sr-06.jpg",
+      "caption": "SR-06 · Supply Chain Director: What would those mitigations cost us, and is the investment worth it?",
+      "step": 25,
+      "case_id": "SR-06",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/25-sr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$1.098M",
+        "65% reduction",
+        "Break-even"
+      ],
+      "boxes": [
+        {
+          "x": 486,
+          "y": 865,
+          "width": 71,
+          "height": 22,
+          "label": "$1.098M"
+        },
+        {
+          "x": 511,
+          "y": 1034,
+          "width": 116,
+          "height": 20,
+          "label": "65% reduction"
+        },
+        {
+          "x": 310,
+          "y": 1199,
+          "width": 95,
+          "height": 20,
+          "label": "Break-even"
+        }
+      ]
+    },
+    {
+      "id": "hard-sr-07",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/26-sr-07.jpg",
+      "caption": "SR-07 · Supply Chain Director: Lay out a twelve-month plan for putting these protections in place.",
+      "step": 26,
+      "case_id": "SR-07",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/26-sr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Phase 1 (Months 1-3)",
+        "Risk score target"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 502,
+          "width": 164,
+          "height": 23,
+          "label": "Phase 1 (Months 1-3)"
+        },
+        {
+          "x": 569,
+          "y": 1049,
+          "width": 124,
+          "height": 24,
+          "label": "Risk score target"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "60% Taiwan / 40% Korea not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-sr-08",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/27-sr-08.jpg",
+      "caption": "SR-08 · Procurement Manager: How would we keep watching these suppliers after the plan is in place?",
+      "step": 27,
+      "case_id": "SR-08",
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/27-sr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Automated Actions",
+        "Alert Thresholds",
+        "Early warning"
+      ],
+      "boxes": [
+        {
+          "x": 1014,
+          "y": 473,
+          "width": 136,
+          "height": 21,
+          "label": "Automated Actions"
+        },
+        {
+          "x": 285,
+          "y": 747,
+          "width": 131,
+          "height": 20,
+          "label": "Alert Thresholds"
+        },
+        {
+          "x": 310,
+          "y": 1153,
+          "width": 108,
+          "height": 24,
+          "label": "Early warning"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-28",
+      "mode": "hard",
+      "source": "solutions/supplier-risk-monitoring/screenshots/manual/28-confirm-draft.jpg",
+      "caption": "Manual step 28 · Confirm Draft and stop before publish",
+      "step": 28,
+      "draft": true,
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/28-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Risk Monitoring Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 233,
+          "height": 24,
+          "label": "Supply Risk Monitoring Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy SR-03 with SUP-104 and force majeure visible in the final answer rather than only in reasoning.",
-      "Easy Draft gate filtered to Supply Risk Monitoring Pilot with Draft visible.",
-      "Manual step 4 with the Save tooltip confirming no unsaved changes.",
-      "Manual step 5 showing the web-search removal action or an unambiguous before-and-after state.",
-      "Manual steps 8-11 with each requested skill addition visibly isolated.",
-      "Manual SR-02 with SUP-101 and Geopolitical visible in the final answer."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 4/4 verdict.",
-      "Copilot-only local 4/4 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:supplier-risk-monitoring",
-    "reviewed_at": "2026-08-10T00:57:29.461000+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Easy SR-01 is demoted because its visible recommendation ends at \u201cAt\u201d; Draft publication remains machine-proven when no reusable Draft screenshot is available, and reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:52:24.422963+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

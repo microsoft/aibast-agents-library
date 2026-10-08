@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T10:26:43.549Z",
+  "captured_at": "2026-10-08T00:27:46.460416Z",
   "solution": "@aibast-agents-library/energy-regulatory-reporting",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Regulatory Reporting Manual",
-    "bot_id": "66b3797f-6fd3-4614-bb66-2d253c06b0c3",
+    "bot_id": "11dddd4b-3665-4c28-bc9f-d951229b12bb",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 6,
+      "confirmed": 6
     },
     "tools": {
       "expected": 0,
@@ -46,7 +46,7 @@
         "Pipeline Operations"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-energy_regulatory_reporting-01.jpg",
+      "expected_screenshot": "18-energy_regulatory_reporting-01.jpg",
       "passed": true
     },
     {
@@ -58,7 +58,7 @@
         "authorized report owner"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-energy_regulatory_reporting-02.jpg",
+      "expected_screenshot": "19-energy_regulatory_reporting-02.jpg",
       "passed": true
     },
     {
@@ -70,7 +70,7 @@
         "No regulator filing"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-energy_regulatory_reporting-03.jpg",
+      "expected_screenshot": "20-energy_regulatory_reporting-03.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,31 @@
         "cannot predict an audit outcome"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-energy_regulatory_reporting-04.jpg",
+      "expected_screenshot": "21-energy_regulatory_reporting-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-05",
+      "prompt": "I need to prepare our quarterly EPA emissions report. Can you pull the data?",
+      "must_include": [
+        "14 facilities",
+        "8.24M tons",
+        "down 7.3%"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "22-energy_regulatory_reporting-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-06",
+      "prompt": "Generate the EPA submission file for the quarter and show me any compliance risks.",
+      "must_include": [
+        "EPA_Q1_Emissions_Report.xml",
+        "6 sections incomplete",
+        "No regulator filing"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "23-energy_regulatory_reporting-06.jpg",
       "passed": true
     }
   ],
@@ -95,6 +119,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "24-confirm-draft.jpg"
   }
 }

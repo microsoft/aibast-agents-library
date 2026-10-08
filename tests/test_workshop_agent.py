@@ -59,8 +59,8 @@ def test_generic_engine_builds_and_tests_time_entry_billing(tmp_path):
         "@aibast-agents-library/time-entry-billing"
     )
     assert result["active_solution"] == "time-entry-billing"
-    assert result["local_validation"]["passed"] == 5
-    assert result["local_validation"]["total"] == 5
+    assert result["local_validation"]["passed"] == 9
+    assert result["local_validation"]["total"] == 9
     assert result["target_agent"]["tool"] == "TimeEntryBillingAgent"
     assert (agents_dir / "time_entry_billing_agent.py").exists()
     assert (
@@ -90,8 +90,8 @@ def test_same_engine_adapts_to_inventory_rebalancing(tmp_path):
         "@aibast-agents-library/inventory-rebalancing"
     )
     assert result["active_solution"] == "inventory-rebalancing"
-    assert result["local_validation"]["passed"] == 4
-    assert result["local_validation"]["total"] == 4
+    assert result["local_validation"]["passed"] == 10
+    assert result["local_validation"]["total"] == 10
     assert result["target_agent"]["tool"] == "InventoryRebalancingAgent"
     assert (agents_dir / "inventory_rebalancing_agent.py").exists()
 
@@ -123,7 +123,8 @@ def test_generic_engine_returns_front_door_handoff(tmp_path, monkeypatch):
     assert handoff["solution"] == (
         "@aibast-agents-library/time-entry-billing"
     )
-    assert len(handoff["cases"]) == 5
+    locked = json.loads((ROOT / "tests" / "demo_cases" / "time-entry-billing.json").read_text(encoding="utf-8"))
+    assert len(handoff["cases"]) == len(locked["cases"]) == 9
     assert "real Copilot Studio front door" in handoff["instruction"]
     assert handoff["callback_schema"]["cases"][0]["response"] == (
         "The actual Copilot Studio Preview response."
@@ -258,21 +259,74 @@ def test_generic_engine_closes_actual_front_door_responses(tmp_path):
     )
 
     assert result["status"] == "complete"
-    assert result["front_door_validation"]["passed"] == 5
-    assert result["front_door_validation"]["total"] == 5
+    assert result["front_door_validation"]["passed"] == 9
+    assert result["front_door_validation"]["total"] == 9
     assert result["published"] is False
-    assert result["visual_evidence"]["status"] == "reshoot_required"
-    assert result["visual_remediation_status"] == "required"
-    assert "replacement captures before the teaching package is complete" in (
-        result["verdict"]
-    )
+    # The time-entry-billing teaching visuals were re-shot in the real
+    # Copilot Studio UI, so the visual evidence is now ready and the engine
+    # must close without inventing a remediation step.
+    assert result["visual_evidence"]["status"] == "ready"
+    assert result["visual_evidence"]["reshoot_required"] == 0
+    assert result["visual_remediation_status"] == "not_required"
+    assert "replacement captures" not in result["verdict"]
+    assert "must not offer publication" in result["verdict"]
     assert "functional workshop complete" in result["verdict"]
     assert "generic engine" in result["verdict"]
     context = agent.system_context()
     assert "already functionally completed and front-door validated" in context
+    assert "Teaching visuals are not complete" not in context
+    assert "Do not suggest deploying again, publishing" in context
+    assert "Do not suggest deploying again" in context
+
+
+def test_generic_engine_keeps_visual_remediation_when_reshoots_remain(tmp_path):
+    """The remediation branch must survive packages whose visuals are ready."""
+    _module, agent, agents_dir = build_agent(tmp_path)
+    agent._deploy_draft = lambda _solution, _source, _deployment, _environment: {
+        "display_name": "Time Entry and Billing Pilot",
+        "schema_name": "aibast_TimeEntryandBillingPilot",
+        "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+        "status": "Draft",
+        "published": False,
+    }
+    agent.perform(operation="deploy", solution="Time Entry and Billing")
+    state_path = tmp_path / "workshop-state.json"
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    state["visual_evidence"] = {"status": "reshoot_required", "reshoot_required": 2}
+    state_path.write_text(json.dumps(state), encoding="utf-8")
+    cases = json.loads(
+        (ROOT / "tests/demo_cases/time-entry-billing.json").read_text(
+            encoding="utf-8"
+        )
+    )["cases"]
+    source_agent = agent._load_target_agent(
+        agents_dir / "time_entry_billing_agent.py",
+        "TimeEntryBillingAgent",
+    )
+    evidence = {
+        "status": "Draft",
+        "published": False,
+        "cases": [
+            {
+                "case_id": case["id"],
+                "response": source_agent.perform(operation=case["operation"]),
+                "passed": True,
+            }
+            for case in cases
+        ],
+    }
+
+    result = json.loads(
+        agent.perform(operation="complete", preview_evidence=json.dumps(evidence))
+    )
+
+    assert result["status"] == "complete"
+    assert result["published"] is False
+    assert result["visual_remediation_status"] == "required"
+    assert "Visual evidence still requires 2 replacement captures" in result["verdict"]
+    context = agent.system_context()
     assert "Teaching visuals are not complete" in context
     assert "supplemental visual remediation" in context
-    assert "Do not suggest deploying again" in context
 
 
 def test_workshop_agent_is_registry_ready_and_never_publishes():

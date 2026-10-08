@@ -44,7 +44,10 @@ def skill_routes(cases, skills_directory, current=""):
         if name in names:
             raise ValueError(f"{path}: duplicate skill name {name!r}")
         names.add(name)
-        operation = path.parent.name.replace("-", "_")
+        # Skill folders are either "<operation>" or the re-shot library form
+        # "aibast_<operation>_<NN>" (for example aibast_hedis-status_05).
+        folder = re.sub(r"^aibast_(.+?)_[A-Za-z]*\d+$", r"\1", path.parent.name)
+        operation = folder.replace("-", "_")
         if operation in by_operation:
             raise ValueError(f"{path}: ambiguous operation directory {operation!r}")
         by_operation[operation] = name

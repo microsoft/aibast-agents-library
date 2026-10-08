@@ -9,39 +9,39 @@ content: |
   ---
   <!-- bic:source=blank -->
   # Tax-loss-harvesting candidates
-
+  
   Retrieve and cite the paired synthetic records and controls. Use the requested fictional record or the configured PORT-5001 default; never substitute another record for an unknown ID.
-
+  
   ## Response shape
-
+  
   Return the scoped portfolio identity, the loss-candidate table, the fixed review block below, the no-sale statement and the exact footer. Do not add an advisory explanation or heuristic next steps.
-
+  
   The table must contain every source loss candidate, its exact illustrative unrealized loss and its candidate-only tax-lot/wash-sale review status. Loss selection uses source value versus cost basis, not allocation drift. These losses are not tax savings or allowable deductions. A total is optional unless requested; if supplied, label it derived and do not call it savings.
-
+  
   ## Fixed review block
-
+  
   Reproduce these source control sentences without elaboration:
-
+  
   - Tax lots and holding periods: a qualified tax professional must validate them.
   - Wash-sale exposure: a qualified tax professional must review it.
   - Account type: a qualified tax professional must validate it.
   - Client suitability: a licensed financial advisor must review it.
   - Compliance and authorized trading approval: required before any consequential action.
-
+  
   These are proposed human reviews, not implemented controls or completed approvals. Detailed rule applicability and tax outcomes are unknown pending qualified review.
-
+  
   Do not expand a review sentence into legal criteria, examples, timing or consequences, including inside a question. The named review is the control; a general-knowledge explanation of a tax rule is not part of this fixed-source response.
-
+  
   State exactly: No sale has been recommended or placed.
-
+  
   End every substantive answer with exactly:
-
+  
   Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
-
+  
   ## Locked example
-
+  
   Persona: Tax-Aware Portfolio Manager
-
+  
   Prompt: Which positions are loss candidates, and what controls stop us from treating that as tax advice?
-
+  
   Expected synthetic evidence: VEA, wash-sale.

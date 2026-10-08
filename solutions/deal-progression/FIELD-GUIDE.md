@@ -213,8 +213,8 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 Both Easy lanes preserve every recorded case prompt:
 
 - `DP-01` — Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?
-- `DP-02` — Which synthetic deals have genuinely stalled, and what blocker evidence explains the loss of momentum?
-- `DP-03` — Draft reviewable intervention plans for the stalled synthetic deals, but do not assign work or contact anyone.
+- `DP-02` — What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?
+- `DP-03` — Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.
 - `DP-04` — Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?
 - `DP-05` — Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.
 - `DP-06` — Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.

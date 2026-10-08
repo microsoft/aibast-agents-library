@@ -17,8 +17,8 @@ Use when a product manager asks for a compact view of volume, channels, categori
 
 ## Deterministic pilot evidence
 
-- `6`
-- `Avg Satisfaction Score`
+- `10,150`
+- `Total Feedback Items`
 - `No roadmap commitment`
 
 ## Safety gate

@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "ma-target-sourcing",
+  "agent": "@aibast-agents-library/ma-target-sourcing",
+  "display_name": "M&A Target Sourcing Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic market universe",
+        "detail": "Eight fictional companies with region, revenue, EBITDA, growth, recurring revenue, criteria scores and risks."
+      },
+      {
+        "name": "Acquisition thesis and weights",
+        "detail": "One fixed thesis with sector, region, revenue band, profitability filter and three named weightings."
+      },
+      {
+        "name": "Evidence source register",
+        "detail": "Dated synthetic sources per target used for citations, staleness checks and research requests."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Thesis to screening criteria",
+        "detail": "Use when someone describes an acquisition thesis and wants it turned into screening criteria and filters."
+      },
+      {
+        "name": "Ranked target longlist",
+        "detail": "Use when someone wants the screen run and the passing companies ranked with a transparent weighted score."
+      },
+      {
+        "name": "Cited target dossier",
+        "detail": "Use when someone wants one target's profile, synthetic financials, criteria scores, sources and diligence questions."
+      },
+      {
+        "name": "Weighting challenge",
+        "detail": "Use when someone asks whether the ranking holds under different weightings, such as weighting financial quality more heavily."
+      },
+      {
+        "name": "Evidence-gap review",
+        "detail": "Use when someone asks where the evidence behind the targets is thin, missing or out of date."
+      },
+      {
+        "name": "Investment committee memo draft",
+        "detail": "Use when someone asks for the investment committee screening memo draft for the shortlist."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the six-skill Draft agent with two synthetic knowledge files; publishing is a separate gated step."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Conversational entry point for corporate development once approved production controls exist."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file MATargetSourcingAgent locally with deterministic routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Ranked longlist view",
+        "detail": "Shows filters, exclusions, weighted scores and the shortlist with the leader called out."
+      },
+      {
+        "name": "Evidence coverage view",
+        "detail": "Lists missing and stale evidence per target with draft research requests."
+      },
+      {
+        "name": "Committee memo draft",
+        "detail": "Summarizes the shortlist, conditions and the ask, marked Draft and not sent."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable MATargetSourcingAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only operations over synthetic data."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server that discovers the agent and exposes chat and health endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; explicit approval is required before publication."
+    },
+    {
+      "name": "Approved market-data source",
+      "detail": "Cited production seam for company financials; no live connection exists in the package."
+    },
+    {
+      "name": "Deal CRM (read-only seam)",
+      "detail": "Cited production seam for pipeline context; the agent never writes to it."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only bundled fictional companies and sources; never browses or enriches from live data."
+    },
+    {
+      "name": "Transparent scoring",
+      "detail": "Every score is criteria times published weights, shown in the answer and testable under alternatives."
+    },
+    {
+      "name": "Citation-first answers",
+      "detail": "Dossier figures and risks cite synthetic source IDs; stale and missing evidence is flagged."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never contacts targets, updates a CRM, shares documents or sends the memo."
+    },
+    {
+      "name": "Human investment authority",
+      "detail": "Shortlist approval, outreach and investment decisions stay with the corporate development lead."
+    }
+  ]
+}

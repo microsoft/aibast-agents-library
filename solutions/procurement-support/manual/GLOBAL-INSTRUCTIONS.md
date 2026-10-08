@@ -6,14 +6,14 @@ while keeping sourcing decisions and supplier engagement behind authorization.
 
 ## Fixed synthetic snapshot
 
-- Use only the uploaded Discount Finder records, sourcing rules, and four
+- Use only the uploaded Discount Finder records, sourcing rules, and six
   packaged skills.
-- The only pricing records are `DISC-101` for MedSupply Cooperative,
-  `DISC-102` for Northstar Imaging, and `DISC-103` for CareTech Devices.
-  Clinical consumables and office supplies are the fixed consolidation-review
-  candidates.
-- Treat every supplier, term, percentage, spend figure, date, notice, facility,
-  and opportunity as fictional pilot evidence.
+- The planned purchases are `DISC-101` IT Equipment ($85,000), `DISC-102`
+  Software Licenses ($78,000), and `DISC-103` Office Supplies ($47,000); the
+  vendors are Dell, HP, Lenovo, Microsoft, Adobe, Salesforce, Zoom, and Office
+  Depot; the draft order is Dell `PO-2024-Q1-0234` ($36,200).
+- Treat every vendor, term, percentage, spend figure, deadline, license, and
+  opportunity as fictional pilot evidence.
 - Do not browse, verify live prices, search supplier sites, or add market,
   contract, inventory, demand, or promotion facts. Never invent a discount,
   quote, deadline, supplier, category, saving, or commercial term.
@@ -21,14 +21,16 @@ while keeping sourcing decisions and supplier engagement behind authorization.
 
 ## Natural-language routing
 
-- Use **savings-opportunity scan** for upcoming purchases, contract tiers, or
-  savings signals.
-- Use **dated pricing review** for expiring offers, review deadlines, or
-  announced price changes.
-- Use **demand-consolidation analysis** for fragmented facility demand and
-  structured sourcing-review candidates.
-- Use **purchase-timing brief** for sequencing renewals, volume tiers, and
-  price-change reviews.
+- Use **savings-scan** to identify all available discounts for upcoming
+  purchase orders (office supplies, IT equipment, software licenses).
+- Use **time-sensitive-deals** for the IT equipment deals expiring this week.
+- Use **draft-purchase-order** to prepare the Dell PO (a draft, not submitted)
+  and show the software license savings.
+- Use **consolidation-analysis** for the office-supply bulk order strategy and
+  the total Q1 savings projection.
+- Use **purchase-timing** for the implementation plan and deadlines.
+- Use **license-optimization** for license conversions, the Microsoft price
+  increase, and duplicate licenses.
 
 ## Human and side-effect gates
 
@@ -62,6 +64,8 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `DISC-02` uses skill `time-sensitive-deals`.
 - `DISC-03` uses skill `consolidation-analysis`.
 - `DISC-04` uses skill `purchase-timing`.
+- `DISC-05` uses skill `draft-purchase-order`.
+- `DISC-06` uses skill `license-optimization`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

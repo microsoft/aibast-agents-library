@@ -29,12 +29,18 @@
       "manual/knowledge/aibast_care-gap-closure-synthetic-records.md",
       "manual/knowledge/aibast_care-gap-closure-review-rules.md"
     ],
-    "skill_count": 4,
+    "skill_count": 10,
     "skills": [
-      "manual/skills/gap-analysis/SKILL.md",
-      "manual/skills/cohort-review/SKILL.md",
-      "manual/skills/outreach-draft/SKILL.md",
-      "manual/skills/quality-dashboard/SKILL.md"
+      "manual/manual/skills/aibast_gap-analysis_01/SKILL.md",
+      "manual/manual/skills/aibast_cohort-review_02/SKILL.md",
+      "manual/manual/skills/aibast_outreach-draft_03/SKILL.md",
+      "manual/manual/skills/aibast_quality-dashboard_04/SKILL.md",
+      "manual/manual/skills/aibast_hedis-status_05/SKILL.md",
+      "manual/manual/skills/aibast_top-gaps_06/SKILL.md",
+      "manual/manual/skills/aibast_risk-stratification_07/SKILL.md",
+      "manual/manual/skills/aibast_outreach-strategy_08/SKILL.md",
+      "manual/manual/skills/aibast_campaign-projection_09/SKILL.md",
+      "manual/manual/skills/aibast_monitoring-plan_10/SKILL.md"
     ],
     "locked_demo_cases": "../../tests/demo_cases/care-gap-closure.json",
     "onepager_map": "evals/onepager-map.json",
@@ -54,21 +60,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "Care Gap Closure Manual",
-      "bot_id": "5a3ce80b-47c2-4561-84bd-8307a819364f",
+      "bot_id": "f827ef15-8641-4ac7-ab0b-3af457e62707",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 10,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "source_contract_status": "reshoot_required",
-      "source_contract_note": "The repaired instructions have not been saved or tested in this live agent. CG-01 requires a fresh SYN-COL — 182 records Preview capture; other recorded case contracts are unchanged.",
-      "historical_preview_cases_passed": 4,
-      "preview_cases_passed": 3,
-      "preview_cases_pending": 1,
-      "preview_cases_total": 4
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
     },
     "validated_pilot": {
       "display_name": "Care Gap Closure Pilot",
@@ -77,18 +79,27 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 10,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "source_contract_status": "reshoot_required",
-      "source_contract_note": "The repaired native source has not been synchronized or tested in this live agent. CG-01 requires a fresh SYN-COL — 182 records Preview capture; other recorded case contracts are unchanged.",
-      "historical_preview_cases_passed": 4,
-      "preview_cases_passed": 3,
-      "preview_cases_pending": 1,
-      "preview_cases_total": 4
-    }
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
+    },
+    "operations": [
+      "gap_analysis",
+      "cohort_review",
+      "outreach_draft",
+      "quality_dashboard",
+      "hedis_status",
+      "top_gaps",
+      "risk_stratification",
+      "outreach_strategy",
+      "campaign_projection",
+      "monitoring_plan"
+    ],
+    "manual_skill_count": 10
   },
   "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
   "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",

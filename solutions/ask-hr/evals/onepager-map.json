@@ -12,7 +12,9 @@
       "parental_leave",
       "health_insurance",
       "remote_work",
-      "benefits_summary"
+      "benefits_summary",
+      "time_off_check",
+      "reminders"
     ],
     "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
   },
@@ -24,18 +26,20 @@
         "parental_leave",
         "health_insurance",
         "remote_work",
-        "benefits_summary"
+        "benefits_summary",
+        "reminders"
       ],
       "demo_cases": [
         "HR-01",
         "HR-03",
         "HR-04",
         "HR-05",
-        "HR-06"
+        "HR-06",
+        "HR-08"
       ],
       "synthetic_evidence": [
         "Vacation",
-        "15.5 days",
+        "14 days",
         "Synthetic HRIS",
         "Eligibility Rule",
         "Verify tenure",
@@ -48,7 +52,10 @@
         "Do not infer caregiver",
         "No salary",
         "Total-compensation value is inferred",
-        "Synthetic Profile"
+        "Synthetic Profile",
+        "Open enrollment",
+        "Carryover",
+        "before Dec 31"
       ]
     },
     {
@@ -73,15 +80,20 @@
     {
       "advertised_promise": "Automates core HR transactions like time-off requests to reduce operational costs and increase HR team productivity",
       "operations": [
-        "submit_time_off"
+        "submit_time_off",
+        "time_off_check"
       ],
       "demo_cases": [
-        "HR-02"
+        "HR-02",
+        "HR-07"
       ],
       "synthetic_evidence": [
         "Not Submitted",
         "Draft for employee review",
-        "No notification was sent"
+        "No notification was sent",
+        "After Request",
+        "David Kim",
+        "Blackout dates"
       ]
     }
   ]

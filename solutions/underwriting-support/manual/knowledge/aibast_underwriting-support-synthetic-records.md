@@ -5,13 +5,21 @@
 ## Source identity
 
 - Portable source: `agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py`
-- Source SHA-256: `2e6378aa40236659e8615d65bf40254427d19ee762f851191b35aa2c0e4c8ff3`
+- Source SHA-256: `0df5e53fe082565ad48d9a80bc35bb141c532a104e0d5c6b9941dcb099adae43`
 - Expected tool: `UnderwritingSupportAgent`
 - Snapshot behavior: fixed to the packaged source revision; no live connection or current-data claim.
 
 ## Complete deterministic source records
 
 The following objects reproduce every packaged identifier, name, value, amount, date, status, rule, threshold, mapping, and relationship used by the agent. Keys and values are exact.
+
+The commercial submission walked through in the demo is `UW-2025-100` (Midwest Manufacturing Inc.) in
+`SUBMISSIONS`; it is the default for submission_review, risk_assessment, pricing_recommendation (without an ID),
+coverage_structure, compliance_check, and underwriting_summary. Its package premium is the sum of the line premiums
+($32,400 + $28,700 + $18,600 + $8,400 = $88,100); the net rate adjustment is multiplicative (0.92 x 1.05 = -3.4%);
+5-year incurred losses are $180,000 + $57,000 = $237,000; property TIV $4.2M + $3.4M + $0.6M = $8.2M is within the
+$10M underwriter authority. The preliminary risk score 68/100 (Moderate) is a recorded value on a different scale
+from the queue risk scores in `APPLICATIONS`.
 
 ### `APPLICATIONS`
 
@@ -227,6 +235,168 @@ The following objects reproduce every packaged identifier, name, value, amount, 
 }
 ```
 
+### `SUBMISSIONS`
+
+```json
+{
+  "UW-2025-100": {
+    "applicant": "Midwest Manufacturing Inc.",
+    "class_loss_ratio": 0.58,
+    "combined_ratio_pct": 94,
+    "completeness_pct": 95,
+    "coverages_requested": [
+      "GL",
+      "Property",
+      "Products"
+    ],
+    "dimensions": [
+      {
+        "factor": "Industry hazard",
+        "note": "Metal fab = moderate",
+        "score": 72
+      },
+      {
+        "factor": "Financial stability",
+        "note": "Healthy ratios",
+        "score": 78
+      },
+      {
+        "factor": "Loss experience",
+        "note": "Better than class",
+        "score": 82
+      },
+      {
+        "factor": "Operations",
+        "note": "Equipment age concern",
+        "score": 70
+      }
+    ],
+    "employees": 145,
+    "endorsements": [
+      {
+        "endorsement": "Equipment breakdown",
+        "reason": "Aging machinery"
+      },
+      {
+        "endorsement": "Contingent business income",
+        "reason": "Single location"
+      },
+      {
+        "endorsement": "Blanket additional insured",
+        "reason": "Contracts"
+      }
+    ],
+    "expected_loss_ratio_pct": 52,
+    "gl_structure": "$1M occurrence, $2M aggregate, $5K deductible",
+    "industry": "Metal fabrication",
+    "loss_ratio": 0.42,
+    "losses_5yr": [
+      {
+        "amount": 180000,
+        "note": "defective bracket, QC gap addressed",
+        "type": "Products liability",
+        "year": "Year -3"
+      },
+      {
+        "amount": 57000,
+        "note": "minor, closed",
+        "type": "Other GL and property claims",
+        "year": "Years -5 to -1"
+      }
+    ],
+    "market_high": 96000,
+    "market_low": 82000,
+    "missing": [
+      "current financials",
+      "property value confirmation"
+    ],
+    "naics": "332312",
+    "preliminary_risk_score": 68,
+    "premium_lines": [
+      {
+        "coverage": "General Liability",
+        "limit": "$1M/$2M",
+        "premium": 32400
+      },
+      {
+        "coverage": "Property",
+        "limit": "$8.2M",
+        "premium": 28700
+      },
+      {
+        "coverage": "Products Liability",
+        "limit": "$1M/$2M",
+        "premium": 18600
+      },
+      {
+        "coverage": "Business Income",
+        "limit": "$2M",
+        "premium": 8400
+      }
+    ],
+    "property_values": [
+      {
+        "item": "building",
+        "value": 4200000
+      },
+      {
+        "item": "contents",
+        "value": 3400000
+      },
+      {
+        "item": "equipment (scheduled)",
+        "value": 600000
+      }
+    ],
+    "rate_adjustments": [
+      {
+        "name": "Loss experience credit",
+        "pct": -8
+      },
+      {
+        "name": "Equipment age",
+        "pct": 5
+      }
+    ],
+    "revenue": 24000000,
+    "risk_flags": [
+      "40% equipment >15 years",
+      "single location concentration",
+      "heavy machinery"
+    ],
+    "risk_label": "Moderate",
+    "state": "OH",
+    "strengths": [
+      "Favorable loss history",
+      "strong financials",
+      "safety program"
+    ],
+    "subjectivities": [
+      "Current financials",
+      "equipment maintenance records",
+      "QC procedures"
+    ],
+    "target_profit_pct": 12
+  }
+}
+```
+
+### `AUTHORITY_MATRIX`
+
+```json
+{
+  "filed_states": [
+    "OH",
+    "IN",
+    "MI"
+  ],
+  "quote_validity_days": 30,
+  "rate_adequacy": "Above minimum",
+  "reinsurance": "Within capacity",
+  "underwriter_limit": 10000000
+}
+```
+
 ## Locked-case deterministic outputs
 
 These are direct `perform()` results for the locked operation and arguments. Preserve the headings, identifiers, values, and boundary language.
@@ -374,6 +544,158 @@ These are direct `perform()` results for the locked operation and arguments. Pre
 4. Request additional information before any coverage decision
 
 No approval, decline, quote, or binder has been issued.
+```
+
+### UWS-05 — Underwriter
+
+- Prompt: Help me evaluate this commercial insurance application and tell me what is missing.
+- Operation: `submission_review`
+- Arguments: `{}`
+- Required factual anchors: `Midwest Manufacturing Inc.`, `95% complete`, `68/100 (Moderate)`
+
+```text
+> **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Submission Review: Midwest Manufacturing Inc. (UW-2025-100)
+
+Analyzed the Midwest Manufacturing Inc. application - moderate risk with attention areas.
+
+| Field | Details |
+|---|---|
+| Applicant | Midwest Manufacturing Inc. |
+| Industry | Metal fabrication (NAICS 332312) |
+| Revenue | $24M, 145 employees |
+| Coverage | GL, Property, Products |
+| State | OH |
+
+**Completeness:** 95% complete, need current financials and property value confirmation
+**Risk Flags:** 40% equipment >15 years, single location concentration, heavy machinery
+**Preliminary Risk Score:** 68/100 (Moderate)
+
+Source: [Application Portal (synthetic)]
+
+See detailed risk and loss history?
+```
+
+### UWS-06 — Risk Analyst
+
+- Prompt: Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.
+- Operation: `risk_assessment`
+- Arguments: `{}`
+- Required factual anchors: `Industry hazard`, `$237K`, `0.42 vs class 0.58`
+
+```text
+> **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Risk Assessment: Midwest Manufacturing Inc. (UW-2025-100)
+
+Risk assessment complete - favorable loss history with one notable claim.
+
+| Risk Factor | Score | Notes |
+|---|---|---|
+| Industry hazard | 72/100 | Metal fab = moderate |
+| Financial stability | 78/100 | Healthy ratios |
+| Loss experience | 82/100 | Better than class |
+| Operations | 70/100 | Equipment age concern |
+
+**5-Year Loss History:** Total incurred $237K (below the class average)
+**Notable Claim:** Year -3 products liability $180K (defective bracket, QC gap addressed)
+**Benchmark:** Loss ratio 0.42 vs class 0.58 (better than average)
+**Preliminary Risk Score:** 68/100 (Moderate)
+
+Source: [Claims Database (synthetic)]
+
+Generate pricing?
+```
+
+### UWS-07 — Underwriter
+
+- Prompt: What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?
+- Operation: `coverage_structure`
+- Arguments: `{}`
+- Required factual anchors: `Equipment breakdown`, `$5K deductible`, `$8.2M total`
+
+```text
+> **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Recommended Coverage Structure: Midwest Manufacturing Inc. (UW-2025-100)
+
+Coverage structure designed for the manufacturing risk profile (recommendation for the underwriter).
+
+**General Liability:** $1M occurrence, $2M aggregate, $5K deductible
+**Property Coverage:** $8.2M total (building $4.2M, contents $3.4M, equipment (scheduled) $600K)
+
+**Recommended Endorsements:**
+
+| Endorsement | Reason |
+|---|---|
+| Equipment breakdown | Aging machinery |
+| Contingent business income | Single location |
+| Blanket additional insured | Contracts |
+
+**Subjectivities:** Current financials, equipment maintenance records, QC procedures
+
+Source: [Product Library (synthetic)]
+
+Run compliance check?
+```
+
+### UWS-08 — Senior Underwriter
+
+- Prompt: Check compliance and authority before we finalize the Midwest Manufacturing recommendation.
+- Operation: `compliance_check`
+- Arguments: `{}`
+- Required factual anchors: `Within $10M limit`, `OH rates filed`, `30 days`
+
+```text
+> **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Compliance and Authority Check: Midwest Manufacturing Inc. (UW-2025-100)
+
+Compliance validated - within authority, ready for your quote decision.
+
+| Check | Status |
+|---|---|
+| Underwriting authority | Within $10M limit |
+| Rate adequacy | Above minimum |
+| Reinsurance treaty | Within capacity |
+| State filing | OH rates filed |
+
+**Approval:** Within your binding authority, no referral required; the bind decision is yours.
+**Subjectivities Before Binding:** Current financials, equipment maintenance records, QC procedures
+**Quote Validity:** 30 days
+
+Source: [Authority Matrix (synthetic)]
+
+Generate underwriting summary?
+```
+
+### UWS-09 — Senior Underwriter
+
+- Prompt: Generate the complete underwriting summary for the Midwest Manufacturing submission.
+- Operation: `underwriting_summary`
+- Arguments: `{}`
+- Required factual anchors: `Approve with conditions`, `$88,100`, `drafted for you to issue`
+
+```text
+> **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.
+
+# Underwriting Summary: Midwest Manufacturing Inc. (UW-2025-100)
+
+Recommendation for the underwriter: approve with conditions, $88,100 premium.
+
+| Decision Detail | Value |
+|---|---|
+| Recommendation | Approve with conditions (underwriter decision) |
+| Risk score | 68/100 (Moderate) |
+| Premium | $88,100 |
+| Authority | Within limits |
+
+**Strengths:** Favorable loss history, strong financials, safety program
+**Conditions for Binding:** Current financials, equipment maintenance records, QC procedures
+**Quote Package:** drafted for you to issue - letter, coverage summary, subjectivities listed
+
+Source: [All Underwriting Systems (synthetic)]
 ```
 
 ## Evidence boundary

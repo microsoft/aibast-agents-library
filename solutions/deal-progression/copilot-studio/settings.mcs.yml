@@ -1,15 +1,16 @@
-displayName: "Deal Progression Pilot"
-schemaName: "aibast_DealProgressionPilot"
+displayName: Deal Progression Pilot
+schemaName: aibast_DealProgressionPilot
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -30,6 +31,8 @@ configuration:
             - `executive_summary` — compiled leadership review.
 
             Route timing options, pull-forward questions, or quick-win scenarios to `acceleration`. Route task or owner planning to `assign_tasks`, not to an execution workflow.
+
+            Demo conversation path: "which deals are stalled ... what actions will move them forward" -> `pipeline_health`; "details on TechCorp and Global Manufacturing" -> `stalled_deals` with those deal names; "create action plans with specific next steps" -> `action_plans`; "accelerate the entire pipeline" -> `acceleration`; "assign tasks and set up tracking" -> `assign_tasks` (a draft plan for approval); "summarize everything" -> `executive_summary`.
 
             ## Fixed evidence policy
 
@@ -71,5 +74,8 @@ configuration:
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

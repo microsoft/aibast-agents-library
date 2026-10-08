@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CAR-01, CAR-02, CAR-03, CAR-04`.
+1. Which locked case IDs did you complete? Expected scope: `CAR-01, CAR-02, CAR-03, CAR-04, CAR-05, CAR-06, CAR-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,9 @@ Both Easy lanes preserve every recorded case prompt:
 - `CAR-02` — As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.
 - `CAR-03` — As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.
 - `CAR-04` — As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.
+- `CAR-05` — As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers?
+- `CAR-06` — As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry?
+- `CAR-07` — As Growth Manager, what else could we change to lift our recovery rate further?
 
 ## Manual mode — literal browser construction
 

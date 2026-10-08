@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T09:04:48.660Z",
+  "captured_at": "2026-10-07T08:15:08.998915Z",
   "solution": "@aibast-agents-library/client-health-score",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Client Health Score Manual",
-    "bot_id": "daf1b824-7eb1-43a3-a8c0-5b1be2b325bc",
+    "bot_id": "37072557-19b1-43f0-b741-e2cbe0723e1e",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 5,
-      "confirmed": 5
+      "expected": 8,
+      "confirmed": 8
     },
     "tools": {
       "expected": 0,
@@ -43,12 +43,13 @@
       "must_include": [
         "TechCorp Industries",
         "Churn Indicator",
-        "CRITICAL"
+        "CRITICAL",
+        "$22.3M"
       ],
       "must_not_include": [
         "churn will occur"
       ],
-      "expected_screenshot": "15-chs-01.jpg",
+      "expected_screenshot": "20-chs-01.jpg",
       "passed": true
     },
     {
@@ -59,21 +60,10 @@
         "Declining billing trend",
         "TechCorp Industries"
       ],
-      "required_skill": "client-engagement-analysis",
       "must_not_include": [
-        "meeting was created",
-        "search-before-answer",
-        "open escalations",
-        "active escalations",
-        "typically precedes billing contraction",
-        "utilization caused",
-        "utilization correlating",
-        "portfolio-wide",
-        "highest in the portfolio",
-        "lowest in the portfolio",
-        "benchmark"
+        "meeting was created"
       ],
-      "expected_screenshot": "16-chs-02.jpg",
+      "expected_screenshot": "21-chs-02.jpg",
       "passed": true
     },
     {
@@ -87,7 +77,7 @@
       "must_not_include": [
         "live survey"
       ],
-      "expected_screenshot": "17-chs-03.jpg",
+      "expected_screenshot": "22-chs-03.jpg",
       "passed": true
     },
     {
@@ -96,12 +86,13 @@
       "must_include": [
         "TechCorp Industries",
         "Global Finance Corp",
-        "Healthcare Solutions Inc"
+        "Healthcare Solutions Inc",
+        "47 open support tickets"
       ],
       "must_not_include": [
         "churn is certain"
       ],
-      "expected_screenshot": "18-chs-04.jpg",
+      "expected_screenshot": "23-chs-04.jpg",
       "passed": true
     },
     {
@@ -110,22 +101,56 @@
       "must_include": [
         "Morgan Lee",
         "Value realization workshop",
-        "Approval gate"
+        "Approval gate",
+        "Sarah Mitchell"
       ],
-      "required_skill": "client-retention-playbook",
       "must_not_include": [
         "message was sent",
-        "CRM record updated successfully",
-        "Snapshot date",
-        "open escalations",
-        "active escalations",
-        "I am planning",
-        "I will schedule",
-        "Total value at risk",
-        "Cross-Account",
-        "Churn Probability"
+        "CRM record updated successfully"
       ],
-      "expected_screenshot": "19-chs-05.jpg",
+      "expected_screenshot": "24-chs-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CHS-06",
+      "prompt": "What's driving TechCorp's health score down so fast?",
+      "must_include": [
+        "78%",
+        "$340K outstanding",
+        "John Davis"
+      ],
+      "must_not_include": [
+        "churn will occur"
+      ],
+      "expected_screenshot": "25-chs-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CHS-07",
+      "prompt": "Who is the first executive we need to reach at TechCorp, and in what order should we meet the others?",
+      "must_include": [
+        "Sarah Mitchell",
+        "Tuesday",
+        "ROI documentation"
+      ],
+      "must_not_include": [
+        "invitation was sent"
+      ],
+      "expected_screenshot": "26-chs-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CHS-08",
+      "prompt": "Wrap up my quarterly business review prep with a summary of the portfolio, the risks and the retention plan.",
+      "must_include": [
+        "$17.2M",
+        "300%",
+        "ready for you to send"
+      ],
+      "must_not_include": [
+        "meetings scheduled"
+      ],
+      "expected_screenshot": "27-chs-08.jpg",
       "passed": true
     }
   ],
@@ -138,6 +163,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "20-confirm-draft.jpg"
+    "confirmation_screenshot": "28-confirm-draft.jpg"
   }
 }

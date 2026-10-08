@@ -1,0 +1,102 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/briefing-pack-builder",
+  "display_name": "Briefing Pack Builder Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/briefing_pack_builder_stack/briefing_pack_builder_agent.py",
+  "source_path": "agents/@aibast-agents-library/slg_government_stacks/briefing_pack_builder_stack/briefing_pack_builder_agent.py",
+  "target_filename": "briefing_pack_builder_agent.py",
+  "expected_tool": "BriefingPackBuilderAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "What briefing formats can you build for us?",
+    "arguments": {
+      "operation": "list_templates"
+    },
+    "must_call": "BriefingPackBuilderAgent",
+    "must_include": [
+      "Budget Hearing Brief",
+      "Council Question Brief"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "list_templates",
+      "content_scan",
+      "figure_check",
+      "draft_brief",
+      "gap_report",
+      "approval_route"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_briefing-pack-builder-synthetic-records.md",
+      "manual/knowledge/aibast_briefing-pack-builder-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 6,
+    "required_connections": [
+      "Approved SharePoint document library (read-only)",
+      "Approved drafts folder for officer-saved briefs (no agent write in the demonstration)",
+      "Bind only customer-approved systems after security, privacy, and business-owner review"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Briefing Pack Builder Manual",
+      "bot_id": "32b1d7e9-7a80-4ad5-899f-cb492bc20825",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 6,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Briefing Pack Builder Pilot",
+      "bot_id": "6c66fd22-2b4a-4321-b94f-0c28ce4701f5",
+      "schema_name": "aibast_BriefingPackBuilderPilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Briefing Pack Builder Manual",
+      "schema_name": "cr2bf_briefingpackbuildermanual_DjUTv7",
+      "solution_unique_name": "aibast_BriefingPackBuilderManualBuild",
+      "bot_id": "32b1d7e9-7a80-4ad5-899f-cb492bc20825",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "briefing-pack-builder-list-templates",
+    "briefing-pack-builder-content-scan",
+    "briefing-pack-builder-figure-check",
+    "briefing-pack-builder-draft-brief",
+    "briefing-pack-builder-gap-report",
+    "briefing-pack-builder-approval-route"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

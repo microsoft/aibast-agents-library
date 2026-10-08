@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T09:29:31.508Z",
+  "captured_at": "2026-10-07T03:44:26.325896Z",
   "solution": "@aibast-agents-library/asset-maintenance-forecast",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Asset Maintenance Manual",
-    "bot_id": "b608e498-c872-4e78-b9ba-855964f6b7d9",
+    "bot_id": "5f6263c9-1539-4ecd-a820-c07abf353cc7",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -39,10 +39,11 @@
   "canonical_preview": [
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-01",
-      "prompt": "Which asset is most likely to interrupt operations next, and what evidence supports that?",
+      "prompt": "I need immediate analysis on our wind farm turbines",
       "must_include": [
-        "Substation Transformer B-12",
-        "2026-05-01"
+        "Unit 12",
+        "8.7/10",
+        "March 18-22"
       ],
       "must_not_include": [],
       "expected_screenshot": "14-asset_maintenance_forecast-01.jpg",
@@ -50,9 +51,9 @@
     },
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-02",
-      "prompt": "Show me the weakest asset condition and whether this is an operating authorization.",
+      "prompt": "Show me the weakest turbine condition and whether this is an operating authorization.",
       "must_include": [
-        "Substation Transformer B-12",
+        "Unit 12",
         "CRITICAL",
         "not a safety determination"
       ],
@@ -62,10 +63,10 @@
     },
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-03",
-      "prompt": "What maintenance funding should I reserve for the transformer risk?",
+      "prompt": "What maintenance funding should I reserve for the at-risk turbines?",
       "must_include": [
-        "Substation Transformer B-12",
-        "$273,000",
+        "$70,200",
+        "$227,000",
         "Synthetic planning estimate"
       ],
       "must_not_include": [],
@@ -74,10 +75,10 @@
     },
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-04",
-      "prompt": "Draft the maintenance queue for AST-X002, but do not create any work orders.",
+      "prompt": "Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.",
       "must_include": [
-        "Substation Transformer B-12",
-        "Draft approval queue",
+        "Bundled Maintenance Plan",
+        "258%",
         "No work order"
       ],
       "must_not_include": [],

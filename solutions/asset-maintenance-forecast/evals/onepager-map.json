@@ -15,8 +15,8 @@
         "ASSET_MAINTENANCE_FORECAST-01"
       ],
       "synthetic_evidence": [
-        "Substation Transformer B-12",
-        "2026-05-01"
+        "Unit 12",
+        "8.7/10"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     },
@@ -29,7 +29,7 @@
         "ASSET_MAINTENANCE_FORECAST-02"
       ],
       "synthetic_evidence": [
-        "Substation Transformer B-12",
+        "Unit 12",
         "CRITICAL"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
@@ -43,8 +43,8 @@
         "ASSET_MAINTENANCE_FORECAST-03"
       ],
       "synthetic_evidence": [
-        "Substation Transformer B-12",
-        "$273,000"
+        "$70,200",
+        "$227,000"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     },
@@ -57,10 +57,18 @@
         "ASSET_MAINTENANCE_FORECAST-04"
       ],
       "synthetic_evidence": [
-        "Substation Transformer B-12",
-        "Draft approval queue"
+        "Bundled Maintenance Plan",
+        "258%"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     }
-  ]
+  ],
+  "source_audit": {
+    "implemented_operations": [
+      "maintenance_forecast",
+      "asset_health",
+      "budget_projection",
+      "work_order_plan"
+    ]
+  }
 }

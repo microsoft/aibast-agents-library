@@ -1,0 +1,27 @@
+---
+name: field-service-dispatch-dispatch-dashboard
+description: "Use when a Field Operations Manager asks for the job dashboard."
+---
+# Field Service Dispatch Agent: Job dashboard
+
+## Route
+
+Use the `dispatch_dashboard` operation. The canonical persona prompt is:
+
+> What does tomorrow's job list look like by crew, and which crews are on standby?
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `dispatch_dashboard` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- J-101
+- Marcus Chen
+- No job
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

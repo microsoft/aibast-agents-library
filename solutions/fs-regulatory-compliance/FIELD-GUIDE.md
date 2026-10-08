@@ -18,12 +18,6 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Preservation review, not certification
-
-Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json.
-
-See [evals/manual-pilot-review.json](evals/manual-pilot-review.json).
-
 
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
@@ -74,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `RC-01, RC-02, RC-03, RC-04, RC-05`.
+1. Which locked case IDs did you complete? Expected scope: `RC-01, RC-02, RC-03, RC-04, RC-05, RC-06, RC-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -223,6 +217,8 @@ Both Easy lanes preserve every recorded case prompt:
 - `RC-03` — We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?
 - `RC-04` — Is anything about to go live that shouldn't?
 - `RC-05` — My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.
+- `RC-06` — How did best execution hold up last quarter, venue by venue?
+- `RC-07` — Generate the executive report and summarize what we accomplished in this review.
 
 ## Manual mode — literal browser construction
 
@@ -273,9 +269,3 @@ an approved production tool returns evidence that it succeeded.
   part of scaffolding.
 - **Customer gate:** replacement connections, governance, telemetry, support,
   and success measures are agreed before production.
-
-## Pending evidence
-
-- solutions/fs-regulatory-compliance/evals/manual-build-evidence.json does not record passed manual Preview evidence
-
-Pending items are not proof and must not be described as captured.

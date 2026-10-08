@@ -16,6 +16,15 @@
     ],
     "customer_update": [
       "OS-04"
+    ],
+    "engagement_plan": [
+      "OS-05"
+    ],
+    "quality_validation": [
+      "OS-06"
+    ],
+    "performance_dashboard": [
+      "OS-07"
     ]
   },
   "defects_fixed": [
@@ -28,6 +37,11 @@
       "area": "recommendation-only safety",
       "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
       "after": "The agent drafts only; it never changes orders, schedules, shipments, recovery plans, or sends customer updates. Every output labels the fixed data and exact figures as synthetic."
+    },
+    {
+      "area": "collateral alignment (demo video + one-pager)",
+      "before": "Collateral alignment (demo video + one-pager): the hero order used a real company name and was not marked delayed; there was no order_id filter, production breakdown, structured recovery plan with costs/compensation/timeline, multi-channel engagement plan, quality validation or performance dashboard; day counts used 30-day months.",
+      "after": "Aligned to the demo video: real company names replaced with fictional ones (E-Cars Corp, Ironridge Equipment Co., Voltline Motors, Greenfield Agri Machines); ORD-7810 is E-Cars Corp PO #F2024-3847 (default) with a supplier delay 7 -> 3 days, production breakdown, recovery actions with costs ($54K), 2% compensation computed as $8,400, Day 1-6 timeline; new engagement_plan, quality_validation and performance_dashboard; order_id filter; calendar-correct days. Every communication and discount is prepared, never sent or applied."
     }
   ],
   "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",

@@ -33,11 +33,9 @@ unresponsive during the pilot. No r3 component or locked case is accepted;
 installation, complete save/reopen persistence, all four fresh native cases,
 reviewed screenshots and same-Draft confirmation remain required.
 
-The [input inventory](evals/manual-inputs-r3.json) pins the seven candidate files
-to source commit `38a1c30d3cccfa1cab379f6a0bb94879cf4de496` and includes the
-unchanged locked-case digest. The downloadable ZIP contains those inputs,
-cases and their inventory, not an importable Copilot Studio solution or a
-standalone guide. Follow the current [manual tutorial](manual-tutorial.html).
+The superseded grounding-r3 [input inventory](evals/history/2026-10-08-pre-reshoot/manual-inputs-r3.json)
+is kept as history only. The downloadable ZIP is the standard complete source
+bundle for the re-shot build. Follow the current [manual tutorial](manual-tutorial.html).
 
 Historical metadata and unchanged images remain preserved through
 [the history index](evals/history/2026-08/index.json). They do not establish
@@ -62,11 +60,11 @@ staging deployment never substitute for live native evidence.
 | Source bundle | `solutions/procurement-agent/exports/procurement-agent-source.zip` |
 | Manual evidence | `solutions/procurement-agent/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/procurement-agent/screenshots/manual/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — not current source | `solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip` |
+| Copilot Studio solution ZIP | `solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/procurement-agent/exports/procurement-agent-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/procurement-agent/exports/procurement-agent-solution-export.json` |
 
-**Scaffold status:** 75 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Current manual Preview and saved-instruction verification remain pending.
+**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

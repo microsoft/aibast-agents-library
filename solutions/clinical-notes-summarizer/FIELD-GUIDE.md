@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CN-01, CN-02, CN-03, CN-04`.
+1. Which locked case IDs did you complete? Expected scope: `CN-01, CN-02, CN-03, CN-04, CN-05, CN-06, CN-07, CN-08, CN-09, CN-10, CN-11`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,13 @@ Both Easy lanes preserve every recorded case prompt:
 - `CN-02` — List the source-recorded medications for SYN-ENC-001 for reconciliation.
 - `CN-03` — Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.
 - `CN-04` — What referral context is recorded for SYN-ENC-001, and what action has not occurred?
+- `CN-05` — I need a pre-op clearance summary for Patient ID 78392.
+- `CN-06` — Show me his cardiac and respiratory status with recent testing.
+- `CN-07` — Review his medications and flag any surgical concerns.
+- `CN-08` — Give me anesthesia and monitoring considerations for his eye surgery.
+- `CN-09` — Explain his ASA class III and the factors behind it.
+- `CN-10` — What would change the recommendation, and when should I reconsider clearance?
+- `CN-11` — Generate the clearance note and send it to ophthalmology.
 
 ## Manual mode — literal browser construction
 

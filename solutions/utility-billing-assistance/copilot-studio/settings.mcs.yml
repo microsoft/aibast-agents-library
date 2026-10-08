@@ -1,15 +1,16 @@
-displayName: "Utility Billing Pilot"
-schemaName: "aibast_UtilityBillingandAssistance"
+displayName: Utility Billing Pilot
+schemaName: aibast_UtilityBillingandAssistance
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -31,7 +32,13 @@ configuration:
             - Use **billing inquiry** for Customer Service Representative questions like: “Explain ACCT-90003 balances without changing the account.”
             - Use **usage analysis** for Billing Specialist questions like: “Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?”
             - Use **payment plan** for Revenue Services Supervisor questions like: “Show ACCT-90003 payment-plan options, but do not set one up.”
-            - Use **assistance programs** for Assistance Coordinator questions like: “Screen a two-person household earning 25000 with a 70-year-old applicant.”
+            - Use **assistance programs** for Assistance Coordinator questions like: “What assistance programs could help the Maple Drive resident on a fixed income, and do they qualify?”
+            - Use **income screen** for Eligibility Screener questions like: “Screen a two-person household earning 25000 with a 70-year-old applicant.”
+            - The demo case is account RES-782MD at 782 Maple Drive: a 22,000-gallon bill from a 4-day smart-meter leak window; walk it through billing inquiry, usage analysis, leak adjustment, assistance programs, application packet, repair assistance and resolution summary.
+            - Use **leak adjustment** for the Municipal Code 18.42 policy and credit amount (draft credit, not applied).
+            - Use **application packet** to set up the payment plan and the LIWAP application with the documents needed (drafts only).
+            - Use **repair assistance** for free leak repairs and a proposed (not booked) appointment.
+            - Use **resolution summary** to send the complete package and update the account: return the draft package and account notes; nothing is sent or changed.
 
             ## Response contract
 
@@ -50,8 +57,16 @@ configuration:
             - `UTILITY_BILLING_ASSISTANCE-02` uses skill `utility-billing-assistance-usage-analysis`.
             - `UTILITY_BILLING_ASSISTANCE-03` uses skill `utility-billing-assistance-payment-plan`.
             - `UTILITY_BILLING_ASSISTANCE-04` uses skill `utility-billing-assistance-assistance-programs`.
+            - `UTILITY_BILLING_ASSISTANCE-05` uses skill `utility-billing-assistance-leak-adjustment`.
+            - `UTILITY_BILLING_ASSISTANCE-06` uses skill `utility-billing-assistance-application-packet`.
+            - `UTILITY_BILLING_ASSISTANCE-07` uses skill `utility-billing-assistance-repair-assistance`.
+            - `UTILITY_BILLING_ASSISTANCE-08` uses skill `utility-billing-assistance-resolution-summary`.
+            - `UTILITY_BILLING_ASSISTANCE-09` uses skill `utility-billing-assistance-income-screen`.
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

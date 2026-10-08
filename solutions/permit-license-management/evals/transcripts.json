@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:28:10.578540+00:00",
+  "captured_at": "2026-10-07T01:25:53.871381+00:00",
   "solution": "@aibast-agents-library/permit-license-management",
   "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
   "brainstem_version": "0.6.16",
@@ -10,79 +10,96 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
-      "sha256": "6d42f1ce868288628c1355841200790d26ff9756fc854c451bfb138d1b8aa66e"
+      "sha256": "40d35799eb84340dd98c5cca3ac896c99401688ebfe2660ab2f7b4ef53ab40e5"
     }
   ],
   "case_file": "tests/demo_cases/permit-license-management.json",
-  "case_file_sha256": "3a085cd75bceace09f03371a77e0f267b351670b6853a7e07722ac3e6f015b8a",
+  "case_file_sha256": "239d11a0225004062d91ad2a19d9537fbbc38be042b1200a651a141ef97b5d95",
   "strict_isolation": true,
   "transcripts": [
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
       "persona": "Facility Manager",
       "onepager_promise": null,
-      "prompt": "Which Riverside permit is expired right now?",
-      "assistant_response": "**Riverside Generating Station has 1 expired permit:**\n\n**NPDES Stormwater Discharge Permit (PRM-6002)** \u2014 expired on 2026-03-01, issued by CA State Water Board.\n\nThis one needs immediate attention for renewal. Do you want me to pull the renewal calendar or compliance gaps to see what's needed?",
-      "agent_logs": "[PermitLicenseManagementAgent] # Permit & License Inventory\n\n**Total Permits:** 2 | **Active:** 1 | **Expired:** 1\n\n| ID | Permit | Facility | Authority | Status | Expiration | Conditions |\n|----|--------|----------|-----------|--------|-----------|-----------|\n| PRM-6001 | Title V Air Operating Permit | Riverside Generating Station | CA Air Resources Board | ACTIVE | 2029-06-15 | 24 |\n| PRM-6002 | NPDES Stormwater Discharge Permit | Riverside Generating Station | CA State Water Board | EXPIRED | 2026-03-01 | 18 |\n\n> Synthetic register only. Verify status with the issuing authority before relying on it.",
+      "prompt": "Show me our permit status and any expiring soon",
+      "assistant_response": "Here's your portfolio snapshot (via the permit tracking agent):\n\n**Overview:** 240 active permits, 63 expiring in the next 120 days, 8 of those critical (<30 days).\n\n**Critical (<30 days):**\n| Facility | Permit Type | Days Left |\n|---|---|---|\n| Imperial Valley Solar | Air Quality | 18 |\n| Reno Wind Farm | Environmental | 22 |\n| Phoenix Solar | Water Use | 26 |\n| Bakersfield Solar | Hazmat | 28 |\n| Tehachapi Wind | Avian Protection | 29 |\n| Palm Springs Wind | Noise Variance | 29 |\n| Yuma Solar | Grading | 29 |\n| Mojave Storage | Fire Code | 29 |\n\n**Exposure:** $2.34M total renewal cost across the 63 expiring permits; $47M in production at risk if the criticals lapse.\n\nNote: this is a synthetic register \u2014 verify with the issuing authority before acting. Want me to prepare the emergency renewal package (draft only, nothing submitted) for the 8 critical ones?",
+      "agent_logs": "[PermitLicenseManagementAgent] # Permit & License Inventory\n\nI've analyzed all 240 active permits across your facilities. You have 63 permits expiring in the next 120 days, including 8 critical ones needing immediate attention.\n\n## Critical Permits (<30 Days) as of 2026-03-02\n\n| ID | Facility | Permit Type | Days Left | Risk |\n|----|----------|-------------|-----------|------|\n| PRM-8101 | Imperial Valley Solar | Air Quality | 18 | CRITICAL |\n| PRM-8102 | Reno Wind Farm | Environmental | 22 | CRITICAL |\n| PRM-8103 | Phoenix Solar | Water Use | 26 | CRITICAL |\n| PRM-8104 | Bakersfield Solar | Hazmat | 28 | CRITICAL |\n| PRM-8105 | Tehachapi Wind | Avian Protection | 29 | CRITICAL |\n| PRM-8106 | Palm Springs Wind | Noise Variance | 29 | CRITICAL |\n| PRM-8107 | Yuma Solar | Grading | 29 | CRITICAL |\n| PRM-8108 | Mojave Storage | Fire Code | 29 | CRITICAL |\n\n**Total Renewal Investment:** $2.34M across 63 permits\n**Production at Risk:** $47M if permits lapse\n\nSource: [Synthetic D365 + SharePoint permit register]\n\n**Next step:** Should I prepare the emergency renewal package for the critical permits?\n\n> Synthetic register only. Verify status with the issuing authority before relying on it.",
       "expected_agent": "PermitLicenseManagementAgent",
       "must_include": [
-        "PRM-6002",
-        "EXPIRED",
-        "Verify status"
+        "240 active permits",
+        "Imperial Valley Solar",
+        "$47M"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
       "persona": "Permit Coordinator",
       "onepager_promise": null,
-      "prompt": "What is the next Riverside renewal deadline I need to prepare for?",
-      "assistant_response": "Your next active renewal deadline at **Riverside Generating Station** is:\n\n**Title V Air Operating Permit** \u2014 expires **June 15, 2029** (365 days lead time recommended)\n\nNote: The NPDES Stormwater Discharge Permit is already **expired** (March 1, 2026) \u2014 this should be prioritized for immediate attention if it hasn't been renewed.",
-      "agent_logs": "[PermitLicenseManagementAgent] # Permit Renewal Calendar\n\n| Permit | Facility | Expiration | Status | Lead Time |\n|--------|----------|-----------|--------|-----------|\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | 2026-03-01 | EXPIRED | 180 days |\n| Title V Air Operating Permit | Riverside Generating Station | 2029-06-15 | ACTIVE | 365 days |\n\n> Planning reminders only. No renewal, notice, or authority submission has been initiated.",
+      "prompt": "Which permit renewals have already missed their lead time, and how many days are left?",
+      "assistant_response": "All 8 permits in the portfolio have missed their renewal lead time \u2014 none are currently compliant on that front. Here's the rundown (days left vs. expiration):\n\n| Permit | Facility | Days Left | Required Lead Time |\n|---|---|---|---|\n| PRM-8101 Air Quality | Imperial Valley Solar | 18 | 90 days |\n| PRM-8102 Environmental | Reno Wind Farm | 22 | 120 days |\n| PRM-8103 Water Use | Phoenix Solar | 26 | 60 days |\n| PRM-8104 Hazmat | Bakersfield Solar | 28 | 60 days |\n| PRM-8105 Avian Protection | Tehachapi Wind | 29 | 90 days |\n| PRM-8106 Noise Variance | Palm Springs Wind | 29 | 45 days |\n| PRM-8107 Grading | Yuma Solar | 29 | 45 days |\n| PRM-8108 Fire Code | Mojave Storage | 29 | 45 days |\n\nAll 8 are flagged critical (under 30 days left). Reno Wind Farm's environmental permit is the worst gap proportionally \u2014 22 days left against a 120-day requirement. Want me to prepare the emergency renewal package for these?",
+      "agent_logs": "[PermitLicenseManagementAgent] # Compliance Gap Analysis\n\n**Total Gaps:** 8 | **Critical:** 8\n\n| Permit | Facility | Gap Type | Severity | Detail |\n|--------|----------|----------|----------|--------|\n| PRM-8101 Air Quality | Imperial Valley Solar | renewal_lead_time_missed | CRITICAL | 18 days left vs 90-day lead time; at risk: Dust control plan, Annual emissions inventory, Quarterly compliance reports |\n| PRM-8102 Environmental | Reno Wind Farm | renewal_lead_time_missed | CRITICAL | 22 days left vs 120-day lead time; at risk: Habitat monitoring, Annual environmental report, Mitigation plan updates |\n| PRM-8103 Water Use | Phoenix Solar | renewal_lead_time_missed | CRITICAL | 26 days left vs 60-day lead time; at risk: Monthly water use reporting, Annual allocation review, Conservation plan |\n| PRM-8104 Hazmat | Bakersfield Solar | renewal_lead_time_missed | CRITICAL | 28 days left vs 60-day lead time; at risk: Hazardous materials business plan, Annual inventory certification, Emergency response plan |\n| PRM-8105 Avian Protection | Tehachapi Wind | renewal_lead_time_missed | CRITICAL | 29 days left vs 90-day lead time; at risk: Post-construction fatality monitoring, Annual avian report, Adaptive management plan |\n| PRM-8106 Noise Variance | Palm Springs Wind | renewal_lead_time_missed | CRITICAL | 29 days left vs 45-day lead time; at risk: Quarterly noise monitoring, Community complaint log |\n| PRM-8107 Grading | Yuma Solar | renewal_lead_time_missed | CRITICAL | 29 days left vs 45-day lead time; at risk: Erosion control inspection, Grading completion certification |\n| PRM-8108 Fire Code | Mojave Storage | renewal_lead_time_missed | CRITICAL | 29 days left vs 45-day lead time; at risk: Annual fire inspection, Battery hazard mitigation analysis |\n\n> Triage evidence only, not legal advice. Authorized permit staff must validate obligations and approve remediation.\n[PermitLicenseManagementAgent] # Permit Renewal Calendar\n\nDays left are computed from the snapshot date 2026-03-02.\n\n| Permit | Facility | Expiration | Days Left | Lead Time | Lead Time Status |\n|--------|----------|-----------|-----------|-----------|------------------|\n| PRM-8101 Air Quality | Imperial Valley Solar | 2026-03-20 | 18 | 90 days | MISSED |\n| PRM-8102 Environmental | Reno Wind Farm | 2026-03-24 | 22 | 120 days | MISSED |\n| PRM-8103 Water Use | Phoenix Solar | 2026-03-28 | 26 | 60 days | MISSED |\n| PRM-8104 Hazmat | Bakersfield Solar | 2026-03-30 | 28 | 60 days | MISSED |\n| PRM-8105 Avian Protection | Tehachapi Wind | 2026-03-31 | 29 | 90 days | MISSED |\n| PRM-8106 Noise Variance | Palm Springs Wind | 2026-03-31 | 29 | 45 days | MISSED |\n| PRM-8107 Grading | Yuma Solar | 2026-03-31 | 29 | 45 days | MISSED |\n| PRM-8108 Fire Code | Mojave Storage | 2026-03-31 | 29 | 45 days | MISSED |\n\n> Planning reminders only. No renewal, notice, or authority submission has been initiated.",
       "expected_agent": "PermitLicenseManagementAgent",
       "must_include": [
-        "NPDES Stormwater Discharge Permit",
-        "2026-03-01",
+        "Reno Wind Farm",
+        "MISSED",
         "No renewal"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
       "persona": "Compliance Manager",
       "onepager_promise": null,
-      "prompt": "What permit evidence gap needs immediate authorized review at Riverside?",
-      "assistant_response": "**Critical gap at Riverside:** The **NPDES Stormwater Discharge Permit (NPDES-CA-0052841) expired on March 1, 2026**. This has cascading risk to three compliance requirements:\n- Monthly effluent sampling\n- Annual DMR submission  \n- Stormwater pollution prevention plan\n\n**Authorized staff should review immediately:**\n1. Confirm expiration date and renewal status\n2. Validate whether a renewal application was submitted before expiration\n3. Determine if the facility is operating under continued permit authority\n\nThis needs authorized review and action\u2014I can't submit or represent approval. Do you want me to check the renewal calendar or application status for this permit?",
-      "agent_logs": "[PermitLicenseManagementAgent] # Compliance Gap Analysis\n\n**Total Gaps:** 4 | **Critical:** 1\n\n| Permit | Facility | Gap Type | Severity | Detail |\n|--------|----------|----------|----------|--------|\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | expired_permit | CRITICAL | Permit NPDES-CA-0052841 expired on 2026-03-01 |\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | requirement_at_risk | HIGH | Requirement 'Monthly effluent sampling' at risk due to expired permit |\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | requirement_at_risk | HIGH | Requirement 'Annual DMR submission' at risk due to expired permit |\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | requirement_at_risk | HIGH | Requirement 'Stormwater pollution prevention plan' at risk due to expired permit |\n\n> Triage evidence only, not legal advice. Authorized permit staff must validate obligations and approve remediation.",
+      "prompt": "What permit evidence gap needs immediate authorized review?",
+      "assistant_response": "All 8 permits in the portfolio have critical, immediate gaps \u2014 each has missed its required renewal lead time versus days remaining:\n\n- **PRM-8101 Air Quality** (Imperial Valley Solar) \u2013 18 days left vs 90-day lead time\n- **PRM-8102 Environmental** (Reno Wind Farm) \u2013 22 days left vs 120-day lead time\n- **PRM-8103 Water Use** (Phoenix Solar) \u2013 26 days left vs 60-day lead time\n- **PRM-8104 Hazmat** (Bakersfield Solar) \u2013 28 days left vs 60-day lead time\n- **PRM-8105 Avian Protection** (Tehachapi Wind) \u2013 29 days left vs 90-day lead time\n- **PRM-8106 Noise Variance** (Palm Springs Wind) \u2013 29 days left vs 45-day lead time\n- **PRM-8107 Grading** (Yuma Solar) \u2013 29 days left vs 45-day lead time\n- **PRM-8108 Fire Code** (Mojave Storage) \u2013 29 days left vs 45-day lead time\n\n**Most urgent: PRM-8101 (Imperial Valley Solar)** \u2014 only 18 days left against a 90-day lead time requirement, putting dust control, emissions inventory, and compliance reporting at risk.\n\nThis is triage evidence only \u2014 authorized permit staff need to validate obligations and approve remediation. I can pull up the renewal calendar or a prepared emergency renewal package next if useful.",
+      "agent_logs": "[PermitLicenseManagementAgent] # Compliance Gap Analysis\n\n**Total Gaps:** 8 | **Critical:** 8\n\n| Permit | Facility | Gap Type | Severity | Detail |\n|--------|----------|----------|----------|--------|\n| PRM-8101 Air Quality | Imperial Valley Solar | renewal_lead_time_missed | CRITICAL | 18 days left vs 90-day lead time; at risk: Dust control plan, Annual emissions inventory, Quarterly compliance reports |\n| PRM-8102 Environmental | Reno Wind Farm | renewal_lead_time_missed | CRITICAL | 22 days left vs 120-day lead time; at risk: Habitat monitoring, Annual environmental report, Mitigation plan updates |\n| PRM-8103 Water Use | Phoenix Solar | renewal_lead_time_missed | CRITICAL | 26 days left vs 60-day lead time; at risk: Monthly water use reporting, Annual allocation review, Conservation plan |\n| PRM-8104 Hazmat | Bakersfield Solar | renewal_lead_time_missed | CRITICAL | 28 days left vs 60-day lead time; at risk: Hazardous materials business plan, Annual inventory certification, Emergency response plan |\n| PRM-8105 Avian Protection | Tehachapi Wind | renewal_lead_time_missed | CRITICAL | 29 days left vs 90-day lead time; at risk: Post-construction fatality monitoring, Annual avian report, Adaptive management plan |\n| PRM-8106 Noise Variance | Palm Springs Wind | renewal_lead_time_missed | CRITICAL | 29 days left vs 45-day lead time; at risk: Quarterly noise monitoring, Community complaint log |\n| PRM-8107 Grading | Yuma Solar | renewal_lead_time_missed | CRITICAL | 29 days left vs 45-day lead time; at risk: Erosion control inspection, Grading completion certification |\n| PRM-8108 Fire Code | Mojave Storage | renewal_lead_time_missed | CRITICAL | 29 days left vs 45-day lead time; at risk: Annual fire inspection, Battery hazard mitigation analysis |\n\n> Triage evidence only, not legal advice. Authorized permit staff must validate obligations and approve remediation.",
       "expected_agent": "PermitLicenseManagementAgent",
       "must_include": [
-        "expired_permit",
+        "renewal_lead_time_missed",
         "CRITICAL",
         "not legal advice"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
       "persona": "Environmental Counsel",
       "onepager_promise": null,
-      "prompt": "Where does the Riverside gas turbine permit application stand, and did we submit anything today?",
-      "assistant_response": "Here's the status on Riverside's gas turbine work:\n\n**Gas Turbine NSR Application (APP-7002):**\n- **Submitted:** January 20, 2026 to CA Air Resources Board\n- **Status:** Public comment period (active)\n- **Decision expected:** June 30, 2026\n- **Comment:** 12 items noted (likely review comments or outstanding questions)\n\n**Related stormwater permit (APP-7001):**\n- Submitted September 1, 2025, currently under review with the State Water Board\n\n**Today's submissions:** No new applications appear in the log for today. The gas turbine NSR is in the public comment phase\u2014authorized staff would need to review any incoming comments and prepare responses before the June deadline.\n\nIs there a specific aspect of either application you need to address?",
-      "agent_logs": "[PermitLicenseManagementAgent] # Permit Application Status\n\n**Active Applications:** 2\n\n| ID | Application | Facility | Authority | Submitted | Status | Decision Date | Comments |\n|----|-------------|----------|-----------|-----------|--------|--------------|----------|\n| APP-7001 | NPDES Stormwater Discharge Permit Renewal | Riverside Generating Station | CA State Water Board | 2025-09-01 | under_review | 2026-04-15 | 3 |\n| APP-7002 | New Source Review - Gas Turbine Expansion | Riverside Generating Station | CA Air Resources Board | 2026-01-20 | public_comment | 2026-06-30 | 12 |\n\n> Read-only synthetic tracking. The agent cannot submit, amend, withdraw, or approve an application.",
+      "prompt": "Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today?",
+      "assistant_response": "Here's the status on Imperial Valley Solar Phase 2:\n\n- **Application:** Conditional Use Permit (APP-7102)\n- **Authority:** County planning commission\n- **Submitted:** Jan 20, 2026\n- **Current status:** In public comment period\n- **Expected decision:** June 30, 2026\n- **Notes:** 12 comments logged so far\n\nNothing new went out today \u2014 this is a read-only tracking view, and no submissions, amendments, or approvals were (or can be) made by me. If you need to act on it, that requires your authorized filing process.",
+      "agent_logs": "[PermitLicenseManagementAgent] # Permit Application Status\n\n**Active Applications:** 1\n\n| ID | Application | Facility | Authority | Submitted | Status | Decision Date | Comments |\n|----|-------------|----------|-----------|-----------|--------|--------------|----------|\n| APP-7102 | Imperial Valley Solar Phase 2 Conditional Use Permit | Imperial Valley Solar | County planning commission | 2026-01-20 | public_comment | 2026-06-30 | 12 |\n\n> Read-only synthetic tracking. The agent cannot submit, amend, withdraw, or approve an application.",
       "expected_agent": "PermitLicenseManagementAgent",
       "must_include": [
-        "APP-7002",
+        "APP-7102",
         "public_comment",
         "cannot submit"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-05",
+      "persona": "Operations Director",
+      "onepager_promise": null,
+      "prompt": "Start emergency renewals for the critical permits.",
+      "assistant_response": "Emergency renewal package prepared for all 8 critical permits (expiring in 18\u201329 days):\n\n| ID | Facility | Type | Days Left | Cost |\n|---|---|---|---|---|\n| PRM-8101 | Imperial Valley Solar | Air Quality | 18 | $185K |\n| PRM-8102 | Reno Wind Farm | Environmental | 22 | $140K |\n| PRM-8103 | Phoenix Solar | Water Use | 26 | $95K |\n| PRM-8104 | Bakersfield Solar | Hazmat | 28 | $80K |\n| PRM-8105 | Tehachapi Wind | Avian Protection | 29 | $60K |\n| PRM-8106 | Palm Springs Wind | Noise Variance | 29 | $45K |\n| PRM-8107 | Yuma Solar | Grading | 29 | $40K |\n| PRM-8108 | Mojave Storage | Fire Code | 29 | $40K |\n\n- **Total investment:** $685K\n- **Production protected:** $13.8M combined capacity\n- Stakeholder alert drafts prepared for facility managers and Legal (not sent)\n\n**Important:** nothing has actually been submitted, no vendors engaged, no notices sent \u2014 this is a prepared package awaiting human approval via your authenticated filing tools. Want me to dig into the Reno Wind Farm permit specifics next?",
+      "agent_logs": "[PermitLicenseManagementAgent] Emergency renewal package prepared for all 8 critical permits, ready for your approval. Expedited processing requests and stakeholder alerts are drafted, not sent.\n\n# Emergency Renewal Plan\n\n| ID | Facility | Permit Type | Days Left | Prepared Action | Renewal Cost |\n|----|----------|-------------|-----------|-----------------|--------------|\n| PRM-8101 | Imperial Valley Solar | Air Quality | 18 | Expedited air quality renewal application prepared, ready for you to submit | $185,000 |\n| PRM-8102 | Reno Wind Farm | Environmental | 22 | Environmental permit vendor shortlisted (2-week turnaround); engagement request drafted | $140,000 |\n| PRM-8103 | Phoenix Solar | Water Use | 26 | County approval fast-track request drafted | $95,000 |\n| PRM-8104 | Bakersfield Solar | Hazmat | 28 | Hazmat documentation compiled, ready to submit | $80,000 |\n| PRM-8105 | Tehachapi Wind | Avian Protection | 29 | Monitoring report assembled for the renewal filing | $60,000 |\n| PRM-8106 | Palm Springs Wind | Noise Variance | 29 | Variance renewal letter drafted | $45,000 |\n| PRM-8107 | Yuma Solar | Grading | 29 | Grading plan resubmittal package prepared | $40,000 |\n| PRM-8108 | Mojave Storage | Fire Code | 29 | Fire code inspection request drafted | $40,000 |\n\n**Investment Required:** $685,000 for critical renewals\n**Production Protected:** $13.8M (combined facility capacity)\n**Stakeholder Alerts (drafts for Teams and Outlook):** Facility managers, Legal\n\nDraft alert: \"Critical permit renewals: 8 permits expire within 30 days. The renewal package is ready for approval; please confirm owners today.\"\n\n**Monitoring:** daily status review with executive escalation if a renewal slips (recommended cadence).\n\nSource: [Synthetic D365 vendor management + SharePoint]\n\n**Next step:** Would you like me to analyze the Reno Wind Farm permit to see what's needed?\n\n> Prepared for approval only. No application was submitted, no vendor was engaged, and no Teams or Outlook message was sent.",
+      "expected_agent": "PermitLicenseManagementAgent",
+      "must_include": [
+        "$685,000",
+        "$13.8M",
+        "No application was submitted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

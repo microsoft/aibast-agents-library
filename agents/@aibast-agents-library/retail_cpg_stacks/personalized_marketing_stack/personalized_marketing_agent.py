@@ -1,8 +1,16 @@
 """
 Personalized Marketing Agent — Retail & CPG Stack
 
-Drives customer segmentation, campaign design, content personalization,
-and performance analysis for targeted retail marketing programs.
+Drives customer segmentation, multi-wave campaign design, content
+personalization with A/B variants, automation workflows, revenue projection,
+and an executive brief for targeted retail marketing programs.
+
+Demo scenario (the default): a holiday email promotion for 240K active
+customers in five segments ($8.4M addressable), a five-wave plan led by VIP
+Shoppers ($8.12M expected from a $47K investment), three VIP A/B variants,
+a 72-hour automation workflow, and conservative / expected / optimistic VIP
+revenue scenarios. Everything is a draft for approval: nothing is sent,
+scheduled, or issued.
 """
 
 import sys
@@ -20,7 +28,7 @@ __manifest__ = {
     "version": "1.0.0",
     "display_name": "Personalized Marketing Agent",
     "description": (
-        "Draft privacy-safe customer segment insights, campaign concepts, personalized content, and performance analysis for human review."
+        "Draft privacy-safe customer segment insights, multi-wave campaign plans, personalized content with A/B variants, automation workflows, revenue projections, and executive briefs for human review."
     ),
     "author": "AIBAST",
     "tags": [
@@ -37,182 +45,213 @@ __manifest__ = {
 }
 
 # ---------------------------------------------------------------------------
-# Synthetic Data — Customer Segments
+# Synthetic Data — Customer Segments (aggregate, no personal attributes)
+# holiday_potential = modeled holiday revenue potential for the segment
 # ---------------------------------------------------------------------------
 
 CUSTOMER_SEGMENTS = {
-    "SEG-LOYAL": {
-        "name": "Loyal Advocates",
-        "size": 42850,
-        "avg_annual_spend": 1875.00,
-        "avg_orders_per_year": 18.3,
-        "avg_basket_size": 102.46,
-        "preferred_channels": ["in_store", "mobile_app"],
-        "top_categories": ["Apparel", "Footwear", "Accessories"],
-        "churn_risk": 0.04,
-        "lifetime_value": 11250.00,
-        "engagement_score": 92,
+    "SEG-VIP": {
+        "name": "VIP Shoppers",
+        "short": "VIPs",
+        "size": 12400,
+        "avg_order": 340,
+        "open_rate": 68,
+        "conversion_rate": 12.4,
+        "holiday_potential": 1480000,
+        "top_categories": ["Premium Apparel", "Footwear", "Accessories"],
     },
-    "SEG-ATRISK": {
-        "name": "At-Risk Churners",
-        "size": 18420,
-        "avg_annual_spend": 620.00,
-        "avg_orders_per_year": 5.1,
-        "avg_basket_size": 121.57,
-        "preferred_channels": ["email", "desktop_web"],
-        "top_categories": ["Electronics", "Home"],
-        "churn_risk": 0.38,
-        "lifetime_value": 3720.00,
-        "engagement_score": 31,
+    "SEG-FREQUENT": {
+        "name": "Frequent Buyers",
+        "short": "frequent buyers",
+        "size": 38200,
+        "avg_order": 185,
+        "open_rate": 52,
+        "conversion_rate": 9.6,
+        "holiday_potential": 2260000,
+        "top_categories": ["Apparel", "Home", "Beauty"],
+    },
+    "SEG-SEASONAL": {
+        "name": "Seasonal Shoppers",
+        "short": "seasonal shoppers",
+        "size": 67800,
+        "avg_order": 210,
+        "open_rate": 44,
+        "conversion_rate": 7.2,
+        "holiday_potential": 2060000,
+        "top_categories": ["Gifts", "Toys", "Electronics"],
+    },
+    "SEG-LAPSED": {
+        "name": "Lapsed Customers",
+        "short": "lapsed customers",
+        "size": 84300,
+        "avg_order": 165,
+        "open_rate": 28,
+        "conversion_rate": 3.1,
+        "holiday_potential": 1320000,
+        "top_categories": ["Home", "Electronics"],
     },
     "SEG-NEW": {
-        "name": "New Explorers",
-        "size": 27600,
-        "avg_annual_spend": 340.00,
-        "avg_orders_per_year": 3.8,
-        "avg_basket_size": 89.47,
-        "preferred_channels": ["social_media", "mobile_app"],
+        "name": "New Subscribers",
+        "short": "new subscribers",
+        "size": 37300,
+        "avg_order": 0,
+        "open_rate": 71,
+        "conversion_rate": 15.8,
+        "holiday_potential": 1280000,
         "top_categories": ["Apparel", "Beauty", "Accessories"],
-        "churn_risk": 0.22,
-        "lifetime_value": 2040.00,
-        "engagement_score": 58,
-    },
-    "SEG-HIGHVAL": {
-        "name": "High-Engagement Members",
-        "size": 8750,
-        "avg_annual_spend": 4200.00,
-        "avg_orders_per_year": 24.6,
-        "avg_basket_size": 170.73,
-        "preferred_channels": ["in_store", "mobile_app", "email"],
-        "top_categories": ["Premium Apparel", "Footwear", "Jewelry"],
-        "churn_risk": 0.06,
-        "lifetime_value": 33600.00,
-        "engagement_score": 97,
-    },
-    "SEG-DORMANT": {
-        "name": "Dormant Lapsed",
-        "size": 34200,
-        "avg_annual_spend": 85.00,
-        "avg_orders_per_year": 0.8,
-        "avg_basket_size": 106.25,
-        "preferred_channels": ["email"],
-        "top_categories": ["Home", "Electronics"],
-        "churn_risk": 0.72,
-        "lifetime_value": 510.00,
-        "engagement_score": 9,
     },
 }
 
-CAMPAIGN_TEMPLATES = {
-    "CAMP-WINBACK": {
-        "name": "Win-Back Journey",
-        "type": "automated_email",
-        "target_segment": "SEG-DORMANT",
-        "stages": 4,
-        "duration_days": 28,
-        "offer_concept": "Optional incentive concept, subject to policy and approval",
-        "subject_lines": [
-            "Draft A: Reconnect with recent category interests",
-            "Draft B: Explore what is new",
-            "Draft C: Optional value reminder",
-            "Draft D: Close the sequence respectfully",
-        ],
-        "historical_open_rate": 0.18,
-        "historical_click_rate": 0.04,
-        "historical_conversion_rate": 0.012,
+# Multi-wave holiday plan. expected_revenue = predictive-model season revenue for the wave.
+HOLIDAY_WAVES = {
+    "WAVE-1": {
+        "segment": "SEG-VIP",
+        "day": 0,
+        "day_label": "Launch Day",
+        "theme": "Early Access - 30% Off Everything",
+        "personalization": "Past purchase categories featured",
+        "expected_revenue": 1420000,
     },
-    "CAMP-LOYALTY": {
-        "name": "Loyalty Tier Upgrade",
-        "type": "multi_channel",
-        "target_segment": "SEG-LOYAL",
-        "stages": 3,
-        "duration_days": 14,
-        "offer_concept": "Early-access concept; no benefit is issued",
-        "subject_lines": [
-            "Draft A: Review progress toward the next tier",
-            "Draft B: Explain an optional approved benefit",
-            "Draft C: Acknowledge a verified tier change",
-        ],
-        "historical_open_rate": 0.42,
-        "historical_click_rate": 0.15,
-        "historical_conversion_rate": 0.08,
+    "WAVE-2": {
+        "segment": "SEG-FREQUENT",
+        "day": 2,
+        "day_label": "Day 2",
+        "theme": "Your Favorites Are On Sale",
+        "personalization": "AI-recommended products based on browsing",
+        "expected_revenue": 2170000,
     },
-    "CAMP-NEWWELCOME": {
-        "name": "New Customer Welcome",
-        "type": "automated_email",
-        "target_segment": "SEG-NEW",
-        "stages": 5,
-        "duration_days": 30,
-        "offer_concept": "Welcome-value concept, subject to policy and approval",
-        "subject_lines": [
-            "Draft A: Welcome and explain available categories",
-            "Draft B: Introduce popular products",
-            "Draft C: Offer optional curated ideas",
-            "Draft D: Invite the shopper to set preferences",
-            "Draft E: Explain the rewards program without enrollment",
-        ],
-        "historical_open_rate": 0.35,
-        "historical_click_rate": 0.11,
-        "historical_conversion_rate": 0.055,
+    "WAVE-3": {
+        "segment": "SEG-SEASONAL",
+        "day": 5,
+        "day_label": "Day 5",
+        "theme": "Holiday Gifts - Free Shipping",
+        "personalization": "Gift guides by top category",
+        "expected_revenue": 1980000,
     },
-    "CAMP-VIP": {
-        "name": "VIP Exclusive Preview",
-        "type": "multi_channel",
-        "target_segment": "SEG-HIGHVAL",
-        "stages": 2,
-        "duration_days": 7,
-        "offer_concept": "Private-preview concept; no access or discount is granted",
-        "subject_lines": [
-            "Draft A: Preview a collection for an eligible aggregate audience",
-            "Draft B: Close the preview sequence without urgency pressure",
-        ],
-        "historical_open_rate": 0.58,
-        "historical_click_rate": 0.24,
-        "historical_conversion_rate": 0.14,
+    "WAVE-4": {
+        "segment": "SEG-NEW",
+        "day": 7,
+        "day_label": "Day 7",
+        "theme": "Welcome Gift - 40% Off First Purchase",
+        "personalization": "Signup-preference categories",
+        "expected_revenue": 1240000,
+    },
+    "WAVE-5": {
+        "segment": "SEG-LAPSED",
+        "day": 10,
+        "day_label": "Day 10",
+        "theme": "We Saved You a Gift - Free Shipping",
+        "personalization": "Last purchased category",
+        "expected_revenue": 1310000,
     },
 }
+
+CAMPAIGN_ECONOMICS = {
+    "campaign": "Holiday Promotion",
+    "investment": 47000,
+    "investment_note": "creative + platform + labor",
+    "personalization_lift_pct": 15.8,
+}
+
+VIP_VARIANTS = {
+    "A": {
+        "focus": "Product Focus",
+        "hero_image": "Best-selling items from the customer's purchase history",
+        "subject_line": "{FirstName}, Your Favorites Are 30% Off (VIP Early Access)",
+        "cta": "Shop My Picks",
+    },
+    "B": {
+        "focus": "Urgency Focus",
+        "hero_image": "Countdown timer + exclusive badge",
+        "subject_line": "24-Hour VIP Access Starts Now - 30% Off",
+        "cta": "Activate My VIP Access",
+    },
+    "C": {
+        "focus": "Rewards Focus",
+        "hero_image": "Double points badge + tier benefits",
+        "subject_line": "Earn 3X Points + 30% Off (VIP Exclusive)",
+        "cta": "Claim VIP Rewards",
+    },
+}
+
+AB_TEST_SETUP = {
+    "campaign_name": "Early Access VIP - 30% Off Everything",
+    "split": [33, 33, 34],
+    "duration_hours": 12,
+    "winner_metric": "open rate + revenue",
+    "sample_first_name": "Sarah",
+}
+
+AUTOMATION_WORKFLOW = {
+    "launch_label": "Tomorrow",
+    "launch_hour": 8,
+    "timezone": "PST",
+    "follow_up_hours": 48,
+    "steps": [
+        {"hour": 0, "step": "Initial send with variant testing"},
+        {"hour": 12, "step": "Winner declared, send winning variant to remaining audience"},
+        {"hour": 24, "step": "Browse abandonment email (personalized products)"},
+        {"hour": 48, "step": "Cart abandonment email (10% additional discount)"},
+        {"hour": 72, "step": "Final call email (last chance messaging)"},
+    ],
+    "tracking": [
+        "Real-time dashboard monitoring open/click/revenue",
+        "Milestone alerts to the campaign channel",
+        "Optimization recommendations based on early performance",
+    ],
+}
+
+# VIP wave revenue scenarios. Rates are percentages; revenue = predictive-model season revenue.
+REVENUE_SCENARIOS = [
+    {"name": "Conservative (Baseline)", "open_rate": 68, "click_rate": 24, "conversion_rate": 12.4,
+     "avg_order": 340, "avg_order_note": "", "revenue": 1420000},
+    {"name": "Expected (Hit Benchmarks)", "open_rate": 72, "click_rate": 28, "conversion_rate": 14.2,
+     "avg_order": 380, "avg_order_note": " (upsell success)", "revenue": 1780000},
+    {"name": "Optimistic (Beat Benchmarks)", "open_rate": 78, "click_rate": 32, "conversion_rate": 16.8,
+     "avg_order": 420, "avg_order_note": " (premium mix)", "revenue": 2110000},
+]
 
 AB_TEST_RESULTS = {
     "ABT-001": {
-        "campaign": "CAMP-WINBACK",
-        "variant_a": {"subject": "We miss you — here is 20% off", "open_rate": 0.18, "click_rate": 0.04, "conversions": 82},
-        "variant_b": {"subject": "Come back for something special", "open_rate": 0.21, "click_rate": 0.05, "conversions": 107},
+        "campaign": "Last year's VIP early access",
+        "variant_a": {"subject": "VIP Only: private sale starts now", "open_rate": 0.58, "click_rate": 0.24, "conversions": 215},
+        "variant_b": {"subject": "Your favorites, VIP early access", "open_rate": 0.64, "click_rate": 0.27, "conversions": 248},
         "winner": "B",
         "confidence": 0.94,
-        "sample_size": 8500,
+        "sample_size": 11800,
     },
     "ABT-002": {
-        "campaign": "CAMP-LOYALTY",
-        "variant_a": {"subject": "You are almost Gold status!", "open_rate": 0.42, "click_rate": 0.15, "conversions": 341},
-        "variant_b": {"subject": "Unlock Gold rewards today", "open_rate": 0.39, "click_rate": 0.13, "conversions": 298},
+        "campaign": "Last year's frequent-buyer sale",
+        "variant_a": {"subject": "Your favorites are on sale", "open_rate": 0.49, "click_rate": 0.15, "conversions": 341},
+        "variant_b": {"subject": "Holiday deals picked for you", "open_rate": 0.46, "click_rate": 0.13, "conversions": 298},
         "winner": "A",
         "confidence": 0.91,
-        "sample_size": 6200,
+        "sample_size": 36000,
     },
     "ABT-003": {
-        "campaign": "CAMP-VIP",
-        "variant_a": {"subject": "VIP Only: private sale starts now", "open_rate": 0.58, "click_rate": 0.24, "conversions": 215},
-        "variant_b": {"subject": "Your private collection awaits", "open_rate": 0.61, "click_rate": 0.27, "conversions": 248},
+        "campaign": "Generic vs personalized holiday email",
+        "variant_a": {"subject": "Holiday sale: shop now", "open_rate": 0.31, "click_rate": 0.08, "conversions": 190},
+        "variant_b": {"subject": "Gifts picked from your favorite categories", "open_rate": 0.36, "click_rate": 0.10, "conversions": 220},
         "winner": "B",
         "confidence": 0.88,
-        "sample_size": 3400,
+        "sample_size": 24000,
     },
 }
 
 CONTENT_BLOCKS = {
     "hero_banner": {
-        "SEG-LOYAL": {"headline": "Thank You for Being a Loyal Customer", "cta": "Shop Your Rewards"},
-        "SEG-ATRISK": {"headline": "We Have Something Special for You", "cta": "Rediscover Your Favorites"},
-        "SEG-NEW": {"headline": "Welcome to the Family", "cta": "Start Shopping"},
-        "SEG-HIGHVAL": {"headline": "Exclusive Access Just for You", "cta": "View Private Collection"},
-        "SEG-DORMANT": {"headline": "It Has Been a While — Come Back", "cta": "See What Is New"},
+        "SEG-VIP": {"headline": "VIP Early Access - 30% Off Everything", "cta": "Shop My Picks"},
+        "SEG-FREQUENT": {"headline": "Your Favorites Are On Sale", "cta": "See My Favorites"},
+        "SEG-SEASONAL": {"headline": "Holiday Gifts - Free Shipping", "cta": "Shop Gift Guides"},
+        "SEG-LAPSED": {"headline": "We Saved You a Gift", "cta": "See What Is New"},
+        "SEG-NEW": {"headline": "Welcome Gift - 40% Off First Purchase", "cta": "Start Shopping"},
     },
     "product_recs": {
-        "SEG-LOYAL": ["Classic Denim Jacket", "Premium Running Shoes", "Leather Crossbody Bag"],
-        "SEG-ATRISK": ["Wireless Earbuds Pro", "Smart Fitness Tracker"],
+        "SEG-VIP": ["Limited Edition Blazer", "Designer Handbag", "Artisan Watch"],
+        "SEG-FREQUENT": ["Classic Denim Jacket", "Premium Running Shoes", "Cozy Throw Blanket"],
+        "SEG-SEASONAL": ["Holiday Gift Set", "Wireless Earbuds Pro", "Board Game Bundle"],
+        "SEG-LAPSED": ["Best Sellers Bundle", "Gift Card"],
         "SEG-NEW": ["Organic Cotton T-Shirt", "Stainless Water Bottle", "UV Protection Sunglasses"],
-        "SEG-HIGHVAL": ["Limited Edition Blazer", "Designer Handbag", "Artisan Watch"],
-        "SEG-DORMANT": ["Best Sellers Bundle", "Gift Card"],
     },
 }
 
@@ -243,28 +282,46 @@ def _response_header(persona):
 # Helper Functions
 # ---------------------------------------------------------------------------
 
-def _total_addressable_customers():
+def _millions(amount):
+    """1420000 -> '$1.42M'; 8400000 -> '$8.4M'."""
+    if amount % 100000 == 0:
+        return f"${amount / 1000000:.1f}M"
+    return f"${amount / 1000000:.2f}M"
+
+
+def _total_customers():
     return sum(seg["size"] for seg in CUSTOMER_SEGMENTS.values())
 
 
-def _weighted_avg_ltv():
-    total_size = _total_addressable_customers()
-    weighted = sum(seg["size"] * seg["lifetime_value"] for seg in CUSTOMER_SEGMENTS.values())
-    return round(weighted / total_size, 2) if total_size > 0 else 0
+def _total_addressable():
+    return sum(seg["holiday_potential"] for seg in CUSTOMER_SEGMENTS.values())
 
 
-def _segment_revenue_contribution(seg_id):
-    seg = CUSTOMER_SEGMENTS.get(seg_id, {})
-    return round(seg.get("size", 0) * seg.get("avg_annual_spend", 0), 2)
+def _total_wave_revenue():
+    return sum(w["expected_revenue"] for w in HOLIDAY_WAVES.values())
 
 
-def _campaign_projected_revenue(camp_id):
-    camp = CAMPAIGN_TEMPLATES.get(camp_id, {})
-    seg = CUSTOMER_SEGMENTS.get(camp.get("target_segment", ""), {})
-    audience = seg.get("size", 0)
-    conv_rate = camp.get("historical_conversion_rate", 0)
-    basket = seg.get("avg_basket_size", 0)
-    return round(audience * conv_rate * basket, 2)
+def _roi(revenue):
+    """Revenue to investment ratio, rounded to a whole number."""
+    return int(revenue / CAMPAIGN_ECONOMICS["investment"] + 0.5)
+
+
+def _scenario_funnel(scenario, audience):
+    """Opens, clicks and orders from the audience and the scenario rates (rounded to whole people)."""
+    opens = int(audience * scenario["open_rate"] / 100 + 0.5)
+    clicks = int(opens * scenario["click_rate"] / 100 + 0.5)
+    orders = int(clicks * scenario["conversion_rate"] / 100 + 0.5)
+    return opens, clicks, orders
+
+
+def _launch_time(hours_after):
+    """Clock time of a workflow step on the 12-hour clock, e.g. 12 -> '8:00 PM'."""
+    hour = (AUTOMATION_WORKFLOW["launch_hour"] + hours_after) % 24
+    suffix = "AM" if hour < 12 else "PM"
+    shown = hour % 12
+    if shown == 0:
+        shown = 12
+    return f"{shown}:00 {suffix}"
 
 
 # ---------------------------------------------------------------------------
@@ -278,7 +335,17 @@ class PersonalizedMarketingAgent(BasicAgent):
         self.name = "personalized-marketing-agent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                __manifest__["description"]
+                + " Always use this tool for the holiday email campaign: 'analyze our customer segments "
+                "and recommend the best approach' uses customer_segmentation; 'show me the personalized "
+                "campaign recommendations' uses campaign_design; 'generate the VIP campaign with personalized "
+                "content and A/B test variants' uses content_personalization; 'schedule the VIP wave and show "
+                "me the automation workflow' uses campaign_workflow; 'revenue projection breakdown' uses "
+                "revenue_projection; 'create the executive brief' uses executive_brief; past test results use "
+                "performance_analysis. Every operation has demo defaults; call it without asking for details. "
+                "Outputs are drafts: nothing is sent, scheduled, or issued."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -289,10 +356,29 @@ class PersonalizedMarketingAgent(BasicAgent):
                             "campaign_design",
                             "content_personalization",
                             "performance_analysis",
+                            "campaign_workflow",
+                            "revenue_projection",
+                            "executive_brief",
                         ],
+                        "description": (
+                            "customer_segmentation: segments, sizes, avg order, open rate, holiday potential and "
+                            "recommended strategy. campaign_design: multi-wave campaign recommendations with themes "
+                            "and expected revenue. content_personalization: VIP creative with three A/B test "
+                            "variants (or hero copy for another segment). performance_analysis: past A/B test "
+                            "results and benchmarks. campaign_workflow: schedule the VIP wave (tomorrow 8:00 AM) and "
+                            "the 72-hour automation workflow, as a draft for approval. revenue_projection: "
+                            "conservative / expected / optimistic VIP revenue scenarios and ROI. executive_brief: "
+                            "executive summary of the whole campaign strategy and program economics."
+                        ),
                     },
-                    "segment_id": {"type": "string"},
-                    "campaign_id": {"type": "string"},
+                    "segment_id": {
+                        "type": "string",
+                        "description": "Optional segment: SEG-VIP, SEG-FREQUENT, SEG-SEASONAL, SEG-LAPSED or SEG-NEW (default VIP for content)",
+                    },
+                    "campaign_id": {
+                        "type": "string",
+                        "description": "Optional wave: WAVE-1 to WAVE-5 (default: the whole holiday plan)",
+                    },
                     "persona": {
                         "type": "string",
                         "enum": list(APPROVED_PERSONAS),
@@ -309,90 +395,135 @@ class PersonalizedMarketingAgent(BasicAgent):
         segment_id = kwargs.get("segment_id")
         if segment_id and segment_id not in CUSTOMER_SEGMENTS:
             return f"Unknown segment_id `{segment_id}`. Valid: {', '.join(CUSTOMER_SEGMENTS)}"
-        segments = (
-            {segment_id: CUSTOMER_SEGMENTS[segment_id]}
-            if segment_id
-            else CUSTOMER_SEGMENTS
-        )
+        segments = {segment_id: CUSTOMER_SEGMENTS[segment_id]} if segment_id else CUSTOMER_SEGMENTS
+        total = _total_customers()
         lines = _response_header(kwargs.get("persona")) + [
             "# Customer Segmentation Overview",
             "",
-            f"**Total Addressable Customers:** {_total_addressable_customers():,}",
-            f"**Weighted Average LTV:** ${_weighted_avg_ltv():,.2f}",
+            f"I've analyzed your {total // 1000}K active customers and identified "
+            f"{len(CUSTOMER_SEGMENTS)} high-value segments for targeted holiday campaigns.",
             "",
-            "| Segment | Size | Avg Spend | Orders/Yr | LTV | Churn Risk | Engagement |",
-            "|---------|------|-----------|-----------|-----|------------|------------|",
+            f"**Total Addressable Customers:** {total:,}",
+            "",
+            "| Segment | Size | Avg Order | Open Rate | Conversion |",
+            "|---------|------|-----------|-----------|------------|",
         ]
-        for seg_id, seg in segments.items():
+        for seg in segments.values():
             lines.append(
-                f"| {seg['name']} | {seg['size']:,} | ${seg['avg_annual_spend']:,.2f} "
-                f"| {seg['avg_orders_per_year']} | ${seg['lifetime_value']:,.2f} "
-                f"| {seg['churn_risk']*100:.0f}% | {seg['engagement_score']}/100 |"
+                f"| {seg['name']} | {seg['size']:,} | ${seg['avg_order']} | {seg['open_rate']}% | {seg['conversion_rate']}% |"
             )
-        lines.append("")
-        lines.append("## Revenue Contribution by Segment")
-        lines.append("")
-        for seg_id, seg in segments.items():
-            rev = _segment_revenue_contribution(seg_id)
-            lines.append(f"- **{seg['name']}:** ${rev:,.2f}")
+        top_value = None
+        top_growth = None
+        for seg in CUSTOMER_SEGMENTS.values():
+            if top_value is None or seg["avg_order"] > top_value["avg_order"]:
+                top_value = seg
+            if top_growth is None or seg["conversion_rate"] > top_growth["conversion_rate"]:
+                top_growth = seg
+        lines += [
+            "",
+            "**Holiday Revenue Potential:**",
+            f"- Total addressable: {_millions(_total_addressable())} across all segments",
+            f"- Highest ROI: {top_value['name']} ({top_value['conversion_rate']}% conversion)",
+            f"- Fastest growth: {top_growth['name']} ({top_growth['conversion_rate']}% conversion)",
+            "",
+            f"**Recommended Strategy:** Multi-wave campaign targeting {top_value['short']} first, "
+            "then expanding to other segments.",
+            "",
+            "Source: [CRM Analytics + Purchase History + Email Platform]",
+            "",
+            "Next: want to see personalized campaign recommendations?",
+        ]
         return "\n".join(lines)
 
     def _campaign_design(self, **kwargs):
         campaign_id = kwargs.get("campaign_id")
-        if campaign_id and campaign_id not in CAMPAIGN_TEMPLATES:
-            return f"Unknown campaign_id `{campaign_id}`. Valid: {', '.join(CAMPAIGN_TEMPLATES)}"
-        if campaign_id:
-            camps = {campaign_id: CAMPAIGN_TEMPLATES[campaign_id]}
-        else:
-            camps = CAMPAIGN_TEMPLATES
-        lines = _response_header(kwargs.get("persona")) + ["# Draft Campaign Design Portfolio", ""]
-        for cid, camp in camps.items():
-            seg = CUSTOMER_SEGMENTS.get(camp["target_segment"], {})
-            proj_rev = _campaign_projected_revenue(cid)
-            lines.append(f"## {camp['name']} (`{cid}`)")
-            lines.append("")
-            lines.append(f"- **Type:** {camp['type']}")
-            lines.append(f"- **Target Segment:** {seg.get('name', 'Unknown')} ({camp['target_segment']})")
-            lines.append(f"- **Audience Size:** {seg.get('size', 0):,}")
-            lines.append(f"- **Duration:** {camp['duration_days']} days, {camp['stages']} stages")
-            lines.append(f"- **Offer Concept:** {camp['offer_concept']}")
-            lines.append(f"- **Illustrative Revenue Scenario:** ${proj_rev:,.2f}")
-            lines.append("")
-            lines.append("**Draft Sequence (not sent):**")
-            for i, subj in enumerate(camp["subject_lines"], 1):
-                lines.append(f"  {i}. {subj}")
-            lines.append("")
-            lines.append(f"**Historical Benchmarks:** Open {camp['historical_open_rate']*100:.0f}% | "
-                         f"Click {camp['historical_click_rate']*100:.0f}% | "
-                         f"Convert {camp['historical_conversion_rate']*100:.1f}%")
-            lines.append("")
+        if campaign_id and campaign_id not in HOLIDAY_WAVES:
+            return f"Unknown campaign_id `{campaign_id}`. Valid: {', '.join(HOLIDAY_WAVES)}"
+        waves = {campaign_id: HOLIDAY_WAVES[campaign_id]} if campaign_id else HOLIDAY_WAVES
+        lines = _response_header(kwargs.get("persona")) + [
+            "# Draft Campaign Design Portfolio",
+            "",
+            f"I've created {len(waves)} personalized campaign drafts optimized for each segment's behavior patterns.",
+            "",
+            "**Campaign Recommendations:**",
+            "",
+        ]
+        for wid, wave in waves.items():
+            seg = CUSTOMER_SEGMENTS[wave["segment"]]
+            lines += [
+                f"## {wid.replace('WAVE-', 'Wave ')}: {seg['name']} ({wave['day_label']})",
+                "",
+                f"- **Theme (proposed offer, not issued):** \"{wave['theme']}\"",
+                f"- **Personalization:** {wave['personalization']}",
+                f"- **Audience:** {seg['size']:,} ({seg['conversion_rate']}% conversion, ${seg['avg_order']} avg order)",
+                f"- **Expected revenue:** {_millions(wave['expected_revenue'])}",
+                "",
+            ]
+        total = sum(w["expected_revenue"] for w in waves.values())
+        lines += [
+            f"**Total Campaign Projection:** {_millions(total)} revenue from "
+            f"${CAMPAIGN_ECONOMICS['investment'] // 1000}K campaign investment",
+            "",
+            "Source: [Predictive Analytics + Historical Performance]",
+            "",
+            "Next: generate the VIP campaign creative?",
+        ]
         return "\n".join(lines)
 
     def _content_personalization(self, **kwargs):
-        segment_id = kwargs.get("segment_id")
-        if segment_id and segment_id not in CUSTOMER_SEGMENTS:
+        segment_id = kwargs.get("segment_id") or "SEG-VIP"
+        if segment_id not in CUSTOMER_SEGMENTS:
             return f"Unknown segment_id `{segment_id}`. Valid: {', '.join(CUSTOMER_SEGMENTS)}"
-        if segment_id:
-            segs = {segment_id: CUSTOMER_SEGMENTS[segment_id]}
-        else:
-            segs = CUSTOMER_SEGMENTS
+        seg = CUSTOMER_SEGMENTS[segment_id]
+        hero = CONTENT_BLOCKS["hero_banner"][segment_id]
+        recs = CONTENT_BLOCKS["product_recs"][segment_id]
         lines = _response_header(kwargs.get("persona")) + ["# Draft Content Personalization Matrix", ""]
-        for seg_id, seg in segs.items():
-            hero = CONTENT_BLOCKS["hero_banner"].get(seg_id, {})
-            recs = CONTENT_BLOCKS["product_recs"].get(seg_id, [])
-            lines.append(f"## {seg['name']} (`{seg_id}`)")
-            lines.append("")
-            lines.append("**Draft Hero Copy:**")
-            lines.append(f"- Headline: \"{hero.get('headline', '')}\"")
-            lines.append(f"- CTA: \"{hero.get('cta', '')}\"")
-            lines.append("")
-            lines.append("**Draft Product Ideas:**")
-            for prod in recs:
-                lines.append(f"- {prod}")
-            lines.append("")
-            lines.append(f"**Preferred Channels:** {', '.join(seg['preferred_channels'])}")
-            lines.append(f"**Top Categories:** {', '.join(seg['top_categories'])}")
-            lines.append("")
+        if segment_id == "SEG-VIP":
+            setup = AB_TEST_SETUP
+            lines += [
+                f"VIP campaign creative drafted with {len(VIP_VARIANTS)} A/B test variants optimized for engagement.",
+                "",
+                f"**Campaign:** \"{setup['campaign_name']}\"",
+                "",
+            ]
+            for key, v in VIP_VARIANTS.items():
+                lines += [
+                    f"## Variant {key}: {v['focus']}",
+                    "",
+                    f"- Hero image: {v['hero_image']}",
+                    f"- Subject line: \"{v['subject_line']}\"",
+                    f"- CTA: \"{v['cta']}\"",
+                    "",
+                ]
+            sample = VIP_VARIANTS["A"]["subject_line"].replace("{FirstName}", setup["sample_first_name"])
+            lines += [
+                f"Preview of Variant A for a sample VIP: \"{sample}\"",
+                "",
+                "**A/B Test Setup:**",
+                f"- Split: {' / '.join(str(s) + '%' for s in setup['split'])}",
+                f"- Duration: {setup['duration_hours']} hours",
+                f"- Winner auto-selected by {setup['winner_metric']}",
+                "",
+            ]
+        lines += [
+            f"## {seg['name']} (`{segment_id}`)",
+            "",
+            "**Draft Hero Copy:**",
+            f"- Headline: \"{hero['headline']}\"",
+            f"- CTA: \"{hero['cta']}\"",
+            "",
+            "**Draft Product Ideas:**",
+        ]
+        for prod in recs:
+            lines.append(f"- {prod}")
+        lines += [
+            "",
+            f"**Top Categories:** {', '.join(seg['top_categories'])}",
+            "",
+            "Source: [Creative Engine + Testing Framework]",
+            "",
+            "Next: schedule the campaign launch?",
+        ]
         return "\n".join(lines)
 
     def _performance_analysis(self, **kwargs):
@@ -405,31 +536,142 @@ class PersonalizedMarketingAgent(BasicAgent):
             "|------|----------|--------|------------|--------|------|",
         ]
         for test_id, test in AB_TEST_RESULTS.items():
-            camp_name = CAMPAIGN_TEMPLATES.get(test["campaign"], {}).get("name", test["campaign"])
             a_conv = test["variant_a"]["conversions"]
             b_conv = test["variant_b"]["conversions"]
-            lift = round(((max(a_conv, b_conv) - min(a_conv, b_conv)) / min(a_conv, b_conv)) * 100, 1)
+            lift = round((max(a_conv, b_conv) - min(a_conv, b_conv)) * 100 / min(a_conv, b_conv), 1)
             lines.append(
-                f"| {test_id} | {camp_name} | Variant {test['winner']} "
-                f"| {test['confidence']*100:.0f}% | {test['sample_size']:,} | +{lift}% |"
+                f"| {test_id} | {test['campaign']} | Variant {test['winner']} "
+                f"| {test['confidence'] * 100:.0f}% | {test['sample_size']:,} | +{lift}% |"
             )
-        lines.append("")
-        lines.append("## Campaign ROI Summary")
-        lines.append("")
-        lines.append("| Campaign | Audience | Proj. Revenue | Conv. Rate | Est. ROAS |")
-        lines.append("|----------|----------|---------------|------------|-----------|")
-        for cid, camp in CAMPAIGN_TEMPLATES.items():
-            seg = CUSTOMER_SEGMENTS.get(camp["target_segment"], {})
-            rev = _campaign_projected_revenue(cid)
-            cost_estimate = seg.get("size", 0) * 0.35  # $0.35 per contact
-            roas = round(rev / cost_estimate, 2) if cost_estimate > 0 else 0
-            lines.append(
-                f"| {camp['name']} | {seg.get('size', 0):,} | ${rev:,.2f} "
-                f"| {camp['historical_conversion_rate']*100:.1f}% | {roas}x |"
-            )
-        lines.append("")
-        total_rev = sum(_campaign_projected_revenue(c) for c in CAMPAIGN_TEMPLATES)
-        lines.append(f"**Total Projected Campaign Revenue:** ${total_rev:,.2f}")
+        lines += [
+            "",
+            "## Benchmarks Used for the Holiday Plan",
+            "",
+            "| Segment | Open Rate | Conversion | Avg Order |",
+            "|---------|-----------|------------|-----------|",
+        ]
+        for seg in CUSTOMER_SEGMENTS.values():
+            lines.append(f"| {seg['name']} | {seg['open_rate']}% | {seg['conversion_rate']}% | ${seg['avg_order']} |")
+        lines += [
+            "",
+            f"**Personalization benchmark:** {CAMPAIGN_ECONOMICS['personalization_lift_pct']}% higher conversion "
+            "than generic campaigns (synthetic benchmark).",
+            "",
+            "Measurement limitation: past tests are synthetic samples; confirm significance before any decision.",
+        ]
+        return "\n".join(lines)
+
+    def _campaign_workflow(self, **kwargs):
+        wf = AUTOMATION_WORKFLOW
+        setup = AB_TEST_SETUP
+        seg = CUSTOMER_SEGMENTS["SEG-VIP"]
+        launch = _launch_time(0)
+        winner = _launch_time(setup["duration_hours"])
+        lines = _response_header(kwargs.get("persona")) + [
+            "# Draft VIP Launch Schedule and Automation Workflow",
+            "",
+            f"VIP wave draft scheduled for {wf['launch_label'].lower()} {launch} with the full automation workflow, "
+            "ready for you to approve. Nothing is scheduled or sent until you approve it in the marketing platform.",
+            "",
+            "**Scheduled Campaign (draft):**",
+            f"- Launch: {wf['launch_label']} {launch} {wf['timezone']}",
+            f"- Audience: {seg['size']:,} VIP customers",
+            f"- A/B Test: {len(VIP_VARIANTS)} variants ({'/'.join(str(s) for s in setup['split'])} split)",
+            f"- Winner Selection: Auto-select at {winner} ({setup['duration_hours']} hours)",
+            f"- Follow-up: {wf['follow_up_hours']}-hour reminder if no purchase",
+            "",
+            "**Automation Workflow:**",
+            "",
+            "| Hour | Step |",
+            "|------|------|",
+        ]
+        for s in wf["steps"]:
+            lines.append(f"| Hour {s['hour']} | {s['step']} |")
+        lines += ["", "**Performance Tracking:**"]
+        for t in wf["tracking"]:
+            lines.append(f"- {t}")
+        lines += [
+            "",
+            "Source: [Marketing Automation + Campaign Scheduler]",
+            "",
+            "Next: want to see the revenue projection breakdown?",
+        ]
+        return "\n".join(lines)
+
+    def _revenue_projection(self, **kwargs):
+        audience = CUSTOMER_SEGMENTS["SEG-VIP"]["size"]
+        base = REVENUE_SCENARIOS[0]["revenue"]
+        top = REVENUE_SCENARIOS[-1]["revenue"]
+        lines = _response_header(kwargs.get("persona")) + [
+            "# VIP Revenue Projection Model",
+            "",
+            f"Revenue projections show {_millions(base)} baseline with {_millions(top)} upside if we beat benchmarks "
+            f"(VIP wave, {audience:,} customers).",
+            "",
+        ]
+        for sc in REVENUE_SCENARIOS:
+            opens, clicks, orders = _scenario_funnel(sc, audience)
+            lines += [
+                f"## {sc['name']}",
+                "",
+                f"- Open rate: {sc['open_rate']}% ({opens:,} opens)",
+                f"- Click rate: {sc['click_rate']}% ({clicks:,} clicks)",
+                f"- Conversion: {sc['conversion_rate']}% ({orders:,} launch-email orders)",
+                f"- Avg order: ${sc['avg_order']}{sc['avg_order_note']}",
+                f"- Revenue (season model): {_millions(sc['revenue'])}",
+                "",
+            ]
+        econ = CAMPAIGN_ECONOMICS
+        lines += [
+            f"**Campaign Investment:** ${econ['investment'] // 1000}K ({econ['investment_note']})",
+            f"**ROI Range:** {_roi(base)}:1 (baseline) to {_roi(top)}:1 (optimistic)",
+            "",
+            "Scenarios are planning estimates, not forecasts or committed results.",
+            "",
+            "Source: [Predictive Models + Historical Data]",
+            "",
+            "Next: generate the executive campaign brief?",
+        ]
+        return "\n".join(lines)
+
+    def _executive_brief(self, **kwargs):
+        total = _total_customers()
+        econ = CAMPAIGN_ECONOMICS
+        vip = CUSTOMER_SEGMENTS["SEG-VIP"]
+        waves = list(HOLIDAY_WAVES.values())
+        base = REVENUE_SCENARIOS[0]["revenue"]
+        expected = REVENUE_SCENARIOS[1]["revenue"]
+        top = REVENUE_SCENARIOS[-1]["revenue"]
+        program = _total_wave_revenue()
+        lines = _response_header(kwargs.get("persona")) + [
+            "# Executive Campaign Brief",
+            "",
+            f"Executive brief prepared. Here's the complete {econ['campaign'].lower()} strategy:",
+            "",
+            "**Campaign Strategy Summary:**",
+            f"- Segment analysis - {total // 1000}K customers > {len(CUSTOMER_SEGMENTS)} targeted segments, "
+            f"{_millions(_total_addressable())} revenue potential",
+            f"- Multi-wave plan - {len(waves)} waves over {waves[-1]['day']} days, prioritizing VIPs "
+            f"({vip['conversion_rate']}% conversion)",
+            f"- Creative development - {len(VIP_VARIANTS)} A/B test variants with personalization",
+            f"- Automation built - {AUTOMATION_WORKFLOW['steps'][-1]['hour']}-hour nurture workflow with browse/cart abandonment",
+            f"- Revenue modeling - {_millions(base)} baseline to {_millions(top)} optimistic ({_millions(expected)} expected)",
+            f"- Launch ready for approval - {AUTOMATION_WORKFLOW['launch_label']} {_launch_time(0)}, {vip['size']:,} VIP customers",
+            "",
+            "**Program Economics:**",
+            f"- Total investment: ${econ['investment'] // 1000}K",
+            f"- Expected total revenue: {_millions(program)} (all waves)",
+            f"- Program ROI: {_roi(program)}:1",
+            f"- VIP wave alone: {_roi(base)}-{_roi(top)}:1 ROI",
+            "",
+            f"**Competitive Advantage:** Personalization creates {econ['personalization_lift_pct']}% higher conversion "
+            "vs generic campaigns (synthetic benchmark).",
+            "",
+            "The brief is a draft you can share with stakeholders (for example in Microsoft Teams); "
+            "it has not been sent.",
+            "",
+            "Source: [All Connected Systems]",
+        ]
         return "\n".join(lines)
 
     def perform(self, **kwargs):
@@ -441,6 +683,9 @@ class PersonalizedMarketingAgent(BasicAgent):
             "campaign_design": self._campaign_design,
             "content_personalization": self._content_personalization,
             "performance_analysis": self._performance_analysis,
+            "campaign_workflow": self._campaign_workflow,
+            "revenue_projection": self._revenue_projection,
+            "executive_brief": self._executive_brief,
         }
         handler = dispatch.get(operation)
         if not handler:
@@ -449,17 +694,12 @@ class PersonalizedMarketingAgent(BasicAgent):
 
 
 # ---------------------------------------------------------------------------
-# Main — exercise all operations
+# Main — the demo video's turns in order
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     agent = PersonalizedMarketingAgent()
-    print("=" * 80)
-    print(agent.perform(operation="customer_segmentation"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="campaign_design", campaign_id="CAMP-VIP"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="content_personalization", segment_id="SEG-LOYAL"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="performance_analysis"))
-    print("=" * 80)
+    for op in ["customer_segmentation", "campaign_design", "content_personalization",
+               "campaign_workflow", "revenue_projection", "executive_brief", "performance_analysis"]:
+        print("=" * 80)
+        print(agent.perform(operation=op))

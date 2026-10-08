@@ -46,7 +46,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot Studio deployment settings | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-solution-export.json` |
 
-**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 98 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

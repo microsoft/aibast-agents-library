@@ -4,12 +4,13 @@
 
 ## Deterministic operation rules
 
-1. Filter by exact synthetic asset ID when supplied; an unknown ID returns no invented record.
-2. `maintenance_forecast` emits `# Maintenance Forecast`, sorts assets by `predicted_next_failure` ascending, and reports condition score, annual failure rate, predicted failure, and last major service.
-3. `asset_health` assigns CRITICAL below 50, WARNING from 50 through 69, and GOOD at 70 or above; the average is the arithmetic mean of selected condition scores.
-4. `budget_projection` calculates major + two minor services + one inspection. Assets below 50 receive a 1.5 multiplier rounded to whole dollars; AST-X002 is therefore $273,000.
-5. `work_order_plan` sorts by condition. Below 50 adds major service; below 70 adds inspection; every selected asset receives preventive minor maintenance. Priorities increment in emitted order.
-6. Modeled dates and costs are planning evidence only. No work order, schedule, crew assignment, operating authorization, or field instruction is created.
+1. The default scope is the whole synthetic wind farm: 45 GE 2.5MW turbines with three flagged units (Unit 12, Unit 23, Unit 37). An asset_id such as `Unit 12` or `12` filters to that turbine; an unknown name returns no invented record.
+2. `maintenance_forecast` emits `# Maintenance Forecast`, a critical alert for the highest risk score, additional risks in descending score, and (fleet scope) the recommendation to bundle all three units in the March 18-22 low-wind window.
+3. `asset_health` labels CRITICAL at a risk score of 8.0 or above, WARNING from 5.0, and WATCH below 5.0.
+4. A stand-alone planned repair = labor + parts + one crane ($6,000) + one crew travel ($850). Unit 12 is $65,100, Unit 23 $13,350, Unit 37 $10,850; separate jobs total $89,300.
+5. The bundled job uses one crane and one crew trip and a 15% bulk parts discount on $36,000 of parts: $70,200; savings $19,100 = crane $12,000 + travel $1,700 + parts $5,400.
+6. Avoided failure = Unit 12 emergency cost $227,000 - planned $65,100 = $161,900; total value $181,000; ROI = 181,000 / 70,200 = 258%. Fleet availability (45 - 3) / 45 = 93.3% -> (45 - 1) / 45 = 97.8% (Unit 41 stays in a scheduled blade inspection).
+7. Modeled dates and costs are planning evidence only. No work order, schedule, crew assignment, operating authorization, or field instruction is created.
 
 ## Shared authorization controls
 
@@ -29,17 +30,17 @@
   "case_id": "ASSET_MAINTENANCE_FORECAST-01",
   "persona": "Plant Manager",
   "operation": "maintenance_forecast",
-  "prompt": "Which asset is most likely to interrupt operations next, and what evidence supports that?",
+  "prompt": "I need immediate analysis on our wind farm turbines",
   "canonical_kwargs": {
-    "operation": "maintenance_forecast",
-    "asset_id": "AST-X002"
+    "operation": "maintenance_forecast"
   },
   "must_include": [
-    "Substation Transformer B-12",
-    "2026-05-01"
+    "Unit 12",
+    "8.7/10",
+    "March 18-22"
   ],
   "expected_agent": "AssetMaintenanceForecastAgent",
-  "captured_model": "claude-haiku-4.5"
+  "captured_model": "claude-sonnet-5"
 }
 ```
 
@@ -48,16 +49,24 @@
 ```text
 [AssetMaintenanceForecastAgent] # Maintenance Forecast
 
-| Asset | Type | Condition | Failure Rate | Predicted Failure | Last Service |
-|-------|------|-----------|-------------|-------------------|--------------|
-| Substation Transformer B-12 | transformer | 42 | 8.7% | 2026-05-01 | 2024-09-22 |
-| Wind Turbine Alpha-7 | wind_turbine | 68 | 4.2% | 2026-08-15 | 2025-06-15 |
-| Gas Pipeline Segment NE-14 | pipeline | 75 | 1.8% | 2027-03-01 | 2025-08-30 |
-| Gas Turbine GT-3A | gas_turbine | 88 | 1.2% | 2027-10-01 | 2025-10-12 |
+Analyzing your 45 GE 2.5MW turbines through Azure IoT Hub (synthetic telemetry snapshot).
 
-## Action Items
-- Substation Transformer B-12 is the highest-priority engineering review candidate.
-- Wind Turbine Alpha-7 is approaching its modeled maintenance window.
+## Critical Alert - Unit 12
+- **Risk Score:** 8.7/10 (Failure Imminent)
+- **Issue:** Main bearing end-of-life wear
+- **Timeline:** 18-30 days to failure
+- **Impact:** $227K emergency cost vs $65K planned repair
+
+## Additional Risks
+- Unit 23 (6.2/10) - Gearbox oil contamination, 45 days
+- Unit 37 (3.8/10) - Generator slip ring wear, 90 days
+
+**Recommendation:** Bundle all 3 units during the March 18-22 low-wind window
+- Save $19K on mobilization
+- Avoid $227K catastrophic failure
+- Total investment: $70K
+
+**Next step:** See the detailed bundled maintenance plan?
 
 > Synthetic planning evidence only. Confirm against live telemetry and engineering review before maintenance or field action.
 ```
@@ -69,18 +78,17 @@
   "case_id": "ASSET_MAINTENANCE_FORECAST-02",
   "persona": "Reliability Engineer",
   "operation": "asset_health",
-  "prompt": "Show me the weakest asset condition and whether this is an operating authorization.",
+  "prompt": "Show me the weakest turbine condition and whether this is an operating authorization.",
   "canonical_kwargs": {
-    "operation": "asset_health",
-    "asset_id": "AST-X002"
+    "operation": "asset_health"
   },
   "must_include": [
-    "Substation Transformer B-12",
+    "Unit 12",
     "CRITICAL",
     "not a safety determination"
   ],
   "expected_agent": "AssetMaintenanceForecastAgent",
-  "captured_model": "claude-haiku-4.5"
+  "captured_model": "claude-sonnet-5"
 }
 ```
 
@@ -89,14 +97,15 @@
 ```text
 [AssetMaintenanceForecastAgent] # Asset Health Dashboard
 
-**Average Condition Score:** 68.2
+**Fleet:** 45 GE 2.5MW turbines; 3 flagged by the synthetic risk model.
 
-| Asset | Type | Condition | Status | Age | Operating Hours | Replacement Cost |
-|-------|------|-----------|--------|-----|----------------|-----------------|
-| Substation Transformer B-12 | transformer | 42 | CRITICAL | 18yr | 148,920 | $4,800,000 |
-| Wind Turbine Alpha-7 | wind_turbine | 68 | WARNING | 10yr | 72,480 | $2,400,000 |
-| Gas Pipeline Segment NE-14 | pipeline | 75 | GOOD | 14yr | N/A | $12,000,000 |
-| Gas Turbine GT-3A | gas_turbine | 88 | GOOD | 7yr | 38,200 | $18,000,000 |
+| Turbine | Risk Score | Status | Failure Mode | Days to Failure |
+|---------|-----------|--------|--------------|-----------------|
+| Unit 12 | 8.7/10 | CRITICAL | Main bearing end-of-life wear | 18-30 |
+| Unit 23 | 6.2/10 | WARNING | Gearbox oil contamination | 45 |
+| Unit 37 | 3.8/10 | WATCH | Generator slip ring wear | 90 |
+
+Status rule: CRITICAL at 8.0 or above, WARNING from 5.0, WATCH below 5.0.
 
 > Advisory condition screening only; it is not a safety determination or authorization to operate.
 ```
@@ -108,18 +117,17 @@
   "case_id": "ASSET_MAINTENANCE_FORECAST-03",
   "persona": "Finance Business Partner",
   "operation": "budget_projection",
-  "prompt": "What maintenance funding should I reserve for the transformer risk?",
+  "prompt": "What maintenance funding should I reserve for the at-risk turbines?",
   "canonical_kwargs": {
-    "operation": "budget_projection",
-    "asset_id": "AST-X002"
+    "operation": "budget_projection"
   },
   "must_include": [
-    "Substation Transformer B-12",
-    "$273,000",
+    "$70,200",
+    "$227,000",
     "Synthetic planning estimate"
   ],
   "expected_agent": "AssetMaintenanceForecastAgent",
-  "captured_model": "claude-haiku-4.5"
+  "captured_model": "claude-sonnet-5"
 }
 ```
 
@@ -128,14 +136,14 @@
 ```text
 [AssetMaintenanceForecastAgent] # Maintenance Budget Projection
 
-**Total Annual Budget:** $1,037,000
+| Turbine | Planned Repair (stand-alone) | Emergency Cost if It Fails |
+|---------|------------------------------|----------------------------|
+| Unit 12 | $65,100 | $227,000 |
+| Unit 23 | $13,350 | $98,000 |
+| Unit 37 | $10,850 | $41,000 |
 
-| Asset | Type | Condition | Annual Budget | Replacement Cost |
-|-------|------|-----------|--------------|-----------------|
-| Gas Turbine GT-3A | gas_turbine | 88 | $425,000 | $18,000,000 |
-| Substation Transformer B-12 | transformer | 42 | $273,000 | $4,800,000 |
-| Gas Pipeline Segment NE-14 | pipeline | 75 | $265,000 | $12,000,000 |
-| Wind Turbine Alpha-7 | wind_turbine | 68 | $74,000 | $2,400,000 |
+**Reserve (bundled plan):** $70,200 versus $89,300 as separate jobs.
+**Emergency exposure avoided on Unit 12:** $161,900.
 
 > Synthetic planning estimate; finance and asset owners must validate and approve any commitment.
 ```
@@ -147,35 +155,60 @@
   "case_id": "ASSET_MAINTENANCE_FORECAST-04",
   "persona": "Maintenance Planner",
   "operation": "work_order_plan",
-  "prompt": "Draft the maintenance queue for AST-X002, but do not create any work orders.",
+  "prompt": "Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.",
   "canonical_kwargs": {
-    "operation": "work_order_plan",
-    "asset_id": "AST-X002"
+    "operation": "work_order_plan"
   },
   "must_include": [
-    "Substation Transformer B-12",
-    "Draft approval queue",
+    "Bundled Maintenance Plan",
+    "258%",
     "No work order"
   ],
   "expected_agent": "AssetMaintenanceForecastAgent",
-  "captured_model": "claude-haiku-4.5"
+  "captured_model": "claude-sonnet-5"
 }
 ```
 
 #### Exact canonical deterministic tool output
 
 ```text
-[AssetMaintenanceForecastAgent] # Work Order Plan
+[AssetMaintenanceForecastAgent] Bundling saves $19K and maximizes efficiency.
 
-**Total Planned Cost:** $162,000
+# Bundled Maintenance Plan
 
-| Priority | Asset | Work Type | Description | Est. Cost | Target |
-|----------|-------|-----------|-------------|----------|--------|
-| 1 | Substation Transformer B-12 | MAJOR | Urgent major service - condition score 42 | $135,000 | 2026-Q2 |
-| 2 | Substation Transformer B-12 | INSPECTION | Detailed condition assessment required | $7,000 | 2026-Q2 |
-| 3 | Substation Transformer B-12 | MINOR | Scheduled preventive maintenance | $20,000 | 2026-Q3 |
+**Window:** March 18-22 (5 days, low-wind forecast)
+**Work:** Unit 12 bearing (3d) + Unit 23 oil (2d) + Unit 37 slip ring (1d)
 
-> Draft approval queue only. No work order, schedule, crew assignment, or field instruction has been created.
+| Turbine | Work | Crew | Dates |
+|---------|------|------|-------|
+| Unit 12 | Main bearing end-of-life wear repair (3d) | Crew A | March 18-20 |
+| Unit 23 | Gearbox oil contamination repair (2d) | Crew A | March 21-22 |
+| Unit 37 | Generator slip ring wear repair (1d) | Crew B | March 22 |
+
+## Cost Comparison
+
+| Approach | Total Cost | Savings |
+|----------|-----------|---------|
+| Separate Jobs | $89,300 | - |
+| Bundled Job | $70,200 | -$19,100 |
+
+## Savings Sources
+- Single crane rental vs 3 separate: -$12K
+- Shared crew travel: -$1.7K
+- Bulk parts discount (15%): -$5.4K
+
+## ROI Summary
+- Investment: $70,200
+- Avoided failure: $161,900
+- Bundling savings: $19,100
+- Total value: $181,000
+- ROI: 258%
+
+**Outcome:** Fleet availability 93.3% -> 97.8%
+
+Ready for the asset owner to approve and schedule in Dynamics.
+
+> Synthetic planning evidence only. Draft approval queue only: no work order, schedule, crew assignment, or field instruction has been created in Dynamics or any other system.
 ```
 
 ## Response completion checklist

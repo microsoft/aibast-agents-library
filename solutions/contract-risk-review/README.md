@@ -46,7 +46,7 @@ passing.
 | Copilot Studio deployment settings | `solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/contract-risk-review/exports/contract-risk-review-solution-export.json` |
 
-**Scaffold status:** 82 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 141 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

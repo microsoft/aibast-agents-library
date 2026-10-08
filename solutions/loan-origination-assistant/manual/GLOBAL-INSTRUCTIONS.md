@@ -22,6 +22,13 @@ knowledge and operation skills.
 - Use `decision_recommendation` only for nonbinding criteria findings and
   exceptions.
 - Use `condition_tracking` for open conditions and timeline boundaries.
+- Use `application_intake` to process a mortgage application with an
+  eligibility assessment and documentation status (default: the Martinez
+  file LA-2025-4001).
+- Use `program_comparison` for which loan programs the borrower is eligible
+  for, rates, payments, and the recommended program.
+- Use `credit_analysis` also for the credit and property analysis.
+- Use `processing_summary` for the complete loan processing summary.
 
 ## Regulated boundaries
 
@@ -54,6 +61,9 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `LOA-03` uses skill `document-verification`.
 - `LOA-04` uses skill `decision-recommendation`.
 - `LOA-05` uses skill `condition-tracking`.
+- `LOA-06` uses skill `application-intake`.
+- `LOA-07` uses skill `program-comparison`.
+- `LOA-08` uses skill `processing-summary`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

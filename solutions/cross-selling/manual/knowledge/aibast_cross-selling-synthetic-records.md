@@ -12,68 +12,79 @@
 
 If a requested identifier or fact is absent below, state that it is absent from the fixed synthetic snapshot.
 
+## Demo scenario (aligned with the product video)
+
+A SaaS company's sales leader analyzes the top 100 enterprise accounts (default; no account name needed):
+
+1. Portfolio scan: $3.2M total expansion ARR — High Priority 12 accounts / $1.4M / avg $117K; Medium Priority 20 /
+   $1.2M / $60K; Nurture 68 / $0.6M / $9K. Quick wins: 32 accounts with active buying signals, 8 exceeded usage limits
+   this quarter, 5 requested features in products they don't own. Top signal: 12 accounts use CRM but not Analytics;
+   94% of similar companies have both.
+2. Top 5 opportunities = $547K: Acme Corp (CRM, Marketing -> Analytics Suite, $120K), TechCo Industries (Basic Plan ->
+   Enterprise + Security, $115K), GlobalRetail Inc (CRM -> Full Platform, $108K), Meridian Finance (Analytics -> CRM +
+   Integrations, $104K), Apex Manufacturing (Marketing -> CRM + Analytics, $100K). #1 Acme Corp deep dive: spend
+   $85K/year, heavy data exports (no analytics), champion VP Marketing, trigger requested custom reports last week, next
+   step schedule analytics demo.
+3. Engagement strategies (drafts, not sent): Acme value-led demo, champion VP Marketing (Sarah Chen), end of quarter
+   budget, talking points (50K records exported monthly; similar customers saw 340% ROI in 6 months; competitor TechGiant
+   uses our full suite — synthetic examples to verify); TechCo usage-based upgrade, exceeded limits 3 consecutive months,
+   hit limits 12 times, Security add-on for the compliance audit. Outreach sequence: Day 1 email, Day 3 LinkedIn, Day 5
+   calendar invite.
+4. Revenue impact: $2.1M realizable this quarter — Month 1 32 quick wins / 12-15 deals / $540K; Month 2 20 medium / 8-10
+   deals / $720K; Month 3 12 high-value / 5-6 deals / $840K; close rates 45% / 38% / 50%; pipeline $1.8M -> $5.0M
+   (+178%); quota coverage 2.8x vs 1.2x; 12 accounts need SE support, 8 need an executive sponsor intro.
+5. Draft account assignments: James Wilson 8 accounts $680K Enterprise/Security; Lisa Chen 7 / $520K Analytics/Data;
+   Mike Torres 9 / $490K Marketing/CRM; Sarah Kim 8 / $410K Manufacturing (32 accounts, $2.1M). This week (drafts ready
+   for the leader to send): 32 quick-win emails, 12 SE demos, Friday executive intros; recommended (not enabled)
+   triggers; team briefing proposed for tomorrow 9 AM.
+
+Locked case prompts: see the companion operating rules (CS-01 to CS-07) for each prompt and its exact output.
+
 ## Dataset index
 
 | Source constant | Records or fields |
 | --- | ---: |
-| `_PRODUCT_CATALOG` | 8 |
+| `_PORTFOLIO` | 4 |
 | `_CUSTOMER_OWNERSHIP` | 5 |
-| `_AFFINITY_RULES` | 8 |
+| `_AFFINITY_RULES` | 6 |
 | `_CROSS_SELL_SUCCESS_RATES` | 3 |
+| `_FORECAST` | 6 |
+| `_REPS` | 4 |
+| `_OUTREACH_SEQUENCE` | 3 |
+| `_OPERATIONS` | 7 |
 
-## Exact dataset `_PRODUCT_CATALOG`
+## Exact dataset `_PORTFOLIO`
 
 The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
 
 ```json
 {
-  "ANLYT-100": {
-    "annual_price": 12000,
-    "category": "Analytics",
-    "margin_pct": 82,
-    "name": "Analytics Standard"
-  },
-  "ANLYT-200": {
-    "annual_price": 28000,
-    "category": "Analytics",
-    "margin_pct": 85,
-    "name": "Analytics Pro"
-  },
-  "INTGR-100": {
-    "annual_price": 18000,
-    "category": "Integration",
-    "margin_pct": 78,
-    "name": "Integration Hub"
-  },
-  "PLAT-100": {
-    "annual_price": 24000,
-    "category": "Platform",
-    "margin_pct": 72,
-    "name": "Core Platform"
-  },
-  "PLAT-200": {
-    "annual_price": 60000,
-    "category": "Platform",
-    "margin_pct": 75,
-    "name": "Enterprise Platform"
-  },
-  "SECUR-100": {
-    "annual_price": 15000,
-    "category": "Security",
-    "margin_pct": 80,
-    "name": "Security Suite"
-  },
-  "SUPRT-100": {
-    "annual_price": 8000,
-    "category": "Support",
-    "margin_pct": 90,
-    "name": "Premium Support"
-  },
-  "TRAIN-100": {
-    "annual_price": 5000,
-    "category": "Services",
-    "margin_pct": 65,
-    "name": "Training Package"
+  "accounts": 100,
+  "quick_wins": [
+    "32 accounts showing active buying signals",
+    "8 accounts exceeded usage limits this quarter",
+    "5 accounts requested features in products they don't own"
+  ],
+  "segments": [
+    {
+      "accounts": 12,
+      "potential_arr": 1400000,
+      "segment": "High Priority"
+    },
+    {
+      "accounts": 20,
+      "potential_arr": 1200000,
+      "segment": "Medium Priority"
+    },
+    {
+      "accounts": 68,
+      "potential_arr": 600000,
+      "segment": "Nurture"
+    }
+  ],
+  "top_signal": {
+    "crm_without_analytics": 12,
+    "peer_pct_with_both": 94
   }
 }
 ```
@@ -85,102 +96,153 @@ The JSON below preserves every source identifier, name, value, label, signal, as
 ```json
 {
   "CUST-001": {
-    "arr": 84000,
-    "budget_window": "Annual planning review next quarter",
-    "buying_signals": [
-      "Requested advanced analytics comparison"
+    "approach": "Value-led demo showcasing ROI",
+    "budget_window": "End of quarter budget available",
+    "champion": "VP Marketing (Sarah Chen)",
+    "current_products": [
+      "CRM",
+      "Marketing"
     ],
-    "contact": "Sandra Lee",
-    "health_score": 92,
-    "name": "Meridian Corp",
-    "products": [
-      "PLAT-200",
-      "ANLYT-100",
-      "SUPRT-100"
+    "current_spend": 85000,
+    "health_score": 91,
+    "name": "Acme Corp",
+    "next_step": "Schedule analytics demo",
+    "owner": "Lisa Chen",
+    "recommended": [
+      {
+        "arr": 120000,
+        "product": "Analytics Suite"
+      }
     ],
-    "segment": "Enterprise",
-    "tenure_months": 24,
-    "usage_signals": [
-      "Analytics export volume rising",
-      "Security admin workflow used weekly"
-    ]
+    "relationship": "strong relationship",
+    "talking_points": [
+      "You're exporting 50K records monthly - Analytics automates this",
+      "Similar customers saw 340% ROI in 6 months",
+      "Your competitor TechGiant uses our full suite"
+    ],
+    "trigger": "Requested custom reports last week",
+    "usage": "Heavy data exports (no analytics)",
+    "usage_fact": "exporting 50K records monthly"
   },
   "CUST-002": {
-    "arr": 42000,
-    "budget_window": "Department planning review this quarter",
-    "buying_signals": [
-      "Asked about support coverage"
+    "approach": "Usage-based upgrade conversation",
+    "budget_window": "Compliance audit budget this quarter",
+    "champion": "Director of IT",
+    "current_products": [
+      "Basic Plan"
     ],
-    "contact": "Marco Torres",
-    "health_score": 78,
-    "name": "Atlas Digital",
-    "products": [
-      "PLAT-100",
-      "INTGR-100"
+    "current_spend": 48000,
+    "health_score": 86,
+    "name": "TechCo Industries",
+    "next_step": "Usage review and Enterprise upgrade proposal",
+    "owner": "James Wilson",
+    "recommended": [
+      {
+        "arr": 85000,
+        "product": "Enterprise"
+      },
+      {
+        "arr": 30000,
+        "product": "Security"
+      }
     ],
-    "segment": "Mid-Market",
-    "tenure_months": 18,
-    "usage_signals": [
-      "Integration jobs approaching synthetic capacity threshold"
-    ]
+    "relationship": "engaged",
+    "talking_points": [
+      "You've hit limits 12 times - Enterprise removes caps",
+      "Security add-on addresses your compliance audit needs"
+    ],
+    "trigger": "Exceeded limits 3 consecutive months",
+    "usage": "Exceeded plan limits 3 consecutive months (12 limit hits)",
+    "usage_fact": "hit limits 12 times"
   },
   "CUST-003": {
-    "arr": 60000,
-    "budget_window": "Post-implementation value review",
-    "buying_signals": [
-      "Feature request references analytics and security"
+    "approach": "Platform consolidation conversation",
+    "budget_window": "Annual planning next month",
+    "champion": "VP Sales Operations",
+    "current_products": [
+      "CRM"
     ],
-    "contact": "Dr. Amy Patel",
-    "health_score": 85,
-    "name": "Pinnacle Health",
-    "products": [
-      "PLAT-200"
+    "current_spend": 60000,
+    "health_score": 84,
+    "name": "GlobalRetail Inc",
+    "next_step": "Full Platform walkthrough",
+    "owner": "Mike Torres",
+    "recommended": [
+      {
+        "arr": 108000,
+        "product": "Full Platform"
+      }
     ],
-    "segment": "Enterprise",
-    "tenure_months": 6,
-    "usage_signals": [
-      "Core workflow adoption broadening across teams"
-    ]
+    "relationship": "strong relationship",
+    "talking_points": [
+      "Your CRM is used across every region - the Full Platform connects marketing to it",
+      "One platform replaces the spreadsheet campaign process"
+    ],
+    "trigger": "Asked about marketing automation in last QBR",
+    "usage": "CRM used by all regional sales teams; marketing runs on spreadsheets",
+    "usage_fact": "CRM adoption across all regions"
   },
   "CUST-004": {
-    "arr": 24000,
-    "budget_window": "Retail planning cycle later this year",
-    "buying_signals": [
-      "Requested integration roadmap"
+    "approach": "Integration-led conversation",
+    "budget_window": "New fiscal year budget",
+    "champion": "Head of Revenue Operations",
+    "current_products": [
+      "Analytics"
     ],
-    "contact": "Kevin O'Neill",
-    "health_score": 65,
-    "name": "Greenleaf Retail",
-    "products": [
-      "PLAT-100"
+    "current_spend": 52000,
+    "health_score": 82,
+    "name": "Meridian Finance",
+    "next_step": "Integration discovery call",
+    "owner": "James Wilson",
+    "recommended": [
+      {
+        "arr": 76000,
+        "product": "CRM"
+      },
+      {
+        "arr": 28000,
+        "product": "Integrations"
+      }
     ],
-    "segment": "Mid-Market",
-    "tenure_months": 12,
-    "usage_signals": [
-      "Reporting exports remain manual",
-      "Support usage increasing"
-    ]
+    "relationship": "engaged",
+    "talking_points": [
+      "You upload CRM data manually every week - native CRM + Integrations removes that step",
+      "Analytics customers who add CRM get one revenue view"
+    ],
+    "trigger": "Requested a CRM connector in a support ticket",
+    "usage": "Analytics dashboards fed by manual CRM uploads",
+    "usage_fact": "uploading CRM data manually every week"
   },
   "CUST-005": {
-    "arr": 113000,
-    "budget_window": "Enterprise agreement review",
-    "buying_signals": [
-      "Asked about premium support coverage"
+    "approach": "Lead-to-revenue demo",
+    "budget_window": "Mid-year budget review",
+    "champion": "Marketing Director",
+    "current_products": [
+      "Marketing"
     ],
-    "contact": "Rachel Kim",
-    "health_score": 96,
-    "name": "Beacon Financial",
-    "products": [
-      "PLAT-200",
-      "ANLYT-200",
-      "INTGR-100",
-      "SECUR-100"
+    "current_spend": 40000,
+    "health_score": 80,
+    "name": "Apex Manufacturing",
+    "next_step": "Lead-to-revenue demo",
+    "owner": "Sarah Kim",
+    "recommended": [
+      {
+        "arr": 62000,
+        "product": "CRM"
+      },
+      {
+        "arr": 38000,
+        "product": "Analytics"
+      }
     ],
-    "segment": "Enterprise",
-    "tenure_months": 36,
-    "usage_signals": [
-      "Broad adoption across owned products"
-    ]
+    "relationship": "engaged",
+    "talking_points": [
+      "Your campaign leads leave the platform - CRM keeps them connected",
+      "Analytics shows which campaigns turn into revenue"
+    ],
+    "trigger": "Feature request for lead scoring",
+    "usage": "Campaign leads tracked outside the platform",
+    "usage_fact": "tracking campaign leads in spreadsheets"
   }
 }
 ```
@@ -192,60 +254,46 @@ The JSON below preserves every source identifier, name, value, label, signal, as
 ```json
 [
   {
-    "affinity_score": 0.85,
-    "avg_time_to_close_days": 35,
-    "if_owns": "PLAT-100",
-    "recommend": "ANLYT-100",
-    "success_rate": 0.42
-  },
-  {
-    "affinity_score": 0.72,
-    "avg_time_to_close_days": 45,
-    "if_owns": "PLAT-100",
-    "recommend": "INTGR-100",
-    "success_rate": 0.38
-  },
-  {
-    "affinity_score": 0.91,
-    "avg_time_to_close_days": 28,
-    "if_owns": "PLAT-200",
-    "recommend": "ANLYT-200",
-    "success_rate": 0.55
-  },
-  {
-    "affinity_score": 0.78,
+    "affinity_score": 0.94,
     "avg_time_to_close_days": 30,
-    "if_owns": "PLAT-200",
-    "recommend": "SECUR-100",
-    "success_rate": 0.48
+    "if_owns": "CRM",
+    "recommend": "Analytics Suite",
+    "success_rate": 0.5
   },
   {
     "affinity_score": 0.88,
     "avg_time_to_close_days": 21,
-    "if_owns": "ANLYT-100",
-    "recommend": "ANLYT-200",
-    "success_rate": 0.62
+    "if_owns": "Basic Plan",
+    "recommend": "Enterprise",
+    "success_rate": 0.45
   },
   {
-    "affinity_score": 0.67,
+    "affinity_score": 0.81,
+    "avg_time_to_close_days": 30,
+    "if_owns": "Enterprise",
+    "recommend": "Security",
+    "success_rate": 0.48
+  },
+  {
+    "affinity_score": 0.79,
+    "avg_time_to_close_days": 45,
+    "if_owns": "Analytics",
+    "recommend": "CRM",
+    "success_rate": 0.38
+  },
+  {
+    "affinity_score": 0.76,
     "avg_time_to_close_days": 40,
-    "if_owns": "INTGR-100",
-    "recommend": "SECUR-100",
-    "success_rate": 0.35
+    "if_owns": "Marketing",
+    "recommend": "CRM",
+    "success_rate": 0.38
   },
   {
-    "affinity_score": 0.82,
-    "avg_time_to_close_days": 14,
-    "if_owns": "PLAT-200",
-    "recommend": "SUPRT-100",
-    "success_rate": 0.65
-  },
-  {
-    "affinity_score": 0.7,
-    "avg_time_to_close_days": 21,
-    "if_owns": "PLAT-100",
-    "recommend": "SUPRT-100",
-    "success_rate": 0.5
+    "affinity_score": 0.72,
+    "avg_time_to_close_days": 28,
+    "if_owns": "CRM",
+    "recommend": "Integrations",
+    "success_rate": 0.45
   }
 ]
 ```
@@ -256,22 +304,120 @@ The JSON below preserves every source identifier, name, value, label, signal, as
 
 ```json
 {
-  "Enterprise": {
-    "avg_deal_cycle_days": 28,
-    "avg_expansion_pct": 35,
-    "avg_success_rate": 0.52
+  "High-value": {
+    "avg_deal_cycle_days": 60,
+    "avg_success_rate": 0.5,
+    "basis": "strong signals"
   },
-  "Mid-Market": {
-    "avg_deal_cycle_days": 42,
-    "avg_expansion_pct": 25,
-    "avg_success_rate": 0.38
+  "Medium priority": {
+    "avg_deal_cycle_days": 45,
+    "avg_success_rate": 0.38,
+    "basis": "historical"
   },
-  "SMB": {
-    "avg_deal_cycle_days": 55,
-    "avg_expansion_pct": 18,
-    "avg_success_rate": 0.28
+  "Quick wins": {
+    "avg_deal_cycle_days": 21,
+    "avg_success_rate": 0.45,
+    "basis": "historical"
   }
 }
+```
+
+## Exact dataset `_FORECAST`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+{
+  "coverage_after": "2.8x",
+  "coverage_before": "1.2x",
+  "current_pipeline": 1800000,
+  "exec_sponsor_accounts": 8,
+  "months": [
+    {
+      "arr": 540000,
+      "close_rate": "Quick wins: 45% close rate (historical)",
+      "closes": "12-15 deals",
+      "month": "Month 1",
+      "opportunities": "32 quick wins"
+    },
+    {
+      "arr": 720000,
+      "close_rate": "Medium priority: 38% close rate",
+      "closes": "8-10 deals",
+      "month": "Month 2",
+      "opportunities": "20 medium"
+    },
+    {
+      "arr": 840000,
+      "close_rate": "High-value: 50% close rate (strong signals)",
+      "closes": "5-6 deals",
+      "month": "Month 3",
+      "opportunities": "12 high-value"
+    }
+  ],
+  "se_support_accounts": 12
+}
+```
+
+## Exact dataset `_REPS`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  {
+    "accounts": 8,
+    "arr": 680000,
+    "rep": "James Wilson",
+    "specialty": "Enterprise/Security"
+  },
+  {
+    "accounts": 7,
+    "arr": 520000,
+    "rep": "Lisa Chen",
+    "specialty": "Analytics/Data"
+  },
+  {
+    "accounts": 9,
+    "arr": 490000,
+    "rep": "Mike Torres",
+    "specialty": "Marketing/CRM"
+  },
+  {
+    "accounts": 8,
+    "arr": 410000,
+    "rep": "Sarah Kim",
+    "specialty": "Manufacturing"
+  }
+]
+```
+
+## Exact dataset `_OUTREACH_SEQUENCE`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  "Day 1: Personalized email with usage insights",
+  "Day 3: LinkedIn touchpoint",
+  "Day 5: Calendar invite for value demo"
+]
+```
+
+## Exact dataset `_OPERATIONS`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  "opportunity_scan",
+  "product_affinity",
+  "recommendation_engine",
+  "revenue_impact",
+  "portfolio_scan",
+  "top_opportunities",
+  "account_assignments"
+]
 ```
 
 ## Data-use boundary

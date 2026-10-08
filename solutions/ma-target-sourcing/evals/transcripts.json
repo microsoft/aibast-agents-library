@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:42:37.235665+00:00",
+  "solution": "@aibast-agents-library/ma-target-sourcing",
+  "onepager": "55. M&A Target Sourcing Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "MATargetSourcingAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py",
+      "sha256": "ab4fc7383a270a699507886b6d5dc14a3243a0fc324473538f337c0b58430d0e"
+    }
+  ],
+  "case_file": "tests/demo_cases/ma-target-sourcing.json",
+  "case_file_sha256": "699779d469a4bc86e5ecef56fff8a7a28edb68c43af74d415937bca9c4b430e5",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "MATS-01",
+      "persona": "Corporate Development Associate",
+      "onepager_promise": "Turn an acquisition thesis into explicit, reviewable screening criteria",
+      "prompt": "We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.",
+      "assistant_response": "Here's the screen turned into a thesis (TH-2026-014):\n\n**Criteria set**\n- Sector: compliance/regulatory workflow software\n- Region: Europe\n- Revenue: $20M\u2013$120M\n- Profitability: positive EBITDA required\n- Scoring weights: Strategy fit 40%, Financial quality 30%, Market signal 15%, Execution fit 15%\n\n**Result:** 8 companies in the universe, 5 pass. Excluded: a North America-based player, one with negative EBITDA, and one too large for the revenue band.\n\nWant me to run the screen and rank the 5 that pass?",
+      "agent_logs": "[MATargetSourcingAgent] # Screening Criteria - TH-2026-014\n\n**Acquirer:** Fabrikam Information Services | **Objective:** Add compliance and regulatory workflow software in Europe\n\n| Criterion | Setting |\n|-----------|---------|\n| Sector focus | Compliance and regulatory workflow software |\n| Region | Europe |\n| Revenue band | $20M-$120M |\n| Profitability | Positive EBITDA required |\n| Score weights | Strategy fit 40%, financial quality 30%, market signal 15%, execution fit 15% |\n\n**Universe:** 8 synthetic companies; **5 of 8 pass** the filters.\n\n| Excluded | Company | Reason |\n|----------|---------|--------|\n| T-04 | Brightquay Reg Data | Region North America is outside Europe |\n| T-05 | Oskarvale Workflow | EBITDA $-1.8M is not positive |\n| T-06 | Cindral Risk Labs | Revenue $140M is outside the $20M-$120M band |\n\nNext: run the screen and rank the targets that pass.\n\n> Synthetic screening support only. All companies, financials and sources are fictional. No target was contacted, no CRM or deal record was changed, nothing was shared, and no investment decision was made.",
+      "expected_agent": "MATargetSourcingAgent",
+      "must_include": [
+        "TH-2026-014",
+        "5 of 8 pass",
+        "Cindral Risk Labs"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-02",
+      "persona": "Corporate Development Associate",
+      "onepager_promise": "Rank targets with transparent weights and test the ranking before it is trusted",
+      "prompt": "Run the screen and rank the companies that pass.",
+      "assistant_response": "Screen complete \u2014 5 targets passed out of the universe screened against the Fabrikam Information Services thesis.\n\n**Ranked results** (strategy fit 40% / financial quality 30% / market signal 15% / execution fit 15%):\n\n| Rank | Target | Revenue | EBITDA | Growth | Score |\n|---|---|---|---|---|---|\n| 1 | Lumenrock Compliance Systems | $64M | $14.1M | 18% | 85.7 |\n| 2 | Tessaline Controls | $47M | $7.1M | 15% | 79.8 |\n| 3 | Veridane Analytics | $38M | $6.5M | 24% | 77.0 |\n| 4 | Halverd Audit Cloud | $92M | $17.5M | 11% | 76.6 |\n| 5 | Marrowgate Reporting | $29M | $4.4M | 9% | 61.5 |\n\n**Leader:** Lumenrock Compliance Systems, with Tessaline Controls and Veridane Analytics rounding out the top-3 shortlist.\n\nWant me to pull a dossier on Lumenrock (the top target), stress-test the ranking with different weightings, or check for evidence gaps before an IC memo?",
+      "agent_logs": "[MATargetSourcingAgent] # Ranked Longlist - TH-2026-014\n\n5 targets pass the screen (snapshot 2026-06-30). Weighted score = strategy fit 40% + financial quality 30% + market signal 15% + execution fit 15%.\n\n| Rank | Target | Company | Revenue | EBITDA | Growth | Score |\n|------|--------|---------|---------|--------|--------|-------|\n| 1 | T-01 | Lumenrock Compliance Systems | $64M | $14.1M | 18% | 85.7 |\n| 2 | T-07 | Tessaline Controls | $47M | $7.1M | 15% | 79.8 |\n| 3 | T-02 | Veridane Analytics | $38M | $6.5M | 24% | 77.0 |\n| 4 | T-03 | Halverd Audit Cloud | $92M | $17.5M | 11% | 76.6 |\n| 5 | T-08 | Marrowgate Reporting | $29M | $4.4M | 9% | 61.5 |\n\n**Shortlist (top 3):** T-01 Lumenrock Compliance Systems, T-07 Tessaline Controls, T-02 Veridane Analytics.\n**Leader:** T-01 Lumenrock Compliance Systems at 85.7.\n\nNext: open the dossier on the top-ranked target.\n\n> Synthetic screening support only. All companies, financials and sources are fictional. No target was contacted, no CRM or deal record was changed, nothing was shared, and no investment decision was made.",
+      "expected_agent": "MATargetSourcingAgent",
+      "must_include": [
+        "Lumenrock Compliance Systems",
+        "85.7",
+        "79.8"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-03",
+      "persona": "Corporate Development Associate",
+      "onepager_promise": "Build cited dossiers and close evidence gaps before outreach",
+      "prompt": "Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+      "assistant_response": "Here's the top-ranked target: **T-01 Lumenrock Compliance Systems** (regulatory/policy workflow, Europe), ranked #1 of 5 with a weighted score of 85.7.\n\n**Snapshot**\n- Revenue: $64M, EBITDA $14.1M (22.0% margin), growing 18%, 88% recurring\n- Scores: Strategy fit 92, Financial quality 84, Market signal 78, Execution fit 80\n- Risk flags: top 5 clients = 31% of revenue; sales still founder-led\n\n**Sources**\n- [T-01-S1] FY2025 audited financial summary (synthetic), 2026-03-31\n- [T-01-S2] Analyst product review (synthetic), 2026-05-12\n- [T-01-S3] Customer reference notes (synthetic), 2025-11-04\n\n**Diligence questions**\n1. How concentrated is renewal exposure over the next 18 months?\n2. Which product modules sell standalone vs. bundled?\n3. What's needed to extend sales beyond the founders?\n\nReminder: all data here is synthetic/fictional \u2014 no real target, no outreach, no decisions made. Want me to check evidence gaps or stress-test this ranking under different weightings?",
+      "agent_logs": "[MATargetSourcingAgent] # Target Dossier - T-01 Lumenrock Compliance Systems\n\n**Focus:** Regulatory change and policy workflow | **Region:** Europe | **Rank:** 1 of 5 | **Weighted score:** 85.7\n\n| Synthetic financials | Value |\n|----------------------|-------|\n| Revenue | $64M |\n| EBITDA | $14.1M (22.0% margin) |\n| Revenue growth | 18% |\n| Recurring revenue | 88% |\n\n| Criterion | Score | Weight |\n|-----------|-------|--------|\n| Strategy fit | 92 | 40% |\n| Financial quality | 84 | 30% |\n| Market signal | 78 | 15% |\n| Execution fit | 80 | 15% |\n\n**Risk flags:** Top five clients are 31% of revenue; Founder-led sales motion.\n\n**Sources:**\n- [T-01-S1] Financials: FY2025 audited summary (synthetic), 2026-03-31\n- [T-01-S2] Product: Analyst product review (synthetic), 2026-05-12\n- [T-01-S3] Customer: Customer reference notes (synthetic), 2025-11-04\n\n**Diligence questions:**\n1. How concentrated is renewal exposure in the next 18 months?\n2. Which product modules are sold standalone versus bundled?\n3. What would it take to move sales beyond the founders?\n\n> Synthetic screening support only. All companies, financials and sources are fictional. No target was contacted, no CRM or deal record was changed, nothing was shared, and no investment decision was made.",
+      "expected_agent": "MATargetSourcingAgent",
+      "must_include": [
+        "T-01-S1",
+        "22.0% margin",
+        "Diligence questions"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-04",
+      "persona": "Head of Corporate Development",
+      "onepager_promise": "Rank targets with transparent weights and test the ranking before it is trusted",
+      "prompt": "Does the ranking hold if we weight financial quality more heavily?",
+      "assistant_response": "Yes \u2014 the ranking holds. Lumenrock stays #1 across all three weighting schemes (base thesis, financial-first, equal weights).\n\nOne thing to watch: under financial-first weighting, the gap between #2 (Tessaline Controls) and #3 (Veridane Analytics) shrinks from 2.8 points to just 0.7 \u2014 so those two are essentially tied if financial quality matters most to you. Worth digging into their evidence before leaning too hard on that ordering. Want me to pull the evidence gaps for those two?",
+      "agent_logs": "[MATargetSourcingAgent] # Ranking Challenge - Three Weightings\n\n| Target | Base thesis | Financial-first | Equal weights |\n|--------|------|------|------|\n| T-01 Lumenrock Compliance Systems | 85.7 | 84.5 | 83.5 |\n| T-07 Tessaline Controls | 79.8 | 78.6 | 79.0 |\n| T-02 Veridane Analytics | 77.0 | 77.9 | 77.5 |\n| T-03 Halverd Audit Cloud | 76.6 | 74.2 | 73.0 |\n| T-08 Marrowgate Reporting | 61.5 | 61.2 | 63.0 |\n\n**Verdict:** The top 3 holds under all 3 weightings.\n**Watch:** the gap between rank 2 (T-07) and rank 3 (T-02) narrows from 2.8 to 0.7 points under Financial-first, so treat them as close.\n\nNext: check where the evidence behind the shortlist is thin or out of date.\n\n> Synthetic screening support only. All companies, financials and sources are fictional. No target was contacted, no CRM or deal record was changed, nothing was shared, and no investment decision was made.",
+      "expected_agent": "MATargetSourcingAgent",
+      "must_include": [
+        "Financial-first",
+        "84.5",
+        "top 3 holds under all 3 weightings"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-05",
+      "persona": "Research Analyst",
+      "onepager_promise": "Build cited dossiers and close evidence gaps before outreach",
+      "prompt": "Where is our evidence thin or out of date?",
+      "assistant_response": "Here's the gap picture as of the latest snapshot:\n\n**Shortlisted targets with gaps (priority \u2014 3 gaps):**\n- **T-07**: Product evidence is stale (dated Apr 2025, cutoff is Jun 2025); Customer evidence is missing entirely\n- **T-02**: Product evidence missing entirely\n\n**Non-shortlisted targets with gaps (lower priority):**\n- **T-03**: Financials stale (dated Mar 2025)\n- **T-08**: Both Product and Customer evidence missing\n\n**Clean:** T-01 (Lumenrock Compliance Systems) has complete, current evidence across all three required areas.\n\nBottom line: before leaning hard on T-07 or T-02 in the ranking, I'd want fresh product/customer evidence pulled \u2014 those are draft research requests sitting unsent. Want me to draft the IC memo noting these caveats, or pull the dossier on T-07 to see what's actually there?",
+      "agent_logs": "[MATargetSourcingAgent] # Evidence Coverage - Snapshot 2026-06-30\n\nRequired per target: Financials, Product, Customer. Sources dated before 2025-06-30 are stale.\n\n| Request | Target | Evidence | Issue | Detail | Shortlist |\n|---------|--------|----------|-------|--------|-----------|\n| RR-01 | T-07 | Product | Stale | T-07-S2 dated 2025-04-18 | Yes |\n| RR-02 | T-07 | Customer | Missing | No source on file | Yes |\n| RR-03 | T-02 | Product | Missing | No source on file | Yes |\n| RR-04 | T-03 | Financials | Stale | T-03-S1 dated 2025-03-31 | No |\n| RR-05 | T-08 | Product | Missing | No source on file | No |\n| RR-06 | T-08 | Customer | Missing | No source on file | No |\n\n**6 evidence gaps across 4 targets; 3 sit on the shortlist.** T-01 Lumenrock Compliance Systems has complete, current evidence.\n\nThe research requests above are drafts for the research team; none has been sent.\n\n> Synthetic screening support only. All companies, financials and sources are fictional. No target was contacted, no CRM or deal record was changed, nothing was shared, and no investment decision was made.",
+      "expected_agent": "MATargetSourcingAgent",
+      "must_include": [
+        "RR-01",
+        "6 evidence gaps across 4 targets",
+        "none has been sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-06",
+      "persona": "Head of Corporate Development",
+      "onepager_promise": "Draft the investment committee screening memo for human approval",
+      "prompt": "Draft the screening memo for the investment committee.",
+      "assistant_response": "Here's the draft IC screening memo (ICM-2026-07-01) for the thesis on European compliance/regulatory workflow software:\n\n**Universe \u2192 Shortlist:** 8 companies screened, 5 passed, top 3 shortlisted\n\n| Rank | Target | Company | Score | Revenue | Key risk |\n|------|--------|---------|-------|---------|----------|\n| 1 | T-01 | Lumenrock Compliance Systems | 85.7 | $64M | Top 5 clients = 31% of revenue |\n| 2 | T-07 | Tessaline Controls | 79.8 | $47M | Single product line |\n| 3 | T-02 | Veridane Analytics | 77.0 | $38M | Partner-dependent distribution |\n\n- **Combined shortlist revenue:** $149M\n- **Ranking stability:** Top 3 hold steady across 3 alternative weighting scenarios\n- **Before outreach:** 3 open evidence gaps on the shortlist need closing; corp dev lead must sign off on first contact\n- **Ask:** Committee approval to proceed to confidential management-outreach planning\n\nStatus: this is a draft for internal review \u2014 nothing has gone out, no targets contacted, no CRM touched, no decisions made yet.\n\nWant me to pull the evidence gaps that need closing, or get the full dossier on the #1 target (Lumenrock) first?",
+      "agent_logs": "[MATargetSourcingAgent] # Investment Committee Screening Memo - DRAFT ICM-2026-07-01\n\n**Thesis:** TH-2026-014 Add compliance and regulatory workflow software in Europe | **Universe:** 8 | **Passed screen:** 5 | **Shortlist:** 3\n\n| Rank | Target | Company | Score | Revenue | Key risk |\n|------|--------|---------|-------|---------|----------|\n| 1 | T-01 | Lumenrock Compliance Systems | 85.7 | $64M | Top five clients are 31% of revenue |\n| 2 | T-07 | Tessaline Controls | 79.8 | $47M | Single product line |\n| 3 | T-02 | Veridane Analytics | 77.0 | $38M | Partner-dependent distribution |\n\n**Combined shortlist revenue:** $149M. **Ranking check:** top 3 stable under 3 weightings.\n**Conditions before outreach:** close 3 open evidence gaps on the shortlist; the corporate development lead approves any first contact.\n**Ask of the committee:** approve the shortlist for confidential management outreach planning.\n\nStatus: Draft for the corporate development lead. Not sent; no target contacted.\n\n> Synthetic screening support only. All companies, financials and sources are fictional. No target was contacted, no CRM or deal record was changed, nothing was shared, and no investment decision was made.",
+      "expected_agent": "MATargetSourcingAgent",
+      "must_include": [
+        "ICM-2026-07-01",
+        "$149M",
+        "Not sent; no target contacted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

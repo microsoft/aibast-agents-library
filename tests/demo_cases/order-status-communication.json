@@ -39,15 +39,18 @@
       "id": "OS-03",
       "operation": "delay_notification",
       "persona": "Operations Leader",
-      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
+      "prompt": "Prepare the internal delay and recovery review for the E-Cars Corp transmission housing order without changing any schedule.",
       "must_include": [
-        "ORD-7813",
+        "Midwest Casting",
         "Recorded synthetic recovery options"
       ],
       "expects_agent": "OrderStatusCommunicationAgent",
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
-      ]
+      ],
+      "arguments": {
+        "order_id": "ORD-7810"
+      }
     },
     {
       "id": "OS-04",
@@ -62,6 +65,63 @@
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
       ]
+    },
+    {
+      "id": "OS-05",
+      "operation": "engagement_plan",
+      "persona": "Production Manager",
+      "prompt": "Show the customer touchpoints planned for the E-Cars Corp delay across email, EDI, portal and the follow-up call.",
+      "must_include": [
+        "EDI 856 ASN",
+        "Today 2 PM EST",
+        "Ready to send"
+      ],
+      "expects_agent": "OrderStatusCommunicationAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "arguments": {
+        "order_id": "ORD-7810"
+      },
+      "onepager_bullet": "Automate tailored, multi-channel communications that keep customers informed and reduce inbound inquiries"
+    },
+    {
+      "id": "OS-06",
+      "operation": "quality_validation",
+      "persona": "Production Manager",
+      "prompt": "What quality assurance and validation is in place for the E-Cars Corp housings from the alternative supplier?",
+      "must_include": [
+        "PPAP Level 3",
+        "99.8%",
+        "Metallurgical testing"
+      ],
+      "expects_agent": "OrderStatusCommunicationAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "arguments": {
+        "order_id": "ORD-7810"
+      },
+      "onepager_bullet": "Generate and execute recovery plans instantly to minimize disruption and preserve customer confidence"
+    },
+    {
+      "id": "OS-07",
+      "operation": "performance_dashboard",
+      "persona": "Operations Leader",
+      "prompt": "Show the performance dashboard for the E-Cars Corp account and this order.",
+      "must_include": [
+        "96.2%",
+        "$14.2M",
+        "Lessons learned"
+      ],
+      "expects_agent": "OrderStatusCommunicationAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "arguments": {
+        "order_id": "ORD-7810"
+      },
+      "onepager_bullet": "Monitor order and production status in real time to detect delays early and prevent customer surprises"
     }
   ],
   "assertion_principle": "Route from persona language, assert deterministic source evidence, and preserve recommendation-only safety."

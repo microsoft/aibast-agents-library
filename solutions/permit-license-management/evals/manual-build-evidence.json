@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T11:22:09.406Z",
+  "captured_at": "2026-10-07T16:40:15.034120Z",
   "solution": "@aibast-agents-library/permit-license-management",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Permit Management Manual",
-    "bot_id": "d13fd96b-7491-4556-baad-fbd549f8f8fb",
+    "bot_id": "a3690254-2f80-4bf1-ac06-9378d156e2ba",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 5,
+      "confirmed": 5
     },
     "tools": {
       "expected": 0,
@@ -39,50 +39,62 @@
   "canonical_preview": [
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
-      "prompt": "Which Riverside permit is expired right now?",
+      "prompt": "Show me our permit status and any expiring soon",
       "must_include": [
-        "PRM-6002",
-        "EXPIRED",
-        "Verify status"
+        "240 active permits",
+        "Imperial Valley Solar",
+        "$47M"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-permit_license_management-01.jpg",
+      "expected_screenshot": "15-permit_license_management-01.jpg",
       "passed": true
     },
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
-      "prompt": "What is the next Riverside renewal deadline I need to prepare for?",
+      "prompt": "Which permit renewals have already missed their lead time, and how many days are left?",
       "must_include": [
-        "NPDES Stormwater Discharge Permit",
-        "2026-03-01",
+        "Reno Wind Farm",
+        "MISSED",
         "No renewal"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-permit_license_management-02.jpg",
+      "expected_screenshot": "16-permit_license_management-02.jpg",
       "passed": true
     },
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
-      "prompt": "What permit evidence gap needs immediate authorized review at Riverside?",
+      "prompt": "What permit evidence gap needs immediate authorized review?",
       "must_include": [
-        "expired_permit",
+        "renewal_lead_time_missed",
         "CRITICAL",
         "not legal advice"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-permit_license_management-03.jpg",
+      "expected_screenshot": "17-permit_license_management-03.jpg",
       "passed": true
     },
     {
       "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
-      "prompt": "Where does the Riverside gas turbine permit application stand, and did we submit anything today?",
+      "prompt": "Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today?",
       "must_include": [
-        "APP-7002",
+        "APP-7102",
         "public_comment",
         "cannot submit"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-permit_license_management-04.jpg",
+      "expected_screenshot": "18-permit_license_management-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-05",
+      "prompt": "Start emergency renewals for the critical permits.",
+      "must_include": [
+        "$685,000",
+        "$13.8M",
+        "No application was submitted"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "19-permit_license_management-05.jpg",
       "passed": true
     }
   ],
@@ -95,6 +107,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "20-confirm-draft.jpg"
   }
 }

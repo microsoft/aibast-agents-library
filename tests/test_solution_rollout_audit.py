@@ -23,7 +23,7 @@ def test_rollout_audit_tracks_every_advertised_onepager_solution():
         if agent.get("_solution") and agent["_solution"].get("has_onepager")
     }
     assert {row["name"] for row in rows} == expected
-    assert len(rows) == 51
+    assert len(rows) == 66
 
 
 def test_completed_journeys_pass_every_rollout_gate():
@@ -38,18 +38,24 @@ def test_completed_journeys_pass_every_rollout_gate():
         assert rows[name]["complete"] is True
 
 
-def test_preserved_manual_repairs_do_not_pass_the_rollout_completion_gate():
+def test_recaptured_manual_repairs_pass_the_rollout_completion_gate_on_current_evidence():
+    # These two packages were once preserved repairs that stayed below the
+    # completion gate. They were re-shot in the real Copilot Studio UI, so the
+    # gate may pass only because the CURRENT manual evidence passes every
+    # locked case, never because of the historical capture.
     module = load_module()
     rows = {row["slug"]: row for row in module.collect()}
     for slug in ("fs-customer-onboarding", "fs-regulatory-compliance"):
-        assert rows[slug]["manual_evidence"] == "reshoot_required"
-        assert rows[slug]["complete"] is False
+        assert rows[slug]["manual_evidence"] == "passed"
+        assert rows[slug]["complete"] is True
         evidence = module.read_json(
             ROOT / "solutions" / slug / "evals/manual-build-evidence.json"
         )
-        assert evidence["captured_status"] == "passed"
-        assert all(case["passed"] is None for case in evidence["canonical_preview"])
-        assert all(case["captured_passed"] is True for case in evidence["canonical_preview"])
+        assert evidence["status"] == "passed"
+        cases = module.read_json(ROOT / "tests" / "demo_cases" / f"{slug}.json")["cases"]
+        preview = {case["case_id"]: case for case in evidence["canonical_preview"]}
+        assert set(preview) == {case["id"] for case in cases}
+        assert all(case["passed"] is True for case in preview.values())
 
 
 def test_standard_manual_packages_include_global_instructions():

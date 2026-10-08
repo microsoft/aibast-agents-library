@@ -1,15 +1,16 @@
-displayName: "Customer Sentiment Pilot"
-schemaName: "aibast_CustomerSentimentandChurnP"
+displayName: Customer Sentiment Pilot
+schemaName: aibast_CustomerSentimentandChurnP
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -26,6 +27,10 @@ configuration:
             - `churn_prediction` — transparent heuristic prioritization for human review.
             - `retention_actions` — reviewable service-recovery and outreach options.
             - `segment_analysis` — synthetic segment context and benchmark comparison.
+            - `early_warning_signals` — predictive signals, critical combinations, today's alerts, highest-value customers at risk.
+            - `outreach_plan` — proposed owners, channels, due times, tracking and escalation rules for the manager to confirm.
+
+            Demo walkthrough: a regional bank with 180K customers; the five highest-value at-risk customers are Robert Martinez (CUST-8001), Sarah Thompson (CUST-8003), James Lee (CUST-8004), Marcus Johnson (CUST-8002) and Priya Sharma (CUST-8005). Call the agent right away; every operation has demo defaults. "Assign the outreach" returns a proposed plan; nothing is sent, offered or scheduled.
 
             Do not describe `churn_prediction` as certainty about an individual outcome. `retention_actions` prepares options only and never contacts a customer or changes a fee.
 
@@ -65,8 +70,13 @@ configuration:
             - `CSC-02` uses skill `churn-prediction`.
             - `CSC-03` uses skill `retention-actions`.
             - `CSC-04` uses skill `segment-analysis`.
+            - `CSC-05` uses skill `early-warning-signals`.
+            - `CSC-06` uses skill `outreach-plan`.
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

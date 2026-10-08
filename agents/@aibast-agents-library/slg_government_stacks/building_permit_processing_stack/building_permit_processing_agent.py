@@ -23,7 +23,7 @@ def _d(offset_days):
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/building-permit-processing",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Building Permit Processing Agent",
     "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
     "author": "AIBAST",
@@ -53,7 +53,7 @@ PERMIT_APPLICATIONS = {
         "review_cycle": 2,
     },
     "BP-2025-0102": {
-        "applicant": "Johnson Family Trust",
+        "applicant": "Whitaker Family Trust",
         "property_address": "812 Maple Street",
         "parcel_id": "023-114-003",
         "permit_type": "residential_addition",
@@ -119,6 +119,108 @@ PERMIT_APPLICATIONS = {
         "review_cycle": 0,
         "documents": ["site_plan", "structural_calcs", "mep_drawings", "title_report"],
     },
+    "BP-2024-3847": {
+        "applicant": "Johnson Residence",
+        "property_address": "123 Oak Lane",
+        "parcel_id": "031-207-018",
+        "permit_type": "residential_addition",
+        "description": "400 sq ft master bedroom + bathroom addition",
+        "contractor": "Premier Builders LLC (License #BLD-48291)",
+        "submitted": _d(0),
+        "received": "15 minutes ago",
+        "valuation": 68000,
+        "zoning_district": "R-2 (HOA Residential)",
+        "status": "intake",
+        "assigned_reviewer": None,
+        "review_cycle": 0,
+        "documents": ["site_plan", "structural_drawings", "property_survey", "proof_of_insurance"],
+    },
+}
+
+# The demo application (video): Johnson Residence residential addition.
+DEMO_PERMIT = "BP-2024-3847"
+
+# Intake completeness notes for the demo application's documents.
+DOCUMENT_NOTES = {
+    "site_plan": ["Site plan", "Verified dimensions"],
+    "structural_drawings": ["Structural drawings", "Stamped by PE"],
+    "property_survey": ["Property survey", "Updated 3 months ago"],
+    "proof_of_insurance": ["Proof of insurance", "Valid through next year"],
+    "hoa_approval": ["HOA approval", "Required for this zone"],
+}
+
+# Plan measurements taken from the demo application's drawings.
+PLAN_MEASUREMENTS = {
+    "BP-2024-3847": {
+        "setback_ft": 15,
+        "lot_coverage_pct": 28,
+        "height_ft": 18,
+        "egress_window_sq_ft": 0,
+        "bathroom_gfci_count": 1,
+        "structural_stamped": True,
+    },
+}
+
+CODE_RULES = {
+    "requirements_checked": 247,
+    "review_minutes": 2.4,
+    "egress_min_sq_ft": 5.7,
+    "gfci_min_bathroom": 2,
+    "resubmission_impact": "1-2 days",
+}
+
+PLANS_EXAMINERS = {
+    "Mike Chen": {"title": "Senior Plans Examiner", "specialization": "residential_addition", "workload": 8, "avg_review_days": 1.2, "availability": "Can start today"},
+    "Tom Delgado": {"title": "Plans Examiner", "specialization": "residential_addition", "workload": 15, "avg_review_days": 2.1, "availability": "Next opening in 2 days"},
+    "Karen Whitfield": {"title": "Senior Plans Examiner", "specialization": "commercial_alteration", "workload": 11, "avg_review_days": 1.8, "availability": "Can start tomorrow"},
+}
+
+PARALLEL_REVIEWERS = [
+    {"discipline": "Electrical", "reviewer": "Sarah Martinez", "turnaround": "same-day review"},
+    {"discipline": "Plumbing", "reviewer": "David Park", "turnaround": "same-day review"},
+]
+
+WORKFLOW_EVENTS = {
+    "BP-2024-3847": {
+        "processing_day": 3,
+        "steps": [
+            ["Application received", "Day 1", "done"],
+            ["Completeness verified", "Day 1", "done"],
+            ["Code compliance scan", "Day 1", "done"],
+            ["Plans review assigned", "Day 2", "done"],
+            ["Corrections requested", "Day 2", "current"],
+            ["Revised plans", "", "pending"],
+            ["Final approval", "", "pending"],
+            ["Permit issuance", "", "pending"],
+        ],
+        "reviewer_feedback": "Plans look good overall. Need manufacturer specs on egress window and updated electrical plan showing second bathroom GFCI. Once resubmitted, can approve same day.",
+        "contractor_response": "Revised plans submitted 2 hours ago",
+        "corrections": [
+            {"item": "Egress window manufacturer cut sheet", "resolved": True},
+            {"item": "Second bathroom GFCI on the electrical plan", "resolved": True},
+        ],
+        "next_step": "Final review scheduled (tomorrow 9 AM)",
+        "total_processing_days": 4.5,
+        "baseline_days": 18,
+        "satisfaction_pct": 96,
+    },
+}
+
+PERMIT_PACKAGE = [
+    "Digital permit card (QR code for inspections)",
+    "Approved plans (digitally stamped)",
+    "Inspection schedule (4 required inspections)",
+    "Contractor safety checklist",
+    "Job site posting requirements",
+]
+
+REQUIRED_INSPECTIONS = {
+    "residential_addition": [
+        ["Foundation", "after excavation", "Lisa Park"],
+        ["Framing", "before drywall", "Lisa Park"],
+        ["Rough electrical/plumbing", "before walls", "Dave Martinez"],
+        ["Final", "before occupancy", "Carlos Reyes"],
+    ],
 }
 
 # Statutory review clocks. Exceeding these is what generates the status-check
@@ -141,7 +243,7 @@ REVIEW_ROUTING = {
 # Intake completeness: what a submission must carry before the clock starts.
 REQUIRED_DOCUMENTS = {
     "new_construction": ["site_plan", "structural_calcs", "mep_drawings", "title_report"],
-    "residential_addition": ["site_plan", "structural_calcs"],
+    "residential_addition": ["site_plan", "structural_drawings", "property_survey", "proof_of_insurance", "hoa_approval"],
     "commercial_alteration": ["site_plan", "mep_drawings"],
     "institutional": ["site_plan", "structural_calcs", "mep_drawings", "title_report", "traffic_study"],
 }
@@ -165,6 +267,13 @@ ZONING_REQUIREMENTS = {
         "lot_coverage": 60,
         "parking": "1 per 1,000 sq ft",
     },
+    "R-2 (HOA Residential)": {
+        "max_height": "25 ft / 2 stories",
+        "max_height_ft": 25,
+        "setbacks": {"front": 15, "side": 15, "rear": 15},
+        "lot_coverage": 35,
+        "parking": "2 spaces per unit",
+    },
     "PF (Public Facilities)": {
         "max_height": "50 ft / 3 stories",
         "setbacks": {"front": 30, "side": 15, "rear": 20},
@@ -177,7 +286,7 @@ INSPECTION_SCHEDULE = {
     "BP-2025-0103": [
         {"type": "Electrical Rough-In", "inspector": "Dave Martinez", "date": _d(10), "status": "scheduled"},
         {"type": "Structural Mounting", "inspector": "Lisa Park", "date": _d(12), "status": "scheduled"},
-        {"type": "Final Electrical", "inspector": "Dave Martinez", "date": _d(-5), "status": "pending"},
+        {"type": "Final Electrical", "inspector": "Dave Martinez", "date": _d(18), "status": "pending"},
     ],
 }
 
@@ -189,6 +298,12 @@ FEE_TABLES = {
     "mechanical": {"base": 75, "per_thousand_valuation": 1.00},
     "fire_review": {"base": 200, "per_thousand_valuation": 2.00},
     "technology_surcharge": {"base": 25, "per_thousand_valuation": 0.50},
+}
+
+# Residential additions use the simplified residential schedule: $100 + $10.25 per $1,000, plus a $50 technology fee.
+RESIDENTIAL_FEE_TABLES = {
+    "building_permit": {"base": 100, "per_thousand_valuation": 10.25},
+    "technology_surcharge": {"base": 50, "per_thousand_valuation": 0},
 }
 
 INSPECTORS = {
@@ -259,16 +374,61 @@ def _duplicate_of(permit_id, permit):
     return None
 
 
-def _calculate_fees(valuation):
-    """Calculate permit fees based on project valuation."""
+def _calculate_fees(valuation, permit_type=""):
+    """Calculate permit fees based on project valuation (residential additions use the residential schedule)."""
     fees = {}
     total = 0
-    for fee_name, schedule in FEE_TABLES.items():
+    tables = RESIDENTIAL_FEE_TABLES if permit_type == "residential_addition" else FEE_TABLES
+    for fee_name, schedule in tables.items():
         amount = schedule["base"] + (valuation / 1000) * schedule["per_thousand_valuation"]
         amount = round(amount, 2)
         fees[fee_name] = amount
         total += amount
     return fees, round(total, 2)
+
+
+def _resolve_permit(query):
+    """Permit ID or applicant (e.g. 'BP-2024-3847', 'Johnson'); default the demo application; None if no match."""
+    if not query:
+        return DEMO_PERMIT
+    q = query.lower().strip()
+    for key in PERMIT_APPLICATIONS:
+        if key.lower() in q or q in PERMIT_APPLICATIONS[key]["applicant"].lower():
+            return key
+    return None
+
+
+def _not_found(query):
+    return (f"No synthetic permit matches '{query}'. Known permits: {', '.join(PERMIT_APPLICATIONS)}.\n\n"
+            f"> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.")
+
+
+def _compliance_checks(pid):
+    """(rows, corrections) from the plan measurements against the zone and code rules."""
+    p = PERMIT_APPLICATIONS[pid]
+    m = PLAN_MEASUREMENTS[pid]
+    z = ZONING_REQUIREMENTS[p["zoning_district"]]
+    rows, corrections = [], []
+    sb = z["setbacks"]["side"]
+    rows.append(["Setback requirements", "Met" if m["setback_ft"] >= sb else "Flag",
+                 f"{m['setback_ft']} ft all sides (min {sb} ft)"])
+    rows.append(["Lot coverage", "Met" if m["lot_coverage_pct"] <= z["lot_coverage"] else "Flag",
+                 f"{m['lot_coverage_pct']}% (max {z['lot_coverage']}% allowed)"])
+    rows.append(["Height restrictions", "Met" if m["height_ft"] <= z["max_height_ft"] else "Flag",
+                 f"{m['height_ft']} ft (max {z['max_height_ft']} ft allowed)"])
+    if m["egress_window_sq_ft"] >= CODE_RULES["egress_min_sq_ft"]:
+        rows.append(["Egress windows", "Met", f"{m['egress_window_sq_ft']} sq ft opening"])
+    else:
+        rows.append(["Egress windows", "Flag", f"Bedroom needs {CODE_RULES['egress_min_sq_ft']} sq ft min opening"])
+        corrections.append("Egress window specification unclear (provide manufacturer cut sheet)")
+    if m["bathroom_gfci_count"] >= CODE_RULES["gfci_min_bathroom"]:
+        rows.append(["GFCI outlets", "Met", f"{m['bathroom_gfci_count']} in bathroom"])
+    else:
+        rows.append(["GFCI outlets", "Flag", f"Bathroom plan shows only {m['bathroom_gfci_count']} (need {CODE_RULES['gfci_min_bathroom']})"])
+        corrections.append("Add second GFCI outlet near vanity per NEC 210.8")
+    rows.append(["Structural loads", "Met" if m["structural_stamped"] else "Flag",
+                 "Within limits (stamped by engineer)" if m["structural_stamped"] else "Engineer stamp missing"])
+    return rows, corrections
 
 
 def _review_checklist(permit_type):
@@ -341,7 +501,12 @@ class BuildingPermitProcessingAgent(BasicAgent):
                 "inspections are on the board for a job referred to by street name, applicant, or "
                 "project type (for example 'the solar job' or 'the restaurant fit-out on Harbor "
                 "Way'). Covers intake classification and validation, automatic routing to review "
-                "teams, applicant communication, and inspector assignment."
+                "teams, applicant communication, and inspector assignment. Also walks the new "
+                "Johnson Residence residential addition (BP-2024-3847) through intake, code "
+                "compliance review, routing to a plans examiner, workflow tracking and permit "
+                "issuance; call it right away, no permit id is needed. It prepares decisions, "
+                "packets and notification drafts for staff; it never issues a permit, books an "
+                "inspection or sends a message."
             ),
             "parameters": {
                 "type": "object",
@@ -364,7 +529,20 @@ class BuildingPermitProcessingAgent(BasicAgent):
                             "review_checklist: the plan-review checklist for a permit type. "
                             "inspector_assignment: which inspections are booked and who covers "
                             "them. "
-                            "fee_calculation: permit fees for a valuation."
+                            "fee_calculation: permit fees for a valuation. "
+                            "The demo application is the Johnson Residence residential addition "
+                            "(BP-2024-3847, 123 Oak Lane); these five operations walk it end to end "
+                            "and need no permit id: "
+                            "application_intake: process / review the new residential application "
+                            "(completeness check, fee, hold or accept). "
+                            "code_compliance_review: code compliance checking / plan review against "
+                            "building, electrical, plumbing and zoning codes. "
+                            "route_for_review: route it for expert review, pick the plans examiner, "
+                            "review packet, parallel reviews. "
+                            "workflow_timeline: track the workflow / approval progress, reviewer "
+                            "feedback, corrections. "
+                            "permit_issuance: show the permit issuance, permit package, required "
+                            "inspections, citizen notification."
                         ),
                         "enum": [
                             "permit_backlog",
@@ -374,10 +552,15 @@ class BuildingPermitProcessingAgent(BasicAgent):
                             "review_checklist",
                             "inspector_assignment",
                             "fee_calculation",
+                            "application_intake",
+                            "code_compliance_review",
+                            "route_for_review",
+                            "workflow_timeline",
+                            "permit_issuance",
                         ],
                     },
                     "permit_id": {"type": "string",
-                                  "description": "Optional. Only needed for a single-permit view."},
+                                  "description": "Optional permit ID or applicant name. Only needed for a single-permit view; the demo walkthrough operations default to BP-2024-3847."},
                 },
                 "required": ["operation"],
             },
@@ -394,6 +577,11 @@ class BuildingPermitProcessingAgent(BasicAgent):
             "review_checklist": self._review_checklist,
             "inspector_assignment": self._inspector_assignment,
             "fee_calculation": self._fee_calculation,
+            "application_intake": self._application_intake,
+            "code_compliance_review": self._code_compliance_review,
+            "route_for_review": self._route_for_review,
+            "workflow_timeline": self._workflow_timeline,
+            "permit_issuance": self._permit_issuance,
         }
         handler = dispatch.get(operation)
         if not handler:
@@ -522,8 +710,13 @@ message, permit update, assignment, or system action occurred.
         return "\n".join(lines)
 
     def _review_checklist(self, **kwargs) -> str:
-        permit_id = kwargs.get("permit_id", "BP-2025-0101")
-        p = PERMIT_APPLICATIONS.get(permit_id, list(PERMIT_APPLICATIONS.values())[0])
+        permit_id = kwargs.get("permit_id") or "BP-2025-0101"
+        if permit_id not in PERMIT_APPLICATIONS:
+            found = _resolve_permit(permit_id)
+            if found is None:
+                return _not_found(permit_id)
+            permit_id = found
+        p = PERMIT_APPLICATIONS[permit_id]
         checklist = _review_checklist(p["permit_type"])
         lines = [f"# Review Checklist: {permit_id}\n"]
         lines.append(f"**Project:** {p['description']}")
@@ -561,7 +754,7 @@ message, permit update, assignment, or system action occurred.
         else:
             permits_to_calc = PERMIT_APPLICATIONS
         for pid, p in permits_to_calc.items():
-            fees, total = _calculate_fees(p["valuation"])
+            fees, total = _calculate_fees(p["valuation"], p["permit_type"])
             lines.append(f"## {pid}: {p['applicant']}\n")
             lines.append(f"**Project Valuation:** ${p['valuation']:,.0f}\n")
             lines.append("| Fee Category | Amount |")
@@ -572,6 +765,162 @@ message, permit update, assignment, or system action occurred.
             lines.append(f"| **Total** | **${total:,.2f}** |")
             lines.append("")
         return "\n".join(lines)
+
+
+    # ── video walkthrough: the Johnson Residence residential addition ──
+    def _demo_permit(self, kwargs):
+        """(permit_id, error); only permits with plan measurements have walkthrough data."""
+        query = kwargs.get("permit_id")
+        pid = _resolve_permit(query)
+        if pid is None:
+            return None, _not_found(query)
+        if pid not in PLAN_MEASUREMENTS:
+            return None, (f"The intake-to-issuance walkthrough data covers {DEMO_PERMIT} (Johnson Residence) only; "
+                          f"use permit_status or intake_triage for {pid}.")
+        return pid, None
+
+    def _application_intake(self, **kwargs) -> str:
+        pid, err = self._demo_permit(kwargs)
+        if err:
+            return err
+        p = PERMIT_APPLICATIONS[pid]
+        missing = _missing_documents(p)
+        fees, total = _calculate_fees(p["valuation"], p["permit_type"])
+        L = [f"# New Permit Application — Received {p['received']}\n"]
+        L.append(f"**Permit:** {pid}")
+        L.append(f"**Project:** {p['permit_type'].replace('_', ' ').title()}")
+        L.append(f"**Applicant:** {p['applicant']} ({p['property_address']})")
+        L.append(f"**Contractor:** {p['contractor']}")
+        L.append(f"**Scope:** {p['description']}\n")
+        L.append("**Auto-Completeness Check:**\n")
+        L.append("| Required Item | Status | Notes |")
+        L.append("|---|---|---|")
+        for doc in REQUIRED_DOCUMENTS[p["permit_type"]]:
+            label = DOCUMENT_NOTES[doc][0]
+            note = DOCUMENT_NOTES[doc][1]
+            status = "Missing" if doc in missing else "Complete"
+            L.append(f"| {label} | {status} | {note} |")
+        L.append(f"\n**Fee Calculated:** ${total:,.0f} (based on ${int(p['valuation'] / 1000)}K project value)")
+        if "hoa_approval" in missing:
+            L.append("**Recommended action:** Application on hold — HOA approval letter needed before plan review begins.")
+        elif missing:
+            L.append(f"**Recommended action:** Application on hold — missing {', '.join(missing)}.")
+        else:
+            L.append("**Recommended action:** Accept — complete; plan review can begin.")
+        L.append("\n**Next:** show code compliance checking?")
+        L.append("\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.")
+        return "\n".join(L)
+
+    def _code_compliance_review(self, **kwargs) -> str:
+        pid, err = self._demo_permit(kwargs)
+        if err:
+            return err
+        rows, corrections = _compliance_checks(pid)
+        L = ["# Automated Code Compliance Review\n"]
+        L.append(f"**Permit #{pid} — Plan Review ({CODE_RULES['review_minutes']} minutes)**\n")
+        L.append(f"Checked the plans against {CODE_RULES['requirements_checked']} code requirements across "
+                 "building, electrical, plumbing, and zoning codes.\n")
+        L.append("| Check | Result | Detail |")
+        L.append("|---|---|---|")
+        for r in rows:
+            L.append(f"| {r[0]} | {r[1]} | {r[2]} |")
+        L.append(f"\n**Flags Requiring Correction ({len(corrections)}):**")
+        for c in corrections:
+            L.append(f"- {c}")
+        L.append(f"\n**Estimated Resubmission Impact:** {CODE_RULES['resubmission_impact']}")
+        L.append("These are synthetic plan-review findings for the examiner, not a code-compliance certification.")
+        L.append("\n**Next:** ready to route for expert review?")
+        L.append("\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.")
+        return "\n".join(L)
+
+    def _route_for_review(self, **kwargs) -> str:
+        pid, err = self._demo_permit(kwargs)
+        if err:
+            return err
+        p = PERMIT_APPLICATIONS[pid]
+        best = ""
+        for name, e in PLANS_EXAMINERS.items():
+            if e["specialization"] == p["permit_type"]:
+                if best == "" or e["workload"] < PLANS_EXAMINERS[best]["workload"]:
+                    best = name
+        e = PLANS_EXAMINERS[best]
+        load = "light" if e["workload"] < 6 else ("moderate" if e["workload"] <= 10 else "heavy")
+        rows, corrections = _compliance_checks(pid)
+        L = ["# Intelligent Routing — Plan Review Assignment\n"]
+        L.append(f"**Recommended Primary Reviewer:** {best}, {e['title']}")
+        L.append(f"- Specialization: {p['permit_type'].replace('_', ' ').capitalize()}s")
+        L.append(f"- Current workload: {e['workload']} permits ({load})")
+        L.append(f"- Avg review time: {e['avg_review_days']} days")
+        L.append(f"- Availability: {e['availability']}\n")
+        L.append("**Review Packet (prepared):**")
+        L.append("1. Complete application with markup highlights")
+        L.append(f"2. Code compliance checklist ({len(corrections)} items flagged)")
+        L.append("3. Property history (no prior violations)")
+        L.append("4. Zoning verification certificate")
+        L.append("5. HOA approval letter (just received)\n")
+        L.append("**Parallel Review (recommended):**")
+        for r in PARALLEL_REVIEWERS:
+            L.append(f"- {r['discipline']}: {r['reviewer']} ({r['turnaround']})")
+        L.append(f"\n**Draft Applicant Notification (not sent):** \"Your plans are under review. We found "
+                 f"{len(corrections)} minor items needing clarification. Reviewer will contact you within 1 business day.\"")
+        L.append("Assignment and notification are ready for a supervisor to confirm; nothing was assigned or sent.")
+        L.append("\n**Next:** track the approval workflow?")
+        L.append("\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.")
+        return "\n".join(L)
+
+    def _workflow_timeline(self, **kwargs) -> str:
+        pid, err = self._demo_permit(kwargs)
+        if err:
+            return err
+        w = WORKFLOW_EVENTS[pid]
+        resolved = 0
+        for c in w["corrections"]:
+            if c["resolved"]:
+                resolved += 1
+        labels = {"done": "Done", "current": "Current", "pending": "Pending"}
+        L = ["# Approval Workflow Status\n"]
+        L.append(f"**Permit #{pid} — Day {w['processing_day']} of Processing**\n")
+        L.append("| Step | When | Status |")
+        L.append("|---|---|---|")
+        for step in w["steps"]:
+            when = step[1] if step[1] else "-"
+            L.append(f"| {step[0]} | {when} | {labels[step[2]]} |")
+        L.append(f"\n**Reviewer Feedback (received today):** \"{w['reviewer_feedback']}\"")
+        L.append(f"**Contractor Response:** {w['contractor_response']}")
+        if resolved == len(w["corrections"]):
+            L.append(f"**Auto-Validation:** Both corrections addressed ({resolved} of {len(w['corrections'])})")
+        else:
+            L.append(f"**Auto-Validation:** {resolved} of {len(w['corrections'])} corrections addressed")
+        L.append(f"**Next Step:** {w['next_step']}")
+        L.append("\n**Next:** show the permit issuance?")
+        L.append("\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.")
+        return "\n".join(L)
+
+    def _permit_issuance(self, **kwargs) -> str:
+        pid, err = self._demo_permit(kwargs)
+        if err:
+            return err
+        p = PERMIT_APPLICATIONS[pid]
+        w = WORKFLOW_EVENTS[pid]
+        faster = round((1 - w["total_processing_days"] / w["baseline_days"]) * 100)
+        L = ["# Permit Issuance — Ready for Construction\n"]
+        L.append(f"**Permit #{pid} — APPROVED in final review; ready for the building official to issue**\n")
+        L.append(f"**Total Processing Time:** {w['total_processing_days']} days (vs. {w['baseline_days']}-day baseline)\n")
+        L.append("**Permit Package (assembled):**")
+        for item in PERMIT_PACKAGE:
+            L.append(f"- {item}")
+        L.append("\n**Required Inspections (proposed schedule):**\n")
+        L.append("| Inspection | Timing | Inspector |")
+        L.append("|---|---|---|")
+        for i in REQUIRED_INSPECTIONS[p["permit_type"]]:
+            L.append(f"| {i[0]} | {i[1]} | {i[2]} |")
+        L.append("\n**Draft Citizen Notification (ready to send):** \"Your permit is approved! Digital permit and plans "
+                 "available in your portal. Schedule inspections 24 hours in advance through our mobile app.\"")
+        L.append(f"\n**Performance Impact:** {faster}% faster processing, {w['satisfaction_pct']}% satisfaction rate")
+        L.append("The package, inspection bookings and notification are prepared for staff to issue, book and send; "
+                 "this agent did not issue the permit, book an inspection, or send a message.")
+        L.append("\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.")
+        return "\n".join(L)
 
 
 # ---------------------------------------------------------------------------
@@ -589,3 +938,7 @@ if __name__ == "__main__":
     print(agent.perform(operation="inspector_assignment"))
     print("\n" + "=" * 80 + "\n")
     print(agent.perform(operation="fee_calculation", permit_id="BP-2025-0101"))
+    for op in ["application_intake", "code_compliance_review", "route_for_review",
+               "workflow_timeline", "permit_issuance"]:
+        print("\n" + "=" * 80 + "\n")
+        print(agent.perform(operation=op))

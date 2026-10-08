@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CES-01, CES-02, CES-03, CES-04`.
+1. Which locked case IDs did you complete? Expected scope: `CES-01, CES-02, CES-03, CES-04, CES-05, CES-06, CES-07, CES-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `CES-02` — What approved guidance should I review for the customer who cannot export a long analytics range?
 - `CES-03` — The SSO migration case is urgent. Which queue and response target does our rulebook recommend?
 - `CES-04` — What does the latest service-quality snapshot say, and which signals need human review?
+- `CES-05` — Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this?
+- `CES-06` — Go ahead and get the refund and the credit ready for Jennifer Adams.
+- `CES-07` — Schedule the follow-up for Jennifer Adams and prepare the response email.
+- `CES-08` — Summarize the Jennifer Adams interaction for me.
 
 ## Manual mode — literal browser construction
 

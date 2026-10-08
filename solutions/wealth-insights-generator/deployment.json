@@ -41,30 +41,34 @@
       "client_insights",
       "opportunity_alerts",
       "performance_attribution",
-      "meeting_brief"
+      "meeting_brief",
+      "book_insights",
+      "planning_gaps",
+      "engagement_strategy",
+      "insights_summary"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_wealth-insights-generator-synthetic-records.md",
       "manual/knowledge/aibast_wealth-insights-generator-controls-and-review.md"
     ],
-    "manual_skill_count": 5,
+    "manual_skill_count": 9,
     "publish_requires_confirmation": true,
     "safety_gate": "Validate synthetic labels, human review, and no-advice/no-approval/no-transaction behavior before publish.",
     "plugin": "mcs-assistant@copilot-studio-plugin",
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Wealth Insights Manual",
-      "bot_id": "a23bab91-3a33-477c-b3e2-35870f711499",
+      "bot_id": "8ee5ca3f-493a-4bc2-b308-3b16c7589fdc",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 5,
+      "skills": 9,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     },
     "validated_pilot": {
       "display_name": "Wealth Insights Pilot",
@@ -73,13 +77,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 5,
+      "skills": 9,
       "knowledge_files": 2,
       "changes_pushed": 8,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     }
   },
   "demo_scenarios": [

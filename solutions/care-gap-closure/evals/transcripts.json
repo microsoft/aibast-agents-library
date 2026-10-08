@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:19:27.259004+00:00",
+  "captured_at": "2026-10-07T01:31:20.069212+00:00",
   "solution": "@aibast-agents-library/care-gap-closure",
   "onepager": "32. Care Gap Closure Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,21 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
-      "sha256": "c47d4fd5aba16df769bc0157c9e10107077e54a4bbfcde9c137b1c991a1a9b00"
+      "sha256": "110f062d29d782d0a2eb8032b9c9c468112975997fc4d3d7d2eb0d3097998508"
     }
   ],
   "case_file": "tests/demo_cases/care-gap-closure.json",
-  "case_file_sha256": "de446da9f1b5c071172e9c141bc67fc2dc0ae3d4b0242b6db58dde8150836270",
-  "captured_case_file_sha256": "1bdadb805383e84752aeef511969d709f10d2e794b512f58772a62c94919d75c",
-  "contract_revalidation": {
-    "reviewed_on": "2026-09-11",
-    "validator": "tools.run_demo_cases.run_case",
-    "scope": "Required markers checked against stored deterministic agent_logs; forbidden prose and word count checked against the unchanged assistant_response.",
-    "live_capture": false,
-    "cases_passed": 4,
-    "cases_total": 4,
-    "note": "CG-01 already computed SYN-COL — 182 records. Only the acceptance contract and its digest changed; capture timestamps, responses, logs, models, and agent source are preserved. This is not a new Copilot Studio Preview pass."
-  },
+  "case_file_sha256": "f002795a9c08df2412295952169562d4b1ad9ee8db40afeb33d3462c6644bd18",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -32,15 +22,15 @@
       "persona": "Quality Manager",
       "onepager_promise": "Analyze quality measures and surface high-priority gaps",
       "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
-      "assistant_response": "**SYN-COL** (Synthetic Colorectal Screening Measure) has the largest evidence-review queue with **182 records** requiring review.\n\nThis is followed by SYN-BCS (108 records) and SYN-CDC (53 records). The colorectal measure's gap is partly due to incomplete clinical exclusions and external claims data\u2014typical for screening measures that depend on multi-source verification.\n\nWould you like to organize a review cohort for SYN-COL or draft outreach for specific gaps?",
+      "assistant_response": "**SYN-COL** (colorectal screening) has the largest queue \u2014 182 records needing evidence review out of 520, vs. 108 for SYN-BCS and 53 for SYN-CDC. All of these still need clinical/quality reviewer validation before any eligibility or exclusion decisions are made.",
       "agent_logs": "[CareGapClosureAgent] # Source-Evidence Gap Analysis\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\n**Largest evidence-review queue:** SYN-COL \u2014 182 records.\n\n## Synthetic Breast Screening Measure (SYN-BCS)\n- Source population: 400\n- Source-recorded closed: 292\n- Records requiring evidence review: 108\n- Limitation: Eligibility and exclusions are unvalidated synthetic source fields.\n\n## Synthetic Colorectal Screening Measure (SYN-COL)\n- Source population: 520\n- Source-recorded closed: 338\n- Records requiring evidence review: 182\n- Limitation: Clinical exclusions and external claims may be incomplete.\n\n## Synthetic Diabetes Monitoring Measure (SYN-CDC)\n- Source population: 310\n- Source-recorded closed: 257\n- Records requiring evidence review: 53\n- Limitation: Recent labs and measure-year attribution require reviewer validation.\n",
       "expected_agent": "CareGapClosureAgent",
       "must_include": [
-        "SYN-COL — 182 records",
+        "SYN-COL \u2014 182 records",
         "Records requiring evidence review"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -48,15 +38,15 @@
       "persona": "Care Coordinator",
       "onepager_promise": "Stratify outreach based on risk, condition severity, and engagement",
       "prompt": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
-      "assistant_response": "Done. I've organized your synthetic evidence-review cohorts into three operational groups:\n\n1. **Multiple Source Gaps (42)** \u2014 mixed evidence; needs staff review before outreach\n2. **Single Source Gap (117)** \u2014 recent evidence may be missing; ready for portal draft  \n3. **Contact Data Review (19)** \u2014 contact preferences unconfirmed; privacy review first\n\nNo clinical risk scoring applied \u2014 this is pure operational triage. Your clinical and quality teams handle eligibility, exclusions, and outreach approval next.",
+      "assistant_response": "Here's the cohort organization \u2014 grouped purely by evidence-completeness/operational status, no clinical risk scoring involved:\n\n- **Multiple Source Gaps (42)** \u2014 mixed evidence completeness \u2192 routed to staff review queue\n- **Single Source Gap (117)** \u2014 recent evidence may be missing \u2192 routed to portal draft\n- **Contact Data Review (19)** \u2014 contact preference not confirmed \u2192 routed to privacy review queue\n\nAll of this is synthetic aggregate data for triage purposes only \u2014 eligibility, exclusions, and outreach approval still require your quality/clinical reviewers. Want me to pull the matching evidence-review queue (`gap_analysis`) for any of these cohorts?",
       "agent_logs": "[CareGapClosureAgent] # Aggregate Cohort Review\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nOrdering is operational triage only, not clinical risk scoring.\n\n## Multiple Source Gaps\n- Synthetic count: 42\n- Evidence barrier: mixed evidence completeness\n- Draft handling route: staff review queue\n\n## Single Source Gap\n- Synthetic count: 117\n- Evidence barrier: recent evidence may be missing\n- Draft handling route: portal draft\n\n## Contact Data Review\n- Synthetic count: 19\n- Evidence barrier: contact preference not confirmed\n- Draft handling route: privacy review queue\n",
       "expected_agent": "CareGapClosureAgent",
       "must_include": [
         "Multiple Source Gaps",
         "operational triage only"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -64,15 +54,15 @@
       "persona": "Care Coordinator",
       "onepager_promise": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
       "prompt": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
-      "assistant_response": "Draft created. This is a template only\u2014no outreach has been sent, and no eligibility statements are included. Before any actual contact, a quality reviewer and clinician must validate records and approve the message content. The template keeps language neutral and invites engagement without claiming someone is due for care.",
-      "agent_logs": "[CareGapClosureAgent] # Outreach Draft\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nNo message is sent. Privacy, consent, accessibility, and clinical content require approval.\n\n## Synthetic Breast Screening Measure (SYN-BCS)\n- Draft: We are reviewing our records and invite you to contact the care team if you have questions.\n- Do not state that care is overdue or that the recipient is eligible until a reviewer validates the record.\n- Approval route: quality reviewer \u2192 clinician when needed \u2192 authorized outreach operator.\n",
+      "assistant_response": "Here's a neutral draft for the screening measures (SYN-BCS/SYN-COL, since \"screening\" could mean either):\n\n**Draft message:**\n\"We are reviewing our records and invite you to contact the care team if you have any questions.\"\n\n**Guardrails applied:**\n- Nothing is sent \u2014 this is a draft only\n- No statement of eligibility or overdue care \u2014 those require reviewer validation first\n- Approval path: quality reviewer \u2192 clinician (if needed) \u2192 authorized outreach operator\n\nLet me know if you meant a specific one (breast vs. colorectal) and I can tailor the draft further.",
+      "agent_logs": "[CareGapClosureAgent] # Outreach Draft\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nNo message is sent. Privacy, consent, accessibility, and clinical content require approval.\n\n## Synthetic Breast Screening Measure (SYN-BCS)\n- Draft: We are reviewing our records and invite you to contact the care team if you have questions.\n- Do not state that care is overdue or that the recipient is eligible until a reviewer validates the record.\n- Approval route: quality reviewer \u2192 clinician when needed \u2192 authorized outreach operator.\n\n## Synthetic Colorectal Screening Measure (SYN-COL)\n- Draft: We are reviewing our records and invite you to contact the care team if you have questions.\n- Do not state that care is overdue or that the recipient is eligible until a reviewer validates the record.\n- Approval route: quality reviewer \u2192 clinician when needed \u2192 authorized outreach operator.\n\n## Synthetic Diabetes Monitoring Measure (SYN-CDC)\n- Draft: We are reviewing our records and invite you to contact the care team if you have questions.\n- Do not state that care is overdue or that the recipient is eligible until a reviewer validates the record.\n- Approval route: quality reviewer \u2192 clinician when needed \u2192 authorized outreach operator.\n",
       "expected_agent": "CareGapClosureAgent",
       "must_include": [
         "No message is sent",
         "Do not state"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -80,15 +70,117 @@
       "persona": "Clinical Operations Lead",
       "onepager_promise": "Analyze care gaps to surface priority measures",
       "prompt": "Show the qualitative source-completeness dashboard and its limitations.",
-      "assistant_response": "## Dashboard Summary\n\nThe **qualitative source-completeness dashboard** shows how much of each measure's evidence is recorded in your source systems as \"closed\" (documented by the practice):\n\n- **SYN-BCS** (Breast Cancer Screening): 73% of eligible patients have source-recorded closure  \n- **SYN-COL** (Colorectal Cancer Screening): 65% \u2014 lowest completeness  \n- **SYN-CDC** (Chronic Disease Care): 82.9% \u2014 highest completeness  \n\nAll dates are current to July 31, 2026.\n\n---\n\n## Key Limitations\n\n1. **No clinical validation** \u2014 the dashboard reports *what's recorded*, not *what's clinically accurate*. A closed record may be outdated, misattributed, or exclude relevant external claims.\n\n2. **Synthetic data** \u2014 these signals are from your synthetic test environment. Real measure gaps may look different.\n\n3. **Eligibility unvalidated** \u2014 the percentages don't guarantee a patient actually qualifies for the measure. Human reviewers must confirm inclusion/exclusion rules.\n\n4. **No attribution logic** \u2014 especially for SYN-CDC, it doesn't confirm whether recent labs belong to the right patient or measure year.\n\n5. **Outreach-blind** \u2014 the dashboard shows source completeness only. It doesn't determine who needs outreach, which is always a clinical decision made by authorized reviewers.\n\n**Bottom line:** Use this to spot which measures have the weakest source documentation, then route those cohorts to clinical review before any patient contact.",
+      "assistant_response": "Here's the dashboard \u2014 it's a qualitative signal, not a clinical determination. Key limitations:\n\n- **SYN-BCS**: 73% recorded closed, but eligibility/exclusions are unvalidated synthetic fields\n- **SYN-COL**: 65% recorded closed, with possible gaps in clinical exclusions and external claims data\n- **SYN-CDC**: 82.9% recorded closed, but recent labs and measure-year attribution still need reviewer validation\n\nAll data is synthetic/aggregate as of 2026-07-31. None of this determines actual member eligibility, exclusions, or outreach approval \u2014 that still requires your quality and clinical team's sign-off. The agent surfaces patterns, it doesn't make the call.",
       "agent_logs": "[CareGapClosureAgent] # Qualitative Quality Dashboard\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\n| Measure | Source completeness signal | Evidence date | Reviewer note |\n|---|---:|---|---|\n| SYN-BCS | 73.0% source-recorded closed | 2026-07-31 | Eligibility and exclusions are unvalidated synthetic source fields. |\n| SYN-COL | 65.0% source-recorded closed | 2026-07-31 | Clinical exclusions and external claims may be incomplete. |\n| SYN-CDC | 82.9% source-recorded closed | 2026-07-31 | Recent labs and measure-year attribution require reviewer validation. |",
       "expected_agent": "CareGapClosureAgent",
       "must_include": [
         "SYN-BCS",
         "source-recorded closed"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-05",
+      "persona": "Quality Manager",
+      "onepager_promise": "Analyze quality measures and surface high-priority gaps",
+      "prompt": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+      "assistant_response": "Here's where you stand (all synthetic demo data, final calls stay with your clinical/quality team):\n\n- **2,847** MA patients, **1,142 (40%)** have open care gaps\n- HEDIS score **72.3%** vs. target **75%** \u2014 currently costing you **-0.5 stars**\n- **$428,900** in revenue at risk, **23 days** left to the deadline\n- Biggest driver: diabetes A1C testing gaps \u2014 **387 patients**, **$189,450** in incentives\n\nWant me to pull the top gaps ranked by revenue and reachability, or drill into the diabetes cohort's risk tiers and barriers next?",
+      "agent_logs": "[CareGapClosureAgent] # HEDIS Performance Summary\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nI've analyzed your Medicare Advantage panel across the synthetic HEDIS quality measures. You have significant gaps affecting your Star Rating and revenue.\n\n| Metric | Current | Impact |\n|---|---|---|\n| Total MA patients | 2,847 | Active panel |\n| Patients with gaps | 1,142 (40.1%) | Action needed |\n| HEDIS score | 72.3% | Target: 75% |\n| Star rating impact | -0.5 stars | Below threshold |\n| Revenue at risk | $428,900 | 23 days to deadline |\n\n**Top Concern:** Diabetes A1C test gaps affecting 387 patients and $189,450 in quality incentives.\n\nSource: [EHR + HEDIS Analytics (synthetic)]\n\nShould I break down the top gaps by measure?",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "HEDIS Performance Summary",
+        "1,142 (40.1%)",
+        "$428,900"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-06",
+      "persona": "Quality Manager",
+      "onepager_promise": "Analyze care gaps to surface priority measures",
+      "prompt": "Show me the top care gaps and which ones are most actionable.",
+      "assistant_response": "Here's the lineup (all synthetic data, pending clinical/quality review):\n\n| Measure | Patients | Revenue Risk | Reachable |\n|---|---|---|---|\n| Diabetes A1C test | 387 | $189,450 | 76% |\n| Breast cancer screen | 243 | $94,170 | 89% |\n| Colorectal screen | 198 | $76,890 | 62% |\n| Statin therapy | 176 | $43,120 | 91% |\n| Blood pressure control | 138 | $25,270 | 84% |\n\n**Most actionable:**\n- **Diabetes A1C test** \u2014 biggest prize: 387 patients, $189K at stake, good reachability. Top priority.\n- **Statin therapy** \u2014 91% reachable, easiest to close even though smaller dollar value.\n- **Breast cancer screen** \u2014 strong combo of size, revenue ($94K), and 89% reachability.\n- **Colorectal screen** \u2014 lowest reachability (62%), so harder to move even with real dollars on the line.\n\nWant me to dig into the diabetes cohort risk breakdown or draft an outreach strategy for one of these?",
+      "agent_logs": "[CareGapClosureAgent] # Top 5 Care Gap Measures\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nRanked by revenue impact and patient reachability:\n\n| Measure | Patients | Revenue Risk | Reachable |\n|---|---|---|---|\n| Diabetes A1C test | 387 | $189,450 | 76% |\n| Breast cancer screen | 243 | $94,170 | 89% |\n| Colorectal screen | 198 | $76,890 | 62% |\n| Statin therapy | 176 | $43,120 | 91% |\n| Blood pressure control | 138 | $25,270 | 84% |\n| **Total** | **1,142** | **$428,900** | |\n\n**Best Opportunity:** Diabetes A1C test group - 387 patients with high closure potential and the largest revenue impact.\n\nSource: [HEDIS Engine + Patient Engagement Data (synthetic)]\n\nWant to see the diabetes cohort analysis?",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "Top 5 Care Gap Measures",
+        "$189,450",
+        "Best Opportunity"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-07",
+      "persona": "Care Coordinator",
+      "onepager_promise": "Stratify outreach based on risk, condition severity, and engagement",
+      "prompt": "Show me the diabetes cohort analysis with risk tiers and engagement barriers.",
+      "assistant_response": "Here's the diabetes cohort breakdown (387 patients, synthetic data, for reviewer prioritization only):\n\n**Risk Tiers**\n- **Critical** (A1C >9.0): avg gap 8.7 months \u2014 immediate priority\n- **Moderate** (A1C 7\u20139): avg gap 7.2 months \u2014 high priority\n- **Never tested**: new diagnoses \u2014 high priority\n\n**Engagement Barriers**\n- Transportation: 34% (132 patients)\n- No-show history: 28% (108 patients)\n- Spanish language: 18% (70 patients)\n- Lapsed insurance: 12% (46 patients)\n- Complexity: avg 4.2 chronic conditions/patient\n\nThis is reviewer-facing analysis \u2014 clinical judgment and outreach approval still sit with your team. Want me to draft a barrier-specific outreach strategy (e.g., transportation-first or language-matched approach) for review?",
+      "agent_logs": "[CareGapClosureAgent] # Diabetes Cohort Risk Stratification\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nAnalysis of 387 diabetic patients shows clear risk tiers and addressable barriers (stratification from synthetic source fields for reviewer prioritization; not a diagnosis).\n\n| Risk Level | Avg Gap | Priority |\n|---|---|---|\n| A1C >9.0 (Critical) | 8.7 months | Immediate |\n| A1C 7-9 (Moderate) | 7.2 months | High |\n| Never tested | New diagnosis | High |\n\n**Engagement Barriers:**\n- Transportation: 34% (132 patients)\n- No-show history: 28% (108 patients)\n- Language (Spanish): 18% (70 patients)\n- Insurance lapsed: 12% (46 patients)\n- Complexity: Average 4.2 chronic conditions per patient\n\nSource: [EHR Clinical Data + Social Determinants (synthetic)]\n\nShall I design a targeted outreach campaign?",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "A1C >9.0 (Critical)",
+        "Transportation: 34% (132 patients)",
+        "4.2 chronic conditions"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-08",
+      "persona": "Care Coordinator",
+      "onepager_promise": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "prompt": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+      "assistant_response": "Here's the barrier-specific plan for the 387-patient diabetes cohort:\n\n**By barrier:**\n- **Transportation (34%, 132 pts):** Mobile clinic slots + ride vouchers\n- **No-show history (28%, 108 pts):** Staggered SMS reminders (48h/24h/2h before appointment)\n- **Spanish language (18%, 70 pts):** Spanish-speaking staff + translated materials\n- **Critical A1C >9.0:** Direct RN callback within 48 hours, regardless of other barriers\n\n**Drafted campaign scope:**\n- 294 SMS messages\n- 387 voicemails\n- 312 portal messages\n- 94 prioritized RN callbacks\n\nThis is a draft only \u2014 nothing launches until an authorized outreach operator approves it. Want me to pull up the projected impact/deployment timeline next?",
+      "agent_logs": "[CareGapClosureAgent] # Diabetes Cohort Risk Stratification\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nAnalysis of 387 diabetic patients shows clear risk tiers and addressable barriers (stratification from synthetic source fields for reviewer prioritization; not a diagnosis).\n\n| Risk Level | Avg Gap | Priority |\n|---|---|---|\n| A1C >9.0 (Critical) | 8.7 months | Immediate |\n| A1C 7-9 (Moderate) | 7.2 months | High |\n| Never tested | New diagnosis | High |\n\n**Engagement Barriers:**\n- Transportation: 34% (132 patients)\n- No-show history: 28% (108 patients)\n- Language (Spanish): 18% (70 patients)\n- Insurance lapsed: 12% (46 patients)\n- Complexity: Average 4.2 chronic conditions per patient\n\nSource: [EHR Clinical Data + Social Determinants (synthetic)]\n\nShall I design a targeted outreach campaign?\n[CareGapClosureAgent] # Outreach Strategy Draft\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nMulti-channel campaign designed with barrier-specific interventions. It is ready for your approval to launch; no message is sent until an authorized outreach operator launches it.\n\n**Personalized Interventions:**\n- Transportation barriers: Mobile clinic slots + ride vouchers\n- No-show history: SMS reminders (48h, 24h, 2h intervals)\n- Language barriers: Spanish-speaking MA staff + translated materials\n- High-risk A1C: Direct RN outreach within 48 hours\n\n**Campaign Scope (drafted):**\n- 294 SMS (76% valid mobile)\n- 387 voicemails (next 3 days)\n- 312 patient portal messages\n- 94 RN callbacks prioritized\n\nSource: [Patient Engagement Platform (synthetic)]\n\nWant to see the campaign deployment plan and projected impact?",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "Outreach Strategy Draft",
+        "294 SMS",
+        "94 RN callbacks"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-09",
+      "persona": "Clinical Operations Lead",
+      "onepager_promise": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "prompt": "Show me the campaign deployment plan and projected impact.",
+      "assistant_response": "Here's the campaign deployment plan (synthetic demo data, pending clinical/quality approval):\n\n**Channels & volumes:**\n- SMS: 294 patients \u2192 42% expected response\n- Patient portal: 312 msgs \u2192 28% expected\n- Voice calls: 387 queued \u2192 35% expected\n- RN outreach: 94 scheduled \u2192 78% expected (highest-touch, highest yield)\n\n**Resources needing approval:**\n- 47 mobile clinic slots (next 2 weeks)\n- 132 ride vouchers\n- Next-day Tue/Thu appointment capacity to open\n\n**Projected impact:**\n- 68% close rate (based on historical campaigns) \u2192 ~263 of 387 patients closed\n- ~$128,700 of $189,450 at-risk revenue recovered\n\nThis is a proposal only \u2014 nothing launches until a human reviewer approves eligibility and outreach. Want me to pull up the monitoring/alerts plan next?",
+      "agent_logs": "[CareGapClosureAgent] # Campaign Deployment Plan and Projected Impact\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nDeployment plan across all channels (ready to launch on approval) with projected outcomes.\n\n| Channel | Planned Volume | Response Rate |\n|---|---|---|\n| SMS | 294 patients | 42% expected |\n| Patient portal | 312 messages | 28% expected |\n| Voice calls | 387 queued | 35% expected |\n| RN outreach | 94 scheduled | 78% expected |\n\n**Resource Allocation (requests for approval):**\n- Mobile clinic slots: 47 to reserve (next 2 weeks)\n- Ride vouchers: 132 to issue\n- Appointment capacity: next-day Tue/Thu slots to open\n\n**Projected Outcomes:**\n- Close rate: 68% (based on historical campaigns) = 263 of 387 patients\n- Revenue saved: $128,700 of $189,450 at risk\n\nSource: [Campaign Management + Historical Analytics (synthetic)]\n\nWant to set up monitoring?",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "42% expected",
+        "$128,700 of $189,450",
+        "47 to reserve"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-10",
+      "persona": "Clinical Operations Lead",
+      "onepager_promise": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "prompt": "Configure monitoring for the campaign and alert me if performance drops.",
+      "assistant_response": "Monitoring's set up on synthetic sample data \u2014 here's what it watches:\n\n**Dashboard:** daily 8 AM summary, real-time close rate, weekly trend vs. last cycle, barrier breakdown by cohort (data lake \u2192 Power BI \u2192 Teams).\n\n**Alerts fire if:**\n- Close rate drops below 60%\n- A patient hits 3 failed contact attempts\n- A critical patient goes unresponsive >48h\n- Budget variance exceeds 15%\n\nNote: this is a synthetic demo \u2014 actual activation, thresholds, and alert routing need sign-off from your quality/clinical team. Want me to pull a full campaign summary too?",
+      "agent_logs": "[CareGapClosureAgent] # Monitoring and Alert Configuration\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nRecommended monitoring dashboard and alerting, ready for your team to turn on.\n\n**Dashboard Features:**\n- Daily 8 AM summary via Teams\n- Real-time close rate tracking\n- Weekly trend vs last HEDIS cycle\n- Barrier analysis by patient cohort\n\n**Alert Triggers:**\n- Close rate drops below 60%\n- 3 failed contact attempts\n- Critical patient non-response >48h\n- Campaign budget variance >15%\n\nData flow: data lake -> Power BI -> Teams notifications.\n\nSource: [Power BI + Teams (synthetic)]\n\nWant a full campaign summary?",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "Daily 8 AM summary via Teams",
+        "Close rate drops below 60%",
+        "Monitoring and Alert Configuration"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

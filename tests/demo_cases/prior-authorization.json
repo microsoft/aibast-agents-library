@@ -83,6 +83,146 @@
       ],
       "min_words": 25,
       "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-05",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Pull payer-specific requirements and match them with EHR data",
+      "operation": "patient_auth_request",
+      "prompt": "Patient Robert Chen needs prior auth for a lumbar MRI ordered by Dr. Thompson for chronic back pain. Can you get the request ready?",
+      "must_include": [
+        "MR-489327",
+        "72148",
+        "Dr. James Thompson"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-06",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Pull payer-specific requirements and match them with EHR data",
+      "operation": "payer_requirements_check",
+      "prompt": "Check Robert Chen's payer requirements for the lumbar MRI against his documentation.",
+      "must_include": [
+        "PT x6 weeks",
+        "Red flag screening",
+        "All required criteria met"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-07",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Submit requests directly to payer portals and send real-time updates",
+      "operation": "submission_packet",
+      "prompt": "Get Robert Chen's lumbar MRI authorization ready to submit and give me the confirmation details.",
+      "must_include": [
+        "PA-2024-892741",
+        "Case #4729183",
+        "Not submitted"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-08",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Flag cases requiring additional documentation and prepare appeal materials proactively",
+      "operation": "approval_outlook",
+      "prompt": "How strong is Robert Chen's lumbar MRI request, and what is our appeal strategy if it is denied?",
+      "must_include": [
+        "94% for similar cases",
+        "Peer-to-peer review with radiologist",
+        "Complete documentation package"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-09",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Submit requests directly to payer portals and send real-time updates",
+      "operation": "tracking_plan",
+      "prompt": "Set up tracking for Robert Chen's authorization and plan to notify everyone when it is approved.",
+      "must_include": [
+        "every 4 hours",
+        "48 hours",
+        "Teams channel post drafted"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-10",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Submit requests directly to payer portals and send real-time updates",
+      "operation": "portfolio_status",
+      "prompt": "Show me all pending prior auths and their status.",
+      "must_include": [
+        "Martinez, Ana",
+        "Pending: 3 authorizations",
+        "91% this month"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-11",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Flag cases requiring additional documentation and prepare appeal materials proactively",
+      "operation": "denial_review",
+      "prompt": "Why was the Medicare sleep study request denied, and where does the appeal stand?",
+      "must_include": [
+        "Epworth Sleepiness Scale",
+        "tomorrow 2 PM",
+        "5 business days"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
     }
   ]
 }

@@ -1,0 +1,107 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T05:22:35.803066Z",
+  "solution": "@aibast-agents-library/benefits-enrollment-assistant",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Benefits Enrollment Pilot",
+  "schema_name": "aibast_BenefitsEnrollmentPilot",
+  "bot_id": "a6631060-5299-4884-bcd0-5ddec324a143",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 10 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "BE-01",
+      "must_include": [
+        "Nov 20, 2026",
+        "Days left",
+        "Jan 1, 2027"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BE-02",
+      "must_include": [
+        "Nov 27, 2026",
+        "Birth or adoption",
+        "LE-1"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BE-03",
+      "must_include": [
+        "3,692.00",
+        "Saver HDHP",
+        "not a plan recommendation"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BE-04",
+      "must_include": [
+        "Riverbend Pediatrics",
+        "Out of network",
+        "Network gaps"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BE-05",
+      "must_include": [
+        "Still missing",
+        "Birth certificate",
+        "Due with the change request"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BE-06",
+      "must_include": [
+        "Not Submitted",
+        "46.00",
+        "No election was submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BE-07",
+      "must_include": [
+        "Days Left",
+        "Nov 20, 2026",
+        "no reminder or invitation was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

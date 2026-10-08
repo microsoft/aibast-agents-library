@@ -1,0 +1,32 @@
+mcs.metadata:
+  componentName: utility-billing-assistance-application-packet
+  description: "\"Use when an Enrollment Specialist asks to prepare the payment plan and assistance application and the documents needed.\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: utility-billing-assistance-application-packet
+  description: "Use when an Enrollment Specialist asks to prepare the payment plan and assistance application and the documents needed."
+  ---
+  # Utility Billing and Assistance Agent: Application Packet
+
+  ## Route
+
+  Use the `application_packet` operation. The canonical persona prompt is:
+
+  > Get the payment plan and the water-assistance application ready for the Maple Drive resident. What paperwork do they need?
+
+  ## Procedure
+
+  1. Read the synthetic knowledge records and controls.
+  2. Call or reproduce only the `application_packet` operation behavior.
+  3. Lead with source-backed identifiers and evidence.
+  4. State uncertainty and the required authorized review.
+  5. End with the operation's no-write boundary.
+
+  ## Required evidence
+
+  - $14.45
+  - Proof of income
+  - 14-day response deadline
+
+  Never imply that a bill was adjusted, a credit applied, a plan created, an application submitted, a repair scheduled, or anything sent to the customer.

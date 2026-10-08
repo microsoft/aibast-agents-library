@@ -8,711 +8,1164 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive target-state anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 29,
-    "reusable": 18,
-    "reshoot_required": 11
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-wl-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "WL-01",
-      "source": "solutions/win-loss-analysis/screenshots/assisted/01-wl-01.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/01-wl-01.png",
+      "source": "solutions/win-loss-analysis/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Decline Concentration — Summary",
-        "Enterprise segment × 250K+ deal size × CompetitorX",
-        "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Q3 Win/Loss Overview and Loss Analysis by Competitor headings are above the captured viewport."
+        "Win/Loss Analysis Pilot",
+        "Draft",
+        "win-loss-analysis-board-presentation",
+        "win-loss-analysis-win-loss-overview",
+        "win-loss-analysis-counter-strategies",
+        "win-loss-analysis-revenue-impact",
+        "win-loss-analysis-root-cause-analysis",
+        "aibast_win-loss-analysis-synthetic-records.md",
+        "aibast_win-loss-analysis-operating-rules.md"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 220,
-          "width": 960,
-          "height": 160,
-          "label": "Decline concentration"
+          "x": 83,
+          "y": 20,
+          "width": 179,
+          "height": 24,
+          "label": "Win/Loss Analysis Pilot"
         },
         {
-          "x": 280,
-          "y": 450,
-          "width": 960,
-          "height": 135,
-          "label": "Synthetic evidence boundary"
+          "x": 273,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 241,
+          "height": 22,
+          "label": "win-loss-analysis-board-presentation"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 232,
+          "height": 22,
+          "label": "win-loss-analysis-win-loss-overview"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 234,
+          "height": 22,
+          "label": "win-loss-analysis-counter-strategies"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 218,
+          "height": 22,
+          "label": "win-loss-analysis-revenue-impact"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 240,
+          "height": 22,
+          "label": "win-loss-analysis-root-cause-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 292,
+          "height": 22,
+          "label": "aibast_win-loss-analysis-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 280,
+          "height": 22,
+          "label": "aibast_win-loss-analysis-operating-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-wl-01",
+      "mode": "easy",
+      "source": "solutions/win-loss-analysis/screenshots/assisted/02-wl-01.jpg",
+      "caption": "WL-01 · Sales Operations Manager: Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+      "case_id": "WL-01",
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/02-wl-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Q3 Win/Loss Overview",
+        "Loss by Competitor",
+        "CompetitorX 47%",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 456,
+          "width": 216,
+          "height": 25,
+          "label": "Q3 Win/Loss Overview"
+        },
+        {
+          "x": 286,
+          "y": 1161,
+          "width": 152,
+          "height": 24,
+          "label": "Loss by Competitor"
+        },
+        {
+          "x": 343,
+          "y": 1162,
+          "width": 95,
+          "height": 23,
+          "label": "CompetitorX 47%"
+        },
+        {
+          "x": 306,
+          "y": 1872,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-wl-02",
       "mode": "easy",
+      "source": "solutions/win-loss-analysis/screenshots/assisted/03-wl-02.jpg",
+      "caption": "WL-02 · Enablement Manager: Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.",
       "case_id": "WL-02",
-      "source": "solutions/win-loss-analysis/screenshots/assisted/02-wl-02.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/02-wl-02.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/03-wl-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Enablement implications — Draft Themes for Review",
-        "Security Certifications and Enterprise References loss drivers",
+        "Root Cause Analysis",
+        "38%",
+        "Buyer Key Insight",
         "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Root Cause Analysis and Deep Dive headings are outside the captured viewport."
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 120,
-          "width": 960,
-          "height": 400,
-          "label": "Draft loss-driver themes"
+          "x": 286,
+          "y": 444,
+          "width": 156,
+          "height": 24,
+          "label": "Root Cause Analysis"
         },
         {
-          "x": 280,
-          "y": 545,
-          "width": 960,
-          "height": 130,
-          "label": "Synthetic evidence boundary"
+          "x": 421,
+          "y": 601,
+          "width": 41,
+          "height": 20,
+          "label": "38%"
+        },
+        {
+          "x": 306,
+          "y": 881,
+          "width": 83,
+          "height": 23,
+          "label": "Buyer Key Insight"
+        },
+        {
+          "x": 286,
+          "y": 1935,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-wl-03",
       "mode": "easy",
+      "source": "solutions/win-loss-analysis/screenshots/assisted/04-wl-03.jpg",
+      "caption": "WL-03 · Enablement Manager: Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.",
       "case_id": "WL-03",
-      "source": "solutions/win-loss-analysis/screenshots/assisted/03-wl-03.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/03-wl-03.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/04-wl-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Talk-track publication requires enablement leadership",
-        "Pricing and reference actions have named approvers",
-        "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Counter-Strategies and Updated Talk Track headings are above the captured viewport."
+        "Counter-Strategies",
+        "Evidence boundary",
+        "FedRAMP in progress",
+        "Talk Track"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 145,
-          "width": 600,
-          "height": 265,
-          "label": "Draft actions and approvers"
+          "x": 286,
+          "y": 445,
+          "width": 147,
+          "height": 23,
+          "label": "Counter-Strategies"
         },
         {
-          "x": 280,
-          "y": 450,
-          "width": 960,
-          "height": 135,
-          "label": "Synthetic evidence boundary"
+          "x": 335,
+          "y": 528,
+          "width": 90,
+          "height": 23,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 430,
+          "y": 1058,
+          "width": 176,
+          "height": 24,
+          "label": "FedRAMP in progress"
+        },
+        {
+          "x": 285,
+          "y": 1838,
+          "width": 100,
+          "height": 23,
+          "label": "Talk Track"
         }
       ]
     },
     {
       "id": "easy-wl-04",
       "mode": "easy",
+      "source": "solutions/win-loss-analysis/screenshots/assisted/05-wl-04.jpg",
+      "caption": "WL-04 · Sales Leader: Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
       "case_id": "WL-04",
-      "source": "solutions/win-loss-analysis/screenshots/assisted/04-wl-04.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/04-wl-04.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/05-wl-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "56.6:1 is labeled a synthetic model output",
-        "Approval Gate",
-        "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Synthetic Revenue Scenario Model and Illustrative scenario value headings are above the captured viewport."
+        "Synthetic Revenue Scenario Model",
+        "$4.2M",
+        "Evidence boundary",
+        "23:1"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 125,
-          "width": 950,
-          "height": 65,
-          "label": "Illustrative model warning"
+          "x": 286,
+          "y": 444,
+          "width": 265,
+          "height": 24,
+          "label": "Synthetic Revenue Scenario Model"
         },
         {
-          "x": 280,
-          "y": 215,
-          "width": 960,
-          "height": 230,
-          "label": "Approval gate"
+          "x": 545,
+          "y": 444,
+          "width": 53,
+          "height": 22,
+          "label": "$4.2M"
         },
         {
-          "x": 280,
-          "y": 455,
-          "width": 960,
-          "height": 130,
-          "label": "Synthetic evidence boundary"
+          "x": 580,
+          "y": 492,
+          "width": 73,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 440,
+          "y": 1473,
+          "width": 38,
+          "height": 20,
+          "label": "23:1"
         }
       ]
     },
     {
       "id": "easy-wl-05",
       "mode": "easy",
+      "source": "solutions/win-loss-analysis/screenshots/assisted/06-wl-05.jpg",
+      "caption": "WL-05 · Sales Leader: Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.",
       "case_id": "WL-05",
-      "source": "solutions/win-loss-analysis/screenshots/assisted/05-wl-05.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/05-wl-05.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/06-wl-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Authorized leadership and finance decisions are listed",
-        "No action, spend, CRM update, outreach, forecast change, or program launch was initiated",
-        "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Board Presentation heading is above the captured viewport."
+        "Board Presentation",
+        "Evidence boundary",
+        "Decision for authorized leaders",
+        "32% Q4 win rate"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 125,
-          "width": 950,
-          "height": 245,
-          "label": "Leadership decisions"
+          "x": 286,
+          "y": 472,
+          "width": 188,
+          "height": 24,
+          "label": "Board Presentation"
         },
         {
-          "x": 285,
-          "y": 395,
-          "width": 950,
-          "height": 185,
-          "label": "Synthetic evidence boundary"
+          "x": 926,
+          "y": 505,
+          "width": 74,
+          "height": 21,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 325,
+          "y": 1248,
+          "width": 70,
+          "height": 21,
+          "label": "Decision for authorized leaders"
+        },
+        {
+          "x": 299,
+          "y": 2880,
+          "width": 130,
+          "height": 21,
+          "label": "32% Q4 win rate"
         }
       ]
     },
     {
       "id": "easy-wl-06",
       "mode": "easy",
+      "source": "solutions/win-loss-analysis/screenshots/assisted/07-wl-06.jpg",
+      "caption": "WL-06 · Sales Operations Manager: Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
       "case_id": "WL-06",
-      "source": "solutions/win-loss-analysis/screenshots/assisted/06-wl-06.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/06-wl-06.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/07-wl-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Synthetic Intervention Scenarios",
-        "Modeled value-to-cost ratio and illustrative investment",
-        "Session Accomplishments"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Complete Summary, Draft Next-Step Options, and Evidence boundary markers are outside the captured viewport."
+        "Complete Summary",
+        "Draft Next-Step Options",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 155,
-          "width": 820,
-          "height": 370,
-          "label": "Scenarios and value model"
+          "x": 440,
+          "y": 444,
+          "width": 156,
+          "height": 24,
+          "label": "Complete Summary"
         },
         {
-          "x": 280,
-          "y": 545,
-          "width": 950,
-          "height": 140,
-          "label": "Session accomplishments"
+          "x": 286,
+          "y": 1859,
+          "width": 230,
+          "height": 28,
+          "label": "Draft Next-Step Options"
+        },
+        {
+          "x": 286,
+          "y": 2690,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-confirm-draft",
       "mode": "easy",
-      "source": "solutions/win-loss-analysis/screenshots/assisted/07-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list shows unrelated agents. The target Win/Loss Analysis Pilot row and its Draft status are not visible.",
-      "draft": true
+      "source": "solutions/win-loss-analysis/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/win-loss-analysis/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Win/Loss Analysis Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 177,
+          "height": 24,
+          "label": "Win/Loss Analysis Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/win-loss-analysis/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows only an empty loading canvas and spinner. No blank agent identity or Build workspace is visible."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/win-loss-analysis/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Win/Loss Analysis Manual",
+      "step": 2,
       "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Win/Loss Analysis Manual is entered in the name field"
-      ],
-      "full_action_not_visibly_proven": [
-        "The page header still reads Untitled Agent, so the capture proves entry rather than the completed rename."
+        "Win/Loss Analysis Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 95,
-          "width": 830,
-          "height": 60,
-          "label": "Manual agent name entered"
+          "x": 83,
+          "y": 20,
+          "width": 200,
+          "height": 24,
+          "label": "Win/Loss Analysis Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/win-loss-analysis/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "All six WL case anchors are visible"
+        "Win/Loss Analysis Agent — Global Instructions"
       ],
       "boxes": [
         {
-          "x": 75,
-          "y": 185,
-          "width": 910,
-          "height": 645,
-          "label": "Reviewed instruction policy"
+          "x": 82,
+          "y": 278,
+          "width": 520,
+          "height": 32,
+          "label": "Win/Loss Analysis Agent — Global Instructions"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/win-loss-analysis/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 5-13 and shows a later final inventory. It contains no save confirmation or no-unsaved-changes state for this step."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 294,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/win-loss-analysis/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4 and 6-13 and shows the completed final inventory rather than the web-search removal action."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/win-loss-analysis/screenshots/manual/06-add-aibast-win-loss-analysis-operating-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_win-loss-analysis-operating-rules.md",
+      "step": 6,
       "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/06-add-aibast-win-loss-analysis-operating-rules.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_win-loss-analysis-operating-rules.md is visible in Knowledge"
-      ],
-      "full_action_not_visibly_proven": [
-        "This shared final-inventory frame proves the file is present, not the moment it was uploaded."
+        "aibast_win-loss-analysis-operating-rules.md"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 548,
-          "width": 370,
-          "height": 48,
-          "label": "Operating rules file"
+          "x": 1058,
+          "y": 313,
+          "width": 280,
+          "height": 37,
+          "label": "aibast_win-loss-analysis-operating-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/win-loss-analysis/screenshots/manual/07-add-aibast-win-loss-analysis-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "full_action_not_visibly_proven": [
-        "This shared final-inventory frame proves the file is present, not the moment it was uploaded."
+      "caption": "Manual step 7 · Add knowledge: aibast_win-loss-analysis-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/07-add-aibast-win-loss-analysis-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_win-loss-analysis-synthetic-records.md"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 292,
+          "height": 22,
+          "label": "aibast_win-loss-analysis-synthetic-records.md"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "step": 8,
       "source": "solutions/win-loss-analysis/screenshots/manual/08-add-action-summary.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is a shared final inventory and the action-summary skill name is hidden behind the +1 indicator, so no exact positive anchor for this skill is visible."
+      "caption": "Manual step 8 · Add skill: action-summary",
+      "step": 8,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/08-add-action-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-loss-analysis-action-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 221,
+          "height": 22,
+          "label": "win-loss-analysis-action-summary"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
-      "step": 9,
       "source": "solutions/win-loss-analysis/screenshots/manual/09-add-board-presentation.jpg",
-      "status": "reshoot_required",
-      "full_action_not_visibly_proven": [
-        "This shared final-inventory frame proves the skill is present, not the moment it was added."
+      "caption": "Manual step 9 · Add skill: board-presentation",
+      "step": 9,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/09-add-board-presentation.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-loss-analysis-board-presentation"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 241,
+          "height": 22,
+          "label": "win-loss-analysis-board-presentation"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
-      "step": 10,
       "source": "solutions/win-loss-analysis/screenshots/manual/10-add-counter-strategies.jpg",
-      "status": "reshoot_required",
-      "full_action_not_visibly_proven": [
-        "This shared final-inventory frame proves the skill is present, not the moment it was added."
+      "caption": "Manual step 10 · Add skill: counter-strategies",
+      "step": 10,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/10-add-counter-strategies.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-loss-analysis-counter-strategies"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 234,
+          "height": 22,
+          "label": "win-loss-analysis-counter-strategies"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
-      "step": 11,
       "source": "solutions/win-loss-analysis/screenshots/manual/11-add-revenue-impact.jpg",
-      "status": "reshoot_required",
-      "full_action_not_visibly_proven": [
-        "This shared final-inventory frame proves the skill is present, not the moment it was added."
+      "caption": "Manual step 11 · Add skill: revenue-impact",
+      "step": 11,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/11-add-revenue-impact.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-loss-analysis-revenue-impact"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 218,
+          "height": 22,
+          "label": "win-loss-analysis-revenue-impact"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
-      "step": 12,
       "source": "solutions/win-loss-analysis/screenshots/manual/12-add-root-cause-analysis.jpg",
-      "status": "reshoot_required",
-      "full_action_not_visibly_proven": [
-        "This shared final-inventory frame proves the skill is present, not the moment it was added."
+      "caption": "Manual step 12 · Add skill: root-cause-analysis",
+      "step": 12,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/12-add-root-cause-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-loss-analysis-root-cause-analysis"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 240,
+          "height": 22,
+          "label": "win-loss-analysis-root-cause-analysis"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
-      "step": 13,
       "source": "solutions/win-loss-analysis/screenshots/manual/13-add-win-loss-overview.jpg",
-      "status": "reshoot_required",
-      "full_action_not_visibly_proven": [
-        "This shared final-inventory frame proves the skill is present, not the moment it was added."
+      "caption": "Manual step 13 · Add skill: win-loss-overview",
+      "step": 13,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/13-add-win-loss-overview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-loss-analysis-win-loss-overview"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 232,
+          "height": 22,
+          "label": "win-loss-analysis-win-loss-overview"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
-      "step": 14,
       "source": "solutions/win-loss-analysis/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
       "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/14-review-inventory.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Five named skills plus one additional skill",
-        "Tools has no configured item",
-        "Two exact knowledge filenames",
-        "Save tooltip says No unsaved changes"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "The sixth skill name is collapsed behind the +1 indicator."
+        "Claude Opus 5",
+        "win-loss-analysis-win-loss-overview",
+        "win-loss-analysis-root-cause-analysis",
+        "win-loss-analysis-revenue-impact",
+        "win-loss-analysis-counter-strategies",
+        "win-loss-analysis-board-presentation",
+        "aibast_win-loss-analysis-synthetic-records.md",
+        "aibast_win-loss-analysis-operating-rules.md"
       ],
       "boxes": [
         {
-          "x": 1048,
-          "y": 48,
-          "width": 200,
-          "height": 50,
-          "label": "Saved state"
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 1200,
-          "y": 85,
-          "width": 195,
-          "height": 42,
-          "label": "Sonnet 4.6"
+          "x": 1057,
+          "y": 197,
+          "width": 232,
+          "height": 22,
+          "label": "win-loss-analysis-win-loss-overview"
         },
         {
-          "x": 1020,
-          "y": 180,
-          "width": 380,
-          "height": 210,
-          "label": "Six skills"
+          "x": 1057,
+          "y": 237,
+          "width": 240,
+          "height": 22,
+          "label": "win-loss-analysis-root-cause-analysis"
         },
         {
-          "x": 1020,
-          "y": 400,
-          "width": 380,
-          "height": 65,
-          "label": "No configured tools"
+          "x": 1057,
+          "y": 277,
+          "width": 218,
+          "height": 22,
+          "label": "win-loss-analysis-revenue-impact"
         },
         {
-          "x": 1020,
-          "y": 470,
-          "width": 380,
-          "height": 130,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 317,
+          "width": 234,
+          "height": 22,
+          "label": "win-loss-analysis-counter-strategies"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 241,
+          "height": 22,
+          "label": "win-loss-analysis-board-presentation"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 292,
+          "height": 22,
+          "label": "aibast_win-loss-analysis-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 280,
+          "height": 22,
+          "label": "aibast_win-loss-analysis-operating-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
       "step": 15,
-      "source": "solutions/win-loss-analysis/screenshots/manual/15-open-preview.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/15-open-preview.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/15-review-skills.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab is selected",
-        "New chat is visible",
-        "Win/Loss Analysis Manual greeting is visible"
+        "win-loss-analysis-win-loss-overview",
+        "win-loss-analysis-root-cause-analysis",
+        "win-loss-analysis-revenue-impact",
+        "win-loss-analysis-counter-strategies",
+        "win-loss-analysis-board-presentation"
       ],
       "boxes": [
         {
-          "x": 635,
-          "y": 5,
-          "width": 110,
-          "height": 48,
-          "label": "Preview selected"
+          "x": 1055,
+          "y": 177,
+          "width": 232,
+          "height": 22,
+          "label": "win-loss-analysis-win-loss-overview"
         },
         {
-          "x": 255,
-          "y": 140,
-          "width": 560,
-          "height": 105,
-          "label": "Fresh manual preview"
+          "x": 1054,
+          "y": 255,
+          "width": 241,
+          "height": 22,
+          "label": "win-loss-analysis-root-cause-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 218,
+          "height": 22,
+          "label": "win-loss-analysis-revenue-impact"
+        },
+        {
+          "x": 1055,
+          "y": 412,
+          "width": 234,
+          "height": 21,
+          "label": "win-loss-analysis-counter-strategies"
+        },
+        {
+          "x": 1055,
+          "y": 489,
+          "width": 241,
+          "height": 22,
+          "label": "win-loss-analysis-board-presentation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-loss-analysis-win-loss-overview",
+        "win-loss-analysis-root-cause-analysis",
+        "win-loss-analysis-revenue-impact",
+        "win-loss-analysis-counter-strategies",
+        "win-loss-analysis-board-presentation",
+        "win-loss-analysis-action-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 69,
+          "width": 232,
+          "height": 19,
+          "label": "win-loss-analysis-win-loss-overview"
+        },
+        {
+          "x": 1055,
+          "y": 144,
+          "width": 240,
+          "height": 22,
+          "label": "win-loss-analysis-root-cause-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 222,
+          "width": 218,
+          "height": 22,
+          "label": "win-loss-analysis-revenue-impact"
+        },
+        {
+          "x": 1055,
+          "y": 300,
+          "width": 234,
+          "height": 22,
+          "label": "win-loss-analysis-counter-strategies"
+        },
+        {
+          "x": 1055,
+          "y": 378,
+          "width": 241,
+          "height": 22,
+          "label": "win-loss-analysis-board-presentation"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 222,
+          "height": 22,
+          "label": "win-loss-analysis-action-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Win/Loss Analysis Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 200,
+          "height": 24,
+          "label": "Win/Loss Analysis Manual"
         }
       ]
     },
     {
       "id": "hard-wl-01",
       "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/18-wl-01.jpg",
+      "caption": "WL-01 · Sales Operations Manager: Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+      "step": 18,
       "case_id": "WL-01",
-      "step": 16,
-      "source": "solutions/win-loss-analysis/screenshots/manual/16-wl-01.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/16-wl-01.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/18-wl-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Decline Summary",
-        "CompetitorX accounts for a 14.1% share-of-loss increase",
+        "Q3 Win/Loss Overview",
+        "Loss by Competitor",
+        "CompetitorX 47%",
         "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Q3 Win/Loss Overview and Loss Analysis by Competitor headings are above the captured viewport."
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 145,
-          "width": 710,
-          "height": 265,
-          "label": "Decline summary"
+          "x": 285,
+          "y": 530,
+          "width": 176,
+          "height": 22,
+          "label": "Q3 Win/Loss Overview"
         },
         {
-          "x": 280,
-          "y": 450,
-          "width": 960,
-          "height": 135,
-          "label": "Synthetic evidence boundary"
+          "x": 286,
+          "y": 1048,
+          "width": 156,
+          "height": 24,
+          "label": "Loss by Competitor"
+        },
+        {
+          "x": 343,
+          "y": 1049,
+          "width": 228,
+          "height": 23,
+          "label": "CompetitorX 47%"
+        },
+        {
+          "x": 286,
+          "y": 1714,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "hard-wl-02",
       "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/19-wl-02.jpg",
+      "caption": "WL-02 · Enablement Manager: Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.",
+      "step": 19,
       "case_id": "WL-02",
-      "step": 17,
-      "source": "solutions/win-loss-analysis/screenshots/manual/17-wl-02.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/17-wl-02.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/19-wl-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Deep Dive — Security Certifications",
-        "Deep Dive — Enterprise References",
-        "Synthetic buyer quote and enablement implication"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Root Cause Analysis and Evidence boundary markers are outside the captured viewport."
+        "Root Cause Analysis",
+        "38%",
+        "Buyer Key Insight",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 240,
-          "width": 960,
-          "height": 440,
-          "label": "Evidence-backed deep dives"
+          "x": 733,
+          "y": 490,
+          "width": 174,
+          "height": 23,
+          "label": "Root Cause Analysis"
+        },
+        {
+          "x": 421,
+          "y": 665,
+          "width": 41,
+          "height": 20,
+          "label": "38%"
+        },
+        {
+          "x": 286,
+          "y": 899,
+          "width": 121,
+          "height": 23,
+          "label": "Buyer Key Insight"
+        },
+        {
+          "x": 286,
+          "y": 1477,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "hard-wl-03",
       "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/20-wl-03.jpg",
+      "caption": "WL-03 · Enablement Manager: Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.",
+      "step": 20,
       "case_id": "WL-03",
-      "step": 18,
-      "source": "solutions/win-loss-analysis/screenshots/manual/18-wl-03.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/18-wl-03.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/20-wl-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Talk-track deployment and content publication require enablement leadership",
-        "Named finance, security, sales, and legal review gates",
+        "Counter-Strategies",
+        "Talk Track",
+        "FedRAMP in progress",
         "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Counter-Strategies and Updated Talk Track headings are above the captured viewport."
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 145,
-          "width": 665,
-          "height": 265,
-          "label": "Counter-strategy review gates"
+          "x": 367,
+          "y": 417,
+          "width": 141,
+          "height": 24,
+          "label": "Counter-Strategies"
         },
         {
-          "x": 280,
-          "y": 450,
-          "width": 960,
-          "height": 135,
-          "label": "Synthetic evidence boundary"
+          "x": 285,
+          "y": 1038,
+          "width": 86,
+          "height": 20,
+          "label": "Talk Track"
+        },
+        {
+          "x": 692,
+          "y": 1038,
+          "width": 165,
+          "height": 24,
+          "label": "FedRAMP in progress"
+        },
+        {
+          "x": 286,
+          "y": 1264,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "hard-wl-04",
       "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/21-wl-04.jpg",
+      "caption": "WL-04 · Sales Leader: Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+      "step": 21,
       "case_id": "WL-04",
-      "step": 19,
-      "source": "solutions/win-loss-analysis/screenshots/manual/19-wl-04.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/19-wl-04.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/21-wl-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Modeled scenarios are explicitly not revenue commitments",
-        "Approval Gate",
-        "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Synthetic Revenue Scenario Model and Illustrative scenario value headings are above the captured viewport."
+        "Synthetic Revenue Scenario Model",
+        "$4.2M",
+        "Evidence boundary",
+        "23:1"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 145,
-          "width": 950,
-          "height": 105,
-          "label": "Illustrative scenario warning"
+          "x": 1053,
+          "y": 444,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic Revenue Scenario Model"
         },
         {
-          "x": 280,
-          "y": 270,
-          "width": 960,
-          "height": 210,
-          "label": "Approval gate"
+          "x": 544,
+          "y": 511,
+          "width": 54,
+          "height": 23,
+          "label": "$4.2M"
         },
         {
-          "x": 280,
-          "y": 485,
-          "width": 960,
-          "height": 100,
-          "label": "Synthetic evidence boundary"
+          "x": 286,
+          "y": 814,
+          "width": 75,
+          "height": 21,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 463,
+          "y": 975,
+          "width": 36,
+          "height": 20,
+          "label": "23:1"
         }
       ]
     },
     {
       "id": "hard-wl-05",
       "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/22-wl-05.jpg",
+      "caption": "WL-05 · Sales Leader: Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.",
+      "step": 22,
       "case_id": "WL-05",
-      "step": 20,
-      "source": "solutions/win-loss-analysis/screenshots/manual/20-wl-05.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/20-wl-05.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/22-wl-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Three decisions are required from authorized leadership",
-        "No forecast, spend, CRM, buyer-contact, or program-launch side effect",
-        "Evidence Boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Board Presentation heading is above the captured viewport."
+        "Board Presentation",
+        "32% Q4 win rate",
+        "Evidence boundary",
+        "Decision for authorized leaders"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 140,
-          "width": 960,
-          "height": 250,
-          "label": "Authorized leadership decisions"
+          "x": 732,
+          "y": 490,
+          "width": 166,
+          "height": 23,
+          "label": "Board Presentation"
         },
         {
-          "x": 280,
-          "y": 410,
-          "width": 960,
-          "height": 175,
-          "label": "Synthetic evidence boundary"
+          "x": 418,
+          "y": 810,
+          "width": 129,
+          "height": 22,
+          "label": "32% Q4 win rate"
+        },
+        {
+          "x": 442,
+          "y": 875,
+          "width": 76,
+          "height": 21,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 917,
+          "y": 973,
+          "width": 70,
+          "height": 20,
+          "label": "Decision for authorized leaders"
         }
       ]
     },
     {
       "id": "hard-wl-06",
       "mode": "hard",
+      "source": "solutions/win-loss-analysis/screenshots/manual/23-wl-06.jpg",
+      "caption": "WL-06 · Sales Operations Manager: Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
+      "step": 23,
       "case_id": "WL-06",
-      "step": 21,
-      "source": "solutions/win-loss-analysis/screenshots/manual/21-wl-06.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/21-wl-06.png",
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/23-wl-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Strategic conclusions, financial assumptions, talk tracks, certification scope, pricing, and reference activation have named reviewers",
-        "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Complete Summary and Draft Next-Step Options headings are above the captured viewport."
+        "Complete Summary",
+        "Evidence boundary",
+        "Draft Next-Step Options"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 115,
-          "width": 535,
-          "height": 300,
-          "label": "Draft actions and reviewers"
+          "x": 430,
+          "y": 530,
+          "width": 156,
+          "height": 24,
+          "label": "Complete Summary"
         },
         {
-          "x": 280,
-          "y": 455,
-          "width": 960,
-          "height": 130,
-          "label": "Synthetic evidence boundary"
+          "x": 442,
+          "y": 1075,
+          "width": 79,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 286,
+          "y": 1250,
+          "width": 190,
+          "height": 24,
+          "label": "Draft Next-Step Options"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-step-24",
       "mode": "hard",
-      "step": 22,
-      "source": "solutions/win-loss-analysis/screenshots/manual/22-confirm-draft.jpg",
-      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/22-confirm-draft.png",
+      "source": "solutions/win-loss-analysis/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/win-loss-analysis/screenshots/manual/annotated/24-confirm-draft.png",
       "status": "reusable",
       "visible_anchors": [
-        "Win/Loss Analysis Manual",
-        "Draft"
+        "Win/Loss Analysis Manual"
       ],
       "boxes": [
         {
-          "x": 105,
-          "y": 438,
-          "width": 1240,
-          "height": 55,
-          "label": "Target agent remains Draft"
+          "x": 140,
+          "y": 154,
+          "width": 197,
+          "height": 24,
+          "label": "Win/Loss Analysis Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Win/Loss Analysis Pilot with the target row and Draft status visible.",
-      "Manual step 1 after the blank agent Build workspace has loaded.",
-      "Manual step 4 with a visible save confirmation or No unsaved changes state.",
-      "Manual step 5 immediately after default web search is removed.",
-      "Manual step 8 with the action-summary skill name visibly expanded."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 6/6 verdict.",
-      "Copilot-only local 6/6 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:win-loss-analysis",
-    "reviewed_at": "2026-08-10T00:27:58.199008+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:53:12.646057+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

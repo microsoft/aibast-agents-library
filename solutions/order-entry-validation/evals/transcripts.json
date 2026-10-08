@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:45:52.725877+00:00",
+  "solution": "@aibast-agents-library/order-entry-validation",
+  "onepager": "54. Order Entry Validation Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "OrderEntryValidationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/order_entry_validation_stack/order_entry_validation_agent.py",
+      "sha256": "8567a365f6975adfd7c995fcfb95425d1f065e9534d0e5c968237ac7b9713a89"
+    }
+  ],
+  "case_file": "tests/demo_cases/order-entry-validation.json",
+  "case_file_sha256": "dc8504d905e605c19f187b22db6cc6ed424b1ca7be5a1202c40862a4b1b2a776",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "OE-01",
+      "persona": "Sales Operations Specialist",
+      "onepager_promise": "Shows the pending purchase-order queue with the matched quote and what to watch for on each",
+      "prompt": "What's in my PO queue this morning?",
+      "assistant_response": "Here's your queue this morning \u2014 5 POs, $221,900 total:\n\n| PO | Customer | Value | Watch For |\n|---|---|---|---|\n| PO-4471 | Woodgrove Water Authority | $28,000 | Sensor head price mismatch vs quote |\n| PO-4472 | Coho Refining | $56,520 | H\u2082S heads ordered without safety kit |\n| PO-4473 | Tailwind Mining Co | $66,550 | Payment terms + region-restricted sensor |\n| PO-4474 | Lucerne Labs | $18,870 | None expected \u2014 likely clean |\n| PO-4475 | Relecloud Utilities | $51,960 | Buying group pricing on quote |\n\nAll five are matched to accepted quotes. Suggested order: start with PO-4471 (oldest), or jump straight to PO-4474 if you want a quick clean win first. Want me to validate any of these against their quotes now?",
+      "agent_logs": "[OrderEntryValidationAgent] **Pending PO Queue: Proseware Instruments Sales Operations (2026-10-05)**\n\n| PO | Customer | Received | Quote | PO Value | Watch For |\n|---|---|---|---|---|---|\n| PO-4471 | Woodgrove Water Authority | 2026-10-01 | Q-2210 | $28,000 | Sensor head price differs from the quote |\n| PO-4472 | Coho Refining | 2026-10-02 | Q-2214 | $56,520 | Hydrogen sulfide heads ordered without the safety kit |\n| PO-4473 | Tailwind Mining Co | 2026-10-02 | Q-2219 | $66,550 | Payment terms and a region-restricted sensor |\n| PO-4474 | Lucerne Labs | 2026-10-03 | Q-2223 | $18,870 | None expected |\n| PO-4475 | Relecloud Utilities | 2026-10-04 | Q-2226 | $51,960 | Buying group pricing on the quote |\n\n**Queue:** 5 purchase orders worth $221,900, each matched to an accepted quote.\n**Next step:** start with PO-4471 (oldest): read it and check it against quote Q-2210.\n\nSynthetic decision support only. This agent does not submit, book, release or change an order, and it does not contact the customer; a sales operations specialist reviews every draft and resolves every exception.\n\nSource: [Synthetic PO Inbox + CRM Quote + Configuration Rule Snapshot]\nAgents: OrderEntryValidationAgent",
+      "expected_agent": "OrderEntryValidationAgent",
+      "must_include": [
+        "5 purchase orders",
+        "$221,900",
+        "Woodgrove Water Authority"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OE-02",
+      "persona": "Sales Operations Specialist",
+      "onepager_promise": "Reads each purchase order into structured header and line fields with nothing inferred",
+      "prompt": "Read PO-4471 and pull out the order details.",
+      "assistant_response": "Here's PO-4471, pulled straight from the document \u2014 nothing inferred:\n\n**Customer:** Woodgrove Water Authority\n**PO #:** PO-4471 (received 2026-10-01)\n**Ship-To:** 1200 Reservoir Rd, Dock 3 \u2014 contact Hannah Cole\n**Terms:** Net 30 / FOB Origin\n**Referenced Quote:** Q-2210\n\n**Lines:**\n| Line | Part | Description | Qty | Unit Price | Extended |\n|---|---|---|---|---|---|\n| 1 | PX-300 | Portable gas analyzer | 4 | $6,450 | $25,800 |\n| 2 | SH-CO | CO sensor head | 4 | $410 | $1,640 |\n| 3 | KIT-CAL | Calibration kit | 2 | $280 | $560 |\n\n**Total:** $28,000\n\nNext logical step would be to validate this against quote Q-2210 \u2014 want me to run that check?",
+      "agent_logs": "[OrderEntryValidationAgent] **Purchase Order Extract: PO-4471**\n\n| Field | Value |\n|---|---|\n| Customer | Woodgrove Water Authority |\n| PO Number | PO-4471 |\n| Date Received | 2026-10-01 |\n| Ship-To | 1200 Reservoir Rd, Dock 3 |\n| Ship-To Contact | Hannah Cole |\n| Payment Terms | Net 30 |\n| Freight Terms | FOB Origin |\n| Referenced Quote | Q-2210 |\n\n| Line | Part | Description | Qty | Unit Price | Extended |\n|---|---|---|---|---|---|\n| 1 | PX-300 | PX-300 portable gas analyzer | 4 | $6,450 | $25,800 |\n| 2 | SH-CO | Carbon monoxide sensor head | 4 | $410 | $1,640 |\n| 3 | KIT-CAL | Calibration kit | 2 | $280 | $560 |\n\n**PO total:** $28,000 across 3 lines. Every field above was read from the PO; nothing was inferred.\n**Next step:** validate it against quote Q-2210.\n\nSynthetic decision support only. This agent does not submit, book, release or change an order, and it does not contact the customer; a sales operations specialist reviews every draft and resolves every exception.\n\nSource: [Synthetic PO Inbox + CRM Quote + Configuration Rule Snapshot]\nAgents: OrderEntryValidationAgent",
+      "expected_agent": "OrderEntryValidationAgent",
+      "must_include": [
+        "1200 Reservoir Rd, Dock 3",
+        "Hannah Cole",
+        "PO total"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OE-03",
+      "persona": "Sales Operations Specialist",
+      "onepager_promise": "Validates prices, terms, ship-to and contact against the accepted quote with a per-line price tolerance",
+      "prompt": "Does PO-4471 match the quote?",
+      "assistant_response": "PO-4471 mostly matches its quote (Q-2210) \u2014 customer, contact, address, terms, and two of three line prices all line up. The one issue: **SH-CO is priced at $410 on the PO vs. $395 on the quote** (a 3.8% overage, outside the 1% tolerance). That needs a confirm before it goes in. Everything else is clean.",
+      "agent_logs": "[OrderEntryValidationAgent] **Quote Validation: PO-4471 vs Q-2210**\n\n| Check | PO | Quote | Result |\n|---|---|---|---|\n| Customer account | Woodgrove Water Authority | Woodgrove Water Authority | Match |\n| Ship-to contact | Hannah Cole | Hannah Cole | Match |\n| Ship-to address | 1200 Reservoir Rd, Dock 3 | 1200 Reservoir Rd, Dock 3 | Match |\n| Payment terms | Net 30 | Net 30 | Match |\n| Freight terms | FOB Origin | FOB Origin | Match |\n| Price PX-300 | $6,450 | $6,450 | Match |\n| Price SH-CO | $410 | $395 | Mismatch (+3.8%) |\n| Price KIT-CAL | $280 | $280 | Match |\n\n**Result:** 1 exception: Price SH-CO is $410 on the PO vs $395 on the quote (+3.8%). Price tolerance is 1% per line.\n**Next step:** confirm price SH-CO with the account owner before entry.\n\nSynthetic decision support only. This agent does not submit, book, release or change an order, and it does not contact the customer; a sales operations specialist reviews every draft and resolves every exception.\n\nSource: [Synthetic PO Inbox + CRM Quote + Configuration Rule Snapshot]\nAgents: OrderEntryValidationAgent",
+      "expected_agent": "OrderEntryValidationAgent",
+      "must_include": [
+        "$410 on the PO vs $395 on the quote",
+        "Price tolerance is 1%",
+        "Mismatch"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OE-04",
+      "persona": "Product Configuration Analyst",
+      "onepager_promise": "Catches incompatible pairings, missing mandatory kits and region-restricted configurations before entry",
+      "prompt": "Check the product configuration on the Coho Refining order.",
+      "assistant_response": "Found an issue on **PO-4472 (Coho Refining)**:\n\n- \u2705 SH-H2S + PX-500 pairing is compatible\n- \u274c Missing mandatory kit: SH-H2S requires **KIT-SAFE** (6 units), and 0 were ordered\n\n**Fix:** Add KIT-SAFE (it's already on the matching quote Q-2214) and confirm with the customer before entering the order. I'm not booking anything \u2014 this needs a sales ops review to resolve.",
+      "agent_logs": "[OrderEntryValidationAgent] **Configuration Check: PO-4472 (Coho Refining)**\n\n| Rule | Result | Detail |\n|---|---|---|\n| Compatible pairing | Pass | SH-H2S with PX-500 |\n| Mandatory kit | Fail | SH-H2S needs KIT-SAFE (0 of 6 ordered) |\n\n**Result:** 1 of 2 configuration rules pass. Never enter this order with the wrong configuration: add KIT-SAFE to the order (it is on quote Q-2214) and confirm with the customer.\n\nSynthetic decision support only. This agent does not submit, book, release or change an order, and it does not contact the customer; a sales operations specialist reviews every draft and resolves every exception.\n\nSource: [Synthetic PO Inbox + CRM Quote + Configuration Rule Snapshot]\nAgents: OrderEntryValidationAgent",
+      "expected_agent": "OrderEntryValidationAgent",
+      "must_include": [
+        "SH-H2S needs KIT-SAFE",
+        "1 of 2 configuration rules pass",
+        "Never enter this order with the wrong configuration"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OE-05",
+      "persona": "Sales Operations Specialist",
+      "onepager_promise": "Classifies region, order type, order class and sales channel from the PO and the quote",
+      "prompt": "What order type, class and sales channel should PO-4471 go in as?",
+      "assistant_response": "PO-4471 (Woodgrove Water Authority) should be classified as:\n\n- **Order Type:** STD-DOM (domestic, based on ship-to address)\n- **Order Class:** New (tied to its quote opportunity)\n- **Sales Channel:** Public sector (based on the customer account)\n\nThese are ready to use on the draft sales order header, though a sales ops specialist should confirm before anything's booked.",
+      "agent_logs": "[OrderEntryValidationAgent] **Order Classification: PO-4471 (Woodgrove Water Authority)**\n\n| Attribute | Value | Basis |\n|---|---|---|\n| Region | Domestic | Ship-to address |\n| Order Type | STD-DOM | Region rule |\n| Order Class | New | Quote opportunity |\n| Sales Channel | Public sector | Customer account |\n\n**Next step:** use these values on the draft sales order header.\n\nSynthetic decision support only. This agent does not submit, book, release or change an order, and it does not contact the customer; a sales operations specialist reviews every draft and resolves every exception.\n\nSource: [Synthetic PO Inbox + CRM Quote + Configuration Rule Snapshot]\nAgents: OrderEntryValidationAgent",
+      "expected_agent": "OrderEntryValidationAgent",
+      "must_include": [
+        "STD-DOM",
+        "Public sector",
+        "Order Class"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OE-06",
+      "persona": "Sales Operations Specialist",
+      "onepager_promise": "Prepares a draft sales order at quote prices with every exception listed for the specialist",
+      "prompt": "Prepare the sales order for PO-4471 so I can enter it.",
+      "assistant_response": "This PO is drafted but **on hold** \u2014 one open exception before it's clean to enter:\n\n- **SH-CO pricing mismatch**: PO says $410/unit, quote says $395/unit (4 units \u2192 $60 difference, which is also why the PO total $28,000 doesn't match the $27,940 quote-price total).\n\nEverything else lines up \u2014 order type (STD-DOM), payment terms (Net 30), freight (FOB Origin), and the configuration look clean. Once you confirm/correct the SH-CO price, it's ready to key into the ERP. Want me to check the quote more closely, or pull the queue review to see what else needs attention?",
+      "agent_logs": "[OrderEntryValidationAgent] **Draft Sales Order: PO-4471 - Not Submitted**\n\n| Header | Value |\n|---|---|\n| Customer | Woodgrove Water Authority |\n| Customer PO | PO-4471 |\n| Quote | Q-2210 |\n| Order Type | STD-DOM |\n| Order Class | New |\n| Sales Channel | Public sector |\n| Payment Terms | Net 30 (quote) |\n| Freight Terms | FOB Origin (quote) |\n| Ship-To | 1200 Reservoir Rd, Dock 3 |\n| Status | Draft - Not Submitted, on hold for exceptions |\n\n| Line | Part | Qty | Unit Price (quote) | Extended |\n|---|---|---|---|---|\n| 1 | PX-300 | 4 | $6,450 | $25,800 |\n| 2 | SH-CO | 4 | $395 | $1,580 |\n| 3 | KIT-CAL | 2 | $280 | $560 |\n\n**Order total at quote prices:** $27,940 (PO states $28,000).\n**Exceptions to resolve before entry:**\n- Price SH-CO: PO $410 vs quote $395\n\nA sales operations specialist reviews and enters this order; nothing was submitted to the ERP.\n\nSynthetic decision support only. This agent does not submit, book, release or change an order, and it does not contact the customer; a sales operations specialist reviews every draft and resolves every exception.\n\nSource: [Synthetic PO Inbox + CRM Quote + Configuration Rule Snapshot]\nAgents: OrderEntryValidationAgent",
+      "expected_agent": "OrderEntryValidationAgent",
+      "must_include": [
+        "Not Submitted",
+        "$27,940",
+        "nothing was submitted to the ERP"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OE-07",
+      "persona": "Sales Operations Manager",
+      "onepager_promise": "Reviews the whole queue so ready orders go in first and every exception has a named reason",
+      "prompt": "Across the whole queue, which orders are ready to enter and which need a fix?",
+      "assistant_response": "Here's the breakdown:\n\n**Ready to enter:**\n- **PO-4474 (Lucerne Labs)** \u2014 no exceptions, clear to go.\n\n**Needs a fix (4):**\n- **PO-4471 (Woodgrove)** \u2014 price mismatch: PO shows $410 for SH-CO vs. quoted $395.\n- **PO-4472 (Coho Refining)** \u2014 missing mandatory safety kit (KIT-SAFE) required with SH-H2S.\n- **PO-4473 (Tailwind Mining)** \u2014 two issues: payment terms (PO Net 60 vs. quoted Net 30) and SH-NH3 isn't released for international orders.\n- **PO-4475 (Relecloud)** \u2014 missing buying group assignment (Trey Purchasing Network per quote).\n\nNext step would be entering PO-4474 now and routing the other four to their account owners to resolve before entry. Want me to draft the sales order for PO-4474?",
+      "agent_logs": "[OrderEntryValidationAgent] **Queue Review: 2026-10-05**\n\n| PO | Customer | Status | Exceptions |\n|---|---|---|---|\n| PO-4471 | Woodgrove Water Authority | Needs fix | Price SH-CO: PO $410 vs quote $395 |\n| PO-4472 | Coho Refining | Needs fix | Mandatory kit: SH-H2S needs KIT-SAFE (0 of 6 ordered) |\n| PO-4473 | Tailwind Mining Co | Needs fix | Payment terms: PO Net 60 vs quote Net 30; Region release: SH-NH3 is not released for International orders |\n| PO-4474 | Lucerne Labs | Ready to enter | - |\n| PO-4475 | Relecloud Utilities | Needs fix | Buying group: assign Trey Purchasing Network from the quote |\n\n**Result:** 1 of 5 purchase orders are ready to enter; 4 need a fix first. Each exception names the field or rule behind it.\n**Next step:** enter the ready orders and send the exceptions to their account owners as drafts.\n\nSynthetic decision support only. This agent does not submit, book, release or change an order, and it does not contact the customer; a sales operations specialist reviews every draft and resolves every exception.\n\nSource: [Synthetic PO Inbox + CRM Quote + Configuration Rule Snapshot]\nAgents: OrderEntryValidationAgent",
+      "expected_agent": "OrderEntryValidationAgent",
+      "must_include": [
+        "1 of 5 purchase orders are ready",
+        "Lucerne Labs",
+        "Needs fix"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

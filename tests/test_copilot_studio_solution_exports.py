@@ -34,11 +34,11 @@ def test_historical_native_archives_and_declared_source_bundles_are_intact():
     inventory = read_json(STATE_PATH)
     rows = inventory["solutions"]
     assert inventory["summary"] == {
-        "total": 51,
-        "exported": 51,
+        "total": 66,
+        "exported": 66,
         "missing": 0,
-        "with_deployment_settings": 51,
-        "unpublished": 51,
+        "with_deployment_settings": 66,
+        "unpublished": 66,
     }
     assert {row["slug"] for row in rows} == advertised_slugs()
 
@@ -188,9 +188,40 @@ restoreState = renderStats = buildFilters = renderIndustryMenu = bindInputs = re
     )
 
 
-def test_library_consumer_withholds_shipped_stale_export_and_keeps_current_exports():
-    result = library_export_consumer(read_json(STATE_PATH))
+def test_library_consumer_offers_every_current_export_and_withholds_a_stale_one():
+    inventory = read_json(STATE_PATH)
+    # After the re-shoot every advertised package ships a current native
+    # export; no inventory row may still be marked stale.
+    assert not [
+        row["slug"] for row in inventory["solutions"]
+        if row.get("source_contract_status") == "stale_source"
+    ]
+    result = library_export_consumer(inventory)
+    current = (
+        "care-gap-closure",
+        "account-intelligence",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "portfolio-rebalancing",
+    )
+    for slug in current:
+        assert slug in result["selected"]
+        assert result["downloads"][slug] == {
+            "zip": f"solutions/{slug}/exports/{slug}-copilot-studio-solution.zip",
+            "settings": f"solutions/{slug}/exports/{slug}-deployment-settings.json",
+        }
+        dialog = result["dialogs"][slug]
+        assert "Download Copilot Studio solution" in dialog
+        assert "import the unmanaged Copilot Studio solution manually" in dialog
+        assert "current native Copilot Studio export is unavailable" not in dialog
 
+    # The real inventory must still fail closed when a shipped export is
+    # marked stale: the library withholds it and offers agent.py only.
+    stale_inventory = json.loads(json.dumps(inventory))
+    for row in stale_inventory["solutions"]:
+        if row["slug"] == "care-gap-closure":
+            row["source_contract_status"] = "stale_source"
+    result = library_export_consumer(stale_inventory)
     assert "care-gap-closure" not in result["selected"]
     assert result["downloads"]["care-gap-closure"] is None
     stale_dialog = result["dialogs"]["care-gap-closure"]
@@ -203,26 +234,7 @@ def test_library_consumer_withholds_shipped_stale_export_and_keeps_current_expor
         "import the unmanaged Copilot Studio solution manually",
     ):
         assert unsupported not in stale_dialog
-
-    assert result["downloads"]["account-intelligence"] == {
-        "zip": (
-            "solutions/account-intelligence/exports/"
-            "account-intelligence-copilot-studio-solution.zip"
-        ),
-        "settings": (
-            "solutions/account-intelligence/exports/"
-            "account-intelligence-deployment-settings.json"
-        ),
-    }
-    current_dialog = result["dialogs"]["account-intelligence"]
-    assert "Download Copilot Studio solution" in current_dialog
-    assert "import the unmanaged Copilot Studio solution manually" in current_dialog
-    assert "current native Copilot Studio export is unavailable" not in current_dialog
-    for slug in ("fs-customer-onboarding", "fs-regulatory-compliance", "portfolio-rebalancing"):
-        assert slug not in result["selected"]
-        assert result["downloads"][slug] is None
-        assert "current native Copilot Studio export is unavailable" in result["dialogs"][slug]
-        assert f"{slug}-copilot-studio-solution.zip" not in result["dialogs"][slug]
+    assert "account-intelligence" in result["selected"]
 
 
 @pytest.mark.parametrize(

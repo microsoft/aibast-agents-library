@@ -10,7 +10,7 @@
     "must_call": "SupplierRiskMonitoringAgent",
     "must_include": [
       "TechnoCore Semiconductor",
-      "CRITICAL"
+      "HIGH RISK"
     ]
   },
   "copilot_studio": {
@@ -20,13 +20,17 @@
       "risk_dashboard",
       "supplier_scorecard",
       "disruption_alerts",
-      "alternative_sourcing"
+      "alternative_sourcing",
+      "mitigation_plan",
+      "financial_impact",
+      "implementation_roadmap",
+      "monitoring_plan"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_supplier-risk-monitoring-synthetic-records.md",
       "manual/knowledge/aibast_supplier-risk-monitoring-review-rules.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 8,
     "required_connections": [
       "Approved ERP and supplier-management data",
       "Financial and logistics risk feeds",
@@ -38,17 +42,17 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Supply Risk Monitoring Manual",
-      "bot_id": "7b548b61-63bf-4622-83ba-6ff0ad185169",
+      "bot_id": "fb7acaa6-2878-4cfe-bef8-436602d47312",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 8,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
     },
     "validated_pilot": {
       "display_name": "Supply Risk Monitoring Pilot",
@@ -57,13 +61,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 8,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
     }
   },
   "safety_boundary": "The agent recommends review options only and never contacts, qualifies, selects, or orders from suppliers.",

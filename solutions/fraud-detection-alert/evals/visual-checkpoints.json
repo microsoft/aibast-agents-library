@@ -8,507 +8,1063 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 18,
-    "reshoot_required": 5
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-fda-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "FDA-01",
-      "source": "solutions/fraud-detection-alert/screenshots/assisted/01-fda-01.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/01-fda-01.png",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "The visible retrieval trace names TXN-90006",
-        "The visible retrieval trace names Critical"
-      ],
-      "full_case_not_visibly_proven": [
-        "The final answer is outside this frame; the locked machine gate remains the full-case proof."
+        "Fraud Detection Pilot",
+        "Draft",
+        "morning-summary",
+        "prevention-metrics",
+        "investigation-summary",
+        "pattern-detection",
+        "alert-triage",
+        "aibast_fraud-detection-alert-synthetic-records.m",
+        "aibast_fraud-detection-alert-controls-and-review"
       ],
       "boxes": [
         {
-          "x": 315,
-          "y": 455,
-          "width": 760,
-          "height": 48,
-          "label": "Visible FDA-01 deterministic anchors"
+          "x": 84,
+          "y": 20,
+          "width": 164,
+          "height": 20,
+          "label": "Fraud Detection Pilot"
+        },
+        {
+          "x": 259,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 126,
+          "height": 22,
+          "label": "morning-summary"
+        },
+        {
+          "x": 1240,
+          "y": 197,
+          "width": 128,
+          "height": 22,
+          "label": "prevention-metrics"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 152,
+          "height": 22,
+          "label": "investigation-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 120,
+          "height": 21,
+          "label": "pattern-detection"
+        },
+        {
+          "x": 1234,
+          "y": 277,
+          "width": 80,
+          "height": 22,
+          "label": "alert-triage"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_fraud-detection-alert-synthetic-records.m"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 312,
+          "height": 21,
+          "label": "aibast_fraud-detection-alert-controls-and-review"
+        }
+      ]
+    },
+    {
+      "id": "easy-fda-01",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/02-fda-01.jpg",
+      "caption": "FDA-01 · Fraud Operations Manager: Review overnight fraud activity and show me what needs immediate attention.",
+      "case_id": "FDA-01",
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/02-fda-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1,247 overnight alerts",
+        "$892K",
+        "F-78234"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 461,
+          "width": 168,
+          "height": 24,
+          "label": "1,247 overnight alerts"
+        },
+        {
+          "x": 538,
+          "y": 617,
+          "width": 55,
+          "height": 23,
+          "label": "$892K"
+        },
+        {
+          "x": 298,
+          "y": 1267,
+          "width": 80,
+          "height": 20,
+          "label": "F-78234"
         }
       ]
     },
     {
       "id": "easy-fda-02",
       "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/03-fda-02.jpg",
+      "caption": "FDA-02 · Fraud Analyst: Yes, investigate the account takeover ring and show me the accounts.",
       "case_id": "FDA-02",
-      "source": "solutions/fraud-detection-alert/screenshots/assisted/02-fda-02.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/02-fda-02.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/03-fda-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "The visible routing trace names 4532-XXXX-8891",
-        "The visible routing trace names TXN-90002"
-      ],
-      "full_case_not_visibly_proven": [
-        "The final answer is outside this frame; the locked machine gate remains the full-case proof."
+        "$340K",
+        "***4521",
+        "2:34 AM"
       ],
       "boxes": [
         {
-          "x": 315,
-          "y": 382,
-          "width": 930,
-          "height": 52,
-          "label": "Visible FDA-02 deterministic anchors"
+          "x": 602,
+          "y": 428,
+          "width": 69,
+          "height": 26,
+          "label": "$340K"
+        },
+        {
+          "x": 582,
+          "y": 1232,
+          "width": 75,
+          "height": 22,
+          "label": "***4521"
+        },
+        {
+          "x": 299,
+          "y": 1461,
+          "width": 68,
+          "height": 20,
+          "label": "2:34 AM"
         }
       ]
     },
     {
       "id": "easy-fda-03",
       "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/04-fda-03.jpg",
+      "caption": "FDA-03 · SIU Investigator: Yes, show me the pattern analysis and connected activity.",
       "case_id": "FDA-03",
-      "source": "solutions/fraud-detection-alert/screenshots/assisted/03-fda-03.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/03-fda-03.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/04-fda-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "The visible routing trace names INV-2025-301",
-        "The visible routing trace names Card Cloning"
-      ],
-      "full_case_not_visibly_proven": [
-        "The final answer is outside this frame; the locked machine gate remains the full-case proof."
+        "3 organized fraud rings",
+        "94%",
+        "INV-2025-301"
       ],
       "boxes": [
         {
-          "x": 315,
-          "y": 408,
-          "width": 930,
-          "height": 50,
-          "label": "Visible FDA-03 deterministic anchors"
+          "x": 286,
+          "y": 561,
+          "width": 179,
+          "height": 24,
+          "label": "3 organized fraud rings"
+        },
+        {
+          "x": 470,
+          "y": 918,
+          "width": 42,
+          "height": 20,
+          "label": "94%"
+        },
+        {
+          "x": 310,
+          "y": 1676,
+          "width": 109,
+          "height": 20,
+          "label": "INV-2025-301"
         }
       ]
     },
     {
       "id": "easy-fda-04",
       "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/05-fda-04.jpg",
+      "caption": "FDA-04 · Risk Leader: Yes, create investigation cases and take protective action.",
       "case_id": "FDA-04",
-      "source": "solutions/fraud-detection-alert/screenshots/assisted/04-fda-04.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/04-fda-04.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/05-fda-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Investigation: INV-2025-302 \u2014 SIU Reviewed Package",
-        "No card, account, payment, wire, report, or filing has been blocked"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact phrase no external action is not visible in the final answer."
+        "Ready for authorized execution",
+        "FRD-2024-1847",
+        "no external action"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 548,
-          "width": 945,
-          "height": 120,
-          "label": "Case ID and no-action boundary"
+          "x": 546,
+          "y": 744,
+          "width": 229,
+          "height": 24,
+          "label": "Ready for authorized execution"
+        },
+        {
+          "x": 306,
+          "y": 1005,
+          "width": 122,
+          "height": 20,
+          "label": "FRD-2024-1847"
+        },
+        {
+          "x": 734,
+          "y": 1995,
+          "width": 144,
+          "height": 20,
+          "label": "no external action"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-fda-05",
       "mode": "easy",
-      "source": "solutions/fraud-detection-alert/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list does not show the target Fraud Detection Pilot row, so its Draft state is not visible.",
-      "draft": true
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/06-fda-05.jpg",
+      "caption": "FDA-05 · Risk Leader: Yes, show me our fraud prevention performance and any concerning trends.",
+      "case_id": "FDA-05",
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/06-fda-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Exceeding",
+        "94.2%",
+        "+34%"
+      ],
+      "boxes": [
+        {
+          "x": 450,
+          "y": 461,
+          "width": 84,
+          "height": 24,
+          "label": "Exceeding"
+        },
+        {
+          "x": 448,
+          "y": 618,
+          "width": 55,
+          "height": 20,
+          "label": "94.2%"
+        },
+        {
+          "x": 494,
+          "y": 970,
+          "width": 52,
+          "height": 20,
+          "label": "+34%"
+        }
+      ]
+    },
+    {
+      "id": "easy-fda-06",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/07-fda-06.jpg",
+      "caption": "FDA-06 · Fraud Operations Manager: Yes, summarize everything and give me the action items.",
+      "case_id": "FDA-06",
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/07-fda-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1,247",
+        "$691K",
+        "SAR filing"
+      ],
+      "boxes": [
+        {
+          "x": 535,
+          "y": 629,
+          "width": 48,
+          "height": 22,
+          "label": "1,247"
+        },
+        {
+          "x": 536,
+          "y": 801,
+          "width": 54,
+          "height": 23,
+          "label": "$691K"
+        },
+        {
+          "x": 310,
+          "y": 1533,
+          "width": 81,
+          "height": 24,
+          "label": "SAR filing"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/fraud-detection-alert/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fraud Detection Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 163,
+          "height": 21,
+          "label": "Fraud Detection Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/fraud-detection-alert/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Build tab selected"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 92,
-          "width": 825,
-          "height": 62,
-          "label": "Blank agent name field"
-        },
-        {
-          "x": 566,
-          "y": 10,
-          "width": 78,
-          "height": 40,
-          "label": "Build workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/fraud-detection-alert/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Fraud Detection Manual",
+      "step": 2,
       "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Fraud Detection Manual in the name field"
+        "Fraud Detection Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 92,
-          "width": 825,
-          "height": 62,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 185,
+          "height": 20,
+          "label": "Fraud Detection Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/fraud-detection-alert/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "FDA-01 through FDA-04 deterministic anchors"
+        "Fraud Detection and Alert Agent — Manual Global "
       ],
       "boxes": [
         {
-          "x": 75,
-          "y": 205,
-          "width": 905,
-          "height": 620,
-          "label": "Reviewed instructions and locked anchors"
+          "x": 204,
+          "y": 131,
+          "width": 250,
+          "height": 32,
+          "label": "Fraud Detection and Alert Agent — Manual Global "
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/fraud-detection-alert/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction text is visible, but there is no save confirmation or No unsaved changes indicator. The saved target state is therefore not visually proven."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 281,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/fraud-detection-alert/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The Knowledge area is empty, but the frame contains no affirmative removal confirmation or other positive anchor showing that Search all websites was removed."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/fraud-detection-alert/screenshots/manual/06-add-aibast-fraud-detection-alert-controls-and-review.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_fraud-detection-alert-controls-and-review.md",
+      "step": 6,
       "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/06-add-aibast-fraud-detection-alert-controls-and-review.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_fraud-detection-alert-controls-and-re... knowledge chip"
+        "aibast_fraud-detection-alert-controls-and-review"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 306,
-          "width": 380,
-          "height": 46,
-          "label": "Controls knowledge added"
+          "x": 1057,
+          "y": 321,
+          "width": 312,
+          "height": 21,
+          "label": "aibast_fraud-detection-alert-controls-and-review"
         }
-      ],
-      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/fraud-detection-alert/screenshots/manual/07-add-aibast-fraud-detection-alert-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_fraud-detection-alert-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/07-add-aibast-fraud-detection-alert-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_fraud-detection-alert-synthetic-recor... knowledge chip",
-        "aibast_fraud-detection-alert-controls-and-re... knowledge chip"
+        "aibast_fraud-detection-alert-synthetic-records.m"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 305,
-          "width": 380,
-          "height": 88,
-          "label": "Two reviewed knowledge files"
+          "x": 1057,
+          "y": 321,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_fraud-detection-alert-synthetic-records.m"
         }
-      ],
-      "note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "step": 8,
       "source": "solutions/fraud-detection-alert/screenshots/manual/08-add-aibast-alert-triage-01.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_alert-triage_01",
+      "step": 8,
       "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/08-add-aibast-alert-triage-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "alert-triage skill chip"
+        "alert-triage"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 184,
-          "width": 155,
-          "height": 45,
-          "label": "Alert triage skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 79,
+          "height": 22,
+          "label": "alert-triage"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
-      "step": 9,
       "source": "solutions/fraud-detection-alert/screenshots/manual/09-add-aibast-investigation-summary-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_investigation-summary_04",
+      "step": 9,
       "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/09-add-aibast-investigation-summary-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "investigation-summary skill chip",
-        "alert-triage skill chip"
+        "investigation-summary"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 184,
-          "width": 370,
-          "height": 45,
-          "label": "Investigation summary skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 152,
+          "height": 22,
+          "label": "investigation-summary"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/10-add-aibast-morning-summary-06.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_morning-summary_06",
       "step": 10,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/10-add-aibast-pattern-detection-03.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/10-add-aibast-pattern-detection-03.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/10-add-aibast-morning-summary-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "pattern-detection skill chip"
+        "morning-summary"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 184,
-          "width": 195,
-          "height": 45,
-          "label": "Pattern detection skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 126,
+          "height": 22,
+          "label": "morning-summary"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/11-add-aibast-pattern-detection-03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_pattern-detection_03",
       "step": 11,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/11-add-aibast-transaction-analysis-02.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/11-add-aibast-transaction-analysis-02.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/11-add-aibast-pattern-detection-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "transaction-analysis skill chip",
-        "Four configured skills"
+        "pattern-detection"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 184,
-          "width": 370,
-          "height": 122,
-          "label": "Transaction analysis completes four skills"
+          "x": 1035,
+          "y": 198,
+          "width": 142,
+          "height": 21,
+          "label": "pattern-detection"
         }
-      ],
-      "note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/12-add-aibast-prevention-metrics-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_prevention-metrics_05",
       "step": 12,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/12-add-aibast-prevention-metrics-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Two reviewed knowledge files",
-        "Tools section contains no configured tool",
-        "No unsaved changes"
+        "prevention-metrics"
       ],
       "boxes": [
         {
-          "x": 1045,
-          "y": 45,
-          "width": 205,
-          "height": 50,
-          "label": "Saved: no unsaved changes"
-        },
-        {
-          "x": 1203,
-          "y": 86,
-          "width": 195,
-          "height": 40,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1025,
-          "y": 184,
-          "width": 370,
-          "height": 122,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1018,
-          "y": 359,
-          "width": 385,
-          "height": 20,
-          "label": "No configured tools"
-        },
-        {
-          "x": 1018,
-          "y": 386,
-          "width": 385,
-          "height": 128,
-          "label": "Two reviewed knowledge files"
+          "x": 1057,
+          "y": 197,
+          "width": 128,
+          "height": 21,
+          "label": "prevention-metrics"
         }
-      ],
-      "note": "Several label pills covered helper text in the Skills/Tools/Knowledge panel; regenerated with the pills moved into clear whitespace 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/13-add-aibast-transaction-analysis-02.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_transaction-analysis_02",
       "step": 13,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/13-add-aibast-transaction-analysis-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab selected",
-        "New chat",
+        "transaction-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 133,
+          "height": 22,
+          "label": "transaction-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "transaction-analysis",
+        "prevention-metrics",
+        "pattern-detection",
+        "morning-summary",
+        "investigation-summary",
+        "aibast_fraud-detection-alert-synthetic-records.m",
+        "aibast_fraud-detection-alert-controls-and-review"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 101,
+          "height": 21,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 133,
+          "height": 22,
+          "label": "transaction-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 128,
+          "height": 21,
+          "label": "prevention-metrics"
+        },
+        {
+          "x": 1243,
+          "y": 237,
+          "width": 119,
+          "height": 22,
+          "label": "pattern-detection"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 126,
+          "height": 22,
+          "label": "morning-summary"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 152,
+          "height": 22,
+          "label": "investigation-summary"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_fraud-detection-alert-synthetic-records.m"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 312,
+          "height": 21,
+          "label": "aibast_fraud-detection-alert-controls-and-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "transaction-analysis",
+        "pattern-detection",
+        "prevention-metrics",
+        "morning-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 133,
+          "height": 22,
+          "label": "transaction-analysis"
+        },
+        {
+          "x": 1109,
+          "y": 220,
+          "width": 62,
+          "height": 17,
+          "label": "pattern-detection"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 128,
+          "height": 22,
+          "label": "prevention-metrics"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 126,
+          "height": 22,
+          "label": "morning-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "prevention-metrics",
+        "pattern-detection",
+        "morning-summary",
+        "investigation-summary",
+        "alert-triage"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 84,
+          "width": 128,
+          "height": 22,
+          "label": "prevention-metrics"
+        },
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 120,
+          "height": 22,
+          "label": "pattern-detection"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 126,
+          "height": 22,
+          "label": "morning-summary"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 152,
+          "height": 22,
+          "label": "investigation-summary"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 80,
+          "height": 22,
+          "label": "alert-triage"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Fraud Detection Manual"
       ],
       "boxes": [
         {
-          "x": 638,
-          "y": 10,
-          "width": 100,
-          "height": 40,
-          "label": "Preview selected"
-        },
-        {
-          "x": 835,
-          "y": 84,
-          "width": 100,
-          "height": 48,
-          "label": "Fresh chat control"
+          "x": 84,
+          "y": 20,
+          "width": 185,
+          "height": 20,
+          "label": "Fraud Detection Manual"
         }
       ]
     },
     {
       "id": "hard-fda-01",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/18-fda-01.jpg",
+      "caption": "FDA-01 · Fraud Operations Manager: Review overnight fraud activity and show me what needs immediate attention.",
+      "step": 18,
       "case_id": "FDA-01",
-      "step": 14,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/14-fda-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The visible final answer is for INV-2025-302 and the critical wire investigation, not FDA-01. TXN-90006 is absent, so the wrong-case response defeats this checkpoint."
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/18-fda-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1,247 overnight alerts",
+        "$892K",
+        "F-78234"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 589,
+          "width": 161,
+          "height": 24,
+          "label": "1,247 overnight alerts"
+        },
+        {
+          "x": 538,
+          "y": 696,
+          "width": 55,
+          "height": 22,
+          "label": "$892K"
+        },
+        {
+          "x": 409,
+          "y": 1065,
+          "width": 78,
+          "height": 20,
+          "label": "F-78234"
+        }
+      ]
     },
     {
       "id": "hard-fda-02",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/19-fda-02.jpg",
+      "caption": "FDA-02 · Fraud Analyst: Yes, investigate the account takeover ring and show me the accounts.",
+      "step": 19,
       "case_id": "FDA-02",
-      "step": 15,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/15-fda-02.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/15-fda-02.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/19-fda-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "The visible retrieval trace names 4532-XXXX-8891",
-        "The visible retrieval trace names TXN-90002"
-      ],
-      "full_case_not_visibly_proven": [
-        "The final answer is outside this frame; the locked machine gate remains the full-case proof."
+        "$340K",
+        "***4521",
+        "2:34 AM"
       ],
       "boxes": [
         {
-          "x": 315,
-          "y": 442,
-          "width": 910,
-          "height": 50,
-          "label": "Visible FDA-02 deterministic anchors"
+          "x": 286,
+          "y": 587,
+          "width": 57,
+          "height": 23,
+          "label": "$340K"
+        },
+        {
+          "x": 649,
+          "y": 1323,
+          "width": 90,
+          "height": 25,
+          "label": "***4521"
+        },
+        {
+          "x": 310,
+          "y": 1449,
+          "width": 70,
+          "height": 20,
+          "label": "2:34 AM"
         }
       ]
     },
     {
       "id": "hard-fda-03",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/20-fda-03.jpg",
+      "caption": "FDA-03 · SIU Investigator: Yes, show me the pattern analysis and connected activity.",
+      "step": 20,
       "case_id": "FDA-03",
-      "step": 16,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/16-fda-03.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/16-fda-03.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/20-fda-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "The visible routing trace names INV-2025-301",
-        "The visible routing trace names Card Cloning"
-      ],
-      "full_case_not_visibly_proven": [
-        "The final answer is outside this frame; the locked machine gate remains the full-case proof."
+        "3 organized fraud rings",
+        "94%",
+        "INV-2025-301"
       ],
       "boxes": [
         {
-          "x": 315,
-          "y": 410,
-          "width": 930,
-          "height": 50,
-          "label": "Visible FDA-03 deterministic anchors"
+          "x": 286,
+          "y": 589,
+          "width": 179,
+          "height": 24,
+          "label": "3 organized fraud rings"
+        },
+        {
+          "x": 400,
+          "y": 723,
+          "width": 42,
+          "height": 20,
+          "label": "94%"
+        },
+        {
+          "x": 310,
+          "y": 1474,
+          "width": 131,
+          "height": 20,
+          "label": "INV-2025-301"
         }
       ]
     },
     {
       "id": "hard-fda-04",
       "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/21-fda-04.jpg",
+      "caption": "FDA-04 · Risk Leader: Yes, create investigation cases and take protective action.",
+      "step": 21,
       "case_id": "FDA-04",
-      "step": 17,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/17-fda-04.jpg",
-      "status": "reshoot_required",
-      "reason": "Only internal routing and retrieval reasoning is visible. The final response containing INV-2025-302 and no external action is outside the capture."
-    },
-    {
-      "id": "hard-draft",
-      "mode": "hard",
-      "step": 18,
-      "source": "solutions/fraud-detection-alert/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/18-confirm-draft.png",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/21-fda-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Fraud Detection Manual",
-        "Draft"
+        "Ready for authorized execution",
+        "FRD-2024-1847"
       ],
       "boxes": [
         {
-          "x": 105,
-          "y": 242,
-          "width": 655,
-          "height": 58,
-          "label": "Target agent remains Draft"
+          "x": 561,
+          "y": 790,
+          "width": 229,
+          "height": 24,
+          "label": "Ready for authorized execution"
+        },
+        {
+          "x": 310,
+          "y": 1057,
+          "width": 125,
+          "height": 20,
+          "label": "FRD-2024-1847"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "no external action not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-fda-05",
+      "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/22-fda-05.jpg",
+      "caption": "FDA-05 · Risk Leader: Yes, show me our fraud prevention performance and any concerning trends.",
+      "step": 22,
+      "case_id": "FDA-05",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/22-fda-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "94.2%",
+        "Exceeding",
+        "+34%"
+      ],
+      "boxes": [
+        {
+          "x": 441,
+          "y": 624,
+          "width": 54,
+          "height": 20,
+          "label": "94.2%"
+        },
+        {
+          "x": 682,
+          "y": 623,
+          "width": 81,
+          "height": 24,
+          "label": "Exceeding"
+        },
+        {
+          "x": 447,
+          "y": 890,
+          "width": 52,
+          "height": 20,
+          "label": "+34%"
+        }
+      ]
+    },
+    {
+      "id": "hard-fda-06",
+      "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/23-fda-06.jpg",
+      "caption": "FDA-06 · Fraud Operations Manager: Yes, summarize everything and give me the action items.",
+      "step": 23,
+      "case_id": "FDA-06",
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/23-fda-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1,247",
+        "$691K",
+        "SAR filing"
+      ],
+      "boxes": [
+        {
+          "x": 535,
+          "y": 612,
+          "width": 47,
+          "height": 22,
+          "label": "1,247"
+        },
+        {
+          "x": 536,
+          "y": 784,
+          "width": 53,
+          "height": 23,
+          "label": "$691K"
+        },
+        {
+          "x": 310,
+          "y": 1506,
+          "width": 81,
+          "height": 24,
+          "label": "SAR filing"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/fraud-detection-alert/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/fraud-detection-alert/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fraud Detection Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 183,
+          "height": 21,
+          "label": "Fraud Detection Manual"
         }
       ]
     }
   ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:fraud-detection-alert",
-    "reviewed_at": "2026-08-09T20:27:15-04:00",
-    "method": "Opened the exact real assisted and manual source frames individually in the image viewer, checked each claimed anchor and annotation region, and kept the mismatched manual FDA-01 frame reshoot-required.",
-    "notes": "FDA-01, FDA-02, and FDA-03 assisted frames visibly contain their deterministic anchors in the routing or retrieval trace. Manual FDA-02 and FDA-03 do as well. These partial visual checkpoints do not claim to show the final answer; the locked machine gates remain the full-case proof. Manual FDA-01 genuinely shows the wrong INV-2025-302 response and remains reference-only because no valid manual FDA-01 source exists in this package."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:56:30.924989+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

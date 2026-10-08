@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "field-permit-to-work",
+  "agent": "@aibast-agents-library/field-permit-to-work",
+  "display_name": "Field Permit to Work Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic permit snapshot",
+        "detail": "Three fictional permits with site, asset, work, crew, start time, weather and sign-off stage."
+      },
+      {
+        "name": "Hazard library and risk rules",
+        "detail": "Fictional hazards, controls and PPE per asset class, with weather and competence adjustments."
+      },
+      {
+        "name": "Isolation, briefing and close-out records",
+        "detail": "Fictional required points, plans, live device states, acknowledgements and close-out readings."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Residual risk scoring",
+        "detail": "Adds weather uplift and competence reduction to a base score and assigns a band."
+      },
+      {
+        "name": "Isolation verification",
+        "detail": "Compares plan with required points and the live switching state, flagging missing locks."
+      },
+      {
+        "name": "Sign-off timing",
+        "detail": "Adds remaining stage targets to the snapshot time and compares with the planned start."
+      },
+      {
+        "name": "Close-out reconciliation",
+        "detail": "Compares people and tools at start and close and checks area and work status."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file agent exposes seven routable operations through local Brainstem chat and API surfaces."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Seven skills and two synthetic knowledge files support natural-language preview while the agent stays Draft."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Daily permit queue",
+        "detail": "Permits with stage, start, risk band and blocker."
+      },
+      {
+        "name": "Isolation verdict",
+        "detail": "Plan coverage and live device state with a clear start or do-not-start result."
+      },
+      {
+        "name": "Permit safety roll-up",
+        "detail": "Thirty-day permits, on-time closure, near misses, lockout gaps and top hazards."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "FieldPermitToWorkAgent portable RAPP tool",
+      "detail": "Single-file Python BasicAgent with seven deterministic read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the pilot with seven skills and two knowledge files; publishing requires explicit confirmation."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Documented seam for crew briefing and sign-off notifications; the package messages no one."
+    },
+    {
+      "name": "Power Automate",
+      "detail": "Documented seam for authorized sign-off approvals; the package requests or gives no approval."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every permit, device, person, score and figure is fictional pilot evidence."
+    },
+    {
+      "name": "Fail-safe isolation verdict",
+      "detail": "Any missing point or missing lockout returns do not start work."
+    },
+    {
+      "name": "Authorized-person boundary",
+      "detail": "Issuing, switching, briefing and clearance stay with authorized people."
+    },
+    {
+      "name": "No side effects",
+      "detail": "Never issues or closes a permit, operates a device or instructs a crew."
+    }
+  ]
+}

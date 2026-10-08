@@ -20,6 +20,6 @@ Summarizes fictional claims by loss, amount, status, and fraud-review score.
 
 Persona: Claims Operations Leader
 
-Prompt: Which incoming claim needs specialized handling first, and where should it be reviewed?
+Prompt: Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.
 
-Expected synthetic evidence: CLM-2025-7003, Investigation.
+Expected synthetic evidence: 2,847, 1,936, 34 claims with regulatory deadlines.

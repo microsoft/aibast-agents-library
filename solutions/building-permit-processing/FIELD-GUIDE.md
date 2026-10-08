@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `BPP-01, BPP-02, BPP-03, BPP-04, BPP-05`.
+1. Which locked case IDs did you complete? Expected scope: `BPP-01, BPP-02, BPP-03, BPP-04, BPP-05, BPP-06, BPP-07, BPP-08, BPP-09, BPP-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -217,6 +217,11 @@ Both Easy lanes preserve every recorded case prompt:
 - `BPP-03` — The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?
 - `BPP-04` — My front desk is drowning in status calls. What can we send out today so people stop calling?
 - `BPP-05` — What inspections are on the board for the solar job, and who is covering them?
+- `BPP-06` — A new residential addition application just came in. Process it and tell me if it is complete.
+- `BPP-07` — Run the code compliance check on the Johnson addition plans.
+- `BPP-08` — Route the Johnson addition for expert plan review.
+- `BPP-09` — Track the approval workflow for the Johnson addition.
+- `BPP-10` — Show me the permit issuance package for the Johnson addition.
 
 ## Manual mode — literal browser construction
 

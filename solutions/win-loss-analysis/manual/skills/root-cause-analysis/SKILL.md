@@ -22,7 +22,7 @@ Enablement Manager
 1. Confirm that the request matches `root_cause_analysis`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Root Cause Analysis`, `Deep Dive`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Root Cause Analysis`, `Buyer Key Insight`, `38%`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.
 
 ## Expected evidence marker
-The response must include `Root Cause Analysis`, `Deep Dive`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Root Cause Analysis`, `Buyer Key Insight`, `38%`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

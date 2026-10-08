@@ -1,0 +1,27 @@
+---
+name: field-service-dispatch-post-incident-review
+description: "Use when a Reliability Engineer asks for the post-incident review."
+---
+# Field Service Dispatch Agent: Post-incident review
+
+## Route
+
+Use the `post_incident_review` operation. The canonical persona prompt is:
+
+> The outage is resolved. Show me the post-incident review and how we prevent the next one.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `post_incident_review` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- 87 Minutes
+- 785% ROI
+- Substation 7B
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

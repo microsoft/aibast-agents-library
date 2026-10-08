@@ -11,20 +11,14 @@ from tools import build_solution_export, normalize_manual_instructions
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "solutions/building-permit-processing"
 SKILL = "manual/skills/aibast_inspector-assignment_bp06/SKILL.md"
-HISTORICAL_HASHES = {
-    "screenshots/manual/16-inspector-skill-validation-error.jpg": (
-        "cd250909369f1269a970c42973ffa92b79288f34f942dc1a601836edbd3c9c1b"
-    ),
-    "screenshots/manual/17-retry-inspector-skill.jpg": (
-        "0513b1b2c74264a286fb635e2fe9ca2299a1f19a65bd46436597a58838e299dc"
-    ),
-    "screenshots/annotated/hard-step-16.png": (
-        "0f7ca55fc340c76a33b46d07779a41b6990d14cc0646bf887c51aef85b29bcaa"
-    ),
-    "screenshots/annotated/hard-step-17.png": (
-        "e742131a394f7a2bd103b5750d739dcc882021142594c1ad10dc94e6ddeb1e39"
-    ),
-}
+INSPECTOR_CAPTURES = (
+    "screenshots/manual/12-add-aibast-inspector-assignment-bp06.jpg",
+    "screenshots/manual/annotated/12-add-aibast-inspector-assignment-bp06.png",
+)
+RETIRED_FRAMES = (
+    "16-inspector-skill-validation-error.jpg",
+    "17-retry-inspector-skill.jpg",
+)
 
 
 def read_json(path):
@@ -42,76 +36,68 @@ def test_inspector_skill_remains_valid_and_byte_identical():
     assert fields["description"].strip()
 
 
-def test_validation_steps_accept_success_or_an_authentic_error_without_forcing_retry():
+def test_inspector_skill_is_added_as_an_ordinary_upload_without_forcing_retry():
+    # The 2026-10 re-shoot uploaded the valid inspector skill on the first try.
+    # The tutorial must teach a plain upload, never a manufactured validation
+    # error or retry.
     browserfilm = read_json(PACKAGE / "screenshots/manual/browserfilm.json")
     frames = browserfilm["frames"]
-    assert len(frames) == 24
-    validation = frames[15]["tutorial"]
-    confirmation = frames[16]["tutorial"]
-    assert "If validation succeeds" in validation["action"]
-    assert "If Copilot Studio reports an authentic validation error" in validation["action"]
-    assert "Never corrupt a valid skill or manufacture an error" in validation["action"]
-    assert "Only if step 16 recorded an authentic validation error" in confirmation["action"]
-    assert "If step 16 succeeded, do not edit or re-upload the skill" in confirmation["action"]
-    assert "Do not claim a retry" in confirmation["expected_result"]
-    assert "unresolved error" in confirmation["expected_result"]
-
+    files = [frame["file"] for frame in frames]
+    assert len(frames) == 34
+    assert files[11] == "12-add-aibast-inspector-assignment-bp06.jpg"
+    assert not set(RETIRED_FRAMES) & set(files)
     for filename in ("manual-tutorial.html", "quest.html"):
         page = (PACKAGE / filename).read_text(encoding="utf-8")
         steps = tutorial_steps(page)
-        assert len(steps) == 24
-        for number, contract in ((16, validation), (17, confirmation)):
-            step = steps[number - 1]
-            assert step["title"] == contract["title"]
-            assert " ".join(contract["action"].split()) in step["text"]
-            assert " ".join(contract["expected_result"].split()) in step["text"]
-            assert step["downloads"] == [SKILL]
-            assert step["images"] == []
-            assert "Live verification checkpoint" in step["text"]
+        assert len(steps) == len(frames)
+        step = steps[11]
+        assert step["title"] == "Add skill: aibast_inspector-assignment_bp06"
+        assert step["downloads"] == [SKILL]
+        assert step["images"] == [
+            "screenshots/manual/annotated/12-add-aibast-inspector-assignment-bp06.png"
+        ]
         assert "Diagnose a SKILL.md validation failure" not in page
         assert "Correct and add inspector coverage" not in page
-        assert "Watch the manual film" not in page
+        assert "validation error" not in page
+        assert "manufacture an error" not in page
 
 
-def test_old_failure_and_retry_evidence_is_historical_not_a_current_pass():
+def test_current_evidence_replaces_the_old_failure_and_retry():
     visual = read_json(PACKAGE / "evals/visual-checkpoints.json")
     captures = {item["id"]: item for item in visual["captures"]}
     assert visual["summary"] == {
-        "total_existing_captures": 31,
-        "reusable": 22,
-        "reshoot_required": 9,
+        "total_existing_captures": len(captures),
+        "reusable": len(captures),
+        "reshoot_required": 0,
     }
-    assert "release_review" not in visual
-    assert visual["historical_release_review"]["status"] == "approved"
-    assert visual["source_contract_review"]["status"] == "reshoot_required"
+    assert "historical_release_review" not in visual
+    assert "source_contract_review" not in visual
+    inspector = captures["hard-step-12"]
+    assert inspector["status"] == "reusable"
+    assert inspector["visible_anchors"] == ["inspector-board-and-coverage"]
     report = (PACKAGE / "evidence-report.html").read_text(encoding="utf-8")
-    displayed, gaps = report.split("<h2>Reference-only visual gaps</h2>", 1)
-    for number in (16, 17):
-        identifier = f"hard-step-{number}"
-        checkpoint = captures[identifier]
-        assert checkpoint["status"] == "reshoot_required"
-        assert checkpoint["historical"] is True
-        assert "Historical" in checkpoint["reason"]
-        assert identifier not in displayed
-        assert identifier in gaps
-        assert html.escape(checkpoint["reason"]) in gaps
+    gaps = report.split("<h2>Reference-only visual gaps</h2>", 1)[1].split("</section>", 1)[0]
+    assert "<tbody></tbody>" in gaps
+    # With every Manual checkpoint reusable, the film may be offered.
+    tutorial = (PACKAGE / "manual-tutorial.html").read_text(encoding="utf-8")
+    assert "Watch the manual film" in tutorial
 
     evidence = read_json(PACKAGE / "evals/manual-build-evidence.json")
-    validation = evidence["skill_validation"]
-    assert validation["steps"] == [16, 17]
-    assert validation["step_16_outcomes"] == [
-        "accepted_upload", "authentic_validation_error"
+    cases = read_json(ROOT / "tests/demo_cases/building-permit-processing.json")["cases"]
+    assert "skill_validation" not in evidence
+    assert evidence["status"] == "passed"
+    assert evidence["manual_components"]["skills"] == {"expected": 12, "confirmed": 12}
+    assert [case["case_id"] for case in evidence["canonical_preview"]] == [
+        case["id"] for case in cases
     ]
-    assert validation["current_evidence_status"] == "reshoot_required"
-    assert validation["current_outcome"] is None
-    assert evidence["canonical_preview"]["passed"] is True
-    assert evidence["publication"]["published"] is False
-
-    for relative, digest in HISTORICAL_HASHES.items():
-        assert hashlib.sha256((PACKAGE / relative).read_bytes()).hexdigest() == digest
+    assert all(case["passed"] is True for case in evidence["canonical_preview"])
+    assert evidence["publication_gate"]["published"] is False
+    assert evidence["publication_gate"]["required_state"] == "Draft"
+    for frame in RETIRED_FRAMES:
+        assert not (PACKAGE / "screenshots/manual" / frame).exists()
     film_readme = (PACKAGE / "screenshots/manual/README.md").read_text(encoding="utf-8")
-    assert "Historical" in film_readme
-    assert "Never corrupt a valid skill or manufacture an error" in film_readme
+    assert "34 real browser frames" in film_readme
+    assert "publication approval" in film_readme
 
 
 def test_normalization_keeps_the_canonical_policy_and_generated_copies_in_parity():
@@ -125,7 +111,7 @@ def test_normalization_keeps_the_canonical_policy_and_generated_copies_in_parity
         assert html.escape(instructions) in (PACKAGE / filename).read_text(encoding="utf-8")
 
 
-def test_downloadable_bundle_contains_the_current_contract_and_unchanged_captures():
+def test_downloadable_bundle_contains_the_current_contract_and_captures():
     deployment = read_json(PACKAGE / "deployment.json")
     assert deployment["source_bundle"]["raw_base"] == (
         "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
@@ -142,7 +128,7 @@ def test_downloadable_bundle_contains_the_current_contract_and_unchanged_capture
         "export-manifest.json",
         "manual/GLOBAL-INSTRUCTIONS.md",
         SKILL,
-        *HISTORICAL_HASHES,
+        *INSPECTOR_CAPTURES,
     ]
     with zipfile.ZipFile(bundle) as archive:
         for relative in paths:

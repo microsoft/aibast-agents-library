@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/solution-design-review",
+  "display_name": "Solution Design Review Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/solution_design_review_stack/solution_design_review_agent.py",
+  "source_path": "agents/@aibast-agents-library/professional_services_stacks/solution_design_review_stack/solution_design_review_agent.py",
+  "target_filename": "solution_design_review_agent.py",
+  "expected_tool": "SolutionDesignReviewAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+    "arguments": {
+      "operation": "design_intake"
+    },
+    "must_call": "SolutionDesignReviewAgent",
+    "must_include": [
+      "INIT-2026-031",
+      "3 inputs received"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "design_intake",
+      "architecture_vision",
+      "current_state",
+      "requirements_matrix",
+      "target_design",
+      "readiness_check"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_solution-design-review-synthetic-records.md",
+      "manual/knowledge/aibast_solution-design-review-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 6,
+    "required_connections": [
+      "Use only approved, read-only document, requirement and inventory connections; the packaged demonstration uses synthetic knowledge files."
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Solution Design Review Manual",
+      "bot_id": "52c4c6cf-7eed-4bd1-b548-5f512c3ca9b7",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 6,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Solution Design Review Pilot",
+      "bot_id": "ab6ae641-2ea1-4aa8-bcbd-85969ee278d5",
+      "schema_name": "aibast_SolutionDesignReviewPilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Solution Design Review Manual",
+      "schema_name": "cr2bf_solutiondesignreviewmanual_QN0F2l",
+      "solution_unique_name": "aibast_SolutionDesignReviewManualBuild",
+      "bot_id": "52c4c6cf-7eed-4bd1-b548-5f512c3ca9b7",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "solution-design-review-design-intake",
+    "solution-design-review-architecture-vision",
+    "solution-design-review-current-state",
+    "solution-design-review-requirements-matrix",
+    "solution-design-review-target-design",
+    "solution-design-review-readiness-check"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

@@ -1,0 +1,27 @@
+---
+name: field-service-dispatch-route-optimization
+description: "Use when a Service Director asks for the schedule optimization."
+---
+# Field Service Dispatch Agent: Schedule optimization
+
+## Route
+
+Use the `route_optimization` operation. The canonical persona prompt is:
+
+> I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `route_optimization` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- 34%
+- 187 miles
+- $1,840/day
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

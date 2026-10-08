@@ -20,7 +20,7 @@ OUTPUT_SCHEMA = "aibast-academy/1.0"
 REGISTRY_SCHEMA = "rapp-registry/1.0"
 SOLUTIONS_SCHEMA = "aibast-solution-copy/1.0"
 ROLLOUT_SCHEMA = "aibast-workshop-course-rollout-audit/1.0"
-EXPECTED_COURSES = 51
+EXPECTED_COURSES = 66
 
 EXPECTED_MILESTONES = (
     ("started", "started", 5),

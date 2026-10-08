@@ -37,12 +37,42 @@
     {
       "operation": "assistance_programs",
       "persona": "Assistance Coordinator",
-      "purpose": "Perform preliminary, non-binding program screening."
+      "purpose": "Screen the resident's income on file and total the potential relief (non-binding)."
+    },
+    {
+      "operation": "leak_adjustment",
+      "persona": "Leak Adjustment Analyst",
+      "purpose": "Draft the Municipal Code 18.42 leak credit and new bill without adjusting the bill."
+    },
+    {
+      "operation": "application_packet",
+      "persona": "Enrollment Specialist",
+      "purpose": "Draft the payment plan and pre-filled assistance application without creating either."
+    },
+    {
+      "operation": "repair_assistance",
+      "persona": "Water Conservation Coordinator",
+      "purpose": "Match free repair assistance and propose an appointment without booking it."
+    },
+    {
+      "operation": "resolution_summary",
+      "persona": "Customer Resolution Manager",
+      "purpose": "Assemble the customer package and account notes as a draft without sending or changing anything."
+    },
+    {
+      "operation": "income_screen",
+      "persona": "Eligibility Screener",
+      "purpose": "Perform preliminary, non-binding screening from supplied household facts."
     }
   ],
   "interface_schema": {
     "status": "fixed",
     "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
   },
-  "advertised_vs_local_limitation": "The local source performs synthetic screening and draft calculations only; account adjustment, eligibility, enrollment, payment-plan setup, and repair scheduling require approved systems."
+  "advertised_vs_local_limitation": "The local source performs synthetic screening and draft calculations only; account adjustment, eligibility, enrollment, payment-plan setup, and repair scheduling require approved systems.",
+  "collateral_alignment": {
+    "status": "fixed",
+    "finding": "The demo video walks one resident (782 Maple Drive, RES-782MD) from a 22,000-gallon bill through hourly smart-meter evidence, a Municipal Code 18.42 leak credit, AMI-based assistance screening, payment plan and LIWAP application, repair assistance and a complete package; the agent had no such account, a monthly-only 50% top-tier leak estimate, FPL screening, no repair, packet or summary operation, a trend/anomaly baseline contradiction, and empty rate headers.",
+    "fix": "Added RES-782MD with daily smart-meter reads (17,500 gallons Mar 10-13 at 182 gal/hr), leak_adjustment ($97.80 credit, $86.70 new bill, 53%), AMI screening (68% AMI; LIWAP $150 + LIHEAP $200), 6 x $14.45 plan from April 15, application_packet, repair_assistance (proposed, not booked) and resolution_summary (draft package, nothing sent); one baseline for trend and anomaly; addresses resolve to accounts; every new operation returns drafts for authorized staff."
+  }
 }

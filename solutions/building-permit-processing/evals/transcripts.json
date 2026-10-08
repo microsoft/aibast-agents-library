@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T00:42:46.729810+00:00",
+  "captured_at": "2026-10-07T01:38:54.342092+00:00",
   "solution": "@aibast-agents-library/building-permit-processing",
   "onepager": "46. Building Permit Processing Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
-      "sha256": "55a5cfa3e015b62579d0edf4171f080f22500eb89a5e7c25947dae93f0f79e7c"
+      "sha256": "f263fce15e46a25788db493139e6928c41815e8d8187f53335e71e705365b57d"
     }
   ],
   "case_file": "tests/demo_cases/building-permit-processing.json",
-  "case_file_sha256": "600facefe3ade7f225160859ba67eb8afa7225709e1ee3dfb6bcf30c22634004",
+  "case_file_sha256": "53816159aa8d682cb7e9bcefca2c136f09a27986f9d5c9af9ae311e48ce20f67",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,16 +22,16 @@
       "persona": "Development Services Director",
       "onepager_promise": "pain: long processing times and high citizen complaints",
       "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
-      "assistant_response": "## Summary\n\n**Three permits are overdue** on the statutory clock:\n\n1. **BP-2025-0104** (Metro School District, institutional) — **63 days, 18 days overdue** — This one is at the highest complaint risk (100/100). It's been through 3 correction cycles and is still awaiting revisions. This is your lead complainant.\n\n2. **BP-2025-0101** (Greenfield Development LLC, new construction) — **48 days, 18 days overdue** — High complaint risk (66/100).\n\n3. **BP-2025-0103** (Sunrise Solar Inc., commercial alteration) — **26 days, 5 days overdue** — Moderate complaint risk (25/100).\n\n## Who will complain first\n\n**Metro School District** on the institutional project at 2200 Education Way (BP-2025-0104). They're the furthest over the clock, longest in process, and caught in a correction loop. The auditor evidence shows this needs immediate action: **send the cycle-3 correction list today with a committed re-review date** to head off the call. Your reviewer Tom Delgado should be notified this is a priority escalation.",
-      "agent_logs": "[BuildingPermitProcessingAgent] # Permit Backlog — 2026-08-07\n\n**5 open applications · 3 past the statutory clock**\n\n| Permit | Applicant | Type | Age | SLA | State | Complaint risk |\n|---|---|---|---|---|---|---|\n| BP-2025-0104 | Metro School District | institutional | 63d | 45d | OVERDUE (+18d) | 100/100 |\n| BP-2025-0101 | Greenfield Development LLC | new construction | 48d | 30d | OVERDUE (+18d) | 66/100 |\n| BP-2025-0103 | Sunrise Solar Inc. | commercial alteration | 26d | 21d | OVERDUE (+5d) | 25/100 |\n| BP-2025-0105 | Greenfield Development LLC | new construction | 3d | 30d | ON TRACK | 0/100 |\n| BP-2025-0106 | Ridgeline Restaurants Inc. | commercial alteration | 1d | 21d | ON TRACK | 0/100 |\n\n## Who calls first\n\n**Metro School District** on BP-2025-0104 — 2200 Education Way. 63 days in process against a 45-day clock, 18 days over, 3 correction cycle(s), currently corrections required.\n- Reviewer: Tom Delgado\n- Get ahead of it: send the cycle-3 correction list today and give a committed re-review date.",
+      "assistant_response": "Here's the backlog picture (pulled from the permit system):\n\n| Priority | Permit | Applicant | Status |\n|---:|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days overdue, cycle 3 corrections, 63 days total \u2014 **highest complaint risk (100/100)** |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |\n\n**Who complains first:** Metro School District on BP-2025-0104 \u2014 it's the oldest, most overdue, and already on its third correction round with reviewer Tom Delgado.\n\n**Suggested next step:** have a reviewer draft the cycle-3 correction list and set a firm re-review date for that permit before it escalates further.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Permit Backlog and Complaint Risk\n\n**First intervention:** BP-2025-0104 \u2014 Metro School District. It is the\nhighest-priority backlog item and the applicant most likely to call first. The\napplication is 63 days old against a 45-day target, 18 days overdue, in\ncorrection cycle 3, assigned to Tom Delgado, with complaint risk 100/100.\n\n**Recommended next step:** An authorized reviewer drafts the cycle-3 correction\nlist and chooses a specific re-review date. This is a recommendation only; no\nmessage, permit update, assignment, or system action occurred.\n\n| Priority | Permit | Applicant | Snapshot state |\n|---:|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days overdue |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
       "expected_agent": "BuildingPermitProcessingAgent",
       "must_include": [
         "BP-2025-0104",
         "Metro School District",
         "overdue"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -39,15 +39,15 @@
       "persona": "Permit Technician",
       "onepager_promise": "Classify and validate permit applications at intake",
       "prompt": "Anything at the front counter I should not be accepting today?",
-      "assistant_response": "**Yes — reject BP-2025-0105 (Greenfield Development LLC).**\n\nIt's a **duplicate** of **BP-2025-0101**, which is already in plan review for the same parcel and applicant. Close it and direct them to track the original application.\n\nAlso flag: even if they resubmit, this one is **missing MEP drawings and a title report**, so it wouldn't be ready to accept anyway.\n\n**Accept BP-2025-0106** (Ridgeline Restaurants Inc.) — that's a clean commercial alteration application routing through Zoning → Building → Fire/Life Safety with a 21-day clock starting today.",
-      "agent_logs": "[BuildingPermitProcessingAgent] # Intake Triage — 2 application(s)\n\n## BP-2025-0105 — Greenfield Development LLC\n\n- **Classification:** new construction · MU-2 (Mixed Use) · $4,200,000 valuation\n- **Verdict:** REJECT — duplicate\n- **Duplicate of BP-2025-0101** — same parcel 045-221-009 and applicant, already in plan review. Close this one and point the applicant at BP-2025-0101.\n- **Missing at intake:** `mep_drawings`, `title_report` — the review clock does not start until these land.\n\n## BP-2025-0106 — Ridgeline Restaurants Inc.\n\n- **Classification:** commercial alteration · MU-2 (Mixed Use) · $540,000 valuation\n- **Verdict:** ACCEPT\n- **Routed to:** Zoning → Building → Fire/Life Safety\n- **Clock starts today**, 21-day statutory target (due 2026-08-28).\n",
+      "assistant_response": "Two to hold off on today:\n\n- **BP-2025-0105 (Greenfield Development, $4.2M mixed-use)** \u2014 reject as a **duplicate** of BP-2025-0101, same parcel/applicant already in review. Also missing MEP drawings and title report, so point them to the existing case instead.\n- **BP-2024-3847 (Johnson Residence)** \u2014 **hold**, missing HOA approval letter; clock doesn't start until it's in.\n\nGood to accept:\n- **BP-2025-0106 (Ridgeline Restaurants, $540K alteration)** \u2014 complete, routes to Zoning \u2192 Building \u2192 Fire/Life Safety, 21-day clock due 2026-08-28.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Intake Triage \u2014 3 application(s)\n\n## BP-2025-0105 \u2014 Greenfield Development LLC\n\n- **Classification:** new construction \u00b7 MU-2 (Mixed Use) \u00b7 $4,200,000 valuation\n- **Verdict:** REJECT \u2014 duplicate\n- **Duplicate of BP-2025-0101** \u2014 same parcel 045-221-009 and applicant, already in plan review. Close this one and point the applicant at BP-2025-0101.\n- **Missing at intake:** `mep_drawings`, `title_report` \u2014 the review clock does not start until these land.\n\n## BP-2025-0106 \u2014 Ridgeline Restaurants Inc.\n\n- **Classification:** commercial alteration \u00b7 MU-2 (Mixed Use) \u00b7 $540,000 valuation\n- **Verdict:** ACCEPT\n- **Routed to:** Zoning \u2192 Building \u2192 Fire/Life Safety\n- **Clock starts today**, 21-day statutory target (due 2026-08-28).\n\n## BP-2024-3847 \u2014 Johnson Residence\n\n- **Classification:** residential addition \u00b7 R-2 (HOA Residential) \u00b7 $68,000 valuation\n- **Verdict:** HOLD \u2014 incomplete\n- **Missing at intake:** `hoa_approval` \u2014 the review clock does not start until these land.\n",
       "expected_agent": "BuildingPermitProcessingAgent",
       "must_include": [
         "BP-2025-0105",
         "duplicate"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -55,16 +55,16 @@
       "persona": "Permit Technician",
       "onepager_promise": "Route requests automatically to the correct review teams",
       "prompt": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
-      "assistant_response": "Good news — the restaurant fit-out on Harbor Way came in clean.\n\n**Permit:** BP-2025-0106 (Ridgeline Restaurants Inc.)  \n**Classification:** Commercial alteration, MU-2 zoning, $540,000 valuation\n\n**Review Path:**\n1. **Zoning** (first)\n2. **Building** (second)\n3. **Fire/Life Safety** (third)\n\n**Clock:** Starts today with a **21-day statutory target due 2026-08-28**.\n\nThe application is accepted and ready to route through the review teams in that order.",
-      "agent_logs": "[BuildingPermitProcessingAgent] # Intake Triage — 2 application(s)\n\n## BP-2025-0105 — Greenfield Development LLC\n\n- **Classification:** new construction · MU-2 (Mixed Use) · $4,200,000 valuation\n- **Verdict:** REJECT — duplicate\n- **Duplicate of BP-2025-0101** — same parcel 045-221-009 and applicant, already in plan review. Close this one and point the applicant at BP-2025-0101.\n- **Missing at intake:** `mep_drawings`, `title_report` — the review clock does not start until these land.\n\n## BP-2025-0106 — Ridgeline Restaurants Inc.\n\n- **Classification:** commercial alteration · MU-2 (Mixed Use) · $540,000 valuation\n- **Verdict:** ACCEPT\n- **Routed to:** Zoning → Building → Fire/Life Safety\n- **Clock starts today**, 21-day statutory target (due 2026-08-28).\n",
+      "assistant_response": "Found it \u2014 **BP-2025-0106, Ridgeline Restaurants Inc.** (commercial alteration, MU-2, $540,000 valuation):\n\n- **Routed to:** Zoning \u2192 Building \u2192 Fire/Life Safety (in that order)\n- **Clock:** started today, 21-day statutory target\n- **Due back:** 2026-08-28\n\nIt was accepted at intake with no missing documents, so the clock is already running.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Intake Triage \u2014 3 application(s)\n\n## BP-2025-0105 \u2014 Greenfield Development LLC\n\n- **Classification:** new construction \u00b7 MU-2 (Mixed Use) \u00b7 $4,200,000 valuation\n- **Verdict:** REJECT \u2014 duplicate\n- **Duplicate of BP-2025-0101** \u2014 same parcel 045-221-009 and applicant, already in plan review. Close this one and point the applicant at BP-2025-0101.\n- **Missing at intake:** `mep_drawings`, `title_report` \u2014 the review clock does not start until these land.\n\n## BP-2025-0106 \u2014 Ridgeline Restaurants Inc.\n\n- **Classification:** commercial alteration \u00b7 MU-2 (Mixed Use) \u00b7 $540,000 valuation\n- **Verdict:** ACCEPT\n- **Routed to:** Zoning \u2192 Building \u2192 Fire/Life Safety\n- **Clock starts today**, 21-day statutory target (due 2026-08-28).\n\n## BP-2024-3847 \u2014 Johnson Residence\n\n- **Classification:** residential addition \u00b7 R-2 (HOA Residential) \u00b7 $68,000 valuation\n- **Verdict:** HOLD \u2014 incomplete\n- **Missing at intake:** `hoa_approval` \u2014 the review clock does not start until these land.\n",
       "expected_agent": "BuildingPermitProcessingAgent",
       "must_include": [
         "Zoning",
         "Fire/Life Safety",
         "21"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -72,15 +72,15 @@
       "persona": "Customer Service Lead",
       "onepager_promise": "Centralize communication and provide instant updates to applicants",
       "prompt": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
-      "assistant_response": "Perfect. **Send these five updates today:**\n\n1. **Metro School District (BP-2025-0104)** — overdue 18 days. Tell them: corrections are with Tom Delgado; include his contact and a target handoff date to keep them from re-calling.\n\n2. **Greenfield Development LLC (BP-2025-0101)** — overdue 18 days. They're in active plan review; share which review teams have it and expected completion date.\n\n3. **Sunrise Solar Inc. (BP-2025-0103)** — 5 days overdue. Their next trigger is a scheduled electrical rough-in inspection on 2026-08-17 with Dave Martinez; confirm the appointment or reschedule.\n\n4. **Greenfield Development LLC (BP-2025-0105)** — on track but stalled at intake. Send the exact missing items (MEP drawings, title report) and a deadline to reactivate the 30-day clock.\n\n5. **Ridgeline Restaurants Inc. (BP-2025-0106)** — just entered review. Confirm receipt, set expectations for the 21-day review period, and give them a checkpoint date.\n\nThese proactive updates address the reason behind most status calls: **uncertainty about what happens next and who to contact.** Expect a sharp drop in call volume once these go out.",
-      "agent_logs": "[BuildingPermitProcessingAgent] # Applicant Updates Ready to Send — 5\n\n**BP-2025-0104 → Metro School District**\n- your application is in correction cycle 3; the outstanding items are with Tom Delgado.\n- Day 63 of a 45-day target — overdue, 18 days over.\n\n**BP-2025-0101 → Greenfield Development LLC**\n- your application is in plan review.\n- Day 48 of a 30-day target — overdue, 18 days over.\n\n**BP-2025-0103 → Sunrise Solar Inc.**\n- your next inspection is Electrical Rough-In on 2026-08-17 with Dave Martinez.\n- Day 26 of a 21-day target — overdue, 5 days over.\n\n**BP-2025-0105 → Greenfield Development LLC**\n- we need mep_drawings, title_report before the review clock can start.\n- Day 3 of a 30-day target — on track.\n\n**BP-2025-0106 → Ridgeline Restaurants Inc.**\n- your application is complete and enters review today.\n- Day 1 of a 21-day target — on track.\n\nSending these removes the reason for 5 status-check call(s).",
+      "assistant_response": "Here are 6 ready-to-send applicant updates that should cut most of today's status calls:\n\n- **Metro School District (BP-2025-0104)** \u2014 in correction cycle 3 with Tom Delgado; 18 days over target.\n- **Greenfield Development (BP-2025-0101)** \u2014 in plan review; 18 days over target.\n- **Sunrise Solar (BP-2025-0103)** \u2014 Electrical Rough-In inspection scheduled 8/17 with Dave Martinez; 5 days over.\n- **Greenfield Development (BP-2025-0105)** \u2014 needs MEP drawings + title report before clock starts; on track.\n- **Ridgeline Restaurants (BP-2025-0106)** \u2014 complete, entering review today; on track.\n- **Johnson Residence (BP-2024-3847)** \u2014 needs HOA approval before clock starts; on track.\n\nFor the overdue ones, I'd lead with an honest status + apology for delay; for the ones waiting on documents, a clear checklist of what's missing stops the \"any update?\" calls fastest. Want me to draft the actual email/letter text for any of these?",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Applicant Updates Ready to Send \u2014 6\n\n**BP-2025-0104 \u2192 Metro School District**\n- your application is in correction cycle 3; the outstanding items are with Tom Delgado.\n- Day 63 of a 45-day target \u2014 overdue, 18 days over.\n\n**BP-2025-0101 \u2192 Greenfield Development LLC**\n- your application is in plan review.\n- Day 48 of a 30-day target \u2014 overdue, 18 days over.\n\n**BP-2025-0103 \u2192 Sunrise Solar Inc.**\n- your next inspection is Electrical Rough-In on 2026-08-17 with Dave Martinez.\n- Day 26 of a 21-day target \u2014 overdue, 5 days over.\n\n**BP-2025-0105 \u2192 Greenfield Development LLC**\n- we need mep_drawings, title_report before the review clock can start.\n- Day 3 of a 30-day target \u2014 on track.\n\n**BP-2025-0106 \u2192 Ridgeline Restaurants Inc.**\n- your application is complete and enters review today.\n- Day 1 of a 21-day target \u2014 on track.\n\n**BP-2024-3847 \u2192 Johnson Residence**\n- we need hoa_approval before the review clock can start.\n- Day 0 of a 15-day target \u2014 on track.\n\nSending these removes the reason for 6 status-check call(s).",
       "expected_agent": "BuildingPermitProcessingAgent",
       "must_include": [
         "BP-2025-0104",
         "Greenfield"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -88,14 +88,99 @@
       "persona": "Chief Building Inspector",
       "onepager_promise": "Provide inspectors with mobile access and real-time assignments",
       "prompt": "What inspections are on the board for the solar job, and who is covering them?",
-      "assistant_response": "Based on the inspector assignment data, the **solar job** (permit **BP-2025-0103** at 1100 Industrial Pkwy) has the following inspections scheduled:\n\n| Inspection Type | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-02 | Pending |\n\n**Coverage:**\n- **Dave Martinez** (Electrical Specialist, East Zone) is covering both the electrical rough-in and final electrical inspections\n- **Lisa Park** (Structural Specialist, East Zone) is covering the structural mounting inspection",
-      "agent_logs": "[BuildingPermitProcessingAgent] # Inspector Assignment\n\n## Available Inspectors\n\n| Inspector | Specialty | Available Slots | Zone |\n|---|---|---|---|\n| Dave Martinez | Electrical | 3 | East |\n| Lisa Park | Structural | 2 | East |\n| Carlos Reyes | Plumbing/Mechanical | 4 | West |\n| Ann Kowalski | Fire/Life Safety | 2 | All |\n\n## Scheduled Inspections\n\n### BP-2025-0103 — 1100 Industrial Pkwy\n\n| Type | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-02 | Pending |\n",
+      "assistant_response": "Here's the board for the solar job (BP-2025-0103, 1100 Industrial Pkwy):\n\n| Inspection | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-25 | Pending |\n\nDave Martinez (electrical) covers both rough-in and final, Lisa Park (structural) covers the panel mounting inspection.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Inspector Assignment\n\n## Available Inspectors\n\n| Inspector | Specialty | Available Slots | Zone |\n|---|---|---|---|\n| Dave Martinez | Electrical | 3 | East |\n| Lisa Park | Structural | 2 | East |\n| Carlos Reyes | Plumbing/Mechanical | 4 | West |\n| Ann Kowalski | Fire/Life Safety | 2 | All |\n\n## Scheduled Inspections\n\n### BP-2025-0103 \u2014 1100 Industrial Pkwy\n\n| Type | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-25 | Pending |\n",
       "expected_agent": "BuildingPermitProcessingAgent",
       "must_include": [
         "Dave Martinez"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-06",
+      "persona": "Permitting Supervisor",
+      "onepager_promise": "Classify and validate permit applications at intake",
+      "prompt": "A new residential addition application just came in. Process it and tell me if it is complete.",
+      "assistant_response": "I ran it through intake triage (BuildingPermitProcessingAgent).\n\n**Result: Not complete \u2014 on hold.**\n\n- Permit BP-2024-3847, Johnson Residence, 123 Oak Lane \u2014 400 sq ft bedroom/bath addition\n- Site plan, structural drawings, survey, and insurance are all in order\n- **Missing: HOA approval letter**, which is required for this zone\n- Fee calculated at $847 ($68K valuation), but plan review won't start until the HOA letter is submitted\n\nWant me to run the code compliance check next, or draft a note to the applicant asking for the HOA approval?",
+      "agent_logs": "[BuildingPermitProcessingAgent] # New Permit Application \u2014 Received 15 minutes ago\n\n**Permit:** BP-2024-3847\n**Project:** Residential Addition\n**Applicant:** Johnson Residence (123 Oak Lane)\n**Contractor:** Premier Builders LLC (License #BLD-48291)\n**Scope:** 400 sq ft master bedroom + bathroom addition\n\n**Auto-Completeness Check:**\n\n| Required Item | Status | Notes |\n|---|---|---|\n| Site plan | Complete | Verified dimensions |\n| Structural drawings | Complete | Stamped by PE |\n| Property survey | Complete | Updated 3 months ago |\n| Proof of insurance | Complete | Valid through next year |\n| HOA approval | Missing | Required for this zone |\n\n**Fee Calculated:** $847 (based on $68K project value)\n**Recommended action:** Application on hold \u2014 HOA approval letter needed before plan review begins.\n\n**Next:** show code compliance checking?\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "Johnson Residence",
+        "HOA approval",
+        "$847"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-07",
+      "persona": "Permitting Supervisor",
+      "onepager_promise": "Classify and validate permit applications at intake",
+      "prompt": "Run the code compliance check on the Johnson addition plans.",
+      "assistant_response": "Ran the compliance review on the Johnson Residence addition (BP-2024-3847). Results:\n\n**Passed:** setbacks, lot coverage, height, structural loads \u2014 all within code.\n\n**2 flags needing correction:**\n1. Egress window \u2014 bedroom opening needs to confirm 5.7 sq ft min (request manufacturer cut sheet)\n2. Bathroom only shows 1 GFCI outlet \u2014 needs 2 per NEC 210.8\n\nEstimated fix turnaround: 1\u20132 days. Want me to route this for expert/plans-examiner review next?",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Automated Code Compliance Review\n\n**Permit #BP-2024-3847 \u2014 Plan Review (2.4 minutes)**\n\nChecked the plans against 247 code requirements across building, electrical, plumbing, and zoning codes.\n\n| Check | Result | Detail |\n|---|---|---|\n| Setback requirements | Met | 15 ft all sides (min 15 ft) |\n| Lot coverage | Met | 28% (max 35% allowed) |\n| Height restrictions | Met | 18 ft (max 25 ft allowed) |\n| Egress windows | Flag | Bedroom needs 5.7 sq ft min opening |\n| GFCI outlets | Flag | Bathroom plan shows only 1 (need 2) |\n| Structural loads | Met | Within limits (stamped by engineer) |\n\n**Flags Requiring Correction (2):**\n- Egress window specification unclear (provide manufacturer cut sheet)\n- Add second GFCI outlet near vanity per NEC 210.8\n\n**Estimated Resubmission Impact:** 1-2 days\nThese are synthetic plan-review findings for the examiner, not a code-compliance certification.\n\n**Next:** ready to route for expert review?\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "247 code requirements",
+        "NEC 210.8",
+        "1-2 days"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-08",
+      "persona": "Permitting Supervisor",
+      "onepager_promise": "Route requests automatically to the correct review teams",
+      "prompt": "Route the Johnson addition for expert plan review.",
+      "assistant_response": "Johnson Residence (BP-2024-3847) is routed for expert plan review:\n\n- **Primary reviewer:** Mike Chen, Senior Plans Examiner (residential additions specialist, moderate workload, can start today, ~1.2 day avg turnaround)\n- **Parallel reviews:** Electrical (Sarah Martinez) and Plumbing (David Park), both same-day\n- **Packet prepared:** marked-up application, code compliance checklist (2 minor items flagged), clean property history, zoning verification, and HOA approval letter\n\nA draft applicant notification is ready but unsent, noting the 2 minor items and a 1-business-day follow-up. This still needs a supervisor to confirm the assignment and send the notice \u2014 nothing has actually been routed or sent yet.\n\nWant me to pull up the workflow timeline next to track progress once it's confirmed?",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Intelligent Routing \u2014 Plan Review Assignment\n\n**Recommended Primary Reviewer:** Mike Chen, Senior Plans Examiner\n- Specialization: Residential additions\n- Current workload: 8 permits (moderate)\n- Avg review time: 1.2 days\n- Availability: Can start today\n\n**Review Packet (prepared):**\n1. Complete application with markup highlights\n2. Code compliance checklist (2 items flagged)\n3. Property history (no prior violations)\n4. Zoning verification certificate\n5. HOA approval letter (just received)\n\n**Parallel Review (recommended):**\n- Electrical: Sarah Martinez (same-day review)\n- Plumbing: David Park (same-day review)\n\n**Draft Applicant Notification (not sent):** \"Your plans are under review. We found 2 minor items needing clarification. Reviewer will contact you within 1 business day.\"\nAssignment and notification are ready for a supervisor to confirm; nothing was assigned or sent.\n\n**Next:** track the approval workflow?\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "Mike Chen",
+        "Sarah Martinez",
+        "David Park"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-09",
+      "persona": "Permitting Supervisor",
+      "onepager_promise": "Centralize communication and provide instant updates to applicants",
+      "prompt": "Track the approval workflow for the Johnson addition.",
+      "assistant_response": "Here's where the Johnson Residence addition (BP-2024-3847) stands:\n\n- **Day 1\u20132:** Application received, completeness check, code compliance scan, and plans review assignment \u2014 all complete.\n- **Corrections requested:** Reviewer flagged missing egress window manufacturer specs and needed updated electrical plan (GFCI for second bathroom).\n- **Revised plans submitted** by contractor just 2 hours ago \u2014 both corrections addressed per auto-validation.\n- **Next step:** Final review tomorrow at 9 AM; reviewer indicated same-day approval likely once resubmitted.\n\nStill pending: final approval and permit issuance. Want me to pull up what the issuance package/inspections will look like once it's approved?",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Approval Workflow Status\n\n**Permit #BP-2024-3847 \u2014 Day 3 of Processing**\n\n| Step | When | Status |\n|---|---|---|\n| Application received | Day 1 | Done |\n| Completeness verified | Day 1 | Done |\n| Code compliance scan | Day 1 | Done |\n| Plans review assigned | Day 2 | Done |\n| Corrections requested | Day 2 | Current |\n| Revised plans | - | Pending |\n| Final approval | - | Pending |\n| Permit issuance | - | Pending |\n\n**Reviewer Feedback (received today):** \"Plans look good overall. Need manufacturer specs on egress window and updated electrical plan showing second bathroom GFCI. Once resubmitted, can approve same day.\"\n**Contractor Response:** Revised plans submitted 2 hours ago\n**Auto-Validation:** Both corrections addressed (2 of 2)\n**Next Step:** Final review scheduled (tomorrow 9 AM)\n\n**Next:** show the permit issuance?\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "Day 3 of Processing",
+        "Both corrections addressed",
+        "tomorrow 9 AM"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-10",
+      "persona": "Permitting Supervisor",
+      "onepager_promise": "Provide inspectors with mobile access and real-time assignments",
+      "prompt": "Show me the permit issuance package for the Johnson addition.",
+      "assistant_response": "Here's the Johnson Residence permit package (BP-2024-3847, 123 Oak Lane) \u2014 approved and staged for issuance:\n\n**Processing:** 4.5 days total (vs. 18-day baseline)\n\n**Package contents:**\n- Digital permit card w/ QR code\n- Stamped approved plans\n- Inspection schedule\n- Contractor safety checklist\n- Job site posting requirements\n\n**4 Required Inspections:**\n| Inspection | When | Inspector |\n|---|---|---|\n| Foundation | after excavation | Lisa Park |\n| Framing | before drywall | Lisa Park |\n| Rough electrical/plumbing | before walls | Dave Martinez |\n| Final | before occupancy | Carlos Reyes |\n\n**Citizen notification draft:** ready to send, tells them to check the portal and schedule inspections via the app.\n\nNote: this is all staged for staff \u2014 the agent prepared it but didn't actually issue the permit, book inspections, or send the notice. Want me to flag it for a human to pull the trigger?",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Permit Issuance \u2014 Ready for Construction\n\n**Permit #BP-2024-3847 \u2014 APPROVED in final review; ready for the building official to issue**\n\n**Total Processing Time:** 4.5 days (vs. 18-day baseline)\n\n**Permit Package (assembled):**\n- Digital permit card (QR code for inspections)\n- Approved plans (digitally stamped)\n- Inspection schedule (4 required inspections)\n- Contractor safety checklist\n- Job site posting requirements\n\n**Required Inspections (proposed schedule):**\n\n| Inspection | Timing | Inspector |\n|---|---|---|\n| Foundation | after excavation | Lisa Park |\n| Framing | before drywall | Lisa Park |\n| Rough electrical/plumbing | before walls | Dave Martinez |\n| Final | before occupancy | Carlos Reyes |\n\n**Draft Citizen Notification (ready to send):** \"Your permit is approved! Digital permit and plans available in your portal. Schedule inspections 24 hours in advance through our mobile app.\"\n\n**Performance Impact:** 75% faster processing, 96% satisfaction rate\nThe package, inspection bookings and notification are prepared for staff to issue, book and send; this agent did not issue the permit, book an inspection, or send a message.\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "4.5 days",
+        "Foundation",
+        "Draft Citizen Notification"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

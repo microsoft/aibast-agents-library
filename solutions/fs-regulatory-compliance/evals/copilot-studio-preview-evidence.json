@@ -1,18 +1,18 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T07:58:34.826Z",
+  "captured_at": "2026-10-08T02:39:29.207573Z",
   "solution": "@aibast-agents-library/fs-regulatory-compliance",
   "display_name": "Regulatory Compliance Pilot",
   "model": "Claude Sonnet 4.6",
-  "status": "reshoot_required",
+  "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "RC-01",
       "must_include": [
-        "T-2041",
-        "T-2233"
+        "99.8%",
+        "Strategy #5"
       ],
       "must_not_include": [
         "I don't have access",
@@ -20,68 +20,81 @@
         "give me a trade",
         "which trade would you"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
     },
     {
       "case_id": "RC-02",
       "must_include": [
-        "T-2041",
-        "T-2233"
+        "James Morrison",
+        "No trader is lapsed"
       ],
       "must_not_include": [
         "I don't have access",
         "provide the trader"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
     },
     {
       "case_id": "RC-03",
       "must_include": [
-        "TRD-88133",
-        "field"
+        "APX-2024-8847",
+        "Venue ID mismatch"
       ],
       "must_not_include": [
         "I don't have access",
         "upload"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
     },
     {
       "case_id": "RC-04",
       "must_include": [
-        "ALGO-POV-NL"
+        "Strategy #5",
+        "Pre-trade testing"
       ],
       "must_not_include": [
         "I don't have access"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
     },
     {
       "case_id": "RC-05",
       "must_include": [
-        "TRD-88133"
+        "APX-2024-8847",
+        "Standard National Bank"
       ],
       "must_not_include": [
         "I don't have access"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
+    },
+    {
+      "case_id": "RC-06",
+      "must_include": [
+        "LSE (London)",
+        "98.2%",
+        "RTS 28"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RC-07",
+      "must_include": [
+        "Compliance Scorecard",
+        "£847K",
+        "80%"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "passed": true
     }
   ],
-  "captured_status": "Draft",
-  "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "schema_name": "aibast_RegulatoryCompliancePilot",
+  "bot_id": "1a5fb3de-2e07-4415-89f9-40c5620c0cc5"
 }

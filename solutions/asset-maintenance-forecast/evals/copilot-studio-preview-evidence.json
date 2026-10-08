@@ -1,22 +1,23 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T18:05:59.637Z",
+  "captured_at": "2026-10-07T04:11:40.355649Z",
   "solution": "@aibast-agents-library/asset-maintenance-forecast",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Asset Maintenance Pilot",
   "schema_name": "aibast_AssetMaintenanceForecastPil",
   "bot_id": "201fab8e-7f43-45d4-8c81-2dcc476e0f6d",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 7 change(s) pushed.",
   "cases": [
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-01",
       "must_include": [
-        "Substation Transformer B-12",
-        "2026-05-01"
+        "Unit 12",
+        "8.7/10",
+        "March 18-22"
       ],
       "must_not_include": [],
       "passed": true
@@ -24,7 +25,7 @@
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-02",
       "must_include": [
-        "Substation Transformer B-12",
+        "Unit 12",
         "CRITICAL",
         "not a safety determination"
       ],
@@ -34,8 +35,8 @@
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-03",
       "must_include": [
-        "Substation Transformer B-12",
-        "$273,000",
+        "$70,200",
+        "$227,000",
         "Synthetic planning estimate"
       ],
       "must_not_include": [],
@@ -44,8 +45,8 @@
     {
       "case_id": "ASSET_MAINTENANCE_FORECAST-04",
       "must_include": [
-        "Substation Transformer B-12",
-        "Draft approval queue",
+        "Bundled Maintenance Plan",
+        "258%",
         "No work order"
       ],
       "must_not_include": [],

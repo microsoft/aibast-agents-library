@@ -1,0 +1,105 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/engineering-standards-advisor",
+  "onepager": "59. Engineering Standards Agent one-pager.pptx",
+  "source_slide_sha256": "1c1d31db197c350ccb751d528e166f4beff713413765150e78a5e65439ec1d84",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/energy_stacks/engineering_standards_advisor_stack/engineering_standards_advisor_agent.py",
+    "implemented_operations": [
+      "vetted_lookup",
+      "interpretation",
+      "flag_for_review",
+      "review_queue",
+      "quick_reference",
+      "scope_job"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts, checks or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Answers standards questions in seconds with vetted values and exact section and page citations",
+      "operations": [
+        "vetted_lookup"
+      ],
+      "demo_cases": [
+        "ESA-01"
+      ],
+      "synthetic_evidence": [
+        "6.5 m",
+        "QR-210-01",
+        "page 14"
+      ]
+    },
+    {
+      "advertised_promise": "Interprets the full standard text when no vetted value exists, clearly labeled as unvetted",
+      "operations": [
+        "interpretation"
+      ],
+      "demo_cases": [
+        "ESA-02"
+      ],
+      "synthetic_evidence": [
+        "UNVETTED",
+        "Class 3",
+        "Not authoritative"
+      ]
+    },
+    {
+      "advertised_promise": "Routes interpretations to a standards engineer so good answers become vetted guidance",
+      "operations": [
+        "flag_for_review"
+      ],
+      "demo_cases": [
+        "ESA-03"
+      ],
+      "synthetic_evidence": [
+        "REV-0318",
+        "Not Submitted",
+        "Nothing was submitted"
+      ]
+    },
+    {
+      "advertised_promise": "Gives standards engineers one queue of interpretations to confirm and rows to re-vet",
+      "operations": [
+        "review_queue"
+      ],
+      "demo_cases": [
+        "ESA-04"
+      ],
+      "synthetic_evidence": [
+        "REV-0311",
+        "Pending reviews",
+        "QR-210-04"
+      ]
+    },
+    {
+      "advertised_promise": "Keeps quick-reference sheets current by showing what is vetted and what needs re-vetting",
+      "operations": [
+        "quick_reference"
+      ],
+      "demo_cases": [
+        "ESA-05"
+      ],
+      "synthetic_evidence": [
+        "QR-210-04",
+        "Re-vetting due",
+        "3 vetted and current"
+      ]
+    },
+    {
+      "advertised_promise": "Scopes jobs against the standards and risk factors that apply, before design starts",
+      "operations": [
+        "scope_job"
+      ],
+      "demo_cases": [
+        "ESA-06"
+      ],
+      "synthetic_evidence": [
+        "7.4 crew-days",
+        "INT-0318",
+        "Total risk score"
+      ]
+    }
+  ]
+}

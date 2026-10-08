@@ -103,6 +103,150 @@
       ],
       "min_words": 30,
       "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-05",
+      "persona": "Account Executive",
+      "onepager_bullet": "Analyze customer health, feature adoption, usage spikes, and waitlisted demand",
+      "prompt": "GlobalBank license expires in 45 days. Currently 2,000 seats at $1M ARR. Usage shows they need 500 more seats. Competitor offering 30% discount.",
+      "operation": "account_health",
+      "arguments": {
+        "operation": "account_health",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Account Analysis: GlobalBank",
+        "99.4%",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-06",
+      "persona": "Customer Success Manager",
+      "onepager_bullet": "Compare competitive offers and calculate true switching costs",
+      "prompt": "Yes, show me the competitive defense strategy.",
+      "operation": "competitive_defense",
+      "arguments": {
+        "operation": "competitive_defense",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Competitive Defense Strategy",
+        "~$500K",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-07",
+      "persona": "Account Executive",
+      "onepager_bullet": "Identify credible expansion opportunities tied to user demand",
+      "prompt": "Yes, build the renewal and expansion proposal.",
+      "operation": "renewal_proposal",
+      "arguments": {
+        "operation": "renewal_proposal",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "$787.5K/year",
+        "5.3x",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-08",
+      "persona": "Account Executive",
+      "onepager_bullet": "Get a pricing and packaging strategy with pre‑approved concessions",
+      "prompt": "Yes, create the executive presentation with talking points.",
+      "operation": "executive_brief",
+      "arguments": {
+        "operation": "executive_brief",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Draft Executive Presentation",
+        "Key Talking Points",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-09",
+      "persona": "Sales Leadership",
+      "onepager_bullet": "Get a pricing and packaging strategy with pre‑approved concessions",
+      "prompt": "Yes, show me negotiation strategy and what approvals I need.",
+      "operation": "negotiation_plan",
+      "arguments": {
+        "operation": "negotiation_plan",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Negotiation Boundaries",
+        "Approvals to Request",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-10",
+      "persona": "Sales Leadership",
+      "onepager_bullet": "Get a pricing and packaging strategy with pre‑approved concessions",
+      "prompt": "Yes, send the proposal and summarize our renewal strategy.",
+      "operation": "deal_summary",
+      "arguments": {
+        "operation": "deal_summary",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "$2.36M",
+        "not sent",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
     }
   ],
   "assertion_principle": "expects_agent proves routing; must_include checks deterministic tool output; must_not_include catches routing stalls or prohibited side-effect claims."

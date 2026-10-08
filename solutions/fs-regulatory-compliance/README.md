@@ -94,11 +94,11 @@ reproduce this manual build.
 | Source bundle | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip` |
 | Manual evidence | `solutions/fs-regulatory-compliance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json` |
-| Historical Copilot Studio solution ZIP — not current source | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |
+| Copilot Studio solution ZIP | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-solution-export.json` |
 
-**Scaffold status:** 86 resources ready; 0 pending. Pending assets are not evidence and must not be claimed as captured. Current manual Preview and saved-instruction verification remain pending.
+**Scaffold status:** 127 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

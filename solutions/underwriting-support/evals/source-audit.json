@@ -2,7 +2,7 @@
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/underwriting-support",
   "audited_source": "agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py",
-  "source_sha256": "2e6378aa40236659e8615d65bf40254427d19ee762f851191b35aa2c0e4c8ff3",
+  "source_sha256": "0df5e53fe082565ad48d9a80bc35bb141c532a104e0d5c6b9941dcb099adae43",
   "case_file": "tests/demo_cases/underwriting-support.json",
   "onepager": "33. Underwriting Support Agent one-pager.pptx",
   "operations": {
@@ -17,6 +17,21 @@
     ],
     "exception_review": [
       "UWS-04"
+    ],
+    "submission_review": [
+      "UWS-05"
+    ],
+    "risk_assessment": [
+      "UWS-06"
+    ],
+    "coverage_structure": [
+      "UWS-07"
+    ],
+    "compliance_check": [
+      "UWS-08"
+    ],
+    "underwriting_summary": [
+      "UWS-09"
     ]
   },
   "defects_fixed": [
@@ -24,7 +39,8 @@
     "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
     "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
     "Rejected unknown record identifiers instead of silently substituting another fictional record.",
-    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture.",
+    "Collateral alignment (demo video): added the Midwest Manufacturing commercial package submission (UW-2025-100, default) with completeness, risk flags, four-factor scores, loss history, $88,100 premium by line (computed), coverage structure, authority matrix, and summary; new operations submission_review, risk_assessment, coverage_structure, compliance_check, underwriting_summary; pricing_recommendation defaults to the package premium and keeps the Riverside factor review when an ID is given."
   ],
   "unresolved_defects": [],
   "routing_result": {

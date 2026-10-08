@@ -22,7 +22,7 @@ Sales Leader
 1. Confirm that the request matches `revenue_impact`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Synthetic Revenue Scenario Model`, `Illustrative scenario value`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Synthetic Revenue Scenario Model`, `$4.2M`, `23:1`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Model synthetic intervention scenarios without presenting them as realized or committed revenue.
 
 ## Expected evidence marker
-The response must include `Synthetic Revenue Scenario Model`, `Illustrative scenario value`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Synthetic Revenue Scenario Model`, `$4.2M`, `23:1`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

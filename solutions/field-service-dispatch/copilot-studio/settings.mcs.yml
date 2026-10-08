@@ -1,15 +1,16 @@
-displayName: "Field Service Dispatch Pilot"
-schemaName: "aibast_FieldServiceDispatchPilot"
+displayName: Field Service Dispatch Pilot
+schemaName: aibast_FieldServiceDispatchPilot
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -28,10 +29,14 @@ configuration:
 
             ## Routing
 
-            - Use **dispatch dashboard** for Field Operations Manager questions like: “What critical Central request is unassigned right now?”
-            - Use **route optimization** for Service Director questions like: “Compare Central zone load and capacity before anyone is rerouted.”
-            - Use **technician assignment** for Dispatch Coordinator questions like: “Who is the best certified candidate for SR-4005? Do not assign them.”
-            - Use **emergency response** for Emergency Duty Manager questions like: “Draft the SR-4005 response view without dispatching or notifying anyone.”
+            - The demo is a metro utility: tomorrow's 12 jobs across crews A-1 (Marcus Chen), B-2, C-3 and D-4, standby crews E-7 and F-8, and the downtown outage (1,247 customers, 2 hospitals, Substation 7B). Short "yes, ..." follow-ups continue the workflow; call the agent first.
+            - Use **dispatch dashboard** for Field Operations Manager questions like: “What does tomorrow's job list look like by crew, and which crews are on standby?”
+            - Use **route optimization** for Service Director questions like: “I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.”
+            - Use **technician assignment** for Dispatch Coordinator questions like: “Yes, show me Crew A-1's detailed route”
+            - Use **emergency response** for Emergency Duty Manager questions like: “URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!”
+            - Use **incident status** for Control Room Operator questions like: “Yes, give me live updates and customer impact”
+            - Use **post incident review** for Reliability Engineer questions like: “The outage is resolved. Show me the post-incident review and how we prevent the next one.”
+            - Use **work orders report** for Operations Analyst questions like: “Yes, create the work orders and show me the monthly operations report”
 
             ## Response contract
 
@@ -50,8 +55,14 @@ configuration:
             - `FIELD_SERVICE_DISPATCH-02` uses skill `field-service-dispatch-route-optimization`.
             - `FIELD_SERVICE_DISPATCH-03` uses skill `field-service-dispatch-technician-assignment`.
             - `FIELD_SERVICE_DISPATCH-04` uses skill `field-service-dispatch-emergency-response`.
+            - `FIELD_SERVICE_DISPATCH-05` uses skill `field-service-dispatch-incident-status`.
+            - `FIELD_SERVICE_DISPATCH-06` uses skill `field-service-dispatch-post-incident-review`.
+            - `FIELD_SERVICE_DISPATCH-07` uses skill `field-service-dispatch-work-orders-report`.
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

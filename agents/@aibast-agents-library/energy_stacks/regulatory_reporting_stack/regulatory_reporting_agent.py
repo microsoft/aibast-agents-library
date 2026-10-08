@@ -104,7 +104,53 @@ REGULATORY_REPORTS = {
         "assignee": "Pipeline Operations",
         "last_updated": "2026-03-14",
     },
+    "RPT-9007": {
+        "name": "EPA CAMD Quarterly Emissions Report (Part 75) Q1",
+        "authority": "EPA",
+        "facility": "All 14 facilities",
+        "reporting_period": "Q1 2026",
+        "deadline": "2026-04-30",
+        "status": "in_progress",
+        "data_quality_score": 99.7,
+        "completeness_pct": 100,
+        "assignee": "Environmental Compliance Team",
+        "last_updated": "2026-03-19",
+    },
 }
+
+# Demo date for deadline arithmetic (no current-date dependence).
+DEMO_DATE = "2026-03-19"
+
+EMISSIONS_QUARTER = {
+    "quarter": "Q1",
+    "period": "Last Quarter (Q1 2026)",
+    "facilities": 14,
+    "facilities_within_limits": 14,
+    "cems_data_availability_pct": 99.7,
+    "pollutants": [
+        {"pollutant": "CO2", "total": 8240000, "annual_limit": 35200000, "unit": "tons", "prior_year_quarter": 8890000},
+        {"pollutant": "NOx", "total": 4187, "annual_limit": 18500, "unit": "tons", "prior_year_quarter": 4402},
+        {"pollutant": "SO2", "total": 2943, "annual_limit": 12800, "unit": "tons", "prior_year_quarter": 3105},
+        {"pollutant": "Mercury", "total": 142, "annual_limit": 620, "unit": "lbs", "prior_year_quarter": 151},
+    ],
+}
+
+SUBMISSION_PACKAGE = {
+    "report_id": "RPT-9007",
+    "file_name": "EPA_Q1_Emissions_Report.xml",
+    "schema": "EPA CAMD schema",
+    "schema_check": "passed (synthetic validation)",
+    "location": "SharePoint > Regulatory Filings",
+    "manual_hours": 85,
+    "agent_hours": 6,
+    "labor_rate_per_hour": 105,
+}
+
+COMPLIANCE_RISKS = [
+    {"item": "FERC Form 1", "report": "RPT-9002", "detail": "6 sections incomplete", "sections_incomplete": 6},
+    {"item": "OSHA 300A Posting", "report": None, "detail": "3 facilities missing annual summaries", "facilities_missing": 3},
+    {"item": "State Air Permits", "report": None, "detail": "2 renewals needed next quarter", "renewals_next_quarter": 2},
+]
 
 DATA_VALIDATION_RULES = {
     "emissions_data": {
@@ -132,6 +178,21 @@ AUDIT_FINDINGS = {
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _days_until(deadline):
+    """Days from the fixed demo date to a YYYY-MM-DD deadline."""
+    import datetime
+    return (datetime.date.fromisoformat(deadline) - datetime.date.fromisoformat(DEMO_DATE)).days
+
+
+def _short_amount(value):
+    """8240000 -> '8.24M'; 4187 -> '4,187'."""
+    if value >= 1000000 and value % 100000 == 0:
+        return f"{value / 1000000:.1f}M"
+    if value >= 1000000:
+        return f"{value / 1000000:.2f}M"
+    return f"{value:,}"
+
 
 def _selected_reports(report_id=None):
     if report_id:
@@ -217,7 +278,12 @@ class RegulatoryReportingAgent(BasicAgent):
         self.name = "RegulatoryReportingAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                __manifest__["description"]
+                + " Always use this tool for the quarterly EPA emissions report: 'prepare our quarterly EPA "
+                "emissions report, pull the data' uses emissions_summary; 'generate the submission file and show "
+                "me any compliance risks' uses prepare_submission (a draft package; nothing is uploaded or filed)."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -228,12 +294,20 @@ class RegulatoryReportingAgent(BasicAgent):
                             "data_validation",
                             "submission_tracker",
                             "audit_readiness",
+                            "emissions_summary",
+                            "prepare_submission",
                         ],
-                        "description": "Choose report_status for the reporting portfolio, data_validation for source-quality exceptions, submission_tracker for read-only filing state, or audit_readiness for open evidence gaps.",
+                        "description": (
+                            "Choose emissions_summary to pull the quarterly emissions data for the EPA report "
+                            "(pollutant totals vs annual limits across all facilities), prepare_submission to "
+                            "generate the draft EPA CAMD submission file and list compliance risks, report_status "
+                            "for the reporting portfolio, data_validation for source-quality exceptions, "
+                            "submission_tracker for read-only filing state, or audit_readiness for open evidence gaps."
+                        ),
                     },
                     "report_id": {
                         "type": "string",
-                        "description": "Optional synthetic report ID such as RPT-9006. Unknown IDs return an empty result.",
+                        "description": "Optional synthetic report ID such as RPT-9006. Unknown IDs return a not-found message.",
                     },
                 },
                 "required": ["operation"],
@@ -244,6 +318,13 @@ class RegulatoryReportingAgent(BasicAgent):
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "report_status")
         report_id = kwargs.get("report_id")
+        if report_id and report_id not in REGULATORY_REPORTS:
+            return (f"No synthetic report found for `{report_id}`. Known reports: "
+                    + ", ".join(REGULATORY_REPORTS) + ".")
+        if op == "emissions_summary":
+            return self._emissions_summary()
+        if op == "prepare_submission":
+            return self._prepare_submission()
         if op == "report_status":
             return self._report_status(report_id)
         elif op == "data_validation":
@@ -333,10 +414,82 @@ class RegulatoryReportingAgent(BasicAgent):
         return "\n".join(lines)
 
 
+    def _emissions_summary(self) -> str:
+        q = EMISSIONS_QUARTER
+        within = all(p["total"] <= p["annual_limit"] for p in q["pollutants"])
+        compliant = "All plants are compliant with permit limits" if within and \
+            q["facilities_within_limits"] == q["facilities"] else "Some plants exceed a permit limit"
+        lines = [
+            "# Emissions Summary - " + q["period"],
+            "",
+            f"I've compiled your quarterly emissions data across all {q['facilities']} facilities. {compliant} "
+            f"and data quality is strong at {q['cems_data_availability_pct']}% uptime (CEMS data availability).",
+            "",
+            "| Pollutant | Total | Annual Limit | % of Limit |",
+            "|-----------|-------|--------------|------------|",
+        ]
+        for p in q["pollutants"]:
+            pct = round(p["total"] * 100 / p["annual_limit"], 1)
+            lines.append(f"| {p['pollutant']} | {_short_amount(p['total'])} {p['unit']} | "
+                         f"{_short_amount(p['annual_limit'])} {p['unit']} | {pct}% |")
+        co2 = q["pollutants"][0]
+        change = round((co2["total"] - co2["prior_year_quarter"]) * 100 / co2["prior_year_quarter"], 1)
+        direction = "down" if change < 0 else "up"
+        lines += [
+            "",
+            f"**Key Highlight:** CO2 emissions {direction} {abs(change)}% vs same quarter last year while "
+            "maintaining generation capacity.",
+            "",
+            "Source: [Azure Compliance Manager + CEMS] (synthetic)",
+            "",
+            "> Synthetic emissions snapshot for report preparation; not a certified submission.",
+            "",
+            "Next: should I generate the EPA CAMD submission file?",
+        ]
+        return "\n".join(lines)
+
+    def _prepare_submission(self) -> str:
+        pkg = SUBMISSION_PACKAGE
+        saved_hours = pkg["manual_hours"] - pkg["agent_hours"]
+        saved = saved_hours * pkg["labor_rate_per_hour"]
+        lines = [
+            "# Draft EPA Submission Package",
+            "",
+            f"The EPA submission file is ready for your upload, and I've identified {len(COMPLIANCE_RISKS)} "
+            "compliance risks that need attention in the next 30 days.",
+            "",
+            "**Submission Ready (draft):**",
+            f"- {pkg['file_name']} generated (draft for {REGULATORY_REPORTS[pkg['report_id']]['name']})",
+            f"- Validated against {pkg['schema']}: {pkg['schema_check']}",
+            f"- Location: {pkg['location']} (pending your authorized upload)",
+            "",
+            "**Compliance Risks Identified:**",
+        ]
+        for r in COMPLIANCE_RISKS:
+            due = ""
+            if r["report"]:
+                due = f", {_days_until(REGULATORY_REPORTS[r['report']]['deadline'])} days until deadline"
+            lines.append(f"- {r['item']} - {r['detail']}{due}")
+        lines += [
+            "",
+            f"**Automation Value:** This report took {pkg['agent_hours']} hours vs {pkg['manual_hours']} hours "
+            f"manually, saving ${saved:,} in labor costs ({saved_hours} hours x ${pkg['labor_rate_per_hour']}/hour, "
+            "synthetic estimate).",
+            "",
+            "Source: [Azure Compliance + SharePoint] (synthetic)",
+            "",
+            "> Draft package only. No regulator filing, certification, signature, upload, or transmission has occurred.",
+            "",
+            "Next: would you like me to assess what's needed to complete the FERC filing?",
+        ]
+        return "\n".join(lines)
+
+
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     agent = RegulatoryReportingAgent()
-    for op in ["report_status", "data_validation", "submission_tracker", "audit_readiness"]:
+    for op in ["emissions_summary", "prepare_submission", "report_status", "data_validation",
+               "submission_tracker", "audit_readiness"]:
         print(f"\n{'='*60}")
         print(f"Operation: {op}")
         print("=" * 60)

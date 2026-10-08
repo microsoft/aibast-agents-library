@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `ENERGY_REGULATORY_REPORTING-01, ENERGY_REGULATORY_REPORTING-02, ENERGY_REGULATORY_REPORTING-03, ENERGY_REGULATORY_REPORTING-04`.
+1. Which locked case IDs did you complete? Expected scope: `ENERGY_REGULATORY_REPORTING-01, ENERGY_REGULATORY_REPORTING-02, ENERGY_REGULATORY_REPORTING-03, ENERGY_REGULATORY_REPORTING-04, ENERGY_REGULATORY_REPORTING-05, ENERGY_REGULATORY_REPORTING-06`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,8 @@ Both Easy lanes preserve every recorded case prompt:
 - `ENERGY_REGULATORY_REPORTING-02` — Which report data is incomplete or below quality threshold?
 - `ENERGY_REGULATORY_REPORTING-03` — Show filing state and confirm you did not transmit anything.
 - `ENERGY_REGULATORY_REPORTING-04` — What high-severity reporting evidence is still open?
+- `ENERGY_REGULATORY_REPORTING-05` — I need to prepare our quarterly EPA emissions report. Can you pull the data?
+- `ENERGY_REGULATORY_REPORTING-06` — Generate the EPA submission file for the quarter and show me any compliance risks.
 
 ## Manual mode — literal browser construction
 

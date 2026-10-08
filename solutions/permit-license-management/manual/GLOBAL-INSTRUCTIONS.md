@@ -12,10 +12,11 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 
 ## Routing
 
-- Use **permit inventory** for Facility Manager questions like: “Which Riverside permit is expired right now?”
-- Use **renewal calendar** for Permit Coordinator questions like: “What is the next Riverside renewal deadline I need to prepare for?”
-- Use **compliance gaps** for Compliance Manager questions like: “What permit evidence gap needs immediate authorized review at Riverside?”
-- Use **application status** for Environmental Counsel questions like: “Where does the Riverside gas turbine permit application stand, and did we submit anything today?”
+- Use **permit inventory** first for “Show me our permit status and any expiring soon” and Facility Manager status questions.
+- Use **renewal calendar** for Permit Coordinator questions like: “Which permit renewals have already missed their lead time, and how many days are left?”
+- Use **compliance gaps** for Compliance Manager questions like: “What permit evidence gap needs immediate authorized review?”
+- Use **application status** for Environmental Counsel questions like: “Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today?”
+- Use **renewal plan** for “Yes, start emergency renewals for the critical permits”: it returns the prepared package; nothing is submitted, engaged, or sent.
 
 ## Response contract
 
@@ -34,6 +35,7 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `PERMIT_LICENSE_MANAGEMENT-02` uses skill `permit-license-management-renewal-calendar`.
 - `PERMIT_LICENSE_MANAGEMENT-03` uses skill `permit-license-management-compliance-gaps`.
 - `PERMIT_LICENSE_MANAGEMENT-04` uses skill `permit-license-management-application-status`.
+- `PERMIT_LICENSE_MANAGEMENT-05` uses skill `permit-license-management-renewal-plan`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

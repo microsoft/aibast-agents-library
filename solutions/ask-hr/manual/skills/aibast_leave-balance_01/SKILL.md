@@ -17,7 +17,7 @@ Use when an employee asks for the fictional balance snapshot and published time-
 ## Deterministic pilot evidence
 
 - `Vacation`
-- `15.5 days`
+- `14 days`
 - `Synthetic HRIS`
 
 ## Safety gate

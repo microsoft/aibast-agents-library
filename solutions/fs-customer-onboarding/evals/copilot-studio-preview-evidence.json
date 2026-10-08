@@ -1,12 +1,12 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T19:24:31.409Z",
+  "captured_at": "2026-10-08T02:54:38.484218Z",
   "solution": "@aibast-agents-library/fs-customer-onboarding",
   "display_name": "Customer Onboarding Pilot",
   "model": "Claude Sonnet 4.6",
-  "status": "reshoot_required",
+  "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "FCO-01",
@@ -20,10 +20,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
     },
     {
       "case_id": "FCO-02",
@@ -37,10 +34,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
     },
     {
       "case_id": "FCO-03",
@@ -54,10 +48,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
     },
     {
       "case_id": "FCO-04",
@@ -71,12 +62,86 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required",
-      "reason": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+      "passed": true
+    },
+    {
+      "case_id": "FCO-05",
+      "must_include": [
+        "Nexus Industries Inc.",
+        "ONB-2025-4782",
+        "KYC Verification In Progress"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FCO-06",
+      "must_include": [
+        "Marcus Chen",
+        "2 of 3 Verified",
+        "67%"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FCO-07",
+      "must_include": [
+        "5-Day Fast Track",
+        "Credit committee review at 2 PM",
+        "67% faster"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FCO-08",
+      "must_include": [
+        "No significant red flags",
+        "Moderate-low",
+        "OFAC screening on wire transfers"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FCO-09",
+      "must_include": [
+        "Status Summary",
+        "ONB-2025-4782",
+        "No message was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
     }
   ],
-  "captured_status": "Draft",
-  "source_contract_note": "Historical capture only, not acceptance of the preserved 2026-09-12 repairs. Fresh saved-state verification, live regression and personally reviewed per-step evidence remain required. See evals/manual-pilot-review.json."
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "schema_name": "aibast_CustomerOnboardingPilot",
+  "bot_id": "764b64a0-bb6c-450d-a917-142de5d4f45d"
 }

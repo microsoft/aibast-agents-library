@@ -54,6 +54,58 @@
       "must_include": ["DSP-301", "DSP-302", "authorized review"],
       "must_not_include": ["contacted the client", "charge was waived"],
       "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-06",
+      "persona": "Finance Vice President",
+      "operation": "month_end_close",
+      "onepager_bullet": "Process time entries intelligently to enforce billing rules and accelerate invoice generation",
+      "prompt": "Month-end close is here. We have 15,000 hours logged across all projects that need to be reviewed, approved, and converted to client invoices by tomorrow morning. Can you process the full billing cycle?",
+      "arguments": {
+        "operation": "month_end_close"
+      },
+      "must_include": ["15,247", "$2,847,500", "267 hours"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-07",
+      "persona": "Billing Manager",
+      "operation": "flagged_review",
+      "onepager_bullet": "Automate risk and compliance checks to reduce errors and maintain audit-ready documentation",
+      "prompt": "Break down the hours that were flagged for review before final approval.",
+      "arguments": {
+        "operation": "flagged_review"
+      },
+      "must_include": ["MegaCorp Systems", "$892K", "5 projects over 95% budget consumed"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-08",
+      "persona": "Finance Vice President",
+      "operation": "budget_overruns",
+      "onepager_bullet": "Provide dispute resolution intelligence to help protect revenue and preserve client relationships",
+      "prompt": "Show me the budget overruns and write-off exposure.",
+      "arguments": {
+        "operation": "budget_overruns"
+      },
+      "must_include": ["FinanceHub", "RetailCo", "$47K recoverable"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-09",
+      "persona": "Billing Manager",
+      "operation": "final_invoices",
+      "onepager_bullet": "Automate risk and compliance checks to reduce errors and maintain audit-ready documentation",
+      "prompt": "Bill RetailCo $15K, approve everything else, and generate the final invoices and revenue report.",
+      "arguments": {
+        "operation": "final_invoices"
+      },
+      "must_include": ["$2,839,300", "$157,800", "Deferred: $427,000"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "TimeEntryBillingAgent"
     }
   ]
 }

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `TEB-01, TEB-02, TEB-03, TEB-04, TEB-05`.
+1. Which locked case IDs did you complete? Expected scope: `TEB-01, TEB-02, TEB-03, TEB-04, TEB-05, TEB-06, TEB-07, TEB-08, TEB-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -217,6 +217,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `TEB-03` — Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?
 - `TEB-04` — Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.
 - `TEB-05` — What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?
+- `TEB-06` — Month-end close is here. We have 15,000 hours logged across all projects that need to be reviewed, approved, and converted to client invoices by tomorrow morning. Can you process the full billing cycle?
+- `TEB-07` — Break down the hours that were flagged for review before final approval.
+- `TEB-08` — Show me the budget overruns and write-off exposure.
+- `TEB-09` — Bill RetailCo $15K, approve everything else, and generate the final invoices and revenue report.
 
 ## Manual mode — literal browser construction
 

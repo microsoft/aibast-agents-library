@@ -20,7 +20,7 @@ if str(ROOT) not in sys.path:
 from tools import scaffold_solution_journey as journey  # noqa: E402
 
 
-EXPECTED_ADVERTISED_COUNT = 51
+EXPECTED_ADVERTISED_COUNT = 66
 REFERENCE_SLUG = "time-entry-billing"
 CONTRACT_SCHEMA = "aibast-visual-checkpoints/1.0"
 SUMMARY_SCHEMA = "aibast-workshop-course-rollout/1.0"

@@ -25,6 +25,10 @@ PURCHASE = "skills/aibast_purchase-request_01/SKILL.md"
 VENDOR = "skills/aibast_vendor-comparison_02/SKILL.md"
 APPROVAL = "skills/aibast_approval-routing_03/SKILL.md"
 SPEND = "skills/aibast_spend-analysis_04/SKILL.md"
+DRAFT_PO = "skills/aibast_draft-purchase-order_05/SKILL.md"
+EXPEDITE = "skills/aibast_expedite-approval_06/SKILL.md"
+BUDGET = "skills/aibast_budget-impact_07/SKILL.md"
+RFQ = "skills/aibast_draft-rfq_08/SKILL.md"
 FOOTER = (
     "Synthetic procurement evidence; decision support only. No approval, supplier "
     "action, purchase order, or spend commitment occurred."
@@ -69,6 +73,32 @@ SKILLS = {
         "Use when a finance director asks which synthetic category is over budget or approaching a limit.",
     ),
 }
+# Four skills added for the re-shot PR-5005 demo scenario (one-pager operations
+# draft_purchase_order, expedite_approval, budget_impact and draft_rfq). Their
+# frontmatter descriptions are quoted YAML strings because they embed a prompt.
+DEMO_SKILLS = {
+    DRAFT_PO: (
+        "draft-purchase-order",
+        'Use when a procurement manager asks something like \\"Create the purchase order for '
+        'the 50 Dell Latitude 7440 laptops for the new engineering team\\"',
+    ),
+    EXPEDITE: (
+        "expedite-approval",
+        'Use when a procurement manager asks something like \\"The engineering laptop order is '
+        'stuck in approval. Can you expedite it with urgency notifications\\"',
+    ),
+    BUDGET: (
+        "budget-impact",
+        'Use when a finance director asks something like \\"How does the engineering laptop '
+        'order affect our Q4 IT budget\\"',
+    ),
+    RFQ: (
+        "draft-rfq",
+        'Use when a category buyer asks something like \\"We also need an RFQ for office '
+        'furniture for the same engineering team\\"',
+    ),
+}
+ALL_SKILLS = {**SKILLS, **DEMO_SKILLS}
 
 
 def read_manual(relative):
@@ -88,7 +118,7 @@ def read_contract(relative, mirror):
     elif relative == RULES:
         path = studio / "capabilities/knowledge/files" / Path(RULES).name
     else:
-        path = studio / "behaviors" / f"aibast_{SKILLS[relative][0]}.mcs.yml"
+        path = studio / "behaviors" / f"aibast_{ALL_SKILLS[relative][0]}.mcs.yml"
     return path.read_text(encoding="utf-8")
 
 
@@ -103,6 +133,10 @@ def source_table(heading):
     return [dict(zip(rows[0], row)) for row in rows[2:]]
 
 
+def normalized(text):
+    return "\n".join(line.rstrip() for line in text.splitlines()) + "\n"
+
+
 def money(value):
     return Decimal(value.split()[0].replace("$", "").replace(",", ""))
 
@@ -113,7 +147,10 @@ def money(value):
         (
             "solutions/procurement-agent/manual/knowledge/"
             "aibast_procurement-agent-synthetic-records.md",
-            "f3ff24b900de86dc98e4630787cbda7df459bd4d713e7353c7efb3a4c7baaffe",
+            # Re-locked after the PR-5005 demo scenario (vendors VND-007..009,
+            # PO-2024-ENG-0892, Q4 IT budget, RFQ) and the one-pager threshold
+            # table were added in the deliberate content update.
+            "1fc6f1bc2ecd8b8a758e4a25812b27d50a176826353f3ae8c95255d9f119d7ae",
         ),
         (
             "solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md",
@@ -121,7 +158,8 @@ def money(value):
         ),
         (
             "tests/demo_cases/procurement-agent.json",
-            "30c70a4e75fe85ba0cad7f716256693e1987f75459bdc99664488b518048928e",
+            # Re-locked after PROC-05..PROC-08 were added for the one-pager demo.
+            "8d39b80e8da592813dd68d83db5b617ec9017058ca069da06c7964f00721ac6e",
         ),
     ],
 )
@@ -135,7 +173,14 @@ def test_frozen_records_approval_skill_and_locked_cases_are_byte_preserved(relat
 
 def test_manual_inventory_and_skill_identities_are_stable():
     inputs = {path.relative_to(MANUAL).as_posix() for path in MANUAL.rglob("*.md")}
-    assert inputs == {POLICY, RULES, f"knowledge/{RECORDS}", *SKILLS}
+    assert inputs == {POLICY, RULES, f"knowledge/{RECORDS}", *ALL_SKILLS}
+    for relative, (name, description) in DEMO_SKILLS.items():
+        text, fields = parse_frontmatter(MANUAL / relative)
+        assert fields == {"name": name, "description": f'"{description}"'}
+        assert text.startswith(
+            f'---\nname: {name}\ndescription: "{description}"\n---\n<!-- bic:source=blank -->\n'
+        )
+        assert text.count("<!-- bic:source=blank -->") == 1
     for relative, (name, description) in SKILLS.items():
         text, fields = parse_frontmatter(MANUAL / relative)
         assert fields == {"name": name, "description": description}
@@ -175,10 +220,21 @@ def test_global_policy_is_compact_and_does_not_embed_source_tables_or_prompts():
     for amount in ("$340,000", "$285,000", "$4,350,000", "$496,500", "$890,000"):
         assert amount not in policy
     cases = json.loads((ROOT / "tests/demo_cases/procurement-agent.json").read_text())
+    knowledge = "".join(
+        path.read_text(encoding="utf-8") for path in sorted((MANUAL / "knowledge").glob("*.md"))
+    )
+    original = {"PROC-01", "PROC-02", "PROC-03", "PROC-04"}
+    assert original < {case["id"] for case in cases["cases"]}
     for case in cases["cases"]:
         assert case["prompt"] not in policy
         for anchor in case["must_include"]:
-            assert anchor in policy
+            # Every locked anchor must be grounded in an uploaded source. The four
+            # original cases keep their anchors in the compact policy; the PR-5005
+            # demo anchors live in the knowledge files, which keeps the policy
+            # under its size cap instead of embedding source tables.
+            assert anchor in knowledge
+            if case["id"] in original:
+                assert anchor in policy
 
 
 @pytest.mark.parametrize("relative", [POLICY, RULES, *SKILLS])
@@ -384,15 +440,18 @@ def test_approval_skill_requires_complete_threshold_table_and_request_specific_r
     ]
     for amount, approver, sla, cap in (
         ("5000", "Direct Manager", "4 hours", "$5,000"),
-        ("25000", "Department Head", "8 hours", "$25,000"),
-        ("100000", "VP Finance", "24 hours", "$100,000"),
+        # One-pager threshold table: Dept Manager to $25,000, Finance Director to
+        # $75,000 (so PR-5005 at $81,893 needs the CFO), CFO to $500,000.
+        ("25000", "Dept Manager", "8 hours", "$25,000"),
+        ("75000", "Finance Director", "24 hours", "$75,000"),
+        ("81893", "CFO", "48 hours", "$500,000"),
         ("125000", "CFO", "48 hours", "$500,000"),
         ("500000", "CFO", "48 hours", "$500,000"),
-        ("500000.01", "CEO + Board", "120 hours", "Unlimited"),
+        ("500000.01", "CEO + Board", "120 hours", "Unlimited (above $500,000)"),
     ):
         selected = next(
             row for row in thresholds
-            if row["Amount up to and including"] == "Unlimited"
+            if row["Amount up to and including"].startswith("Unlimited")
             or Decimal(amount) <= money(row["Amount up to and including"])
         )
         assert selected == {
@@ -459,7 +518,9 @@ def test_manual_and_studio_shared_sources_match_existing_renderer():
     schema = parse_yaml_scalar(settings, "schemaName")
     assert (name, schema) == ("Procurement Pilot", "aibast_ProcurementPilot")
     rendered = render_settings(name, schema, read_manual(POLICY))
-    assert settings == "\n".join(line.rstrip() for line in rendered.splitlines()) + "\n"
+    # Studio-synced YAML indents blank lines inside block scalars; that is
+    # whitespace-only and parses to the same value, so compare per-line rstrip.
+    assert normalized(settings) == normalized(rendered)
     for path in (MANUAL / "knowledge").glob("*.md"):
         mirror = PACKAGE / "copilot-studio/capabilities/knowledge/files" / path.name
         assert mirror.read_bytes() == path.read_bytes()
@@ -467,10 +528,9 @@ def test_manual_and_studio_shared_sources_match_existing_renderer():
 
 def test_manual_and_studio_skills_match_existing_renderer():
     mirrors = set((PACKAGE / "copilot-studio/behaviors").glob("*.mcs.yml"))
-    assert len(mirrors) == len(SKILLS)
-    for relative in SKILLS:
+    assert len(mirrors) == len(ALL_SKILLS) == 8
+    for relative in ALL_SKILLS:
         content, fields = render_skill(MANUAL / relative)
         mirror = PACKAGE / "copilot-studio/behaviors" / f"aibast_{fields['name']}.mcs.yml"
         assert mirror in mirrors
-        expected = "\n".join(line.rstrip() for line in content.splitlines()) + "\n"
-        assert mirror.read_text(encoding="utf-8") == expected
+        assert normalized(mirror.read_text(encoding="utf-8")) == normalized(content)

@@ -1,0 +1,1151 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/order-entry-validation",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 35,
+    "reusable": 35,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Entry Validation Pilot",
+        "queue-review",
+        "extract-po",
+        "configuration-check",
+        "draft-sales-order",
+        "order-queue",
+        "aibast_order-entry-validation-synthetic-records.",
+        "aibast_order-entry-validation-rules-and-guardrai"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 209,
+          "height": 24,
+          "label": "Order Entry Validation Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "queue-review"
+        },
+        {
+          "x": 1209,
+          "y": 199,
+          "width": 75,
+          "height": 20,
+          "label": "extract-po"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 135,
+          "height": 22,
+          "label": "configuration-check"
+        },
+        {
+          "x": 1249,
+          "y": 237,
+          "width": 115,
+          "height": 19,
+          "label": "draft-sales-order"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 89,
+          "height": 21,
+          "label": "order-queue"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 302,
+          "height": 22,
+          "label": "aibast_order-entry-validation-synthetic-records."
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_order-entry-validation-rules-and-guardrai"
+        }
+      ]
+    },
+    {
+      "id": "easy-oe-01",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/02-oe-01.jpg",
+      "caption": "OE-01 · Sales Operations Specialist: What's in my PO queue this morning?",
+      "case_id": "OE-01",
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/02-oe-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "5 purchase orders",
+        "$221,900",
+        "Woodgrove Water Authority"
+      ],
+      "boxes": [
+        {
+          "x": 456,
+          "y": 417,
+          "width": 247,
+          "height": 24,
+          "label": "5 purchase orders"
+        },
+        {
+          "x": 757,
+          "y": 417,
+          "width": 78,
+          "height": 23,
+          "label": "$221,900"
+        },
+        {
+          "x": 417,
+          "y": 525,
+          "width": 94,
+          "height": 24,
+          "label": "Woodgrove Water Authority"
+        }
+      ]
+    },
+    {
+      "id": "easy-oe-02",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/03-oe-02.jpg",
+      "caption": "OE-02 · Sales Operations Specialist: Read PO-4471 and pull out the order details.",
+      "case_id": "OE-02",
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/03-oe-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1200 Reservoir Rd, Dock 3",
+        "Hannah Cole",
+        "PO total"
+      ],
+      "boxes": [
+        {
+          "x": 447,
+          "y": 703,
+          "width": 191,
+          "height": 23,
+          "label": "1200 Reservoir Rd, Dock 3"
+        },
+        {
+          "x": 448,
+          "y": 746,
+          "width": 101,
+          "height": 21,
+          "label": "Hannah Cole"
+        },
+        {
+          "x": 286,
+          "y": 1223,
+          "width": 75,
+          "height": 20,
+          "label": "PO total"
+        }
+      ]
+    },
+    {
+      "id": "easy-oe-03",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/04-oe-03.jpg",
+      "caption": "OE-03 · Sales Operations Specialist: Does PO-4471 match the quote?",
+      "case_id": "OE-03",
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/04-oe-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Mismatch",
+        "$410 on the PO vs $395 on the quote"
+      ],
+      "boxes": [
+        {
+          "x": 909,
+          "y": 789,
+          "width": 82,
+          "height": 20,
+          "label": "Mismatch"
+        },
+        {
+          "x": 743,
+          "y": 897,
+          "width": 278,
+          "height": 24,
+          "label": "$410 on the PO vs $395 on the quote"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Price tolerance is 1% not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-oe-04",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/05-oe-04.jpg",
+      "caption": "OE-04 · Product Configuration Analyst: Check the product configuration on the Coho Refining order.",
+      "case_id": "OE-04",
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/05-oe-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1 of 2 configuration rules pass"
+      ],
+      "boxes": [
+        {
+          "x": 338,
+          "y": 638,
+          "width": 231,
+          "height": 24,
+          "label": "1 of 2 configuration rules pass"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "SH-H2S needs KIT-SAFE, Never enter this order with the wrong configuration not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-oe-05",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/06-oe-05.jpg",
+      "caption": "OE-05 · Sales Operations Specialist: What order type, class and sales channel should PO-4471 go in as?",
+      "case_id": "OE-05",
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/06-oe-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Class",
+        "STD-DOM",
+        "Public sector"
+      ],
+      "boxes": [
+        {
+          "x": 366,
+          "y": 417,
+          "width": 142,
+          "height": 21,
+          "label": "Order Class"
+        },
+        {
+          "x": 420,
+          "y": 525,
+          "width": 82,
+          "height": 20,
+          "label": "STD-DOM"
+        },
+        {
+          "x": 420,
+          "y": 611,
+          "width": 101,
+          "height": 21,
+          "label": "Public sector"
+        }
+      ]
+    },
+    {
+      "id": "easy-oe-06",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/07-oe-06.jpg",
+      "caption": "OE-06 · Sales Operations Specialist: Prepare the sales order for PO-4471 so I can enter it.",
+      "case_id": "OE-06",
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/07-oe-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "$27,940"
+      ],
+      "boxes": [
+        {
+          "x": 625,
+          "y": 472,
+          "width": 144,
+          "height": 24,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 486,
+          "y": 1247,
+          "width": 68,
+          "height": 23,
+          "label": "$27,940"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "nothing was submitted to the ERP not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-oe-07",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/08-oe-07.jpg",
+      "caption": "OE-07 · Sales Operations Manager: Across the whole queue, which orders are ready to enter and which need a fix?",
+      "case_id": "OE-07",
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/08-oe-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1 of 5 purchase orders are ready",
+        "Needs fix",
+        "Lucerne Labs"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 505,
+          "width": 243,
+          "height": 24,
+          "label": "1 of 5 purchase orders are ready"
+        },
+        {
+          "x": 599,
+          "y": 505,
+          "width": 81,
+          "height": 21,
+          "label": "Needs fix"
+        },
+        {
+          "x": 418,
+          "y": 742,
+          "width": 105,
+          "height": 21,
+          "label": "Lucerne Labs"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/order-entry-validation/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/order-entry-validation/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Entry Validation Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 206,
+          "height": 24,
+          "label": "Order Entry Validation Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Order Entry Validation Manual",
+      "step": 2,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Entry Validation Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 231,
+          "height": 24,
+          "label": "Order Entry Validation Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Entry Validation Agent — Manual Global Ins"
+      ],
+      "boxes": [
+        {
+          "x": 119,
+          "y": 126,
+          "width": 429,
+          "height": 44,
+          "label": "Order Entry Validation Agent — Manual Global Ins"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 326,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/06-add-aibast-order-entry-validation-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_order-entry-validation-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/06-add-aibast-order-entry-validation-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_order-entry-validation-rules-and-guardrai"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_order-entry-validation-rules-and-guardrai"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/07-add-aibast-order-entry-validation-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_order-entry-validation-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/07-add-aibast-order-entry-validation-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_order-entry-validation-synthetic-records."
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_order-entry-validation-synthetic-records."
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/08-add-aibast-configuration-check-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_configuration-check_04",
+      "step": 8,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/08-add-aibast-configuration-check-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "configuration-check"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 135,
+          "height": 22,
+          "label": "configuration-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/09-add-aibast-draft-sales-order-06.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_draft-sales-order_06",
+      "step": 9,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/09-add-aibast-draft-sales-order-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "draft-sales-order"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 115,
+          "height": 19,
+          "label": "draft-sales-order"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/10-add-aibast-extract-po-02.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_extract-po_02",
+      "step": 10,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/10-add-aibast-extract-po-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "extract-po"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 199,
+          "width": 75,
+          "height": 20,
+          "label": "extract-po"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/11-add-aibast-order-classification-05.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_order-classification_05",
+      "step": 11,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/11-add-aibast-order-classification-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "order-classification"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 128,
+          "height": 19,
+          "label": "order-classification"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/12-add-aibast-order-queue-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_order-queue_01",
+      "step": 12,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/12-add-aibast-order-queue-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "order-queue"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 89,
+          "height": 21,
+          "label": "order-queue"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/13-add-aibast-queue-review-07.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_queue-review_07",
+      "step": 13,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/13-add-aibast-queue-review-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "queue-review"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "queue-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/14-add-aibast-quote-validation-03.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_quote-validation_03",
+      "step": 14,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/14-add-aibast-quote-validation-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "quote-validation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 112,
+          "height": 22,
+          "label": "quote-validation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "quote-validation",
+        "queue-review",
+        "order-queue",
+        "order-classification",
+        "extract-po",
+        "aibast_order-entry-validation-synthetic-records.",
+        "aibast_order-entry-validation-rules-and-guardrai"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 112,
+          "height": 22,
+          "label": "quote-validation"
+        },
+        {
+          "x": 1228,
+          "y": 197,
+          "width": 95,
+          "height": 21,
+          "label": "queue-review"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 89,
+          "height": 21,
+          "label": "order-queue"
+        },
+        {
+          "x": 1203,
+          "y": 237,
+          "width": 128,
+          "height": 19,
+          "label": "order-classification"
+        },
+        {
+          "x": 1057,
+          "y": 279,
+          "width": 75,
+          "height": 20,
+          "label": "extract-po"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 302,
+          "height": 22,
+          "label": "aibast_order-entry-validation-synthetic-records."
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_order-entry-validation-rules-and-guardrai"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "quote-validation",
+        "queue-review",
+        "order-queue",
+        "order-classification",
+        "extract-po"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 113,
+          "height": 22,
+          "label": "quote-validation"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 95,
+          "height": 22,
+          "label": "queue-review"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 89,
+          "height": 22,
+          "label": "order-queue"
+        },
+        {
+          "x": 1055,
+          "y": 411,
+          "width": 128,
+          "height": 19,
+          "label": "order-classification"
+        },
+        {
+          "x": 1055,
+          "y": 490,
+          "width": 75,
+          "height": 21,
+          "label": "extract-po"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "queue-review",
+        "order-queue",
+        "order-classification",
+        "extract-po",
+        "draft-sales-order",
+        "configuration-check"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 69,
+          "width": 95,
+          "height": 18,
+          "label": "queue-review"
+        },
+        {
+          "x": 1055,
+          "y": 144,
+          "width": 89,
+          "height": 22,
+          "label": "order-queue"
+        },
+        {
+          "x": 1055,
+          "y": 222,
+          "width": 128,
+          "height": 19,
+          "label": "order-classification"
+        },
+        {
+          "x": 1055,
+          "y": 301,
+          "width": 75,
+          "height": 20,
+          "label": "extract-po"
+        },
+        {
+          "x": 1055,
+          "y": 378,
+          "width": 115,
+          "height": 19,
+          "label": "draft-sales-order"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 135,
+          "height": 22,
+          "label": "configuration-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Entry Validation Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 231,
+          "height": 24,
+          "label": "Order Entry Validation Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-oe-01",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/19-oe-01.jpg",
+      "caption": "OE-01 · Sales Operations Specialist: What's in my PO queue this morning?",
+      "step": 19,
+      "case_id": "OE-01",
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/19-oe-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "5 purchase orders",
+        "$221,900",
+        "Woodgrove Water Authority"
+      ],
+      "boxes": [
+        {
+          "x": 353,
+          "y": 502,
+          "width": 141,
+          "height": 24,
+          "label": "5 purchase orders"
+        },
+        {
+          "x": 532,
+          "y": 501,
+          "width": 78,
+          "height": 23,
+          "label": "$221,900"
+        },
+        {
+          "x": 417,
+          "y": 609,
+          "width": 211,
+          "height": 24,
+          "label": "Woodgrove Water Authority"
+        }
+      ]
+    },
+    {
+      "id": "hard-oe-02",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/20-oe-02.jpg",
+      "caption": "OE-02 · Sales Operations Specialist: Read PO-4471 and pull out the order details.",
+      "step": 20,
+      "case_id": "OE-02",
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/20-oe-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1200 Reservoir Rd, Dock 3",
+        "Hannah Cole",
+        "PO total"
+      ],
+      "boxes": [
+        {
+          "x": 447,
+          "y": 700,
+          "width": 191,
+          "height": 22,
+          "label": "1200 Reservoir Rd, Dock 3"
+        },
+        {
+          "x": 448,
+          "y": 743,
+          "width": 101,
+          "height": 20,
+          "label": "Hannah Cole"
+        },
+        {
+          "x": 286,
+          "y": 1158,
+          "width": 73,
+          "height": 20,
+          "label": "PO total"
+        }
+      ]
+    },
+    {
+      "id": "hard-oe-03",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/21-oe-03.jpg",
+      "caption": "OE-03 · Sales Operations Specialist: Does PO-4471 match the quote?",
+      "step": 21,
+      "case_id": "OE-03",
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/21-oe-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Mismatch",
+        "$410 on the PO vs $395 on the quote",
+        "Price tolerance is 1%"
+      ],
+      "boxes": [
+        {
+          "x": 663,
+          "y": 462,
+          "width": 86,
+          "height": 23,
+          "label": "Mismatch"
+        },
+        {
+          "x": 660,
+          "y": 937,
+          "width": 272,
+          "height": 24,
+          "label": "$410 on the PO vs $395 on the quote"
+        },
+        {
+          "x": 988,
+          "y": 937,
+          "width": 153,
+          "height": 21,
+          "label": "Price tolerance is 1%"
+        }
+      ]
+    },
+    {
+      "id": "hard-oe-04",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/22-oe-04.jpg",
+      "caption": "OE-04 · Product Configuration Analyst: Check the product configuration on the Coho Refining order.",
+      "step": 22,
+      "case_id": "OE-04",
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/22-oe-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1 of 2 configuration rules pass",
+        "SH-H2S needs KIT-SAFE",
+        "Never enter this order with the wrong configurat"
+      ],
+      "boxes": [
+        {
+          "x": 649,
+          "y": 462,
+          "width": 192,
+          "height": 24,
+          "label": "1 of 2 configuration rules pass"
+        },
+        {
+          "x": 575,
+          "y": 613,
+          "width": 179,
+          "height": 21,
+          "label": "SH-H2S needs KIT-SAFE"
+        },
+        {
+          "x": 627,
+          "y": 988,
+          "width": 379,
+          "height": 24,
+          "label": "Never enter this order with the wrong configurat"
+        }
+      ]
+    },
+    {
+      "id": "hard-oe-05",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/23-oe-05.jpg",
+      "caption": "OE-05 · Sales Operations Specialist: What order type, class and sales channel should PO-4471 go in as?",
+      "step": 23,
+      "case_id": "OE-05",
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/23-oe-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Class",
+        "STD-DOM",
+        "Public sector"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 462,
+          "width": 156,
+          "height": 21,
+          "label": "Order Class"
+        },
+        {
+          "x": 418,
+          "y": 614,
+          "width": 82,
+          "height": 20,
+          "label": "STD-DOM"
+        },
+        {
+          "x": 418,
+          "y": 699,
+          "width": 101,
+          "height": 21,
+          "label": "Public sector"
+        }
+      ]
+    },
+    {
+      "id": "hard-oe-06",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/24-oe-06.jpg",
+      "caption": "OE-06 · Sales Operations Specialist: Prepare the sales order for PO-4471 so I can enter it.",
+      "step": 24,
+      "case_id": "OE-06",
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/24-oe-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "$27,940"
+      ],
+      "boxes": [
+        {
+          "x": 558,
+          "y": 462,
+          "width": 121,
+          "height": 23,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 486,
+          "y": 1244,
+          "width": 68,
+          "height": 23,
+          "label": "$27,940"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "nothing was submitted to the ERP not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-oe-07",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/25-oe-07.jpg",
+      "caption": "OE-07 · Sales Operations Manager: Across the whole queue, which orders are ready to enter and which need a fix?",
+      "step": 25,
+      "case_id": "OE-07",
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/25-oe-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Needs fix",
+        "1 of 5 purchase orders are ready",
+        "Lucerne Labs"
+      ],
+      "boxes": [
+        {
+          "x": 818,
+          "y": 462,
+          "width": 81,
+          "height": 21,
+          "label": "Needs fix"
+        },
+        {
+          "x": 482,
+          "y": 463,
+          "width": 218,
+          "height": 23,
+          "label": "1 of 5 purchase orders are ready"
+        },
+        {
+          "x": 418,
+          "y": 700,
+          "width": 102,
+          "height": 20,
+          "label": "Lucerne Labs"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/order-entry-validation/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/order-entry-validation/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Entry Validation Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 226,
+          "height": 24,
+          "label": "Order Entry Validation Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:49:45.107035+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

@@ -39,7 +39,7 @@ refund, credit, replacement, shipment, reservation, or customer message.
 | Copilot Studio deployment settings | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-solution-export.json` |
 
-**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

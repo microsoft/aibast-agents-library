@@ -8,115 +8,232 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 29,
-    "reusable": 26,
-    "reshoot_required": 3
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-dp-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "DP-01",
-      "source": "solutions/deal-progression/screenshots/assisted/01-dp-01.jpg",
-      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/01-dp-01.png",
+      "source": "solutions/deal-progression/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "No CRM record was written",
-        "Sales leadership must review all findings"
-      ],
-      "full_case_not_visibly_proven": [
-        "Pipeline Health Summary is above the captured viewport."
+        "Deal Progression Pilot",
+        "Draft",
+        "deal-progression-stalled-deals",
+        "deal-progression-action-plans",
+        "deal-progression-executive-summary",
+        "deal-progression-acceleration",
+        "deal-progression-pipeline-health",
+        "aibast_deal-progression-synthetic-records.md",
+        "aibast_deal-progression-operating-rules.md"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 448,
-          "width": 945,
-          "height": 128,
-          "label": "Evidence boundary and read-only gate"
+          "x": 84,
+          "y": 20,
+          "width": 170,
+          "height": 24,
+          "label": "Deal Progression Pilot"
+        },
+        {
+          "x": 265,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 199,
+          "height": 22,
+          "label": "deal-progression-stalled-deals"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 197,
+          "height": 22,
+          "label": "deal-progression-action-plans"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 241,
+          "height": 22,
+          "label": "deal-progression-executive-summary"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 195,
+          "height": 22,
+          "label": "deal-progression-acceleration"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 214,
+          "height": 22,
+          "label": "deal-progression-pipeline-health"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 293,
+          "height": 22,
+          "label": "aibast_deal-progression-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 281,
+          "height": 22,
+          "label": "aibast_deal-progression-operating-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-dp-01",
+      "mode": "easy",
+      "source": "solutions/deal-progression/screenshots/assisted/02-dp-01.jpg",
+      "caption": "DP-01 · Sales Director: Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?",
+      "case_id": "DP-01",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/02-dp-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Pipeline Health Summary",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 455,
+          "width": 240,
+          "height": 28,
+          "label": "Pipeline Health Summary"
+        },
+        {
+          "x": 286,
+          "y": 1608,
+          "width": 75,
+          "height": 21,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-dp-02",
       "mode": "easy",
+      "source": "solutions/deal-progression/screenshots/assisted/03-dp-02.jpg",
+      "caption": "DP-02 · Account Executive: What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
       "case_id": "DP-02",
-      "source": "solutions/deal-progression/screenshots/assisted/02-dp-02.jpg",
-      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/02-dp-02.png",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/03-dp-02.png",
       "status": "reusable",
       "visible_anchors": [
+        "Stalled Deal Deep-Dive",
         "Evidence boundary",
-        "read-only output did not write CRM data",
-        "authorized opportunity owner must review"
-      ],
-      "full_case_not_visibly_proven": [
-        "Stalled Deal Deep-Dive and Diagnosis are above the captured viewport."
+        "Diagnosis"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 468,
-          "width": 945,
-          "height": 108,
-          "label": "Evidence boundary and review gate"
+          "x": 286,
+          "y": 455,
+          "width": 218,
+          "height": 28,
+          "label": "Stalled Deal Deep-Dive"
+        },
+        {
+          "x": 440,
+          "y": 629,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 286,
+          "y": 1085,
+          "width": 85,
+          "height": 24,
+          "label": "Diagnosis"
         }
       ]
     },
     {
       "id": "easy-dp-03",
       "mode": "easy",
+      "source": "solutions/deal-progression/screenshots/assisted/04-dp-03.jpg",
+      "caption": "DP-03 · Account Executive: Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.",
       "case_id": "DP-03",
-      "source": "solutions/deal-progression/screenshots/assisted/03-dp-03.jpg",
-      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/03-dp-03.png",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/04-dp-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Approval Gate",
-        "Evidence boundary",
-        "No CRM record, task, alert, forecast entry, pricing approval, proposal, meeting, or customer communication was created or modified"
-      ],
-      "full_case_not_visibly_proven": [
-        "Action Plans and Planning Objective are above the captured viewport."
+        "Action Plans",
+        "Planning Objective",
+        "Evidence boundary"
       ],
       "boxes": [
         {
           "x": 285,
-          "y": 401,
-          "width": 945,
-          "height": 176,
-          "label": "Approval and evidence boundaries"
+          "y": 444,
+          "width": 101,
+          "height": 21,
+          "label": "Action Plans"
+        },
+        {
+          "x": 698,
+          "y": 1332,
+          "width": 151,
+          "height": 24,
+          "label": "Planning Objective"
+        },
+        {
+          "x": 286,
+          "y": 2291,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-dp-04",
       "mode": "easy",
+      "source": "solutions/deal-progression/screenshots/assisted/05-dp-04.jpg",
+      "caption": "DP-04 · Sales Director: Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?",
       "case_id": "DP-04",
-      "source": "solutions/deal-progression/screenshots/assisted/04-dp-04.jpg",
-      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/04-dp-04.png",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/05-dp-04.png",
       "status": "reusable",
       "visible_anchors": [
+        "Pipeline Acceleration Strategy",
         "Synthetic Scenario",
-        "$2.4M of possible Q4 timing movement",
-        "not a forecast commitment",
         "Evidence boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "Pipeline Acceleration Strategy is above the captured viewport."
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 300,
-          "width": 945,
-          "height": 104,
-          "label": "Synthetic scenario boundary"
+          "x": 286,
+          "y": 455,
+          "width": 283,
+          "height": 28,
+          "label": "Pipeline Acceleration Strategy"
         },
         {
-          "x": 285,
-          "y": 443,
-          "width": 945,
-          "height": 130,
+          "x": 286,
+          "y": 1822,
+          "width": 144,
+          "height": 24,
+          "label": "Synthetic Scenario"
+        },
+        {
+          "x": 973,
+          "y": 1853,
+          "width": 74,
+          "height": 21,
           "label": "Evidence boundary"
         }
       ]
@@ -124,146 +241,209 @@
     {
       "id": "easy-dp-05",
       "mode": "easy",
+      "source": "solutions/deal-progression/screenshots/assisted/06-dp-05.jpg",
+      "caption": "DP-05 · Sales Director: Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.",
       "case_id": "DP-05",
-      "source": "solutions/deal-progression/screenshots/assisted/05-dp-05.jpg",
-      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/05-dp-05.png",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/06-dp-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "No CRM record was written",
-        "no owner was assigned",
-        "Sales leadership must review and authorize every task mapping"
-      ],
-      "full_case_not_visibly_proven": [
-        "Draft Task Assignment Plan and candidate tasks are above the captured viewport."
+        "Draft Task Assignment Plan",
+        "candidate tasks",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 443,
-          "width": 945,
-          "height": 131,
-          "label": "Evidence boundary and no-assignment gate"
+          "x": 286,
+          "y": 444,
+          "width": 208,
+          "height": 24,
+          "label": "Draft Task Assignment Plan"
+        },
+        {
+          "x": 286,
+          "y": 895,
+          "width": 156,
+          "height": 24,
+          "label": "candidate tasks"
+        },
+        {
+          "x": 286,
+          "y": 3051,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
       "id": "easy-dp-06",
       "mode": "easy",
+      "source": "solutions/deal-progression/screenshots/assisted/07-dp-06.jpg",
+      "caption": "DP-06 · Sales Director: Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.",
       "case_id": "DP-06",
-      "source": "solutions/deal-progression/screenshots/assisted/06-dp-06.jpg",
-      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/06-dp-06.png",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/07-dp-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "read-only decision support only",
-        "authorized human review"
-      ],
-      "full_case_not_visibly_proven": [
-        "Executive Summary and Synthetic Planning Targets are above the captured viewport."
+        "Executive Summary",
+        "Synthetic Planning Targets",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 469,
-          "width": 945,
-          "height": 101,
-          "label": "Evidence boundary and human-review gate"
+          "x": 286,
+          "y": 456,
+          "width": 188,
+          "height": 27,
+          "label": "Executive Summary"
+        },
+        {
+          "x": 286,
+          "y": 549,
+          "width": 78,
+          "height": 24,
+          "label": "Synthetic Planning Targets"
+        },
+        {
+          "x": 543,
+          "y": 1990,
+          "width": 74,
+          "height": 21,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-confirm-draft",
       "mode": "easy",
-      "source": "solutions/deal-progression/screenshots/assisted/07-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The capture is blank; neither Deal Progression Pilot nor a Draft status is visible.",
-      "draft": true
+      "source": "solutions/deal-progression/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Deal Progression Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 170,
+          "height": 24,
+          "label": "Deal Progression Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/deal-progression/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/deal-progression/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 164,
-          "y": 99,
-          "width": 818,
-          "height": 50,
-          "label": "Blank agent name field"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/deal-progression/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Deal Progression Manual",
+      "step": 2,
       "annotated": "solutions/deal-progression/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Deal Progression Manual in the name field"
+        "Deal Progression Manual"
       ],
       "boxes": [
         {
-          "x": 164,
-          "y": 99,
-          "width": 818,
-          "height": 50,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 191,
+          "height": 24,
+          "label": "Deal Progression Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/deal-progression/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/deal-progression/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "DP-01 through DP-06 acceptance anchors"
+        "Deal Progression Agent — Global Instructions"
       ],
       "boxes": [
         {
-          "x": 82,
-          "y": 245,
-          "width": 894,
-          "height": 582,
-          "label": "Reviewed instruction and locked anchors"
+          "x": 204,
+          "y": 131,
+          "width": 262,
+          "height": 39,
+          "label": "Deal Progression Agent — Global Instructions"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/deal-progression/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows instruction content but no saved-state confirmation such as No unsaved changes, so it does not visually prove the save action."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/deal-progression/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The Search all websites chip is absent, but the frame has no positive removal confirmation; absence alone is not a reliable visual anchor for this checkpoint."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/deal-progression/screenshots/manual/06-add-aibast-deal-progression-operating-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_deal-progression-operating-rules.md",
+      "step": 6,
       "annotated": "solutions/deal-progression/screenshots/manual/annotated/06-add-aibast-deal-progression-operating-rules.png",
       "status": "reusable",
       "visible_anchors": [
@@ -271,420 +451,617 @@
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 307,
-          "width": 372,
-          "height": 42,
-          "label": "Operating-rules knowledge file"
+          "x": 1057,
+          "y": 321,
+          "width": 281,
+          "height": 22,
+          "label": "aibast_deal-progression-operating-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/deal-progression/screenshots/manual/07-add-aibast-deal-progression-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_deal-progression-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/deal-progression/screenshots/manual/annotated/07-add-aibast-deal-progression-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_deal-progression-synthetic-records.md",
-        "aibast_deal-progression-operating-rules.md"
+        "aibast_deal-progression-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 1025,
-          "y": 307,
-          "width": 372,
-          "height": 80,
-          "label": "Two reviewed knowledge files"
+          "x": 1057,
+          "y": 321,
+          "width": 293,
+          "height": 22,
+          "label": "aibast_deal-progression-synthetic-records.md"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/08-add-aibast-acceleration-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_acceleration_04",
       "step": 8,
-      "source": "solutions/deal-progression/screenshots/manual/08-add-acceleration.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/08-add-acceleration.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/08-add-aibast-acceleration-04.png",
       "status": "reusable",
       "visible_anchors": [
         "deal-progression-acceleration"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 187,
-          "width": 278,
-          "height": 42,
-          "label": "Acceleration skill"
+          "x": 1057,
+          "y": 197,
+          "width": 195,
+          "height": 22,
+          "label": "deal-progression-acceleration"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/09-add-aibast-action-plans-03.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_action-plans_03",
       "step": 9,
-      "source": "solutions/deal-progression/screenshots/manual/09-add-action-plans.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/09-add-action-plans.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/09-add-aibast-action-plans-03.png",
       "status": "reusable",
       "visible_anchors": [
         "deal-progression-action-plans"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 187,
-          "width": 278,
-          "height": 42,
-          "label": "Action-plans skill"
+          "x": 1057,
+          "y": 197,
+          "width": 197,
+          "height": 22,
+          "label": "deal-progression-action-plans"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/10-add-aibast-assign-tasks-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_assign-tasks_05",
       "step": 10,
-      "source": "solutions/deal-progression/screenshots/manual/10-add-assign-tasks.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/10-add-assign-tasks.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/10-add-aibast-assign-tasks-05.png",
       "status": "reusable",
       "visible_anchors": [
         "deal-progression-assign-tasks"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 187,
-          "width": 278,
-          "height": 42,
-          "label": "Assign-tasks skill"
+          "x": 1057,
+          "y": 197,
+          "width": 196,
+          "height": 22,
+          "label": "deal-progression-assign-tasks"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/11-add-aibast-executive-summary-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_executive-summary_06",
       "step": 11,
-      "source": "solutions/deal-progression/screenshots/manual/11-add-executive-summary.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/11-add-executive-summary.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/11-add-aibast-executive-summary-06.png",
       "status": "reusable",
       "visible_anchors": [
         "deal-progression-executive-summary"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 187,
-          "width": 318,
-          "height": 42,
-          "label": "Executive-summary skill"
+          "x": 1057,
+          "y": 197,
+          "width": 241,
+          "height": 22,
+          "label": "deal-progression-executive-summary"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/12-add-aibast-pipeline-health-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_pipeline-health_01",
       "step": 12,
-      "source": "solutions/deal-progression/screenshots/manual/12-add-pipeline-health.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/12-add-pipeline-health.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/12-add-aibast-pipeline-health-01.png",
       "status": "reusable",
       "visible_anchors": [
         "deal-progression-pipeline-health"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 187,
-          "width": 306,
-          "height": 42,
-          "label": "Pipeline-health skill"
+          "x": 1057,
+          "y": 197,
+          "width": 214,
+          "height": 22,
+          "label": "deal-progression-pipeline-health"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/13-add-aibast-stalled-deals-02.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_stalled-deals_02",
       "step": 13,
-      "source": "solutions/deal-progression/screenshots/manual/13-add-stalled-deals.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/13-add-stalled-deals.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/13-add-aibast-stalled-deals-02.png",
       "status": "reusable",
       "visible_anchors": [
         "deal-progression-stalled-deals"
       ],
       "boxes": [
         {
-          "x": 1026,
-          "y": 186,
-          "width": 286,
-          "height": 42,
-          "label": "Stalled-deals skill"
+          "x": 1057,
+          "y": 197,
+          "width": 199,
+          "height": 22,
+          "label": "deal-progression-stalled-deals"
         }
       ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
-      "step": 14,
       "source": "solutions/deal-progression/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
       "annotated": "solutions/deal-progression/screenshots/manual/annotated/14-review-inventory.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "six configured skills shown as five names plus +1",
+        "Claude Opus 5",
+        "deal-progression-stalled-deals",
+        "deal-progression-pipeline-health",
+        "deal-progression-executive-summary",
+        "deal-progression-assign-tasks",
+        "deal-progression-action-plans",
         "aibast_deal-progression-synthetic-records.md",
         "aibast_deal-progression-operating-rules.md"
       ],
       "boxes": [
         {
-          "x": 1203,
-          "y": 86,
-          "width": 193,
-          "height": 38,
-          "label": "Reviewed model"
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 1026,
-          "y": 186,
-          "width": 322,
-          "height": 198,
-          "label": "Six configured skills"
+          "x": 1057,
+          "y": 197,
+          "width": 199,
+          "height": 22,
+          "label": "deal-progression-stalled-deals"
         },
         {
-          "x": 1026,
-          "y": 510,
-          "width": 372,
-          "height": 82,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 237,
+          "width": 214,
+          "height": 22,
+          "label": "deal-progression-pipeline-health"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 241,
+          "height": 22,
+          "label": "deal-progression-executive-summary"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 196,
+          "height": 22,
+          "label": "deal-progression-assign-tasks"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 197,
+          "height": 22,
+          "label": "deal-progression-action-plans"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 293,
+          "height": 22,
+          "label": "aibast_deal-progression-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 281,
+          "height": 22,
+          "label": "aibast_deal-progression-operating-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
       "step": 15,
-      "source": "solutions/deal-progression/screenshots/manual/15-open-preview.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/15-open-preview.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/15-review-skills.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab selected",
-        "New chat",
-        "Deal Progression Manual greeting"
+        "deal-progression-stalled-deals",
+        "deal-progression-pipeline-health",
+        "deal-progression-executive-summary",
+        "deal-progression-assign-tasks",
+        "deal-progression-action-plans"
       ],
       "boxes": [
         {
-          "x": 638,
-          "y": 8,
-          "width": 101,
-          "height": 43,
-          "label": "Preview selected"
+          "x": 1055,
+          "y": 177,
+          "width": 200,
+          "height": 22,
+          "label": "deal-progression-stalled-deals"
         },
         {
-          "x": 833,
-          "y": 91,
-          "width": 114,
-          "height": 37,
-          "label": "Fresh chat control"
+          "x": 1055,
+          "y": 255,
+          "width": 214,
+          "height": 22,
+          "label": "deal-progression-pipeline-health"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 242,
+          "height": 22,
+          "label": "deal-progression-executive-summary"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 197,
+          "height": 22,
+          "label": "deal-progression-assign-tasks"
+        },
+        {
+          "x": 1055,
+          "y": 509,
+          "width": 198,
+          "height": 22,
+          "label": "deal-progression-action-plans"
         }
       ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
       "step": 16,
-      "case_id": "DP-01",
-      "source": "solutions/deal-progression/screenshots/manual/16-dp-01.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/16-dp-01.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/16-review-skills-more.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "read-only output did not write CRM data",
-        "Sales leadership must review all forecast changes"
-      ],
-      "full_case_not_visibly_proven": [
-        "Pipeline Health Summary is above the captured viewport."
+        "deal-progression-pipeline-health",
+        "deal-progression-executive-summary",
+        "deal-progression-assign-tasks",
+        "deal-progression-action-plans",
+        "deal-progression-acceleration"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 448,
-          "width": 945,
-          "height": 128,
-          "label": "Evidence boundary and read-only gate"
+          "x": 1055,
+          "y": 104,
+          "width": 215,
+          "height": 22,
+          "label": "deal-progression-pipeline-health"
+        },
+        {
+          "x": 1055,
+          "y": 202,
+          "width": 242,
+          "height": 22,
+          "label": "deal-progression-executive-summary"
+        },
+        {
+          "x": 1055,
+          "y": 280,
+          "width": 197,
+          "height": 22,
+          "label": "deal-progression-assign-tasks"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 198,
+          "height": 22,
+          "label": "deal-progression-action-plans"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 196,
+          "height": 22,
+          "label": "deal-progression-acceleration"
         }
       ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
       "step": 17,
-      "case_id": "DP-02",
-      "source": "solutions/deal-progression/screenshots/manual/17-dp-02.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/17-dp-02.png",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/17-open-preview.png",
       "status": "reusable",
       "visible_anchors": [
-        "Approval gate",
-        "Evidence boundary",
-        "No CRM record, task, alert, outreach, forecast change, or customer communication was created or sent"
-      ],
-      "full_case_not_visibly_proven": [
-        "Stalled Deal Deep-Dive and Diagnosis are above the captured viewport."
+        "Deal Progression Manual"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 430,
-          "width": 945,
-          "height": 147,
-          "label": "Approval and evidence boundaries"
+          "x": 84,
+          "y": 20,
+          "width": 191,
+          "height": 24,
+          "label": "Deal Progression Manual"
         }
       ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-dp-01",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/18-dp-01.jpg",
+      "caption": "DP-01 · Sales Director: Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?",
       "step": 18,
-      "case_id": "DP-03",
-      "source": "solutions/deal-progression/screenshots/manual/18-dp-03.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/18-dp-03.png",
+      "case_id": "DP-01",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/18-dp-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "read-only decision support",
-        "Every plan requires authorized review"
-      ],
-      "full_case_not_visibly_proven": [
-        "Action Plans and Planning Objective are above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 443,
-          "width": 945,
-          "height": 130,
-          "label": "Evidence boundary and review gate"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-19",
-      "mode": "hard",
-      "step": 19,
-      "case_id": "DP-04",
-      "source": "solutions/deal-progression/screenshots/manual/19-dp-04.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/19-dp-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Synthetic Scenario",
-        "$2.4M of possible Q4 timing movement",
-        "not a forecast commitment",
+        "Pipeline Health Summary",
         "Evidence boundary"
       ],
-      "full_case_not_visibly_proven": [
-        "Pipeline Acceleration Strategy is above the captured viewport."
-      ],
       "boxes": [
         {
-          "x": 285,
-          "y": 285,
-          "width": 945,
-          "height": 84,
-          "label": "Synthetic scenario boundary"
+          "x": 286,
+          "y": 489,
+          "width": 194,
+          "height": 24,
+          "label": "Pipeline Health Summary"
         },
         {
-          "x": 285,
-          "y": 496,
-          "width": 945,
-          "height": 75,
+          "x": 286,
+          "y": 867,
+          "width": 75,
+          "height": 21,
           "label": "Evidence boundary"
         }
-      ],
-      "note": "Evidence-boundary label pill sat on top of the approval-gate paragraph above the box; regenerated the PNG with the pill placed below the boxed evidence boundary 2026-09-10."
+      ]
     },
     {
-      "id": "hard-step-20",
+      "id": "hard-dp-02",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/19-dp-02.jpg",
+      "caption": "DP-02 · Account Executive: What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
+      "step": 19,
+      "case_id": "DP-02",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/19-dp-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Stalled Deal Deep-Dive",
+        "Diagnosis",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 444,
+          "width": 177,
+          "height": 24,
+          "label": "Stalled Deal Deep-Dive"
+        },
+        {
+          "x": 286,
+          "y": 1026,
+          "width": 85,
+          "height": 24,
+          "label": "Diagnosis"
+        },
+        {
+          "x": 286,
+          "y": 1964,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-dp-03",
+      "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/20-dp-03.jpg",
+      "caption": "DP-03 · Account Executive: Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.",
       "step": 20,
-      "case_id": "DP-05",
-      "source": "solutions/deal-progression/screenshots/manual/20-dp-05.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/20-dp-05.png",
+      "case_id": "DP-03",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/20-dp-03.png",
       "status": "reusable",
       "visible_anchors": [
+        "Action Plans",
         "Evidence boundary",
-        "No tasks were created",
-        "authorized opportunity owner must review and approve all assignments"
-      ],
-      "full_case_not_visibly_proven": [
-        "Draft Task Assignment Plan and candidate tasks are above the captured viewport."
+        "Planning Objective"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 443,
-          "width": 945,
-          "height": 130,
-          "label": "Evidence boundary and no-task gate"
+          "x": 367,
+          "y": 417,
+          "width": 96,
+          "height": 24,
+          "label": "Action Plans"
+        },
+        {
+          "x": 286,
+          "y": 762,
+          "width": 76,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 843,
+          "y": 1160,
+          "width": 151,
+          "height": 24,
+          "label": "Planning Objective"
         }
       ]
     },
     {
-      "id": "hard-step-21",
+      "id": "hard-dp-04",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/21-dp-04.jpg",
+      "caption": "DP-04 · Sales Director: Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?",
       "step": 21,
-      "case_id": "DP-06",
-      "source": "solutions/deal-progression/screenshots/manual/21-dp-06.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/21-dp-06.png",
+      "case_id": "DP-04",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/21-dp-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence boundary",
-        "read-only decision support",
-        "Authorized human review is required"
-      ],
-      "full_case_not_visibly_proven": [
-        "Executive Summary and Synthetic Planning Targets are above the captured viewport."
+        "Pipeline Acceleration Strategy",
+        "Synthetic Scenario",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 469,
-          "width": 945,
-          "height": 101,
-          "label": "Evidence boundary and human-review gate"
+          "x": 286,
+          "y": 444,
+          "width": 228,
+          "height": 24,
+          "label": "Pipeline Acceleration Strategy"
+        },
+        {
+          "x": 286,
+          "y": 1328,
+          "width": 148,
+          "height": 24,
+          "label": "Synthetic Scenario"
+        },
+        {
+          "x": 668,
+          "y": 1328,
+          "width": 73,
+          "height": 20,
+          "label": "Evidence boundary"
         }
       ]
     },
     {
-      "id": "hard-step-22",
+      "id": "hard-dp-05",
       "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/22-dp-05.jpg",
+      "caption": "DP-05 · Sales Director: Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.",
       "step": 22,
-      "source": "solutions/deal-progression/screenshots/manual/22-confirm-draft.jpg",
-      "annotated": "solutions/deal-progression/screenshots/manual/annotated/22-confirm-draft.png",
+      "case_id": "DP-05",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/22-dp-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Deal Progression Manual",
-        "Draft"
+        "Draft Task Assignment Plan",
+        "candidate tasks",
+        "Evidence boundary"
       ],
       "boxes": [
         {
-          "x": 105,
-          "y": 239,
-          "width": 638,
-          "height": 60,
-          "label": "Target manual agent remains Draft"
+          "x": 286,
+          "y": 557,
+          "width": 208,
+          "height": 24,
+          "label": "Draft Task Assignment Plan"
+        },
+        {
+          "x": 305,
+          "y": 596,
+          "width": 120,
+          "height": 21,
+          "label": "candidate tasks"
+        },
+        {
+          "x": 286,
+          "y": 898,
+          "width": 165,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-dp-06",
+      "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/23-dp-06.jpg",
+      "caption": "DP-06 · Sales Director: Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.",
+      "step": 23,
+      "case_id": "DP-06",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/23-dp-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Planning Targets",
+        "Executive Summary",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 594,
+          "width": 78,
+          "height": 24,
+          "label": "Synthetic Planning Targets"
+        },
+        {
+          "x": 533,
+          "y": 595,
+          "width": 157,
+          "height": 23,
+          "label": "Executive Summary"
+        },
+        {
+          "x": 286,
+          "y": 1001,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/deal-progression/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Deal Progression Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 190,
+          "height": 24,
+          "label": "Deal Progression Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate with Deal Progression Pilot and Draft visible.",
-      "Manual step 4 with a visible saved-state confirmation.",
-      "Manual step 5 with a positive web-search removal confirmation."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:deal-progression",
-    "reviewed_at": "2026-08-10T00:27:58.140058+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:47:54.149715+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

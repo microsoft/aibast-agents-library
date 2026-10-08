@@ -129,10 +129,12 @@ def test_manual_and_native_sources_share_the_same_contract():
             native / "capabilities/knowledge/files" / source.name
         ).read_bytes()
     for source in (manual / "skills").glob("*/SKILL.md"):
-        mirror = native / "behaviors" / f"aibast_care-gap-closure-{source.parent.name}.mcs.yml"
+        # behaviors are named after the skill's front-matter name, not its folder
+        skill_name = re.search(r"^name:\s*(\S+)", source.read_text(), re.M).group(1)
+        mirror = native / "behaviors" / f"aibast_{skill_name}.mcs.yml"
         assert textwrap.dedent(mirror.read_text().split("content: |\n", 1)[1]) == source.read_text()
     for source in [
-        manual / "skills/gap-analysis/SKILL.md",
+        *sorted((manual / "skills").glob("aibast_gap-analysis_*/SKILL.md")),
         *sorted((manual / "knowledge").glob("*.md")),
     ]:
         assert EXPECTED[0] in source.read_text()
@@ -166,78 +168,66 @@ def test_transcript_revalidation_is_offline_and_preserves_recorded_output():
             for row in capture["transcripts"]
         ],
     }
+    # 2026-10-06 video alignment: CG-05..CG-10 were added and every case was recaptured live in strict
+    # isolation, replacing the 2026-09-11 offline revalidation of the four original cases.
     assert hashlib.sha256(json.dumps(immutable, sort_keys=True).encode()).hexdigest() == (
-        "9cc14154c4488aea953f6ad09d40d9241d3d2a3b15d19c6c3818179ccf11a58f"
-    )
-    assert capture["captured_case_file_sha256"] == (
-        "1bdadb805383e84752aeef511969d709f10d2e794b512f58772a62c94919d75c"
+        "f8bef795ee4ebc0eef757b57d66966e7d7df6a212bf19041cb01a0b8482e1663"
     )
     assert capture["case_file_sha256"] == hashlib.sha256(CASE_FILE.read_bytes()).hexdigest()
-    assert capture["contract_revalidation"]["live_capture"] is False
-    assert capture["contract_revalidation"]["validator"] == "tools.run_demo_cases.run_case"
+    assert capture["strict_isolation"] is True
     for case, transcript in zip(read_json(CASE_FILE)["cases"], capture["transcripts"]):
         assert case["id"] == transcript["case_id"]
         assert transcript["must_include"] == case["must_include"]
         assert run_case(case, transcript["assistant_response"], transcript["agent_logs"]) == (True, [])
 
 
-def test_live_source_revision_is_not_claimed_as_verified():
+def test_live_source_revision_is_verified_by_the_reshoot_and_stays_fail_closed():
+    # The repaired CG-01 contract (SYN-COL leader) was re-shot live in Copilot
+    # Studio for both lanes. Acceptance must come from the current evidence,
+    # every locked case must pass, and both agents must remain unpublished Drafts.
+    cases = read_json(CASE_FILE)["cases"]
     manual = read_json(PACKAGE / "evals/manual-build-evidence.json")
     preview = read_json(PACKAGE / "evals/copilot-studio-preview-evidence.json")
-    assert manual["status"] == "reshoot_required"
-    assert manual["manual_components"]["global_instructions"]["confirmed"] is False
-    assert preview["source_contract_status"] == "reshoot_required"
-    assert cg01(scaffold.easy_case_records(context()))["passed"] is False
-    for cases in (manual["canonical_preview"], preview["cases"]):
-        case = cg01(cases)
-        assert case["passed"] is None
-        assert case["status"] == "reshoot_required"
-        assert case["captured_passed"] is True
-        assert case["captured_must_include"] == [
-            "SYN-BCS", "Records requiring evidence review"
-        ]
+    assert manual["status"] == "passed"
+    assert manual["manual_components"]["global_instructions"]["confirmed"] is True
+    assert manual["publication_gate"]["published"] is False
+    assert preview["status"] == "Draft"
+    assert preview["published"] is False
+    for rows in (manual["canonical_preview"], preview["cases"]):
+        assert [row["case_id"] for row in rows] == [case["id"] for case in cases]
+        assert all(row["passed"] is True for row in rows)
+        assert cg01(rows)["must_include"] == EXPECTED
+        assert "captured_must_include" not in cg01(rows)
+    assert cg01(scaffold.easy_case_records(context()))["passed"] is True
     studio = read_json(PACKAGE / "deployment.json")["copilot_studio"]
     for key in ("validated_manual", "validated_pilot"):
-        assert studio[key]["source_contract_status"] == "reshoot_required"
-        assert studio[key]["preview_cases_passed"] == 3
-        assert studio[key]["preview_cases_pending"] == 1
         assert studio[key]["published"] is False
-    manual["manual_components"]["global_instructions"]["confirmed"] = True
-    for case in manual["canonical_preview"]:
-        case["passed"] = True
-    assert scaffold.manual_evidence_passed(manual) is False
-    with pytest.raises(scaffold.ScaffoldError, match="does not record passed manual Preview"):
-        scaffold.load_context(
-            ROOT, "care-gap-closure", allow_pending=False,
-            raw_base=scaffold.DEFAULT_RAW_BASE,
+        assert "source_contract_status" not in studio[key], (
+            f"{key} still carries the superseded reshoot_required contract"
         )
+        assert studio[key]["preview_cases_total"] == len(cases)
+        assert studio[key]["preview_cases_passed"] == len(cases)
+    # The gate still fails closed if CG-01 loses its pass.
+    broken = json.loads(json.dumps(manual))
+    cg01(broken["canonical_preview"])["passed"] = None
+    assert scaffold.manual_evidence_passed(broken) is False
 
 
-def test_affected_checkpoints_keep_historical_anchors_without_relabeling():
+def test_repaired_checkpoints_show_the_current_contract():
     visual = read_json(PACKAGE / "evals/visual-checkpoints.json")
     captures = {capture["id"]: capture for capture in visual["captures"]}
     assert visual["summary"] == {
-        "total_existing_captures": 23, "reusable": 18, "reshoot_required": 5
+        "total_existing_captures": len(captures),
+        "reusable": len(captures),
+        "reshoot_required": 0,
     }
-    assert {
-        key for key, capture in captures.items()
-        if capture["status"] == "reshoot_required"
-    } == REPAIRED_CAPTURES | {"easy-cg-04"}
-    for key in REPAIRED_CAPTURES:
+    assert {capture["status"] for capture in captures.values()} == {"reusable"}
+    for key in ("easy-cg-01", "hard-cg-01"):
         capture = captures[key]
-        assert (ROOT / capture["historical_annotation"]).is_file()
-        assert capture["historical_visible_anchors"]
-        assert capture["historical_boxes"]
-        assert "annotated" not in capture
-        assert "visible_anchors" not in capture
-        assert EXPECTED[0] in capture["reason"]
-    assert captures["easy-cg-01"]["historical_visible_anchors"][0] == "SYN-BCS"
-    assert captures["hard-cg-01"]["historical_visible_anchors"][0] == "SYN-BCS"
-    assert "CG-01 / gap_analysis: SYN-BCS" in (
-        captures["hard-step-03"]["historical_visible_anchors"][1]
-    )
-    assert "release_review" not in visual
-    assert visual["historical_release_review"]["status"] == "approved"
+        assert (ROOT / capture["annotated"]).is_file()
+        assert capture["visible_anchors"] == EXPECTED
+        assert not any(name.startswith("historical") for name in capture)
+    assert "historical_release_review" not in visual
 
 
 def test_historical_screenshots_and_films_are_byte_identical():
@@ -250,13 +240,15 @@ def test_historical_screenshots_and_films_are_byte_identical():
         path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
         for path in paths
     }
-    assert len(manifest) == 51
+    # Re-shot 2026-10 frame set: 32 manual + 12 assisted captures, their
+    # annotated copies, two films, two contact sheets and two audit shots.
+    assert len(manifest) == 94
     assert hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest() == (
-        "379ca2a604590526a49646825fcf684d6ee5f91c88e60cc730d4de1b748625a3"
+        "11ddd09c33c42ec7ea5f7790342c22dfd10c4e68af96f2421c1756211cb19ecf"
     )
 
 
-def test_generated_pages_do_not_promote_stale_images_or_captured_contracts():
+def test_generated_pages_promote_only_the_current_contract():
     ctx = context()
     _, outputs = scaffold.generated_outputs(ctx)
     for path, expected in outputs.items():
@@ -264,35 +256,37 @@ def test_generated_pages_do_not_promote_stale_images_or_captured_contracts():
     tutorial = (PACKAGE / "manual-tutorial.html").read_text()
     quest = (PACKAGE / "quest.html").read_text()
     for page in (tutorial, quest):
-        assert "Pending evidence:" in page
+        assert "Pending evidence:" not in page
         assert EXPECTED[0] in html.unescape(page)
-        for filename in ("03-enter-instructions", "04-save-instructions", "14-cg-01"):
-            assert f'src="screenshots/manual/annotated/{filename}.png"' not in page
-        assert "The captured Preview evidence records CG-01" not in page
-    assert 'src="screenshots/assisted/annotated/02-cg-01.png"' not in quest
-    assert "Historical response evidence" in quest
-    assert "SYN-BCS" in quest
+        assert 'src="screenshots/manual/annotated/22-cg-01.png"' in page
+        unescaped = html.unescape(page)
+        assert "records CG-01 with the recorded identifiers SYN-BCS" not in unescaped
+        if "The captured Preview evidence records CG-01" in unescaped:
+            assert f"records CG-01 with the recorded identifiers {EXPECTED[0]}" in unescaped
+        assert "Historical response evidence" not in page
+    assert "Confirm Draft and stop before publish" in tutorial
+    assert "Do not choose Publish" in tutorial
+    assert 'src="screenshots/assisted/annotated/02-cg-01.png"' in quest
     report = (PACKAGE / "evidence-report.html").read_text()
-    gaps = report.split("<h2>Reference-only visual gaps</h2>", 1)[1]
-    for key in REPAIRED_CAPTURES:
-        assert key in gaps
-    step14 = re.search(r'id="step-14">(.*?)</article>', tutorial, re.DOTALL).group(1)
-    assert "fresh Preview" in html.unescape(step14)
+    gaps = report.split("<h2>Reference-only visual gaps</h2>", 1)[1].split("</section>", 1)[0]
+    assert "<tbody></tbody>" in gaps
+    step = re.search(r'id="step-21">(.*?)</article>', tutorial, re.DOTALL).group(1)
+    assert "fresh Preview" in html.unescape(step)
 
 
-def test_historical_native_export_is_not_presented_as_the_repaired_source():
+def test_native_export_is_the_current_unpublished_source():
     metadata = read_json(PACKAGE / "exports/care-gap-closure-solution-export.json")
-    assert metadata["source_contract_status"] == "stale_source"
-    assert hashlib.sha256((ROOT / metadata["zip"]).read_bytes()).hexdigest() == (
-        "dd5fdcdc5fb7c484ad923464709d62587a1eca23ca8d497b4ddc72a7142681a0"
-    )
+    assert metadata["status"] == "exported"
+    assert metadata["published"] is False
+    assert metadata["managed"] is False
+    assert "source_contract_status" not in metadata
+    assert hashlib.sha256((ROOT / metadata["zip"]).read_bytes()).hexdigest() == metadata["sha256"]
     rows = read_json(ROOT / "state/copilot_studio_solution_exports.json")["solutions"]
     assert next(row for row in rows if row["slug"] == "care-gap-closure") == metadata
     links = scaffold.copilot_solution_download_links(context())
-    assert "Historical export" in links
-    assert "Download Copilot Studio solution" not in links
-    assert metadata["source_contract_note"] in html.unescape(links)
-    assert "Historical export" in (PACKAGE / "exports/README.md").read_text()
+    assert "Historical export" not in links
+    assert "Download Copilot Studio solution" in links
+    assert "Historical export" not in (PACKAGE / "exports/README.md").read_text()
 
 
 def test_source_bundle_contains_repaired_sources_and_preserved_media():

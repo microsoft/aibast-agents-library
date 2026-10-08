@@ -66,6 +66,126 @@
         "human approval"
       ],
       "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-05",
+      "operation": "root_cause_analysis",
+      "persona": "Regional Retail Manager",
+      "onepager_bullet": "Score severity and determine impacted SKUs, orders, and revenue exposure",
+      "prompt": "I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?",
+      "kwargs": {
+        "operation": "root_cause_analysis"
+      },
+      "must_include": [
+        "Portland DC",
+        "143 products",
+        "$84,300/week"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-06",
+      "operation": "emergency_options",
+      "persona": "Regional Operations Director",
+      "onepager_bullet": "Compare backup sourcing, inventory shifts, and routing alternatives",
+      "prompt": "What are our emergency options and costs?",
+      "kwargs": {
+        "operation": "emergency_options"
+      },
+      "must_include": [
+        "Denver DC Emergency Transfer",
+        "$15,600",
+        "3:1"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-07",
+      "operation": "transfer_plan",
+      "persona": "Store Operations Manager",
+      "onepager_bullet": "Recommend the best mitigation plan based on cost and lead time",
+      "prompt": "Approved. Execute both Seattle and the 5 additional stores.",
+      "kwargs": {
+        "operation": "transfer_plan"
+      },
+      "must_include": [
+        "ready to release",
+        "$24,500",
+        "$78,000"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-08",
+      "operation": "recovery_plan",
+      "persona": "Distribution Center Manager",
+      "onepager_bullet": "Detect supplier issues and logistics disruptions in real time",
+      "prompt": "Activate tracking and show me the Portland DC recovery plan.",
+      "kwargs": {
+        "operation": "recovery_plan"
+      },
+      "must_include": [
+        "Conveyor repair",
+        "340 pending orders",
+        "Friday noon"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-09",
+      "operation": "incident_report",
+      "persona": "Finance Business Partner",
+      "onepager_bullet": "Recommend the best mitigation plan based on cost and lead time",
+      "prompt": "Create the executive report with financial impact.",
+      "kwargs": {
+        "operation": "incident_report"
+      },
+      "must_include": [
+        "Executive Incident Report",
+        "$53,500",
+        "47 minutes"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-10",
+      "operation": "incident_summary",
+      "persona": "Supply Chain Director",
+      "onepager_bullet": "Detect supplier issues and logistics disruptions in real time",
+      "prompt": "Distribute the report and summarize what we accomplished.",
+      "kwargs": {
+        "operation": "incident_summary"
+      },
+      "must_include": [
+        "Crisis Response Summary",
+        "not sent",
+        "all 47 stores"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
     }
   ],
   "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",

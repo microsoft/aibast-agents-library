@@ -26,7 +26,7 @@
 | Permit type | Required documents |
 |---|---|
 | new_construction | site_plan, structural_calcs, mep_drawings, title_report |
-| residential_addition | site_plan, structural_calcs |
+| residential_addition | site_plan, structural_drawings, property_survey, proof_of_insurance, hoa_approval |
 | commercial_alteration | site_plan, mep_drawings |
 | institutional | site_plan, structural_calcs, mep_drawings, title_report, traffic_study |
 
@@ -44,6 +44,7 @@ the duplicate was closed or changed.
 | R-1 (Single Family Residential) | 35 ft / 2.5 stories | 25 ft | 5 ft | 20 ft | 40% | 2 spaces per unit |
 | MU-2 (Mixed Use) | 55 ft / 4 stories | 0 ft | 0 ft | 10 ft | 80% | 1 space per unit + 1 per 500 sq ft commercial |
 | I-1 (Light Industrial) | 45 ft / 3 stories | 20 ft | 10 ft | 15 ft | 60% | 1 per 1,000 sq ft |
+| R-2 (HOA Residential) | 25 ft / 2 stories | 15 ft | 15 ft | 15 ft | 35% | 2 spaces per unit |
 | PF (Public Facilities) | 50 ft / 3 stories | 30 ft | 15 ft | 20 ft | 50% | Per use determination |
 
 Quote these standards as written. They are not compliance determinations.
@@ -89,16 +90,21 @@ For each category:
 | Fire Review | $200.00 | $2.00 |
 | Technology Surcharge | $25.00 | $0.50 |
 
-All seven categories apply in this pilot. The total identity is
-`$850 + (valuation / 1000) × $19.25`.
+All seven categories apply in this pilot except to residential additions. The total
+identity is `$850 + (valuation / 1000) × $19.25`.
+
+Residential additions use the residential schedule instead: Building Permit $100.00 +
+$10.25 per $1,000, plus a $50.00 Technology Surcharge, so the total is
+`$150 + (valuation / 1000) × $10.25` ($68,000 → $847.00).
 
 ### Precomputed permit totals
 
 | Permit | Valuation | Estimated total |
 |---|---:|---:|
 | BP-2025-0101 | $4,200,000 | $81,700.00 |
-| BP-2025-0102 | $185,000 | $4,411.25 |
+| BP-2025-0102 | $185,000 | $2,046.25 |
 | BP-2025-0103 | $320,000 | $7,010.00 |
 | BP-2025-0104 | $6,800,000 | $131,750.00 |
 | BP-2025-0105 | $4,200,000 | $81,700.00 |
 | BP-2025-0106 | $540,000 | $11,245.00 |
+| BP-2024-3847 | $68,000 | $847.00 |

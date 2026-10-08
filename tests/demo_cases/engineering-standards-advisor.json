@@ -1,0 +1,136 @@
+{
+  "solution": "Engineering Standards Agent",
+  "agent": "@aibast-agents-library/engineering-standards-advisor",
+  "onepager": "59. Engineering Standards Agent one-pager.pptx",
+  "agent_files": [
+    "engineering_standards_advisor_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "ESA-01",
+      "persona": "Design Technician",
+      "operation": "vetted_lookup",
+      "onepager_bullet": "Answers standards questions in seconds with vetted values and exact section and page citations",
+      "prompt": "What is the minimum clearance for a primary conductor over a public road?",
+      "arguments": {
+        "operation": "vetted_lookup",
+        "topic": "road_clearance"
+      },
+      "must_include": [
+        "6.5 m",
+        "QR-210-01",
+        "page 14"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "EngineeringStandardsAgent"
+    },
+    {
+      "id": "ESA-02",
+      "persona": "Design Technician",
+      "operation": "interpretation",
+      "onepager_bullet": "Interprets the full standard text when no vetted value exists, clearly labeled as unvetted",
+      "prompt": "Can I use a Class 5 pole on a 35-degree corner that carries a 75 kVA transformer?",
+      "arguments": {
+        "operation": "interpretation",
+        "topic": "corner_transformer_pole"
+      },
+      "must_include": [
+        "UNVETTED",
+        "Class 3",
+        "Not authoritative"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "EngineeringStandardsAgent"
+    },
+    {
+      "id": "ESA-03",
+      "persona": "Design Technician",
+      "operation": "flag_for_review",
+      "onepager_bullet": "Routes interpretations to a standards engineer so good answers become vetted guidance",
+      "prompt": "Send the corner-pole interpretation to a standards engineer to confirm.",
+      "arguments": {
+        "operation": "flag_for_review",
+        "topic": "corner_transformer_pole"
+      },
+      "must_include": [
+        "REV-0318",
+        "Not Submitted",
+        "Nothing was submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "EngineeringStandardsAgent"
+    },
+    {
+      "id": "ESA-04",
+      "persona": "Standards Engineer",
+      "operation": "review_queue",
+      "onepager_bullet": "Gives standards engineers one queue of interpretations to confirm and rows to re-vet",
+      "prompt": "What is waiting in my standards review queue?",
+      "arguments": {
+        "operation": "review_queue"
+      },
+      "must_include": [
+        "REV-0311",
+        "Pending reviews",
+        "QR-210-04"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "EngineeringStandardsAgent"
+    },
+    {
+      "id": "ESA-05",
+      "persona": "Standards Engineer",
+      "operation": "quick_reference",
+      "onepager_bullet": "Keeps quick-reference sheets current by showing what is vetted and what needs re-vetting",
+      "prompt": "Show the overhead clearances quick-reference sheet and anything due for re-vetting.",
+      "arguments": {
+        "operation": "quick_reference",
+        "standard_id": "DS-210"
+      },
+      "must_include": [
+        "QR-210-04",
+        "Re-vetting due",
+        "3 vetted and current"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "EngineeringStandardsAgent"
+    },
+    {
+      "id": "ESA-06",
+      "persona": "Field Engineering Lead",
+      "operation": "scope_job",
+      "onepager_bullet": "Scopes jobs against the standards and risk factors that apply, before design starts",
+      "prompt": "Scope the Maple Ridge pole replacement job: risk, effort and the standards that apply.",
+      "arguments": {
+        "operation": "scope_job"
+      },
+      "must_include": [
+        "7.4 crew-days",
+        "INT-0318",
+        "Total risk score"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "EngineeringStandardsAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

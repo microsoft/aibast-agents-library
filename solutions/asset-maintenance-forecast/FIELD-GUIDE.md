@@ -212,10 +212,10 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `ASSET_MAINTENANCE_FORECAST-01` — Which asset is most likely to interrupt operations next, and what evidence supports that?
-- `ASSET_MAINTENANCE_FORECAST-02` — Show me the weakest asset condition and whether this is an operating authorization.
-- `ASSET_MAINTENANCE_FORECAST-03` — What maintenance funding should I reserve for the transformer risk?
-- `ASSET_MAINTENANCE_FORECAST-04` — Draft the maintenance queue for AST-X002, but do not create any work orders.
+- `ASSET_MAINTENANCE_FORECAST-01` — I need immediate analysis on our wind farm turbines
+- `ASSET_MAINTENANCE_FORECAST-02` — Show me the weakest turbine condition and whether this is an operating authorization.
+- `ASSET_MAINTENANCE_FORECAST-03` — What maintenance funding should I reserve for the at-risk turbines?
+- `ASSET_MAINTENANCE_FORECAST-04` — Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.
 
 ## Manual mode — literal browser construction
 

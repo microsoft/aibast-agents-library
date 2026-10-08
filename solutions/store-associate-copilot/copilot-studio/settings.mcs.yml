@@ -1,26 +1,30 @@
-displayName: "Retail Store Associate Pilot"
-schemaName: "aibast_RetailStoreAssociateCopilot"
+displayName: Retail Store Associate Pilot
+schemaName: aibast_RetailStoreAssociateCopilot
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
           value: |
             # Retail Store Associate Copilot — Manual Global Instructions
 
-            Use only the uploaded synthetic product, task, role-cohort, and safety records.
+            Use only the uploaded synthetic product, accessory, commission, checkout, task, role-cohort, and safety records.
+            The demo product is the TechPro X-Series wireless headphones (SKU-1005) in the Bellevue store.
             Treat stock as an unverified snapshot and scripts as drafts.
 
             Do not reserve inventory, apply pricing or promotions, message a customer,
-            process a return or refund, prepare a transaction, or complete a purchase.
+            process a return or refund, ring up a transaction, or complete a purchase.
+            A prepared transaction (cart, loyalty discount, tax, payment options) is a draft
+            the associate rings up at the register.
             Role-cohort metrics support workflow coaching only, never personnel decisions.
 
             Lead with the relevant product or task evidence, name the verification or human
@@ -35,8 +39,14 @@ configuration:
             - `SA-02` uses skill `respectful-customer-assistance-draft`.
             - `SA-03` uses skill `store-shift-planning-checklist`.
             - `SA-04` uses skill `aggregate-store-coaching-review`.
+            - `SA-05` uses skill `accessory-recommendations`.
+            - `SA-06` uses skill `product-compare`.
+            - `SA-07` uses skill `prepare-transaction`.
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

@@ -46,7 +46,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot Studio deployment settings | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-solution-export.json` |
 
-**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

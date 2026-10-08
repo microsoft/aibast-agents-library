@@ -62,38 +62,41 @@ def test_concurrent_sync_policy_variants_cannot_relabel_frozen_inputs(slug):
     }
 
 
+def current_visual(slug):
+    return read(ROOT / "solutions" / slug / "evals/visual-checkpoints.json")
+
+
 @pytest.mark.parametrize("slug", SNAPSHOTS)
-def test_upstream_annotations_cannot_change_current_acceptance(slug):
+def test_upstream_annotations_stay_historical_after_the_reshoot(slug):
+    # The 2026-09-10 upstream annotations were archived as history. The
+    # workshop was later re-shot end to end, so current acceptance comes only
+    # from the new captures; nothing in the archive may be rebound to them.
     package = ROOT / "solutions" / slug
-    visual = read(package / "evals/visual-checkpoints.json")
-    reference = visual.pop("historical_annotation_reference")
-    assert reference["status"] == "historical_only"
-    assert reference["annotation_date"] == "2026-09-10"
-    assert reference["index"] == f"{HISTORY}/index.json"
-    index = read(package / reference["index"])
+    index = read(package / HISTORY / "index.json")
     assert index["status"] == "historical_only"
+    assert index["annotation_date"] == "2026-09-10"
     assert index["new_native_acceptance"] == {
         "accepted_components": 0, "accepted_cases": 0, "reviewed_images": 0,
     }
     assert index["source_commits"] == {
         "base": MERGE_BASE, "staging": STAGING, "upstream": UPSTREAM,
     }
+    assert index["current_visual_projection"]["sha256"] == SNAPSHOTS[slug]["current"]
+    visual = current_visual(slug)
+    assert "historical_annotation_reference" not in visual
     projection = digest(json.dumps(visual, sort_keys=True).encode())
-    assert projection == index["current_visual_projection"]["sha256"]
-    assert projection == SNAPSHOTS[slug]["current"]
+    assert projection != index["current_visual_projection"]["sha256"]
+    archived = {record["path"] for record in index["archived_annotations"]}
+    serialized = json.dumps(visual)
+    assert HISTORY not in serialized
+    assert not any(path in serialized for path in archived)
+    assert visual["summary"]["reshoot_required"] == 0
+    assert visual["summary"]["reusable"] == len(visual["captures"])
     for capture in visual["captures"]:
-        if capture["status"] == "reshoot_required":
-            assert capture["reason"]
-            assert "annotated" not in capture
-            assert "visible_anchors" not in capture
-        else:
-            assert slug == "portfolio-rebalancing"
-            assert capture["mode"] == "hard"
-            assert capture["build_revision"] == "repaired-r5"
-            assert "/manual/repaired-r5/" in capture["annotated"]
-    if slug != "portfolio-rebalancing":
-        assert visual["summary"]["reusable"] == 0
-        assert visual["summary"]["reshoot_required"] == len(visual["captures"])
+        assert capture["status"] == "reusable"
+        assert "historical_boxes" not in capture
+        for field in ("source", "annotated"):
+            assert (ROOT / capture[field]).is_file(), capture[field]
 
 
 @pytest.mark.parametrize("slug", SNAPSHOTS)
@@ -115,10 +118,10 @@ def test_both_annotation_versions_have_complete_hash_verified_path_resolution(sl
         assert "2026-09-10" in record["upstream_note"]
         assert f"/{HISTORY}/screenshots/" in record["path"]
         corrected = verify_file(record)
-        retained = (ROOT / original).read_bytes()
-        assert corrected != retained
-        assert digest(retained) == record["retained_original_sha256"]
-        assert digest(retained) == index["retained_original_media_sha256"][original]
+        # The live-tree originals these hashes describe were replaced by the
+        # re-shoot; the archive keeps its own internally consistent record.
+        assert record["retained_original_sha256"] == index["retained_original_media_sha256"][original]
+        assert digest(corrected) != record["retained_original_sha256"]
         assert corrected[:8] == b"\x89PNG\r\n\x1a\n"
     references = {
         capture[field]
@@ -130,8 +133,6 @@ def test_both_annotation_versions_have_complete_hash_verified_path_resolution(sl
     assert references == set(archived) | set(unchanged)
     assert references == set(index["retained_original_media_sha256"])
     assert not set(archived) & set(unchanged)
-    for original, expected in unchanged.items():
-        assert digest((ROOT / original).read_bytes()) == expected
 
 
 def test_corrected_geometry_is_archived_not_rebound_to_original_images():
@@ -149,43 +150,47 @@ def test_corrected_geometry_is_archived_not_rebound_to_original_images():
             for box in record["upstream_boxes"]
         }
         assert set(boxes) <= actual
-    current = read(ROOT / "solutions/procurement-agent/evals/visual-checkpoints.json")
-    row = next(row for row in current["captures"] if row["id"] == "hard-step-16")
-    assert row["historical_boxes"][0]["y"] == 207
-    assert row["historical_boxes"][0]["height"] == 84
-    current = read(ROOT / "solutions/fs-customer-onboarding/evals/visual-checkpoints.json")
-    row = next(row for row in current["captures"] if row["id"] == "hard-step-12")
-    assert row["historical_boxes"][-1]["y"] == 323
-    assert row["historical_boxes"][-1]["height"] == 190
+        # The re-shot capture with the same id is a different frame; the
+        # archived geometry must not be rebound to it.
+        current = next(
+            row for row in current_visual(slug)["captures"] if row["id"] == capture_id
+        )
+        assert current["boxes"] != record["upstream_boxes"]
+        assert current["annotated"] != record["path"]
+        assert "historical_boxes" not in current
 
 
-def test_procurement_candidate_keeps_seven_inputs_and_all_august_bytes_without_acceptance():
+def test_procurement_reshoot_replaces_the_candidate_and_keeps_august_history_intact():
+    # The grounding-r3 "candidate, native acceptance pending" state was
+    # superseded: procurement was re-shot and fully captured. The August
+    # archive must stay byte-intact; the old r3 inventory is history only.
     package = ROOT / "solutions/procurement-agent"
-    inventory = read(package / "evals/manual-inputs-r3.json")
-    assert inventory["build_revision"] == "grounding-r3"
-    assert len(inventory["inputs"]) == 7
-    for record in inventory["inputs"]:
-        verify_file(record)
-    verify_file(inventory["locked_cases"])
     evidence = read(package / "evals/manual-build-evidence.json")
-    regression = evidence["native_regression"]
-    assert evidence["status"] == "reshoot_required"
-    assert regression["status"] == "blocked"
-    assert regression["accepted_components"] == regression["cases_run"] == regression["passed"] == 0
-    assert regression["older_passes_carried_forward"] is False
-    assert regression["total"] == len(evidence["canonical_preview"]) == 4
-    assert all(case["passed"] is None and case["status"] == "reshoot_required"
-               for case in evidence["canonical_preview"])
+    locked = read(ROOT / "tests/demo_cases/procurement-agent.json")["cases"]
+    assert evidence["status"] == "passed"
+    assert "native_regression" not in evidence
+    assert [case["case_id"] for case in evidence["canonical_preview"]] == [case["id"] for case in locked]
+    assert all(case["passed"] is True for case in evidence["canonical_preview"])
+    assert evidence["publication_gate"]["published"] is False
     history = read(package / "evals/history/2026-08/index.json")
     assert len(history["files"]) == 8
     for record in history["files"]:
         verify_file({**record, "path": record["archived_path"]})
-    assert len(history["media_sha256"]) == 41
-    for original, expected in history["media_sha256"].items():
-        assert digest((ROOT / original).read_bytes()) == expected
     for mode in ("manual", "assisted"):
         film = read(package / "screenshots" / mode / "browserfilm.json")
-        assert all(frame["captured"] is False for frame in film["frames"])
+        assert film["frames"]
+        assert all(frame["captured"] is True for frame in film["frames"])
+    inventory_path = package / "evals/manual-inputs-r3.json"
+    if inventory_path.exists():
+        inventory = read(inventory_path)
+        assert inventory["build_revision"] == "grounding-r3"
+        assert len(inventory["inputs"]) == 7
+        assert any(
+            digest((ROOT / record["path"]).read_bytes()) != record["sha256"]
+            for record in inventory["inputs"]
+        )
+        manifest_paths = {item["path"] for item in read(package / "export-manifest.json")["files"]}
+        assert "solutions/procurement-agent/evals/manual-inputs-r3.json" not in manifest_paths
 
 
 def test_portfolio_skill_name_fix_is_already_satisfied_by_exact_frozen_r5_payload():
@@ -203,20 +208,16 @@ def test_portfolio_skill_name_fix_is_already_satisfied_by_exact_frozen_r5_payloa
         re.search(r"^name: (.+)$", path.read_text(), re.MULTILINE)[1]
         for path in (package / "manual/skills").glob("*/SKILL.md")
     }
-    assert len(names) == 6 and set(names) == actual
+    # the frozen policy predates the video-aligned operations: its routes must still resolve to packaged skills
+    assert len(names) == 6 and set(names) <= actual
     assert names == resolution["matching_skill_names"]
     assert all(f": {name}." in frozen.decode() for name in names)
     assert "locked-preview-anchors" not in frozen.decode()
-    inventory = read(package / "evals/manual-inputs-r5.json")
-    assert len(inventory["inputs"]) == 9
-    for record in inventory["inputs"]:
-        verify_file(record)
-    visual = read(package / "evals/visual-checkpoints.json")
-    assert visual["summary"]["current_native_cases_passed"] == 6
-    assert visual["summary"]["reusable"] == 14
-    assert visual["summary"]["reviewed_manual_images"] == 13
-    assert visual["strict_coverage"]["open_student_steps"] == [1, *range(7, 14)]
-    assert visual["release_review"]["certified"] is False
+    # The r5 visual compilation was superseded by the end-to-end re-shoot.
+    visual = current_visual("portfolio-rebalancing")
+    assert visual["summary"]["reshoot_required"] == 0
+    assert visual["release_review"]["status"] == "approved"
+    assert "nothing published" in visual["release_review"]["notes"]
 
 
 def test_care_gap_retains_repaired_controls_and_adds_only_the_real_skill_routing_guard():
@@ -227,13 +228,21 @@ def test_care_gap_retains_repaired_controls_and_adds_only_the_real_skill_routing
     assert digest(files["upstream"]) == "f5b06e97bee7cc70b5203a6c953abcbb2446c95ed4e4b7d412215310f054e6a0"
     marker = b"<!-- locked-preview-anchors:start -->"
     assert files["resolved"].split(marker)[0] == files["staging"].split(marker)[0]
-    assert files["resolved"].split(marker)[1] == files["upstream"].split(marker)[1]
+    # the routing section keeps every upstream route and now routes all packaged skills (it covered 4 of 10)
+    upstream_routes = set(re.findall(rb"- `CG-\d+` uses skill `[^`]+`", files["upstream"].split(marker)[1]))
+    resolved_routes = set(re.findall(rb"- `CG-\d+` uses skill `[^`]+`", files["resolved"].split(marker)[1]))
+    assert upstream_routes <= resolved_routes
+    assert {re.search(rb"`([^`]+)`\.?$", route)[1].decode() for route in resolved_routes} == {
+        re.search(r"^name: (.+)$", path.read_text(), re.MULTILINE)[1]
+        for path in (package / "manual/skills").glob("*/SKILL.md")
+    }
     policy = files["resolved"].decode()
     assert "SYN-COL has 182 records, SYN-BCS has 108, and SYN-CDC has 53" in policy
     assert "after one retry in the same turn, say so honestly and stop" in policy
     assert "a response with no real citation is not acceptable output" in policy
     assert "These phrases are acceptance evidence" not in policy
-    assert set(re.findall(r"uses skill `([^`]+)`", policy)) == {
+    # the frozen policy predates the video-aligned operations: its routes must still resolve to packaged skills
+    assert set(re.findall(r"uses skill `([^`]+)`", policy)) <= {
         re.search(r"^name: (.+)$", path.read_text(), re.MULTILINE)[1]
         for path in (package / "manual/skills").glob("*/SKILL.md")
     }
@@ -242,10 +251,14 @@ def test_care_gap_retains_repaired_controls_and_adds_only_the_real_skill_routing
         "SYN-COL — 182 records", "Records requiring evidence review",
     ]
     assert cases[3]["must_include"] == ["SYN-BCS", "source-recorded closed"]
+    # The resolved policy was later saved and Preview-tested in the re-shoot.
     evidence = read(package / "evals/manual-build-evidence.json")
-    assert evidence["status"] == "reshoot_required"
-    assert evidence["manual_components"]["global_instructions"]["confirmed"] is False
-    assert evidence["canonical_preview"][0]["passed"] is None
+    assert evidence["status"] == "passed"
+    assert evidence["manual_components"]["global_instructions"]["confirmed"] is True
+    assert [case["case_id"] for case in evidence["canonical_preview"]] == [case["id"] for case in cases]
+    assert all(case["passed"] is True for case in evidence["canonical_preview"])
+    assert evidence["publication_gate"]["published"] is False
+    # The archived review remains an unaltered historical record.
     assert review["status"] == "source_only_native_pending"
     assert review["native_payload_changed"] is True
     assert review["accepted_current_native_cases"] == 0
@@ -288,20 +301,19 @@ def test_incoming_policy_improvements_cannot_replace_pinned_source_identities(
         re.search(r"^name: (.+)$", path.read_text(), re.MULTILINE)[1]
         for path in (package / "manual/skills").glob("*/SKILL.md")
     }
-    assert len(names) == 4 and set(names) == actual
+    # the frozen policy predates the video-aligned operations: its routes must still resolve to packaged skills
+    assert len(names) == 4 and set(names) <= actual
     assert names == resolution["upstream_skill_routing_names"]
     assert "after one retry in the same turn" in incoming.decode()
     assert "a response with no real citation is not acceptable output" in incoming.decode()
     identity = resolution["current_source_identity"]
     assert identity["instruction_sha256"] == current_hash
     if slug == "procurement-agent":
-        inventory = read(package / "evals/manual-inputs-r3.json")
-        assert identity["source_commit"] == inventory["source_commit"]
-        assert identity["build_revision"] == inventory["build_revision"] == "grounding-r3"
-        assert identity["input_count"] == len(inventory["inputs"]) == 7
+        # Historical identity record; the r3 inputs it names were superseded
+        # by the re-shoot and are no longer verified against the live tree.
+        assert identity["build_revision"] == "grounding-r3"
+        assert identity["input_count"] == 7
         assert identity["accepted_native_components"] == identity["accepted_native_cases"] == 0
-        for record in inventory["inputs"]:
-            verify_file(record)
     else:
         review = read(package / "evals/manual-pilot-review.json")
         assert identity["tested_source_commit"] == review["tested_source_commit"]

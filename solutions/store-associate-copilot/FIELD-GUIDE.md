@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `SA-01, SA-02, SA-03, SA-04`.
+1. Which locked case IDs did you complete? Expected scope: `SA-01, SA-02, SA-03, SA-04, SA-05, SA-06, SA-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,9 @@ Both Easy lanes preserve every recorded case prompt:
 - `SA-02` — As Store Associate, draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.
 - `SA-03` — As Floor Specialist, turn the opening work into a prioritized planning checklist without claiming execution.
 - `SA-04` — As Sales Manager, summarize aggregate role-cohort coaching signals without ranking employees.
+- `SA-05` — What accessories go with the TechPro headphones, and what would I earn on the whole package?
+- `SA-06` — The shopper is torn between the TechPro and the SoundMax Pro. How do they stack up?
+- `SA-07` — My Gold member customer is taking the TechPro with the warranty and cleaning kit. Get the sale ready.
 
 ## Manual mode — literal browser construction
 

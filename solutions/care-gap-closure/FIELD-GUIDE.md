@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CG-01, CG-02, CG-03, CG-04`.
+1. Which locked case IDs did you complete? Expected scope: `CG-01, CG-02, CG-03, CG-04, CG-05, CG-06, CG-07, CG-08, CG-09, CG-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `CG-02` — Organize the synthetic evidence-review cohorts without clinical risk scoring.
 - `CG-03` — Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.
 - `CG-04` — Show the qualitative source-completeness dashboard and its limitations.
+- `CG-05` — I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?
+- `CG-06` — Show me the top care gaps and which ones are most actionable.
+- `CG-07` — Show me the diabetes cohort analysis with risk tiers and engagement barriers.
+- `CG-08` — Design a barrier-specific outreach strategy for the diabetes gap patients.
+- `CG-09` — Show me the campaign deployment plan and projected impact.
+- `CG-10` — Configure monitoring for the campaign and alert me if performance drops.
 
 ## Manual mode — literal browser construction
 
@@ -264,9 +270,3 @@ an approved production tool returns evidence that it succeeded.
   part of scaffolding.
 - **Customer gate:** replacement connections, governance, telemetry, support,
   and success measures are agreed before production.
-
-## Pending evidence
-
-- solutions/care-gap-closure/evals/manual-build-evidence.json does not record passed manual Preview evidence
-
-Pending items are not proof and must not be described as captured.

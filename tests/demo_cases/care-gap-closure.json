@@ -83,6 +83,126 @@
       ],
       "min_words": 25,
       "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-05",
+      "persona": "Quality Manager",
+      "onepager_bullet": "Analyze quality measures and surface high-priority gaps",
+      "operation": "hedis_status",
+      "prompt": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+      "must_include": [
+        "HEDIS Performance Summary",
+        "1,142 (40.1%)",
+        "$428,900"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-06",
+      "persona": "Quality Manager",
+      "onepager_bullet": "Analyze care gaps to surface priority measures",
+      "operation": "top_gaps",
+      "prompt": "Show me the top care gaps and which ones are most actionable.",
+      "must_include": [
+        "Top 5 Care Gap Measures",
+        "$189,450",
+        "Best Opportunity"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-07",
+      "persona": "Care Coordinator",
+      "onepager_bullet": "Stratify outreach based on risk, condition severity, and engagement",
+      "operation": "risk_stratification",
+      "prompt": "Show me the diabetes cohort analysis with risk tiers and engagement barriers.",
+      "must_include": [
+        "A1C >9.0 (Critical)",
+        "Transportation: 34% (132 patients)",
+        "4.2 chronic conditions"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-08",
+      "persona": "Care Coordinator",
+      "onepager_bullet": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "operation": "outreach_strategy",
+      "prompt": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+      "must_include": [
+        "Outreach Strategy Draft",
+        "294 SMS",
+        "94 RN callbacks"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-09",
+      "persona": "Clinical Operations Lead",
+      "onepager_bullet": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "operation": "campaign_projection",
+      "prompt": "Show me the campaign deployment plan and projected impact.",
+      "must_include": [
+        "42% expected",
+        "$128,700 of $189,450",
+        "47 to reserve"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-10",
+      "persona": "Clinical Operations Lead",
+      "onepager_bullet": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "operation": "monitoring_plan",
+      "prompt": "Configure monitoring for the campaign and alert me if performance drops.",
+      "must_include": [
+        "Daily 8 AM summary via Teams",
+        "Close rate drops below 60%",
+        "Monitoring and Alert Configuration"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
     }
   ]
 }

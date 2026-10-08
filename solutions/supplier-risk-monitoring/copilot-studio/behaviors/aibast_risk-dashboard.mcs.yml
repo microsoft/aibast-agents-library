@@ -1,6 +1,6 @@
 mcs.metadata:
-  componentName: "risk-dashboard"
-  description: "Use for total spend, elevated-risk spend, ranked supplier risk, composite health, and incident counts."
+  componentName: risk-dashboard
+  description: Use when a supply chain director asks where supplier exposure deserves review.
 kind: InlineAgentSkill
 content: |
   ---
@@ -33,7 +33,7 @@ content: |
 
   - Persona: **Supply Chain Director**
   - Prompt: “Where is supplier exposure concentrated, and which relationships should leadership review first?”
-  - Required deterministic evidence: `TechnoCore Semiconductor`, `CRITICAL`
+  - Required deterministic evidence: `TechnoCore Semiconductor`, `HIGH RISK`
 
   ## Authorization boundary
 

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `OS-01, OS-02, OS-03, OS-04`.
+1. Which locked case IDs did you complete? Expected scope: `OS-01, OS-02, OS-03, OS-04, OS-05, OS-06, OS-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -214,8 +214,11 @@ Both Easy lanes preserve every recorded case prompt:
 
 - `OS-01` — Which orders are on track or delayed, and where should customer service focus its review?
 - `OS-02` — What shipment evidence is recorded for the shipped order, and what still needs carrier validation?
-- `OS-03` — Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.
+- `OS-03` — Prepare the internal delay and recovery review for the E-Cars Corp transmission housing order without changing any schedule.
 - `OS-04` — Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.
+- `OS-05` — Show the customer touchpoints planned for the E-Cars Corp delay across email, EDI, portal and the follow-up call.
+- `OS-06` — What quality assurance and validation is in place for the E-Cars Corp housings from the alternative supplier?
+- `OS-07` — Show the performance dashboard for the E-Cars Corp account and this order.
 
 ## Manual mode — literal browser construction
 

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PERMIT_LICENSE_MANAGEMENT-01, PERMIT_LICENSE_MANAGEMENT-02, PERMIT_LICENSE_MANAGEMENT-03, PERMIT_LICENSE_MANAGEMENT-04`.
+1. Which locked case IDs did you complete? Expected scope: `PERMIT_LICENSE_MANAGEMENT-01, PERMIT_LICENSE_MANAGEMENT-02, PERMIT_LICENSE_MANAGEMENT-03, PERMIT_LICENSE_MANAGEMENT-04, PERMIT_LICENSE_MANAGEMENT-05`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,11 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `PERMIT_LICENSE_MANAGEMENT-01` — Which Riverside permit is expired right now?
-- `PERMIT_LICENSE_MANAGEMENT-02` — What is the next Riverside renewal deadline I need to prepare for?
-- `PERMIT_LICENSE_MANAGEMENT-03` — What permit evidence gap needs immediate authorized review at Riverside?
-- `PERMIT_LICENSE_MANAGEMENT-04` — Where does the Riverside gas turbine permit application stand, and did we submit anything today?
+- `PERMIT_LICENSE_MANAGEMENT-01` — Show me our permit status and any expiring soon
+- `PERMIT_LICENSE_MANAGEMENT-02` — Which permit renewals have already missed their lead time, and how many days are left?
+- `PERMIT_LICENSE_MANAGEMENT-03` — What permit evidence gap needs immediate authorized review?
+- `PERMIT_LICENSE_MANAGEMENT-04` — Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today?
+- `PERMIT_LICENSE_MANAGEMENT-05` — Start emergency renewals for the critical permits.
 
 ## Manual mode — literal browser construction
 

@@ -1,15 +1,16 @@
-displayName: "Sales Qualification Pilot"
-schemaName: "aibast_SalesQualificationPilot"
+displayName: Sales Qualification Pilot
+schemaName: aibast_SalesQualificationPilot
 accessControlPolicy: GroupMembership
 authenticationMode: Integrated
 authenticationTrigger: Always
 configuration:
-  authoringModel: CliCopilot
   recognizer:
     kind: CLICopilotRecognizer
+
   agentSettings:
     model:
       series: Sonnet46
+
     instructions:
       segments:
         - kind: StaticSegment
@@ -28,6 +29,10 @@ configuration:
             - `assign_leads` — recommended routing for manager review.
             - `setup_tracking` — draft SLA and escalation plan.
             - `qualification_report` — synthetic pipeline and assumption summary.
+
+            The demo snapshot is 45 inbound conference leads: 8 Hot (80+, $800K), 15 Warm (60-79, $450K), 22 Nurture;
+            top hot leads TechFlow Industries (94), Meridian Corp (91), Apex Solutions (88); hot leads route to Mike
+            Rodriguez, Sarah Kim, James Chen and Lisa Park. Short follow-ups ("yes, assign to AEs") continue the workflow.
 
             Route outreach wording to `create_outreach`, routing questions to `assign_leads`, and SLA or alert planning to `setup_tracking`. None of these operations executes an action.
 
@@ -71,5 +76,8 @@ configuration:
 
             These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
             <!-- locked-preview-anchors:end -->
+
+  authoringModel: CliCopilot
+
 template: cliagent-1.0.0
 language: 1033

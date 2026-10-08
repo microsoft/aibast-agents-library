@@ -317,24 +317,25 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
 def test_manual_and_assisted_evidence_is_real_and_consistent():
     manual = read_json(PACKAGE / "evals" / "manual-build-evidence.json")
     assisted = read_json(PACKAGE / "screenshots" / "assisted" / "browserfilm.json")
+    recipe = read_json(PACKAGE / "deployment.json")["copilot_studio"]
     cases = read_json(CASE_FILE)["cases"]
-    assert manual["manual_agent"]["bot_id"] == "05b62fa7-0327-4626-b9db-8c9de02de91a"
-    assert manual["manual_components"]["knowledge_files"]["parity_fix_confirmed"]
-    assert manual["source_parity"] == {
-        "knowledge_files_byte_identical_to_easy_source": True,
-        "skill_files_exact_easy_content_blocks": True,
-        "skill_frontmatter_included": True,
-    }
+    # 2026-10 re-shoot: a new Manual Draft was built from empty and recorded.
+    assert manual["manual_agent"]["bot_id"] == "22d96642-33fd-4e0c-978f-bafca57400f2"
+    assert manual["manual_agent"]["bot_id"] == recipe["validated_manual"]["bot_id"]
+    assert manual["status"] == "passed"
+    assert manual["manual_components"]["knowledge_files"] == {"expected": 2, "confirmed": 2}
+    assert manual["manual_components"]["skills"] == {"expected": 10, "confirmed": 10}
     assert [item["case_id"] for item in manual["canonical_preview"]] == [
         case["id"] for case in cases
     ]
     for case, item in zip(cases, manual["canonical_preview"]):
         assert item["must_include"] == case["must_include"]
+        assert item["must_not_include"] == case["must_not_include"]
         assert item["passed"] is True
-    assert manual["canonical_preview"][3]["source_capture"] == 142
     assert manual["publication_gate"]["published"] is False
     assert assisted["capture_status"] == "captured"
-    assert len(assisted["frames"]) == 6
+    # One build review, one frame per locked case, one Draft confirmation.
+    assert len(assisted["frames"]) == len(cases) + 2
     for frame in assisted["frames"]:
         assert (PACKAGE / "screenshots" / "assisted" / frame["file"]).exists()
 
@@ -343,9 +344,9 @@ def test_manual_downloads_exactly_match_reviewed_easy_source():
     easy_knowledge = PACKAGE / "copilot-studio" / "capabilities" / "knowledge" / "files"
     manual_knowledge = PACKAGE / "manual" / "knowledge"
     knowledge_pairs = {
-        "aibast-inventory-rebalancing-facility-sku-snapshot.md":
+        "aibast_inventory-rebalancing-synthetic-records.md":
             "aibast_inventory-rebalancing-synthetic-records.md",
-        "aibast-inventory-rebalancing-cost-and-review-rules.md":
+        "aibast_inventory-rebalancing-review-rules.md":
             "aibast_inventory-rebalancing-review-rules.md",
     }
     for source, manual in knowledge_pairs.items():
@@ -356,14 +357,26 @@ def test_manual_downloads_exactly_match_reviewed_easy_source():
     behaviors = PACKAGE / "copilot-studio" / "behaviors"
     skills = PACKAGE / "manual" / "skills"
     skill_pairs = {
-        "aibast-inventory-snapshot_pv7k2q.mcs.yml":
-            "aibast_inventory_snapshot/SKILL.md",
-        "aibast-rebalance-recommendation_pv7k2q.mcs.yml":
-            "aibast_rebalance_recommendation/SKILL.md",
-        "aibast-transfer-plan_pv7k2q.mcs.yml":
-            "aibast_transfer_plan/SKILL.md",
-        "aibast-cost-analysis_pv7k2q.mcs.yml":
-            "aibast_cost_analysis/SKILL.md",
+        "aibast_aibast-inventory-snapshot.mcs.yml":
+            "aibast_inventory-snapshot_01/SKILL.md",
+        "aibast_aibast-rebalance-recommendation.mcs.yml":
+            "aibast_rebalance-recommendation_02/SKILL.md",
+        "aibast_aibast-transfer-plan.mcs.yml":
+            "aibast_transfer-plan_03/SKILL.md",
+        "aibast_aibast-cost-analysis.mcs.yml":
+            "aibast_cost-analysis_04/SKILL.md",
+        "aibast_portfolio-analysis.mcs.yml":
+            "aibast_portfolio-analysis_05/SKILL.md",
+        "aibast_recovery-plan.mcs.yml":
+            "aibast_recovery-plan_06/SKILL.md",
+        "aibast_warehouse-impact.mcs.yml":
+            "aibast_warehouse-impact_07/SKILL.md",
+        "aibast_financial-impact.mcs.yml":
+            "aibast_financial-impact_08/SKILL.md",
+        "aibast_execution-timeline.mcs.yml":
+            "aibast_execution-timeline_09/SKILL.md",
+        "aibast_monitoring-plan.mcs.yml":
+            "aibast_monitoring-plan_10/SKILL.md",
     }
     for source, manual in skill_pairs.items():
         content = extract_content_block(behaviors / source)
@@ -378,7 +391,7 @@ def test_guides_state_identity_proof_boundaries_and_production_seams():
     for identifier in [
         "aibast_InventoryRebalancingPilot",
         "236a0c04-ea66-46e8-b461-1e2b68291c92",
-        "05b62fa7-0327-4626-b9db-8c9de02de91a",
+        "22d96642-33fd-4e0c-978f-bafca57400f2",
         "ee67a404-325c-e726-a18a-886fe708ca0b",
         "Sonnet46",
     ]:
@@ -399,32 +412,33 @@ def test_guides_state_identity_proof_boundaries_and_production_seams():
 def test_deployment_recipe_records_both_validated_draft_identities():
     recipe = read_json(PACKAGE / "deployment.json")
     studio = recipe["copilot_studio"]
-    assert studio["validated_pilot"] == {
-        "display_name": "Inventory Rebalancing Pilot",
-        "schema_name": "aibast_InventoryRebalancingPilot",
-        "bot_id": "236a0c04-ea66-46e8-b461-1e2b68291c92",
-        "environment_name": "kodyv8",
-        "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
-        "model": "Sonnet46",
-        "skills": 4,
-        "knowledge_files": 2,
-        "changes_pushed": 7,
-        "status": "Draft",
-        "published": False,
-        "preview_cases_passed": 4,
-        "preview_cases_total": 4,
+    cases = read_json(CASE_FILE)["cases"]
+    preview = read_json(PACKAGE / "evals" / "copilot-studio-preview-evidence.json")
+    manual = read_json(PACKAGE / "evals" / "manual-build-evidence.json")
+    skills = len(list((PACKAGE / "manual" / "skills").glob("*/SKILL.md")))
+    assert skills == 10
+    pilot = studio["validated_pilot"]
+    assert {key: pilot[key] for key in ("display_name", "schema_name", "bot_id", "environment_id")} == {
+        "display_name": preview["display_name"],
+        "schema_name": preview["schema_name"],
+        "bot_id": preview["bot_id"],
+        "environment_id": preview["environment_id"],
     }
-    assert studio["validated_manual"] == {
-        "display_name": "Inventory Manual Build",
-        "bot_id": "05b62fa7-0327-4626-b9db-8c9de02de91a",
-        "environment_name": "kodyv8",
-        "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
-        "model": "Sonnet46",
-        "skills": 4,
-        "knowledge_files": 2,
-        "web_search_removed": True,
-        "status": "Draft",
-        "published": False,
-        "preview_cases_passed": 4,
-        "preview_cases_total": 4,
-    }
+    assert pilot["environment_name"] == "kodyv8"
+    assert pilot["status"] == "Draft"
+    assert pilot["published"] is False
+    assert pilot["knowledge_files"] == 2
+    assert pilot["skills"] == skills
+    assert pilot["preview_cases_total"] == len(cases)
+    assert pilot["preview_cases_passed"] == len(cases)
+    validated = studio["validated_manual"]
+    assert validated["display_name"] == manual["manual_agent"]["display_name"]
+    assert validated["bot_id"] == manual["manual_agent"]["bot_id"]
+    assert validated["environment_id"] == manual["environment"]["id"]
+    assert validated["skills"] == manual["manual_components"]["skills"]["confirmed"]
+    assert validated["knowledge_files"] == 2
+    assert validated["web_search_removed"] is True
+    assert validated["status"] == "Draft"
+    assert validated["published"] is False
+    assert validated["preview_cases_total"] == len(cases)
+    assert validated["preview_cases_passed"] == len(cases)

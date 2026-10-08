@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `RU-01, RU-02, RU-03, RU-04, RU-05`.
+1. Which locked case IDs did you complete? Expected scope: `RU-01, RU-02, RU-03, RU-04, RU-05, RU-06, RU-07, RU-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -217,6 +217,9 @@ Both Easy lanes preserve every recorded case prompt:
 - `RU-03` — Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.
 - `RU-04` — Which available consultants fit the strongest pipeline needs, and who still needs another path?
 - `RU-05` — Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.
+- `RU-06` — Our board wants utilization up to 85% by next quarter. We have 200 consultants currently at 72% billable. I need an optimization plan that shows how we get there without compromising quality.
+- `RU-07` — What is the complete financial impact of this plan by month, quarter, and year?
+- `RU-08` — Create a tracking dashboard and summarize what we accomplished.
 
 ## Manual mode — literal browser construction
 

@@ -1,0 +1,157 @@
+{
+  "solution": "Field Permit to Work Agent",
+  "agent": "@aibast-agents-library/field-permit-to-work",
+  "onepager": "60. Field Permit to Work Agent one-pager.pptx",
+  "agent_files": [
+    "field_permit_to_work_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "PTW-01",
+      "persona": "Permit Coordinator",
+      "operation": "permit_queue",
+      "onepager_bullet": "Shows every permit waiting today with its stage, risk and blocker",
+      "prompt": "Which work permits are waiting for today?",
+      "arguments": {
+        "operation": "permit_queue"
+      },
+      "must_include": [
+        "PTW-4471",
+        "2 with a blocker",
+        "Live isolation not confirmed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-02",
+      "persona": "Permit Coordinator",
+      "operation": "risk_assessment",
+      "onepager_bullet": "Drafts the risk assessment with hazards, controls, PPE and residual risk",
+      "prompt": "Draft the risk assessment for the Cedar Hill transformer job.",
+      "arguments": {
+        "operation": "risk_assessment",
+        "permit_id": "PTW-4471"
+      },
+      "must_include": [
+        "60 of 100",
+        "Arc-rated coveralls",
+        "Draft for the authorized person"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-03",
+      "persona": "Authorized Person",
+      "operation": "isolation_check",
+      "onepager_bullet": "Checks the isolation plan against required points and the live switching state",
+      "prompt": "Is the isolation for the Cedar Hill job actually in place?",
+      "arguments": {
+        "operation": "isolation_check",
+        "permit_id": "PTW-4471"
+      },
+      "must_include": [
+        "CB-CH-02 lockout not applied",
+        "Do not start work",
+        "No device was operated"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-04",
+      "persona": "Permit Coordinator",
+      "operation": "authorization_route",
+      "onepager_bullet": "Tracks sign-offs and timing so permits are ready for the planned start",
+      "prompt": "Where is the Cedar Hill permit in the sign-off chain, and will it be ready for the 11:00 start?",
+      "arguments": {
+        "operation": "authorization_route",
+        "permit_id": "PTW-4471"
+      },
+      "must_include": [
+        "Lee Carter",
+        "Earliest issue",
+        "10:30"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-05",
+      "persona": "Crew Lead",
+      "operation": "crew_briefing",
+      "onepager_bullet": "Confirms every crew member has acknowledged the briefing before work starts",
+      "prompt": "Has the Cedar Hill crew acknowledged the briefing?",
+      "arguments": {
+        "operation": "crew_briefing",
+        "permit_id": "PTW-4471"
+      },
+      "must_include": [
+        "3 of 4 acknowledged",
+        "Chris Dale",
+        "no one was messaged"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-06",
+      "persona": "Authorized Person",
+      "operation": "clearance_check",
+      "onepager_bullet": "Reconciles people, tools and site status before a permit is cleared",
+      "prompt": "The Cedar Hill crew has finished. Can we close the permit?",
+      "arguments": {
+        "operation": "clearance_check",
+        "permit_id": "PTW-4471"
+      },
+      "must_include": [
+        "Held for review",
+        "1 unaccounted for",
+        "The permit was not closed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-07",
+      "persona": "Operations Manager",
+      "operation": "safety_kpis",
+      "onepager_bullet": "Rolls up permit safety performance and the hazards that matter most",
+      "prompt": "How are we doing on permit safety this month?",
+      "arguments": {
+        "operation": "safety_kpis"
+      },
+      "must_include": [
+        "212",
+        "Lockout gaps caught before work",
+        "Near misses"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

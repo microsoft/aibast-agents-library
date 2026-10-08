@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T11:27:25.346Z",
+  "captured_at": "2026-10-07T17:51:08.385780Z",
   "solution": "@aibast-agents-library/personalized-marketing",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Personalized Marketing Manual",
-    "bot_id": "22c712b6-7501-4034-9539-2fb52c718228",
+    "bot_id": "f8487e1c-8db6-4a8c-81ea-d332e7b71598",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 7,
+      "confirmed": 7
     },
     "tools": {
       "expected": 0,
@@ -46,31 +46,31 @@
         "no audience is profiled with sensitive attributes"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-pm-01.jpg",
+      "expected_screenshot": "19-pm-01.jpg",
       "passed": true
     },
     {
       "case_id": "PM-02",
-      "prompt": "As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.",
+      "prompt": "As Campaign Manager, show me the personalized multi-wave campaign recommendations for the holiday promotion and the approval gates.",
       "must_include": [
         "Prepared for:** Campaign Manager",
         "Draft Campaign Design Portfolio",
-        "Win-Back Journey"
+        "Total Campaign Projection"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-pm-02.jpg",
+      "expected_screenshot": "20-pm-02.jpg",
       "passed": true
     },
     {
       "case_id": "PM-03",
-      "prompt": "As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.",
+      "prompt": "As Campaign Manager, generate the VIP campaign with personalized content and A/B test variants.",
       "must_include": [
         "Draft Content Personalization Matrix",
-        "New Explorers",
-        "Draft Hero Copy"
+        "VIP Shoppers",
+        "A/B Test Setup"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-pm-03.jpg",
+      "expected_screenshot": "21-pm-03.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,43 @@
         "Synthetic aggregate planning data"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-pm-04.jpg",
+      "expected_screenshot": "22-pm-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PM-05",
+      "prompt": "As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval.",
+      "must_include": [
+        "Draft VIP Launch Schedule",
+        "Hour 48",
+        "Nothing is scheduled or sent"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "23-pm-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PM-06",
+      "prompt": "As Marketing Director, break down the revenue projection scenarios for the VIP wave.",
+      "must_include": [
+        "VIP Revenue Projection Model",
+        "Conservative (Baseline)",
+        "ROI Range"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "24-pm-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PM-07",
+      "prompt": "As Marketing Director, create the executive brief summarizing our holiday campaign strategy.",
+      "must_include": [
+        "Executive Campaign Brief",
+        "Program Economics",
+        "has not been sent"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "25-pm-07.jpg",
       "passed": true
     }
   ],
@@ -95,6 +131,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "26-confirm-draft.jpg"
   }
 }

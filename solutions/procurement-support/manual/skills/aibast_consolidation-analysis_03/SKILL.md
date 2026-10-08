@@ -1,11 +1,11 @@
 ---
 name: consolidation-analysis
-description: Use when a finance director asks whether fragmented facility demand may qualify for structured sourcing review.
+description: "Use when someone asks for the office-supply bulk order strategy and the total Q1 savings projection."
 ---
 <!-- bic:source=blank -->
 # Demand-consolidation analysis
 
-Use when a finance director asks whether fragmented facility demand may qualify for structured sourcing review.
+Use when someone asks for the office-supply bulk order strategy and the total Q1 savings projection.
 
 ## Procedure
 
@@ -16,8 +16,8 @@ Use when a finance director asks whether fragmented facility demand may qualify 
 
 ## Deterministic pilot evidence
 
-- `Clinical consumables`
-- `4`
+- `Office Supply Bulk Strategy`
+- `$56,400`
 - `does not recommend a supplier award`
 
 ## Safety gate

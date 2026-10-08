@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T11:02:23.475Z",
+  "captured_at": "2026-10-07T22:33:58.802540Z",
   "solution": "@aibast-agents-library/loan-origination-assistant",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Loan Origination Manual",
-    "bot_id": "26d9fba0-4ce7-4e5a-aa46-da3764a08587",
+    "bot_id": "341d67ac-eb8d-43cd-be78-7e0ee8d72ee6",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 5,
-      "confirmed": 5
+      "expected": 8,
+      "confirmed": 8
     },
     "tools": {
       "expected": 0,
@@ -50,7 +50,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "15-loa-01.jpg",
+      "expected_screenshot": "20-loa-01.jpg",
       "passed": true
     },
     {
@@ -66,7 +66,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "16-loa-02.jpg",
+      "expected_screenshot": "21-loa-02.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "17-loa-03.jpg",
+      "expected_screenshot": "22-loa-03.jpg",
       "passed": true
     },
     {
@@ -98,7 +98,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "18-loa-04.jpg",
+      "expected_screenshot": "23-loa-04.jpg",
       "passed": true
     },
     {
@@ -114,7 +114,58 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "19-loa-05.jpg",
+      "expected_screenshot": "24-loa-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-06",
+      "prompt": "Process the Martinez mortgage application and give me an eligibility assessment with documentation status.",
+      "must_include": [
+        "92% documentation complete",
+        "1234 Oak Lane",
+        "missing 1 paystub"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "25-loa-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-07",
+      "prompt": "Which loan programs are the Martinezes eligible for, and which one do you recommend?",
+      "must_include": [
+        "Conventional 15-yr",
+        "$2,549",
+        "9.2 months"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "26-loa-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-08",
+      "prompt": "Give me the complete loan processing summary for the Martinez file.",
+      "must_include": [
+        "67% faster",
+        "2 outstanding",
+        "$3,954 PITI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "27-loa-08.jpg",
       "passed": true
     }
   ],
@@ -127,6 +178,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "20-confirm-draft.jpg"
+    "confirmation_screenshot": "28-confirm-draft.jpg"
   }
 }

@@ -12,7 +12,7 @@ def test_every_onepager_reference_has_extracted_slide_content():
     solutions = json.loads(SOLUTIONS.read_text(encoding="utf-8"))
     extracted = content["onepagers"]
 
-    assert content["stats"]["onepagers"] == 48
+    assert content["stats"]["onepagers"] == 63
     for solution in solutions["solutions"]:
         onepager = solution.get("onepager")
         if onepager:

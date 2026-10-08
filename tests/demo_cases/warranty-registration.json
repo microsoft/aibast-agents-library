@@ -1,0 +1,136 @@
+{
+  "solution": "Warranty and Registration Agent",
+  "agent": "@aibast-agents-library/warranty-registration",
+  "onepager": "64. Warranty and Registration Agent one-pager.pptx",
+  "agent_files": [
+    "warranty_registration_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries. New wave-2 template distilled from a field workflow pattern; all records are fictional.",
+  "cases": [
+    {
+      "id": "WAR-01",
+      "persona": "Dealer Service Manager",
+      "operation": "coverage_overview",
+      "onepager_bullet": "Shows every registered unit's coverage, what is expiring and what still needs registering in one view",
+      "prompt": "How does our dealership's warranty coverage look right now?",
+      "arguments": {
+        "operation": "coverage_overview"
+      },
+      "must_include": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "WarrantyRegistrationAgent"
+    },
+    {
+      "id": "WAR-02",
+      "persona": "Dealer Service Manager",
+      "operation": "claim_precheck",
+      "onepager_bullet": "Pre-checks whether a repair is covered before work starts, so claims are not rejected later",
+      "prompt": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+      "arguments": {
+        "operation": "claim_precheck",
+        "serial_number": "WS-25-4471"
+      },
+      "must_include": [
+        "Eligible for claim review",
+        "Labor covered",
+        "No claim was filed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "WarrantyRegistrationAgent"
+    },
+    {
+      "id": "WAR-03",
+      "persona": "Warranty Administrator",
+      "operation": "unit_record",
+      "onepager_bullet": "Pulls a unit's full warranty record and claim history in seconds",
+      "prompt": "Pull the full warranty record for tire changer TC-90-3307.",
+      "arguments": {
+        "operation": "unit_record",
+        "serial_number": "TC-90-3307"
+      },
+      "must_include": [
+        "Expired (ended 16 days ago)",
+        "CLM-25-0044",
+        "Claim history"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "WarrantyRegistrationAgent"
+    },
+    {
+      "id": "WAR-04",
+      "persona": "Dealer Sales Staff",
+      "operation": "validate_serial",
+      "onepager_bullet": "Validates serials against the catalog and catches duplicates before registration",
+      "prompt": "We just sold welding station WS-25-4520. Check the serial before we register it.",
+      "arguments": {
+        "operation": "validate_serial",
+        "serial_number": "WS-25-4520"
+      },
+      "must_include": [
+        "Ready to register",
+        "Already registered",
+        "2026-03-22"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "WarrantyRegistrationAgent"
+    },
+    {
+      "id": "WAR-05",
+      "persona": "Dealer Sales Staff",
+      "operation": "registration_draft",
+      "onepager_bullet": "Prepares product registrations as drafts so no sold unit misses its registration window",
+      "prompt": "Prepare the registration for WS-25-4520, but don't submit anything.",
+      "arguments": {
+        "operation": "registration_draft",
+        "serial_number": "WS-25-4520"
+      },
+      "must_include": [
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "WarrantyRegistrationAgent"
+    },
+    {
+      "id": "WAR-06",
+      "persona": "Dealer Sales Staff",
+      "operation": "extension_offers",
+      "onepager_bullet": "Finds units whose coverage is ending and drafts extended-coverage offers before it lapses",
+      "prompt": "Which units should we offer extended coverage to this month?",
+      "arguments": {
+        "operation": "extension_offers"
+      },
+      "must_include": [
+        "$191.25",
+        "BG-08-2290",
+        "No offer was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "WarrantyRegistrationAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

@@ -1,6 +1,6 @@
 mcs.metadata:
-  componentName: "sentiment-dashboard"
-  description: "Use for cross-channel sentiment view questions in the Customer Sentiment and Churn Prediction Agent synthetic pilot."
+  componentName: sentiment-dashboard
+  description: Use for cross-channel sentiment view questions in the Customer Sentiment and Churn Prediction Agent synthetic pilot.
 kind: InlineAgentSkill
 content: |
   ---
@@ -25,6 +25,6 @@ content: |
 
   Persona: Customer Success Lead
 
-  Prompt: What are customers telling us across channels, and which relationship needs attention first?
+  Prompt: Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.
 
-  Expected synthetic evidence: CUST-8002, Negative.
+  Expected synthetic evidence: 180K customers analyzed, $8.2M, Negative sentiment up 18%.

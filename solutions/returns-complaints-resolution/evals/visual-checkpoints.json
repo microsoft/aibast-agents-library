@@ -8,601 +8,1455 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 19,
-    "reshoot_required": 4
+    "total_existing_captures": 44,
+    "reusable": 44,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-rcr-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "RCR-01",
-      "source": "solutions/returns-complaints-resolution/screenshots/assisted/01-rcr-01.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/01-rcr-01.png",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Pending Review lists RET-4001, RET-4003, and RET-4004",
-        "Policy Match Candidates lists RET-4002 and RET-4006",
-        "Approval Boundary states that no return, refund, credit, replacement, shipment, reservation, account change, or customer message was approved, created, or sent"
+        "Returns Resolution Pilot",
+        "Draft",
+        "recovery-tiers",
+        "recovery-performance",
+        "follow-up-plan",
+        "executive-summary",
+        "escalation-snapshot",
+        "aibast_returns-complaints-synthetic-records.md",
+        "aibast_returns-complaints-rules-and-safety.md"
       ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for, Draft Return Review Queue, and Synthetic size-mismatch case markers are above the captured viewport."
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 185,
+          "height": 20,
+          "label": "Returns Resolution Pilot"
+        },
+        {
+          "x": 280,
+          "y": 22,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "recovery-tiers"
+        },
+        {
+          "x": 1210,
+          "y": 195,
+          "width": 147,
+          "height": 25,
+          "label": "recovery-performance"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 102,
+          "height": 22,
+          "label": "follow-up-plan"
+        },
+        {
+          "x": 1217,
+          "y": 239,
+          "width": 131,
+          "height": 20,
+          "label": "executive-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 134,
+          "height": 22,
+          "label": "escalation-snapshot"
+        },
+        {
+          "x": 1058,
+          "y": 445,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_returns-complaints-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 298,
+          "height": 22,
+          "label": "aibast_returns-complaints-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-rcr-01",
+      "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/02-rcr-01.jpg",
+      "caption": "RCR-01 · Customer Service Agent: As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.",
+      "case_id": "RCR-01",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/02-rcr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Customer Service Agent",
+        "Synthetic size-mismatch case",
+        "Draft Return Review Queue"
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 150,
-          "width": 558,
-          "height": 254,
-          "label": "Review queue metrics"
+          "y": 444,
+          "width": 280,
+          "height": 24,
+          "label": "Prepared for:** Customer Service Agent"
         },
         {
-          "x": 286,
-          "y": 451,
-          "width": 948,
-          "height": 126,
-          "label": "Approval boundary"
+          "x": 306,
+          "y": 491,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic size-mismatch case"
+        },
+        {
+          "x": 603,
+          "y": 491,
+          "width": 225,
+          "height": 22,
+          "label": "Draft Return Review Queue"
         }
       ]
     },
     {
       "id": "easy-rcr-02",
       "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/03-rcr-02.jpg",
+      "caption": "RCR-02 · Customer Service Agent: As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
       "case_id": "RCR-02",
-      "source": "solutions/returns-complaints-resolution/screenshots/assisted/02-rcr-02.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/02-rcr-02.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/03-rcr-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Product Quality",
-        "Authorized-Review Next Step",
-        "No action has been taken \u2014 no return, refund, credit, replacement, or customer message has been approved, created, or sent"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft Complaint Classification heading is above the captured viewport."
+        "no return, refund",
+        "Draft Complaint Classification",
+        "Product Quality"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 212,
-          "width": 692,
-          "height": 264,
-          "label": "Product Quality evidence"
+          "x": 749,
+          "y": 520,
+          "width": 79,
+          "height": 21,
+          "label": "no return, refund"
         },
         {
-          "x": 286,
-          "y": 555,
-          "width": 943,
-          "height": 92,
-          "label": "Authorized review gate"
+          "x": 287,
+          "y": 608,
+          "width": 335,
+          "height": 32,
+          "label": "Draft Complaint Classification"
+        },
+        {
+          "x": 385,
+          "y": 642,
+          "width": 120,
+          "height": 24,
+          "label": "Product Quality"
         }
       ]
     },
     {
       "id": "easy-rcr-03",
       "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/04-rcr-03.jpg",
+      "caption": "RCR-03 · Customer Service Agent: As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.",
       "case_id": "RCR-03",
-      "source": "solutions/returns-complaints-resolution/screenshots/assisted/03-rcr-03.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/03-rcr-03.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/04-rcr-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Product Exchange",
-        "Store Credit",
-        "Authorization gate requires authorized human review before any action is taken"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft Resolution Options and Option for authorized review markers are above the captured viewport."
+        "no return",
+        "Draft Resolution Options",
+        "Option for authorized review"
       ],
       "boxes": [
         {
-          "x": 288,
-          "y": 152,
-          "width": 746,
-          "height": 262,
-          "label": "Resolution playbooks"
+          "x": 748,
+          "y": 724,
+          "width": 80,
+          "height": 20,
+          "label": "no return"
         },
         {
-          "x": 288,
-          "y": 477,
-          "width": 934,
-          "height": 99,
-          "label": "Authorization gate"
+          "x": 287,
+          "y": 811,
+          "width": 279,
+          "height": 32,
+          "label": "Draft Resolution Options"
+        },
+        {
+          "x": 285,
+          "y": 1373,
+          "width": 231,
+          "height": 24,
+          "label": "Option for authorized review"
         }
       ]
     },
     {
       "id": "easy-rcr-04",
       "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/05-rcr-04.jpg",
+      "caption": "RCR-04 · Quality Team: As Quality Team, summarize aggregate defect and return patterns without accusing any person.",
       "case_id": "RCR-04",
-      "source": "solutions/returns-complaints-resolution/screenshots/assisted/04-rcr-04.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/04-rcr-04.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/05-rcr-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Wrong-size returns are the leading category at 715 over 6 months",
-        "Resolution efficiency improved",
-        "CSAT recovered",
-        "Authorized reviewer gate"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for Quality Team, Synthetic Returns & Complaints Trend Analysis, and Key Insights markers are above the captured viewport."
+        "Prepared for:** Quality Team",
+        "Synthetic Returns & Complaints Trend Analysis",
+        "Key Insights"
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 124,
-          "width": 951,
-          "height": 365,
-          "label": "Aggregate quality trends"
+          "y": 444,
+          "width": 201,
+          "height": 24,
+          "label": "Prepared for:** Quality Team"
         },
         {
-          "x": 288,
-          "y": 505,
-          "width": 934,
-          "height": 72,
-          "label": "Authorized reviewer gate"
+          "x": 306,
+          "y": 491,
+          "width": 522,
+          "height": 24,
+          "label": "Synthetic Returns & Complaints Trend Analysis"
+        },
+        {
+          "x": 312,
+          "y": 1854,
+          "width": 119,
+          "height": 28,
+          "label": "Key Insights"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-rcr-05",
       "mode": "easy",
-      "source": "solutions/returns-complaints-resolution/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Returns Resolution Pilot row is not visible, so the screenshot does not prove its Draft identity.",
-      "draft": true
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/06-rcr-05.jpg",
+      "caption": "RCR-05 · Service Manager: As Service Manager, I have an escalated customer complaint about a defective laptop and the customer is very upset; help me ",
+      "case_id": "RCR-05",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/06-rcr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "David Chen",
+        "$18,400",
+        "Churn Risk:** 87%"
+      ],
+      "boxes": [
+        {
+          "x": 697,
+          "y": 554,
+          "width": 134,
+          "height": 26,
+          "label": "David Chen"
+        },
+        {
+          "x": 565,
+          "y": 830,
+          "width": 64,
+          "height": 22,
+          "label": "$18,400"
+        },
+        {
+          "x": 311,
+          "y": 1497,
+          "width": 158,
+          "height": 24,
+          "label": "Churn Risk:** 87%"
+        }
+      ]
+    },
+    {
+      "id": "easy-rcr-06",
+      "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/07-rcr-06.jpg",
+      "caption": "RCR-06 · Service Manager: As Service Manager, show me resolution options that will keep this VIP customer satisfied.",
+      "case_id": "RCR-06",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/07-rcr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Premium Recovery",
+        "$540",
+        "34:1 ROI"
+      ],
+      "boxes": [
+        {
+          "x": 369,
+          "y": 928,
+          "width": 181,
+          "height": 27,
+          "label": "Premium Recovery"
+        },
+        {
+          "x": 445,
+          "y": 1157,
+          "width": 47,
+          "height": 23,
+          "label": "$540"
+        },
+        {
+          "x": 839,
+          "y": 1728,
+          "width": 73,
+          "height": 20,
+          "label": "34:1 ROI"
+        }
+      ]
+    },
+    {
+      "id": "easy-rcr-07",
+      "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/08-rcr-07.jpg",
+      "caption": "RCR-07 · Service Manager: As Service Manager, Tier 1 is approved; get it ready and prepare my talking points for the call.",
+      "case_id": "RCR-07",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/08-rcr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ready for authorized execution",
+        "ProBook Elite Plus",
+        "Talking Points"
+      ],
+      "boxes": [
+        {
+          "x": 501,
+          "y": 554,
+          "width": 351,
+          "height": 32,
+          "label": "ready for authorized execution"
+        },
+        {
+          "x": 448,
+          "y": 771,
+          "width": 137,
+          "height": 21,
+          "label": "ProBook Elite Plus"
+        },
+        {
+          "x": 356,
+          "y": 1037,
+          "width": 137,
+          "height": 28,
+          "label": "Talking Points"
+        }
+      ]
+    },
+    {
+      "id": "easy-rcr-08",
+      "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/09-rcr-08.jpg",
+      "caption": "RCR-08 · Service Manager: As Service Manager, the call went well and the customer accepted; what is our follow-up plan?",
+      "case_id": "RCR-08",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/09-rcr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Nothing has been scheduled",
+        "delivery confirmation SMS",
+        "Day 30"
+      ],
+      "boxes": [
+        {
+          "x": 574,
+          "y": 572,
+          "width": 249,
+          "height": 24,
+          "label": "Nothing has been scheduled"
+        },
+        {
+          "x": 358,
+          "y": 636,
+          "width": 70,
+          "height": 24,
+          "label": "delivery confirmation SMS"
+        },
+        {
+          "x": 306,
+          "y": 831,
+          "width": 61,
+          "height": 24,
+          "label": "Day 30"
+        }
+      ]
+    },
+    {
+      "id": "easy-rcr-09",
+      "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/10-rcr-09.jpg",
+      "caption": "RCR-09 · Service Manager: As Service Manager, show me the service recovery performance and financial impact.",
+      "case_id": "RCR-09",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/10-rcr-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "4.2 hours",
+        "$4.67M",
+        "$127,000"
+      ],
+      "boxes": [
+        {
+          "x": 436,
+          "y": 635,
+          "width": 79,
+          "height": 20,
+          "label": "4.2 hours"
+        },
+        {
+          "x": 571,
+          "y": 1321,
+          "width": 65,
+          "height": 23,
+          "label": "$4.67M"
+        },
+        {
+          "x": 571,
+          "y": 1364,
+          "width": 75,
+          "height": 23,
+          "label": "$127,000"
+        }
+      ]
+    },
+    {
+      "id": "easy-rcr-10",
+      "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/11-rcr-10.jpg",
+      "caption": "RCR-10 · Service Manager: As Service Manager, create the executive summary and recap what we accomplished.",
+      "case_id": "RCR-10",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/11-rcr-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Executive Summary",
+        "87% churn risk",
+        "Business Value"
+      ],
+      "boxes": [
+        {
+          "x": 312,
+          "y": 446,
+          "width": 191,
+          "height": 27,
+          "label": "Executive Summary"
+        },
+        {
+          "x": 1138,
+          "y": 675,
+          "width": 88,
+          "height": 21,
+          "label": "87% churn risk"
+        },
+        {
+          "x": 286,
+          "y": 1396,
+          "width": 116,
+          "height": 21,
+          "label": "Business Value"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/returns-complaints-resolution/screenshots/assisted/12-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 12 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/assisted/annotated/12-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Returns Resolution Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 183,
+          "height": 21,
+          "label": "Returns Resolution Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/returns-complaints-resolution/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 168,
-          "y": 97,
-          "width": 230,
-          "height": 55,
-          "label": "Blank agent \u2014 Untitled Agent"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible Untitled Agent text and tightened the annotation to the exact anchor 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/returns-complaints-resolution/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Returns and Complaints Manual",
+      "step": 2,
       "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Returns and Complaints Manual in the name field"
+        "Returns and Complaints Manual"
       ],
       "boxes": [
         {
-          "x": 170,
-          "y": 107,
-          "width": 482,
-          "height": 36,
+          "x": 84,
+          "y": 20,
+          "width": 242,
+          "height": 24,
           "label": "Returns and Complaints Manual"
         }
-      ],
-      "note": "Original box spanned most of the title input chrome; re-measured the visible agent name text and tightened the annotation to the exact anchor 2026-09-10."
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/returns-complaints-resolution/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Reviewed instruction policy",
-        "Locked Preview evidence anchors",
-        "RCR-01 through RCR-04 acceptance anchors"
+        "Returns and Complaints Resolution Agent — Manual"
       ],
       "boxes": [
         {
-          "x": 77,
-          "y": 241,
-          "width": 905,
-          "height": 598,
-          "label": "Reviewed instruction policy"
+          "x": 84,
+          "y": 278,
+          "width": 792,
+          "height": 32,
+          "label": "Returns and Complaints Resolution Agent — Manual"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/returns-complaints-resolution/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame shows the completed inventory but no visible save confirmation or No unsaved changes state for the instruction policy."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 338,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/returns-complaints-resolution/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4, 6, and 7 and shows a completed inventory rather than the web-search removal action; absence alone is not sufficient visual proof."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/returns-complaints-resolution/screenshots/manual/06-add-aibast-returns-complaints-rules-and-safety.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_returns-complaints-rules-and-safety.md",
+      "step": 6,
       "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/06-add-aibast-returns-complaints-rules-and-safety.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_returns-complaints-rules-and-safety filename stem is visible in Knowledge"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "The .md suffix is truncated by the Copilot Studio pill."
+        "aibast_returns-complaints-rules-and-safety.md"
       ],
       "boxes": [
         {
-          "x": 1027,
-          "y": 510,
-          "width": 372,
-          "height": 43,
-          "label": "Rules knowledge file"
+          "x": 1057,
+          "y": 321,
+          "width": 298,
+          "height": 22,
+          "label": "aibast_returns-complaints-rules-and-safety.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/returns-complaints-resolution/screenshots/manual/07-add-aibast-returns-complaints-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "full_inventory_not_visibly_proven": [
-        "The .md suffix is truncated by the Copilot Studio pill."
+      "caption": "Manual step 7 · Add knowledge: aibast_returns-complaints-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/07-add-aibast-returns-complaints-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_returns-complaints-synthetic-records.md"
       ],
-      "reason": "Duplicate visual evidence; retained capture hard-step-06."
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 321,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_returns-complaints-synthetic-records.md"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/08-add-aibast-complaint-classification-02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_complaint-classification_02",
       "step": 8,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/08-add-complaint-classification.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/08-add-complaint-classification.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/08-add-aibast-complaint-classification-02.png",
       "status": "reusable",
       "visible_anchors": [
         "privacy-safe-complaint-classification"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 182,
-          "width": 373,
-          "height": 45,
-          "label": "Classification skill"
+          "x": 1057,
+          "y": 197,
+          "width": 235,
+          "height": 22,
+          "label": "privacy-safe-complaint-classification"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/09-add-aibast-escalation-snapshot-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_escalation-snapshot_05",
       "step": 9,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/09-add-resolution-recommendation.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/09-add-resolution-recommendation.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/09-add-aibast-escalation-snapshot-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "human-approved-resolution-options"
+        "escalation-snapshot"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 224,
-          "width": 373,
-          "height": 45,
-          "label": "Resolution options skill"
+          "x": 1057,
+          "y": 197,
+          "width": 134,
+          "height": 22,
+          "label": "escalation-snapshot"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/10-add-aibast-executive-summary-10.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_executive-summary_10",
       "step": 10,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/10-add-return-processing.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/10-add-return-processing.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/10-add-aibast-executive-summary-10.png",
       "status": "reusable",
       "visible_anchors": [
-        "anonymous-return-review-queue"
+        "executive-summary"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 265,
-          "width": 373,
-          "height": 45,
-          "label": "Return review skill"
+          "x": 1057,
+          "y": 197,
+          "width": 131,
+          "height": 21,
+          "label": "executive-summary"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/11-add-aibast-follow-up-plan-08.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_follow-up-plan_08",
       "step": 11,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/11-add-trend-analysis.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/11-add-trend-analysis.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/11-add-aibast-follow-up-plan-08.png",
       "status": "reusable",
       "visible_anchors": [
-        "aggregate-returns-quality-trends"
+        "follow-up-plan"
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 306,
-          "width": 373,
-          "height": 45,
-          "label": "Trend analysis skill"
+          "x": 1057,
+          "y": 197,
+          "width": 102,
+          "height": 22,
+          "label": "follow-up-plan"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/12-add-aibast-recovery-performance-09.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_recovery-performance_09",
       "step": 12,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/12-add-aibast-recovery-performance-09.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Two configured knowledge files",
-        "Tools section contains no configured tool",
-        "Save tooltip states No unsaved changes"
+        "recovery-performance"
       ],
       "boxes": [
         {
-          "x": 1047,
-          "y": 43,
-          "width": 205,
-          "height": 51,
-          "label": "No unsaved changes"
-        },
-        {
-          "x": 1202,
-          "y": 85,
-          "width": 196,
-          "height": 40,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1027,
-          "y": 182,
-          "width": 374,
-          "height": 171,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1027,
-          "y": 365,
-          "width": 374,
-          "height": 191,
-          "label": "Tools and knowledge"
+          "x": 1057,
+          "y": 197,
+          "width": 148,
+          "height": 22,
+          "label": "recovery-performance"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/13-add-aibast-recovery-tiers-06.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_recovery-tiers_06",
       "step": 13,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/13-add-aibast-recovery-tiers-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Returns and Complaints Manual greeting"
+        "recovery-tiers"
       ],
       "boxes": [
         {
-          "x": 566,
-          "y": 0,
-          "width": 171,
-          "height": 61,
-          "label": "Preview selected"
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "recovery-tiers"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/14-add-aibast-resolution-execution-plan-07.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_resolution-execution-plan_07",
+      "step": 14,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/14-add-aibast-resolution-execution-plan-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "resolution-execution-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 170,
+          "height": 22,
+          "label": "resolution-execution-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/15-add-aibast-resolution-recommendation-03.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_resolution-recommendation_03",
+      "step": 15,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/15-add-aibast-resolution-recommendation-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "human-approved-resolution-options"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 237,
+          "height": 22,
+          "label": "human-approved-resolution-options"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/16-add-aibast-return-processing-01.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_return-processing_01",
+      "step": 16,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/16-add-aibast-return-processing-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "anonymous-return-review-queue"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 113,
+          "height": 23,
+          "label": "anonymous-return-review-queue"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/17-add-aibast-trend-analysis-04.jpg",
+      "caption": "Manual step 17 · Add skill: aibast_trend-analysis_04",
+      "step": 17,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/17-add-aibast-trend-analysis-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aggregate-returns-quality-trends"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 215,
+          "height": 22,
+          "label": "aggregate-returns-quality-trends"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/18-review-inventory.jpg",
+      "caption": "Manual step 18 · Review model, skills, knowledge, and safety boundaries",
+      "step": 18,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/18-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "aggregate-returns-quality-trends",
+        "anonymous-return-review-queue",
+        "human-approved-resolution-options",
+        "resolution-execution-plan",
+        "recovery-tiers",
+        "aibast_returns-complaints-synthetic-records.md",
+        "aibast_returns-complaints-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 833,
-          "y": 82,
-          "width": 111,
-          "height": 54,
-          "label": "Fresh chat control"
+          "x": 1057,
+          "y": 197,
+          "width": 215,
+          "height": 22,
+          "label": "aggregate-returns-quality-trends"
         },
         {
-          "x": 258,
-          "y": 143,
-          "width": 617,
-          "height": 97,
-          "label": "Manual agent greeting"
+          "x": 1057,
+          "y": 237,
+          "width": 113,
+          "height": 23,
+          "label": "anonymous-return-review-queue"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 237,
+          "height": 22,
+          "label": "human-approved-resolution-options"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 170,
+          "height": 22,
+          "label": "resolution-execution-plan"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 95,
+          "height": 22,
+          "label": "recovery-tiers"
+        },
+        {
+          "x": 1058,
+          "y": 525,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_returns-complaints-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 298,
+          "height": 22,
+          "label": "aibast_returns-complaints-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/19-review-skills.jpg",
+      "caption": "Manual step 19 · Review the skill list (10 skills)",
+      "step": 19,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/19-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aggregate-returns-quality-trends",
+        "anonymous-return-review-queue",
+        "human-approved-resolution-options",
+        "resolution-execution-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 215,
+          "height": 22,
+          "label": "aggregate-returns-quality-trends"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 216,
+          "height": 21,
+          "label": "anonymous-return-review-queue"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 238,
+          "height": 22,
+          "label": "human-approved-resolution-options"
+        },
+        {
+          "x": 1182,
+          "y": 396,
+          "width": 64,
+          "height": 17,
+          "label": "resolution-execution-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/20-review-skills-more.jpg",
+      "caption": "Manual step 20 · Review the rest of the skill list",
+      "step": 20,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/20-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "recovery-tiers",
+        "recovery-performance",
+        "follow-up-plan",
+        "executive-summary",
+        "escalation-snapshot",
+        "privacy-safe-complaint-classification"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 89,
+          "width": 56,
+          "height": 17,
+          "label": "recovery-tiers"
+        },
+        {
+          "x": 1103,
+          "y": 86,
+          "width": 78,
+          "height": 20,
+          "label": "recovery-performance"
+        },
+        {
+          "x": 1055,
+          "y": 122,
+          "width": 103,
+          "height": 22,
+          "label": "follow-up-plan"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 131,
+          "height": 21,
+          "label": "executive-summary"
+        },
+        {
+          "x": 1055,
+          "y": 318,
+          "width": 135,
+          "height": 22,
+          "label": "escalation-snapshot"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 235,
+          "height": 22,
+          "label": "privacy-safe-complaint-classification"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/21-open-preview.jpg",
+      "caption": "Manual step 21 · Open a fresh Preview conversation",
+      "step": 21,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/21-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Returns and Complaints Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 242,
+          "height": 24,
+          "label": "Returns and Complaints Manual"
         }
       ]
     },
     {
       "id": "hard-rcr-01",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/22-rcr-01.jpg",
+      "caption": "RCR-01 · Customer Service Agent: As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.",
+      "step": 22,
       "case_id": "RCR-01",
-      "step": 14,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/14-rcr-01.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/14-rcr-01.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/22-rcr-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Pending Reviews: 3",
-        "Policy Match Candidates: RET-4002 and RET-4006",
-        "Approval Boundary requires an authorized human reviewer and states no return, refund, credit, replacement, shipment, reservation, account change, or customer message was approved, created, or sent"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for, Draft Return Review Queue, and Synthetic size-mismatch case markers are above the captured viewport."
+        "Prepared for:** Customer Service Agent",
+        "Synthetic size-mismatch case",
+        "Draft Return Review Queue"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 138,
-          "width": 623,
-          "height": 265,
-          "label": "Queue summary"
+          "x": 558,
+          "y": 444,
+          "width": 279,
+          "height": 24,
+          "label": "Prepared for:** Customer Service Agent"
+        },
+        {
+          "x": 306,
+          "y": 519,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic size-mismatch case"
         },
         {
           "x": 287,
-          "y": 451,
-          "width": 936,
-          "height": 116,
-          "label": "Approval boundary"
+          "y": 591,
+          "width": 304,
+          "height": 29,
+          "label": "Draft Return Review Queue"
         }
       ]
     },
     {
       "id": "hard-rcr-02",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/23-rcr-02.jpg",
+      "caption": "RCR-02 · Customer Service Agent: As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
+      "step": 23,
       "case_id": "RCR-02",
-      "step": 15,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/15-rcr-02.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/15-rcr-02.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/23-rcr-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Product Quality defect",
-        "Quality Assurance reviewer",
-        "No action was taken \u2014 no return, refund, or any other external side effect has occurred"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft Complaint Classification heading is above the captured viewport."
+        "no return, refund",
+        "Draft Complaint Classification",
+        "Product Quality"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 179,
-          "width": 939,
-          "height": 132,
-          "label": "Product Quality rationale"
+          "x": 749,
+          "y": 520,
+          "width": 79,
+          "height": 21,
+          "label": "no return, refund"
         },
         {
-          "x": 286,
-          "y": 436,
-          "width": 939,
-          "height": 141,
-          "label": "Authorized review gate"
+          "x": 287,
+          "y": 591,
+          "width": 335,
+          "height": 32,
+          "label": "Draft Complaint Classification"
+        },
+        {
+          "x": 299,
+          "y": 765,
+          "width": 121,
+          "height": 24,
+          "label": "Product Quality"
         }
       ]
     },
     {
       "id": "hard-rcr-03",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/24-rcr-03.jpg",
+      "caption": "RCR-03 · Customer Service Agent: As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.",
+      "step": 24,
       "case_id": "RCR-03",
-      "step": 16,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/16-rcr-03.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/16-rcr-03.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/24-rcr-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Available Resolution Playbooks",
-        "Product Exchange",
-        "Authorization gate requires an authorized reviewer to evaluate and act"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft Resolution Options and Option for authorized review markers are above the captured viewport."
+        "no return",
+        "Draft Resolution Options",
+        "Option for authorized review"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 137,
-          "width": 550,
-          "height": 305,
-          "label": "Resolution playbooks"
+          "x": 749,
+          "y": 538,
+          "width": 79,
+          "height": 21,
+          "label": "no return"
         },
         {
           "x": 287,
-          "y": 504,
-          "width": 936,
-          "height": 74,
-          "label": "Authorization gate"
+          "y": 609,
+          "width": 279,
+          "height": 32,
+          "label": "Draft Resolution Options"
+        },
+        {
+          "x": 309,
+          "y": 741,
+          "width": 225,
+          "height": 24,
+          "label": "Option for authorized review"
         }
       ]
     },
     {
       "id": "hard-rcr-04",
       "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/25-rcr-04.jpg",
+      "caption": "RCR-04 · Quality Team: As Quality Team, summarize aggregate defect and return patterns without accusing any person.",
+      "step": 25,
       "case_id": "RCR-04",
-      "step": 17,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/17-rcr-04.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/17-rcr-04.png",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/25-rcr-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Wrong-size is the leading return driver across all six months at 715 total",
-        "Resolution efficiency improved",
-        "CSAT recovered",
-        "Authorized reviewer gate"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for Quality Team, Synthetic Returns & Complaints Trend Analysis, and Key Insights markers are above the captured viewport."
+        "Prepared for:** Quality Team",
+        "Synthetic Returns & Complaints Trend Analysis",
+        "Key Insights"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 124,
-          "width": 939,
-          "height": 365,
-          "label": "Aggregate quality trends"
+          "x": 558,
+          "y": 489,
+          "width": 200,
+          "height": 24,
+          "label": "Prepared for:** Quality Team"
         },
         {
-          "x": 287,
-          "y": 505,
-          "width": 936,
-          "height": 73,
-          "label": "Authorized reviewer gate"
+          "x": 306,
+          "y": 564,
+          "width": 522,
+          "height": 24,
+          "label": "Synthetic Returns & Complaints Trend Analysis"
+        },
+        {
+          "x": 286,
+          "y": 1695,
+          "width": 120,
+          "height": 28,
+          "label": "Key Insights"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-rcr-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/returns-complaints-resolution/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/26-rcr-05.jpg",
+      "caption": "RCR-05 · Service Manager: As Service Manager, I have an escalated customer complaint about a defective laptop and the customer is very upset; help me ",
+      "step": 26,
+      "case_id": "RCR-05",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/26-rcr-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Returns and Complaints Manual",
-        "Draft"
+        "David Chen",
+        "$18,400",
+        "Churn Risk:** 87%"
       ],
       "boxes": [
         {
-          "x": 104,
-          "y": 723,
-          "width": 1280,
-          "height": 54,
-          "label": "Target agent remains Draft"
+          "x": 637,
+          "y": 609,
+          "width": 134,
+          "height": 27,
+          "label": "David Chen"
+        },
+        {
+          "x": 599,
+          "y": 643,
+          "width": 66,
+          "height": 23,
+          "label": "$18,400"
+        },
+        {
+          "x": 285,
+          "y": 1302,
+          "width": 128,
+          "height": 20,
+          "label": "Churn Risk:** 87%"
+        }
+      ]
+    },
+    {
+      "id": "hard-rcr-06",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/27-rcr-06.jpg",
+      "caption": "RCR-06 · Service Manager: As Service Manager, show me resolution options that will keep this VIP customer satisfied.",
+      "step": 27,
+      "case_id": "RCR-06",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/27-rcr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Premium Recovery",
+        "$540"
+      ],
+      "boxes": [
+        {
+          "x": 344,
+          "y": 637,
+          "width": 181,
+          "height": 27,
+          "label": "Premium Recovery"
+        },
+        {
+          "x": 438,
+          "y": 794,
+          "width": 45,
+          "height": 22,
+          "label": "$540"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "34:1 ROI not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-rcr-07",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/28-rcr-07.jpg",
+      "caption": "RCR-07 · Service Manager: As Service Manager, Tier 1 is approved; get it ready and prepare my talking points for the call.",
+      "step": 28,
+      "case_id": "RCR-07",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/28-rcr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ready for authorized execution",
+        "ProBook Elite Plus",
+        "Talking Points"
+      ],
+      "boxes": [
+        {
+          "x": 501,
+          "y": 609,
+          "width": 343,
+          "height": 32,
+          "label": "ready for authorized execution"
+        },
+        {
+          "x": 445,
+          "y": 778,
+          "width": 137,
+          "height": 20,
+          "label": "ProBook Elite Plus"
+        },
+        {
+          "x": 322,
+          "y": 1055,
+          "width": 115,
+          "height": 24,
+          "label": "Talking Points"
+        }
+      ]
+    },
+    {
+      "id": "hard-rcr-08",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/29-rcr-08.jpg",
+      "caption": "RCR-08 · Service Manager: As Service Manager, the call went well and the customer accepted; what is our follow-up plan?",
+      "step": 29,
+      "case_id": "RCR-08",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/29-rcr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "delivery confirmation SMS",
+        "Day 30",
+        "Nothing has been scheduled"
+      ],
+      "boxes": [
+        {
+          "x": 455,
+          "y": 676,
+          "width": 196,
+          "height": 24,
+          "label": "delivery confirmation SMS"
+        },
+        {
+          "x": 286,
+          "y": 954,
+          "width": 64,
+          "height": 24,
+          "label": "Day 30"
+        },
+        {
+          "x": 286,
+          "y": 1196,
+          "width": 212,
+          "height": 24,
+          "label": "Nothing has been scheduled"
+        }
+      ]
+    },
+    {
+      "id": "hard-rcr-09",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/30-rcr-09.jpg",
+      "caption": "RCR-09 · Service Manager: As Service Manager, show me the service recovery performance and financial impact.",
+      "step": 30,
+      "case_id": "RCR-09",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/30-rcr-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "4.2 hours",
+        "$127,000",
+        "$4.67M"
+      ],
+      "boxes": [
+        {
+          "x": 468,
+          "y": 678,
+          "width": 76,
+          "height": 21,
+          "label": "4.2 hours"
+        },
+        {
+          "x": 530,
+          "y": 1080,
+          "width": 72,
+          "height": 23,
+          "label": "$127,000"
+        },
+        {
+          "x": 384,
+          "y": 1142,
+          "width": 63,
+          "height": 23,
+          "label": "$4.67M"
+        }
+      ]
+    },
+    {
+      "id": "hard-rcr-10",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/31-rcr-10.jpg",
+      "caption": "RCR-10 · Service Manager: As Service Manager, create the executive summary and recap what we accomplished.",
+      "step": 31,
+      "case_id": "RCR-10",
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/31-rcr-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Executive Summary",
+        "87% churn risk",
+        "Business Value"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 565,
+          "width": 228,
+          "height": 31,
+          "label": "Executive Summary"
+        },
+        {
+          "x": 971,
+          "y": 637,
+          "width": 117,
+          "height": 23,
+          "label": "87% churn risk"
+        },
+        {
+          "x": 580,
+          "y": 1125,
+          "width": 120,
+          "height": 20,
+          "label": "Business Value"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-32",
+      "mode": "hard",
+      "source": "solutions/returns-complaints-resolution/screenshots/manual/32-confirm-draft.jpg",
+      "caption": "Manual step 32 · Confirm Draft and stop before publish",
+      "step": 32,
+      "draft": true,
+      "annotated": "solutions/returns-complaints-resolution/screenshots/manual/annotated/32-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Returns and Complaints Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 240,
+          "height": 24,
+          "label": "Returns and Complaints Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Returns Resolution Pilot with Draft visible.",
-      "Manual step 4 with the save control showing No unsaved changes immediately after the instruction policy is saved.",
-      "Manual step 5 showing the default Search all websites source being removed or the resulting target state with an explicit removal confirmation."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 4/4 verdict.",
-      "Copilot-only local 4/4 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:returns-complaints-resolution",
-    "reviewed_at": "2026-08-10T00:27:58.174534+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:53.757168+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

@@ -5,29 +5,9 @@
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/fs-customer-onboarding",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
-    "label": "Customer Onboarding Agent manual workshop review source",
+    "label": "Complete Customer Onboarding Agent source bundle",
     "path": "solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip",
-    "kind": "manual-review-source",
-    "native_importable": false,
-    "include_paths": [
-      "solutions/fs-customer-onboarding/README.md",
-      "solutions/fs-customer-onboarding/deployment.json",
-      "solutions/fs-customer-onboarding/manual/GLOBAL-INSTRUCTIONS.md",
-      "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-controls-and-review.md",
-      "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-synthetic-records.md",
-      "solutions/fs-customer-onboarding/manual/skills/aibast_account-setup_02/SKILL.md",
-      "solutions/fs-customer-onboarding/manual/skills/aibast_document-checklist_03/SKILL.md",
-      "solutions/fs-customer-onboarding/manual/skills/aibast_kyc-verification_01/SKILL.md",
-      "solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-status_04/SKILL.md",
-      "solutions/fs-customer-onboarding/manual-tutorial.html",
-      "solutions/fs-customer-onboarding/evals/manual-build-evidence.json",
-      "solutions/fs-customer-onboarding/evals/manual-pilot-review.json",
-      "solutions/fs-customer-onboarding/evals/visual-checkpoints.json",
-      "solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json",
-      "solutions/fs-customer-onboarding/export-manifest.json",
-      "solutions/fs-customer-onboarding/exports/README.md"
-    ]
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip"
   },
   "files": [
     {
@@ -36,8 +16,7 @@
       "path": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "deployment-recipe",
@@ -45,17 +24,15 @@
       "path": "solutions/fs-customer-onboarding/deployment.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/deployment.json",
       "use": "Easy-mode deployment contract",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "copilot-studio-solution",
-      "label": "Historical Copilot Studio solution \u2014 not current source",
+      "label": "Importable Copilot Studio solution",
       "path": "solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip",
-      "use": "Historical native import archive: inspection found five entries, no workshop skills and no workshop knowledge files. It does not reproduce the preserved manual build or its repairs. The separate source ZIP is an explicit public-safe manual-source subset, not a native import package. No new live export, import, runtime parity or publication is claimed.",
-      "status": "ready",
-      "included_in_bundle": false
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
     },
     {
       "id": "copilot-studio-deployment-settings",
@@ -63,8 +40,7 @@
       "path": "solutions/fs-customer-onboarding/exports/fs-customer-onboarding-deployment-settings.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/exports/fs-customer-onboarding-deployment-settings.json",
       "use": "Connection-reference, environment-variable, and agent import settings",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "copilot-studio-export-metadata",
@@ -72,8 +48,7 @@
       "path": "solutions/fs-customer-onboarding/exports/fs-customer-onboarding-solution-export.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/exports/fs-customer-onboarding-solution-export.json",
       "use": "Export identity, integrity hash, source environment, and import caveats",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "field-guide",
@@ -81,8 +56,7 @@
       "path": "solutions/fs-customer-onboarding/field-guide.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/field-guide.html",
       "use": "Styled facilitation, evidence boundaries, gates, and recovery",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "field-guide-source",
@@ -90,8 +64,7 @@
       "path": "solutions/fs-customer-onboarding/FIELD-GUIDE.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/FIELD-GUIDE.md",
       "use": "Markdown source retained for audit and export",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "facilitator-cohort-form",
@@ -99,8 +72,7 @@
       "path": "solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
       "use": "Private Microsoft Forms Quick Import template for SE identity, MSIX, and cohort registration",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "badge-qualification-form",
@@ -108,8 +80,7 @@
       "path": "solutions/_shared/AIBAST-Badge-Qualification.docx",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/AIBAST-Badge-Qualification.docx",
       "use": "Private Microsoft Forms Quick Import template for consent, module test, and reviewer matching",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-personless-guide",
@@ -117,8 +88,7 @@
       "path": "solutions/fs-customer-onboarding/EASY-MODE-PERSONLESS.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/EASY-MODE-PERSONLESS.md",
       "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-copilot-chat-prompts",
@@ -126,8 +96,7 @@
       "path": "solutions/fs-customer-onboarding/EASY-MODE-COPILOT-CHAT.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/EASY-MODE-COPILOT-CHAT.md",
       "use": "Copilot-only lane skill attachment and the same two workshop messages",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-mode-brainstem-skill",
@@ -135,8 +104,7 @@
       "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
       "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-mode-copilot-skill",
@@ -144,8 +112,7 @@
       "path": "skills/aibast-easy-mode-copilot/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
       "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "generic-workshop-agent",
@@ -153,8 +120,7 @@
       "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
       "use": "Registry-driven Brainstem engine shared by every packaged solution",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-instructions",
@@ -162,8 +128,7 @@
       "path": "solutions/fs-customer-onboarding/manual/GLOBAL-INSTRUCTIONS.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "settings",
@@ -171,8 +136,7 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/settings.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "agent-sync",
@@ -180,8 +144,7 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/agent.sync.yaml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "knowledge-aibast-fs-customer-onboarding-controls-and-review",
@@ -189,8 +152,7 @@
       "path": "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-controls-and-review.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-controls-and-review.md",
       "use": "Manual knowledge upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "knowledge-aibast-fs-customer-onboarding-synthetic-records",
@@ -198,8 +160,7 @@
       "path": "solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-synthetic-records.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/knowledge/aibast_fs-customer-onboarding-synthetic-records.md",
       "use": "Manual knowledge upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "skill-aibast-account-setup-02",
@@ -207,8 +168,15 @@
       "path": "solutions/fs-customer-onboarding/manual/skills/aibast_account-setup_02/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_account-setup_02/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-beneficial-ownership-06",
+      "label": "Capability card: aibast beneficial ownership 06",
+      "path": "solutions/fs-customer-onboarding/manual/skills/aibast_beneficial-ownership_06/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_beneficial-ownership_06/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
     },
     {
       "id": "skill-aibast-document-checklist-03",
@@ -216,8 +184,15 @@
       "path": "solutions/fs-customer-onboarding/manual/skills/aibast_document-checklist_03/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_document-checklist_03/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-initiate-onboarding-05",
+      "label": "Capability card: aibast initiate onboarding 05",
+      "path": "solutions/fs-customer-onboarding/manual/skills/aibast_initiate-onboarding_05/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_initiate-onboarding_05/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
     },
     {
       "id": "skill-aibast-kyc-verification-01",
@@ -225,8 +200,7 @@
       "path": "solutions/fs-customer-onboarding/manual/skills/aibast_kyc-verification_01/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_kyc-verification_01/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "skill-aibast-onboarding-status-04",
@@ -234,8 +208,31 @@
       "path": "solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-status_04/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-status_04/SKILL.md",
       "use": "Manual skill upload",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-onboarding-timeline-07",
+      "label": "Capability card: aibast onboarding timeline 07",
+      "path": "solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-timeline_07/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-timeline_07/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-risk-assessment-08",
+      "label": "Capability card: aibast risk assessment 08",
+      "path": "solutions/fs-customer-onboarding/manual/skills/aibast_risk-assessment_08/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_risk-assessment_08/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-status-summary-09",
+      "label": "Capability card: aibast status summary 09",
+      "path": "solutions/fs-customer-onboarding/manual/skills/aibast_status-summary_09/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual/skills/aibast_status-summary_09/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-fs-customer-onboarding-controls-and-review",
@@ -243,8 +240,7 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-controls-and-review.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-controls-and-review.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-fs-customer-onboarding-controls-and-review-md-mcs",
@@ -252,8 +248,7 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-controls-and-review.md.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-controls-and-review.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-fs-customer-onboarding-synthetic-records",
@@ -261,8 +256,7 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-synthetic-records.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-synthetic-records.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-knowledge-aibast-fs-customer-onboarding-synthetic-records-md-mcs",
@@ -270,8 +264,7 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-synthetic-records.md.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/capabilities/knowledge/files/aibast_fs-customer-onboarding-synthetic-records.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-account-setup-mcs",
@@ -279,8 +272,15 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_account-setup.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_account-setup.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-beneficial-ownership-mcs",
+      "label": "Aibast Beneficial Ownership.Mcs",
+      "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_beneficial-ownership.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_beneficial-ownership.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-document-checklist-mcs",
@@ -288,8 +288,15 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_document-checklist.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_document-checklist.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-initiate-onboarding-mcs",
+      "label": "Aibast Initiate Onboarding.Mcs",
+      "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_initiate-onboarding.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_initiate-onboarding.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-kyc-verification-mcs",
@@ -297,8 +304,7 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_kyc-verification.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_kyc-verification.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-skill-aibast-onboarding-status-mcs",
@@ -306,8 +312,31 @@
       "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_onboarding-status.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_onboarding-status.mcs.yml",
       "use": "Copilot Studio behavior source",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-onboarding-timeline-mcs",
+      "label": "Aibast Onboarding Timeline.Mcs",
+      "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_onboarding-timeline.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_onboarding-timeline.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-risk-assessment-mcs",
+      "label": "Aibast Risk Assessment.Mcs",
+      "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_risk-assessment.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_risk-assessment.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-status-summary-mcs",
+      "label": "Aibast Status Summary.Mcs",
+      "path": "solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_status-summary.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/copilot-studio/behaviors/aibast_status-summary.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
     },
     {
       "id": "easy-evidence-copilot-studio-preview-evidence",
@@ -315,8 +344,7 @@
       "path": "solutions/fs-customer-onboarding/evals/copilot-studio-preview-evidence.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/copilot-studio-preview-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-evidence-dataverse-draft-evidence",
@@ -324,8 +352,7 @@
       "path": "solutions/fs-customer-onboarding/evals/dataverse-draft-evidence.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/dataverse-draft-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-evidence",
@@ -333,8 +360,7 @@
       "path": "solutions/fs-customer-onboarding/evals/manual-build-evidence.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "manual-pilot-review",
@@ -342,8 +368,7 @@
       "path": "solutions/fs-customer-onboarding/evals/manual-pilot-review.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/manual-pilot-review.json",
       "use": "Non-certifying response findings, discrepancies and open gates",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "onepager-map",
@@ -351,8 +376,7 @@
       "path": "solutions/fs-customer-onboarding/evals/onepager-map.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-evidence-source-audit",
@@ -360,8 +384,7 @@
       "path": "solutions/fs-customer-onboarding/evals/source-audit.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/source-audit.json",
       "use": "Easy-mode deployment or Preview evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "brainstem-transcripts",
@@ -369,8 +392,7 @@
       "path": "solutions/fs-customer-onboarding/evals/transcripts.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "easy-evidence-visual-checkpoints",
@@ -378,8 +400,335 @@
       "path": "solutions/fs-customer-onboarding/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evals/visual-checkpoints.json",
       "use": "Reviewed image scope, media format, provenance and open student steps",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-review-build",
+      "label": "Annotated visual checkpoint: easy-review-build",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/01-review-build.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/01-review-build.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-fco-01",
+      "label": "Annotated visual checkpoint: easy-fco-01",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/02-fco-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/02-fco-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-fco-02",
+      "label": "Annotated visual checkpoint: easy-fco-02",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/03-fco-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/03-fco-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-fco-03",
+      "label": "Annotated visual checkpoint: easy-fco-03",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/04-fco-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/04-fco-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-fco-04",
+      "label": "Annotated visual checkpoint: easy-fco-04",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/05-fco-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/05-fco-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-fco-05",
+      "label": "Annotated visual checkpoint: easy-fco-05",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/06-fco-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/06-fco-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-fco-06",
+      "label": "Annotated visual checkpoint: easy-fco-06",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/07-fco-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/07-fco-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-fco-07",
+      "label": "Annotated visual checkpoint: easy-fco-07",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/08-fco-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/08-fco-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-fco-08",
+      "label": "Annotated visual checkpoint: easy-fco-08",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/09-fco-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/09-fco-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-fco-09",
+      "label": "Annotated visual checkpoint: easy-fco-09",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/10-fco-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/10-fco-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-confirm-draft",
+      "label": "Annotated visual checkpoint: easy-confirm-draft",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/11-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/annotated/11-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/04-save-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-fs-customer-onboarding-controls-and-review",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-fs-customer-onboarding-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-account-setup-02",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/08-add-aibast-account-setup-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/08-add-aibast-account-setup-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-beneficial-ownership-06",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/09-add-aibast-beneficial-ownership-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/09-add-aibast-beneficial-ownership-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-document-checklist-03",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/10-add-aibast-document-checklist-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/10-add-aibast-document-checklist-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-aibast-initiate-onboarding-05",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/11-add-aibast-initiate-onboarding-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/11-add-aibast-initiate-onboarding-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-aibast-kyc-verification-01",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/12-add-aibast-kyc-verification-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/12-add-aibast-kyc-verification-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-aibast-onboarding-status-04",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/13-add-aibast-onboarding-status-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/13-add-aibast-onboarding-status-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-add-aibast-onboarding-timeline-07",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/14-add-aibast-onboarding-timeline-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/14-add-aibast-onboarding-timeline-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-add-aibast-risk-assessment-08",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/15-add-aibast-risk-assessment-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/15-add-aibast-risk-assessment-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-add-aibast-status-summary-09",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/16-add-aibast-status-summary-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/16-add-aibast-status-summary-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/17-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/17-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-review-skills",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/18-review-skills.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/18-review-skills.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-review-skills-more",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/19-review-skills-more.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/19-review-skills-more.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-20",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/20-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/20-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-fco-01",
+      "label": "Annotated visual checkpoint: hard-fco-01",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/21-fco-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/21-fco-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-fco-02",
+      "label": "Annotated visual checkpoint: hard-fco-02",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/22-fco-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/22-fco-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-fco-03",
+      "label": "Annotated visual checkpoint: hard-fco-03",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/23-fco-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/23-fco-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-24-fco-04",
+      "label": "Annotated visual checkpoint: hard-fco-04",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/24-fco-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/24-fco-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-25-fco-05",
+      "label": "Annotated visual checkpoint: hard-fco-05",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/25-fco-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/25-fco-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-26-fco-06",
+      "label": "Annotated visual checkpoint: hard-fco-06",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/26-fco-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/26-fco-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-27-fco-07",
+      "label": "Annotated visual checkpoint: hard-fco-07",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/27-fco-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/27-fco-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-28-fco-08",
+      "label": "Annotated visual checkpoint: hard-fco-08",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/28-fco-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/28-fco-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-29-fco-09",
+      "label": "Annotated visual checkpoint: hard-fco-09",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/29-fco-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/29-fco-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-30-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-30",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/30-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/annotated/30-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
     },
     {
       "id": "manual-browserfilm-manifest",
@@ -387,8 +736,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json",
       "use": "Ordered literal-browser evidence frames",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "manual-frame-01",
@@ -396,8 +744,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/01-create-blank-agent.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/01-create-blank-agent.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-02",
@@ -405,8 +752,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/02-name-agent.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/02-name-agent.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-03",
@@ -414,8 +760,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/03-enter-instructions.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/03-enter-instructions.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-04",
@@ -423,8 +768,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/04-save-instructions.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/04-save-instructions.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-05",
@@ -432,8 +776,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/05-remove-web-search.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/05-remove-web-search.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-06",
@@ -441,8 +784,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/06-add-aibast-fs-customer-onboarding-controls-and-review.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/06-add-aibast-fs-customer-onboarding-controls-and-review.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-07",
@@ -450,8 +792,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/07-add-aibast-fs-customer-onboarding-synthetic-records.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/07-add-aibast-fs-customer-onboarding-synthetic-records.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-08",
@@ -459,98 +800,183 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/08-add-aibast-account-setup-02.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/08-add-aibast-account-setup-02.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-09",
-      "label": "Add skill: aibast_document-checklist_03",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-document-checklist-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-document-checklist-03.jpg",
+      "label": "Add skill: aibast_beneficial-ownership_06",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-beneficial-ownership-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-beneficial-ownership-06.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-10",
-      "label": "Add skill: aibast_kyc-verification_01",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-kyc-verification-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-kyc-verification-01.jpg",
+      "label": "Add skill: aibast_document-checklist_03",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-document-checklist-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-document-checklist-03.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-11",
-      "label": "Add skill: aibast_onboarding-status_04",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-onboarding-status-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-onboarding-status-04.jpg",
+      "label": "Add skill: aibast_initiate-onboarding_05",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-initiate-onboarding-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-initiate-onboarding-05.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-12",
-      "label": "Review model, skills, knowledge, and safety boundaries",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/12-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/12-review-inventory.jpg",
+      "label": "Add skill: aibast_kyc-verification_01",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/12-add-aibast-kyc-verification-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/12-add-aibast-kyc-verification-01.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-13",
-      "label": "Open a fresh Preview conversation",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/13-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/13-open-preview.jpg",
+      "label": "Add skill: aibast_onboarding-status_04",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/13-add-aibast-onboarding-status-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/13-add-aibast-onboarding-status-04.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-14",
-      "label": "Run and verify FCO-01: Compliance Officer",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/14-fco-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/14-fco-01.jpg",
+      "label": "Add skill: aibast_onboarding-timeline_07",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/14-add-aibast-onboarding-timeline-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/14-add-aibast-onboarding-timeline-07.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-15",
-      "label": "Run and verify FCO-02: Onboarding Specialist",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/15-fco-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/15-fco-02.jpg",
+      "label": "Add skill: aibast_risk-assessment_08",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/15-add-aibast-risk-assessment-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/15-add-aibast-risk-assessment-08.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-16",
-      "label": "Run and verify FCO-03: Relationship Manager",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/16-fco-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/16-fco-03.jpg",
+      "label": "Add skill: aibast_status-summary_09",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/16-add-aibast-status-summary-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/16-add-aibast-status-summary-09.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-17",
-      "label": "Run and verify FCO-04: Head of Onboarding",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/17-fco-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/17-fco-04.jpg",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/17-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/17-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-frame-18",
-      "label": "Confirm Draft and stop before publish",
-      "path": "solutions/fs-customer-onboarding/screenshots/manual/18-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/18-confirm-draft.jpg",
+      "label": "Review the skill list (9 skills)",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/18-review-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/18-review-skills.jpg",
       "use": "Real manual browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Review the rest of the skill list",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/19-review-skills-more.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/19-review-skills-more.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/20-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/20-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Pass FCO-01: Compliance Officer",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/21-fco-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/21-fco-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Pass FCO-02: Onboarding Specialist",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/22-fco-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/22-fco-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Pass FCO-03: Relationship Manager",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/23-fco-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/23-fco-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-24",
+      "label": "Pass FCO-04: Head of Onboarding",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/24-fco-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/24-fco-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-25",
+      "label": "Pass FCO-05: Relationship Manager",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/25-fco-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/25-fco-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-26",
+      "label": "Pass FCO-06: Compliance Officer",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/26-fco-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/26-fco-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-27",
+      "label": "Pass FCO-07: Relationship Manager",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/27-fco-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/27-fco-07.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-28",
+      "label": "Pass FCO-08: Compliance Officer",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/28-fco-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/28-fco-08.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-29",
+      "label": "Pass FCO-09: Head of Onboarding",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/29-fco-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/29-fco-09.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-30",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/fs-customer-onboarding/screenshots/manual/30-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/30-confirm-draft.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
     },
     {
       "id": "manual-browserfilm",
@@ -558,8 +984,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/manual-build-walkthrough.gif",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/manual-build-walkthrough.gif",
       "use": "Animated manual walkthrough",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-contact-sheet",
@@ -567,8 +992,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/manual-build-contact-sheet.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/manual-build-contact-sheet.jpg",
       "use": "Static manual evidence overview",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-browserfilm-manifest",
@@ -576,8 +1000,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/assisted/browserfilm.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-browserfilm",
@@ -585,8 +1008,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-contact-sheet",
@@ -594,53 +1016,95 @@
       "path": "solutions/fs-customer-onboarding/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-01",
-      "label": "Pass FCO-01: Compliance Officer",
-      "path": "solutions/fs-customer-onboarding/screenshots/assisted/01-fco-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/01-fco-01.jpg",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-02",
-      "label": "Pass FCO-02: Onboarding Specialist",
-      "path": "solutions/fs-customer-onboarding/screenshots/assisted/02-fco-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/02-fco-02.jpg",
+      "label": "Pass FCO-01: Compliance Officer",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/02-fco-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/02-fco-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-03",
-      "label": "Pass FCO-03: Relationship Manager",
-      "path": "solutions/fs-customer-onboarding/screenshots/assisted/03-fco-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/03-fco-03.jpg",
+      "label": "Pass FCO-02: Onboarding Specialist",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/03-fco-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/03-fco-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-04",
-      "label": "Pass FCO-04: Head of Onboarding",
-      "path": "solutions/fs-customer-onboarding/screenshots/assisted/04-fco-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/04-fco-04.jpg",
+      "label": "Pass FCO-03: Relationship Manager",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/04-fco-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/04-fco-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "assisted-frame-05",
-      "label": "Confirm the validated agent remains Draft",
-      "path": "solutions/fs-customer-onboarding/screenshots/assisted/05-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/05-confirm-draft.jpg",
+      "label": "Pass FCO-04: Head of Onboarding",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/05-fco-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/05-fco-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-06",
+      "label": "Pass FCO-05: Relationship Manager",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/06-fco-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/06-fco-05.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-07",
+      "label": "Pass FCO-06: Compliance Officer",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/07-fco-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/07-fco-06.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-08",
+      "label": "Pass FCO-07: Relationship Manager",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/08-fco-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/08-fco-07.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-09",
+      "label": "Pass FCO-08: Compliance Officer",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/09-fco-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/09-fco-08.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-10",
+      "label": "Pass FCO-09: Head of Onboarding",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/10-fco-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/10-fco-09.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-11",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/fs-customer-onboarding/screenshots/assisted/11-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/11-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
     },
     {
       "id": "workshop-settings",
@@ -648,8 +1112,7 @@
       "path": "solutions/_shared/workshop-settings.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
       "use": "Site-wide persisted Easy-mode harness preference",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "evidence-report",
@@ -657,8 +1120,7 @@
       "path": "solutions/fs-customer-onboarding/evidence-report.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/evidence-report.html",
       "use": "Learner-safe HTML summary of deterministic and visual evidence",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "quest",
@@ -666,8 +1128,7 @@
       "path": "solutions/fs-customer-onboarding/quest.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/quest.html",
       "use": "Resumable Easy/Manual customer journey",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-tutorial",
@@ -675,8 +1136,7 @@
       "path": "solutions/fs-customer-onboarding/manual-tutorial.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/manual-tutorial.html",
       "use": "Student actions, source downloads, reviewed references and explicit evidence gaps",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "screenshots-readme",
@@ -684,8 +1144,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "manual-screenshots-readme",
@@ -693,8 +1152,7 @@
       "path": "solutions/fs-customer-onboarding/screenshots/manual/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     },
     {
       "id": "exports-readme",
@@ -702,8 +1160,7 @@
       "path": "solutions/fs-customer-onboarding/exports/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/exports/README.md",
       "use": "Bundle build instructions",
-      "status": "ready",
-      "included_in_bundle": true
+      "status": "ready"
     },
     {
       "id": "assisted-screenshots-readme",
@@ -711,18 +1168,18 @@
       "path": "solutions/fs-customer-onboarding/screenshots/assisted/README.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
-      "status": "ready",
-      "included_in_bundle": false
+      "status": "ready"
     }
   ],
   "copilot_studio_solution": {
-    "label": "Historical Customer Onboarding Agent Copilot Studio solution \u2014 not current source",
-    "status": "stale_source",
+    "label": "Importable Customer Onboarding Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_CustomerOnboardingPilot",
     "zip": {
       "path": "solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip",
-      "sha256": "d2e670f306a5f9f64e54546c4359f91bdbe209d65e45c2f25e56dcab74df1f69",
-      "bytes": 3978
+      "sha256": "25e12d2d54d11527201ec1955616fa412a39f40057f6c1ec04acadc0dbcb9468",
+      "bytes": 36746
     },
     "deployment_settings": {
       "path": "solutions/fs-customer-onboarding/exports/fs-customer-onboarding-deployment-settings.json",
@@ -738,7 +1195,6 @@
       "Import as an unmanaged solution for manual review.",
       "Map connection references and environment variables before enabling integrations.",
       "The exported agent remains unpublished unless the target administrator explicitly publishes it."
-    ],
-    "source_contract_note": "Historical native import archive: inspection found five entries, no workshop skills and no workshop knowledge files. It does not reproduce the preserved manual build or its repairs. The separate source ZIP is an explicit public-safe manual-source subset, not a native import package. No new live export, import, runtime parity or publication is claimed."
+    ]
   }
 }

@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/payments-operations",
+  "onepager": "61. Payments Operations Agent one-pager.pptx",
+  "source_slide_sha256": "267b79ae491039f67fe0fa2399d86a67285123536584f08b43e250cdf93529d8",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
+    "implemented_operations": [
+      "queue_overview",
+      "validate_payment",
+      "repair_plan",
+      "release_risk_review",
+      "reconcile_settlement",
+      "payment_status",
+      "daily_kpi_brief"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Validates payments against scheme rules and plans exception repairs before the release cutoff",
+      "operations": [
+        "validate_payment",
+        "repair_plan"
+      ],
+      "demo_cases": [
+        "PO-02",
+        "PO-03"
+      ],
+      "synthetic_evidence": [
+        "AMOUNT_OVER_RAIL_LIMIT",
+        "BENEFICIARY_ACCOUNT_MISSING",
+        "Scheme Rule",
+        "Not Executed",
+        "Domestic High-Value",
+        "Draft for analyst review"
+      ]
+    },
+    {
+      "advertised_promise": "Reviews screening and pre-release risk drivers so analysts decide on held payments with evidence",
+      "operations": [
+        "queue_overview",
+        "release_risk_review"
+      ],
+      "demo_cases": [
+        "PO-01",
+        "PO-04"
+      ],
+      "synthetic_evidence": [
+        "Release Queue",
+        "PAY-3105",
+        "Needs attention",
+        "Risk band",
+        "8.9 times",
+        "Watchlist screening"
+      ]
+    },
+    {
+      "advertised_promise": "Reconciles settlement accounts and ranks open breaks by value",
+      "operations": [
+        "reconcile_settlement"
+      ],
+      "demo_cases": [
+        "PO-05"
+      ],
+      "synthetic_evidence": [
+        "WGB-SETTLE-USD-01",
+        "BRK-02",
+        "9,846.90"
+      ]
+    },
+    {
+      "advertised_promise": "Answers payment status inquiries and builds the daily KPI brief by rail",
+      "operations": [
+        "payment_status",
+        "daily_kpi_brief"
+      ],
+      "demo_cases": [
+        "PO-06",
+        "PO-07"
+      ],
+      "synthetic_evidence": [
+        "Scheme acknowledged",
+        "15:00",
+        "not sent",
+        "99.07%",
+        "Cross-Border Wire",
+        "nothing was distributed"
+      ]
+    }
+  ]
+}

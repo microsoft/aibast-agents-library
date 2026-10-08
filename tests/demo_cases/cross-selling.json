@@ -12,7 +12,7 @@
       "id": "CS-01",
       "persona": "Sales Operations Manager",
       "onepager_bullet": "Analyze product usage trends and benchmarking gaps across accounts to pinpoint expansion potential",
-      "prompt": "Scan synthetic customer CUST-001 for product gaps, usage signals, buying signals, and budget timing.",
+      "prompt": "Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing.",
       "operation": "opportunity_scan",
       "arguments": {
         "operation": "opportunity_scan",
@@ -62,7 +62,7 @@
       "id": "CS-03",
       "persona": "Enablement Manager",
       "onepager_bullet": "Generate prioritized opportunity lists and personalize outreach plans to boost conversion rates",
-      "prompt": "Draft prioritized product recommendations and a reviewable engagement plan for synthetic customer CUST-001 without sending outreach.",
+      "prompt": "Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.",
       "operation": "recommendation_engine",
       "arguments": {
         "operation": "recommendation_engine",
@@ -87,7 +87,7 @@
       "id": "CS-04",
       "persona": "Sales Leader",
       "onepager_bullet": "Generate prioritized opportunity lists and personalize outreach plans to boost conversion rates",
-      "prompt": "Compare the bundled portfolio synthetic value scenarios without making conversion, revenue, or margin claims.",
+      "prompt": "Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.",
       "operation": "revenue_impact",
       "arguments": {
         "operation": "revenue_impact",
@@ -97,6 +97,78 @@
       "must_include": [
         "Synthetic Cross-Sell Value Scenario",
         "Portfolio Totals",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "CrossSellingAgent"
+    },
+    {
+      "id": "CS-05",
+      "persona": "Sales Leader",
+      "onepager_bullet": "Analyze product usage trends and benchmarking gaps across accounts to pinpoint expansion potential",
+      "prompt": "Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.",
+      "operation": "portfolio_scan",
+      "arguments": {
+        "operation": "portfolio_scan",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Cross-Sell Opportunity Summary",
+        "Quick Wins",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "CrossSellingAgent"
+    },
+    {
+      "id": "CS-06",
+      "persona": "Sales Leader",
+      "onepager_bullet": "Generate prioritized opportunity lists and personalize outreach plans to boost conversion rates",
+      "prompt": "Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.",
+      "operation": "top_opportunities",
+      "arguments": {
+        "operation": "top_opportunities",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Top Cross-Sell Opportunities",
+        "Deep Dive",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "CrossSellingAgent"
+    },
+    {
+      "id": "CS-07",
+      "persona": "Sales Operations Manager",
+      "onepager_bullet": "Generate prioritized opportunity lists and personalize outreach plans to boost conversion rates",
+      "prompt": "Assign the opportunity accounts to reps by expertise and draft this week's action plan.",
+      "operation": "account_assignments",
+      "arguments": {
+        "operation": "account_assignments",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Draft Account Assignments",
+        "This Week's Actions",
         "Evidence boundary"
       ],
       "must_not_include": [

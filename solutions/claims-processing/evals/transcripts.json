@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:19:48.140745+00:00",
+  "captured_at": "2026-10-07T01:32:28.380839+00:00",
   "solution": "@aibast-agents-library/claims-processing",
   "onepager": "39. Claims Processing Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,27 +10,28 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack/claims_processing_agent.py",
-      "sha256": "1239dd5f2cbf012c08e7413bfd6051f92441d00f4ff1f2b3a4be9ca69c309403"
+      "sha256": "81dca988b558093374ea92d739d2a4aa9ba6f5aa8da568f77ac006a6e6f31e1e"
     }
   ],
   "case_file": "tests/demo_cases/claims-processing.json",
-  "case_file_sha256": "8c937f05adbfa5258d3daff000b9dd3dd9fb715b8c4f79f0e45e6ed58cd16084",
+  "case_file_sha256": "5a599e3b51207690ae95b7d4675d15976a965efc2ac398d4f48344916e05a52a",
   "strict_isolation": true,
   "transcripts": [
     {
       "case_id": "CLP-01",
       "persona": "Claims Operations Leader",
       "onepager_promise": "Triage claims instantly to accelerate routing and reduce adjuster workloads",
-      "prompt": "Which incoming claim needs specialized handling first, and where should it be reviewed?",
-      "assistant_response": "**CLM-2025-7003 (Apex Commercial Properties)** needs specialized handling first.\n\n**Why:** It's flagged for investigation with a fraud score of 68\u2014the highest on the queue\u2014and the largest claimed amount ($485,000). Commercial fire-damage claims at that threshold typically require SIU (Special Investigations Unit) review.\n\n**Where to review it:** Send to **SIU immediately** for fraud indicator assessment and investigation coordination. The commercial property and loss magnitude warrant specialized handling before general adjudication.\n\nThe second priority is **CLM-2025-7004 (Jennifer Liu, theft)** with a fraud score of 45 and pending documentation\u2014once docs arrive, it should route to SIU as well.",
-      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Claims Intake Dashboard\n\n**Total Claims:** 4\n**Total Claimed:** $569,700\n**Avg Fraud Score:** 32.5\n\n| Claim ID | Claimant | Policy Type | Loss | Amount | Status | Fraud |\n|---|---|---|---|---|---|---|\n| CLM-2025-7001 | Margaret Sullivan | Homeowners | Water Damage | $28,500 | Under Review | 12 |\n| CLM-2025-7002 | David Park | Auto | Collision | $14,200 | Ready For Adjuster Review | 5 |\n| CLM-2025-7003 | Apex Commercial Properties | Commercial Property | Fire Damage | $485,000 | Investigation | 68 |\n| CLM-2025-7004 | Jennifer Liu | Homeowners | Theft | $42,000 | Pending Documentation | 45 |\n\n## Status Distribution\n\n- Under Review: 1\n- Ready For Adjuster Review: 1\n- Investigation: 1\n- Pending Documentation: 1",
+      "prompt": "Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
+      "assistant_response": "Here's the breakdown of today's 2,847 incoming claims (all synthetic demo data \u2014 adjuster review still required):\n\n**Auto-adjudication (68% \u2014 1,936 claims)**\n- Simple auto claims under $5,000, routine medical with matching codes, property claims with verified estimates\n- Avg processing: 4 min vs 3 days \u2014 recommendations only, pending sign-off\n\n**Needs immediate attention (32% \u2014 911 claims)**\n- Standard review: 624 (22%) \u2192 adjuster queue\n- Complex/high-value: 198 (7%) \u2192 senior adjuster\n- Fraud investigation: 89 (3%) \u2192 SIU referral\n\n**Priority flags on top of that:**\n- 34 claims with 48-hr regulatory deadlines\n- 18 VIP policyholder claims\n- 12 with litigation potential\n- 8 catastrophe-related (expedited)\n\nStandout example: **Apex Commercial Properties (CLM-2025-7003)**, $485K fire damage claim, fraud score 68 \u2014 already in Investigation, likely your top priority today.\n\nWant me to pull the fraud detection details on the high-risk claims next?",
+      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Claims Intake Dashboard\n\nI've analyzed today's 2,847 incoming claims. 68% qualify for auto-adjudication, saving 5,807 adjuster hours.\n\n## Claims Queue Analysis\n\n| Category | Claims | % of Total | Recommended Action |\n|---|---|---|---|\n| Auto-adjudicate | 1,936 | 68% | Instant processing (recommendation for sign-off) |\n| Standard review | 624 | 22% | Adjuster queue |\n| Complex/High-value | 198 | 7% | Senior adjuster |\n| Fraud investigation | 89 | 3% | SIU referral |\n\n## Priority Flags Detected\n\n- 34 claims with regulatory deadlines in 48 hours\n- 18 claims from VIP policyholders\n- 12 claims with litigation potential\n- 8 catastrophe-related claims (expedited handling)\n\n## Auto-Adjudication Eligible\n\n- Simple auto claims under $5,000\n- Routine medical with matching codes\n- Property claims with verified estimates\n- Average processing: 4 minutes vs 3 days\n\nNext step: see the fraud detection results?\n\n## Sample Claim Files\n\n**Total Claims:** 5\n**Total Claimed:** $696,700\n**Avg Fraud Score:** 27.6\n\n| Claim ID | Claimant | Policy Type | Loss | Amount | Status | Fraud |\n|---|---|---|---|---|---|---|\n| CLM-78445 | Homeowner policyholder (water loss) | Homeowners | Water Damage | $127,000 | Complex Prepared | 8 |\n| CLM-2025-7001 | Margaret Sullivan | Homeowners | Water Damage | $28,500 | Under Review | 12 |\n| CLM-2025-7002 | David Park | Auto | Collision | $14,200 | Ready For Adjuster Review | 5 |\n| CLM-2025-7003 | Apex Commercial Properties | Commercial Property | Fire Damage | $485,000 | Investigation | 68 |\n| CLM-2025-7004 | Jennifer Liu | Homeowners | Theft | $42,000 | Pending Documentation | 45 |\n\n## Status Distribution\n\n- Complex Prepared: 1\n- Under Review: 1\n- Ready For Adjuster Review: 1\n- Investigation: 1\n- Pending Documentation: 1",
       "expected_agent": "ClaimsProcessingAgent",
       "must_include": [
-        "CLM-2025-7003",
-        "Investigation"
+        "2,847",
+        "1,936",
+        "34 claims with regulatory deadlines"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,31 +39,32 @@
       "persona": "Claims Adjuster",
       "onepager_promise": "Pre-prepare complex claim files to give adjusters ready-to-review summaries",
       "prompt": "What is missing from Jennifer Liu\u2019s theft file before I can evaluate it?",
-      "assistant_response": "Jennifer Liu's theft file is missing three key documents before evaluation:\n\n1. **Itemized list of stolen items** \u2014 details of what was taken\n2. **Receipts or proof of ownership** \u2014 for the electronics, jewelry, and collectibles claimed\n3. **Appraisals** \u2014 especially for high-value jewelry and collectibles to support the $42,000 claim\n\nSandra Ortiz has already requested these. Once you have them, the file will be complete for adjudication.",
-      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Adjudication Review: CLM-2025-7004\n\n- **Claimant:** Jennifer Liu\n- **Policy:** HO-557210 (Homeowners)\n- **Date of Loss:** 2025-03-01\n- **Loss Type:** Theft\n- **Description:** Home burglary \u2014 electronics, jewelry, and collectibles stolen\n- **Claimed Amount:** $42,000\n- **Adjuster:** Sandra Ortiz\n- **Fraud Score:** 45/100\n\n## Policy Details\n\n- Coverage Limit: $400,000\n- Deductible: $2,000\n- Effective: 2025-01-01 to 2026-01-01\n\n## Supporting Documents\n\n- [x] Police Report\n- [x] Photos\n\n## Adjuster Notes\n\n- Police report filed but no suspects identified\n- Itemized list of stolen items requested\n- Receipts or appraisals needed for jewelry and collectibles",
+      "assistant_response": "Called the ClaimsProcessingAgent (adjudication_review) on CLM-2025-7004.\n\nJennifer Liu's theft file (CLM-2025-7004) has a police report and photos on file, but is missing two things before it can be evaluated:\n\n- **Itemized list of stolen items**\n- **Receipts or appraisals** (especially needed for the jewelry and collectibles)\n\nAdjuster Sandra Ortiz has already requested these; no suspects have been identified in the police report. Fraud score is 45/100 \u2014 noted but not conclusive of anything. No approval/payment decision has been made.",
+      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Adjudication Review: CLM-2025-7004\n\n- **Claimant:** Jennifer Liu\n- **Policy:** HO-557210 (Homeowners)\n- **Date of Loss:** 2025-03-01\n- **Loss Type:** Theft\n- **Description:** Home burglary \u2014 electronics, jewelry, and collectibles stolen\n- **Claimed Amount:** $42,000\n- **Adjuster:** Sandra Ortiz\n- **Fraud Score:** 45/100\n\n## Policy Details\n\n- Coverage Limit: $400,000\n- Deductible: $2,000\n- Effective: 2025-01-01 to 2026-01-01\n\n## Supporting Documents\n\n- [x] Police Report\n- [x] Photos\n\n## Missing Before Evaluation\n\n- [ ] Itemized list of stolen items\n- [ ] Receipts or appraisals\n\n## Adjuster Notes\n\n- Police report filed but no suspects identified\n- Itemized list of stolen items requested\n- Receipts or appraisals needed for jewelry and collectibles",
       "expected_agent": "ClaimsProcessingAgent",
       "must_include": [
         "CLM-2025-7004",
         "Receipts or appraisals"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "CLP-03",
       "persona": "SIU Investigator",
       "onepager_promise": "Spot fraud indicators early to prevent exposure and protect claim payouts",
-      "prompt": "Which claim crosses the SIU review threshold, and does that prove fraud?",
-      "assistant_response": "**CLM-2025-7003 (Apex Commercial Properties)** crosses the SIU threshold with a fraud score of 68 \u2014 well above the 60-point referral line. The $485,000 fire damage claim is in Investigation status.\n\n**However, a fraud score is not proof of fraud.** It's a risk indicator that warrants specialized investigation. The score reflects pattern-matching against indicators like excessive amount, inconsistent narrative, or documentation gaps \u2014 but those flags alone don't establish fraud. Authorized SIU adjuster review is required to investigate further and determine whether actual fraud occurred.\n\nCLM-2025-7004 (Jennifer Liu, theft, $42,000) also flags at 45 but stays below the SIU threshold.",
-      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Claims Intake Dashboard\n\n**Total Claims:** 4\n**Total Claimed:** $569,700\n**Avg Fraud Score:** 32.5\n\n| Claim ID | Claimant | Policy Type | Loss | Amount | Status | Fraud |\n|---|---|---|---|---|---|---|\n| CLM-2025-7001 | Margaret Sullivan | Homeowners | Water Damage | $28,500 | Under Review | 12 |\n| CLM-2025-7002 | David Park | Auto | Collision | $14,200 | Ready For Adjuster Review | 5 |\n| CLM-2025-7003 | Apex Commercial Properties | Commercial Property | Fire Damage | $485,000 | Investigation | 68 |\n| CLM-2025-7004 | Jennifer Liu | Homeowners | Theft | $42,000 | Pending Documentation | 45 |\n\n## Status Distribution\n\n- Under Review: 1\n- Ready For Adjuster Review: 1\n- Investigation: 1\n- Pending Documentation: 1\n[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Fraud Detection Report\n\n## Fraud Indicator Reference\n\n| Indicator | Weight | Description |\n|---|---|---|\n| Financial Stress | 15 | Claimant shows signs of recent financial distress |\n| Claim Timing | 12 | Claim filed shortly after policy inception or increase in coverage |\n| Excessive Amount | 20 | Claimed amount significantly exceeds typical loss for category |\n| Inconsistent Narrative | 18 | Inconsistencies between claimant statement and evidence |\n| Prior Claims History | 10 | Multiple prior claims on same or similar policies |\n| Delayed Reporting | 8 | Significant delay between loss event and claim filing |\n| Witness Issues | 12 | Lack of independent witnesses or corroborating evidence |\n| Documentation Gaps | 15 | Missing or incomplete supporting documentation |\n\n## Flagged Claims (score >= 30)\n\n| Claim ID | Claimant | Amount | Fraud Score | Status |\n|---|---|---|---|---|\n| CLM-2025-7003 | Apex Commercial Properties | $485,000 | 68 | Investigation |\n| CLM-2025-7004 | Jennifer Liu | $42,000 | 45 | Pending Documentation |\n\n## SIU Referrals (score >= 60)\n\n- **CLM-2025-7003:** Apex Commercial Properties \u2014 $485,000 (score: 68)",
+      "prompt": "Yes, show me the fraud detection results and high-risk claims.",
+      "assistant_response": "Here's the fraud detection snapshot (synthetic demo data, SIU adjuster review required):\n\n**Overall:** 89 suspicious claims flagged, $2.4M total exposure \u2014 12 are high-confidence (not proof of fraud).\n\n| Risk | Count | Value | Action |\n|---|---|---|---|\n| High (80%+) | 12 | $890K | SIU immediate |\n| Medium (50-79%) | 41 | $1.1M | Enhanced review |\n| Low (25-49%) | 36 | $420K | Adjuster flag |\n\n**Top high-risk claims:**\n- CLM-78234 (Auto) \u2014 staged accident pattern, 3 claims in 18 months, body shop on watch list\n- CLM-78156 (Medical) \u2014 provider billing anomaly\n- CLM-78089 (Property) \u2014 recent policy change before loss\n\n**SIU referral threshold (score \u226560):**\n- CLM-2025-7003 \u2014 Apex Commercial Properties, $485K, score 68 \u2192 under investigation\n- CLM-2025-7004 \u2014 Jennifer Liu, $42K, score 45 \u2192 pending docs (below SIU threshold)\n\nNo claims have been approved, paid, or adjudicated \u2014 these are flags for human adjuster review only. Want me to pull the SIU evidence package for CLM-78234 or run auto-adjudication on the eligible (non-flagged) claims?",
+      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Fraud Detection Report\n\nFraud analysis identified 89 suspicious claims worth $2.4M. 12 are high-confidence fraud referrals (a flag is not proof of fraud).\n\n| Risk Level | Claims | Total Value | Action |\n|---|---|---|---|\n| High (80%+) | 12 | $890K | SIU immediate |\n| Medium (50-79%) | 41 | $1.1M | Enhanced review |\n| Low (25-49%) | 36 | $420K | Flag for adjuster |\n\n## Top High-Risk Claims\n\n| Claim # | Type | Fraud Indicators |\n|---|---|---|\n| CLM-78234 | Auto | Staged accident pattern |\n| CLM-78156 | Medical | Provider billing anomaly |\n| CLM-78089 | Property | Recent policy change |\n\n## CLM-78234 Deep Analysis (SIU evidence package draft)\n\n- Claimant filed 3 claims in 18 months\n- Accident location matches known staging area\n- Body shop on fraud watch list\n- Similar claims from same intersection\n\n**Estimated Fraud Savings:** $890K prevented if high-risk confirmed (estimate).\n\nNext step: proceed with auto-adjudication recommendations for eligible claims?\n\n## Fraud Indicator Reference\n\n| Indicator | Weight | Description |\n|---|---|---|\n| Financial Stress | 15 | Claimant shows signs of recent financial distress |\n| Claim Timing | 12 | Claim filed shortly after policy inception or increase in coverage |\n| Excessive Amount | 20 | Claimed amount significantly exceeds typical loss for category |\n| Inconsistent Narrative | 18 | Inconsistencies between claimant statement and evidence |\n| Prior Claims History | 10 | Multiple prior claims on same or similar policies |\n| Delayed Reporting | 8 | Significant delay between loss event and claim filing |\n| Witness Issues | 12 | Lack of independent witnesses or corroborating evidence |\n| Documentation Gaps | 15 | Missing or incomplete supporting documentation |\n\n## Flagged Claims (score >= 30)\n\n| Claim ID | Claimant | Amount | Fraud Score | Status |\n|---|---|---|---|---|\n| CLM-2025-7003 | Apex Commercial Properties | $485,000 | 68 | Investigation |\n| CLM-2025-7004 | Jennifer Liu | $42,000 | 45 | Pending Documentation |\n\n## SIU Referrals (score >= 60)\n\n- **CLM-2025-7003:** Apex Commercial Properties \u2014 $485,000 (score: 68)",
       "expected_agent": "ClaimsProcessingAgent",
       "must_include": [
-        "CLM-2025-7003",
-        "SIU Referrals"
+        "89 suspicious claims",
+        "CLM-78234",
+        "$890K"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +72,66 @@
       "persona": "Claims Manager",
       "onepager_promise": "Auto-adjudicate simple claims to shorten cycle times and improve consistency",
       "prompt": "Show the policy-term estimates and state clearly whether any claim was approved or paid.",
-      "assistant_response": "## Clear Status: No Claims Approved or Paid\n\n**No claim has been approved, denied, settled, or paid.** This is demo data showing policy-term estimates for adjuster review only.\n\nThe table above shows:\n- **Claimed amounts** and deductibles for each claimant\n- **Fraud scores** (not proof of fraud\u2014flagged for investigation)\n- **Review estimates** showing what each claim could settle for *if* approved after adjuster validation\n\nAn authorized adjuster must review coverage, causation, documentation, and SIU findings before any decision. The estimates are non-binding and serve only to guide adjudication workflow.",
-      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Policy-Term Settlement Estimates for Adjuster Review\n\n| Claim ID | Claimant | Claimed | Deductible | Fraud Score | Review Estimate |\n|---|---|---|---|---|---|\n| CLM-2025-7001 | Margaret Sullivan | $28,500 | $1,500 | 12 | $27,000 |\n| CLM-2025-7002 | David Park | $14,200 | $500 | 5 | $13,700 |\n| CLM-2025-7003 | Apex Commercial Properties | $485,000 | $10,000 | 68 | $475,000 |\n| CLM-2025-7004 | Jennifer Liu | $42,000 | $2,000 | 45 | $40,000 |\n\n**Total Claimed:** $569,700\n**Aggregate Review Estimate:** $555,700\n\nFraud scores do not reduce or eliminate coverage. An authorized adjuster must validate coverage, causation, documentation, exclusions, jurisdictional rules, and SIU findings. No approval, denial, settlement, reserve, or payment has occurred.",
+      "assistant_response": "Here are the policy-term estimates (synthetic demo data, adjuster review required):\n\n| Claim | Claimant | Claimed | Deductible | Fraud Score | Review Estimate |\n|---|---|---|---|---|---|\n| CLM-78445 | Water-damage homeowner | $127,000 | $2,500 | 8 | $124,500 |\n| CLM-2025-7001 | Margaret Sullivan | $28,500 | $1,500 | 12 | $27,000 |\n| CLM-2025-7002 | David Park | $14,200 | $500 | 5 | $13,700 |\n| CLM-2025-7003 | Apex Commercial Properties | $485,000 | $10,000 | 68 | **Hold pending SIU** |\n| CLM-2025-7004 | Jennifer Liu | $42,000 | $2,000 | 45 | $40,000 |\n\n**Total claimed:** $696,700 | **Aggregate review estimate (excl. SIU hold):** $205,200\n\n**Clear answer: No claim has been approved, denied, settled, or paid.** These are nonbinding review estimates only \u2014 fraud scores don't prove fraud or reduce coverage, and every figure still requires sign-off from an authorized human adjuster before any money moves.",
+      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Policy-Term Settlement Estimates for Adjuster Review\n\n| Claim ID | Claimant | Claimed | Deductible | Fraud Score | Review Estimate |\n|---|---|---|---|---|---|\n| CLM-78445 | Homeowner policyholder (water loss) | $127,000 | $2,500 | 8 | $124,500 |\n| CLM-2025-7001 | Margaret Sullivan | $28,500 | $1,500 | 12 | $27,000 |\n| CLM-2025-7002 | David Park | $14,200 | $500 | 5 | $13,700 |\n| CLM-2025-7003 | Apex Commercial Properties | $485,000 | $10,000 | 68 | Hold pending SIU |\n| CLM-2025-7004 | Jennifer Liu | $42,000 | $2,000 | 45 | $40,000 |\n\n**Total Claimed:** $696,700\n**Aggregate Review Estimate (excluding SIU holds):** $205,200\n\nFraud scores do not reduce or eliminate coverage. An authorized adjuster must validate coverage, causation, documentation, exclusions, jurisdictional rules, and SIU findings. No approval, denial, settlement, reserve, or payment has occurred.",
       "expected_agent": "ClaimsProcessingAgent",
       "must_include": [
         "CLM-2025-7002",
         "No approval"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-05",
+      "persona": "Claims Manager",
+      "onepager_promise": "Auto\u2011generate approval or denial recommendations aligned with guidelines",
+      "prompt": "Yes, auto-adjudicate the eligible claims and show me the results.",
+      "assistant_response": "Ran auto-adjudication via the ClaimsProcessingAgent on the 1,936 eligible claims. Results:\n\n- **Approve (recommended):** 1,724 claims, $4.2M \u2014 mostly auto physical damage, routine medical, minor property\n- **Deny (recommended):** 142 claims, $380K \u2014 top reasons: coverage exclusion, lapsed policy, duplicate submission\n- **Needs more info:** 70 claims, $290K\n\n**Efficiency:** ~5,807 hours saved vs. manual processing, 99.2% auto-decision accuracy, 100% within payment guidelines.\n\n\u26a0\ufe0f These are recommendations only \u2014 synthetic demo data, nothing is actually approved/paid until an adjuster signs off.\n\nWant me to pull up the complex claims flagged for adjuster review next?",
+      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Auto-Adjudication Recommendations\n\n1,936 eligible claims evaluated against the guidelines. Outcomes below are recommendations; release requires authorized adjuster sign-off.\n\n| Recommended Outcome | Claims | Total Value | Avg Time |\n|---|---|---|---|\n| Approve | 1,724 | $4.2M | 3.8 min |\n| Deny | 142 | $380K | 2.1 min |\n| Needs info | 70 | $290K | 4.2 min |\n\n## Approval Breakdown\n\n- Auto physical damage: 892 claims ($1.8M)\n- Medical routine: 534 claims ($1.6M)\n- Property minor: 298 claims ($800K)\n\n## Denial Reasons\n\n- Coverage exclusion: 68 claims\n- Policy lapsed: 42 claims\n- Duplicate submission: 32 claims\n\n## Efficiency Gains\n\n- Traditional processing: 5,808 hours\n- AI processing: 18 minutes\n- Hours saved: 5,807 (99.98%)\n- Cost savings: $290,350 (at $50/hour)\n\n## Quality Metrics\n\n- Auto-decision accuracy: 99.2%\n- Within payment guidelines: 100%\n\nNo approval, denial, or payment has occurred; adjusters release the recommendations.\n\nNext step: review the complex claims prepared for adjusters?",
+      "expected_agent": "ClaimsProcessingAgent",
+      "must_include": [
+        "1,724",
+        "$290,350",
+        "sign-off"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-06",
+      "persona": "Claims Operations Leader",
+      "onepager_promise": "Classify and route claims instantly to automated or human workflows",
+      "prompt": "Yes, show me the metrics and where we can improve further.",
+      "assistant_response": "Here's the metrics snapshot (synthetic demo data \u2014 adjuster review required):\n\n**Impact so far:**\n- Cycle time: 12 \u2192 5.2 days (-57%)\n- Auto-adjudication rate: 12% \u2192 68% (+467%)\n- Cost per claim: $142 \u2192 $48 (-66%)\n- Customer satisfaction: 3.2 \u2192 4.4/5 (+38%)\n\n**Where to improve next:**\n- **Expand auto-adjudication rules** \u2014 +8% auto rate, medium effort\n- **Mobile photo AI assessment** \u2014 saves ~1 day cycle time, low effort\n- **Real-time status updates** \u2014 +0.3 CSAT, low effort\n- **Provider network integration** \u2014 -2 days on medical claims, high effort\n\nBiggest bang-for-buck right now: mobile photo assessment and status updates (low effort, quick wins). Want a session summary of everything done today?",
+      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Claims Processing Metrics\n\nCycle time improved 57%. Additional optimization can reduce cycle time to about 4 days.\n\n| Metric | Before AI | With AI | Change |\n|---|---|---|---|\n| Avg cycle time | 12 days | 5.2 days | -57% |\n| Auto-adjudication | 12% | 68% | +467% |\n| Cost per claim | $142 | $48 | -66% |\n| Customer satisfaction | 3.2/5 | 4.4/5 | +38% |\n\n## Optimization Opportunities\n\n| Improvement | Impact | Effort |\n|---|---|---|\n| Expand auto-adjudication rules | +8% auto rate | Medium |\n| Mobile photo AI assessment | -1 day cycle | Low |\n| Real-time status updates | +0.3 CSAT | Low |\n| Provider network integration | -2 days medical | High |\n\nNext step: summarize everything accomplished today?",
+      "expected_agent": "ClaimsProcessingAgent",
+      "must_include": [
+        "5.2 days",
+        "+467%",
+        "Mobile photo AI assessment"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-07",
+      "persona": "Claims Operations Leader",
+      "onepager_promise": "Classify and route claims instantly to automated or human workflows",
+      "prompt": "Yes, summarize everything we accomplished today.",
+      "assistant_response": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days \u2192 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid \u2014 every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+      "agent_logs": "[ClaimsProcessingAgent] > **SYNTHETIC DEMO DATA \u2014 ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, reserve, or change a claim.\n\n# Claims Processing Session Summary\n\n| Accomplishment | Result |\n|---|---|\n| Claims processed | 2,847 total |\n| Auto-adjudication recommendations | 1,936 (68%) in 18 minutes |\n| Fraud identified | 89 claims, $2.4M flagged for SIU review |\n| Complex prepared | 198 claims with AI analysis |\n| Payments recommended | $4.2M awaiting adjuster release |\n\n## Efficiency Gains\n\n| Metric | Value |\n|---|---|\n| Hours saved | 5,807 adjuster hours |\n| Cost savings | $290,350 today |\n| Cycle time reduction | 57% (12 to 5.2 days) |\n\nNo approval, denial, settlement, or payment has occurred; each needs authorized adjuster sign-off.",
+      "expected_agent": "ClaimsProcessingAgent",
+      "must_include": [
+        "2,847 total",
+        "5,807 adjuster hours",
+        "$290,350"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

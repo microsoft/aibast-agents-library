@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `MS-01, MS-02, MS-03, MS-04`.
+1. Which locked case IDs did you complete? Expected scope: `MS-01, MS-02, MS-03, MS-04, MS-05, MS-06, MS-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -213,9 +213,12 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 Both Easy lanes preserve every recorded case prompt:
 
 - `MS-01` — Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.
-- `MS-02` — Which asset signals deserve immediate human review before the next production run?
-- `MS-03` — Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.
-- `MS-04` — What synthetic downtime exposure and preventive trade-offs should leadership review?
+- `MS-02` — Machine #7 on Line 3 is showing wear indicators and we have a big order next week. What does the condition data say?
+- `MS-03` — Show me the lowest-impact maintenance window for machine #7 with coverage, crew, parts and backup, but do not create or dispatch work orders.
+- `MS-04` — What does preventive maintenance on machine #7 cost compared with a breakdown, and what is the ROI?
+- `MS-05` — Line up the crew and parts for the machine #7 overhaul so I can approve it.
+- `MS-06` — What does the maintenance calendar look like for the next 30 days?
+- `MS-07` — What long-term changes would cut our maintenance cost and unplanned downtime?
 
 ## Manual mode — literal browser construction
 

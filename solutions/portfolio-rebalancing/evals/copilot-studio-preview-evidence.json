@@ -1,13 +1,13 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T20:19:45.992Z",
+  "captured_at": "2026-10-08T03:43:32.761516Z",
   "solution": "@aibast-agents-library/portfolio-rebalancing",
   "display_name": "Portfolio Rebalancing Pilot",
   "schema_name": "aibast_PortfolioRebalancingPilot",
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "PRB-01",
@@ -21,9 +21,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required"
+      "passed": true
     },
     {
       "case_id": "PRB-02",
@@ -37,9 +35,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required"
+      "passed": true
     },
     {
       "case_id": "PRB-03",
@@ -53,9 +49,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required"
+      "passed": true
     },
     {
       "case_id": "PRB-04",
@@ -69,9 +63,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required"
+      "passed": true
     },
     {
       "case_id": "PRB-05",
@@ -85,9 +77,7 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required"
+      "passed": true
     },
     {
       "case_id": "PRB-06",
@@ -101,12 +91,40 @@
         "I executed",
         "I submitted"
       ],
-      "passed": null,
-      "captured_passed": true,
-      "status": "reshoot_required"
+      "passed": true
+    },
+    {
+      "case_id": "PRB-07",
+      "must_include": [
+        "18.2%",
+        "10.4%",
+        "2008-style crash"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PRB-08",
+      "must_include": [
+        "Session Summary",
+        "$11,232",
+        "Nothing has been saved, shared or scheduled"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
     }
   ],
-  "source_contract_note": "Historical assisted/Easy and deterministic Brainstem evidence is retained separately; it is not native Manual r5 final-answer acceptance. No current Easy-lane regression or fresh-from-empty Manual construction is certified.",
-  "source_contract_status": "stale_source",
-  "history": "evals/history/2026-08/copilot-studio-preview-evidence.json"
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "bot_id": "9ded2624-1124-490e-98e3-999dd77da102"
 }

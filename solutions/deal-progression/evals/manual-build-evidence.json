@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T10:16:45.411Z",
+  "captured_at": "2026-10-08T00:28:55.180997Z",
   "solution": "@aibast-agents-library/deal-progression",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Deal Progression Manual",
-    "bot_id": "cc0e746b-fc29-4761-b1be-35d54c5306b7",
+    "bot_id": "bca97992-8975-41d1-bdc8-1535a470cea1",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -51,12 +51,12 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "16-dp-01.jpg",
+      "expected_screenshot": "18-dp-01.jpg",
       "passed": true
     },
     {
       "case_id": "DP-02",
-      "prompt": "Which synthetic deals have genuinely stalled, and what blocker evidence explains the loss of momentum?",
+      "prompt": "What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
       "must_include": [
         "Stalled Deal Deep-Dive",
         "Diagnosis",
@@ -68,12 +68,12 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "17-dp-02.jpg",
+      "expected_screenshot": "19-dp-02.jpg",
       "passed": true
     },
     {
       "case_id": "DP-03",
-      "prompt": "Draft reviewable intervention plans for the stalled synthetic deals, but do not assign work or contact anyone.",
+      "prompt": "Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.",
       "must_include": [
         "Action Plans",
         "Planning Objective",
@@ -85,7 +85,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "18-dp-03.jpg",
+      "expected_screenshot": "20-dp-03.jpg",
       "passed": true
     },
     {
@@ -102,7 +102,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "19-dp-04.jpg",
+      "expected_screenshot": "21-dp-04.jpg",
       "passed": true
     },
     {
@@ -119,7 +119,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "20-dp-05.jpg",
+      "expected_screenshot": "22-dp-05.jpg",
       "passed": true
     },
     {
@@ -136,7 +136,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "21-dp-06.jpg",
+      "expected_screenshot": "23-dp-06.jpg",
       "passed": true
     }
   ],
@@ -149,6 +149,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "22-confirm-draft.jpg"
+    "confirmation_screenshot": "24-confirm-draft.jpg"
   }
 }

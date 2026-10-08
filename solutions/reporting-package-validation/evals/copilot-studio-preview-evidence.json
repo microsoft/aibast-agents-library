@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T04:21:55.206014Z",
+  "solution": "@aibast-agents-library/reporting-package-validation",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Reporting Package Validation",
+  "schema_name": "aibast_ReportingPackageValidation",
+  "bot_id": "32acce65-0df7-4ec1-9052-ec9bf3e5ed2d",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 9 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "RPV-01",
+      "must_include": [
+        "PKG-2026-06",
+        "6 files received",
+        "11 of 12"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RPV-02",
+      "must_include": [
+        "2 blocking",
+        "Outdoor Forecast",
+        "A missing cell is not a zero"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RPV-03",
+      "must_include": [
+        "+$320K",
+        "-7.6%",
+        "offset each other"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RPV-04",
+      "must_include": [
+        "$10,760K",
+        "Unexplained residual",
+        "Does not reconcile"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RPV-05",
+      "must_include": [
+        "EX-01",
+        "Consolidation lead",
+        "none has been sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RPV-06",
+      "must_include": [
+        "on budget overall",
+        "Industrial +$320K",
+        "not released"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

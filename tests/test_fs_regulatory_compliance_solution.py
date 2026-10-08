@@ -41,18 +41,18 @@ def test_source_operations_cover_the_locked_cases():
     module = load_agent_module()
     agent = module.FSRegulatoryComplianceAgent()
     expected = {
-        "compliance_dashboard": ["T-2041", "T-2233", "TRD-88133"],
-        "trade_surveillance": ["TRD-88133", "field"],
-        "documentation_review": ["ALGO-POV-NL"],
+        "compliance_dashboard": ["12,000", "99.8%", "Strategy #5"],
+        "trade_surveillance": ["APX-2024-8847", "Venue ID mismatch", "Standard National Bank"],
+        "documentation_review": ["ALGO-MOM-05", "Pre-trade testing"],
         "remediation_submission": [
-            "TRD-88133",
-            "T-2041",
-            "T-2107",
+            "23 amendments staged",
+            "APX-2024-8847",
             "549300XKQZ2P4NLK7T18",
-            "XPAR",
-            "XLON",
+            "Strategy #5",
         ],
-        "certification_tracker": ["T-2041", "T-2233"],
+        "certification_tracker": ["James Morrison", "No trader is lapsed"],
+        "best_execution_analysis": ["LSE (London)", "98.2%", "RTS 28"],
+        "executive_summary": ["Compliance Scorecard", "£847K", "80%"],
     }
     assert agent.metadata["parameters"]["properties"]["operation"]["enum"] == list(
         expected
@@ -90,7 +90,8 @@ def test_dashboard_sets_audit_outcome_and_advice_boundaries():
     assert "at-risk areas and control gaps only" in description
     assert "never state that an audit will pass or fail" in description
     assert "never present the result as legal or regulatory advice" in description
-    assert "Audit-readiness assessment: AT RISK" in output
+    assert "Audit-readiness assessment: LOW RISK" in output
+    assert "control gaps" in output
     assert "cannot determine whether an audit will pass or fail" in output
     assert "does not provide legal or regulatory advice" in output
 
@@ -104,7 +105,7 @@ def test_package_maps_the_approved_onepager_and_manual_assets():
     assert len(promise_map["promises"]) == 4
     assert len(list((PACKAGE / "manual" / "knowledge").glob("*.md"))) == 2
     skills = list((PACKAGE / "manual" / "skills").glob("*/SKILL.md"))
-    assert len(skills) == 5
+    assert len(skills) == 7
     assert all(path.read_text(encoding="utf-8").startswith("---\n") for path in skills)
 
 
@@ -149,7 +150,7 @@ def test_catalog_prompts_and_deployment_match_canonical_cases():
     assert recipe["expected_tool"] == "FSRegulatoryCompliance"
     assert recipe["smoke_test"]["must_call"] == smoke["expects_agent"]
     assert recipe["smoke_test"]["must_include"] == smoke["must_include"][:2]
-    assert recipe["copilot_studio"]["manual_skill_count"] == 5
+    assert recipe["copilot_studio"]["manual_skill_count"] == 7
     assert recipe["demo_scenarios"] == list(SCENARIO_CASES)
 
 
@@ -169,7 +170,10 @@ def test_registry_and_transcript_pin_the_final_source():
     entry = next(item for item in registry if item["name"] == NAME)
     digest = hashlib.sha256(SOURCE.read_bytes()).hexdigest()
     transcript = read_json(PACKAGE / "evals" / "transcripts.json")
-    assert entry["version"] == "2.0.2"
+    manifest_version = re.search(
+        r'"version":\s*"([^"]+)"', SOURCE.read_text(encoding="utf-8")
+    )[1]
+    assert entry["version"] == manifest_version == "2.1.0"
     assert entry["_sha256"] == digest
     assert transcript["agent_sources"] == [
         {

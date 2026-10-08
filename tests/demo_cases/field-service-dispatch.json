@@ -1,77 +1,125 @@
 {
-  "schema": "aibast-persona-cases/1.0",
-  "solution": "Field Service Dispatch Agent",
-  "agent": "@aibast-agents-library/field-service-dispatch",
-  "onepager": "23. Field Service Dispatch Agent one-pager.pptx",
-  "cases": [
-    {
-      "id": "FIELD_SERVICE_DISPATCH-01",
-      "operation": "dispatch_dashboard",
-      "persona": "Field Operations Manager",
-      "prompt": "What critical Central request is unassigned right now?",
-      "kwargs": {
-        "operation": "dispatch_dashboard",
-        "zone": "Central",
-        "service_request_id": "SR-4005"
-      },
-      "must_include": [
-        "Emergency: SCADA communication failure",
-        "CRITICAL",
-        "No job"
-      ],
-      "expects_agent": "FieldServiceDispatchAgent"
-    },
-    {
-      "id": "FIELD_SERVICE_DISPATCH-02",
-      "operation": "route_optimization",
-      "persona": "Service Director",
-      "prompt": "Compare Central zone load and capacity before anyone is rerouted.",
-      "kwargs": {
-        "operation": "route_optimization",
-        "zone": "Central"
-      },
-      "must_include": [
-        "Central",
-        "3",
-        "dispatcher must validate"
-      ],
-      "expects_agent": "FieldServiceDispatchAgent"
-    },
-    {
-      "id": "FIELD_SERVICE_DISPATCH-03",
-      "operation": "technician_assignment",
-      "persona": "Dispatch Coordinator",
-      "prompt": "Who is the best certified candidate for SR-4005? Do not assign them.",
-      "kwargs": {
-        "operation": "technician_assignment",
-        "service_request_id": "SR-4005"
-      },
-      "must_include": [
-        "Marcus Thompson",
-        "Candidate for dispatcher review",
-        "No technician has been assigned"
-      ],
-      "expects_agent": "FieldServiceDispatchAgent"
-    },
-    {
-      "id": "FIELD_SERVICE_DISPATCH-04",
-      "operation": "emergency_response",
-      "persona": "Emergency Duty Manager",
-      "prompt": "Draft the SR-4005 response view without dispatching or notifying anyone.",
-      "kwargs": {
-        "operation": "emergency_response",
-        "service_request_id": "SR-4005"
-      },
-      "must_include": [
-        "Emergency Response Draft",
-        "Marcus Thompson",
-        "No field action"
-      ],
-      "expects_agent": "FieldServiceDispatchAgent"
-    }
-  ],
-  "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
-  "agent_files": [
-    "field_service_dispatch_agent"
-  ]
+ "schema": "aibast-persona-cases/1.0",
+ "solution": "Field Service Dispatch Agent",
+ "agent": "@aibast-agents-library/field-service-dispatch",
+ "onepager": "23. Field Service Dispatch Agent one-pager.pptx",
+ "cases": [
+  {
+   "id": "FIELD_SERVICE_DISPATCH-01",
+   "operation": "dispatch_dashboard",
+   "persona": "Field Operations Manager",
+   "onepager_bullet": "Deliver proactive customer communication and operational  dashboards to boost customer confidence",
+   "prompt": "What does tomorrow's job list look like by crew, and which crews are on standby?",
+   "kwargs": {
+    "operation": "dispatch_dashboard"
+   },
+   "must_include": [
+    "J-101",
+    "Marcus Chen",
+    "No job"
+   ],
+   "expects_agent": "FieldServiceDispatchAgent"
+  },
+  {
+   "id": "FIELD_SERVICE_DISPATCH-02",
+   "operation": "route_optimization",
+   "persona": "Service Director",
+   "onepager_bullet": "Perform intelligent route optimization and skill-based matching to reduce travel time and increase first-time fix rates",
+   "prompt": "I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
+   "kwargs": {
+    "operation": "route_optimization"
+   },
+   "must_include": [
+    "34%",
+    "187 miles",
+    "$1,840/day"
+   ],
+   "expects_agent": "FieldServiceDispatchAgent"
+  },
+  {
+   "id": "FIELD_SERVICE_DISPATCH-03",
+   "operation": "technician_assignment",
+   "persona": "Dispatch Coordinator",
+   "onepager_bullet": "Perform intelligent route optimization and skill-based matching to reduce travel time and increase first-time fix rates",
+   "prompt": "Yes, show me Crew A-1's detailed route",
+   "kwargs": {
+    "operation": "technician_assignment",
+    "crew_id": "A-1"
+   },
+   "must_include": [
+    "Marcus Chen",
+    "Truck",
+    "Underground cable certified"
+   ],
+   "expects_agent": "FieldServiceDispatchAgent"
+  },
+  {
+   "id": "FIELD_SERVICE_DISPATCH-04",
+   "operation": "emergency_response",
+   "persona": "Emergency Duty Manager",
+   "onepager_bullet": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+   "prompt": "URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!",
+   "kwargs": {
+    "operation": "emergency_response"
+   },
+   "must_include": [
+    "1,247",
+    "$26,140/hour",
+    "No crew was dispatched"
+   ],
+   "expects_agent": "FieldServiceDispatchAgent"
+  },
+  {
+   "id": "FIELD_SERVICE_DISPATCH-05",
+   "operation": "incident_status",
+   "persona": "Control Room Operator",
+   "onepager_bullet": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+   "prompt": "Yes, give me live updates and customer impact",
+   "kwargs": {
+    "operation": "incident_status"
+   },
+   "must_include": [
+    "Phase B insulator",
+    "$12,400",
+    "93 min"
+   ],
+   "expects_agent": "FieldServiceDispatchAgent"
+  },
+  {
+   "id": "FIELD_SERVICE_DISPATCH-06",
+   "operation": "post_incident_review",
+   "persona": "Reliability Engineer",
+   "onepager_bullet": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+   "prompt": "The outage is resolved. Show me the post-incident review and how we prevent the next one.",
+   "kwargs": {
+    "operation": "post_incident_review"
+   },
+   "must_include": [
+    "87 Minutes",
+    "785% ROI",
+    "Substation 7B"
+   ],
+   "expects_agent": "FieldServiceDispatchAgent"
+  },
+  {
+   "id": "FIELD_SERVICE_DISPATCH-07",
+   "operation": "work_orders_report",
+   "persona": "Operations Analyst",
+   "onepager_bullet": "Deliver proactive customer communication and operational  dashboards to boost customer confidence",
+   "prompt": "Yes, create the work orders and show me the monthly operations report",
+   "kwargs": {
+    "operation": "work_orders_report"
+   },
+   "must_include": [
+    "WO-2847",
+    "$29,260/month",
+    "none was created"
+   ],
+   "expects_agent": "FieldServiceDispatchAgent"
+  }
+ ],
+ "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
+ "agent_files": [
+  "field_service_dispatch_agent"
+ ]
 }

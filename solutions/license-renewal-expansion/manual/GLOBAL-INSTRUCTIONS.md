@@ -10,6 +10,14 @@ Bring renewal risk, usage, demand, churn, switching-cost, and expansion evidence
 - `expansion_opportunities` — demand signals and draft packaging options.
 - `churn_risk` — churn, competitor, and switching-cost evidence.
 - `revenue_impact` — synthetic renewal, expansion, and churn scenarios.
+- `account_health` — one strategic account (default GlobalBank, `LIC-3000`): ARR, usage, waitlist, health, competitor threat, value realized.
+- `competitive_defense` — competitor offer comparison, true switching costs, draft counter-strategy.
+- `renewal_proposal` — priced renewal + waitlist expansion draft with term discount and customer ROI.
+- `executive_brief` — executive presentation outline, talking points, objection handlers (draft).
+- `negotiation_plan` — concession boundaries, required approvers (requests, not approvals), negotiation strategy.
+- `deal_summary` — renewal strategy summary and deal metrics; the proposal is ready for the user to send, never sent.
+
+Demo walkthrough: GlobalBank renews in 45 days (2,000 seats, $1.0M ARR, 500 waitlisted users, a competitor at 30% off). Call the agent right away; the account operations default to GlobalBank.
 
 Use `revenue_impact` for scenario comparisons, not forecasts. Use `expansion_opportunities` for packaging ideas, not approved pricing or concessions.
 
@@ -48,6 +56,12 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `LRE-02` uses skill `license-renewal-expansion-expansion-opportunities`.
 - `LRE-03` uses skill `license-renewal-expansion-churn-risk`.
 - `LRE-04` uses skill `license-renewal-expansion-revenue-impact`.
+- `LRE-05` uses skill `account-health`.
+- `LRE-06` uses skill `competitive-defense`.
+- `LRE-07` uses skill `renewal-proposal`.
+- `LRE-08` uses skill `executive-brief`.
+- `LRE-09` uses skill `negotiation-plan`.
+- `LRE-10` uses skill `deal-summary`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

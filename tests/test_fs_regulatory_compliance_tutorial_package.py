@@ -122,27 +122,29 @@ def test_export_manifest_contains_required_course_resources_and_zip_contract():
         for capture in visual["captures"]
     )
 
+    # The old "manual-review-source" candidate subset was retired when the
+    # package was re-shot; it now ships the standard complete source bundle.
     bundle = ROOT / manifest["bundle"]["path"]
     assert bundle.is_file()
     assert manifest["bundle"]["raw_url"].startswith(manifest["raw_base"])
+    assert "include_paths" not in manifest["bundle"]
+    assert "native_importable" not in manifest["bundle"]
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
     assert not any("/." in name or "__pycache__" in name for name in names)
-    assert names == set(manifest["bundle"]["include_paths"])
-    assert manifest["bundle"]["kind"] == "manual-review-source"
-    assert manifest["bundle"]["native_importable"] is False
-    assert {
-        item["path"] for item in manifest["files"] if item["included_in_bundle"]
-    } <= names
+    assert {item["path"] for item in manifest["files"]} <= names
+    native = manifest["copilot_studio_solution"]
+    assert native["status"] == "exported"
+    assert native["zip"]["path"] in names
+    assert native["deployment_settings"]["path"] in names
     assert {
         "solutions/fs-regulatory-compliance/manual-tutorial.html",
         "solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
-        "solutions/fs-regulatory-compliance/evals/manual-pilot-review.json",
+        "solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
         "solutions/fs-regulatory-compliance/evals/visual-checkpoints.json",
+        "solutions/fs-regulatory-compliance/evals/dataverse-draft-evidence.json",
         "solutions/fs-regulatory-compliance/export-manifest.json",
     } <= names
-    assert not any(name.endswith((".jpg", ".png", ".gif", ".zip")) for name in names)
-    assert not any("/copilot-studio/" in name for name in names)
 
 
 def test_manual_tutorial_is_aibast_themed_and_matches_browserfilm_actions():
@@ -228,11 +230,12 @@ def test_manual_tutorial_covers_locked_cases_and_draft_gate_from_evidence():
         case["id"] for case in cases
     ]
     for case, item in zip(cases, preview):
+        assert item["prompt"] == case["prompt"]
         assert item["must_include"] == case["must_include"]
-        assert item["passed"] is None
-        assert item["captured_passed"] is True
-        assert item["status"] == "reshoot_required"
-        assert item["review_criteria"] in plain_text(tutorial)
+        assert item["must_not_include"] == case["must_not_include"]
+        # Every locked case, including RC-06/RC-07, was re-run live in a
+        # fresh Manual Preview and has its own captured browserfilm frame.
+        assert item["passed"] is True
         assert item["expected_screenshot"] in frame_files
         assert case["id"] in tutorial
         for marker in case["must_include"]:
@@ -246,30 +249,33 @@ def test_manual_tutorial_covers_locked_cases_and_draft_gate_from_evidence():
     assert re.search(r"do not publish|stop before publish", tutorial, re.IGNORECASE)
 
 
-def test_historical_captures_do_not_certify_the_preserved_source_revision():
+def test_current_manual_evidence_accepts_the_reshot_source_revision():
+    # The 2026-09-12 preserved repair was re-built and re-run end to end in
+    # the real Copilot Studio UI; acceptance now comes from that live run.
     evidence = read_json(PACKAGE / "evals" / "manual-build-evidence.json")
-    assert evidence["status"] == "reshoot_required"
-    assert evidence["captured_status"] == "passed"
+    cases = read_json(CASE_FILE)["cases"]
+    assert evidence["status"] == "passed"
     assert evidence["model_confirmed"] is True
-    assert evidence["manual_components"]["knowledge_files"] == {
-        "expected": 2,
-        "confirmed": 2,
-    }
+    for component in ("global_instructions", "web_search_removed", "knowledge_files", "tools"):
+        item = evidence["manual_components"][component]
+        assert item["confirmed"] == item["expected"]
+    assert evidence["manual_components"]["knowledge_files"] == {"expected": 2, "confirmed": 2}
+    skills = list((PACKAGE / "manual" / "skills").glob("*/SKILL.md"))
     assert evidence["manual_components"]["skills"] == {
-        "expected": 5,
-        "confirmed": 5,
+        "expected": len(skills),
+        "confirmed": len(skills),
     }
-    assert all(case["passed"] is None for case in evidence["canonical_preview"])
-    assert all(case["captured_passed"] is True for case in evidence["canonical_preview"])
-    assert evidence["manual_components"]["global_instructions"] == {
-        "expected": True,
-        "confirmed": False,
-        "captured_confirmed": True,
-    }
+    assert [case["case_id"] for case in evidence["canonical_preview"]] == [
+        case["id"] for case in cases
+    ]
+    assert all(case["passed"] is True for case in evidence["canonical_preview"])
+    assert evidence["publication_gate"]["required_state"] == "Draft"
     assert evidence["publication_gate"]["published"] is False
-    assert "bot_id" not in evidence["manual_agent"]
-    assert "environment" not in evidence
-    assert evidence["review_snapshot"] == "evals/manual-pilot-review.json"
+    for legacy in ("captured_status", "review_snapshot", "source_contract_note"):
+        assert legacy not in evidence
+    visual = read_json(PACKAGE / "evals" / "visual-checkpoints.json")
+    assert visual["summary"]["reshoot_required"] == 0
+    assert visual["summary"]["reusable"] == len(visual["captures"])
 
 
 def test_quest_exposes_beta_course_shell_and_global_easy_lanes():

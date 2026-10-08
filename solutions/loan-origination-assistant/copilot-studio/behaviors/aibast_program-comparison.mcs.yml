@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "program-comparison"
+  description: "\"Use when a loan officer asks something like \\\"Which loan programs are the Martinezes eligible for, and which one do you recommend\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: program-comparison
+  description: "Use when a loan officer asks something like \"Which loan programs are the Martinezes eligible for, and which one do you recommend\""
+  ---
+  <!-- bic:source=blank -->
+  # Program comparison
+  
+  Use when a loan officer asks something like "Which loan programs are the Martinezes eligible for, and which one do you recommend"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `Conventional 15-yr`
+  - `$2,549`
+  - `9.2 months`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

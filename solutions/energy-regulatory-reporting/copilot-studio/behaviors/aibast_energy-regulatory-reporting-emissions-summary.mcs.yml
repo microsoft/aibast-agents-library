@@ -1,0 +1,32 @@
+mcs.metadata:
+  componentName: "energy-regulatory-reporting-emissions-summary"
+  description: "\"Use when an Environmental Manager asks for the quarterly emissions summary.\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: energy-regulatory-reporting-emissions-summary
+  description: "Use when an Environmental Manager asks for the quarterly emissions summary."
+  ---
+  # Regulatory Reporting Agent: Emissions Summary
+  
+  ## Route
+  
+  Use the `emissions_summary` operation. The canonical persona prompt is:
+  
+  > I need to prepare our quarterly EPA emissions report. Can you pull the data?
+  
+  ## Procedure
+  
+  1. Read the synthetic knowledge records and controls.
+  2. Call or reproduce only the `emissions_summary` operation behavior.
+  3. Lead with source-backed identifiers and evidence.
+  4. State uncertainty and the required authorized review.
+  5. End with the operation's no-write boundary.
+  
+  ## Required evidence
+  
+  - 14 facilities
+  - 8.24M tons
+  - down 7.3%
+  
+  Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

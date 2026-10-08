@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:51:20.396255+00:00",
+  "solution": "@aibast-agents-library/field-permit-to-work",
+  "onepager": "60. Field Permit to Work Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "FieldPermitToWorkAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/field_permit_to_work_stack/field_permit_to_work_agent.py",
+      "sha256": "cb35fe88b717817093e5208d0487701d5e7ac28d6c1839682886e05a1a596ab8"
+    }
+  ],
+  "case_file": "tests/demo_cases/field-permit-to-work.json",
+  "case_file_sha256": "b4c32adb4e21afc0ddda78873967bdc0a73bbbaecd6ae93151292a9ad554f49a",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PTW-01",
+      "persona": "Permit Coordinator",
+      "onepager_promise": "Shows every permit waiting today with its stage, risk and blocker",
+      "prompt": "Which work permits are waiting for today?",
+      "assistant_response": "Here's today's queue (3 permits, 2 blocked):\n\n- **PTW-4471 \u2014 Cedar Hill Substation** (tap-changer maintenance, 11:00 start): High risk \u2014 **live isolation not confirmed**\n- **PTW-4472 \u2014 Riverside Feeder 7** (cable joint repair, 10:00 start): Medium risk \u2014 **isolation plan incomplete**\n- **PTW-4473 \u2014 Hilltop Line 3** (insulator replacement, 13:00 start): Medium risk \u2014 no blocker, ready for review\n\nSince PTW-4471 is highest risk and closest to its blocker issue, want me to run an isolation check and risk assessment on it first?",
+      "agent_logs": "[FieldPermitToWorkAgent] **Permit Queue: Northwind Energy Networks** (snapshot Tue 10 Mar 2026 06:30)\n\n| Permit | Site | Work | Start | Current stage | Risk | Blocker |\n|---|---|---|---|---|---|---|\n| PTW-4471 | Cedar Hill Substation | Tap-changer maintenance | 11:00 | Authorized person review | High | Live isolation not confirmed |\n| PTW-4472 | Riverside Feeder 7 | Cable joint repair | 10:00 | Supervisor review | Medium | Isolation plan incomplete |\n| PTW-4473 | Hilltop Line 3 | Insulator replacement | 13:00 | Supervisor review | Medium | None |\n\n**Today:** 3 permits, 2 with a blocker before work can start.\n**Recommended next:** PTW-4471 at Cedar Hill is the highest-risk job; draft its risk assessment and check its isolation first.\n\nSynthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make every safety decision.\n\nSource: [Synthetic Permit Snapshot]\nAgents: FieldPermitToWorkAgent",
+      "expected_agent": "FieldPermitToWorkAgent",
+      "must_include": [
+        "PTW-4471",
+        "2 with a blocker",
+        "Live isolation not confirmed"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PTW-02",
+      "persona": "Permit Coordinator",
+      "onepager_promise": "Drafts the risk assessment with hazards, controls, PPE and residual risk",
+      "prompt": "Draft the risk assessment for the Cedar Hill transformer job.",
+      "assistant_response": "Drafted via **FieldPermitToWorkAgent** (risk_assessment, PTW-4471 \u2014 Cedar Hill transformer):\n\n- **Hazards & controls:** arc flash/shock (de-energize, LOTO, prove dead, arc-rated PPE); hot oil contact (cooling period, gloves, drip tray); manual handling (mechanical lift, two-person carry)\n- **PPE:** arc-rated coveralls, insulated gloves, face shield\n- **Residual risk:** 60/100 \u2014 **High** (base 45, +15 for wet weather)\n- **Method steps:** toolbox talk \u2192 confirm isolation/prove dead \u2192 barriers/signage \u2192 work per method statement \u2192 clear site and close permit\n\nThis is a draft only \u2014 needs authorized-person sign-off before the job proceeds. Want me to also check the isolation status or authorization route next?",
+      "agent_logs": "[FieldPermitToWorkAgent] **Risk Assessment Draft: PTW-4471 Cedar Hill Substation Transformer T2**\n\n| Hazard | Controls |\n|---|---|\n| Electric shock or arc flash | De-energize, lock out and tag, prove dead, arc-rated clothing |\n| Hot oil contact | Cooling period, oil-handling gloves, drip tray |\n| Manual handling of heavy components | Mechanical lift, two-person carry |\n\n**PPE:** Arc-rated coveralls, insulated gloves, face shield\n\n| Residual risk | Value |\n|---|---|\n| Base risk | 45 |\n| Weather (wet) | +15 |\n| Senior authorized crew | -0 |\n| **Residual risk score** | **60 of 100 (High)** |\n\n**Method steps:** toolbox talk and sign-in; confirm isolation and prove dead; barriers and signs; work to method statement; tidy site and clear the permit.\n\nRisk bands: Low below 25, Medium 25-54, High 55 or more. Draft for the authorized person to review and sign.\n\nSynthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make every safety decision.\n\nSource: [Synthetic Hazard Library + Permit Snapshot]\nAgents: FieldPermitToWorkAgent",
+      "expected_agent": "FieldPermitToWorkAgent",
+      "must_include": [
+        "60 of 100",
+        "Arc-rated coveralls",
+        "Draft for the authorized person"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PTW-03",
+      "persona": "Authorized Person",
+      "onepager_promise": "Checks the isolation plan against required points and the live switching state",
+      "prompt": "Is the isolation for the Cedar Hill job actually in place?",
+      "assistant_response": "Isolation is **not confirmed** for Cedar Hill (PTW-4471). Three of four devices check out, but **CB-CH-02's lockout padlock isn't applied**, even though the breaker is open. Don't start work \u2014 have the control room apply the lockout and re-run the check before briefing the crew.",
+      "agent_logs": "[FieldPermitToWorkAgent] **Isolation Check: PTW-4471 Cedar Hill Substation** (live state as of Tue 10 Mar 2026 06:30)\n\n**Plan vs required points: PASS (4 of 4)**\n\n| Point | Type | Required state | Plan |\n|---|---|---|---|\n| ISO-T2-A | Primary disconnector | Open | In plan |\n| ISO-T2-B | Earth switch | Closed | In plan |\n| ISO-T2-C | Lockout padlock | Applied | In plan |\n| ISO-T2-D | Voltage proving point | Tested | In plan |\n\n**Live switching state:**\n\n| Device | Type | State | Lockout |\n|---|---|---|---|\n| CB-CH-01 | Circuit breaker | Open | Applied |\n| CB-CH-02 | Circuit breaker | Open | Not applied |\n| DS-CH-01 | Disconnector | Open | Applied |\n| ES-CH-01 | Earth switch | Closed | Applied |\n\n**Result: Isolation NOT confirmed. Do not start work.** CB-CH-02 lockout not applied. Ask the control room to correct it and re-check before the crew briefing.\n\nNo device was operated or locked.\n\nSynthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make every safety decision.\n\nSource: [Synthetic Isolation Plan + Control Room Snapshot]\nAgents: FieldPermitToWorkAgent",
+      "expected_agent": "FieldPermitToWorkAgent",
+      "must_include": [
+        "CB-CH-02 lockout not applied",
+        "Do not start work",
+        "No device was operated"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PTW-04",
+      "persona": "Permit Coordinator",
+      "onepager_promise": "Tracks sign-offs and timing so permits are ready for the planned start",
+      "prompt": "Where is the Cedar Hill permit in the sign-off chain, and will it be ready for the 11:00 start?",
+      "assistant_response": "Cedar Hill (PTW-4471) is currently waiting on Lee Carter's authorized-person review, then needs site manager endorsement and permit office issue. Projected issue time is **10:30** \u2014 30 minutes ahead of the 11:00 start, so it's on track, *provided* the isolation check confirms the live state matches the plan (that's a hard condition before issue). Want me to run the isolation check to confirm that's solid?",
+      "agent_logs": "[FieldPermitToWorkAgent] **Sign-off Route: PTW-4471 Cedar Hill Substation** (from Tue 10 Mar 2026 06:30)\n\n| Stage | Accountable | Target time | Due by |\n|---|---|---|---|\n| Authorized person review | Lee Carter, authorized person | 120 min | 08:30 |\n| Site manager endorsement | Site manager | 90 min | 10:00 |\n| Permit office issue | Permit office | 30 min | 10:30 |\n\n**Next sign-off:** Lee Carter, authorized person (Authorized person review), priority P1 (High risk).\n**Earliest issue:** 10:30. On track: ready 30 minutes before the 11:00 start.\n**Condition:** the permit can only be issued once the live isolation is confirmed.\n\nRouting note prepared for the permit office; no sign-off was given or requested.\n\nSynthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make every safety decision.\n\nSource: [Synthetic Permit Workflow]\nAgents: FieldPermitToWorkAgent",
+      "expected_agent": "FieldPermitToWorkAgent",
+      "must_include": [
+        "Lee Carter",
+        "Earliest issue",
+        "10:30"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PTW-05",
+      "persona": "Crew Lead",
+      "onepager_promise": "Confirms every crew member has acknowledged the briefing before work starts",
+      "prompt": "Has the Cedar Hill crew acknowledged the briefing?",
+      "assistant_response": "Not quite \u2014 3 of 4 crew members on CR-12 have acknowledged (Morgan Hayes, Ravi Kumar, Elena Novak), but **Chris Dale (apprentice) hasn't yet**. Work can't start until that's done.",
+      "agent_logs": "[FieldPermitToWorkAgent] **Crew Briefing: PTW-4471 crew CR-12**\n\n**Briefing topics:** isolation points and lockouts, PPE check, emergency contacts and muster point, site hazards (Electric shock or arc flash, Hot oil contact, Manual handling of heavy components).\n\n| Crew member | Role | Acknowledgement |\n|---|---|---|\n| Morgan Hayes | Crew lead | Acknowledged |\n| Ravi Kumar | Electrician | Acknowledged |\n| Elena Novak | Electrician | Acknowledged |\n| Chris Dale | Apprentice | Not yet |\n\n**Status:** Incomplete: 3 of 4 acknowledged. Work cannot start until Chris Dale acknowledges.\n\nBriefing sheet prepared for the crew lead; no one was messaged.\n\nSynthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make every safety decision.\n\nSource: [Synthetic Crew Briefing Records]\nAgents: FieldPermitToWorkAgent",
+      "expected_agent": "FieldPermitToWorkAgent",
+      "must_include": [
+        "3 of 4 acknowledged",
+        "Chris Dale",
+        "no one was messaged"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PTW-06",
+      "persona": "Authorized Person",
+      "onepager_promise": "Reconciles people, tools and site status before a permit is cleared",
+      "prompt": "The Cedar Hill crew has finished. Can we close the permit?",
+      "assistant_response": "Not yet \u2014 clearance is **held for review**. Everything else checks out (headcount, area safe, work complete), but there's a tool discrepancy: 18 tools issued, only 17 returned.\n\nBefore the permit can close, the crew lead needs to track down the missing tool. Once that's resolved, the authorized person can clear it.",
+      "agent_logs": "[FieldPermitToWorkAgent] **Permit Clearance Check: PTW-4471 Cedar Hill Substation**\n\n| Check | Start | Close |\n|---|---|---|\n| People on site | 4 | 4 |\n| Tools | 18 issued | 17 returned |\n| Area safe | | Yes |\n| Work complete | | Yes |\n\n**Close-out entered:** 16:40 by Morgan Hayes\n**Clearance status:** Held for review\n\n**Issues:**\n- Tools: 18 issued, 17 returned (1 unaccounted for)\n\n**Next step:** the crew lead resolves each issue (for a tool shortfall, finds the missing tool) before the authorized person clears the permit and the control room restores supply.\n\nThe permit was not closed.\n\nSynthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make every safety decision.\n\nSource: [Synthetic Close-out Records]\nAgents: FieldPermitToWorkAgent",
+      "expected_agent": "FieldPermitToWorkAgent",
+      "must_include": [
+        "Held for review",
+        "1 unaccounted for",
+        "The permit was not closed"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PTW-07",
+      "persona": "Operations Manager",
+      "onepager_promise": "Rolls up permit safety performance and the hazards that matter most",
+      "prompt": "How are we doing on permit safety this month?",
+      "assistant_response": "Here's the monthly snapshot:\n\n- **212 permits issued**, **92% closed on time**\n- **5 near misses** reported\n- Avg cycle time: **18.4 hours**\n- **7 lockout gaps caught** before work started (good catch rate \u2014 but the top recurring pre-start finding)\n- 4 isolation plans sent back to planners for fixes\n\n**Top hazards:** arc flash/shock, working at height, live cable strikes, confined space.\n\nOverall solid performance, but lockout gaps keep showing up as the main pre-start issue \u2014 worth reinforcing the isolation check step before every crew briefing. Want me to run an isolation check on a specific permit?",
+      "agent_logs": "[FieldPermitToWorkAgent] **Permit Safety Roll-up: Northwind Energy Networks** (30 days to Tue 10 Mar 2026)\n\n| Measure | Value |\n|---|---|\n| Permits issued | 212 |\n| Closed on time | 196 (92%) |\n| Near misses reported | 5 |\n| Average permit cycle | 18.4 hours |\n| Lockout gaps caught before work | 7 |\n| Isolation plans returned to planner | 4 |\n\n**Top hazards this month:**\n1. Electric shock or arc flash\n2. Working at height\n3. Striking a live cable while digging\n4. Confined space\n\n**Focus:** lockout gaps are the most frequent pre-start finding; keep the live isolation check before every crew briefing.\n\nSynthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make every safety decision.\n\nSource: [Synthetic Permit Analytics Snapshot]\nAgents: FieldPermitToWorkAgent",
+      "expected_agent": "FieldPermitToWorkAgent",
+      "must_include": [
+        "212",
+        "Lockout gaps caught before work",
+        "Near misses"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

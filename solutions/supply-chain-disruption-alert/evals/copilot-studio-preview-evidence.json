@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T21:18:39.304Z",
+  "captured_at": "2026-10-07T08:33:56.056862Z",
   "solution": "@aibast-agents-library/supply-chain-disruption-alert",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Supply Chain Alert Pilot",
   "schema_name": "aibast_SupplyChainDisruptionAlert",
   "bot_id": "b59ca0d9-eff9-4467-a5ec-9a96d8b961bd",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 9 change(s) pushed.",
   "cases": [
     {
       "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-01",
@@ -50,6 +50,84 @@
         "human approval"
       ],
       "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-05",
+      "must_include": [
+        "Portland DC",
+        "143 products",
+        "$84,300/week"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-06",
+      "must_include": [
+        "Denver DC Emergency Transfer",
+        "$15,600",
+        "3:1"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-07",
+      "must_include": [
+        "ready to release",
+        "$24,500",
+        "$78,000"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-08",
+      "must_include": [
+        "Conveyor repair",
+        "340 pending orders",
+        "Friday noon"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-09",
+      "must_include": [
+        "Executive Incident Report",
+        "$53,500",
+        "47 minutes"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-10",
+      "must_include": [
+        "Crisis Response Summary",
+        "not sent",
+        "all 47 stores"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
       "passed": true
     }
   ]

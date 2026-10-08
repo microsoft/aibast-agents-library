@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "insurance-book-cross-sell",
+  "agent": "@aibast-agents-library/insurance-book-cross-sell",
+  "display_name": "Book of Business Cross-Sell Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic book of business",
+        "detail": "Ten fictional policy lines across seven accounts with states, carriers, expirations and premiums for safe demos."
+      },
+      {
+        "name": "Synthetic appetite guide and class crosswalk",
+        "detail": "Bundled industry classes, legacy crosswalk, keyword rules, unit lines and state availability ground every match."
+      },
+      {
+        "name": "Confirmation and routing rules",
+        "detail": "Packaged rules define unit and broker confirmation drafts, recorded replies and the 60-day follow-up lead."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Book of business summary",
+        "detail": "Ingests a broker's book of business and profiles every account, line, premium and expiration in seconds."
+      },
+      {
+        "name": "Industry class resolution",
+        "detail": "Resolves an industry class for every line and flags the ones it cannot classify instead of guessing."
+      },
+      {
+        "name": "Appetite and white-space match",
+        "detail": "Matches every line to the underwriting units with appetite and surfaces the white space on each account."
+      },
+      {
+        "name": "Unit appetite confirmation drafts",
+        "detail": "Drafts the appetite-confirmation note for each underwriting unit with its shortlist before anything is routed."
+      },
+      {
+        "name": "Broker confirmation draft",
+        "detail": "Drafts the broker confirmation so dead or already-placed accounts drop out before routing."
+      },
+      {
+        "name": "Cross-sell routing plan",
+        "detail": "Lays out a routing plan for each unit's sellers with follow-up dates timed ahead of each renewal."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the Draft agent with six skills and two synthetic knowledge files; publish stays a separate approved step."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Gives the cross-sell team a conversational entry point once approved production controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file BookCrossSellAgent locally with deterministic, synthetic-only operation routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Book and opportunity summary",
+        "detail": "Shows accounts, lines, premium with other markets, competing-market lines and white space in one view."
+      },
+      {
+        "name": "Confirmation tracker",
+        "detail": "Lists every unit and broker confirmation draft, the recorded replies and what they removed."
+      },
+      {
+        "name": "Routing plan with renewal follow-ups",
+        "detail": "Orders routed opportunities by expiration with seller, unit and follow-up date for approval."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable BookCrossSellAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only operations over bundled synthetic data."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the agent and exposes chat, health and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; explicit authorized approval is required before publication."
+    },
+    {
+      "name": "Microsoft Outlook",
+      "detail": "Cited production seam for the broker intake mailbox; the package reads a fixed synthetic book instead."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Cited production seam for seller pipeline records; the package only drafts a routing plan."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only bundled fictional book, appetite and reply data; never browses or invents accounts or rules."
+    },
+    {
+      "name": "No-guess classification",
+      "detail": "Unresolved lines are held for the broker instead of being matched on a guessed class."
+    },
+    {
+      "name": "State availability filter",
+      "detail": "Never offers a unit in a state where the unit is unavailable."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never sends outreach, routes records, quotes or binds; every step is a draft for a person."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Six persona cases verify one bounded operation each with exact evidence anchors."
+    }
+  ]
+}

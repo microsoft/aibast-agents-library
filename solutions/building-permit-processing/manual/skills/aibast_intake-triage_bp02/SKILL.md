@@ -11,7 +11,7 @@ restaurant fit-out on Harbor Way" to BP-2025-0106 without asking for an ID.
 
 ## Procedure
 
-When asked generally about today's front counter, evaluate both intake
+When asked generally about today's front counter, evaluate all three intake
 records:
 
 - **BP-2025-0105 — Greenfield Development LLC:** Recommended decision is do
@@ -24,6 +24,9 @@ records:
   accept as complete for this pilot. It is a commercial alteration in MU-2
   with a $540,000 valuation. Route it in order to Zoning → Building →
   Fire/Life Safety. Its fixed 21-day statutory target is 2026-08-28.
+- **BP-2024-3847 — Johnson Residence:** Recommended decision is hold. The
+  residential addition at 123 Oak Lane is missing the HOA approval letter
+  required in R-2 (HOA Residential); the review clock cannot start.
 
 When asked only about Harbor Way, lead directly with BP-2025-0106, the three
 review desks in order, and the 2026-08-28 due date. Do not discuss

@@ -8,501 +8,1279 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 26,
-    "reusable": 13,
-    "reshoot_required": 13
+    "total_existing_captures": 41,
+    "reusable": 41,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-wig-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "WIG-01",
-      "source": "solutions/wealth-insights-generator/screenshots/assisted/01-wig-01.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/01-wig-01.png",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "NASDAQ Composite",
-        "Fixed Synthetic",
-        "Not current market data"
+        "Wealth Insights Pilot",
+        "Draft",
+        "engagement-strategy",
+        "planning-gaps",
+        "book-insights",
+        "insights-summary",
+        "client-insights",
+        "aibast_wealth-insights-generator-controls-and-re",
+        "aibast_wealth-insights-generator-synthetic-recor"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 122,
-          "width": 970,
-          "height": 38,
-          "label": "NASDAQ Composite anchor"
+          "x": 83,
+          "y": 20,
+          "width": 161,
+          "height": 24,
+          "label": "Wealth Insights Pilot"
         },
         {
-          "x": 285,
-          "y": 448,
-          "width": 950,
-          "height": 62,
-          "label": "Fixed Synthetic and not current"
+          "x": 255,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 198,
+          "width": 145,
+          "height": 20,
+          "label": "engagement-strategy"
+        },
+        {
+          "x": 1259,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "planning-gaps"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 95,
+          "height": 22,
+          "label": "book-insights"
+        },
+        {
+          "x": 1210,
+          "y": 237,
+          "width": 121,
+          "height": 22,
+          "label": "insights-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 98,
+          "height": 22,
+          "label": "client-insights"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_wealth-insights-generator-controls-and-re"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_wealth-insights-generator-synthetic-recor"
+        }
+      ]
+    },
+    {
+      "id": "easy-wig-01",
+      "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/02-wig-01.jpg",
+      "caption": "WIG-01 · Advisory Director: Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+      "case_id": "WIG-01",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/02-wig-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fixed Synthetic",
+        "NASDAQ Composite"
+      ],
+      "boxes": [
+        {
+          "x": 312,
+          "y": 455,
+          "width": 147,
+          "height": 28,
+          "label": "Fixed Synthetic"
+        },
+        {
+          "x": 299,
+          "y": 736,
+          "width": 159,
+          "height": 23,
+          "label": "NASDAQ Composite"
         }
       ]
     },
     {
       "id": "easy-wig-02",
       "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/03-wig-02.jpg",
+      "caption": "WIG-02 · Wealth Advisor: Which household has the largest held-away opportunity and what life event needs validation?",
       "case_id": "WIG-02",
-      "source": "solutions/wealth-insights-generator/screenshots/assisted/02-wig-02.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/02-wig-02.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/03-wig-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Estate Plan Revision",
-        "needs validation",
-        "Licensed human review required"
-      ],
-      "full_case_not_visibly_proven": [
-        "WM-003 and Held Away are above the captured final-answer viewport; the machine gate proves the full locked case."
+        "WM-005"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 160,
-          "width": 940,
-          "height": 135,
-          "label": "Life event requiring validation"
-        },
-        {
-          "x": 285,
-          "y": 522,
-          "width": 945,
-          "height": 63,
-          "label": "Human-review boundary"
+          "x": 756,
+          "y": 500,
+          "width": 102,
+          "height": 26,
+          "label": "WM-005"
         }
       ],
-      "note": "Human-review boundary box started too high and crossed the prior bullet line; moved it down onto the italic boundary text on 2026-09-10."
+      "full_case_not_visibly_proven": [
+        "Held Away not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
     },
     {
       "id": "easy-wig-03",
       "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/04-wig-03.jpg",
+      "caption": "WIG-03 · Relationship Manager: Which clients have high-priority planning signals for advisor review?",
       "case_id": "WIG-03",
-      "source": "solutions/wealth-insights-generator/screenshots/assisted/03-wig-03.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/03-wig-03.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/04-wig-03.png",
       "status": "reusable",
       "visible_anchors": [
         "Harrison Family Trust",
-        "Dr. Anita Rao",
-        "Human Review Required"
+        "Dr. Anita Rao"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 240,
-          "width": 750,
-          "height": 220,
-          "label": "Two high-priority clients"
+          "x": 299,
+          "y": 617,
+          "width": 163,
+          "height": 24,
+          "label": "Harrison Family Trust"
+        },
+        {
+          "x": 299,
+          "y": 661,
+          "width": 105,
+          "height": 20,
+          "label": "Dr. Anita Rao"
         }
       ]
     },
     {
       "id": "easy-wig-04",
       "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/05-wig-04.jpg",
+      "caption": "WIG-04 · Portfolio Strategist: Which synthetic client is below its benchmark, and what does the attribution label say?",
       "case_id": "WIG-04",
-      "source": "solutions/wealth-insights-generator/screenshots/assisted/04-wig-04.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/04-wig-04.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/05-wig-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Tidewater Ventures LLC",
-        "Underperformance"
+        "Underperformance",
+        "Tidewater Ventures"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 120,
-          "width": 690,
-          "height": 60,
-          "label": "Below-benchmark client"
+          "x": 626,
+          "y": 417,
+          "width": 101,
+          "height": 24,
+          "label": "Underperformance"
         },
         {
-          "x": 285,
-          "y": 392,
-          "width": 950,
-          "height": 72,
-          "label": "Underperformance attribution"
+          "x": 335,
+          "y": 505,
+          "width": 147,
+          "height": 21,
+          "label": "Tidewater Ventures"
         }
       ]
     },
     {
       "id": "easy-wig-05",
       "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/06-wig-05.jpg",
+      "caption": "WIG-05 · Wealth Advisor: Prepare my review brief for the Kensington household without turning it into advice or outreach.",
       "case_id": "WIG-05",
-      "source": "solutions/wealth-insights-generator/screenshots/assisted/05-wig-05.jpg",
-      "status": "reshoot_required",
-      "reason": "George & Martha Kensington and preparation material appear only in reasoning text. Reasoning text is not visual proof, and the visible final answer contains neither required anchor."
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/06-wig-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "George & Martha Kensington",
+        "preparation material"
+      ],
+      "boxes": [
+        {
+          "x": 597,
+          "y": 554,
+          "width": 329,
+          "height": 32,
+          "label": "George & Martha Kensington"
+        },
+        {
+          "x": 358,
+          "y": 1600,
+          "width": 92,
+          "height": 24,
+          "label": "preparation material"
+        }
+      ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-wig-06",
       "mode": "easy",
-      "source": "solutions/wealth-insights-generator/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Wealth Insights Pilot row is not visible, so the screenshot cannot prove that the validated agent remains Draft.",
-      "draft": true
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/07-wig-06.jpg",
+      "caption": "WIG-06 · Wealth Advisor: Generate wealth insights for my top clients and identify opportunities to deepen relationships.",
+      "case_id": "WIG-06",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/07-wig-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "85 families",
+        "37% (target 55%)",
+        "$4.2M/year"
+      ],
+      "boxes": [
+        {
+          "x": 466,
+          "y": 554,
+          "width": 211,
+          "height": 26,
+          "label": "85 families"
+        },
+        {
+          "x": 461,
+          "y": 901,
+          "width": 133,
+          "height": 24,
+          "label": "37% (target 55%)"
+        },
+        {
+          "x": 617,
+          "y": 1095,
+          "width": 95,
+          "height": 24,
+          "label": "$4.2M/year"
+        }
+      ]
+    },
+    {
+      "id": "easy-wig-07",
+      "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/08-wig-07.jpg",
+      "caption": "WIG-07 · Wealth Advisor: What planning gaps does the Morrison Family have?",
+      "case_id": "WIG-07",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/08-wig-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Outdated (8 yrs)",
+        "pre-TCJA",
+        "+$48K annual fees"
+      ],
+      "boxes": [
+        {
+          "x": 427,
+          "y": 656,
+          "width": 78,
+          "height": 21,
+          "label": "Outdated (8 yrs)"
+        },
+        {
+          "x": 419,
+          "y": 826,
+          "width": 86,
+          "height": 24,
+          "label": "pre-TCJA"
+        },
+        {
+          "x": 377,
+          "y": 1400,
+          "width": 162,
+          "height": 22,
+          "label": "+$48K annual fees"
+        }
+      ]
+    },
+    {
+      "id": "easy-wig-08",
+      "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/09-wig-08.jpg",
+      "caption": "WIG-08 · Relationship Manager: How should I approach the Morrison relationship expansion?",
+      "case_id": "WIG-08",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/09-wig-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Phase 1",
+        "Retirement readiness review",
+        "Legacy goals"
+      ],
+      "boxes": [
+        {
+          "x": 303,
+          "y": 1133,
+          "width": 63,
+          "height": 20,
+          "label": "Phase 1"
+        },
+        {
+          "x": 381,
+          "y": 1133,
+          "width": 222,
+          "height": 20,
+          "label": "Retirement readiness review"
+        },
+        {
+          "x": 303,
+          "y": 1724,
+          "width": 105,
+          "height": 24,
+          "label": "Legacy goals"
+        }
+      ]
+    },
+    {
+      "id": "easy-wig-09",
+      "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/10-wig-09.jpg",
+      "caption": "WIG-09 · Advisory Director: Give me the complete wealth insights summary with the immediate actions.",
+      "case_id": "WIG-09",
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/10-wig-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$8.1M",
+        "Chen call (this week)",
+        "Thompson intro (next week)"
+      ],
+      "boxes": [
+        {
+          "x": 576,
+          "y": 526,
+          "width": 74,
+          "height": 30,
+          "label": "$8.1M"
+        },
+        {
+          "x": 299,
+          "y": 1593,
+          "width": 620,
+          "height": 20,
+          "label": "Chen call (this week)"
+        },
+        {
+          "x": 298,
+          "y": 1636,
+          "width": 626,
+          "height": 24,
+          "label": "Thompson intro (next week)"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/wealth-insights-generator/screenshots/assisted/11-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 11 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/11-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Wealth Insights Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 158,
+          "height": 24,
+          "label": "Wealth Insights Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/wealth-insights-generator/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot is a mostly blank loading surface and does not visibly show an Untitled Agent or a blank Build workspace."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/wealth-insights-generator/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Wealth Insights Manual",
+      "step": 2,
       "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Wealth Insights Manual in the name field"
+        "Wealth Insights Manual"
       ],
       "boxes": [
         {
-          "x": 165,
-          "y": 100,
-          "width": 815,
-          "height": 52,
-          "label": "Manual agent name entered"
+          "x": 83,
+          "y": 20,
+          "width": 182,
+          "height": 24,
+          "label": "Wealth Insights Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/wealth-insights-generator/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors"
+        "Wealth Insights Generator Agent — Manual Global "
       ],
       "boxes": [
         {
-          "x": 72,
-          "y": 195,
-          "width": 905,
-          "height": 615,
-          "label": "Reviewed instruction policy"
+          "x": 202,
+          "y": 131,
+          "width": 245,
+          "height": 39,
+          "label": "Wealth Insights Generator Agent — Manual Global "
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/wealth-insights-generator/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 5-12 and does not show a save confirmation or No unsaved changes tooltip; the completed inventory does not prove the save action."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/wealth-insights-generator/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4 and 6-12 and shows the completed inventory rather than the web-search removal action."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/wealth-insights-generator/screenshots/manual/06-add-aibast-wealth-insights-generator-controls-and-review.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-5 and 7-12. The knowledge pill is truncated and the capture does not isolate the controls-and-review file addition."
+      "caption": "Manual step 6 · Add knowledge: aibast_wealth-insights-generator-controls-and-review.md",
+      "step": 6,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/06-add-aibast-wealth-insights-generator-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_wealth-insights-generator-controls-and-re"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 313,
+          "width": 306,
+          "height": 37,
+          "label": "aibast_wealth-insights-generator-controls-and-re"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/wealth-insights-generator/screenshots/manual/07-add-aibast-wealth-insights-generator-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-6 and 8-12. The knowledge pill is truncated and the capture does not isolate the synthetic-records file addition."
+      "caption": "Manual step 7 · Add knowledge: aibast_wealth-insights-generator-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/07-add-aibast-wealth-insights-generator-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_wealth-insights-generator-synthetic-recor"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 296,
+          "height": 33,
+          "label": "aibast_wealth-insights-generator-synthetic-recor"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/08-add-aibast-book-insights-06.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_book-insights_06",
       "step": 8,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/08-add-aibast-client-insights-02.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-7 and 9-12 and shows the completed five-skill inventory; it does not isolate the client-insights addition."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/08-add-aibast-book-insights-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "book-insights"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "book-insights"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/09-add-aibast-client-insights-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_client-insights_02",
       "step": 9,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/09-add-aibast-market-brief-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-8 and 10-12 and shows the completed five-skill inventory; it does not isolate the market-brief addition."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/09-add-aibast-client-insights-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-insights"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 98,
+          "height": 22,
+          "label": "client-insights"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/10-add-aibast-engagement-strategy-08.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_engagement-strategy_08",
       "step": 10,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/10-add-aibast-meeting-brief-05.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-9 and 11-12 and shows the completed five-skill inventory; it does not isolate the meeting-brief addition."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/10-add-aibast-engagement-strategy-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "engagement-strategy"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 198,
+          "width": 145,
+          "height": 20,
+          "label": "engagement-strategy"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/11-add-aibast-insights-summary-09.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_insights-summary_09",
       "step": 11,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/11-add-aibast-opportunity-alerts-03.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-10 and 12 and shows the completed five-skill inventory; it does not isolate the opportunity-alerts addition."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/11-add-aibast-insights-summary-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "insights-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 121,
+          "height": 22,
+          "label": "insights-summary"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/12-add-aibast-market-brief-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_market-brief_01",
       "step": 12,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/12-add-aibast-performance-attribution-04.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed five-skill inventory; it does not isolate the performance-attribution addition."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/12-add-aibast-market-brief-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "market-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 88,
+          "height": 19,
+          "label": "market-brief"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/13-add-aibast-meeting-brief-05.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_meeting-brief_05",
       "step": 13,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/13-review-inventory.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/13-review-inventory.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/13-add-aibast-meeting-brief-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Save tooltip states No unsaved changes",
-        "Claude Sonnet 4.6",
-        "Five configured skills",
-        "Two configured knowledge files",
-        "Tools section contains no configured tool"
+        "meeting-brief"
       ],
       "boxes": [
         {
-          "x": 1045,
-          "y": 45,
-          "width": 205,
-          "height": 52,
-          "label": "Saved: no unsaved changes"
-        },
-        {
-          "x": 1195,
-          "y": 85,
-          "width": 205,
-          "height": 45,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1025,
-          "y": 140,
-          "width": 380,
-          "height": 170,
-          "label": "Five configured skills"
-        },
-        {
-          "x": 1025,
-          "y": 328,
-          "width": 380,
-          "height": 55,
-          "label": "No configured tools"
-        },
-        {
-          "x": 1025,
-          "y": 388,
-          "width": 380,
-          "height": 135,
-          "label": "Two knowledge files"
+          "x": 1058,
+          "y": 197,
+          "width": 96,
+          "height": 22,
+          "label": "meeting-brief"
         }
       ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/14-add-aibast-opportunity-alerts-03.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_opportunity-alerts_03",
       "step": 14,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/14-open-preview.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/14-open-preview.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/14-add-aibast-opportunity-alerts-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat"
+        "opportunity-alerts"
       ],
       "boxes": [
         {
-          "x": 635,
-          "y": 8,
-          "width": 110,
-          "height": 45,
-          "label": "Preview selected"
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "opportunity-alerts"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/15-add-aibast-performance-attribution-04.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_performance-attribution_04",
+      "step": 15,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/15-add-aibast-performance-attribution-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "performance-attribution"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 160,
+          "height": 22,
+          "label": "performance-attribution"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/16-add-aibast-planning-gaps-07.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_planning-gaps_07",
+      "step": 16,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/16-add-aibast-planning-gaps-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "planning-gaps"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 100,
+          "height": 22,
+          "label": "planning-gaps"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/17-review-inventory.jpg",
+      "caption": "Manual step 17 · Review model, skills, knowledge, and safety boundaries",
+      "step": 17,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/17-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "planning-gaps",
+        "performance-attribution",
+        "opportunity-alerts",
+        "meeting-brief",
+        "market-brief",
+        "aibast_wealth-insights-generator-synthetic-recor",
+        "aibast_wealth-insights-generator-controls-and-re"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 830,
-          "y": 86,
-          "width": 105,
-          "height": 48,
-          "label": "Fresh chat control"
+          "x": 1057,
+          "y": 197,
+          "width": 100,
+          "height": 22,
+          "label": "planning-gaps"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 160,
+          "height": 22,
+          "label": "performance-attribution"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 123,
+          "height": 22,
+          "label": "opportunity-alerts"
+        },
+        {
+          "x": 1238,
+          "y": 277,
+          "width": 96,
+          "height": 22,
+          "label": "meeting-brief"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 88,
+          "height": 19,
+          "label": "market-brief"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_wealth-insights-generator-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_wealth-insights-generator-controls-and-re"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/18-review-skills.jpg",
+      "caption": "Manual step 18 · Review the skill list (9 skills)",
+      "step": 18,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/18-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "planning-gaps",
+        "performance-attribution",
+        "insights-summary",
+        "opportunity-alerts",
+        "meeting-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 100,
+          "height": 22,
+          "label": "planning-gaps"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 160,
+          "height": 22,
+          "label": "performance-attribution"
+        },
+        {
+          "x": 1095,
+          "y": 318,
+          "width": 52,
+          "height": 20,
+          "label": "insights-summary"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 123,
+          "height": 22,
+          "label": "opportunity-alerts"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 96,
+          "height": 22,
+          "label": "meeting-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/19-review-skills-more.jpg",
+      "caption": "Manual step 19 · Review the rest of the skill list",
+      "step": 19,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/19-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "market-brief",
+        "insights-summary",
+        "engagement-strategy",
+        "client-insights",
+        "book-insights"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 84,
+          "width": 88,
+          "height": 19,
+          "label": "market-brief"
+        },
+        {
+          "x": 1095,
+          "y": 127,
+          "width": 52,
+          "height": 20,
+          "label": "insights-summary"
+        },
+        {
+          "x": 1055,
+          "y": 261,
+          "width": 145,
+          "height": 21,
+          "label": "engagement-strategy"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 98,
+          "height": 22,
+          "label": "client-insights"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 95,
+          "height": 22,
+          "label": "book-insights"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/20-open-preview.jpg",
+      "caption": "Manual step 20 · Open a fresh Preview conversation",
+      "step": 20,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/20-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Wealth Insights Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 182,
+          "height": 24,
+          "label": "Wealth Insights Manual"
         }
       ]
     },
     {
       "id": "hard-wig-01",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/21-wig-01.jpg",
+      "caption": "WIG-01 · Advisory Director: Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+      "step": 21,
       "case_id": "WIG-01",
-      "step": 15,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/15-wig-01.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/15-wig-01.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/21-wig-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "NASDAQ Composite",
-        "Synthetic wealth evidence only; not current market data"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact phrase Fixed Synthetic is above the captured viewport."
+        "Fixed Synthetic",
+        "NASDAQ Composite"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 305,
-          "width": 940,
-          "height": 190,
-          "label": "NASDAQ Composite market result"
+          "x": 287,
+          "y": 481,
+          "width": 174,
+          "height": 32,
+          "label": "Fixed Synthetic"
         },
         {
-          "x": 285,
-          "y": 500,
-          "width": 945,
-          "height": 72,
-          "label": "Synthetic and not current boundary"
+          "x": 299,
+          "y": 726,
+          "width": 155,
+          "height": 23,
+          "label": "NASDAQ Composite"
         }
       ]
     },
     {
       "id": "hard-wig-02",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/22-wig-02.jpg",
+      "caption": "WIG-02 · Wealth Advisor: Which household has the largest held-away opportunity and what life event needs validation?",
+      "step": 22,
       "case_id": "WIG-02",
-      "step": 16,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/16-wig-02.jpg",
-      "status": "reshoot_required",
-      "reason": "The Manual source frame shows WM-003 and Held Away only in reasoning text while no final answer is visible. Reasoning text cannot verify the case."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/22-wig-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Held Away",
+        "WM-005"
+      ],
+      "boxes": [
+        {
+          "x": 343,
+          "y": 539,
+          "width": 562,
+          "height": 24,
+          "label": "Held Away"
+        },
+        {
+          "x": 639,
+          "y": 539,
+          "width": 84,
+          "height": 23,
+          "label": "WM-005"
+        }
+      ]
     },
     {
       "id": "hard-wig-03",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/23-wig-03.jpg",
+      "caption": "WIG-03 · Relationship Manager: Which clients have high-priority planning signals for advisor review?",
+      "step": 23,
       "case_id": "WIG-03",
-      "step": 17,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/17-wig-03.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/17-wig-03.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/23-wig-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "High-Priority Planning Signals",
         "Harrison Family Trust",
         "Dr. Anita Rao"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 320,
-          "width": 945,
-          "height": 325,
-          "label": "Two high-priority planning signals"
+          "x": 299,
+          "y": 645,
+          "width": 157,
+          "height": 24,
+          "label": "Harrison Family Trust"
+        },
+        {
+          "x": 299,
+          "y": 689,
+          "width": 103,
+          "height": 20,
+          "label": "Dr. Anita Rao"
         }
       ]
     },
     {
       "id": "hard-wig-04",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/24-wig-04.jpg",
+      "caption": "WIG-04 · Portfolio Strategist: Which synthetic client is below its benchmark, and what does the attribution label say?",
+      "step": 24,
       "case_id": "WIG-04",
-      "step": 18,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/18-wig-04.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/18-wig-04.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/24-wig-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Tidewater Ventures LLC"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Underperformance label is not visible in the final answer; reasoning text is not counted."
+        "Underperformance",
+        "Tidewater Ventures"
       ],
       "boxes": [
         {
+          "x": 287,
+          "y": 454,
+          "width": 149,
+          "height": 27,
+          "label": "Underperformance"
+        },
+        {
           "x": 285,
-          "y": 605,
-          "width": 805,
-          "height": 78,
-          "label": "Below-benchmark client"
+          "y": 524,
+          "width": 151,
+          "height": 21,
+          "label": "Tidewater Ventures"
         }
       ]
     },
     {
       "id": "hard-wig-05",
       "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/25-wig-05.jpg",
+      "caption": "WIG-05 · Wealth Advisor: Prepare my review brief for the Kensington household without turning it into advice or outreach.",
+      "step": 25,
       "case_id": "WIG-05",
-      "step": 19,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/19-wig-05.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/19-wig-05.png",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/25-wig-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "preparation material only"
-      ],
-      "full_case_not_visibly_proven": [
-        "George & Martha Kensington is above the captured viewport."
+        "George & Martha Kensington",
+        "preparation material"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 450,
-          "width": 945,
-          "height": 72,
-          "label": "Preparation material boundary"
+          "x": 597,
+          "y": 537,
+          "width": 329,
+          "height": 32,
+          "label": "George & Martha Kensington"
+        },
+        {
+          "x": 333,
+          "y": 1471,
+          "width": 157,
+          "height": 24,
+          "label": "preparation material"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-wig-06",
       "mode": "hard",
-      "step": 20,
-      "source": "solutions/wealth-insights-generator/screenshots/manual/20-confirm-draft.jpg",
-      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/20-confirm-draft.png",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/26-wig-06.jpg",
+      "caption": "WIG-06 · Wealth Advisor: Generate wealth insights for my top clients and identify opportunities to deepen relationships.",
+      "step": 26,
+      "case_id": "WIG-06",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/26-wig-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Wealth Insights Manual",
-        "Draft"
+        "85 families",
+        "37% (target 55%)",
+        "$4.2M/year"
       ],
       "boxes": [
         {
-          "x": 105,
-          "y": 250,
-          "width": 690,
-          "height": 58,
-          "label": "Target agent remains Draft"
+          "x": 466,
+          "y": 537,
+          "width": 211,
+          "height": 26,
+          "label": "85 families"
+        },
+        {
+          "x": 433,
+          "y": 835,
+          "width": 131,
+          "height": 24,
+          "label": "37% (target 55%)"
+        },
+        {
+          "x": 580,
+          "y": 1007,
+          "width": 92,
+          "height": 25,
+          "label": "$4.2M/year"
+        }
+      ]
+    },
+    {
+      "id": "hard-wig-07",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/27-wig-07.jpg",
+      "caption": "WIG-07 · Wealth Advisor: What planning gaps does the Morrison Family have?",
+      "step": 27,
+      "case_id": "WIG-07",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/27-wig-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Outdated (8 yrs)",
+        "pre-TCJA",
+        "+$48K annual fees"
+      ],
+      "boxes": [
+        {
+          "x": 428,
+          "y": 694,
+          "width": 125,
+          "height": 24,
+          "label": "Outdated (8 yrs)"
+        },
+        {
+          "x": 483,
+          "y": 803,
+          "width": 86,
+          "height": 24,
+          "label": "pre-TCJA"
+        },
+        {
+          "x": 425,
+          "y": 908,
+          "width": 140,
+          "height": 22,
+          "label": "+$48K annual fees"
+        }
+      ]
+    },
+    {
+      "id": "hard-wig-08",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/28-wig-08.jpg",
+      "caption": "WIG-08 · Relationship Manager: How should I approach the Morrison relationship expansion?",
+      "step": 28,
+      "case_id": "WIG-08",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/28-wig-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Phase 1",
+        "Retirement readiness review",
+        "Legacy goals"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 589,
+          "width": 67,
+          "height": 20,
+          "label": "Phase 1"
+        },
+        {
+          "x": 435,
+          "y": 691,
+          "width": 230,
+          "height": 22,
+          "label": "Retirement readiness review"
+        },
+        {
+          "x": 299,
+          "y": 877,
+          "width": 101,
+          "height": 23,
+          "label": "Legacy goals"
+        }
+      ]
+    },
+    {
+      "id": "hard-wig-09",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/29-wig-09.jpg",
+      "caption": "WIG-09 · Advisory Director: Give me the complete wealth insights summary with the immediate actions.",
+      "step": 29,
+      "case_id": "WIG-09",
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/29-wig-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$8.1M",
+        "Chen call (this week)",
+        "Thompson intro (next week)"
+      ],
+      "boxes": [
+        {
+          "x": 576,
+          "y": 554,
+          "width": 74,
+          "height": 30,
+          "label": "$8.1M"
+        },
+        {
+          "x": 637,
+          "y": 1151,
+          "width": 158,
+          "height": 23,
+          "label": "Chen call (this week)"
+        },
+        {
+          "x": 788,
+          "y": 1151,
+          "width": 209,
+          "height": 24,
+          "label": "Thompson intro (next week)"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-30",
+      "mode": "hard",
+      "source": "solutions/wealth-insights-generator/screenshots/manual/30-confirm-draft.jpg",
+      "caption": "Manual step 30 · Confirm Draft and stop before publish",
+      "step": 30,
+      "draft": true,
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/30-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Wealth Insights Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 178,
+          "height": 24,
+          "label": "Wealth Insights Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy WIG-02 with WM-003 and Held Away visible in the final answer.",
-      "Easy WIG-05 with George & Martha Kensington and preparation material visible in the final answer.",
-      "Easy Draft gate filtered to Wealth Insights Pilot with Draft visible.",
-      "Manual step 1 after the blank Build workspace has fully loaded.",
-      "Manual step 4 with a visible save confirmation or No unsaved changes tooltip.",
-      "One expanded Manual-mode Knowledge inventory showing both exact filenames; create two annotated checkpoints from it.",
-      "Distinct Manual-mode captures for each of the five skill additions.",
-      "Manual WIG-02 with WM-003 and Held Away visible in the final answer."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 5/5 verdict.",
-      "Copilot-only local 5/5 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:wealth-insights-generator",
-    "reviewed_at": "2026-08-10T00:35:00Z",
-    "method": "Inspected all raw assisted and manual source frames, including both WIG-02 frames, and retained only checkpoints with visible positive anchors.",
-    "notes": "All five locked cases have reusable visual coverage. Partial checkpoints are explicitly bounded by the deterministic machine gate, and genuine missing or non-proving source frames remain reshoot-required."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:53:08.939594+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

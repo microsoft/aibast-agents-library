@@ -8,490 +8,185 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 26,
-    "reusable": 19,
-    "reshoot_required": 7
+    "total_existing_captures": 38,
+    "reusable": 38,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-chs-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "CHS-01",
-      "source": "solutions/client-health-score/screenshots/assisted/01-chs-01.jpg",
-      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/01-chs-01.png",
+      "source": "solutions/client-health-score/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "HEALTHY \u2014 Monitor & Protect",
-        "Pinnacle Energy",
-        "Apex Manufacturing",
-        "National Logistics Group"
+        "Client Health Score Pilot",
+        "Draft",
+        "risk-analysis",
+        "qbr-summary",
+        "stakeholder-outreach",
+        "client-retention-playbook",
+        "client-engagement-analysis",
+        "aibast_client-health-synthetic-portfolio.md",
+        "aibast_client-health-retention-playbook.md"
       ],
-      "full_case_not_visibly_proven": [
-        "TechCorp Industries, Churn Indicator, and CRITICAL are outside the captured viewport."
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 187,
+          "height": 20,
+          "label": "Client Health Score Pilot"
+        },
+        {
+          "x": 282,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1058,
+          "y": 197,
+          "width": 85,
+          "height": 22,
+          "label": "risk-analysis"
+        },
+        {
+          "x": 1200,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "qbr-summary"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 143,
+          "height": 19,
+          "label": "stakeholder-outreach"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 169,
+          "height": 22,
+          "label": "client-retention-playbook"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 181,
+          "height": 22,
+          "label": "client-engagement-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 273,
+          "height": 22,
+          "label": "aibast_client-health-synthetic-portfolio.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 278,
+          "height": 22,
+          "label": "aibast_client-health-retention-playbook.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-chs-01",
+      "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/02-chs-01.jpg",
+      "caption": "CHS-01 · Client Success Leader: Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+      "case_id": "CHS-01",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/02-chs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$22.3M",
+        "CRITICAL",
+        "TechCorp Industries",
+        "Churn Indicator"
       ],
       "boxes": [
         {
           "x": 286,
-          "y": 284,
-          "width": 940,
-          "height": 310,
-          "label": "Healthy portfolio segment"
+          "y": 461,
+          "width": 64,
+          "height": 22,
+          "label": "$22.3M"
+        },
+        {
+          "x": 306,
+          "y": 518,
+          "width": 78,
+          "height": 20,
+          "label": "CRITICAL"
+        },
+        {
+          "x": 298,
+          "y": 618,
+          "width": 151,
+          "height": 24,
+          "label": "TechCorp Industries"
+        },
+        {
+          "x": 287,
+          "y": 1834,
+          "width": 127,
+          "height": 21,
+          "label": "Churn Indicator"
         }
       ]
     },
     {
       "id": "easy-chs-02",
       "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/03-chs-02.jpg",
+      "caption": "CHS-02 · Account Manager: What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
       "case_id": "CHS-02",
-      "source": "solutions/client-health-score/screenshots/assisted/02-chs-02.jpg",
-      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/02-chs-02.png",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/03-chs-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Healthy Accounts \u2014 Engagement Benchmarks",
         "TechCorp Industries",
-        "executive recovery review"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact No executive contact in 90 days and Declining billing trend markers are outside the captured viewport."
+        "Declining billing trend",
+        "No executive contact in 90 days"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 150,
-          "width": 700,
-          "height": 260,
-          "label": "Healthy engagement benchmarks"
+          "x": 298,
+          "y": 556,
+          "width": 151,
+          "height": 24,
+          "label": "TechCorp Industries"
         },
         {
-          "x": 291,
-          "y": 524,
-          "width": 892,
-          "height": 28,
-          "label": "TechCorp recovery review"
+          "x": 832,
+          "y": 556,
+          "width": 75,
+          "height": 24,
+          "label": "Declining billing trend"
+        },
+        {
+          "x": 310,
+          "y": 1094,
+          "width": 102,
+          "height": 20,
+          "label": "No executive contact in 90 days"
         }
-      ],
-      "note": "Label pill covered the Recommended Internal Review Sequence heading; re-measured the TechCorp review line, tightened the box, and moved the pill into right-side whitespace below the box 2026-09-10."
+      ]
     },
     {
       "id": "easy-chs-03",
       "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/04-chs-03.jpg",
+      "caption": "CHS-03 · Client Experience Director: Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
       "case_id": "CHS-03",
-      "source": "solutions/client-health-score/screenshots/assisted/03-chs-03.jpg",
-      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/03-chs-03.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "All Other Accounts \u2014 Positive NPS, Stable or Growing",
-        "Healthcare Solutions Inc",
-        "Pinnacle Energy"
-      ],
-      "full_case_not_visibly_proven": [
-        "Declining Accounts Requiring Attention, TechCorp Industries, and Global Finance Corp are outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 286,
-          "y": 225,
-          "width": 565,
-          "height": 400,
-          "label": "Positive satisfaction contrast"
-        }
-      ]
-    },
-    {
-      "id": "easy-chs-04",
-      "mode": "easy",
-      "case_id": "CHS-04",
-      "source": "solutions/client-health-score/screenshots/assisted/04-chs-04.jpg",
-      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/04-chs-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Healthcare Solutions Inc \u2014 AT_RISK",
-        "Health Score 61",
-        "Scenario Churn Indicator: 20%"
-      ],
-      "full_case_not_visibly_proven": [
-        "TechCorp Industries and Global Finance Corp are outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 284,
-          "y": 112,
-          "width": 500,
-          "height": 40,
-          "label": "Healthcare at-risk identity"
-        },
-        {
-          "x": 286,
-          "y": 155,
-          "width": 286,
-          "height": 348,
-          "label": "Healthcare risk metrics"
-        }
-      ]
-    },
-    {
-      "id": "easy-chs-05",
-      "mode": "easy",
-      "case_id": "CHS-05",
-      "source": "solutions/client-health-score/screenshots/assisted/05-chs-05.jpg",
-      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/05-chs-05.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Executive Engagement Plan",
-        "Approval gate",
-        "Nina Shah"
-      ],
-      "full_case_not_visibly_proven": [
-        "Morgan Lee and Value realization workshop are outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 185,
-          "width": 940,
-          "height": 360,
-          "label": "Executive engagement plan"
-        },
-        {
-          "x": 295,
-          "y": 462,
-          "width": 933,
-          "height": 29,
-          "label": "Approval gate"
-        }
-      ],
-      "note": "Label pill covered the Roadmap preparation row; re-measured the Approval gate row text, tightened the box, and moved the pill into the blank gap above the row with a smaller pill 2026-09-10."
-    },
-    {
-      "id": "easy-draft",
-      "mode": "easy",
-      "source": "solutions/client-health-score/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Client Health Score Pilot row is not visible; unrelated Draft rows cannot prove the validated agent remains Draft.",
-      "draft": true
-    },
-    {
-      "id": "hard-step-01",
-      "mode": "hard",
-      "step": 1,
-      "source": "solutions/client-health-score/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The capture is a blank loading canvas with a spinner; no blank agent workspace or Untitled Agent identity is visible."
-    },
-    {
-      "id": "hard-step-02",
-      "mode": "hard",
-      "step": 2,
-      "source": "solutions/client-health-score/screenshots/manual/02-name-agent.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/02-name-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Client Health Score Manual in the name field"
-      ],
-      "boxes": [
-        {
-          "x": 160,
-          "y": 95,
-          "width": 825,
-          "height": 58,
-          "label": "Manual agent name entered"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-03",
-      "mode": "hard",
-      "step": 3,
-      "source": "solutions/client-health-score/screenshots/manual/03-enter-instructions.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/03-enter-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "CHS-01 through CHS-05 anchors"
-      ],
-      "boxes": [
-        {
-          "x": 82,
-          "y": 439,
-          "width": 900,
-          "height": 375,
-          "label": "Reviewed locked-case instruction policy"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-04",
-      "mode": "hard",
-      "step": 4,
-      "source": "solutions/client-health-score/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instruction text is visible, but no save confirmation, disabled save state, or No unsaved changes indicator proves the policy was saved."
-    },
-    {
-      "id": "hard-step-05",
-      "mode": "hard",
-      "step": 5,
-      "source": "solutions/client-health-score/screenshots/manual/05-remove-web-search.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/05-remove-web-search.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Tools and Knowledge sections contain no default web-search chip"
-      ],
-      "boxes": [
-        {
-          "x": 1018,
-          "y": 192,
-          "width": 380,
-          "height": 123,
-          "label": "Default web search absent"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-06",
-      "mode": "hard",
-      "step": 6,
-      "source": "solutions/client-health-score/screenshots/manual/06-add-aibast-client-health-retention-playbook.jpg",
-      "status": "reshoot_required",
-      "reason": "Knowledge is collapsed and aibast_client-health-retention-playbook.md is not visible."
-    },
-    {
-      "id": "hard-step-07",
-      "mode": "hard",
-      "step": 7,
-      "source": "solutions/client-health-score/screenshots/manual/07-add-aibast-client-health-synthetic-portfolio.jpg",
-      "status": "reshoot_required",
-      "reason": "Knowledge is collapsed and aibast_client-health-synthetic-portfolio.md is not visible."
-    },
-    {
-      "id": "hard-step-08",
-      "mode": "hard",
-      "step": 8,
-      "source": "solutions/client-health-score/screenshots/manual/08-add-at-risk-clients.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/08-add-at-risk-clients.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "at-risk-client-prioritization"
-      ],
-      "boxes": [
-        {
-          "x": 1028,
-          "y": 183,
-          "width": 242,
-          "height": 45,
-          "label": "At-risk prioritization skill"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-09",
-      "mode": "hard",
-      "step": 9,
-      "source": "solutions/client-health-score/screenshots/manual/09-add-engagement-analysis.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/09-add-engagement-analysis.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "client-engagement-analysis",
-        "at-risk-client-prioritization"
-      ],
-      "boxes": [
-        {
-          "x": 1028,
-          "y": 183,
-          "width": 245,
-          "height": 85,
-          "label": "Two reviewed skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-10",
-      "mode": "hard",
-      "step": 10,
-      "source": "solutions/client-health-score/screenshots/manual/10-add-health-dashboard.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/10-add-health-dashboard.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "client-portfolio-health-dashboard",
-        "client-engagement-analysis",
-        "at-risk-client-prioritization"
-      ],
-      "boxes": [
-        {
-          "x": 1027,
-          "y": 182,
-          "width": 286,
-          "height": 128,
-          "label": "Three reviewed skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-11",
-      "mode": "hard",
-      "step": 11,
-      "source": "solutions/client-health-score/screenshots/manual/11-add-retention-plan.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/11-add-retention-plan.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "client-retention-playbook",
-        "client-portfolio-health-dashboard",
-        "client-engagement-analysis",
-        "at-risk-client-prioritization"
-      ],
-      "boxes": [
-        {
-          "x": 1028,
-          "y": 183,
-          "width": 287,
-          "height": 168,
-          "label": "Four reviewed skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-12",
-      "mode": "hard",
-      "step": 12,
-      "source": "solutions/client-health-score/screenshots/manual/12-add-satisfaction-trend.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/12-add-satisfaction-trend.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "client-satisfaction-trend",
-        "client-retention-playbook",
-        "client-portfolio-health-dashboard",
-        "client-engagement-analysis",
-        "at-risk-client-prioritization"
-      ],
-      "boxes": [
-        {
-          "x": 1027,
-          "y": 182,
-          "width": 288,
-          "height": 211,
-          "label": "Five reviewed skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-13",
-      "mode": "hard",
-      "step": 13,
-      "source": "solutions/client-health-score/screenshots/manual/13-review-inventory.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/13-review-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "No unsaved changes",
-        "Claude Sonnet 4.6",
-        "five reviewed skills"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "The two Knowledge filenames remain collapsed and require reshoot evidence."
-      ],
-      "boxes": [
-        {
-          "x": 1045,
-          "y": 42,
-          "width": 202,
-          "height": 55,
-          "label": "Saved with no unsaved changes"
-        },
-        {
-          "x": 1198,
-          "y": 84,
-          "width": 200,
-          "height": 43,
-          "label": "Claude Sonnet 4.6"
-        },
-        {
-          "x": 1025,
-          "y": 180,
-          "width": 293,
-          "height": 210,
-          "label": "Five reviewed skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-14",
-      "mode": "hard",
-      "step": 14,
-      "source": "solutions/client-health-score/screenshots/manual/14-open-preview.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/14-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Preview selected",
-        "New chat",
-        "Client Health Score Manual"
-      ],
-      "boxes": [
-        {
-          "x": 640,
-          "y": 13,
-          "width": 95,
-          "height": 36,
-          "label": "Preview selected"
-        },
-        {
-          "x": 837,
-          "y": 90,
-          "width": 95,
-          "height": 39,
-          "label": "Fresh chat control"
-        },
-        {
-          "x": 260,
-          "y": 147,
-          "width": 360,
-          "height": 86,
-          "label": "Manual agent Preview"
-        }
-      ]
-    },
-    {
-      "id": "hard-chs-01",
-      "mode": "hard",
-      "case_id": "CHS-01",
-      "step": 15,
-      "source": "solutions/client-health-score/screenshots/manual/15-chs-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The visible response says the actual data files are not accessible and constructs the dashboard from embedded evidence anchors; blocker and reasoning text cannot prove a grounded CHS-01 result."
-    },
-    {
-      "id": "hard-chs-02",
-      "mode": "hard",
-      "case_id": "CHS-02",
-      "step": 16,
-      "source": "solutions/client-health-score/screenshots/manual/16-chs-02.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/16-chs-02.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "TechCorp Industries",
-        "no executive contact",
-        "declining billing",
-        "elevated escalations"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact 90-day wording is outside the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 253,
-          "width": 940,
-          "height": 76,
-          "label": "TechCorp engagement breakdown"
-        }
-      ]
-    },
-    {
-      "id": "hard-chs-03",
-      "mode": "hard",
-      "case_id": "CHS-03",
-      "step": 17,
-      "source": "solutions/client-health-score/screenshots/manual/17-chs-03.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/17-chs-03.png",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/04-chs-03.png",
       "status": "reusable",
       "visible_anchors": [
         "Declining Accounts Requiring Attention",
@@ -500,111 +195,1096 @@
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 288,
-          "width": 930,
-          "height": 165,
-          "label": "Declining-account evidence"
+          "x": 508,
+          "y": 560,
+          "width": 74,
+          "height": 24,
+          "label": "Declining Accounts Requiring Attention"
         },
         {
+          "x": 320,
+          "y": 616,
+          "width": 155,
+          "height": 24,
+          "label": "TechCorp Industries"
+        },
+        {
+          "x": 323,
+          "y": 1065,
+          "width": 157,
+          "height": 24,
+          "label": "Global Finance Corp"
+        }
+      ]
+    },
+    {
+      "id": "easy-chs-04",
+      "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/05-chs-04.jpg",
+      "caption": "CHS-04 · Client Success Leader: Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+      "case_id": "CHS-04",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/05-chs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TechCorp Industries",
+        "Global Finance Corp",
+        "Healthcare Solutions Inc",
+        "47 open support tickets"
+      ],
+      "boxes": [
+        {
+          "x": 305,
+          "y": 545,
+          "width": 156,
+          "height": 24,
+          "label": "TechCorp Industries"
+        },
+        {
+          "x": 306,
+          "y": 1327,
+          "width": 157,
+          "height": 24,
+          "label": "Global Finance Corp"
+        },
+        {
+          "x": 306,
+          "y": 2121,
+          "width": 187,
+          "height": 20,
+          "label": "Healthcare Solutions Inc"
+        },
+        {
+          "x": 309,
+          "y": 2627,
+          "width": 184,
+          "height": 24,
+          "label": "47 open support tickets"
+        }
+      ]
+    },
+    {
+      "id": "easy-chs-05",
+      "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/06-chs-05.jpg",
+      "caption": "CHS-05 · Account Manager: Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+      "case_id": "CHS-05",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/06-chs-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Morgan Lee",
+        "Sarah Mitchell",
+        "Approval gate",
+        "Value realization workshop"
+      ],
+      "boxes": [
+        {
+          "x": 448,
+          "y": 708,
+          "width": 101,
+          "height": 24,
+          "label": "Morgan Lee"
+        },
+        {
+          "x": 448,
+          "y": 751,
+          "width": 114,
+          "height": 21,
+          "label": "Sarah Mitchell"
+        },
+        {
+          "x": 655,
+          "y": 794,
+          "width": 108,
+          "height": 24,
+          "label": "Approval gate"
+        },
+        {
+          "x": 424,
+          "y": 1961,
+          "width": 212,
+          "height": 24,
+          "label": "Value realization workshop"
+        }
+      ]
+    },
+    {
+      "id": "easy-chs-06",
+      "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/07-chs-06.jpg",
+      "caption": "CHS-06 · Account Manager: What's driving TechCorp's health score down so fast?",
+      "case_id": "CHS-06",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/07-chs-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "78%",
+        "$340K outstanding"
+      ],
+      "boxes": [
+        {
+          "x": 981,
+          "y": 462,
+          "width": 42,
+          "height": 20,
+          "label": "78%"
+        },
+        {
+          "x": 609,
+          "y": 730,
+          "width": 149,
+          "height": 25,
+          "label": "$340K outstanding"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "John Davis not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-chs-07",
+      "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/08-chs-07.jpg",
+      "caption": "CHS-07 · Account Manager: Who is the first executive we need to reach at TechCorp, and in what order should we meet the others?",
+      "case_id": "CHS-07",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/08-chs-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sarah Mitchell",
+        "Tuesday"
+      ],
+      "boxes": [
+        {
+          "x": 367,
+          "y": 493,
+          "width": 118,
+          "height": 22,
+          "label": "Sarah Mitchell"
+        },
+        {
+          "x": 1073,
+          "y": 579,
+          "width": 73,
+          "height": 24,
+          "label": "Tuesday"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "ROI documentation not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-chs-08",
+      "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/09-chs-08.jpg",
+      "caption": "CHS-08 · Client Success Leader: Wrap up my quarterly business review prep with a summary of the portfolio, the risks and the retention plan.",
+      "case_id": "CHS-08",
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/09-chs-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ready for you to send",
+        "$17.2M",
+        "300%"
+      ],
+      "boxes": [
+        {
+          "x": 632,
+          "y": 488,
+          "width": 169,
+          "height": 24,
+          "label": "ready for you to send"
+        },
+        {
+          "x": 538,
+          "y": 757,
+          "width": 62,
+          "height": 23,
+          "label": "$17.2M"
+        },
+        {
+          "x": 412,
+          "y": 1811,
+          "width": 51,
+          "height": 20,
+          "label": "300%"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/client-health-score/screenshots/assisted/10-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 10 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/10-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Health Score Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 186,
+          "height": 21,
+          "label": "Client Health Score Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Client Health Score Manual",
+      "step": 2,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Health Score Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 208,
+          "height": 20,
+          "label": "Client Health Score Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Health Score Agent — Global Instructions"
+      ],
+      "boxes": [
+        {
+          "x": 203,
+          "y": 131,
+          "width": 301,
+          "height": 32,
+          "label": "Client Health Score Agent — Global Instructions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 303,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/06-add-aibast-client-health-retention-playbook.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_client-health-retention-playbook.md",
+      "step": 6,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/06-add-aibast-client-health-retention-playbook.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_client-health-retention-playbook.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 278,
+          "height": 22,
+          "label": "aibast_client-health-retention-playbook.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/07-add-aibast-client-health-synthetic-portfolio.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_client-health-synthetic-portfolio.md",
+      "step": 7,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/07-add-aibast-client-health-synthetic-portfolio.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_client-health-synthetic-portfolio.md"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 321,
+          "width": 273,
+          "height": 22,
+          "label": "aibast_client-health-synthetic-portfolio.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/08-add-aibast-at-risk-clients-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_at-risk-clients_04",
+      "step": 8,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/08-add-aibast-at-risk-clients-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "at-risk-client-prioritization"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 172,
+          "height": 22,
+          "label": "at-risk-client-prioritization"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/09-add-aibast-engagement-analysis-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_engagement-analysis_02",
+      "step": 9,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/09-add-aibast-engagement-analysis-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-engagement-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 181,
+          "height": 22,
+          "label": "client-engagement-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/10-add-aibast-health-dashboard-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_health-dashboard_01",
+      "step": 10,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/10-add-aibast-health-dashboard-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-portfolio-health-dashboard"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 219,
+          "height": 22,
+          "label": "client-portfolio-health-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/11-add-aibast-qbr-summary-08.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_qbr-summary_08",
+      "step": 11,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/11-add-aibast-qbr-summary-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "qbr-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 94,
+          "height": 22,
+          "label": "qbr-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/12-add-aibast-retention-plan-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_retention-plan_05",
+      "step": 12,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/12-add-aibast-retention-plan-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-retention-playbook"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 169,
+          "height": 22,
+          "label": "client-retention-playbook"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/13-add-aibast-risk-analysis-06.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_risk-analysis_06",
+      "step": 13,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/13-add-aibast-risk-analysis-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "risk-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 197,
+          "width": 85,
+          "height": 22,
+          "label": "risk-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/14-add-aibast-satisfaction-trend-03.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_satisfaction-trend_03",
+      "step": 14,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/14-add-aibast-satisfaction-trend-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-satisfaction-trend"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 158,
+          "height": 19,
+          "label": "client-satisfaction-trend"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/15-add-aibast-stakeholder-outreach-07.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_stakeholder-outreach_07",
+      "step": 15,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/15-add-aibast-stakeholder-outreach-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "stakeholder-outreach"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 143,
+          "height": 19,
+          "label": "stakeholder-outreach"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/16-review-inventory.jpg",
+      "caption": "Manual step 16 · Review model, skills, knowledge, and safety boundaries",
+      "step": 16,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/16-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "stakeholder-outreach",
+        "client-satisfaction-trend",
+        "risk-analysis",
+        "client-retention-playbook",
+        "qbr-summary",
+        "aibast_client-health-synthetic-portfolio.md",
+        "aibast_client-health-retention-playbook.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 143,
+          "height": 19,
+          "label": "stakeholder-outreach"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 158,
+          "height": 19,
+          "label": "client-satisfaction-trend"
+        },
+        {
+          "x": 1273,
+          "y": 237,
+          "width": 85,
+          "height": 22,
+          "label": "risk-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 169,
+          "height": 22,
+          "label": "client-retention-playbook"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 94,
+          "height": 22,
+          "label": "qbr-summary"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 273,
+          "height": 22,
+          "label": "aibast_client-health-synthetic-portfolio.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 278,
+          "height": 22,
+          "label": "aibast_client-health-retention-playbook.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/17-review-skills.jpg",
+      "caption": "Manual step 17 · Review the skill list (8 skills)",
+      "step": 17,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/17-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "stakeholder-outreach",
+        "client-satisfaction-trend",
+        "risk-analysis",
+        "client-retention-playbook"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 143,
+          "height": 19,
+          "label": "stakeholder-outreach"
+        },
+        {
+          "x": 1055,
+          "y": 295,
+          "width": 158,
+          "height": 19,
+          "label": "client-satisfaction-trend"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 85,
+          "height": 22,
+          "label": "risk-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 169,
+          "height": 22,
+          "label": "client-retention-playbook"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/18-review-skills-more.jpg",
+      "caption": "Manual step 18 · Review the rest of the skill list",
+      "step": 18,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/18-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "stakeholder-outreach",
+        "qbr-summary",
+        "client-portfolio-health-dashboard",
+        "client-engagement-analysis",
+        "at-risk-client-prioritization"
+      ],
+      "boxes": [
+        {
+          "x": 1199,
+          "y": 87,
+          "width": 73,
+          "height": 17,
+          "label": "stakeholder-outreach"
+        },
+        {
+          "x": 1055,
+          "y": 162,
+          "width": 95,
+          "height": 22,
+          "label": "qbr-summary"
+        },
+        {
+          "x": 1055,
+          "y": 280,
+          "width": 219,
+          "height": 22,
+          "label": "client-portfolio-health-dashboard"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 181,
+          "height": 22,
+          "label": "client-engagement-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 173,
+          "height": 22,
+          "label": "at-risk-client-prioritization"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/19-open-preview.jpg",
+      "caption": "Manual step 19 · Open a fresh Preview conversation",
+      "step": 19,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/19-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Health Score Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 208,
+          "height": 20,
+          "label": "Client Health Score Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-chs-01",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/20-chs-01.jpg",
+      "caption": "CHS-01 · Client Success Leader: Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+      "step": 20,
+      "case_id": "CHS-01",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/20-chs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$22.3M",
+        "TechCorp Industries",
+        "CRITICAL",
+        "Churn Indicator"
+      ],
+      "boxes": [
+        {
+          "x": 446,
+          "y": 461,
+          "width": 73,
+          "height": 23,
+          "label": "$22.3M"
+        },
+        {
+          "x": 417,
+          "y": 1017,
+          "width": 151,
+          "height": 24,
+          "label": "TechCorp Industries"
+        },
+        {
+          "x": 704,
+          "y": 1017,
+          "width": 76,
+          "height": 20,
+          "label": "CRITICAL"
+        },
+        {
+          "x": 286,
+          "y": 1082,
+          "width": 127,
+          "height": 21,
+          "label": "Churn Indicator"
+        }
+      ]
+    },
+    {
+      "id": "hard-chs-02",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/21-chs-02.jpg",
+      "caption": "CHS-02 · Account Manager: What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+      "step": 21,
+      "case_id": "CHS-02",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/21-chs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TechCorp Industries",
+        "No executive contact in 90 days",
+        "Declining billing trend"
+      ],
+      "boxes": [
+        {
           "x": 285,
-          "y": 510,
-          "width": 735,
-          "height": 136,
-          "label": "TechCorp and Global Finance trend table"
+          "y": 488,
+          "width": 159,
+          "height": 24,
+          "label": "TechCorp Industries"
+        },
+        {
+          "x": 310,
+          "y": 528,
+          "width": 102,
+          "height": 20,
+          "label": "No executive contact in 90 days"
+        },
+        {
+          "x": 310,
+          "y": 590,
+          "width": 166,
+          "height": 24,
+          "label": "Declining billing trend"
+        }
+      ]
+    },
+    {
+      "id": "hard-chs-03",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/22-chs-03.jpg",
+      "caption": "CHS-03 · Client Experience Director: Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+      "step": 22,
+      "case_id": "CHS-03",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/22-chs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Declining Accounts Requiring Attention",
+        "TechCorp Industries",
+        "Global Finance Corp"
+      ],
+      "boxes": [
+        {
+          "x": 454,
+          "y": 483,
+          "width": 75,
+          "height": 24,
+          "label": "Declining Accounts Requiring Attention"
+        },
+        {
+          "x": 298,
+          "y": 591,
+          "width": 151,
+          "height": 24,
+          "label": "TechCorp Industries"
+        },
+        {
+          "x": 299,
+          "y": 634,
+          "width": 153,
+          "height": 24,
+          "label": "Global Finance Corp"
         }
       ]
     },
     {
       "id": "hard-chs-04",
       "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/23-chs-04.jpg",
+      "caption": "CHS-04 · Client Success Leader: Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+      "step": 23,
       "case_id": "CHS-04",
-      "step": 18,
-      "source": "solutions/client-health-score/screenshots/manual/18-chs-04.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/18-chs-04.png",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/23-chs-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "First Recovery Actions",
-        "account-owner approval required",
-        "value realization workshop",
-        "No outreach, concessions, renewals, or CRM changes"
-      ],
-      "full_case_not_visibly_proven": [
-        "The three required account names are outside the captured viewport."
+        "TechCorp Industries",
+        "Global Finance Corp",
+        "Healthcare Solutions Inc"
       ],
       "boxes": [
         {
           "x": 285,
-          "y": 437,
-          "width": 935,
-          "height": 122,
-          "label": "Approval-gated recovery actions"
+          "y": 528,
+          "width": 155,
+          "height": 24,
+          "label": "TechCorp Industries"
         },
         {
-          "x": 285,
-          "y": 570,
-          "width": 938,
-          "height": 110,
-          "label": "No client-facing side effects"
+          "x": 286,
+          "y": 954,
+          "width": 157,
+          "height": 24,
+          "label": "Global Finance Corp"
+        },
+        {
+          "x": 286,
+          "y": 1381,
+          "width": 187,
+          "height": 20,
+          "label": "Healthcare Solutions Inc"
         }
+      ],
+      "full_case_not_visibly_proven": [
+        "47 open support tickets not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
       "id": "hard-chs-05",
       "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/24-chs-05.jpg",
+      "caption": "CHS-05 · Account Manager: Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+      "step": 24,
       "case_id": "CHS-05",
-      "step": 19,
-      "source": "solutions/client-health-score/screenshots/manual/19-chs-05.jpg",
-      "status": "reshoot_required",
-      "reason": "The visible response says the source files are not present and relies on locked Preview anchors and skill context; echoed acceptance phrases cannot prove a grounded CHS-05 result."
-    },
-    {
-      "id": "hard-draft",
-      "mode": "hard",
-      "step": 20,
-      "source": "solutions/client-health-score/screenshots/manual/20-confirm-draft.jpg",
-      "annotated": "solutions/client-health-score/screenshots/manual/annotated/20-confirm-draft.png",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/24-chs-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Client Health Score Manual",
-        "Draft"
+        "Morgan Lee",
+        "Approval gate",
+        "Value realization workshop"
       ],
       "boxes": [
         {
-          "x": 110,
-          "y": 247,
-          "width": 650,
-          "height": 52,
-          "label": "Target manual agent remains Draft"
+          "x": 449,
+          "y": 525,
+          "width": 98,
+          "height": 23,
+          "label": "Morgan Lee"
+        },
+        {
+          "x": 309,
+          "y": 775,
+          "width": 77,
+          "height": 24,
+          "label": "Approval gate"
+        },
+        {
+          "x": 454,
+          "y": 940,
+          "width": 236,
+          "height": 23,
+          "label": "Value realization workshop"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Sarah Mitchell not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-chs-06",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/25-chs-06.jpg",
+      "caption": "CHS-06 · Account Manager: What's driving TechCorp's health score down so fast?",
+      "step": 25,
+      "case_id": "CHS-06",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/25-chs-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "78%",
+        "John Davis",
+        "$340K outstanding"
+      ],
+      "boxes": [
+        {
+          "x": 1175,
+          "y": 502,
+          "width": 42,
+          "height": 20,
+          "label": "78%"
+        },
+        {
+          "x": 503,
+          "y": 719,
+          "width": 89,
+          "height": 20,
+          "label": "John Davis"
+        },
+        {
+          "x": 641,
+          "y": 891,
+          "width": 152,
+          "height": 24,
+          "label": "$340K outstanding"
+        }
+      ]
+    },
+    {
+      "id": "hard-chs-07",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/26-chs-07.jpg",
+      "caption": "CHS-07 · Account Manager: Who is the first executive we need to reach at TechCorp, and in what order should we meet the others?",
+      "step": 26,
+      "case_id": "CHS-07",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/26-chs-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sarah Mitchell",
+        "Tuesday"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 533,
+          "width": 113,
+          "height": 23,
+          "label": "Sarah Mitchell"
+        },
+        {
+          "x": 298,
+          "y": 728,
+          "width": 70,
+          "height": 24,
+          "label": "Tuesday"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "ROI documentation not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-chs-08",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/27-chs-08.jpg",
+      "caption": "CHS-08 · Client Success Leader: Wrap up my quarterly business review prep with a summary of the portfolio, the risks and the retention plan.",
+      "step": 27,
+      "case_id": "CHS-08",
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/27-chs-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ready for you to send",
+        "$17.2M",
+        "300%"
+      ],
+      "boxes": [
+        {
+          "x": 695,
+          "y": 533,
+          "width": 75,
+          "height": 24,
+          "label": "ready for you to send"
+        },
+        {
+          "x": 372,
+          "y": 889,
+          "width": 59,
+          "height": 22,
+          "label": "$17.2M"
+        },
+        {
+          "x": 727,
+          "y": 925,
+          "width": 49,
+          "height": 20,
+          "label": "300%"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-28",
+      "mode": "hard",
+      "source": "solutions/client-health-score/screenshots/manual/28-confirm-draft.jpg",
+      "caption": "Manual step 28 · Confirm Draft and stop before publish",
+      "step": 28,
+      "draft": true,
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/28-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Health Score Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 206,
+          "height": 21,
+          "label": "Client Health Score Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Client Health Score Pilot with Draft visible.",
-      "Manual step 1 after the blank Untitled Agent workspace has fully loaded.",
-      "Manual step 4 with the save tooltip or another explicit saved-state indicator visible.",
-      "One expanded Manual-mode Knowledge inventory showing both exact filenames; capture both knowledge steps from the real UI.",
-      "Manual CHS-01 after both knowledge files are grounded, with the final answer visible and no missing-source blocker.",
-      "Manual CHS-05 after both knowledge files are grounded, with the final answer visible and no missing-source blocker."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 5/5 verdict.",
-      "Copilot-only local 5/5 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:client-health-score",
-    "reviewed_at": "2026-08-10T00:27:58.132065+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:46:39.261356+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

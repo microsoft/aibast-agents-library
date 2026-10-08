@@ -15,10 +15,10 @@
       "prompt": "What does my fictional leave snapshot show, and what notice rules should I review?",
       "arguments": {
         "operation": "leave_balance",
-        "employee_name": "Jordan Chen"
+        "employee_name": "Sarah Chen"
       },
       "must_include": [
-        "15.5 days",
+        "14 days",
         "Upcoming Company Holidays",
         "Synthetic HRIS"
       ],
@@ -129,6 +129,49 @@
         "No salary",
         "total-compensation value is inferred",
         "Synthetic Profile"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    },
+    {
+      "id": "HR-07",
+      "persona": "Employee",
+      "operation": "time_off_check",
+      "onepager_bullet": "Automates core HR transactions like time-off requests to reduce operational costs and increase HR team productivity",
+      "prompt": "I want to take 5 days off next month for a family trip. Is that okay with my balance and the policy?",
+      "arguments": {
+        "operation": "time_off_check",
+        "employee_name": "Sarah Chen",
+        "days": 5
+      },
+      "must_include": [
+        "After Request",
+        "David Kim",
+        "Blackout dates"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    },
+    {
+      "id": "HR-08",
+      "persona": "Employee",
+      "operation": "reminders",
+      "onepager_bullet": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "Is there anything else I should know about my benefits or time off before the end of the year?",
+      "arguments": {
+        "operation": "reminders",
+        "employee_name": "Sarah Chen"
+      },
+      "must_include": [
+        "Open enrollment",
+        "Carryover",
+        "before Dec 31"
       ],
       "must_not_include": [
         "I do not have access",

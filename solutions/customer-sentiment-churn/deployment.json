@@ -39,30 +39,32 @@
       "sentiment_dashboard",
       "churn_prediction",
       "retention_actions",
-      "segment_analysis"
+      "segment_analysis",
+      "early_warning_signals",
+      "outreach_plan"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_customer-sentiment-churn-synthetic-records.md",
       "manual/knowledge/aibast_customer-sentiment-churn-controls-and-review.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 6,
     "publish_requires_confirmation": true,
     "safety_gate": "Validate synthetic labels, human review, and no-advice/no-approval/no-transaction behavior before publish.",
     "plugin": "mcs-assistant@copilot-studio-plugin",
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Customer Sentiment Manual",
-      "bot_id": "c93c1ae6-304b-4656-ab29-8fdd9da5fbb6",
+      "bot_id": "7383caad-cdfa-4a44-9a66-8badc9d636ac",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 6,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
     },
     "validated_pilot": {
       "display_name": "Customer Sentiment Pilot",
@@ -71,13 +73,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 6,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
     }
   },
   "demo_scenarios": [

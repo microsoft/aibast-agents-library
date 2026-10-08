@@ -21,6 +21,17 @@ knowledge and operation skills.
 - Use `fraud_flag` for explainable SIU indicators and the no-proof boundary.
 - Use `settlement_recommendation` only for nonbinding packaged policy-term
   estimates and approval or payment status.
+- Use `auto_adjudication` to auto-adjudicate eligible claims: recommended
+  approve / deny / needs-info outcomes awaiting adjuster sign-off.
+- Use `processing_metrics` for before/after metrics and optimization ideas.
+- Use `session_summary` to summarize today's work.
+- With no claim named, `adjudication_review` shows the prepared complex file
+  CLM-78445 (198 complex claims prepared).
+
+Demo walkthrough: today's 2,847-claim queue (1,936 auto-adjudicate, 624
+standard, 198 complex, 89 fraud). Call the agent right away; every operation
+has demo defaults. Approvals and payments are recommendations; nothing is
+released by the agent.
 
 ## Regulated boundaries
 
@@ -50,6 +61,9 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `CLP-02` uses skill `adjudication-review`.
 - `CLP-03` uses skill `fraud-flag`.
 - `CLP-04` uses skill `settlement-recommendation`.
+- `CLP-05` uses skill `auto-adjudication`.
+- `CLP-06` uses skill `processing-metrics`.
+- `CLP-07` uses skill `session-summary`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

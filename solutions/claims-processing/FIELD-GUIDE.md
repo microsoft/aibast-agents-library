@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CLP-01, CLP-02, CLP-03, CLP-04`.
+1. Which locked case IDs did you complete? Expected scope: `CLP-01, CLP-02, CLP-03, CLP-04, CLP-05, CLP-06, CLP-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,13 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `CLP-01` — Which incoming claim needs specialized handling first, and where should it be reviewed?
+- `CLP-01` — Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.
 - `CLP-02` — What is missing from Jennifer Liu’s theft file before I can evaluate it?
-- `CLP-03` — Which claim crosses the SIU review threshold, and does that prove fraud?
+- `CLP-03` — Yes, show me the fraud detection results and high-risk claims.
 - `CLP-04` — Show the policy-term estimates and state clearly whether any claim was approved or paid.
+- `CLP-05` — Yes, auto-adjudicate the eligible claims and show me the results.
+- `CLP-06` — Yes, show me the metrics and where we can improve further.
+- `CLP-07` — Yes, summarize everything we accomplished today.
 
 ## Manual mode — literal browser construction
 

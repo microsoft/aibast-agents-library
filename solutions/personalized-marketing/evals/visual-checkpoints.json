@@ -8,616 +8,1149 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 19,
-    "reshoot_required": 4
+    "total_existing_captures": 35,
+    "reusable": 34,
+    "reshoot_required": 1
   },
   "captures": [
     {
-      "id": "easy-pm-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "PM-01",
-      "source": "solutions/personalized-marketing/screenshots/assisted/01-pm-01.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/01-pm-01.png",
+      "source": "solutions/personalized-marketing/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Priority 3 \u2014 Convert New Explorers (SEG-NEW)",
-        "Priority 4 \u2014 Assess Dormant Reactivation ROI (SEG-DORMANT)",
-        "All figures are fixed synthetic planning examples",
-        "human review and approval before any message, offer, or campaign is launched"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for Marketing Director, Total Addressable Customers, and no-sensitive-attribute markers are above the captured viewport."
+        "Personalized Marketing Pilot",
+        "Draft",
+        "campaign-workflow",
+        "privacy-safe-customer-segmentation",
+        "consent-aware-content-personalization",
+        "revenue-projection",
+        "review-only-campaign-design",
+        "aibast_personalized-marketing-rules-and-safety.m",
+        "aibast_personalized-marketing-synthetic-records."
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 130,
-          "width": 950,
-          "height": 350,
-          "label": "Aggregate segment review priorities"
+          "x": 84,
+          "y": 20,
+          "width": 218,
+          "height": 24,
+          "label": "Personalized Marketing Pilot"
         },
         {
-          "x": 285,
-          "y": 505,
-          "width": 940,
-          "height": 72,
-          "label": "Synthetic and approval boundary"
+          "x": 313,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 134,
+          "height": 22,
+          "label": "campaign-workflow"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 238,
+          "height": 22,
+          "label": "privacy-safe-customer-segmentation"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 254,
+          "height": 22,
+          "label": "consent-aware-content-personalization"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 128,
+          "height": 21,
+          "label": "revenue-projection"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 195,
+          "height": 22,
+          "label": "review-only-campaign-design"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_personalized-marketing-rules-and-safety.m"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 316,
+          "height": 22,
+          "label": "aibast_personalized-marketing-synthetic-records."
         }
       ]
     },
     {
+      "id": "easy-pm-01",
+      "mode": "easy",
+      "source": "solutions/personalized-marketing/screenshots/assisted/02-pm-01.jpg",
+      "caption": "PM-01 · Marketing Director: As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review pr",
+      "case_id": "PM-01",
+      "status": "reshoot_required",
+      "reason": "No positive target-state anchor is visible in the frame."
+    },
+    {
       "id": "easy-pm-02",
       "mode": "easy",
+      "source": "solutions/personalized-marketing/screenshots/assisted/03-pm-02.jpg",
+      "caption": "PM-02 · Campaign Manager: As Campaign Manager, show me the personalized multi-wave campaign recommendations for the holiday promotion and the approval",
       "case_id": "PM-02",
-      "source": "solutions/personalized-marketing/screenshots/assisted/02-pm-02.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/02-pm-02.png",
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/03-pm-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Four-Stage Win-Back Sequence (CAMP-WINBACK)",
-        "Stage dependency",
-        "Consent & suppression"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for Campaign Manager and Draft Campaign Design Portfolio markers are above the captured viewport."
+        "Prepared for:** Campaign Manager",
+        "Draft Campaign Design Portfolio",
+        "Total Campaign Projection"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 220,
-          "width": 950,
-          "height": 285,
-          "label": "Review-only win-back sequence"
+          "x": 286,
+          "y": 692,
+          "width": 249,
+          "height": 24,
+          "label": "Prepared for:** Campaign Manager"
+        },
+        {
+          "x": 287,
+          "y": 829,
+          "width": 364,
+          "height": 32,
+          "label": "Draft Campaign Design Portfolio"
         },
         {
           "x": 285,
-          "y": 610,
-          "width": 900,
-          "height": 75,
-          "label": "Consent assumption"
+          "y": 3003,
+          "width": 250,
+          "height": 28,
+          "label": "Total Campaign Projection"
         }
       ]
     },
     {
       "id": "easy-pm-03",
       "mode": "easy",
+      "source": "solutions/personalized-marketing/screenshots/assisted/04-pm-03.jpg",
+      "caption": "PM-03 · Campaign Manager: As Campaign Manager, generate the VIP campaign with personalized content and A/B test variants.",
       "case_id": "PM-03",
-      "source": "solutions/personalized-marketing/screenshots/assisted/03-pm-03.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/03-pm-03.png",
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/04-pm-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Draft Headline",
-        "Draft CTA",
-        "No inferred personal traits",
-        "All copy labeled draft throughout",
-        "Draft-Only Boundary"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft Content Personalization Matrix, New Explorers, and Draft Hero Copy markers are above the captured viewport."
+        "Draft Content Personalization Matrix",
+        "VIP Shoppers",
+        "A/B Test Setup"
       ],
       "boxes": [
         {
-          "x": 281,
-          "y": 184,
-          "width": 932,
-          "height": 155,
-          "label": "Draft content suggestions"
+          "x": 287,
+          "y": 581,
+          "width": 408,
+          "height": 26,
+          "label": "Draft Content Personalization Matrix"
+        },
+        {
+          "x": 462,
+          "y": 654,
+          "width": 362,
+          "height": 24,
+          "label": "VIP Shoppers"
         },
         {
           "x": 285,
-          "y": 365,
-          "width": 940,
-          "height": 155,
-          "label": "Content guardrails"
-        },
-        {
-          "x": 285,
-          "y": 550,
-          "width": 940,
-          "height": 55,
-          "label": "Draft-only boundary"
+          "y": 1828,
+          "width": 144,
+          "height": 28,
+          "label": "A/B Test Setup"
         }
-      ],
-      "note": "The draft-content box stopped short and its bottom border cut across the Neutral alternative line; remeasured and extended it 2026-09-10."
+      ]
     },
     {
       "id": "easy-pm-04",
       "mode": "easy",
+      "source": "solutions/personalized-marketing/screenshots/assisted/05-pm-04.jpg",
+      "caption": "PM-04 · Marketing Director: As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.",
       "case_id": "PM-04",
-      "source": "solutions/personalized-marketing/screenshots/assisted/04-pm-04.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/04-pm-04.png",
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/05-pm-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "CAMP-WINBACK (4-stage Win-Back Journey)",
-        "All rates are fixed synthetic examples, not observed customer KPIs",
-        "Measurement Limitations \u2014 Call-Outs Before Any Decision"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Marketing Performance Analysis and A/B Test Results headings are above the captured viewport."
+        "Marketing Performance Analysis",
+        "Synthetic aggregate planning data",
+        "A/B Test Results"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 150,
-          "width": 945,
-          "height": 220,
-          "label": "Synthetic campaign test portfolio"
+          "x": 386,
+          "y": 444,
+          "width": 81,
+          "height": 24,
+          "label": "Marketing Performance Analysis"
+        },
+        {
+          "x": 306,
+          "y": 491,
+          "width": 256,
+          "height": 24,
+          "label": "Synthetic aggregate planning data"
         },
         {
           "x": 285,
-          "y": 395,
-          "width": 930,
-          "height": 42,
-          "label": "Synthetic KPI disclosure"
-        },
-        {
-          "x": 282,
-          "y": 454,
-          "width": 943,
-          "height": 224,
-          "label": "Measurement limitations"
+          "y": 618,
+          "width": 156,
+          "height": 25,
+          "label": "A/B Test Results"
         }
-      ],
-      "note": "The Measurement Limitations box clipped the final engagement-score callout; remeasured and expanded it downward 2026-09-10."
+      ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-pm-05",
       "mode": "easy",
-      "source": "solutions/personalized-marketing/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Personalized Marketing Pilot row is not visible, so the screenshot does not prove the target agent remains Draft.",
-      "draft": true
+      "source": "solutions/personalized-marketing/screenshots/assisted/06-pm-05.jpg",
+      "caption": "PM-05 · Campaign Manager: As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval.",
+      "case_id": "PM-05",
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/06-pm-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft VIP Launch Schedule",
+        "Hour 48",
+        "Nothing is scheduled or sent"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 581,
+          "width": 297,
+          "height": 26,
+          "label": "Draft VIP Launch Schedule"
+        },
+        {
+          "x": 299,
+          "y": 929,
+          "width": 69,
+          "height": 20,
+          "label": "Hour 48"
+        },
+        {
+          "x": 286,
+          "y": 1714,
+          "width": 222,
+          "height": 24,
+          "label": "Nothing is scheduled or sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-pm-06",
+      "mode": "easy",
+      "source": "solutions/personalized-marketing/screenshots/assisted/07-pm-06.jpg",
+      "caption": "PM-06 · Marketing Director: As Marketing Director, break down the revenue projection scenarios for the VIP wave.",
+      "case_id": "PM-06",
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/07-pm-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "VIP Revenue Projection Model",
+        "Conservative (Baseline)",
+        "ROI Range"
+      ],
+      "boxes": [
+        {
+          "x": 391,
+          "y": 418,
+          "width": 217,
+          "height": 23,
+          "label": "VIP Revenue Projection Model"
+        },
+        {
+          "x": 475,
+          "y": 619,
+          "width": 178,
+          "height": 23,
+          "label": "Conservative (Baseline)"
+        },
+        {
+          "x": 310,
+          "y": 1207,
+          "width": 87,
+          "height": 24,
+          "label": "ROI Range"
+        }
+      ]
+    },
+    {
+      "id": "easy-pm-07",
+      "mode": "easy",
+      "source": "solutions/personalized-marketing/screenshots/assisted/08-pm-07.jpg",
+      "caption": "PM-07 · Marketing Director: As Marketing Director, create the executive brief summarizing our holiday campaign strategy.",
+      "case_id": "PM-07",
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/08-pm-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Executive Campaign Brief",
+        "Program Economics"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 581,
+          "width": 287,
+          "height": 32,
+          "label": "Executive Campaign Brief"
+        },
+        {
+          "x": 286,
+          "y": 1449,
+          "width": 191,
+          "height": 27,
+          "label": "Program Economics"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "has not been sent not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/personalized-marketing/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Marketing Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 216,
+          "height": 24,
+          "label": "Personalized Marketing Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/personalized-marketing/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot is a blank loading canvas with a spinner; no blank-agent workspace or agent identity is visible."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/personalized-marketing/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Personalized Marketing Manual",
+      "step": 2,
       "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Personalized Marketing Manual in the name field"
+        "Personalized Marketing Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 95,
-          "width": 825,
-          "height": 60,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 239,
+          "height": 24,
+          "label": "Personalized Marketing Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/personalized-marketing/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Personalized Marketing Agent \u2014 Manual Global Instructions",
-        "Locked Preview evidence anchors",
-        "PM-01 through PM-04 acceptance anchors"
+        "Personalized Marketing Agent — Manual Global Ins"
       ],
       "boxes": [
         {
-          "x": 75,
-          "y": 225,
-          "width": 900,
-          "height": 605,
-          "label": "Reviewed instructions and locked anchors"
+          "x": 204,
+          "y": 131,
+          "width": 362,
+          "height": 39,
+          "label": "Personalized Marketing Agent — Manual Global Ins"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/personalized-marketing/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The instructions are visible, but no save confirmation or no-unsaved-changes state is shown; the screenshot does not prove the save action completed."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 334,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/personalized-marketing/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
       "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/05-remove-web-search.png",
       "status": "reusable",
       "visible_anchors": [
-        "Tools section contains no configured tool",
-        "Knowledge section contains no Search all websites item"
+        "Provide trusted context to guide decisions"
       ],
       "boxes": [
         {
-          "x": 1015,
-          "y": 135,
-          "width": 390,
-          "height": 315,
-          "label": "Web search removed from inventory"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
       ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/personalized-marketing/screenshots/manual/06-add-aibast-personalized-marketing-rules-and-safety.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_personalized-marketing-rules-and-safety.md",
+      "step": 6,
       "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/06-add-aibast-personalized-marketing-rules-and-safety.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge pill begins aibast_personalized-marketing-rules-and-saf"
-      ],
-      "full_filename_not_visibly_proven": [
-        "The final characters of the rules-and-safety filename are truncated by the product UI."
+        "aibast_personalized-marketing-rules-and-safety.m"
       ],
       "boxes": [
         {
-          "x": 1020,
-          "y": 260,
-          "width": 380,
-          "height": 100,
-          "label": "Rules and safety knowledge added"
+          "x": 1057,
+          "y": 321,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_personalized-marketing-rules-and-safety.m"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/personalized-marketing/screenshots/manual/07-add-aibast-personalized-marketing-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_personalized-marketing-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/07-add-aibast-personalized-marketing-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge pill begins aibast_personalized-marketing-synthetic-rec",
-        "Knowledge pill begins aibast_personalized-marketing-rules-and-saf"
-      ],
-      "full_filename_not_visibly_proven": [
-        "The final characters of both knowledge filenames are truncated by the product UI."
+        "aibast_personalized-marketing-synthetic-records."
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 260,
-          "width": 382,
-          "height": 140,
-          "label": "Two reviewed knowledge files"
+          "x": 1057,
+          "y": 321,
+          "width": 316,
+          "height": 22,
+          "label": "aibast_personalized-marketing-synthetic-records."
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/08-add-aibast-campaign-design-02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_campaign-design_02",
       "step": 8,
-      "source": "solutions/personalized-marketing/screenshots/manual/08-add-campaign-design.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/08-add-campaign-design.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/08-add-aibast-campaign-design-02.png",
       "status": "reusable",
       "visible_anchors": [
         "review-only-campaign-design"
       ],
       "boxes": [
         {
-          "x": 1020,
-          "y": 135,
-          "width": 375,
-          "height": 100,
-          "label": "Campaign design skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 195,
+          "height": 22,
+          "label": "review-only-campaign-design"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/09-add-aibast-campaign-workflow-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_campaign-workflow_05",
       "step": 9,
-      "source": "solutions/personalized-marketing/screenshots/manual/09-add-content-personalization.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/09-add-content-personalization.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/09-add-aibast-campaign-workflow-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "consent-aware-content-personalization",
-        "review-only-campaign-design"
+        "campaign-workflow"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 135,
-          "width": 380,
-          "height": 135,
-          "label": "Content personalization skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 134,
+          "height": 22,
+          "label": "campaign-workflow"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/10-add-aibast-content-personalization-03.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_content-personalization_03",
       "step": 10,
-      "source": "solutions/personalized-marketing/screenshots/manual/10-add-customer-segmentation.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/10-add-customer-segmentation.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/10-add-aibast-content-personalization-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "privacy-safe-customer-segmentation",
-        "consent-aware-content-personalization",
-        "review-only-campaign-design"
+        "consent-aware-content-personalization"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 135,
-          "width": 380,
-          "height": 190,
-          "label": "Customer segmentation skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 254,
+          "height": 22,
+          "label": "consent-aware-content-personalization"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/11-add-aibast-customer-segmentation-01.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_customer-segmentation_01",
       "step": 11,
-      "source": "solutions/personalized-marketing/screenshots/manual/11-add-performance-analysis.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/11-add-performance-analysis.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/11-add-aibast-customer-segmentation-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "synthetic-marketing-performance-analysis",
-        "privacy-safe-customer-segmentation",
-        "consent-aware-content-personalization",
-        "review-only-campaign-design"
+        "privacy-safe-customer-segmentation"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 135,
-          "width": 380,
-          "height": 225,
-          "label": "Performance analysis skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 238,
+          "height": 22,
+          "label": "privacy-safe-customer-segmentation"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/12-add-aibast-executive-brief-07.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_executive-brief_07",
       "step": 12,
-      "source": "solutions/personalized-marketing/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/12-add-aibast-executive-brief-07.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "four configured skills",
-        "Tools section contains no configured tool",
-        "two knowledge files",
-        "Save tooltip states No unsaved changes"
+        "executive-brief"
       ],
       "boxes": [
         {
-          "x": 1040,
-          "y": 48,
-          "width": 215,
-          "height": 47,
-          "label": "Saved: no unsaved changes"
-        },
-        {
-          "x": 1203,
-          "y": 86,
-          "width": 195,
-          "height": 40,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1018,
-          "y": 135,
-          "width": 382,
-          "height": 420,
-          "label": "4 skills, no tools, 2 knowledge files"
+          "x": 1057,
+          "y": 197,
+          "width": 103,
+          "height": 19,
+          "label": "executive-brief"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/13-add-aibast-performance-analysis-04.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_performance-analysis_04",
       "step": 13,
-      "source": "solutions/personalized-marketing/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/13-add-aibast-performance-analysis-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
+        "synthetic-marketing-performance-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 197,
+          "width": 272,
+          "height": 22,
+          "label": "synthetic-marketing-performance-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/14-add-aibast-revenue-projection-06.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_revenue-projection_06",
+      "step": 14,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/14-add-aibast-revenue-projection-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "revenue-projection"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 128,
+          "height": 21,
+          "label": "revenue-projection"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "revenue-projection",
+        "synthetic-marketing-performance-analysis",
+        "executive-brief",
+        "privacy-safe-customer-segmentation",
+        "consent-aware-content-personalization",
+        "aibast_personalized-marketing-synthetic-records.",
+        "aibast_personalized-marketing-rules-and-safety.m"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 128,
+          "height": 21,
+          "label": "revenue-projection"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 272,
+          "height": 22,
+          "label": "synthetic-marketing-performance-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 103,
+          "height": 19,
+          "label": "executive-brief"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 238,
+          "height": 22,
+          "label": "privacy-safe-customer-segmentation"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 254,
+          "height": 22,
+          "label": "consent-aware-content-personalization"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 306,
+          "height": 22,
+          "label": "aibast_personalized-marketing-synthetic-records."
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_personalized-marketing-rules-and-safety.m"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "revenue-projection",
+        "synthetic-marketing-performance-analysis",
+        "campaign-workflow",
+        "executive-brief",
+        "privacy-safe-customer-segmentation"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 128,
+          "height": 22,
+          "label": "revenue-projection"
+        },
+        {
+          "x": 1055,
+          "y": 274,
+          "width": 272,
+          "height": 23,
+          "label": "synthetic-marketing-performance-analysis"
+        },
+        {
+          "x": 1197,
+          "y": 301,
+          "width": 63,
+          "height": 17,
+          "label": "campaign-workflow"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 103,
+          "height": 19,
+          "label": "executive-brief"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 238,
+          "height": 22,
+          "label": "privacy-safe-customer-segmentation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "executive-brief",
+        "campaign-workflow",
+        "privacy-safe-customer-segmentation",
+        "synthetic-marketing-performance-analysis",
+        "consent-aware-content-personalization",
+        "review-only-campaign-design"
+      ],
+      "boxes": [
+        {
+          "x": 1238,
+          "y": 69,
+          "width": 61,
+          "height": 15,
+          "label": "executive-brief"
+        },
+        {
+          "x": 1189,
+          "y": 87,
+          "width": 63,
+          "height": 20,
+          "label": "campaign-workflow"
+        },
+        {
+          "x": 1055,
+          "y": 121,
+          "width": 238,
+          "height": 23,
+          "label": "privacy-safe-customer-segmentation"
+        },
+        {
+          "x": 1238,
+          "y": 165,
+          "width": 59,
+          "height": 20,
+          "label": "synthetic-marketing-performance-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 254,
+          "height": 22,
+          "label": "consent-aware-content-personalization"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 195,
+          "height": 22,
+          "label": "review-only-campaign-design"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Personalized Marketing Manual"
       ],
       "boxes": [
         {
-          "x": 635,
-          "y": 8,
-          "width": 105,
-          "height": 48,
-          "label": "Preview selected"
-        },
-        {
-          "x": 830,
-          "y": 80,
-          "width": 130,
-          "height": 55,
-          "label": "Fresh chat control"
-        },
-        {
-          "x": 260,
-          "y": 145,
-          "width": 470,
-          "height": 85,
-          "label": "Manual agent preview"
+          "x": 84,
+          "y": 20,
+          "width": 238,
+          "height": 24,
+          "label": "Personalized Marketing Manual"
         }
       ]
     },
     {
       "id": "hard-pm-01",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/19-pm-01.jpg",
+      "caption": "PM-01 · Marketing Director: As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review pr",
+      "step": 19,
       "case_id": "PM-01",
-      "step": 14,
-      "source": "solutions/personalized-marketing/screenshots/manual/14-pm-01.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/14-pm-01.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/19-pm-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Portfolio Review Priorities",
-        "Priority 2 \u2014 Intervene on At-Risk Churners",
-        "Priority 3 \u2014 Convert New Explorers Before They Lapse",
-        "synthetic aggregate"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for Marketing Director, Total Addressable Customers, and no-sensitive-attribute markers are above the captured viewport."
+        "Prepared for:** Marketing Director",
+        "no audience is profiled with sensitive attribute",
+        "Total Addressable Customers"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 175,
-          "width": 950,
-          "height": 515,
-          "label": "Aggregate portfolio review priorities"
+          "x": 286,
+          "y": 489,
+          "width": 244,
+          "height": 24,
+          "label": "Prepared for:** Marketing Director"
+        },
+        {
+          "x": 803,
+          "y": 537,
+          "width": 345,
+          "height": 24,
+          "label": "no audience is profiled with sensitive attribute"
+        },
+        {
+          "x": 285,
+          "y": 682,
+          "width": 225,
+          "height": 21,
+          "label": "Total Addressable Customers"
         }
-      ],
-      "note": "The review-priorities box was too short and its bottom border cut through the Priority 4 row; remeasured and extended the box 2026-09-10."
+      ]
     },
     {
       "id": "hard-pm-02",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/20-pm-02.jpg",
+      "caption": "PM-02 · Campaign Manager: As Campaign Manager, show me the personalized multi-wave campaign recommendations for the holiday promotion and the approval",
+      "step": 20,
       "case_id": "PM-02",
-      "step": 15,
-      "source": "solutions/personalized-marketing/screenshots/manual/15-pm-02.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/15-pm-02.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/20-pm-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Planning Assumptions",
-        "SEG-DORMANT (34,200 contacts)",
-        "carries no sensitive attribute profiling",
-        "Approval Gates (all required before any activation)"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Prepared for Campaign Manager, Draft Campaign Design Portfolio, and Win-Back Journey headings are above the captured viewport."
+        "Prepared for:** Campaign Manager",
+        "Draft Campaign Design Portfolio",
+        "Total Campaign Projection"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 180,
-          "width": 950,
-          "height": 310,
-          "label": "Review-only planning assumptions"
+          "x": 286,
+          "y": 489,
+          "width": 249,
+          "height": 24,
+          "label": "Prepared for:** Campaign Manager"
         },
         {
-          "x": 280,
-          "y": 510,
-          "width": 545,
-          "height": 145,
-          "label": "Activation approval gates"
+          "x": 287,
+          "y": 609,
+          "width": 364,
+          "height": 32,
+          "label": "Draft Campaign Design Portfolio"
+        },
+        {
+          "x": 285,
+          "y": 1502,
+          "width": 206,
+          "height": 24,
+          "label": "Total Campaign Projection"
         }
       ]
     },
     {
       "id": "hard-pm-03",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/21-pm-03.jpg",
+      "caption": "PM-03 · Campaign Manager: As Campaign Manager, generate the VIP campaign with personalized content and A/B test variants.",
+      "step": 21,
       "case_id": "PM-03",
-      "step": 16,
-      "source": "solutions/personalized-marketing/screenshots/manual/16-pm-03.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/16-pm-03.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/21-pm-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "Tone & Messaging Guidance (Draft)",
-        "Welcoming, not pressuring",
-        "Neutral alternatives",
-        "authorized human review and approval",
-        "No action has been taken"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft Content Personalization Matrix, New Explorers, and Draft Hero Copy markers are above the captured viewport."
+        "Draft Content Personalization Matrix",
+        "A/B Test Setup",
+        "VIP Shoppers"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 280,
-          "width": 950,
-          "height": 200,
-          "label": "Draft messaging guidance"
+          "x": 287,
+          "y": 609,
+          "width": 408,
+          "height": 27,
+          "label": "Draft Content Personalization Matrix"
         },
         {
-          "x": 280,
-          "y": 490,
-          "width": 950,
-          "height": 100,
-          "label": "Human approval and no-action gate"
+          "x": 285,
+          "y": 1158,
+          "width": 121,
+          "height": 24,
+          "label": "A/B Test Setup"
+        },
+        {
+          "x": 285,
+          "y": 1297,
+          "width": 133,
+          "height": 28,
+          "label": "VIP Shoppers"
         }
       ]
     },
     {
       "id": "hard-pm-04",
       "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/22-pm-04.jpg",
+      "caption": "PM-04 · Marketing Director: As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.",
+      "step": 22,
       "case_id": "PM-04",
-      "step": 17,
-      "source": "solutions/personalized-marketing/screenshots/manual/17-pm-04.jpg",
-      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/17-pm-04.png",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/22-pm-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "ABT-003 \u2014 VIP Exclusive Preview",
-        "88% confidence",
-        "Measurement Limitations \u2014 Flag Before Any Decision",
-        "Synthetic data only"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Marketing Performance Analysis and A/B Test Results headings are above the captured viewport."
+        "Marketing Performance Analysis",
+        "Synthetic aggregate planning data",
+        "A/B Test Results"
       ],
       "boxes": [
         {
-          "x": 281,
-          "y": 134,
-          "width": 949,
-          "height": 228,
-          "label": "A/B test comparison"
+          "x": 386,
+          "y": 489,
+          "width": 81,
+          "height": 24,
+          "label": "Marketing Performance Analysis"
         },
         {
-          "x": 280,
-          "y": 380,
-          "width": 950,
-          "height": 270,
-          "label": "Measurement and synthetic-data limits"
+          "x": 306,
+          "y": 537,
+          "width": 256,
+          "height": 24,
+          "label": "Synthetic aggregate planning data"
+        },
+        {
+          "x": 285,
+          "y": 646,
+          "width": 156,
+          "height": 26,
+          "label": "A/B Test Results"
         }
-      ],
-      "note": "The A/B comparison box bottom border clipped the 88% confidence line; remeasured and expanded it 2026-09-10."
+      ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-pm-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/personalized-marketing/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list is still a loading skeleton and shows zero items; Personalized Marketing Manual and its Draft status are not visible."
+      "source": "solutions/personalized-marketing/screenshots/manual/23-pm-05.jpg",
+      "caption": "PM-05 · Campaign Manager: As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval.",
+      "step": 23,
+      "case_id": "PM-05",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/23-pm-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft VIP Launch Schedule",
+        "Nothing is scheduled or sent",
+        "Hour 48"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 609,
+          "width": 297,
+          "height": 27,
+          "label": "Draft VIP Launch Schedule"
+        },
+        {
+          "x": 1056,
+          "y": 643,
+          "width": 159,
+          "height": 24,
+          "label": "Nothing is scheduled or sent"
+        },
+        {
+          "x": 299,
+          "y": 1146,
+          "width": 67,
+          "height": 20,
+          "label": "Hour 48"
+        }
+      ]
+    },
+    {
+      "id": "hard-pm-06",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/24-pm-06.jpg",
+      "caption": "PM-06 · Marketing Director: As Marketing Director, break down the revenue projection scenarios for the VIP wave.",
+      "step": 24,
+      "case_id": "PM-06",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/24-pm-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "VIP Revenue Projection Model",
+        "Conservative (Baseline)",
+        "ROI Range"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 564,
+          "width": 338,
+          "height": 32,
+          "label": "VIP Revenue Projection Model"
+        },
+        {
+          "x": 286,
+          "y": 636,
+          "width": 220,
+          "height": 27,
+          "label": "Conservative (Baseline)"
+        },
+        {
+          "x": 697,
+          "y": 1222,
+          "width": 91,
+          "height": 23,
+          "label": "ROI Range"
+        }
+      ]
+    },
+    {
+      "id": "hard-pm-07",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/25-pm-07.jpg",
+      "caption": "PM-07 · Marketing Director: As Marketing Director, create the executive brief summarizing our holiday campaign strategy.",
+      "step": 25,
+      "case_id": "PM-07",
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/25-pm-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Executive Campaign Brief",
+        "Program Economics",
+        "has not been sent"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 609,
+          "width": 287,
+          "height": 32,
+          "label": "Executive Campaign Brief"
+        },
+        {
+          "x": 286,
+          "y": 913,
+          "width": 159,
+          "height": 24,
+          "label": "Program Economics"
+        },
+        {
+          "x": 898,
+          "y": 1972,
+          "width": 139,
+          "height": 20,
+          "label": "has not been sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/personalized-marketing/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Marketing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 236,
+          "height": 24,
+          "label": "Personalized Marketing Manual"
+        }
+      ]
     }
   ],
   "reshoot_plan": {
     "replacement_captures": [
-      "Easy Draft gate filtered to Personalized Marketing Pilot with Draft visible.",
-      "Manual step 1 after the blank agent workspace has fully loaded.",
-      "Manual step 4 with an explicit saved or no-unsaved-changes confirmation visible.",
-      "Manual Draft gate filtered to Personalized Marketing Manual with Draft visible."
+      "solutions/personalized-marketing/screenshots/assisted/02-pm-01.jpg"
     ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 4/4 verdict.",
-      "Copilot-only local 4/4 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "new_learn_step_captures": []
   },
   "release_review": {
-    "status": "approved",
-    "reviewer": "workshop-builder:personalized-marketing",
-    "reviewed_at": "2026-08-10T00:27:58.159956+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "status": "changes_requested",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:50:32.401554+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

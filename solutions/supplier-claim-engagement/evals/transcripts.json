@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:52:13.669807+00:00",
+  "solution": "@aibast-agents-library/supplier-claim-engagement",
+  "onepager": "62. Supplier Claim Engagement Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "SupplierClaimEngagementAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+      "sha256": "f4be20770c2bc9e239e911d8e0d914ed031e6b5330c6577c2ed4c9da02a8adf5"
+    }
+  ],
+  "case_file": "tests/demo_cases/supplier-claim-engagement.json",
+  "case_file_sha256": "22dea34555ec073e55714bb56a0ce96a75af3063ce20a73fe7884e8e065f20d9",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "SC-01",
+      "persona": "Supplier Claims Coordinator",
+      "onepager_promise": "Triages damage, shortage, quality, and pricing claims against supplier service terms",
+      "prompt": "Show me our open supplier claims and what needs attention today.",
+      "assistant_response": "Here's today's picture \u2014 4 open claims, $1,631.80 total:\n\n**Needs attention now:**\n- **CLM-5202** (Tailspin Freight, shortage, $345) \u2014 response deadline **breached by 2h**. Ready to draft an escalation brief if you want.\n- **CLM-5203** (Alpine Dairy, quality, $620.80, Critical) \u2014 **only 1 hour left** before it breaches. Worth a reminder nudge now.\n- **CLM-5201** (Northwind Packaging, damage, $591) \u2014 brand new, not yet sent. Ready to draft.\n\n**On track:**\n- **CLM-5204** (Litware Snacks, pricing, $75) \u2014 supplier already responded within window, just needs review.\n- **CLM-5205** \u2014 closed, $410 credit received. \u2705\n\nWant me to draft the escalation for CLM-5202, a reminder for CLM-5203, or the initial claim for CLM-5201?",
+      "agent_logs": "[SupplierClaimEngagementAgent] **Supplier Claims Queue: Fabrikam Grocers, Apr 14, 2026 10:00**\n\n| Claim | Type | Supplier | Value | Severity | Status |\n|---|---|---|---|---|---|\n| CLM-5201 | Damage | Northwind Packaging | $591.00 | P2 - High | Ready to draft |\n| CLM-5202 | Shortage | Tailspin Freight | $345.00 | P3 - Medium | Sent, awaiting response |\n| CLM-5203 | Quality | Alpine Dairy Co-op | $620.80 | P1 - Critical | Sent, awaiting response |\n| CLM-5204 | Pricing | Litware Snacks | $75.00 | P4 - Low | Supplier responded |\n| CLM-5205 | Damage | Northwind Packaging | $410.00 | P2 - High | Closed - credit received |\n\n| Measure | Value |\n|---|---|\n| Open claims | 4 |\n| Open claim value | $1,631.80 |\n| Recovered this month | $410.00 |\n\n**Next step:** CLM-5201 is new and ready to draft; CLM-5202 is past its response window.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent\n[SupplierClaimEngagementAgent] **Supplier Response Deadlines: Apr 14, 2026 10:00**\n\n| Claim | Supplier | Window | Elapsed | Status |\n|---|---|---|---|---|\n| CLM-5201 | Northwind Packaging | 24 h | - | Not sent |\n| CLM-5202 | Tailspin Freight | 36 h | 38 h | Breached by 2 h |\n| CLM-5203 | Alpine Dairy Co-op | 8 h | 7 h | At risk (1 h left) |\n| CLM-5204 | Litware Snacks | 60 h | 43 h | Responded within window |\n\n**Breached:** CLM-5202  \n**At risk:** CLM-5203\n\n**Next step:** prepare the escalation brief for CLM-5202 and a reminder draft for CLM-5203.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent",
+      "expected_agent": "SupplierClaimEngagementAgent",
+      "must_include": [
+        "Open claim value",
+        "1,631.80",
+        "CLM-5201"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SC-02",
+      "persona": "Supplier Claims Coordinator",
+      "onepager_promise": "Triages damage, shortage, quality, and pricing claims against supplier service terms",
+      "prompt": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+      "assistant_response": "Here's the triage on **CLM-5201**:\n\n- **Type:** Damage claim, Severity P2 (High)\n- **Responsible supplier:** Northwind Packaging (PO-77310, delivered Apr 10 to Distribution Center 2)\n- **Claim value:** $591.00\n- **Terms:** Supplier has a 24-hour response window, with a 5-business-day resolution window overall\n\nRouting goes through the supplier claims coordinator to Northwind's claims desk. Want me to pull the evidence pack next, or draft the supplier claim notice?",
+      "agent_logs": "[SupplierClaimEngagementAgent] **Claim Triage: CLM-5201**\n\n| Detail | Value |\n|---|---|\n| Claim type | Damage |\n| Severity | P2 - High |\n| Responsible supplier | Northwind Packaging |\n| Purchase order | PO-77310 |\n| Received at | Distribution Center 2, delivered Apr 10, 2026 |\n| Claim value | $591.00 |\n| Supplier response window | 24 hours |\n| Resolution window | 5 business days |\n| Routing | Supplier claims coordinator, then Northwind Packaging claims desk |\n\n**Next step:** check the evidence pack, then draft the supplier claim notice.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent",
+      "expected_agent": "SupplierClaimEngagementAgent",
+      "must_include": [
+        "P2 - High",
+        "Northwind Packaging",
+        "24 hours"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SC-03",
+      "persona": "Receiving Supervisor",
+      "onepager_promise": "Assembles evidence packs and drafts supplier claim notices for coordinator approval",
+      "prompt": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+      "assistant_response": "CLM-5201's evidence is **complete** \u2014 3 damage photos, receiving inspection report (RIR-4471), and a signed delivery note with exception (DN-90318) are all on file.\n\nThe claim is worth **$591.00** total (18 units sparkling water + 6 cases of pasta sauce), owed by Northwind Packaging.",
+      "agent_logs": "[SupplierClaimEngagementAgent] **Evidence Pack: CLM-5201 (Damage, Northwind Packaging)**\n\n| Required Evidence | On File |\n|---|---|\n| Damage photos (2 or more) | 3 photos |\n| Receiving inspection report | RIR-4471 |\n| Delivery note signed with exception | DN-90318 |\n\n**Evidence status:** Complete\n\n| Affected Item | Units | Unit Cost | Line Value |\n|---|---|---|---|\n| Sparkling water 12-pack | 18 | $21.50 | $387.00 |\n| Pasta sauce glass jars, case of 12 | 6 | $34.00 | $204.00 |\n| **Total claim value** | | | **$591.00** |\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent",
+      "expected_agent": "SupplierClaimEngagementAgent",
+      "must_include": [
+        "Evidence status",
+        "RIR-4471",
+        "591.00"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SC-04",
+      "persona": "Supplier Claims Coordinator",
+      "onepager_promise": "Assembles evidence packs and drafts supplier claim notices for coordinator approval",
+      "prompt": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+      "assistant_response": "Here's the draft claim notice for **CLM-5201** (Damage, P2 - High) \u2014 ready for your review:\n\n| Field | Value |\n|---|---|\n| Supplier | Northwind Packaging |\n| PO | PO-77310 (delivered Apr 10, 2026) |\n| Claim value | $591.00 |\n| Evidence | 3 photos, RIR-4471, DN-90318 |\n| Response due if sent | Apr 15, 10:00 (24h) |\n| Resolution due | Apr 21, 2026 |\n\n**Message:** \"Fabrikam Grocers is filing a damage claim on PO-77310. Affected items: 18x Sparkling water 12-pack ($387.00); 6x Pasta sauce glass jars, case of 12 ($204.00). Total $591.00. Evidence pack attached. Please respond within 24 hours with a credit or replacement proposal.\"\n\nThis is only a draft \u2014 nothing has been sent, and no response clock has started. Let me know if you want changes or if you're ready to send it through your own channels.",
+      "agent_logs": "[SupplierClaimEngagementAgent] **Supplier Claim Notice - Draft, Not Sent**\n\n| Field | Value |\n|---|---|\n| To | Northwind Packaging claims desk (synthetic) |\n| Claim | CLM-5201 - Damage, P2 - High |\n| Purchase order | PO-77310 delivered Apr 10, 2026 |\n| Claim value | $591.00 |\n| Evidence attached | 3 photos, RIR-4471, DN-90318 |\n| Response due if sent now | Apr 15, 2026 10:00 (24 h) |\n| Resolution due if sent now | Apr 21, 2026 (5 business days) |\n\n**Message draft:** \"Fabrikam Grocers is filing a damage claim on PO-77310. Affected items: 18 x Sparkling water 12-pack ($387.00); 6 x Pasta sauce glass jars, case of 12 ($204.00). Total $591.00. The evidence pack is attached. Please respond within 24 hours with a credit or replacement proposal.\"\n\nStatus: Draft for coordinator review. Nothing was sent and no deadline clock was started.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent",
+      "expected_agent": "SupplierClaimEngagementAgent",
+      "must_include": [
+        "Draft, Not Sent",
+        "Apr 15, 2026 10:00",
+        "Nothing was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SC-05",
+      "persona": "Claims Team Lead",
+      "onepager_promise": "Tracks supplier response windows and drafts escalations before recoverable value is lost",
+      "prompt": "Which supplier claims are at risk of missing their response deadline?",
+      "assistant_response": "Here's the risk picture as of this morning's snapshot:\n\n- **CLM-5202 (Tailspin Freight)** \u2014 already **breached**, 2 hours past its 36h window\n- **CLM-5203 (Alpine Dairy Co-op)** \u2014 **at risk**, only 1 hour left in its 8h window\n- CLM-5201 \u2014 not yet sent, no clock running\n- CLM-5204 \u2014 responded on time, no issue\n\nWant me to pull the escalation brief for CLM-5202 and draft a reminder for CLM-5203?",
+      "agent_logs": "[SupplierClaimEngagementAgent] **Supplier Response Deadlines: Apr 14, 2026 10:00**\n\n| Claim | Supplier | Window | Elapsed | Status |\n|---|---|---|---|---|\n| CLM-5201 | Northwind Packaging | 24 h | - | Not sent |\n| CLM-5202 | Tailspin Freight | 36 h | 38 h | Breached by 2 h |\n| CLM-5203 | Alpine Dairy Co-op | 8 h | 7 h | At risk (1 h left) |\n| CLM-5204 | Litware Snacks | 60 h | 43 h | Responded within window |\n\n**Breached:** CLM-5202  \n**At risk:** CLM-5203\n\n**Next step:** prepare the escalation brief for CLM-5202 and a reminder draft for CLM-5203.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent",
+      "expected_agent": "SupplierClaimEngagementAgent",
+      "must_include": [
+        "Breached by 2 h",
+        "CLM-5203",
+        "At risk"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SC-06",
+      "persona": "Supplier Claims Coordinator",
+      "onepager_promise": "Evaluates supplier responses against the claim to surface unrecovered value",
+      "prompt": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+      "assistant_response": "Litware Snacks partially accepted CLM-5204 (pricing dispute, $75 claimed on 50 units):\n\n- **Offered:** $45.00 credit for 30 units \u2014 their reason: those 20 disputed units shipped before the new price list took effect.\n- **Gap:** $30.00 (20 units) unrecovered.\n\nNext step: pull ship dates for the disputed 20 units and compare against the Jan 5, 2026 price list to verify their claim before deciding whether to accept the $45 or counter for the full $75. Want me to pull the evidence pack for that comparison?",
+      "agent_logs": "[SupplierClaimEngagementAgent] **Supplier Response: CLM-5204 (Litware Snacks)**\n\n| Detail | Value |\n|---|---|\n| Received | Apr 13, 2026 09:00 (43 h, within the 60 h window) |\n| Position | Partial acceptance |\n| Supplier reason | Supplier says 20 cases shipped before the new price list took effect |\n| Claimed | $75.00 (50 units) |\n| Credit offered | $45.00 (30 units) |\n| Unrecovered gap | $30.00 (20 units) |\n\n**Suggested next step:** ask the supplier for ship dates on the disputed units and compare them with the agreed price list on file (Price list effective Jan 5, 2026). A coordinator decides whether to accept the $45.00 credit or counter for the $30.00 gap.\n\nNo credit was accepted or rejected.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent\n[SupplierClaimEngagementAgent] **Claim Triage: CLM-5204**\n\n| Detail | Value |\n|---|---|\n| Claim type | Pricing |\n| Severity | P4 - Low |\n| Responsible supplier | Litware Snacks |\n| Purchase order | PO-77251 |\n| Received at | All stores, delivered Apr 6, 2026 |\n| Claim value | $75.00 |\n| Supplier response window | 60 hours |\n| Resolution window | 10 business days |\n| Routing | Supplier claims coordinator, then Litware Snacks claims desk |\n\n**Next step:** check the evidence pack, then draft the supplier claim notice.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent",
+      "expected_agent": "SupplierClaimEngagementAgent",
+      "must_include": [
+        "Partial acceptance",
+        "45.00",
+        "Unrecovered gap"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SC-07",
+      "persona": "Claims Team Lead",
+      "onepager_promise": "Tracks supplier response windows and drafts escalations before recoverable value is lost",
+      "prompt": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+      "assistant_response": "**CLM-5202 Escalation Brief (draft, not sent)**\n\n- **Claim:** Shortage, Priority Medium \u2014 Tailspin Freight\n- **Value:** $345.00\n- **Window:** 36h, elapsed 38h \u2192 **breached by 2 hours**\n- **Escalate to:** Category manager, pantry and beverages\n\n**Draft message:**\n\"CLM-5202 with Tailspin Freight ($345.00) has had no response for 38 hours against a 36-hour window. Please raise it with the supplier's account contact and confirm a response date.\"\n\nNote: CLM-5203 (Alpine Dairy) is also at risk \u2014 only 1 hour left on its 8-hour window, if you want a reminder drafted for that one too.\n\nThis is a draft only \u2014 a coordinator needs to review and send it.",
+      "agent_logs": "[SupplierClaimEngagementAgent] **Supplier Response Deadlines: Apr 14, 2026 10:00**\n\n| Claim | Supplier | Window | Elapsed | Status |\n|---|---|---|---|---|\n| CLM-5201 | Northwind Packaging | 24 h | - | Not sent |\n| CLM-5202 | Tailspin Freight | 36 h | 38 h | Breached by 2 h |\n| CLM-5203 | Alpine Dairy Co-op | 8 h | 7 h | At risk (1 h left) |\n| CLM-5204 | Litware Snacks | 60 h | 43 h | Responded within window |\n\n**Breached:** CLM-5202  \n**At risk:** CLM-5203\n\n**Next step:** prepare the escalation brief for CLM-5202 and a reminder draft for CLM-5203.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent\n[SupplierClaimEngagementAgent] **Escalation Brief - Draft, Not Sent**\n\n| Field | Value |\n|---|---|\n| Claim | CLM-5202 - Shortage, P3 - Medium |\n| Supplier | Tailspin Freight |\n| Claim value | $345.00 |\n| Response window | 36 h |\n| Elapsed without response | 38 h (Breached by 2 h) |\n| Escalate to | Category manager, pantry and beverages |\n\n**Draft:** \"CLM-5202 with Tailspin Freight ($345.00) has had no response for 38 hours against a 36-hour window. Please raise it with the supplier's account contact and confirm a response date.\"\n\nStatus: Draft for coordinator approval. No escalation or message was sent.\n\nSynthetic claims evidence only. This agent does not send a claim, contact a supplier, accept or reject a credit, escalate, or change a case; an authorized claims coordinator reviews every draft.\n\nSource: [Synthetic Fabrikam Grocers Claims Snapshot]\nAgents: SupplierClaimEngagementAgent",
+      "expected_agent": "SupplierClaimEngagementAgent",
+      "must_include": [
+        "Escalation Brief",
+        "38 h",
+        "No escalation or message was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

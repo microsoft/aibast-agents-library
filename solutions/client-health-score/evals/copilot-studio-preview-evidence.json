@@ -1,23 +1,24 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T18:24:36.920Z",
+  "captured_at": "2026-10-07T09:03:29.488274Z",
   "solution": "@aibast-agents-library/client-health-score",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Client Health Score Pilot",
   "schema_name": "aibast_ClientHealthScorePilot",
   "bot_id": "7d8a0261-25dd-4794-9569-22eb92e58e5a",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 8 change(s) pushed.",
   "cases": [
     {
       "case_id": "CHS-01",
       "must_include": [
         "TechCorp Industries",
         "Churn Indicator",
-        "CRITICAL"
+        "CRITICAL",
+        "$22.3M"
       ],
       "must_not_include": [
         "churn will occur"
@@ -31,19 +32,8 @@
         "Declining billing trend",
         "TechCorp Industries"
       ],
-      "required_skill": "client-engagement-analysis",
       "must_not_include": [
-        "meeting was created",
-        "search-before-answer",
-        "open escalations",
-        "active escalations",
-        "typically precedes billing contraction",
-        "utilization caused",
-        "utilization correlating",
-        "portfolio-wide",
-        "highest in the portfolio",
-        "lowest in the portfolio",
-        "benchmark"
+        "meeting was created"
       ],
       "passed": true
     },
@@ -64,7 +54,8 @@
       "must_include": [
         "TechCorp Industries",
         "Global Finance Corp",
-        "Healthcare Solutions Inc"
+        "Healthcare Solutions Inc",
+        "47 open support tickets"
       ],
       "must_not_include": [
         "churn is certain"
@@ -76,20 +67,48 @@
       "must_include": [
         "Morgan Lee",
         "Value realization workshop",
-        "Approval gate"
+        "Approval gate",
+        "Sarah Mitchell"
       ],
-      "required_skill": "client-retention-playbook",
       "must_not_include": [
         "message was sent",
-        "CRM record updated successfully",
-        "Snapshot date",
-        "open escalations",
-        "active escalations",
-        "I am planning",
-        "I will schedule",
-        "Total value at risk",
-        "Cross-Account",
-        "Churn Probability"
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CHS-06",
+      "must_include": [
+        "78%",
+        "$340K outstanding",
+        "John Davis"
+      ],
+      "must_not_include": [
+        "churn will occur"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CHS-07",
+      "must_include": [
+        "Sarah Mitchell",
+        "Tuesday",
+        "ROI documentation"
+      ],
+      "must_not_include": [
+        "invitation was sent"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CHS-08",
+      "must_include": [
+        "$17.2M",
+        "300%",
+        "ready for you to send"
+      ],
+      "must_not_include": [
+        "meetings scheduled"
       ],
       "passed": true
     }

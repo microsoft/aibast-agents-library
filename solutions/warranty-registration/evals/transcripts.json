@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:43:57.518927+00:00",
+  "solution": "@aibast-agents-library/warranty-registration",
+  "onepager": "64. Warranty and Registration Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "WarrantyRegistrationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/warranty_registration_stack/warranty_registration_agent.py",
+      "sha256": "9b198a7bfdd59b5c94c2504fc984d79100b57de2393dce80d4ae69dd90c4a71e"
+    }
+  ],
+  "case_file": "tests/demo_cases/warranty-registration.json",
+  "case_file_sha256": "3260991b9a11bfd4e47759607ff98264b51100c3281e38e754a95766d3ab637a",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "WAR-01",
+      "persona": "Dealer Service Manager",
+      "onepager_promise": "Shows every registered unit's coverage, what is expiring and what still needs registering in one view",
+      "prompt": "How does our dealership's warranty coverage look right now?",
+      "assistant_response": "Here's the snapshot (called via **WarrantyRegistrationAgent**):\n\n**6 registered units** \u2014 3 active, 2 expiring soon, 1 expired:\n- \u2705 Active: HP-40-1182, WS-25-4471 (both until 2027), CR-12-0950 (limited, until 2027-06-30)\n- \u26a0\ufe0f Expiring soon: BG-08-2290 (26 days left, parts only), PW-30-0615 (64 days left)\n- \u274c Expired: TC-90-3307 (ended 16 days ago)\n\n**2 sold units awaiting registration** (30-day clock running):\n- WS-25-4520 \u2014 due in 20 days\n- HP-40-1207 \u2014 due in 26 days\n\n**Priorities:**\n1. Get WS-25-4520 and HP-40-1207 registered before their windows close\n2. Consider extended-coverage offers for BG-08-2290 and PW-30-0615 before they lapse\n\nWant me to draft the registrations for the two pending units, or pull extension-offer candidates?",
+      "agent_logs": "[WarrantyRegistrationAgent] **Warranty Coverage Overview: Fabrikam Tool Supply (Riverside branch)**\n\nDealer account DLR-4100 | Manufacturer Northwind Equipment | As of 2026-03-02\n\n| Measure | Count |\n|---|---|\n| Registered units | 6 |\n| Active | 3 |\n| Expiring within 90 days | 2 |\n| Expired | 1 |\n| Sold, awaiting registration | 2 |\n\n| Serial | Product | Coverage | Ends | Remaining | Status |\n|---|---|---|---|---|---|\n| HP-40-1182 | Hydraulic Press HP-40 | Full parts and labor | 2027-04-10 | 404 days | Active |\n| WS-25-4471 | Welding Station WS-250 | Full parts and labor | 2027-01-22 | 326 days | Active |\n| BG-08-2290 | Bench Grinder BG-8 | Parts only | 2026-03-28 | 26 days | Expiring soon |\n| PW-30-0615 | Parts Washer PW-30 | Full parts and labor | 2026-05-05 | 64 days | Expiring soon |\n| TC-90-3307 | Tire Changer TC-900 | Full parts and labor | 2026-02-14 | ended 16 days ago | Expired |\n| CR-12-0950 | Coolant Recovery Unit CR-12 | Limited (wear items excluded) | 2027-06-30 | 485 days | Active |\n\n**Awaiting registration (30-day window):**\n\n| Serial | Product | Sale | Registration |\n|---|---|---|---|\n| WS-25-4520 | Welding Station WS-250 | sold 2026-02-20 | due 2026-03-22 (20 days) |\n| HP-40-1207 | Hydraulic Press HP-40 | sold 2026-02-26 | due 2026-03-28 (26 days) |\n\n**Next step:** register the 2 sold units before their windows close and review extended-coverage offers for the 2 expiring units.\n\nSynthetic dealer snapshot only. This agent does not file a claim, submit a registration, sell an extension, contact a customer or change a warranty record; it prepares drafts and pre-checks for an authorized person to act on.\n\nSource: [Synthetic Warranty + Registration Snapshot, as of 2026-03-02]\nAgents: WarrantyRegistrationAgent",
+      "expected_agent": "WarrantyRegistrationAgent",
+      "must_include": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-02",
+      "persona": "Dealer Service Manager",
+      "onepager_promise": "Pre-checks whether a repair is covered before work starts, so claims are not rejected later",
+      "prompt": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+      "assistant_response": "Good news \u2014 WS-25-4471 is pre-check eligible: it's registered, warranty is active with 326 days remaining, and coverage includes both parts and labor. Note it has 1 prior claim on record.\n\nThis is a pre-check only, not a filed claim. Next step: have the Northwind warranty desk review and formally approve it, with the failure description, photos, and labor hours for the wire feeder issue.",
+      "agent_logs": "[WarrantyRegistrationAgent] **Claim Pre-Check: WS-25-4471 (Welding Station WS-250)**\n\n| Check | Result |\n|---|---|\n| Registration | Confirmed 2025-01-24 |\n| Warranty active | Yes (ends 2027-01-22) |\n| Days remaining | 326 |\n| Coverage | Full parts and labor |\n| Parts covered | Yes |\n| Labor covered | Yes |\n| Prior claims | 1 |\n\n**Pre-check result: Eligible for claim review**\n\n**Next step:** Parts and labor are covered. Prepare the claim with the failure description, photos and hours for the Northwind warranty desk to approve.\n\nNo claim was filed. The Northwind warranty desk makes the coverage decision.\n\nSynthetic dealer snapshot only. This agent does not file a claim, submit a registration, sell an extension, contact a customer or change a warranty record; it prepares drafts and pre-checks for an authorized person to act on.\n\nSource: [Synthetic Warranty + Registration Snapshot, as of 2026-03-02]\nAgents: WarrantyRegistrationAgent",
+      "expected_agent": "WarrantyRegistrationAgent",
+      "must_include": [
+        "Eligible for claim review",
+        "Labor covered",
+        "No claim was filed"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-03",
+      "persona": "Warranty Administrator",
+      "onepager_promise": "Pulls a unit's full warranty record and claim history in seconds",
+      "prompt": "Pull the full warranty record for tire changer TC-90-3307.",
+      "assistant_response": "Here's the record for **TC-90-3307** (Tire Changer TC-900):\n\n- **Status:** Expired (ended 16 days ago, on 2026-02-14)\n- **Coverage while active:** Full parts, labor, and on-site\n- **Claim history:** 2 resolved claims \u2014 bead breaker cylinder reseal (2024) and turntable motor replacement (2025)\n\nSince warranty just lapsed, any new repair would be customer-paid unless you want to route an exception request to the Northwind warranty desk. Want me to draft that, or check if this unit qualifies for an extended-coverage offer?",
+      "agent_logs": "[WarrantyRegistrationAgent] **Warranty Record: TC-90-3307 (Tire Changer TC-900)**\n\n| Field | Value |\n|---|---|\n| Product family | Tire service |\n| Purchased | 2023-02-14 |\n| Registered | 2023-02-15 |\n| Warranty ends | 2026-02-14 |\n| Status | Expired (ended 16 days ago) |\n| Coverage | Full parts and labor |\n| Parts / Labor / On-site | Yes / Yes / Yes |\n\n**Claim history (2):**\n\n| Claim | Date | Issue | Status |\n|---|---|---|---|\n| CLM-24-0127 | 2024-06-03 | Bead breaker cylinder resealed | Resolved |\n| CLM-25-0044 | 2025-02-11 | Turntable motor replaced | Resolved |\n\n**Next step:** Warranty ended 16 days ago. Repairs are customer-paid; quote the repair and, if the customer asks, route an exception request to the Northwind warranty desk.\n\nSynthetic dealer snapshot only. This agent does not file a claim, submit a registration, sell an extension, contact a customer or change a warranty record; it prepares drafts and pre-checks for an authorized person to act on.\n\nSource: [Synthetic Warranty + Registration Snapshot, as of 2026-03-02]\nAgents: WarrantyRegistrationAgent",
+      "expected_agent": "WarrantyRegistrationAgent",
+      "must_include": [
+        "Expired (ended 16 days ago)",
+        "CLM-25-0044",
+        "Claim history"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-04",
+      "persona": "Dealer Sales Staff",
+      "onepager_promise": "Validates serials against the catalog and catches duplicates before registration",
+      "prompt": "We just sold welding station WS-25-4520. Check the serial before we register it.",
+      "assistant_response": "Serial WS-25-4520 checks out: valid format, in catalog (Welding Station WS-250), not yet registered, sold 2026-02-20 to Contoso Fleet Services \u2014 20 days left in the registration window. It's ready to register whenever you want me to prepare the draft.",
+      "agent_logs": "[WarrantyRegistrationAgent] **Serial Check: WS-25-4520**\n\n| Check | Result |\n|---|---|\n| Format | Valid |\n| In catalog | Yes - Welding Station WS-250 |\n| Already registered | No |\n| Sold | 2026-02-20 to Contoso Fleet Services (shop account C-2207) |\n| Registration window | Due 2026-03-22 (20 days left) |\n\n**Result: Ready to register.** Ask me to prepare the registration draft.\n\nSynthetic dealer snapshot only. This agent does not file a claim, submit a registration, sell an extension, contact a customer or change a warranty record; it prepares drafts and pre-checks for an authorized person to act on.\n\nSource: [Synthetic Warranty + Registration Snapshot, as of 2026-03-02]\nAgents: WarrantyRegistrationAgent",
+      "expected_agent": "WarrantyRegistrationAgent",
+      "must_include": [
+        "Ready to register",
+        "Already registered",
+        "2026-03-22"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-05",
+      "persona": "Dealer Sales Staff",
+      "onepager_promise": "Prepares product registrations as drafts so no sold unit misses its registration window",
+      "prompt": "Prepare the registration for WS-25-4520, but don't submit anything.",
+      "assistant_response": "I drafted the registration for WS-25-4520 via the warranty desk agent \u2014 nothing was submitted. Key details: Welding Station WS-250, sold 2026-02-20 to Contoso Fleet Services, 24-month full parts/labor coverage ending 2028-02-20, with a registration deadline of 2026-03-22 (20 days left).\n\nBefore actually submitting, confirm the sale date on the invoice and the customer contact with Priya Raman, then file it in the manufacturer's portal yourself.",
+      "agent_logs": "[WarrantyRegistrationAgent] **Product Registration Draft - Not Submitted**\n\n| Field | Value |\n|---|---|\n| Draft ID | REG-DRAFT-WS-25-4520 |\n| Serial | WS-25-4520 |\n| Product | Welding Station WS-250 |\n| Dealer | Fabrikam Tool Supply (Riverside branch) (DLR-4100) |\n| End customer | Contoso Fleet Services (shop account C-2207) |\n| Sale date (warranty start) | 2026-02-20 |\n| Warranty term | 24 months |\n| Warranty would end | 2028-02-20 |\n| Coverage | Full parts and labor |\n| Registration due | 2026-03-22 (20 days left) |\n| Status | Draft for dealer review |\n\n**Before submitting:** confirm the sale date on the invoice and the end customer's contact with Priya Raman, then submit it in the manufacturer's registration portal. Nothing was submitted and no warranty was activated.\n\nSynthetic dealer snapshot only. This agent does not file a claim, submit a registration, sell an extension, contact a customer or change a warranty record; it prepares drafts and pre-checks for an authorized person to act on.\n\nSource: [Synthetic Warranty + Registration Snapshot, as of 2026-03-02]\nAgents: WarrantyRegistrationAgent",
+      "expected_agent": "WarrantyRegistrationAgent",
+      "must_include": [
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-06",
+      "persona": "Dealer Sales Staff",
+      "onepager_promise": "Finds units whose coverage is ending and drafts extended-coverage offers before it lapses",
+      "prompt": "Which units should we offer extended coverage to this month?",
+      "assistant_response": "Via the warranty desk agent \u2014 2 units are worth an extended-coverage pitch this month:\n\n- **BG-08-2290** (Bench Grinder BG-8) \u2014 coverage ends in 26 days, offer at $72.25\n- **PW-30-0615** (Parts Washer PW-30) \u2014 coverage ends in 64 days, offer at $119.00\n\nCombined offer value: $191.25. Note **TC-90-3307** was excluded \u2014 its warranty already lapsed, so an extension can't be started on it.\n\nNothing's been sent yet \u2014 these are just drafts for someone on your team to reach out on.",
+      "agent_logs": "[WarrantyRegistrationAgent] **Extended-Coverage Offers: 2 units ending within 90 days**\n\n| Serial | Product | Coverage ends | Remaining | List price | Offer (15% off list) |\n|---|---|---|---|---|---|\n| BG-08-2290 | Bench Grinder BG-8 | 2026-03-28 | 26 days | $85.00 | $72.25 |\n| PW-30-0615 | Parts Washer PW-30 | 2026-05-05 | 64 days | $140.00 | $119.00 |\n\n**Offer total:** $191.25 across 2 units.\n**Not offered:** TC-90-3307 - coverage already ended; extensions must start before the warranty ends.\n\n**Next step:** review the offer drafts and send them to the customers yourself. No offer was sent and nothing was sold.\n\nSynthetic dealer snapshot only. This agent does not file a claim, submit a registration, sell an extension, contact a customer or change a warranty record; it prepares drafts and pre-checks for an authorized person to act on.\n\nSource: [Synthetic Warranty + Registration Snapshot, as of 2026-03-02]\nAgents: WarrantyRegistrationAgent",
+      "expected_agent": "WarrantyRegistrationAgent",
+      "must_include": [
+        "$191.25",
+        "BG-08-2290",
+        "No offer was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

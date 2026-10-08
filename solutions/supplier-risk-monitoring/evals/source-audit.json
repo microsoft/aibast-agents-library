@@ -16,6 +16,18 @@
     ],
     "alternative_sourcing": [
       "SR-04"
+    ],
+    "mitigation_plan": [
+      "SR-05"
+    ],
+    "financial_impact": [
+      "SR-06"
+    ],
+    "implementation_roadmap": [
+      "SR-07"
+    ],
+    "monitoring_plan": [
+      "SR-08"
     ]
   },
   "defects_fixed": [
@@ -28,8 +40,14 @@
       "area": "recommendation-only safety",
       "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
       "after": "The agent recommends review options only and never contacts, qualifies, selects, or orders from suppliers. Every output labels the fixed data and exact figures as synthetic."
+    },
+    {
+      "area": "demo-video and one-pager alignment",
+      "before": "The agent mixed non-semiconductor suppliers into every view, labeled tiers CRITICAL/HIGH/MODERATE, used real company names for backups, and had no mitigation plan, financial case, roadmap, or monitoring design; the review-scope spend counted the wrong suppliers.",
+      "after": "The default view is the Taiwan/China/Malaysia semiconductor scope with 40/35/25% supply shares and five risk categories; HIGH/MEDIUM/LOW levels; fictional backup names; new mitigation_plan, financial_impact ($1.098M, 65% exposure reduction, 8.8% break-even), implementation_roadmap, and monitoring_plan operations as recommendations only; review-scope spend is computed from the listed suppliers."
     }
   ],
   "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",
-  "unresolved_defects": []
+  "unresolved_defects": [],
+  "status": "audited-and-fixed"
 }

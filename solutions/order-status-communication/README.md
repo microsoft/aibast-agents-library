@@ -47,7 +47,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 | Copilot Studio deployment settings | `solutions/order-status-communication/exports/order-status-communication-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/order-status-communication/exports/order-status-communication-solution-export.json` |
 
-**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

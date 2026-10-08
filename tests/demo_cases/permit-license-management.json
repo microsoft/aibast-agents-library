@@ -8,15 +8,14 @@
       "id": "PERMIT_LICENSE_MANAGEMENT-01",
       "operation": "permit_inventory",
       "persona": "Facility Manager",
-      "prompt": "Which Riverside permit is expired right now?",
+      "prompt": "Show me our permit status and any expiring soon",
       "kwargs": {
-        "operation": "permit_inventory",
-        "facility": "Riverside"
+        "operation": "permit_inventory"
       },
       "must_include": [
-        "PRM-6002",
-        "EXPIRED",
-        "Verify status"
+        "240 active permits",
+        "Imperial Valley Solar",
+        "$47M"
       ],
       "expects_agent": "PermitLicenseManagementAgent"
     },
@@ -24,14 +23,13 @@
       "id": "PERMIT_LICENSE_MANAGEMENT-02",
       "operation": "renewal_calendar",
       "persona": "Permit Coordinator",
-      "prompt": "What is the next Riverside renewal deadline I need to prepare for?",
+      "prompt": "Which permit renewals have already missed their lead time, and how many days are left?",
       "kwargs": {
-        "operation": "renewal_calendar",
-        "facility": "Riverside"
+        "operation": "renewal_calendar"
       },
       "must_include": [
-        "NPDES Stormwater Discharge Permit",
-        "2026-03-01",
+        "Reno Wind Farm",
+        "MISSED",
         "No renewal"
       ],
       "expects_agent": "PermitLicenseManagementAgent"
@@ -40,13 +38,12 @@
       "id": "PERMIT_LICENSE_MANAGEMENT-03",
       "operation": "compliance_gaps",
       "persona": "Compliance Manager",
-      "prompt": "What permit evidence gap needs immediate authorized review at Riverside?",
+      "prompt": "What permit evidence gap needs immediate authorized review?",
       "kwargs": {
-        "operation": "compliance_gaps",
-        "facility": "Riverside"
+        "operation": "compliance_gaps"
       },
       "must_include": [
-        "expired_permit",
+        "renewal_lead_time_missed",
         "CRITICAL",
         "not legal advice"
       ],
@@ -56,15 +53,30 @@
       "id": "PERMIT_LICENSE_MANAGEMENT-04",
       "operation": "application_status",
       "persona": "Environmental Counsel",
-      "prompt": "Where does the Riverside gas turbine permit application stand, and did we submit anything today?",
+      "prompt": "Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today?",
       "kwargs": {
         "operation": "application_status",
-        "facility": "Riverside"
+        "facility": "Imperial Valley"
       },
       "must_include": [
-        "APP-7002",
+        "APP-7102",
         "public_comment",
         "cannot submit"
+      ],
+      "expects_agent": "PermitLicenseManagementAgent"
+    },
+    {
+      "id": "PERMIT_LICENSE_MANAGEMENT-05",
+      "operation": "renewal_plan",
+      "persona": "Operations Director",
+      "prompt": "Start emergency renewals for the critical permits.",
+      "kwargs": {
+        "operation": "renewal_plan"
+      },
+      "must_include": [
+        "$685,000",
+        "$13.8M",
+        "No application was submitted"
       ],
       "expects_agent": "PermitLicenseManagementAgent"
     }

@@ -16,6 +16,15 @@
     ],
     "downtime_analysis": [
       "MS-04"
+    ],
+    "work_order_draft": [
+      "MS-05"
+    ],
+    "maintenance_calendar": [
+      "MS-06"
+    ],
+    "optimization_plan": [
+      "MS-07"
     ]
   },
   "defects_fixed": [
@@ -28,6 +37,11 @@
       "area": "recommendation-only safety",
       "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
       "after": "The agent never controls equipment or creates, assigns, schedules, or dispatches maintenance work. Every output labels the fixed data and exact figures as synthetic."
+    },
+    {
+      "area": "collateral alignment",
+      "before": "Generic six-asset plant (CNC, press, welder, Injection Molder 220T) with probability-only alerts, 25%-of-downtime prevention cost, and a technician picker that preferred 'General' over the certified technician; no production context, window, work order, calendar or optimization plan.",
+      "after": "Line 3 IM-2000 machines with Machine #7 at 78% screw wear, the 50,000-unit order, Saturday 6-10 AM window, $3,200 vs $18,500 (ROI 478%), draft WO-2024-3847 with the certified Team B crew and part bins, a 30-day calendar and an optimization plan, all from the demo video; work orders, crew bookings, notifications and part reservations stay drafts for approval."
     }
   ],
   "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",

@@ -1,19 +1,19 @@
 mcs.metadata:
-  componentName: "field-service-dispatch-dispatch-dashboard"
-  description: "Use when a Field Operations Manager asks to prioritize the read-only service-request queue."
+  componentName: field-service-dispatch-dispatch-dashboard
+  description: Use when a Field Operations Manager asks to prioritize the read-only service-request queue.
 kind: InlineAgentSkill
 content: |
   ---
   name: field-service-dispatch-dispatch-dashboard
-  description: Use when a Field Operations Manager asks to prioritize the read-only service-request queue.
+  description: "Use when a Field Operations Manager asks for the job dashboard."
   ---
-  # Field Service Dispatch Agent: Dispatch Dashboard
+  # Field Service Dispatch Agent: Job dashboard
 
   ## Route
 
   Use the `dispatch_dashboard` operation. The canonical persona prompt is:
 
-  > What critical Central request is unassigned right now?
+  > What does tomorrow's job list look like by crew, and which crews are on standby?
 
   ## Procedure
 
@@ -25,8 +25,8 @@ content: |
 
   ## Required evidence
 
-  - Emergency: SCADA communication failure
-  - CRITICAL
+  - J-101
+  - Marcus Chen
   - No job
 
   Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

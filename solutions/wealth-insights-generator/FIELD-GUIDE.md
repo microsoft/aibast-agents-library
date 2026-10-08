@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `WIG-01, WIG-02, WIG-03, WIG-04, WIG-05`.
+1. Which locked case IDs did you complete? Expected scope: `WIG-01, WIG-02, WIG-03, WIG-04, WIG-05, WIG-06, WIG-07, WIG-08, WIG-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -217,6 +217,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `WIG-03` — Which clients have high-priority planning signals for advisor review?
 - `WIG-04` — Which synthetic client is below its benchmark, and what does the attribution label say?
 - `WIG-05` — Prepare my review brief for the Kensington household without turning it into advice or outreach.
+- `WIG-06` — Generate wealth insights for my top clients and identify opportunities to deepen relationships.
+- `WIG-07` — What planning gaps does the Morrison Family have?
+- `WIG-08` — How should I approach the Morrison relationship expansion?
+- `WIG-09` — Give me the complete wealth insights summary with the immediate actions.
 
 ## Manual mode — literal browser construction
 

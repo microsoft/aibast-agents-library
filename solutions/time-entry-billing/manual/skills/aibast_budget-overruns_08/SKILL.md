@@ -1,0 +1,25 @@
+---
+name: budget-overruns
+description: "Use when a finance vice president asks something like \"Show me the budget overruns and write-off exposure\""
+---
+<!-- bic:source=blank -->
+# Budget overruns
+
+Use when a finance vice president asks something like "Show me the budget overruns and write-off exposure"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `FinanceHub`
+- `RetailCo`
+- `$47K recoverable`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

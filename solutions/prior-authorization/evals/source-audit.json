@@ -19,6 +19,27 @@
     ],
     "appeal_evidence_packet": [
       "PA-04"
+    ],
+    "patient_auth_request": [
+      "PA-05"
+    ],
+    "payer_requirements_check": [
+      "PA-06"
+    ],
+    "submission_packet": [
+      "PA-07"
+    ],
+    "approval_outlook": [
+      "PA-08"
+    ],
+    "tracking_plan": [
+      "PA-09"
+    ],
+    "portfolio_status": [
+      "PA-10"
+    ],
+    "denial_review": [
+      "PA-11"
     ]
   },
   "defects_fixed": [
@@ -31,6 +52,11 @@
       "area": "healthcare safety boundary",
       "before": "The agent could imply eligibility, authorization, clinical interpretation, outreach, scheduling, or record mutation beyond evidence.",
       "after": "Every route uses synthetic-only evidence, explicit uncertainty, no side effects, and a qualified human review gate."
+    },
+    {
+      "area": "collateral alignment (demo video)",
+      "before": "The demo video walks Robert Chen's lumbar MRI prior auth (request table, payer-requirement match, submission confirmation PA-2024-892741 / Case #4729183, approval outlook and appeal strategy, tracking, a five-request portfolio, and the Johnson Medicare sleep-study denial); the agent had only two anonymous SYN-AUTH requests and none of these workflows.",
+      "after": "Added PATIENT_REQUESTS, CHEN_REQUEST, PAYER_REQUIREMENTS_72148, PORTFOLIO_METRICS and JOHNSON_DENIAL and seven read-only operations (PA-05 to PA-11). Submission, notifications and tracking are returned as drafts for the coordinator; the video's approval and appeal probabilities (87%, 78%) are not reproduced because the agent never predicts an outcome; the stored 94% historical rate is quoted instead."
     }
   ],
   "claim_audit": [

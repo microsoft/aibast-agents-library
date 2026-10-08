@@ -462,8 +462,8 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>19</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>5</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>24</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -477,22 +477,22 @@ html[data-theme="dark"] {
           <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
           <tbody><tr>
           <td><code>ASSET_MAINTENANCE_FORECAST-01</code></td>
-          <td><span class="marker-chip">Substation Transformer B-12</span><span class="marker-chip">2026-05-01</span></td>
+          <td><span class="marker-chip">Unit 12</span><span class="marker-chip">8.7/10</span><span class="marker-chip">March 18-22</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>ASSET_MAINTENANCE_FORECAST-02</code></td>
-          <td><span class="marker-chip">Substation Transformer B-12</span><span class="marker-chip">CRITICAL</span><span class="marker-chip">not a safety determination</span></td>
+          <td><span class="marker-chip">Unit 12</span><span class="marker-chip">CRITICAL</span><span class="marker-chip">not a safety determination</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>ASSET_MAINTENANCE_FORECAST-03</code></td>
-          <td><span class="marker-chip">Substation Transformer B-12</span><span class="marker-chip">$273,000</span><span class="marker-chip">Synthetic planning estimate</span></td>
+          <td><span class="marker-chip">$70,200</span><span class="marker-chip">$227,000</span><span class="marker-chip">Synthetic planning estimate</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr>
 <tr>
           <td><code>ASSET_MAINTENANCE_FORECAST-04</code></td>
-          <td><span class="marker-chip">Substation Transformer B-12</span><span class="marker-chip">Draft approval queue</span><span class="marker-chip">No work order</span></td>
+          <td><span class="marker-chip">Bundled Maintenance Plan</span><span class="marker-chip">258%</span><span class="marker-chip">No work order</span></td>
           <td><span class="marker-chip">No unsupported side effect</span></td>
         </tr></tbody>
         </table>
@@ -506,28 +506,46 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
+          <td><code>easy-review-build</code></td>
+          <td>easy</td>
+          <td>Asset Maintenance Pilot; Draft; asset-maintenance-forecast-budget-projection; asset-maintenance-forecast-maintenance-forecast; asset-maintenance-forecast-work-order-plan; asset-maintenance-forecast-asset-health; asset-maintenance-forecast-rules-and-controls.md; asset-maintenance-forecast-synthetic-records.md</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/assisted/annotated/01-review-build.png</td>
+        </tr>
+<tr>
           <td><code>easy-asset_maintenance_forecast-01</code></td>
           <td>easy</td>
-          <td>Substation Transformer B-12; 2026-05-01; synthetic planning estimates</td>
+          <td>Unit 12; 8.7/10; March 18-22</td>
           <td>solutions/asset-maintenance-forecast/screenshots/assisted/annotated/02-asset_maintenance_forecast-01.png</td>
         </tr>
 <tr>
           <td><code>easy-asset_maintenance_forecast-02</code></td>
           <td>easy</td>
-          <td>CRITICAL; not a safety determination</td>
+          <td>Unit 12; CRITICAL</td>
           <td>solutions/asset-maintenance-forecast/screenshots/assisted/annotated/03-asset_maintenance_forecast-02.png</td>
         </tr>
 <tr>
           <td><code>easy-asset_maintenance_forecast-03</code></td>
           <td>easy</td>
-          <td>Synthetic planning estimate; finance and asset owners must validate and approve</td>
+          <td>$227,000; $70,200; Synthetic planning estimate</td>
           <td>solutions/asset-maintenance-forecast/screenshots/assisted/annotated/04-asset_maintenance_forecast-03.png</td>
         </tr>
 <tr>
           <td><code>easy-asset_maintenance_forecast-04</code></td>
           <td>easy</td>
-          <td>Draft approval queue; No work order</td>
+          <td>Bundled Maintenance Plan; 258%; No work order</td>
           <td>solutions/asset-maintenance-forecast/screenshots/assisted/annotated/05-asset_maintenance_forecast-04.png</td>
+        </tr>
+<tr>
+          <td><code>easy-confirm-draft</code></td>
+          <td>easy</td>
+          <td>Asset Maintenance Pilot</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/assisted/annotated/06-confirm-draft.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-01</code></td>
+          <td>hard</td>
+          <td>Untitled Agent</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/01-create-blank-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-02</code></td>
@@ -538,85 +556,97 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Response contract; Locked Preview evidence anchors; Substation Transformer B-12</td>
+          <td>Asset Maintenance Forecast Agent — Manual Global</td>
           <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>Draft</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/04-save-instructions.png</td>
         </tr>
 <tr>
           <td><code>hard-step-05</code></td>
           <td>hard</td>
-          <td>Tools section contains no web-search chip; Knowledge section contains no Search all websites chip</td>
+          <td>Provide trusted context to guide decisions</td>
           <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/05-remove-web-search.png</td>
         </tr>
 <tr>
           <td><code>hard-step-06</code></td>
           <td>hard</td>
-          <td>rules-and-controls knowledge chip</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/06-add-rules-and-controls.png</td>
+          <td>asset-maintenance-forecast-rules-and-controls.md</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/06-add-asset-maintenance-forecast-rules-and-controls.png</td>
         </tr>
 <tr>
           <td><code>hard-step-07</code></td>
           <td>hard</td>
-          <td>synthetic-records knowledge chip; rules-and-controls knowledge chip</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/07-add-synthetic-records.png</td>
+          <td>asset-maintenance-forecast-synthetic-records.md</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/07-add-asset-maintenance-forecast-synthetic-records.png</td>
         </tr>
 <tr>
           <td><code>hard-step-08</code></td>
           <td>hard</td>
           <td>asset-maintenance-forecast-asset-health</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/08-add-asset-health.png</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/08-add-aibast-asset-health-02.png</td>
         </tr>
 <tr>
           <td><code>hard-step-09</code></td>
           <td>hard</td>
           <td>asset-maintenance-forecast-budget-projection</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/09-add-budget-projection.png</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/09-add-aibast-budget-projection-03.png</td>
         </tr>
 <tr>
           <td><code>hard-step-10</code></td>
           <td>hard</td>
-          <td>maintenance-forecast skill chip</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/10-add-maintenance-forecast.png</td>
+          <td>asset-maintenance-forecast-maintenance-forecast</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/10-add-aibast-maintenance-forecast-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-11</code></td>
           <td>hard</td>
           <td>asset-maintenance-forecast-work-order-plan</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/11-add-work-order-plan.png</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/11-add-aibast-work-order-plan-04.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>Claude Sonnet 4.6; four skills; two knowledge files</td>
+          <td>Claude Opus 5; asset-maintenance-forecast-work-order-plan; asset-maintenance-forecast-maintenance-forecast; asset-maintenance-forecast-budget-projection; asset-maintenance-forecast-asset-health; asset-maintenance-forecast-synthetic-records.md; asset-maintenance-forecast-rules-and-controls.md</td>
           <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/12-review-inventory.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>Asset Maintenance Manual; Preview; How can I help you today?</td>
+          <td>Asset Maintenance Manual</td>
           <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/13-open-preview.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-15</code></td>
+          <td><code>hard-asset_maintenance_forecast-01</code></td>
           <td>hard</td>
-          <td>Substation Transformer B-12; CRITICAL; not a safety determination</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/15-reliability-preview.png</td>
+          <td>Unit 12; 8.7/10; March 18-22</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/14-asset_maintenance_forecast-01.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-16</code></td>
+          <td><code>hard-asset_maintenance_forecast-02</code></td>
           <td>hard</td>
-          <td>synthetic planning estimate; asset owner and finance authority</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/16-finance-preview.png</td>
+          <td>Unit 12; CRITICAL</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/15-asset_maintenance_forecast-02.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-17</code></td>
+          <td><code>hard-asset_maintenance_forecast-03</code></td>
           <td>hard</td>
-          <td>Draft approval queue only; No work order</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/17-planner-preview.png</td>
+          <td>$227,000; $70,200; Synthetic planning estimate</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/16-asset_maintenance_forecast-03.png</td>
+        </tr>
+<tr>
+          <td><code>hard-asset_maintenance_forecast-04</code></td>
+          <td>hard</td>
+          <td>Bundled Maintenance Plan; 258%</td>
+          <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/17-asset_maintenance_forecast-04.png</td>
         </tr>
 <tr>
           <td><code>hard-step-18</code></td>
           <td>hard</td>
-          <td>Asset Maintenance Manual; Draft; GitHub Copilot</td>
+          <td>Asset Maintenance Manual</td>
           <td>solutions/asset-maintenance-forecast/screenshots/manual/annotated/18-confirm-draft.png</td>
         </tr></tbody>
         </table>
@@ -629,36 +659,7 @@ html[data-theme="dark"] {
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
-          <tbody><tr>
-          <td><code>easy-draft</code></td>
-          <td>easy</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/assisted/01-review-build.jpg</td>
-          <td>The Build screen visibly confirms Asset Maintenance Pilot, Claude Sonnet 4.6, four skills, and two knowledge files, but the intended checkpoint is the Copilot-assisted Draft configuration and no Draft status is visible.</td>
-        </tr>
-<tr>
-          <td><code>easy-draft-02</code></td>
-          <td>easy</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/assisted/06-confirm-draft.jpg</td>
-          <td>The Agents list does not show Asset Maintenance Pilot; only unrelated agent rows are visible, so the target agent&#x27;s Draft state cannot be verified.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-01</code></td>
-          <td>hard</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/01-create-blank-agent.jpg</td>
-          <td>The frame is a blank loading canvas with a spinner; the blank-agent creation controls are not visible.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The instruction text is present, but no save confirmation, saved-state indicator, or success message is visible.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-14</code></td>
-          <td>hard</td>
-          <td>solutions/asset-maintenance-forecast/screenshots/manual/14-asset_maintenance_forecast-01.jpg</td>
-          <td>The visible portion shows only the secondary wind-turbine watch and uncertainty text; both locked Plant Manager anchors, Substation Transformer B-12 and 2026-05-01, are cropped out.</td>
-        </tr></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>

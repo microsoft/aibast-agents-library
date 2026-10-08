@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:44:21.424559+00:00",
+  "captured_at": "2026-10-07T01:37:12.813814+00:00",
   "solution": "@aibast-agents-library/personalized-shopping-assistant",
   "onepager": "41. Personalized Shopping Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,79 +10,113 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack/personalized_shopping_assistant_agent.py",
-      "sha256": "81d81bea23718cefb0b026d8156d6099df5c7e32477fd648bd5204a73ce11dc8"
+      "sha256": "e4fb09dc4fe8ad2cdacfc5949d65c9e781a515278a8e96fe1d2bd3aa8c4efa19"
     }
   ],
   "case_file": "tests/demo_cases/personalized-shopping-assistant.json",
-  "case_file_sha256": "d59176f403b24507257012a48b0451f0024c74c950e16b923c19b71e03e6cfea",
+  "case_file_sha256": "d05270e477861aa494becdd7ddd7db37d08985434f1ce4c17841bd532f7c2f60",
   "strict_isolation": true,
   "transcripts": [
     {
       "case_id": "PSA-01",
       "persona": "Personal Shopper",
-      "onepager_promise": null,
-      "prompt": "As Personal Shopper, suggest transparent options for Synthetic Shopper A using only stated preferences.",
-      "assistant_response": "I've pulled transparent product options for Synthetic Shopper A based on their stated preferences\u2014classic and smart casual style, $50\u2013$250 budget.\n\n**Top picks:**\n- **Merino Wool Crew Sweater** (90% match) \u2014 versatile layering piece, highly rated\n- **Leather Chelsea Boots** (55% match) \u2014 classic smart casual closer, investment piece\n- **Linen Blazer** (35% match) \u2014 polished option, slightly above core preferences but works for smart casual\n\nEach option shows the match score and tradeoffs (price, style alignment). No sensitive data is inferred\u2014only what they've explicitly stated. Ready to dive deeper into any of these, check sizing, or build a coordinated outfit?",
-      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper\n**Role focus:** occasion-ready options and transparent tradeoffs\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Draft Product Recommendations: Synthetic Shopper A\n\n**Style:** classic, smart_casual\n**Budget:** $50 - $250\n\n| Rank | Product | Brand | Price | Match Score | Rating |\n|---|---|---|---|---|---|\n| 1 | Merino Wool Crew Sweater (SKU-1003) | Alpine Knits | $125.00 | 90% | 4.8 |\n| 2 | Leather Chelsea Boots (SKU-1004) | Cobblestone | $195.00 | 55% | 4.6 |\n| 3 | Linen Blazer \u2014 Unstructured (SKU-1008) | Riviera Style | $225.00 | 35% | 4.3 |\n| 4 | Quilted Vest (SKU-1005) | Northfield | $110.00 | 25% | 4.4 |\n| 5 | Performance Running Shoe (SKU-1007) | Stride Labs | $145.00 | 15% | 4.7 |",
+      "onepager_promise": "Build accurate customer style profiles from comprehensive data to power accurate, personalized recommendations",
+      "prompt": "As Personal Shopper, Jennifer needs an outfit for a business dinner with clients; suggest transparent options using only her stated preferences.",
+      "assistant_response": "Here's Jennifer's business dinner recommendation (**Personal Shopper** mode, using her stated preferences only):\n\n**Top picks:**\n- **Theory wool crepe blazer** ($375) \u2013 her favorite brand, structured fit she likes\n- **Vince silk shell top** ($195) \u2013 navy, a color she favors\n- **Equipment tailored ankle pant** ($285) \u2013 high-rise, versatile\n- *Alternative:* **Theory midi sheath dress** ($345) \u2013 one-piece option\n\n**Skipped on purpose (per her preferences):** prints, fitted dresses, trendy pieces \u2014 she favors structured, relaxed, investment-quality pieces.\n\nAll data is synthetic/opt-in, nothing reserved or purchased yet. Want me to build a complete outfit (with accessories) or check stock in her size?",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper\n**Role focus:** occasion-ready options and transparent tradeoffs\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Draft Product Recommendations: Jennifer Hayes (Business dinner with clients)\n\n**Occasion Analysis:**\n\n| Requirement | Recommendation |\n|---|---|\n| Dress code | Business elegant |\n| Impression | Polished, confident |\n| Comfort level | Seated dining, standing cocktails |\n| Her preference | Structured, not stuffy |\n\n**Top Picks for Jennifer:**\n\n| Item | Brand | Price | Match Score |\n|---|---|---|---|\n| Wool crepe blazer (SKU-2001) | Theory | $375 | 96% |\n| Silk shell top (SKU-2002) | Vince | $195 | 94% |\n| Tailored ankle pant (SKU-2003) | Equipment | $285 | 92% |\n| Midi sheath dress (SKU-2004) | Theory | $345 | 91% |\n\n**Why These Selections:**\n\n- Blazer: Her favorite Theory brand, structured silhouette she loves\n- Shell: Navy (her color), pairs with blazer\n- Pants: High-rise she prefers, versatile neutral\n- Dress option: One-piece alternative, midi length\n\n**Not Recommended:**\n\n- Prints (she avoids)\n- Fitted dresses (prefers relaxed)\n- Trendy pieces (wants investment value)\n\nSource: [Recommendation Engine + Occasion Database] Agents: ProductRecommendationAgent, OccasionMatchingAgent\n\n**Next step:** see complete outfit combinations?",
       "expected_agent": "PersonalizedShoppingAssistantAgent",
       "must_include": [
         "Prepared for:** Personal Shopper",
         "Draft Product Recommendations",
-        "no sensitive traits are inferred"
+        "Wool crepe blazer"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "PSA-02",
       "persona": "Clienteling Specialist",
-      "onepager_promise": null,
+      "onepager_promise": "Build accurate customer style profiles from comprehensive data to power accurate, personalized recommendations",
       "prompt": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
-      "assistant_response": "**Synthetic Shopper B's Opt-In Preferences:**\n\n**Sizing:** S (top), 30 (bottom), 8 (shoe)\n\n**Style:** Casual, Outdoor, Athletic\n\n**Brands:** Northfield, Stride Labs\n\n**Colors:** Olive, Black, White Grey\n\n**Budget:** $30\u2013$175\n\n**Recent purchases:** Quilted Vest ($110), Performance Running Shoe ($145)",
-      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Clienteling Specialist\n**Role focus:** opt-in preferences, continuity, and respectful follow-up drafts\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Opt-In Style Profile: Synthetic Shopper B\n\n## Sizing\n\n- Top: S\n- Bottom: 30\n- Shoe: 8\n\n## Style Preferences\n\n- Casual\n- Outdoor\n- Athletic\n\n## Brand Affinity\n\n- Northfield\n- Stride Labs\n\n## Color Preference\n\n- Olive\n- Black\n- White Grey\n\n## Budget Range\n\n$30 - $175\n\n## Purchase History\n\n- Quilted Vest \u2014 $110.00\n- Performance Running Shoe \u2014 $145.00",
+      "assistant_response": "Here's Synthetic Shopper B's opt-in style profile \u2014 stated preferences only, nothing inferred:\n\n**Style**\n- Archetype: Relaxed Minimal\n- Colors: Black, white, camel\n- Fit: Easy, unstructured\n- Price range: $80\u2013250/piece\n- Preferred brand: Vince\n\n**Sizing**\n- Tops: 8/Medium (easy fit)\n- Bottoms: 29/8 (mid-rise)\n- Dresses: 8 (knee length)\n- Shoes: 9 (flats preferred)\n\n**Purchase patterns**\n- Last purchase: 2 months ago (knit top)\n- Avg items/visit: 1.6\n- Return rate: 12%\n- YTD spend: $1,150\n\n**Noted preference (her own words):** \"Prefers comfort and simple shapes\"\n\nThat's the complete opt-in record \u2014 want me to pull product recommendations or check inventory next?",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Clienteling Specialist\n**Role focus:** opt-in preferences, continuity, and respectful follow-up drafts\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Opt-In Style Profile: Synthetic Shopper B\n\n**Customer Style Profile:**\n\n| Attribute | Preference |\n|---|---|\n| Style archetype | Relaxed Minimal |\n| Color palette | Black, white, camel |\n| Fit preference | Easy, unstructured |\n| Price range | $80-250 per piece |\n| Preferred brands | Vince |\n\n**Size Information:**\n\n| Category | Size | Notes |\n|---|---|---|\n| Tops | 8 / Medium | Prefers easy fit |\n| Bottoms | 29/8 | Mid-rise preferred |\n| Dresses | 8 | Knee length |\n| Shoes | 9 | Flats preferred |\n\n**Recent Purchase Patterns:**\n\n- Last purchase: 2 months ago (knit top)\n- Avg items/visit: 1.6\n- Return rate: 12%\n- Total spend (YTD): $1,150\n\n**Style Notes from Past Sessions:** \"Prefers comfort and simple shapes\"\n\nThese are stated, opt-in preferences; nothing else is inferred.\n\nSource: [Purchase History + Style Profile + CRM Notes] Agents: StyleProfileAgent, OccasionMatchingAgent\n\n**Next step:** what occasion is she shopping for?",
       "expected_agent": "PersonalizedShoppingAssistantAgent",
       "must_include": [
         "Prepared for:** Clienteling Specialist",
         "Opt-In Style Profile",
         "Synthetic Shopper B"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "PSA-03",
       "persona": "Retail Manager",
-      "onepager_promise": null,
-      "prompt": "As Retail Manager, show the synthetic size-level availability and verification gate for SKU-1003.",
-      "assistant_response": "**Inventory Verification Gate for SKU-1003:**\n\n\u2713 **Data sourced from:** Synthetic shopper environment (opt-in preferences only)  \n\u2713 **No sensitive customer traits inferred**  \n\u2713 **No inventory reserved or modified**  \n\u2713 **Stock snapshot current as of this check**\n\n**Key findings:**\n- **M and L sizes** carry healthy stock (10 and 8 units)\n- **S and XL** flagged as low stock (4 and 3 units respectively)\n- **Total availability:** 25 units across all sizes\n\n**Retail recommendation:** Consider reordering S and XL to maintain tier-1 availability across the full size range. M and L show strong position.",
-      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Retail Manager\n**Role focus:** consistency, availability caveats, and service quality\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Inventory Snapshot: Merino Wool Crew Sweater (SKU-1003)\n\n- **Price:** $125.00\n- **Brand:** Alpine Knits\n- **Rating:** 4.8\n\n## Stock by Size\n\n| Size | Stock | Status |\n|---|---|---|\n| S | 4 | Low Stock |\n| M | 10 | In Stock |\n| L | 8 | In Stock |\n| XL | 3 | Low Stock |\n\n**Total Units:** 25",
+      "onepager_promise": "Surface real-time availability and optimized pricing options to increase conversion and average order value",
+      "prompt": "As Retail Manager, show the synthetic size-level availability and verification gate for SKU-2003.",
+      "assistant_response": "Here's the SKU-2003 (Equipment Tailored ankle pant, $285) inventory snapshot:\n\n| Location | Size | Stock | Status |\n|---|---|---|---|\n| Store | 27 | 2 | In stock |\n| Store | 28 | 1 | Low stock (last one) |\n| Store | 29 | 2 | In stock |\n| Warehouse | 28 | 0 | Out of stock |\n| Downtown | 28 | 0 | Out of stock |\n\nHer size (28) is only available in-store, and it's down to 1 unit \u2014 no backup at warehouse or downtown.\n\n**Verification gate:** this is a synthetic, opt-in snapshot for review only \u2014 nothing is reserved, no benefits applied, and no order/purchase/return is completed.",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Retail Manager\n**Role focus:** consistency, availability caveats, and service quality\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Inventory Snapshot: Equipment Tailored ankle pant (SKU-2003)\n\n- **Price:** $285\n- **Her size:** 28\n\n| Location | Size | Stock | Status |\n|---|---|---|---|\n| Store | 27 | 2 | In stock |\n| Store | 28 | 1 | Low stock (1 left) |\n| Store | 29 | 2 | In stock |\n| Warehouse | 28 | 0 | Out of stock here |\n| Downtown | 28 | 0 | Out of stock here |",
       "expected_agent": "PersonalizedShoppingAssistantAgent",
       "must_include": [
         "Prepared for:** Retail Manager",
         "Inventory Snapshot",
         "inventory is not reserved"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "PSA-04",
       "persona": "Personal Shopper",
-      "onepager_promise": null,
+      "onepager_promise": "Generate occasion-ready, fully coordinated outfits delivered in minutes across channels",
       "prompt": "As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
-      "assistant_response": "Done. I've drafted four coordinated outfits for you to review\u2014ranging from $255 to $567. Each includes specific pieces, colors, and transparent pricing so you can see the value and tradeoffs at a glance.\n\n**Next steps:**\n- Want to see availability for a specific size?\n- Need style tweaks or different occasions?\n- Ready to review the full preference profile?\n\nNo items are reserved or ordered\u2014this is pure planning.",
-      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper\n**Role focus:** occasion-ready options and transparent tradeoffs\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Draft Outfit Builder: Synthetic Shopper A\n\n## Business Casual\n\n- **Tops:** Classic Oxford Shirt \u2014 White \u2014 $68.00\n- **Bottoms:** Slim Fit Chinos \u2014 Navy \u2014 $79.00\n- **Footwear:** Leather Chelsea Boots \u2014 $195.00\n- **Accessories:** Silk Pocket Square \u2014 $35.00\n\n**Outfit Total:** $377.00\n\n## Weekend Smart\n\n- **Tops:** Merino Wool Crew Sweater \u2014 $125.00\n- **Bottoms:** Slim Fit Chinos \u2014 Navy \u2014 $79.00\n- **Footwear:** Leather Chelsea Boots \u2014 $195.00\n\n**Outfit Total:** $399.00\n\n## Active Weekend\n\n- **Outerwear:** Quilted Vest \u2014 $110.00\n- **Footwear:** Performance Running Shoe \u2014 $145.00\n\n**Outfit Total:** $255.00\n\n## Evening Out\n\n- **Outerwear:** Linen Blazer \u2014 Unstructured \u2014 $225.00\n- **Tops:** Classic Oxford Shirt \u2014 White \u2014 $68.00\n- **Bottoms:** Slim Fit Chinos \u2014 Navy \u2014 $79.00\n- **Footwear:** Leather Chelsea Boots \u2014 $195.00\n\n**Outfit Total:** $567.00\n",
+      "assistant_response": "Here are three draft outfit options for Jennifer Hayes's business dinner (all synthetic, non-binding \u2014 nothing is ordered or reserved):\n\n**1. Power Suiting (recommended)** \u2014 blazer, silk shell top, tailored pant, pumps, tote \u2192 **$1,575**\n\n**2. Elegant Simplicity** \u2014 midi sheath dress + blazer, kitten heels, gold necklace \u2192 **$1,110**\n\n**3. Modern Edge** \u2014 tailored jumpsuit, belt, statement earrings, clutch \u2192 **$920**\n\nStylist pick: **Outfit 1**, closest match to her established preferences.\n\nWant me to check stock/sizes or pricing/loyalty offers next? (Still no purchase would be made \u2014 just more drafting.)",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper\n**Role focus:** occasion-ready options and transparent tradeoffs\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Draft Outfit Builder: Jennifer Hayes (Business dinner with clients)\n\n## Outfit 1: Power Suiting (recommended)\n\n| Piece | Item | Price |\n|---|---|---|\n| Blazer | Theory Wool crepe blazer | $375 |\n| Top | Vince Silk shell top | $195 |\n| Pants | Equipment Tailored ankle pant | $285 |\n| Shoes | Store label Classic leather pump | $295 |\n| Bag | Store label Leather tote | $425 |\n| **Total** | | **$1,575** |\n\n## Outfit 2: Elegant Simplicity\n\n| Piece | Item | Price |\n|---|---|---|\n| Dress | Theory Midi sheath dress | $345 |\n| Blazer | Theory Wool crepe blazer | $375 |\n| Shoes | Store label Pointed kitten heel | $265 |\n| Jewelry | Store label Gold bar necklace | $125 |\n| **Total** | | **$1,110** |\n\n## Outfit 3: Modern Edge\n\n| Piece | Item | Price |\n|---|---|---|\n| Jumpsuit | Vince Tailored jumpsuit | $395 |\n| Belt | Store label Leather waist belt | $145 |\n| Earrings | Store label Statement gold earrings | $85 |\n| Clutch | Store label Evening leather clutch | $295 |\n| **Total** | | **$920** |\n\n**Stylist Recommendation:** Outfit 1 (Power Suiting) - most aligned with her established style.\n\nSource: [Outfit Coordination Engine + Style Rules] Agents: OutfitCoordinationAgent, ProductRecommendationAgent\n\n**Next step:** check availability for her sizes?",
       "expected_agent": "PersonalizedShoppingAssistantAgent",
       "must_include": [
         "Draft Outfit Builder",
-        "Business Casual",
+        "Power Suiting",
         "no return, refund, order, or purchase"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PSA-05",
+      "persona": "Personal Shopper",
+      "onepager_promise": "Surface real-time availability and optimized pricing options to increase conversion and average order value",
+      "prompt": "As Personal Shopper, what is the best offer I can give Jennifer with her loyalty benefits?",
+      "assistant_response": "Here's the best offer for Jennifer (Platinum tier):\n\n**Outfit 1 \u2013 Power Suiting** (blazer, shell top, trousers, heels, tote)\n- Original total: $1,595\n- Platinum member discount (10%): \u2212$159\n- Bundle bonus (5%, for 3+ pieces): \u2212$72\n- Points redemption: \u2212$42\n- **Final price: $1,322** (17% / $273 total savings)\n\nPlus a free alterations perk ($35 value) included with Platinum status.\n\nWant me to save this to her session summary?",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper\n**Role focus:** occasion-ready options and transparent tradeoffs\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Loyalty Pricing: Outfit 1 Power Suiting for Jennifer Hayes\n\n**Tier:** Platinum (10% member pricing)\n\n| Item | Price | Her Price | Benefit |\n|---|---|---|---|\n| Theory wool crepe blazer | $375 | $337 | 10% Platinum |\n| Vince silk shell top | $195 | $175 | 10% Platinum |\n| Equipment tailored ankle pant | $285 | $256 | 10% Platinum |\n| Stuart Weitzman block heel | $315 | $283 | 10% Platinum |\n| Store label leather tote | $425 | $382 | 10% Platinum |\n\n**Additional Offers:**\n\n| Offer | Value | Conditions |\n|---|---|---|\n| Bundle bonus | Extra 5% | 3+ pieces |\n| Points redemption | -$42 | Use balance |\n| Free alterations | $35 value | Platinum perk |\n\n**Best Deal Package:**\n\n| | Amount |\n|---|---|\n| Original total | $1,595 |\n| Platinum discount (10%) | -$159 |\n| Bundle bonus (5%) | -$72 |\n| Points applied | -$42 |\n| **Final price** | **$1,322** |\n| Total savings | $273 (17%) |\n\nCalculated for the stylist to present; the member discount applies to the order total and the bundle bonus to the discounted total. Nothing is charged, and the benefits are applied only when you ring up the order.\n\nSource: [Pricing Engine + Loyalty System + Promotions] Agents: PricingOptimizationAgent, InventoryAvailabilityAgent\n\n**Next step:** generate the session summary?",
+      "expected_agent": "PersonalizedShoppingAssistantAgent",
+      "must_include": [
+        "$1,322",
+        "$273 (17%)",
+        "Bundle bonus"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PSA-06",
+      "persona": "Clienteling Specialist",
+      "onepager_promise": "Generate occasion-ready, fully coordinated outfits delivered in minutes across channels",
+      "prompt": "As Clienteling Specialist, wrap up Jennifer's styling session and prepare the updates for her profile.",
+      "assistant_response": "Session wrapped up for Jennifer Hayes (Clienteling Specialist view):\n\n**Session recap**\n- Style profile matched: 5 preferences\n- Outfits built: 3 looks, top pick \"Power Suiting\"\n- Availability: 4/5 items in stock\n- Savings applied: $273 (17% off $1,322)\n\n**Profile updates ready to save**\n- Save Outfit 1 as \"Business Dinner Look\"\n- Add Outfits 2 & 3 to wishlist\n- Confirm size preferences as-is\n- Add brand note: Stuart Weitzman\n\n**Suggested follow-ups (not yet scheduled)**\n- Notify on new Theory arrivals\n- Alert if pants item sells out\n- Email when wishlist items go on sale\n\nNote: this is a synthetic draft \u2014 nothing has actually been written to her profile yet. Let me know if you want me to treat these as final so you can log them in the real clienteling system.",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Clienteling Specialist\n**Role focus:** opt-in preferences, continuity, and respectful follow-up drafts\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Session Summary: Jennifer Hayes (Business dinner with clients)\n\n| Accomplishment | Result |\n|---|---|\n| Style profile applied | 5 preferences matched |\n| Outfits created | 3 complete looks |\n| Recommended outfit | Power Suiting (#1) |\n| Availability confirmed | 4 of 5 in store |\n| Savings delivered | $273 (17%) on $1,322 |\n\n**Profile updates, ready for you to save:**\n\n- Outfit 1: save as \"Business Dinner Look\"\n- Outfits 2 & 3: add to wishlist\n- Size preferences: confirmed accurate\n- Brand note: Stuart Weitzman added\n\n**Proposed follow-ups (not scheduled):**\n\n| Trigger | Action | Timing |\n|---|---|---|\n| New Theory arrivals | Notification | Automatic |\n| Pants low stock | Alert | If not purchased |\n| Wishlist items on sale | Email | When discounted |\n\nNothing was written to her profile and no message was sent; confirm these updates in the clienteling system.",
+      "expected_agent": "PersonalizedShoppingAssistantAgent",
+      "must_include": [
+        "Business Dinner Look",
+        "Stuart Weitzman",
+        "not scheduled"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

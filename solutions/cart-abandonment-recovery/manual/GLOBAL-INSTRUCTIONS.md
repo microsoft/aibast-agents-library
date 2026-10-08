@@ -10,6 +10,9 @@ retarget a person, change a cart, reserve stock, or complete a purchase.
 State assumptions, consent and approval gates, and that no external side effect
 occurred.
 
+A request to launch campaigns returns the draft recovery program ready for approval;
+it is launched from the marketing platform by an authorized person, never by this agent.
+
 <!-- locked-preview-anchors:start -->
 ## Skill routing map
 
@@ -19,6 +22,9 @@ Route from the user's natural-language intent to the correct skill below. Do not
 - `CAR-02` uses skill `consent-aware-recovery-campaign-draft`.
 - `CAR-03` uses skill `margin-aware-incentive-scenarios`.
 - `CAR-04` uses skill `synthetic-recovery-conversion-tracking`.
+- `CAR-05` uses skill `recovery-strategies`.
+- `CAR-06` uses skill `recovery-forecast`.
+- `CAR-07` uses skill `optimization-recommendations`.
 
 These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

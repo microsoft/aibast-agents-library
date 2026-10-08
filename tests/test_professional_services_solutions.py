@@ -9,25 +9,25 @@ CONFIG = {
         "source": ROOT / "agents/@aibast-agents-library/professional_services_stacks/contract_risk_review_stack/contract_risk_review_agent.py",
         "class": "ContractRiskReviewAgent",
         "onepager": "Contract Risk Review Agent one-pager.pptx",
-        "skills": 4,
+        "skills": 9,
     },
     "time-entry-billing": {
         "source": ROOT / "agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
         "class": "TimeEntryBillingAgent",
         "onepager": "Time and Entry Billing Agent one-pager.pptx",
-        "skills": 5,
+        "skills": 9,
     },
     "resource-utilization": {
         "source": ROOT / "agents/@aibast-agents-library/professional_services_stacks/resource_utilization_stack/resource_utilization_agent.py",
         "class": "ResourceUtilizationAgent",
         "onepager": "Resource Utilization Agent one-pager.pptx",
-        "skills": 5,
+        "skills": 8,
     },
     "client-health-score": {
         "source": ROOT / "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
         "class": "ClientHealthScoreAgent",
         "onepager": "Client Health Score Agent one-pager.pptx",
-        "skills": 5,
+        "skills": 8,
     },
 }
 
@@ -44,6 +44,9 @@ SOURCE_CONSTANTS = {
         "PROJECT_BUDGETS",
         "INVOICE_HISTORY",
         "DISPUTES",
+        "MONTH_END",
+        "FLAGGED_ITEMS",
+        "PROJECT_OVERRUNS",
     ],
     "resource-utilization": [
         "CONSULTANTS",
@@ -51,8 +54,19 @@ SOURCE_CONSTANTS = {
         "UTILIZATION_TARGETS",
         "BENCH_COST_PER_MONTH",
         "WORKFORCE_PATHS",
+        "FIRM_PROFILE",
+        "DEPLOYMENT_PIPELINE",
+        "SHADOW_COHORT",
+        "FINANCIAL_MODEL",
     ],
-    "client-health-score": ["CLIENTS", "STAKEHOLDERS"],
+    "client-health-score": [
+        "CLIENTS",
+        "STAKEHOLDERS",
+        "RISK_FACTORS",
+        "RETENTION_PLAYBOOK",
+        "OUTREACH_SEQUENCE",
+        "OUTREACH_MATERIALS",
+    ],
 }
 
 
@@ -339,7 +353,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     ):
         assert marker in copilot_skill
     assert "brainstem" not in copilot_skill.lower()
-    assert len(cases) == 5
+    assert len(cases) == 9
 
     assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
@@ -349,7 +363,9 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest
-    assert quest.count("data-copy-target=") == 16
+    # 4 Easy prompts + 2 manual setup copies + 9 manual case prompts
+    # + 9 Easy Preview prompts, one per locked case.
+    assert quest.count("data-copy-target=") == 4 + 2 + 2 * len(cases)
     assert "Install RAPP Brainstem Frontier" not in quest
     assert "Open GitHub Copilot Chat" in quest
     assert "Download Brainstem SKILL.md" in quest
@@ -364,7 +380,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Confirm the Draft in Copilot Studio Preview" in quest
     assert "Open the Copilot Studio Draft" in quest
     assert "Know what “done” looks like" in quest
-    assert "5/5 locked cases passed" in quest
+    assert "9/9 locked cases passed" in quest
     assert "Draft · published false" in quest
     assert "Final expected verdict" in quest
     assert "Troubleshooting" in quest
@@ -384,10 +400,10 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Open standalone Manual-mode guide" in quest
     assert manual_tutorial.count(
         'data-copy-target="hard-copy-'
-    ) == 7
+    ) == 2 + len(cases)
     assert "Copy agent name" in manual_tutorial
     assert "Copy instructions" in manual_tutorial
-    assert manual_tutorial.count("Copy Preview prompt") == 5
+    assert manual_tutorial.count("Copy Preview prompt") == len(cases)
     assert "Time Entry and Billing Manual" in manual_tutorial
     for case in cases:
         assert case["prompt"] in manual_tutorial
@@ -429,7 +445,7 @@ def test_staffing_projection_counts_unique_people_and_is_approval_gated():
     output = agent.perform(operation="staffing_recommendation")
     assert "Robert Garcia" in output
     assert "no assignment was made" in output
-    assert "Projected after deployment: **69.6%**" in output
+    assert "Projected after deployment: **80.0%**" in output
 
 
 def test_client_retention_plan_has_stakeholders_and_no_side_effects():

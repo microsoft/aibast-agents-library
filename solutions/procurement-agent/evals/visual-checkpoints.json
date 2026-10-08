@@ -1,12 +1,6 @@
 {
   "schema": "aibast-visual-checkpoints/1.0",
   "solution": "@aibast-agents-library/procurement-agent",
-  "historical_annotation_reference": {
-    "status": "historical_only",
-    "annotation_date": "2026-09-10",
-    "index": "evals/history/2026-09-10-upstream/index.json",
-    "boundary": "Incoming annotation corrections are archived separately from the byte-pinned August evidence and media. Their historical reusable labels grant no acceptance to the seven-input grounding-r3 candidate: zero accepted native components or cases. No new native run or screenshot review occurred during the source merge."
-  },
   "policy": {
     "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
     "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
@@ -14,546 +8,1261 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23
+    "total_existing_captures": 38,
+    "reusable": 38,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-proc-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "PROC-01",
-      "source": "solutions/procurement-agent/screenshots/assisted/01-proc-01.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "The $125,000 amount is above the captured viewport."
+      "source": "solutions/procurement-agent/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Pilot",
+        "Draft",
+        "expedite-approval",
+        "draft-purchase-order",
+        "budget-impact",
+        "spend-analysis",
+        "draft-rfq",
+        "aibast_procurement-agent-synthetic-records.md",
+        "aibast_procurement-agent-rules-and-guardrails.md"
       ],
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png",
-      "historical_visible_anchors": [
-        "The CFO is the authorized approver for PR-5001",
-        "The review is a recommendation only",
-        "No approval, routing action, or spend commitment has occurred"
-      ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 286,
-          "y": 402,
-          "width": 935,
-          "height": 92,
-          "label": "PR-5001 CFO review and human action"
+          "x": 84,
+          "y": 20,
+          "width": 142,
+          "height": 20,
+          "label": "Procurement Pilot"
         },
         {
-          "x": 286,
-          "y": 510,
-          "width": 900,
-          "height": 65,
-          "label": "No approval or spend side effect"
+          "x": 237,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "expedite-approval"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 141,
+          "height": 22,
+          "label": "draft-purchase-order"
+        },
+        {
+          "x": 1255,
+          "y": 237,
+          "width": 103,
+          "height": 22,
+          "label": "budget-impact"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 101,
+          "height": 22,
+          "label": "spend-analysis"
+        },
+        {
+          "x": 1216,
+          "y": 277,
+          "width": 63,
+          "height": 22,
+          "label": "draft-rfq"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_procurement-agent-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_procurement-agent-rules-and-guardrails.md"
         }
+      ]
+    },
+    {
+      "id": "easy-proc-01",
+      "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/02-proc-01.jpg",
+      "caption": "PROC-01 · Procurement Manager: Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+      "case_id": "PROC-01",
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PR-5001",
+        "$125,000",
+        "CFO"
       ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "boxes": [
+        {
+          "x": 573,
+          "y": 455,
+          "width": 96,
+          "height": 26,
+          "label": "PR-5001"
+        },
+        {
+          "x": 444,
+          "y": 808,
+          "width": 72,
+          "height": 22,
+          "label": "$125,000"
+        },
+        {
+          "x": 426,
+          "y": 1190,
+          "width": 41,
+          "height": 20,
+          "label": "CFO"
+        }
+      ]
     },
     {
       "id": "easy-proc-02",
       "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/03-proc-02.jpg",
+      "caption": "PROC-02 · Category Buyer: Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
       "case_id": "PROC-02",
-      "source": "solutions/procurement-agent/screenshots/assisted/02-proc-02.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "AWS and Azure are above the captured viewport.",
-        "The exact phrase not a supplier award is not visible."
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "AWS",
+        "Azure",
+        "not a supplier award"
       ],
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png",
-      "historical_visible_anchors": [
-        "A category buyer or sourcing manager must conduct the full side-by-side evaluation",
-        "No vendor has been selected or awarded"
-      ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 286,
-          "y": 530,
-          "width": 935,
-          "height": 82,
-          "label": "Human selection gate; no vendor awarded"
+          "x": 431,
+          "y": 526,
+          "width": 46,
+          "height": 20,
+          "label": "AWS"
+        },
+        {
+          "x": 652,
+          "y": 526,
+          "width": 54,
+          "height": 20,
+          "label": "Azure"
+        },
+        {
+          "x": 680,
+          "y": 1505,
+          "width": 158,
+          "height": 24,
+          "label": "not a supplier award"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "easy-proc-03",
       "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/04-proc-03.jpg",
+      "caption": "PROC-03 · Department Approver: This infrastructure request landed in my queue. What is the recommended approval path?",
       "case_id": "PROC-03",
-      "source": "solutions/procurement-agent/screenshots/assisted/03-proc-03.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png",
-      "historical_visible_anchors": [
-        "CFO Review",
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CFO",
         "48 hours",
-        "This recommendation does not record an approval"
+        "does not record an approval"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 286,
-          "y": 186,
-          "width": 935,
-          "height": 77,
-          "label": "CFO gate and 48-hour review"
+          "x": 380,
+          "y": 555,
+          "width": 41,
+          "height": 20,
+          "label": "CFO"
         },
         {
-          "x": 286,
-          "y": 403,
-          "width": 935,
-          "height": 92,
-          "label": "Recommendation does not record approval"
+          "x": 680,
+          "y": 841,
+          "width": 75,
+          "height": 20,
+          "label": "48 hours"
+        },
+        {
+          "x": 443,
+          "y": 1010,
+          "width": 214,
+          "height": 24,
+          "label": "does not record an approval"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "easy-proc-04",
       "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/05-proc-04.jpg",
+      "caption": "PROC-04 · Finance Director: Where is the purchasing budget under pressure, and what should we review before approving more spend?",
       "case_id": "PROC-04",
-      "source": "solutions/procurement-agent/screenshots/assisted/04-proc-04.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png",
-      "historical_visible_anchors": [
-        "PR-5001 is $125,000 and requires CFO review",
-        "The $60,000 Software budget gap must be surfaced",
-        "No purchase order is created from this review"
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/05-proc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Software",
+        "$60,000",
+        "No purchase order is created"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 288,
-          "y": 123,
-          "width": 660,
-          "height": 169,
-          "label": "Request amount and CFO review status"
+          "x": 299,
+          "y": 1002,
+          "width": 73,
+          "height": 21,
+          "label": "Software"
         },
         {
-          "x": 287,
-          "y": 378,
-          "width": 940,
-          "height": 110,
-          "label": "Software gap and no purchase order"
+          "x": 827,
+          "y": 1002,
+          "width": 78,
+          "height": 23,
+          "label": "$60,000"
+        },
+        {
+          "x": 310,
+          "y": 1718,
+          "width": 219,
+          "height": 24,
+          "label": "No purchase order is created"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-proc-05",
       "mode": "easy",
-      "source": "solutions/procurement-agent/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
+      "source": "solutions/procurement-agent/screenshots/assisted/06-proc-05.jpg",
+      "caption": "PROC-05 · Procurement Manager: Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team.",
+      "case_id": "PROC-05",
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/06-proc-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PO-2024-ENG-0892",
+        "No purchase order is created",
+        "$81,893"
+      ],
+      "boxes": [
+        {
+          "x": 489,
+          "y": 456,
+          "width": 189,
+          "height": 23,
+          "label": "PO-2024-ENG-0892"
+        },
+        {
+          "x": 785,
+          "y": 488,
+          "width": 219,
+          "height": 24,
+          "label": "No purchase order is created"
+        },
+        {
+          "x": 566,
+          "y": 1622,
+          "width": 88,
+          "height": 23,
+          "label": "$81,893"
+        }
+      ]
+    },
+    {
+      "id": "easy-proc-06",
+      "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/07-proc-06.jpg",
+      "caption": "PROC-06 · Procurement Manager: The engineering laptop order is stuck in approval. Can you expedite it with urgency notifications?",
+      "case_id": "PROC-06",
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/07-proc-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sarah Thompson",
+        "4 hours 23 minutes",
+        "No notification was sent"
+      ],
+      "boxes": [
+        {
+          "x": 435,
+          "y": 702,
+          "width": 132,
+          "height": 24,
+          "label": "Sarah Thompson"
+        },
+        {
+          "x": 455,
+          "y": 831,
+          "width": 154,
+          "height": 20,
+          "label": "4 hours 23 minutes"
+        },
+        {
+          "x": 306,
+          "y": 1209,
+          "width": 190,
+          "height": 21,
+          "label": "No notification was sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-proc-07",
+      "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/08-proc-07.jpg",
+      "caption": "PROC-07 · Finance Director: How does the engineering laptop order affect our Q4 IT budget?",
+      "case_id": "PROC-07",
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/08-proc-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$80,607",
+        "82% committed",
+        "$12,400"
+      ],
+      "boxes": [
+        {
+          "x": 596,
+          "y": 651,
+          "width": 68,
+          "height": 23,
+          "label": "$80,607"
+        },
+        {
+          "x": 753,
+          "y": 717,
+          "width": 125,
+          "height": 21,
+          "label": "82% committed"
+        },
+        {
+          "x": 403,
+          "y": 1665,
+          "width": 66,
+          "height": 23,
+          "label": "$12,400"
+        }
+      ]
+    },
+    {
+      "id": "easy-proc-08",
+      "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/09-proc-08.jpg",
+      "caption": "PROC-08 · Category Buyer: We also need an RFQ for office furniture for the same engineering team.",
+      "case_id": "PROC-08",
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/09-proc-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RFQ-2024-FRN-0145",
+        "Sustainability: 15%"
+      ],
+      "boxes": [
+        {
+          "x": 386,
+          "y": 429,
+          "width": 195,
+          "height": 25,
+          "label": "RFQ-2024-FRN-0145"
+        },
+        {
+          "x": 299,
+          "y": 1442,
+          "width": 157,
+          "height": 24,
+          "label": "Sustainability: 15%"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No RFQ was distributed not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/procurement-agent/screenshots/assisted/10-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 10 · Confirm Draft and stop before publish",
       "draft": true,
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The target Procurement Pilot row is not visible; the frame shows unrelated Sales agents, so it cannot prove the pilot remains Draft.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/10-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 140,
+          "height": 21,
+          "label": "Procurement Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/procurement-agent/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The frame is an empty loading surface with a spinner; no blank agent name or Build workspace is visible.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/procurement-agent/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/02-name-agent.png",
-      "historical_visible_anchors": [
-        "Procurement Manual is entered in the agent name field"
+      "caption": "Manual step 2 · Name Procurement Manual",
+      "step": 2,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Manual"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 166,
-          "y": 99,
-          "width": 815,
-          "height": 50,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 162,
+          "height": 20,
+          "label": "Procurement Manual"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/procurement-agent/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/03-enter-instructions.png",
-      "historical_visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "PROC-01 through PROC-04 acceptance anchors"
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Agent — Global Instructions"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 83,
-          "y": 207,
-          "width": 890,
-          "height": 306,
-          "label": "Reviewed evidence-first instruction policy"
-        },
-        {
-          "x": 82,
-          "y": 513,
-          "width": 895,
-          "height": 300,
-          "label": "Locked PROC-01 through PROC-04 anchors"
+          "x": 204,
+          "y": 132,
+          "width": 206,
+          "height": 32,
+          "label": "Procurement Agent — Global Instructions"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/procurement-agent/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The instruction text is visible, but no saved-state confirmation or No unsaved changes indicator is shown.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 258,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/procurement-agent/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png",
-      "historical_visible_anchors": [
-        "The Knowledge section is visibly empty and no Search all websites source is present"
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 1017,
-          "y": 257,
-          "width": 385,
-          "height": 60,
-          "label": "Knowledge has no web-search source"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/procurement-agent/screenshots/manual/06-add-aibast-procurement-agent-rules-and-guardrails.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The Knowledge section is collapsed and the aibast_procurement-agent-rules-and-guardrails.md filename is not visible.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "caption": "Manual step 6 · Add knowledge: aibast_procurement-agent-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/06-add-aibast-procurement-agent-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_procurement-agent-rules-and-guardrails.md"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 311,
+          "width": 304,
+          "height": 39,
+          "label": "aibast_procurement-agent-rules-and-guardrails.md"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/procurement-agent/screenshots/manual/07-add-aibast-procurement-agent-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The frame is pixel-identical to step 6; the Knowledge section is collapsed and the aibast_procurement-agent-synthetic-records.md filename is not visible.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "caption": "Manual step 7 · Add knowledge: aibast_procurement-agent-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/07-add-aibast-procurement-agent-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_procurement-agent-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_procurement-agent-synthetic-records.md"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "step": 8,
       "source": "solutions/procurement-agent/screenshots/manual/08-add-aibast-approval-routing-03.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/08-add-aibast-approval-routing-03.png",
-      "historical_visible_anchors": [
-        "approval-routing skill chip"
+      "caption": "Manual step 8 · Add skill: aibast_approval-routing_03",
+      "step": 8,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/08-add-aibast-approval-routing-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "approval-routing"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 1027,
-          "y": 181,
-          "width": 180,
-          "height": 52,
-          "label": "Approval-routing skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 115,
+          "height": 22,
+          "label": "approval-routing"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/09-add-aibast-budget-impact-07.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_budget-impact_07",
       "step": 9,
-      "source": "solutions/procurement-agent/screenshots/manual/09-add-aibast-purchase-request-01.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The frame is pixel-identical to step 8 and shows only approval-routing; no purchase-request skill is visible.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/09-add-aibast-budget-impact-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "budget-impact"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 103,
+          "height": 22,
+          "label": "budget-impact"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/10-add-aibast-draft-purchase-order-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_draft-purchase-order_05",
       "step": 10,
-      "source": "solutions/procurement-agent/screenshots/manual/10-add-aibast-spend-analysis-04.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png",
-      "historical_visible_anchors": [
-        "spend-analysis skill chip",
-        "approval-routing skill chip"
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-draft-purchase-order-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "draft-purchase-order"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 1027,
-          "y": 181,
-          "width": 365,
-          "height": 52,
-          "label": "Spend-analysis skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 141,
+          "height": 22,
+          "label": "draft-purchase-order"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/11-add-aibast-draft-rfq-08.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_draft-rfq_08",
       "step": 11,
-      "source": "solutions/procurement-agent/screenshots/manual/11-add-aibast-vendor-comparison-02.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png",
-      "historical_visible_anchors": [
-        "vendor-comparison skill chip",
-        "spend-analysis skill chip",
-        "approval-routing skill chip"
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-draft-rfq-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "draft-rfq"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 1027,
-          "y": 181,
-          "width": 365,
-          "height": 94,
-          "label": "Vendor-comparison skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 63,
+          "height": 22,
+          "label": "draft-rfq"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/12-add-aibast-expedite-approval-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_expedite-approval_06",
       "step": 12,
-      "source": "solutions/procurement-agent/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The reviewed model is visible, but the inventory shows only three skills and omits purchase-request; Knowledge is collapsed, so the required four-skill, two-file state is not proven.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/12-add-aibast-expedite-approval-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "expedite-approval"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "expedite-approval"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/13-add-aibast-purchase-request-01.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_purchase-request_01",
       "step": 13,
-      "source": "solutions/procurement-agent/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png",
-      "historical_visible_anchors": [
-        "Preview tab is selected",
-        "New chat control",
-        "Procurement Manual greeting"
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/13-add-aibast-purchase-request-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "purchase-request"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 640,
-          "y": 8,
-          "width": 102,
-          "height": 44,
-          "label": "Preview selected"
-        },
-        {
-          "x": 832,
-          "y": 84,
-          "width": 115,
-          "height": 52,
-          "label": "Fresh chat control"
+          "x": 1057,
+          "y": 197,
+          "width": 119,
+          "height": 22,
+          "label": "purchase-request"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/14-add-aibast-spend-analysis-04.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_spend-analysis_04",
       "step": 14,
-      "case_id": "PROC-01",
-      "source": "solutions/procurement-agent/screenshots/manual/14-proc-01.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "Only internal reasoning and an incomplete final-answer fragment are visible. Reasoning text cannot prove PROC-01.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/14-add-aibast-spend-analysis-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "spend-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 101,
+          "height": 22,
+          "label": "spend-analysis"
+        }
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/15-add-aibast-vendor-comparison-02.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_vendor-comparison_02",
       "step": 15,
-      "case_id": "PROC-02",
-      "source": "solutions/procurement-agent/screenshots/manual/15-proc-02.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reshoot_required",
-      "historical": true,
-      "historical_reason": "The answer says the synthetic-records file is currently absent and asks for an upload. That grounding blocker defeats the otherwise visible vendor anchors.",
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/15-add-aibast-vendor-comparison-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vendor-comparison"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 133,
+          "height": 22,
+          "label": "vendor-comparison"
+        }
+      ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/16-review-inventory.jpg",
+      "caption": "Manual step 16 · Review model, skills, knowledge, and safety boundaries",
       "step": 16,
-      "case_id": "PROC-03",
-      "source": "solutions/procurement-agent/screenshots/manual/16-proc-03.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png",
-      "historical_visible_anchors": [
-        "CFO Authorization",
-        "$125,000",
-        "48-hour review window",
-        "This recommendation does not record an approval"
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/16-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "vendor-comparison",
+        "spend-analysis",
+        "purchase-request",
+        "expedite-approval",
+        "draft-rfq",
+        "aibast_procurement-agent-synthetic-records.md",
+        "aibast_procurement-agent-rules-and-guardrails.md"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 286,
-          "y": 207,
-          "width": 940,
-          "height": 84,
-          "label": "CFO authorization and 48-hour gate"
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 286,
-          "y": 474,
-          "width": 940,
-          "height": 95,
-          "label": "Recommendation does not record approval"
+          "x": 1057,
+          "y": 197,
+          "width": 133,
+          "height": 22,
+          "label": "vendor-comparison"
+        },
+        {
+          "x": 1246,
+          "y": 197,
+          "width": 102,
+          "height": 22,
+          "label": "spend-analysis"
+        },
+        {
+          "x": 1058,
+          "y": 237,
+          "width": 119,
+          "height": 22,
+          "label": "purchase-request"
+        },
+        {
+          "x": 1233,
+          "y": 237,
+          "width": 123,
+          "height": 22,
+          "label": "expedite-approval"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 63,
+          "height": 22,
+          "label": "draft-rfq"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_procurement-agent-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_procurement-agent-rules-and-guardrails.md"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/17-review-skills.jpg",
+      "caption": "Manual step 17 · Review the skill list (8 skills)",
       "step": 17,
-      "case_id": "PROC-04",
-      "source": "solutions/procurement-agent/screenshots/manual/17-proc-04.jpg",
-      "status": "reshoot_required",
-      "full_case_not_visibly_proven": [
-        "The no-purchase-order boundary is below the captured viewport."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/17-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vendor-comparison",
+        "spend-analysis",
+        "purchase-request",
+        "approval-routing",
+        "expedite-approval"
       ],
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png",
-      "historical_visible_anchors": [
-        "Software spend",
-        "$60,000 pressure figure",
-        "PR-5001 at $125,000",
-        "CFO authorization threshold requires a 48-hour review window"
-      ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 286,
-          "y": 119,
-          "width": 940,
-          "height": 112,
-          "label": "Software budget pressure"
+          "x": 1055,
+          "y": 177,
+          "width": 133,
+          "height": 22,
+          "label": "vendor-comparison"
         },
         {
-          "x": 286,
-          "y": 224,
-          "width": 940,
-          "height": 111,
-          "label": "Open request and CFO threshold"
+          "x": 1055,
+          "y": 255,
+          "width": 102,
+          "height": 22,
+          "label": "spend-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 119,
+          "height": 22,
+          "label": "purchase-request"
+        },
+        {
+          "x": 1198,
+          "y": 376,
+          "width": 57,
+          "height": 19,
+          "label": "approval-routing"
+        },
+        {
+          "x": 1055,
+          "y": 411,
+          "width": 123,
+          "height": 22,
+          "label": "expedite-approval"
         }
-      ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/18-review-skills-more.jpg",
+      "caption": "Manual step 18 · Review the rest of the skill list",
       "step": 18,
-      "source": "solutions/procurement-agent/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "captured_status": "reusable",
-      "historical": true,
-      "historical_annotation": "solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png",
-      "historical_visible_anchors": [
-        "Procurement Manual",
-        "Draft"
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/18-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "approval-routing",
+        "expedite-approval",
+        "draft-rfq",
+        "draft-purchase-order",
+        "purchase-request",
+        "budget-impact"
       ],
-      "historical_boxes": [
+      "boxes": [
         {
-          "x": 102,
-          "y": 237,
-          "width": 650,
-          "height": 72,
-          "label": "Target manual agent remains Draft"
+          "x": 1055,
+          "y": 86,
+          "width": 60,
+          "height": 20,
+          "label": "approval-routing"
+        },
+        {
+          "x": 1154,
+          "y": 87,
+          "width": 56,
+          "height": 20,
+          "label": "expedite-approval"
+        },
+        {
+          "x": 1055,
+          "y": 142,
+          "width": 63,
+          "height": 22,
+          "label": "draft-rfq"
+        },
+        {
+          "x": 1055,
+          "y": 240,
+          "width": 142,
+          "height": 22,
+          "label": "draft-purchase-order"
+        },
+        {
+          "x": 1139,
+          "y": 283,
+          "width": 59,
+          "height": 20,
+          "label": "purchase-request"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 103,
+          "height": 22,
+          "label": "budget-impact"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/19-open-preview.jpg",
+      "caption": "Manual step 19 · Open a fresh Preview conversation",
+      "step": 19,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/19-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 162,
+          "height": 20,
+          "label": "Procurement Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-proc-01",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/20-proc-01.jpg",
+      "caption": "PROC-01 · Procurement Manager: Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+      "step": 20,
+      "case_id": "PROC-01",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/20-proc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PR-5001",
+        "$125,000",
+        "CFO"
+      ],
+      "boxes": [
+        {
+          "x": 573,
+          "y": 455,
+          "width": 96,
+          "height": 26,
+          "label": "PR-5001"
+        },
+        {
+          "x": 439,
+          "y": 772,
+          "width": 72,
+          "height": 22,
+          "label": "$125,000"
+        },
+        {
+          "x": 1125,
+          "y": 1181,
+          "width": 44,
+          "height": 22,
+          "label": "CFO"
+        }
+      ]
+    },
+    {
+      "id": "hard-proc-02",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/21-proc-02.jpg",
+      "caption": "PROC-02 · Category Buyer: Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
+      "step": 21,
+      "case_id": "PROC-02",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/21-proc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "AWS",
+        "Azure"
+      ],
+      "boxes": [
+        {
+          "x": 801,
+          "y": 507,
+          "width": 37,
+          "height": 20,
+          "label": "AWS"
+        },
+        {
+          "x": 874,
+          "y": 508,
+          "width": 54,
+          "height": 19,
+          "label": "Azure"
         }
       ],
-      "reason": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+      "full_case_not_visibly_proven": [
+        "not a supplier award not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-proc-03",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/22-proc-03.jpg",
+      "caption": "PROC-03 · Department Approver: This infrastructure request landed in my queue. What is the recommended approval path?",
+      "step": 22,
+      "case_id": "PROC-03",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/22-proc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CFO",
+        "48 hours",
+        "does not record an approval"
+      ],
+      "boxes": [
+        {
+          "x": 989,
+          "y": 583,
+          "width": 41,
+          "height": 20,
+          "label": "CFO"
+        },
+        {
+          "x": 680,
+          "y": 905,
+          "width": 72,
+          "height": 21,
+          "label": "48 hours"
+        },
+        {
+          "x": 443,
+          "y": 1229,
+          "width": 144,
+          "height": 20,
+          "label": "does not record an approval"
+        }
+      ]
+    },
+    {
+      "id": "hard-proc-04",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/23-proc-04.jpg",
+      "caption": "PROC-04 · Finance Director: Where is the purchasing budget under pressure, and what should we review before approving more spend?",
+      "step": 23,
+      "case_id": "PROC-04",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/23-proc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$60,000",
+        "Software",
+        "No purchase order is created"
+      ],
+      "boxes": [
+        {
+          "x": 406,
+          "y": 863,
+          "width": 76,
+          "height": 22,
+          "label": "$60,000"
+        },
+        {
+          "x": 299,
+          "y": 1046,
+          "width": 73,
+          "height": 21,
+          "label": "Software"
+        },
+        {
+          "x": 286,
+          "y": 1882,
+          "width": 218,
+          "height": 24,
+          "label": "No purchase order is created"
+        }
+      ]
+    },
+    {
+      "id": "hard-proc-05",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/24-proc-05.jpg",
+      "caption": "PROC-05 · Procurement Manager: Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team.",
+      "step": 24,
+      "case_id": "PROC-05",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/24-proc-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PO-2024-ENG-0892",
+        "$81,893",
+        "No purchase order is created"
+      ],
+      "boxes": [
+        {
+          "x": 528,
+          "y": 500,
+          "width": 225,
+          "height": 26,
+          "label": "PO-2024-ENG-0892"
+        },
+        {
+          "x": 1116,
+          "y": 533,
+          "width": 67,
+          "height": 23,
+          "label": "$81,893"
+        },
+        {
+          "x": 363,
+          "y": 1301,
+          "width": 220,
+          "height": 24,
+          "label": "No purchase order is created"
+        }
+      ]
+    },
+    {
+      "id": "hard-proc-06",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/25-proc-06.jpg",
+      "caption": "PROC-06 · Procurement Manager: The engineering laptop order is stuck in approval. Can you expedite it with urgency notifications?",
+      "step": 25,
+      "case_id": "PROC-06",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/25-proc-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "4 hours 23 minutes",
+        "Sarah Thompson",
+        "No notification was sent"
+      ],
+      "boxes": [
+        {
+          "x": 454,
+          "y": 606,
+          "width": 154,
+          "height": 22,
+          "label": "4 hours 23 minutes"
+        },
+        {
+          "x": 1036,
+          "y": 637,
+          "width": 143,
+          "height": 24,
+          "label": "Sarah Thompson"
+        },
+        {
+          "x": 445,
+          "y": 1092,
+          "width": 151,
+          "height": 20,
+          "label": "No notification was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-proc-07",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/26-proc-07.jpg",
+      "caption": "PROC-07 · Finance Director: How does the engineering laptop order affect our Q4 IT budget?",
+      "step": 26,
+      "case_id": "PROC-07",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/26-proc-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$80,607",
+        "$12,400"
+      ],
+      "boxes": [
+        {
+          "x": 446,
+          "y": 655,
+          "width": 66,
+          "height": 23,
+          "label": "$80,607"
+        },
+        {
+          "x": 338,
+          "y": 1102,
+          "width": 57,
+          "height": 22,
+          "label": "$12,400"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "82% committed not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-proc-08",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/27-proc-08.jpg",
+      "caption": "PROC-08 · Category Buyer: We also need an RFQ for office furniture for the same engineering team.",
+      "step": 27,
+      "case_id": "PROC-08",
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/27-proc-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RFQ-2024-FRN-0145",
+        "No RFQ was distributed",
+        "Sustainability: 15%"
+      ],
+      "boxes": [
+        {
+          "x": 386,
+          "y": 474,
+          "width": 195,
+          "height": 25,
+          "label": "RFQ-2024-FRN-0145"
+        },
+        {
+          "x": 501,
+          "y": 506,
+          "width": 185,
+          "height": 22,
+          "label": "No RFQ was distributed"
+        },
+        {
+          "x": 591,
+          "y": 956,
+          "width": 145,
+          "height": 24,
+          "label": "Sustainability: 15%"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-28",
+      "mode": "hard",
+      "source": "solutions/procurement-agent/screenshots/manual/28-confirm-draft.jpg",
+      "caption": "Manual step 28 · Confirm Draft and stop before publish",
+      "step": 28,
+      "draft": true,
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/28-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 161,
+          "height": 21,
+          "label": "Procurement Manual"
+        }
+      ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Procurement Pilot with Draft visible.",
-      "Manual step 1 after the blank agent workspace finishes loading.",
-      "Manual step 4 with the saved-state or No unsaved changes confirmation visible.",
-      "One expanded Knowledge inventory showing both exact filenames; create separate checkpoints for steps 6 and 7.",
-      "Manual step 9 with the purchase-request skill visibly present.",
-      "Manual step 12 with Claude Sonnet 4.6, all four skills, both knowledge files, and no configured tools visible.",
-      "Manual PROC-01 with positive final-answer anchors visible rather than reasoning.",
-      "Manual PROC-02 after the missing-grounding blocker is fixed."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
-  "historical_summary": {
-    "total_existing_captures": 23,
-    "reusable": 14,
-    "reshoot_required": 9
-  },
-  "historical_release_review": {
+  "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:procurement-agent",
-    "reviewed_at": "2026-08-10T00:27:58.163419+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
-  },
-  "source_contract_review": {
-    "status": "reshoot_required",
-    "revision": "grounding-r3",
-    "accepted_native_cases": 0,
-    "reviewed_current_images": 0,
-    "note": "Source-only grounding-r3 candidate. No component or locked case is accepted for this revision. Live Copilot Studio skill saving and Preview were unresponsive, so installation, save/reopen persistence, all four fresh native cases and reviewed screenshots remain unverified. Static checks and staging publication are not native acceptance."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:50:56.265604+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

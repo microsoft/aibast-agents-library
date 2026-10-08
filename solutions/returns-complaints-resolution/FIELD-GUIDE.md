@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `RCR-01, RCR-02, RCR-03, RCR-04`.
+1. Which locked case IDs did you complete? Expected scope: `RCR-01, RCR-02, RCR-03, RCR-04, RCR-05, RCR-06, RCR-07, RCR-08, RCR-09, RCR-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `RCR-02` — As Customer Service Agent, classify this product concern without echoing personal information or sending a response.
 - `RCR-03` — As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.
 - `RCR-04` — As Quality Team, summarize aggregate defect and return patterns without accusing any person.
+- `RCR-05` — As Service Manager, I have an escalated customer complaint about a defective laptop and the customer is very upset; help me resolve it quickly.
+- `RCR-06` — As Service Manager, show me resolution options that will keep this VIP customer satisfied.
+- `RCR-07` — As Service Manager, Tier 1 is approved; get it ready and prepare my talking points for the call.
+- `RCR-08` — As Service Manager, the call went well and the customer accepted; what is our follow-up plan?
+- `RCR-09` — As Service Manager, show me the service recovery performance and financial impact.
+- `RCR-10` — As Service Manager, create the executive summary and recap what we accomplished.
 
 ## Manual mode — literal browser construction
 

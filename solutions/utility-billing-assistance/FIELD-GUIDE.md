@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `UTILITY_BILLING_ASSISTANCE-01, UTILITY_BILLING_ASSISTANCE-02, UTILITY_BILLING_ASSISTANCE-03, UTILITY_BILLING_ASSISTANCE-04`.
+1. Which locked case IDs did you complete? Expected scope: `UTILITY_BILLING_ASSISTANCE-01, UTILITY_BILLING_ASSISTANCE-02, UTILITY_BILLING_ASSISTANCE-03, UTILITY_BILLING_ASSISTANCE-04, UTILITY_BILLING_ASSISTANCE-05, UTILITY_BILLING_ASSISTANCE-06, UTILITY_BILLING_ASSISTANCE-07, UTILITY_BILLING_ASSISTANCE-08, UTILITY_BILLING_ASSISTANCE-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -215,7 +215,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `UTILITY_BILLING_ASSISTANCE-01` — Explain ACCT-90003 balances without changing the account.
 - `UTILITY_BILLING_ASSISTANCE-02` — Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?
 - `UTILITY_BILLING_ASSISTANCE-03` — Show ACCT-90003 payment-plan options, but do not set one up.
-- `UTILITY_BILLING_ASSISTANCE-04` — Screen a two-person household earning 25000 with a 70-year-old applicant.
+- `UTILITY_BILLING_ASSISTANCE-04` — What assistance programs could help the Maple Drive resident on a fixed income, and do they qualify?
+- `UTILITY_BILLING_ASSISTANCE-05` — Does the Maple Drive household qualify for a leak credit, and how much would it be?
+- `UTILITY_BILLING_ASSISTANCE-06` — Get the payment plan and the water-assistance application ready for the Maple Drive resident. What paperwork do they need?
+- `UTILITY_BILLING_ASSISTANCE-07` — Can we help the Maple Drive resident fix the leak at no cost?
+- `UTILITY_BILLING_ASSISTANCE-08` — Pull everything together for the Maple Drive resident so we can send it and close out the account notes.
+- `UTILITY_BILLING_ASSISTANCE-09` — Screen a two-person household earning 25000 with a 70-year-old applicant.
 
 ## Manual mode — literal browser construction
 

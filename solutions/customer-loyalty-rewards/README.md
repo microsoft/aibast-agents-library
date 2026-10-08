@@ -39,7 +39,7 @@ redemption, refund, order, or purchase is issued or changed.
 | Copilot Studio deployment settings | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-solution-export.json` |
 
-**Scaffold status:** 87 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

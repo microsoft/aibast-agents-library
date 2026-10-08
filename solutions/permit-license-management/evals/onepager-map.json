@@ -15,8 +15,8 @@
         "PERMIT_LICENSE_MANAGEMENT-01"
       ],
       "synthetic_evidence": [
-        "PRM-6002",
-        "EXPIRED"
+        "240 active permits",
+        "Imperial Valley Solar"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     },
@@ -29,8 +29,8 @@
         "PERMIT_LICENSE_MANAGEMENT-02"
       ],
       "synthetic_evidence": [
-        "NPDES Stormwater Discharge Permit",
-        "2026-03-01"
+        "Reno Wind Farm",
+        "MISSED"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     },
@@ -43,7 +43,7 @@
         "PERMIT_LICENSE_MANAGEMENT-03"
       ],
       "synthetic_evidence": [
-        "expired_permit",
+        "renewal_lead_time_missed",
         "CRITICAL"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
@@ -57,10 +57,33 @@
         "PERMIT_LICENSE_MANAGEMENT-04"
       ],
       "synthetic_evidence": [
-        "APP-7002",
+        "APP-7102",
         "public_comment"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Tracks permit status, automates renewal workflows, and maintains documentation to keep operations audit-ready",
+      "operations": [
+        "renewal_plan"
+      ],
+      "demo_cases": [
+        "PERMIT_LICENSE_MANAGEMENT-05"
+      ],
+      "synthetic_evidence": [
+        "$685,000",
+        "$13.8M"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     }
-  ]
+  ],
+  "source_audit": {
+    "implemented_operations": [
+      "permit_inventory",
+      "renewal_calendar",
+      "compliance_gaps",
+      "application_status",
+      "renewal_plan"
+    ]
+  }
 }

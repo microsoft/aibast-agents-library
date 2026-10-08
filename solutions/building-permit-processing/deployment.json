@@ -44,7 +44,12 @@
       "permit_backlog",
       "intake_triage",
       "applicant_updates",
-      "inspector_assignment"
+      "inspector_assignment",
+      "application_intake",
+      "code_compliance_review",
+      "route_for_review",
+      "workflow_timeline",
+      "permit_issuance"
     ],
     "publish_requires_confirmation": true,
     "validated_pilot": {
@@ -54,33 +59,33 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 7,
+      "skills": 12,
       "knowledge_files": 2,
       "changes_pushed": 10,
       "status": "Published",
       "published": true,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
     },
     "validated_manual": {
       "display_name": "Building Permit Manual Build",
       "schema_name": "cr2bf_buildingpermitmanualbuild_CEeUx7",
-      "bot_id": "0d89cb6b-4276-46f9-b453-478b2ddde265",
+      "bot_id": "d392cc9d-d166-4e32-8c87-8d727cd8c1b0",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 7,
+      "skills": 12,
       "knowledge_files": 2,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
     },
     "export_agent": {
       "display_name": "Building Permit Manual Build",
-      "schema_name": "cr2bf_buildingpermitmanualbuild_CEeUx7",
-      "solution_unique_name": "aibast_BuildingPermitManualBuild",
-      "bot_id": "0d89cb6b-4276-46f9-b453-478b2ddde265",
+      "schema_name": "cr2bf_buildingpermitmanualbuild_nYrmQJ",
+      "solution_unique_name": "aibast_BuildingPermitManualBuildBuild",
+      "bot_id": "d392cc9d-d166-4e32-8c87-8d727cd8c1b0",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "status": "Draft",

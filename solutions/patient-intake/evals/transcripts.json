@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:27:51.650507+00:00",
+  "captured_at": "2026-10-07T01:36:20.362396+00:00",
   "solution": "@aibast-agents-library/patient-intake",
   "onepager": "31. Patient Intake and Scheduling Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
-      "sha256": "4769d22a81cc1e40b5e9ffd4a43f2707a33834987e19fb00bf4b011c9cf97995"
+      "sha256": "c94a5ac17c924c4f9e37a23dcd00a55eecb269394daee23810e82c9a53157496"
     }
   ],
   "case_file": "tests/demo_cases/patient-intake.json",
-  "case_file_sha256": "d1ebc313739c60a4bbdeea578ae9a69b42bb83efd9db1fb1984a58f26286560f",
+  "case_file_sha256": "3b300edc694f72694f022713708294af0e3e46bffd7dd29e4ae11b6034d678b9",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,15 +22,15 @@
       "persona": "Front Desk Staff",
       "onepager_promise": "Deliver tailored digital packets with all required pre-visit forms",
       "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
-      "assistant_response": "**Patient Alpha is missing confirmation of emergency contact details.** \n\nThe intake packet has contact info, consent, and medications on file, but the emergency contact field still needs staff verification before the patient is ready for scheduling.",
+      "assistant_response": "Per the synthetic intake readiness check for Patient Alpha (SYN-PT-001):\n\n- **On file:** contact details, consent acknowledgement, medication list, preferred language (English)\n- **Still needed:** emergency contact confirmation\n\nThat's the one open item flagged for staff to confirm. (Reminder: this is synthetic demo data \u2014 a human still needs to verify against the real record.)",
       "agent_logs": "[PatientIntakeAgent] # Intake Readiness Draft\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\n## Synthetic Patient Alpha (SYN-PT-001)\n- Preferred language recorded: English\n- Forms present: contact details, consent acknowledgement, medication list\n- Items for staff confirmation: emergency contact confirmation\n",
       "expected_agent": "PatientIntakeAgent",
       "must_include": [
         "SYN-PT-001",
         "emergency contact confirmation"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,15 +38,15 @@
       "persona": "Patient Access Representative",
       "onepager_promise": "Verify insurance, referrals, and network status during patient intake",
       "prompt": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
-      "assistant_response": "**Coverage Evidence for Synthetic Patient Alpha:**\n\n**Recorded:**\n- Payer: Synthetic Health Plan\n- Status: Source record received\n- Evidence dated: 2026-07-30\n\n**Staff must still confirm:**\n- **Active coverage status** \u2014 verify the plan is current\n- **Network status** \u2014 confirm the patient's in-network eligibility for the intended care\n\nThis is synthetic demonstration data only. Real verification requires human review in the actual payer portal before scheduling or determining eligibility.",
-      "agent_logs": "[PatientIntakeAgent] # Coverage Evidence Review\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\n## Synthetic Patient Alpha (SYN-PT-001)\n- Payer recorded in synthetic source: Synthetic Health Plan\n- Source-recorded state: source record received\n- Evidence date: 2026-07-30\n- Human follow-up: Confirm active coverage and network status in the payer portal.\n",
+      "assistant_response": "Here's what's on file for Synthetic Patient Alpha (SYN-PT-001) \u2014 this is synthetic demo data, not a real eligibility determination:\n\n**Recorded:**\n- Payer: Synthetic Health Plan\n- Status: source record received (evidence dated 2026-07-30)\n\n**Staff must still confirm:**\n- Active coverage and network status directly in the payer portal\n- No copay, deductible, or prior-auth details were returned \u2014 those would need separate verification too\n\nThis is a read-only draft; nothing here counts as a determination of eligibility or benefits until a human verifies it in the actual payer system.",
+      "agent_logs": "[PatientIntakeAgent] # Coverage Evidence Review\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\n## Synthetic Patient Alpha (SYN-PT-001)\n- Payer recorded in synthetic source: Synthetic Health Plan\n- Source-recorded state: source record received\n- Evidence date: 2026-07-30\n- Human follow-up: Confirm active coverage and network status in the payer portal.\n\n**Clinician A availability:** 2026-08-20 10:30, 2026-08-22 14:00\n",
       "expected_agent": "PatientIntakeAgent",
       "must_include": [
         "Synthetic Health Plan",
         "source record received"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -54,15 +54,15 @@
       "persona": "Scheduling Coordinator",
       "onepager_promise": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
       "prompt": "Show the candidate source slots for Clinician A without booking anything.",
-      "assistant_response": "Here are the candidate time slots for Clinician A:\n\n- **Aug 20, 2026 at 10:30 AM** \u2014 new patient consultation\n- **Aug 22, 2026 at 2:00 PM** \u2014 follow-up consultation\n\nThese are read-only for review only\u2014nothing has been booked. Human confirmation in your source system is required before scheduling.",
-      "agent_logs": "[PatientIntakeAgent] # Appointment Availability Review\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nThese are candidate source slots for staff review; nothing has been reserved or booked.\n\n## Clinician A\n- 2026-08-20 10:30 \u2014 new patient consultation\n- 2026-08-22 14:00 \u2014 follow-up consultation\n",
+      "assistant_response": "Here are the candidate slots for **Clinician A** \u2014 nothing has been booked:\n\n- **2026-08-20, 10:30 AM** \u2014 new patient consultation\n- **2026-08-22, 2:00 PM** \u2014 follow-up consultation\n\nCoverage check for Sarah Martinez also looks clean: active BCBS, $35 specialist copay, no prior auth needed, in-network. Let me know if you want me to draft a hold on one of these \u2014 that still requires your confirmation to actually book.",
+      "agent_logs": "[PatientIntakeAgent] # Appointment Availability Review\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nThese are candidate source slots for staff review; nothing has been reserved or booked.\n\n## Clinician A\n- 2026-08-20 10:30 \u2014 new patient consultation\n- 2026-08-22 14:00 \u2014 follow-up consultation\n\n**Coverage snapshot for Sarah Martinez:** Active Blue Cross Blue Shield, $35 specialist copay, deductible $450 met of $1,500, prior auth No (initial consult exempt), In-network, Tier 1.\n",
       "expected_agent": "PatientIntakeAgent",
       "must_include": [
         "Clinician A",
         "nothing has been reserved or booked"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +70,83 @@
       "persona": "Front Desk Staff",
       "onepager_promise": "Automate intake checks and coordination to ensure patients are fully prepared",
       "prompt": "Prepare a pre-visit readiness summary for Synthetic Patient Alpha.",
-      "assistant_response": "**Pre-Visit Readiness Summary: Synthetic Patient Alpha**\n\nPatient **SYN-PT-001** is scheduled for a new patient consultation with Clinician A on **August 15, 2026**.\n\n**What needs attention before the visit:**\n- **Intake:** Emergency contact confirmation required\n- **Coverage:** Verify active coverage and network status in the payer portal\n- **Reviewer:** Authorized patient-access staff must confirm both items\n\nThis is read-only evidence for intake planning \u2014 any changes to the patient record or appointment must go through your approved source systems. Would you like me to check coverage details or appointment availability for this patient?",
+      "assistant_response": "Here's the readiness summary for Synthetic Patient Alpha (SYN-PT-001) \u2014 draft only, needs human review:\n\n- **Visit:** New patient consultation with Clinician A on 2026-08-15\n- **Outstanding intake item:** Emergency contact confirmation needed\n- **Coverage:** Needs verification in payer portal \u2014 active status and network not yet confirmed\n\nNothing else is flagged as missing, but confirm the emergency contact and coverage before the visit. Want me to check intake readiness in more detail or pull coverage evidence specifically?",
       "agent_logs": "[PatientIntakeAgent] # Pre-Visit Readiness Summary\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\n## Synthetic Patient Alpha (SYN-PT-001)\n- Source-recorded visit: new patient consultation with Clinician A on 2026-08-15\n- Intake items requiring confirmation: emergency contact confirmation\n- Coverage follow-up: Confirm active coverage and network status in the payer portal.\n- Required reviewer: authorized patient-access staff\n",
       "expected_agent": "PatientIntakeAgent",
       "must_include": [
         "SYN-PT-001",
         "Required reviewer"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PI-05",
+      "persona": "Front Desk Staff",
+      "onepager_promise": "Verify insurance, referrals, and network status during patient intake",
+      "prompt": "New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.",
+      "assistant_response": "Registration drafted for Sarah Martinez (SYN-PT-003) \u2014 new patient, chronic migraines, requesting Dr. James Anderson in Neurology, Blue Cross Blue Shield, within 14 days. This is a staff-review draft only, not yet submitted to the record system.\n\nNext logical steps: check Dr. Anderson's availability in that window and verify her BCBS coverage/prior-auth requirements. Want me to pull both now?",
+      "agent_logs": "[PatientIntakeAgent] # New Patient Registration Draft\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nI'll prepare Sarah Martinez's new-patient registration and check Dr. James Anderson's neurology schedule and her Blue Cross Blue Shield coverage.\n\n**Patient Registration - Draft (ready for staff to create in the registration system)**\n- Patient Name: Sarah Martinez (SYN-PT-003)\n- Type: New Patient\n- Requested Provider: Dr. James Anderson, Neurology\n- Chief Complaint: Chronic migraines\n- Insurance: Blue Cross Blue Shield\n- Timeframe: Within 14 days\n- Source System: Registration module (synthetic)\n\nNext: check Dr. James Anderson's availability and verify her insurance coverage for this visit.",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "New Patient Registration Draft",
+        "Dr. James Anderson, Neurology",
+        "Within 14 days"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PI-06",
+      "persona": "Scheduling Coordinator",
+      "onepager_promise": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "prompt": "Book Sarah Martinez for Tuesday at 2:30 and tell me which intake forms she needs.",
+      "assistant_response": "I drafted the booking (not yet reserved \u2014 needs staff confirmation in the scheduling system):\n\n**Booking draft**\n- Sarah Martinez with Dr. James Anderson, Neurology \u2014 Suite 405\n- Tuesday 2:30 PM, 60 min (new patient consult)\n\n**Intake packet forms she needs:**\n1. Demographics Form\n2. Insurance Verification (photo of card)\n3. Medical History (meds, allergies, surgeries)\n4. Migraine Questionnaire (HIT-6)\n5. HIPAA Authorization\n6. Financial Policy acknowledgment\n\nThis is a draft only \u2014 staff still need to confirm and actually book it in the live system.",
+      "agent_logs": "[PatientIntakeAgent] # Appointment Request Draft\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nAppointment request prepared for Sarah Martinez \u2014 ready for staff to book and confirm in the scheduling system; nothing has been reserved or booked yet.\n\n- Date: Tuesday, January 30, 2024\n- Time: 2:30 PM\n- Duration: 60 minutes (new patient)\n- Provider: Dr. James Anderson, MD\n- Location: Neurology Clinic - Suite 405\n- Visit Type: New Patient Consultation\n- Confirmation: SMS & email confirmation drafted for staff to send after booking\n\n**Intake forms she needs before the visit:** Demographics Form, Insurance Verification, Medical History, HIPAA Authorization, Financial Policy, Migraine Questionnaire.\n\n[PatientIntakeAgent] # Digital Intake Packet Draft\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nPacket tailored to Neurology for Sarah Martinez: it includes HIPAA authorization and medication history. Ready for staff to send to her patient portal; she can complete it on her phone.\n\n- Demographics Form: Name, DOB, contact info, emergency contact\n- Insurance Verification: Photo upload for card front/back\n- Medical History: Current medications, allergies, prior surgeries\n- Migraine Questionnaire: HIT-6 headache impact assessment\n- HIPAA Authorization: Digital signature required\n- Financial Policy: Payment terms and copay acknowledgment\n- Portal Link: ready to send via SMS to the mobile number on file\n",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "Appointment Request Draft",
+        "Tuesday, January 30, 2024",
+        "Suite 405"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PI-07",
+      "persona": "Patient Access Representative",
+      "onepager_promise": "Deliver tailored digital packets with all required pre-visit forms",
+      "prompt": "Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?",
+      "assistant_response": "Yes \u2014 her intake packet (pulled via the intake_packet draft) includes both:\n\n- **HIPAA Authorization** (digital signature required)\n- **Medical History**, which captures medication history, allergies, and prior surgeries\n\nFull packet list:\n1. Demographics Form\n2. Insurance Verification (card photo upload)\n3. Medical History (meds, allergies, surgeries)\n4. Migraine Questionnaire (HIT-6 headache impact)\n5. HIPAA Authorization\n6. Financial Policy acknowledgment\n7. Portal link to send via SMS\n\nIt's a draft \u2014 staff still need to send it and review completed forms.",
+      "agent_logs": "[PatientIntakeAgent] # Digital Intake Packet Draft\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nPacket tailored to Neurology for Sarah Martinez: it includes HIPAA authorization and medication history. Ready for staff to send to her patient portal; she can complete it on her phone.\n\n- Demographics Form: Name, DOB, contact info, emergency contact\n- Insurance Verification: Photo upload for card front/back\n- Medical History: Current medications, allergies, prior surgeries\n- Migraine Questionnaire: HIT-6 headache impact assessment\n- HIPAA Authorization: Digital signature required\n- Financial Policy: Payment terms and copay acknowledgment\n- Portal Link: ready to send via SMS to the mobile number on file\n",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "Digital Intake Packet Draft",
+        "HIT-6",
+        "HIPAA Authorization"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PI-08",
+      "persona": "Scheduling Coordinator",
+      "onepager_promise": "Automate reminders across multiple scheduled touchpoints",
+      "prompt": "Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.",
+      "assistant_response": "Here's the recommended reminder sequence for Sarah's visit (Tuesday 2:30 PM):\n\n- **72 hrs before** (Sat 2:30 PM): SMS + email reminder\n- **24 hrs before** (Mon 2:30 PM): SMS + optional voice call\n- **2 hrs before** (Tue 12:30 PM): Final SMS\n- **Forms nudge**: Alert if intake forms aren't done by Monday\n- **Easy reschedule**: Reply \"RESCHEDULE\" to any SMS\n- **Waitlist auto-fill**: Slot fills automatically if she cancels >24hrs out\n\nThis protocol brings new-patient no-show rates down to ~8%. This is a draft plan from the intake agent \u2014 staff still need to activate it in your actual messaging system.",
+      "agent_logs": "[PatientIntakeAgent] # No-Show Prevention Reminder Plan\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nRecommended multi-channel reminder sequence for Sarah Martinez's Tuesday 2:30 PM visit, based on the 40% no-show reduction protocol (ready for staff to activate):\n\n- 72-Hour Reminder: SMS + Email (Saturday 2:30 PM)\n- 24-Hour Reminder: SMS + Voice call option (Monday 2:30 PM)\n- 2-Hour Reminder: Final SMS (Tuesday 12:30 PM)\n- Forms Completion Alert: Reminder if not completed by Monday\n- Easy Reschedule: Reply RESCHEDULE to SMS anytime\n- Waitlist Automation: Auto-fill the slot if she cancels with >24hr notice\n- Historical No-Show Rate: 8% for new patients with this protocol\n",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "72-Hour Reminder",
+        "Saturday 2:30 PM",
+        "8% for new patients"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

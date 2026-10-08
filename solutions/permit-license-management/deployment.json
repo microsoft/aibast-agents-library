@@ -21,11 +21,11 @@
     "policy_clean_launcher_dir": "~/.copilot/bin"
   },
   "smoke_test": {
-    "prompt": "Which Riverside permit is expired right now?",
+    "prompt": "Show me our permit status and any expiring soon",
     "must_call": "PermitLicenseManagementAgent",
     "must_include": [
-      "PRM-6002",
-      "EXPIRED"
+      "240 active permits",
+      "Imperial Valley Solar"
     ]
   },
   "copilot_studio": {
@@ -35,14 +35,15 @@
       "permit_inventory",
       "renewal_calendar",
       "compliance_gaps",
-      "application_status"
+      "application_status",
+      "renewal_plan"
     ],
     "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
     "manual_knowledge_files": [
       "manual/knowledge/permit-license-management-synthetic-records.md",
       "manual/knowledge/permit-license-management-rules-and-controls.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 5,
     "required_connections": [
       "Permit system of record",
       "SharePoint controlled documents",
@@ -54,17 +55,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "Permit Management Manual",
-      "bot_id": "d13fd96b-7491-4556-baad-fbd549f8f8fb",
+      "bot_id": "a3690254-2f80-4bf1-ac06-9378d156e2ba",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 5,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
     },
     "validated_pilot": {
       "display_name": "Permit Management Pilot",
@@ -73,13 +74,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 5,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
     }
   },
   "demo_scenarios": [

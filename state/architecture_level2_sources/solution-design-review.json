@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "solution-design-review",
+  "agent": "@aibast-agents-library/solution-design-review",
+  "display_name": "Solution Design Review Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic initiative brief",
+        "detail": "One fictional initiative with driver, objective, stakeholders, scope, constraints and review date."
+      },
+      {
+        "name": "Current-state component register",
+        "detail": "Seven fictional components with domain, owner and lifecycle status, two at end of support."
+      },
+      {
+        "name": "Requirements and readiness checklist",
+        "detail": "Eight non-functional requirements with owners and a ten-point review-board checklist."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Design intake and plan",
+        "detail": "Use when an architect hands over the design template, discovery notes and initiative brief and asks where to start."
+      },
+      {
+        "name": "Architecture vision draft",
+        "detail": "Use when an architect asks for the vision: business driver, scope, stakeholders, impacted domains, constraints and review workgroups."
+      },
+      {
+        "name": "Current-state baseline",
+        "detail": "Use when an architect asks what the current state looks like for the systems or components in scope."
+      },
+      {
+        "name": "Non-functional requirements matrix",
+        "detail": "Use when someone asks which non-functional requirements apply, who owns each one, and where the gaps and variances are."
+      },
+      {
+        "name": "Target design and inventory delta",
+        "detail": "Use when an architect asks for the target design and what changes in the component inventory."
+      },
+      {
+        "name": "Review-board readiness check",
+        "detail": "Use when someone asks whether the design is ready for the review board, its confidence score or its gaps."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the six-skill Draft agent with two synthetic knowledge files; publishing is a separate gated step."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Conversational entry point for architects once approved production controls exist."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file SolutionDesignReviewAgent locally with deterministic routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Requirements matrix view",
+        "detail": "Shows each requirement's criterion, owner and status with missing owners and variances called out."
+      },
+      {
+        "name": "Inventory delta view",
+        "detail": "Lists new, changed and retired components to register after build."
+      },
+      {
+        "name": "Readiness scorecard",
+        "detail": "Confidence score, severity-ranked gaps and the recommendation before the review board."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable SolutionDesignReviewAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only operations over synthetic data."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server that discovers the agent and exposes chat and health endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; explicit approval is required before publication."
+    },
+    {
+      "name": "Approved document library",
+      "detail": "Cited production seam for templates and past designs; no live connection exists in the package."
+    },
+    {
+      "name": "Component inventory (read-only seam)",
+      "detail": "Cited production seam for current-state components; the agent never registers changes."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only the bundled fictional initiative; never browses or reads a live inventory."
+    },
+    {
+      "name": "Evidence-traced readiness",
+      "detail": "Every failed check names the missing domain, requirement or response behind it."
+    },
+    {
+      "name": "Architect ownership",
+      "detail": "Every section is a draft the architect edits; owners are suggested by people, not assigned by the agent."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never submits to the review board, registers inventory changes or sends a document."
+    },
+    {
+      "name": "Governance authority stays human",
+      "detail": "Readiness, approval and variances are decided by the review board."
+    }
+  ]
+}

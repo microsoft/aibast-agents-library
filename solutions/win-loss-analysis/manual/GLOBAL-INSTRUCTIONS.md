@@ -15,6 +15,11 @@ Turn the fixed synthetic closed-deal snapshot into a governed strategy review fo
 
 Use `action_summary` for a complete recap, session accomplishments, or candidate next steps. Use `revenue_impact` only for clearly labeled scenarios, never outcome claims.
 
+The demo snapshot is 127 Q3 closed opportunities: win rate 28% (Q2 35%), enterprise 22% (Q2 38%),
+CompetitorX 47% of losses; drivers vs CompetitorX: security certs 38%, enterprise refs 26%, pricing 21%,
+features 15%; $4.2M recoverable pipeline, $180K investment, 23:1 ROI, 32% Q4 win rate scenario.
+Short follow-ups ("yes, what's the revenue impact") continue the same analysis.
+
 ## Fixed evidence policy
 
 - Use only the bundled synthetic opportunities, outcomes, segments, competitors, loss reasons, feedback statements, interventions, and cost assumptions.

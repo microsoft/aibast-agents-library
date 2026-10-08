@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `UWS-01, UWS-02, UWS-03, UWS-04`.
+1. Which locked case IDs did you complete? Expected scope: `UWS-01, UWS-02, UWS-03, UWS-04, UWS-05, UWS-06, UWS-07, UWS-08, UWS-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,11 @@ Both Easy lanes preserve every recorded case prompt:
 - `UWS-02` — Walk me through the rating factors and loss evidence for Riverside without issuing a quote.
 - `UWS-03` — Which applications are outside a stated guideline or missing required evidence?
 - `UWS-04` — Prepare the exception file I need to review and state whether any coverage decision was made.
+- `UWS-05` — Help me evaluate this commercial insurance application and tell me what is missing.
+- `UWS-06` — Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.
+- `UWS-07` — What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?
+- `UWS-08` — Check compliance and authority before we finalize the Midwest Manufacturing recommendation.
+- `UWS-09` — Generate the complete underwriting summary for the Midwest Manufacturing submission.
 
 ## Manual mode — literal browser construction
 

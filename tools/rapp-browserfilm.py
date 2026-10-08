@@ -27,6 +27,11 @@ def font(size, bold=False):
 def fit(image, width, height):
     canvas = Image.new("RGB", (width, height), "#f7f4ef")
     copy = image.convert("RGB")
+    if copy.height * width > copy.width * height * 1.15:
+        # Full-conversation captures are taller than the film: show the top of the
+        # conversation (question and the start of the answer) at full size instead
+        # of shrinking the whole page into an unreadable strip.
+        copy = copy.crop((0, 0, copy.width, round(copy.width * height / width)))
     copy.thumbnail((width, height), Image.Resampling.LANCZOS)
     x = (width - copy.width) // 2
     y = (height - copy.height) // 2
@@ -111,7 +116,7 @@ def build(manifest_path, output_path, contact_path=None):
             y = (index // columns) * thumb_height
             sheet.paste(thumb, (x, y))
         contact_path.parent.mkdir(parents=True, exist_ok=True)
-        sheet.save(contact_path, quality=88, optimize=True)
+        sheet.save(contact_path, quality=70, optimize=True, progressive=True)
 
 
 def main():

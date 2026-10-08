@@ -1,6 +1,6 @@
 {
  "schema": "aibast-solutions/1.0",
- "count": 54,
+ "count": 69,
  "note": "Approved industry-solution catalog as advertised on the AIBAST SharePoint Agents Library. The repo aligns to this; it is not derived from the repo.",
  "solutions": [
   {
@@ -2331,6 +2331,717 @@
    ],
    "is_primary": true,
    "source": "GENERATED \u2014 not yet advertised on the AIBAST SharePoint. Article I.1: it ships only once it is."
+  },
+  {
+   "slot": 52,
+   "advertised_name": "Book of Business Cross-Sell Agent",
+   "canonical_name": "Book of Business Cross-Sell Agent",
+   "repo_agent": "@aibast-agents-library/insurance-book-cross-sell",
+   "executive_summary": "Turn a broker's book of business into a confirmed, routed cross-sell plan: classify every line, match it to the underwriting units with appetite, find the white space, and draft the unit and broker confirmations before anything reaches a seller's pipeline.",
+   "industries": [
+    "Financial Services",
+    "Insurance"
+   ],
+   "personas": [
+    "Cross-Sell Managers",
+    "Underwriting Unit Leads",
+    "Broker Relationship Managers"
+   ],
+   "featured_tools": [
+    "Microsoft Outlook",
+    "Microsoft Teams",
+    "Dynamics 365"
+   ],
+   "customer_scenario": [
+    "Read a broker's book of business and profile every account, line and renewal",
+    "Resolve an industry class for every line and flag what the broker must supply",
+    "Match lines to underwriting units with appetite and surface the white space",
+    "Draft unit and broker confirmations and a routing plan timed to renewals"
+   ],
+   "outcomes": [
+    "Cross-sell white space found across a whole broker book in one pass",
+    "Confirmations drafted consistently before any record reaches a seller",
+    "Seller follow-up timed ahead of every renewal"
+   ],
+   "capabilities": [
+    "Book of business summary",
+    "Industry class resolution",
+    "Appetite and white-space match",
+    "Unit appetite confirmation drafts",
+    "Broker confirmation draft",
+    "Cross-sell routing plan"
+   ],
+   "onepager": "52. Book of Business Cross-Sell Agent one-pager.pptx",
+   "demo_video": "52-Book of Business Cross-Sell Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Book of Business Cross-Sell Agent",
+   "sharepoint_list_name": "Book of Business Cross-Sell Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 53,
+   "advertised_name": "Build Materials Compliance Agent",
+   "canonical_name": "Build Materials Compliance Agent",
+   "repo_agent": "@aibast-agents-library/build-materials-compliance",
+   "executive_summary": "Keep grant-funded construction bills of materials compliant every week: flag items that newly fall out of the program's materials sourcing rule with cited evidence, find same-specification compliant alternates, watch vendor certificates, and keep the audit evidence package ready.",
+   "industries": [
+    "Manufacturing",
+    "Construction",
+    "Public Infrastructure"
+   ],
+   "personas": [
+    "Procurement Compliance Leads",
+    "Buyers",
+    "Supplier Quality Managers",
+    "Program Compliance Reviewers"
+   ],
+   "featured_tools": [
+    "Microsoft Teams",
+    "SharePoint",
+    "Microsoft Word"
+   ],
+   "customer_scenario": [
+    "Scan every approved bill of materials weekly for new and changed lines",
+    "Flag items that newly fall out of the materials sourcing rule with cited evidence",
+    "Find same-specification compliant alternates and size the switch",
+    "Keep vendor certificates and the audit evidence package current"
+   ],
+   "outcomes": [
+    "Compliance problems caught the week they appear, before the order",
+    "Every finding tied to the record that proves it",
+    "Audit evidence ready by project instead of rebuilt at audit time"
+   ],
+   "capabilities": [
+    "Weekly BOM change scan",
+    "Materials compliance check",
+    "Compliant alternates",
+    "Vendor certificate watch",
+    "Audit evidence readiness",
+    "Approved next-step drafts"
+   ],
+   "onepager": "53. Build Materials Compliance Agent one-pager.pptx",
+   "demo_video": "53-Build Materials Compliance Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Build Materials Compliance Agent",
+   "sharepoint_list_name": "Build Materials Compliance Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 54,
+   "advertised_name": "Order Entry Validation Agent",
+   "canonical_name": "Order Entry Validation Agent",
+   "repo_agent": "@aibast-agents-library/order-entry-validation",
+   "executive_summary": "Turn inbound customer purchase orders into validated draft sales orders: extract every PO field, check prices and terms against the accepted quote, catch invalid product configurations, classify the order, and hand a specialist a draft with each exception called out before entry.",
+   "industries": [
+    "Manufacturing"
+   ],
+   "personas": [
+    "Sales Operations Specialists",
+    "Sales Operations Managers",
+    "Product Configuration Analysts"
+   ],
+   "featured_tools": [
+    "Microsoft Outlook",
+    "Microsoft Teams",
+    "Dynamics 365"
+   ],
+   "customer_scenario": [
+    "Read each inbound purchase order into structured fields",
+    "Validate prices, terms, ship-to and contact against the accepted quote",
+    "Catch invalid product configurations before the order is entered",
+    "Prepare a draft sales order with every exception called out"
+   ],
+   "outcomes": [
+    "Purchase orders validated without manual re-keying",
+    "Price, terms and configuration errors stopped before the ERP",
+    "Ready orders entered first, exceptions routed with a named reason"
+   ],
+   "capabilities": [
+    "Pending PO queue",
+    "Purchase order extraction",
+    "Quote validation",
+    "Configuration check",
+    "Order classification",
+    "Draft sales order",
+    "Queue readiness review"
+   ],
+   "onepager": "54. Order Entry Validation Agent one-pager.pptx",
+   "demo_video": "54-Order Entry Validation Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Order Entry Validation Agent",
+   "sharepoint_list_name": "Order Entry Validation Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 55,
+   "advertised_name": "M&A Target Sourcing Agent",
+   "canonical_name": "M&A Target Sourcing Agent",
+   "repo_agent": "@aibast-agents-library/ma-target-sourcing",
+   "executive_summary": "Turn an acquisition thesis into a transparent, cited target shortlist: screening criteria, a weighted ranking of a synthetic market universe, target dossiers with sources and diligence questions, a weighting challenge, evidence-gap review, and an investment committee screening memo draft. The agent is read-only; it never contacts a target, updates a CRM, shares a document, or makes an investment decision.",
+   "industries": [
+    "Financial Services",
+    "Cross-Industry"
+   ],
+   "personas": [
+    "Corporate Development Associate",
+    "Head of Corporate Development",
+    "Research Analyst"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Teams",
+    "Microsoft Excel"
+   ],
+   "customer_scenario": [
+    "Building a longlist took weeks of manual research across scattered sources",
+    "Rankings depended on who ran the spreadsheet, so the committee questioned them",
+    "Out-of-date or missing evidence surfaced late, after outreach had started",
+    "Committee memos were rewritten from scratch for every screen"
+   ],
+   "outcomes": [
+    "Moved from thesis to a ranked shortlist in a single working session",
+    "Gave the committee rankings it could audit and challenge",
+    "Started outreach only after evidence gaps on the shortlist were closed"
+   ],
+   "capabilities": [
+    "Thesis to screening criteria",
+    "Ranked target longlist",
+    "Cited target dossier",
+    "Weighting challenge",
+    "Evidence-gap review",
+    "Investment committee memo draft"
+   ],
+   "onepager": "55. M&A Target Sourcing Agent one-pager.pptx",
+   "demo_video": "55-M&A Target Sourcing Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "M&A Target Sourcing Agent",
+   "sharepoint_list_name": "M&A Target Sourcing Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 56,
+   "advertised_name": "Solution Design Review Agent",
+   "canonical_name": "Solution Design Review Agent",
+   "repo_agent": "@aibast-agents-library/solution-design-review",
+   "executive_summary": "Help architects draft and self-check a solution design document before the architecture review board: intake of the template, discovery notes and initiative brief, an architecture vision, the current-state baseline, the non-functional requirements matrix with owners and gaps, the target design with its inventory changes, and a readiness check with a confidence score and severity-ranked gaps. The agent is read-only; it never submits to the review board, changes an inventory record, or approves a design.",
+   "industries": [
+    "Professional Services",
+    "Cross-Industry"
+   ],
+   "personas": [
+    "Solution Architect",
+    "Enterprise Architecture Lead",
+    "Review Board Coordinator"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Teams",
+    "Microsoft Word"
+   ],
+   "customer_scenario": [
+    "Architects spent days copying discovery notes into a long design template",
+    "Current-state inventories were incomplete, so end-of-support systems slipped through",
+    "Non-functional requirements arrived without owners and were found missing at review",
+    "Designs went back from the review board for gaps a checklist could have caught"
+   ],
+   "outcomes": [
+    "Produced first drafts of design sections in hours instead of days",
+    "Arrived at the review board with owners named and variances answered",
+    "Reduced designs sent back for avoidable checklist gaps"
+   ],
+   "capabilities": [
+    "Design intake and plan",
+    "Architecture vision draft",
+    "Current-state baseline",
+    "Non-functional requirements matrix",
+    "Target design and inventory delta",
+    "Review-board readiness check"
+   ],
+   "onepager": "56. Solution Design Review Agent one-pager.pptx",
+   "demo_video": "56-Solution Design Review Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Solution Design Review Agent",
+   "sharepoint_list_name": "Solution Design Review Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 57,
+   "advertised_name": "Reporting Package Validation Agent",
+   "canonical_name": "Reporting Package Validation Agent",
+   "repo_agent": "@aibast-agents-library/reporting-package-validation",
+   "executive_summary": "Validate a month-end reporting package before anyone builds the executive pack: file intake with source lineage, integrity checks that separate missing data from a reported zero, division variance against budget with explanation thresholds, driver bridge reconciliation, an owner-routed exception queue, and a draft executive summary. The agent is read-only; it never posts a journal, edits a submission, releases the package, or sends commentary.",
+   "industries": [
+    "Financial Services",
+    "Cross-Industry"
+   ],
+   "personas": [
+    "FP&A Manager",
+    "Financial Controller",
+    "Finance Director"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Excel",
+    "Microsoft Teams"
+   ],
+   "customer_scenario": [
+    "Analysts spent the first days of close checking files instead of analyzing them",
+    "Missing submissions were mistaken for zeros and reached leadership drafts",
+    "Offsetting division swings hid behind a flat consolidated total",
+    "Exceptions were chased by email with no clear owner or due date"
+   ],
+   "outcomes": [
+    "Caught package defects on the day files arrived",
+    "Gave leadership commentary that explains what a flat total hides",
+    "Released packages only after every blocking exception cleared"
+   ],
+   "capabilities": [
+    "Package intake and lineage",
+    "Integrity checks",
+    "Variance against budget",
+    "Driver bridge reconciliation",
+    "Exception routing",
+    "Executive summary draft"
+   ],
+   "onepager": "57. Reporting Package Validation Agent one-pager.pptx",
+   "demo_video": "57-Reporting Package Validation Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Reporting Package Validation Agent",
+   "sharepoint_list_name": "Reporting Package Validation Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 58,
+   "advertised_name": "Public Correspondence Agent",
+   "canonical_name": "Public Correspondence Agent",
+   "repo_agent": "@aibast-agents-library/public-correspondence-response",
+   "executive_summary": "Answer every part of every resident enquiry from approved precedent: triage the correspondence queue, break multi-part letters into separate questions, cite approved past responses, route unanswered points to the owning team, and prepare a reviewable draft reply.",
+   "industries": [
+    "State and Local Government"
+   ],
+   "personas": [
+    "Correspondence Officer",
+    "Correspondence Team Lead",
+    "Knowledge Owner"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Outlook",
+    "Microsoft SharePoint",
+    "Microsoft Teams"
+   ],
+   "customer_scenario": [
+    "Parts of multi-part letters are missed in replies",
+    "Approved wording is hard to find and gets rewritten",
+    "New questions stall while ownership is worked out",
+    "New approved answers are not captured for reuse"
+   ],
+   "outcomes": [
+    "Every question in every letter is addressed in the draft (4 of 4 in the hero letter).",
+    "Approved wording is reused with a citation instead of rewritten (3 of 4 answers cited from precedent).",
+    "Gaps reach the right team in minutes with a dated referral, and become reusable precedent once approved."
+   ],
+   "capabilities": [
+    "Triages incoming letters, emails, web forms and phone notes into one prioritized queue",
+    "Breaks multi-part enquiries into separate questions so every part gets answered",
+    "Finds approved past responses for each question and cites them",
+    "Routes unanswered points to the owning team with the exact question to ask",
+    "Drafts a complete, cited reply for officer review, with gaps clearly flagged",
+    "Grows the approved-response library so the same question is never referred twice"
+   ],
+   "onepager": "58. Public Correspondence Agent one-pager.pptx",
+   "demo_video": "58-Public Correspondence Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Public Correspondence Agent",
+   "sharepoint_list_name": "Public Correspondence Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 59,
+   "advertised_name": "Engineering Standards Agent",
+   "canonical_name": "Engineering Standards Agent",
+   "repo_agent": "@aibast-agents-library/engineering-standards-advisor",
+   "executive_summary": "Give designers and field crews cited answers from engineering standards in seconds: vetted values first, clearly labeled interpretations when no vetted value exists, an engineer review loop that turns good interpretations into vetted guidance, and standards-based job scoping.",
+   "industries": [
+    "Energy and Utilities"
+   ],
+   "personas": [
+    "Design Technician",
+    "Standards Engineer",
+    "Field Engineering Lead"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft SharePoint",
+    "Microsoft Teams"
+   ],
+   "customer_scenario": [
+    "Searching standards slows design and field work",
+    "Interpretations vary from person to person",
+    "Engineers cannot see unofficial answers in use",
+    "Quick-reference sheets drift after revisions"
+   ],
+   "outcomes": [
+    "Vetted values are answered in seconds with section and page citations.",
+    "Every interpretation is labeled unvetted and routed to an engineer, so good answers become vetted guidance.",
+    "Jobs are scoped against the right standards, with open interpretations flagged before design is issued."
+   ],
+   "capabilities": [
+    "Answers standards questions in seconds with vetted values and exact section and page citations",
+    "Interprets the full standard text when no vetted value exists, clearly labeled as unvetted",
+    "Routes interpretations to a standards engineer so good answers become vetted guidance",
+    "Gives standards engineers one queue of interpretations to confirm and rows to re-vet",
+    "Keeps quick-reference sheets current by showing what is vetted and what needs re-vetting",
+    "Scopes jobs against the standards and risk factors that apply, before design starts"
+   ],
+   "onepager": "59. Engineering Standards Agent one-pager.pptx",
+   "demo_video": "59-Engineering Standards Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Engineering Standards Agent",
+   "sharepoint_list_name": "Engineering Standards Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 60,
+   "advertised_name": "Field Permit to Work Agent",
+   "canonical_name": "Field Permit to Work Agent",
+   "repo_agent": "@aibast-agents-library/field-permit-to-work",
+   "executive_summary": "Keep every field permit safe and on time: draft the risk assessment, check the isolation plan against the live switching state, track sign-offs and crew briefings, and verify close-out, so no crew starts work on an unconfirmed isolation.",
+   "industries": [
+    "Energy and Utilities"
+   ],
+   "personas": [
+    "Permit Coordinator",
+    "Authorized Person",
+    "Crew Lead",
+    "Operations Manager"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Teams",
+    "Power Automate"
+   ],
+   "customer_scenario": [
+    "Risk assessments vary in quality and take time",
+    "Isolation plans can differ from the live network",
+    "Sign-offs and briefings are chased by phone",
+    "Close-out checks are rushed at the end of the day"
+   ],
+   "outcomes": [
+    "No crew starts on an unconfirmed isolation: plan and live state are checked together before the briefing.",
+    "Every permit's remaining sign-offs and earliest issue time are visible against its planned start.",
+    "Close-out reconciles people and tools before clearance, with monthly safety trends in one view."
+   ],
+   "capabilities": [
+    "Shows every permit waiting today with its stage, risk and blocker",
+    "Drafts the risk assessment with hazards, controls, PPE and residual risk",
+    "Checks the isolation plan against required points and the live switching state",
+    "Tracks sign-offs and timing so permits are ready for the planned start",
+    "Confirms every crew member has acknowledged the briefing before work starts",
+    "Reconciles people, tools and site status before a permit is cleared",
+    "Rolls up permit safety performance and the hazards that matter most"
+   ],
+   "onepager": "60. Field Permit to Work Agent one-pager.pptx",
+   "demo_video": "60-Field Permit to Work Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Field Permit to Work Agent",
+   "sharepoint_list_name": "Field Permit to Work Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 61,
+   "advertised_name": "Payments Operations Agent",
+   "canonical_name": "Payments Operations Agent",
+   "repo_agent": "@aibast-agents-library/payments-operations",
+   "executive_summary": "Help payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, and answering status questions with evidence, while every release decision stays with an authorized analyst.",
+   "industries": [
+    "Financial Services",
+    "Banking"
+   ],
+   "personas": [
+    "Payments Operations Lead",
+    "Payments Analyst",
+    "Payments Repair Analyst",
+    "Reconciliation Analyst",
+    "Head of Payments Operations"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Teams",
+    "Power Automate",
+    "Microsoft Dataverse"
+   ],
+   "customer_scenario": [
+    "Exception repairs are researched by hand every morning, so failed payments sit until an analyst finds the rule that broke.",
+    "Held high-value payments wait while analysts gather screening results and risk signals from separate screens.",
+    "Settlement breaks surface late in the day without a ranked view of which difference matters most.",
+    "Relationship managers chase payment status by email, pulling analysts away from the release queue."
+   ],
+   "outcomes": [
+    "Faster exception triage: every failed payment arrives with its failed rules and a draft repair plan.",
+    "Better-evidenced release decisions: analysts see screening, risk score, and drivers in one view.",
+    "Earlier break resolution: settlement breaks are ranked by value before the cutoff."
+   ],
+   "capabilities": [
+    "Release queue overview",
+    "Scheme-rule validation",
+    "Exception repair plan",
+    "Pre-release risk review",
+    "Settlement reconciliation",
+    "Payment status answer",
+    "Daily payments KPI brief"
+   ],
+   "onepager": "61. Payments Operations Agent one-pager.pptx",
+   "demo_video": "61-Payments Operations Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Payments Operations Agent",
+   "sharepoint_list_name": "Payments Operations Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 62,
+   "advertised_name": "Supplier Claim Engagement Agent",
+   "canonical_name": "Supplier Claim Engagement Agent",
+   "repo_agent": "@aibast-agents-library/supplier-claim-engagement",
+   "executive_summary": "Help retail claims teams recover more from suppliers by triaging damage, shortage, quality, and pricing claims, assembling evidence packs, drafting supplier claim notices, tracking response deadlines, and evaluating supplier responses, while every send, credit acceptance, and escalation stays with an authorized coordinator.",
+   "industries": [
+    "Retail",
+    "Consumer Goods"
+   ],
+   "personas": [
+    "Supplier Claims Coordinator",
+    "Receiving Supervisor",
+    "Claims Team Lead",
+    "Category Manager"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Teams",
+    "Microsoft Outlook",
+    "Dynamics 365 Customer Service"
+   ],
+   "customer_scenario": [
+    "Damaged, short, and off-quality deliveries are logged in different places, so no one sees the full value at stake.",
+    "Coordinators rebuild evidence packs by hand from photos, inspection reports, and delivery notes.",
+    "Supplier response deadlines slip because nobody tracks the clock across open claims.",
+    "Partial supplier credits are accepted without checking the gap against the original claim."
+   ],
+   "outcomes": [
+    "More value recovered: every open claim and its value is visible in one queue.",
+    "Faster claim filing: evidence packs and supplier notices arrive as ready-to-review drafts.",
+    "Fewer missed deadlines: breached and at-risk claims surface with an escalation draft."
+   ],
+   "capabilities": [
+    "Supplier claims queue",
+    "Claim triage",
+    "Evidence pack check",
+    "Supplier claim notice draft",
+    "Response deadline tracker",
+    "Supplier response evaluation",
+    "Escalation brief draft"
+   ],
+   "onepager": "62. Supplier Claim Engagement Agent one-pager.pptx",
+   "demo_video": "62-Supplier Claim Engagement Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Supplier Claim Engagement Agent",
+   "sharepoint_list_name": "Supplier Claim Engagement Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 63,
+   "advertised_name": "Benefits Enrollment Agent",
+   "canonical_name": "Benefits Enrollment Agent",
+   "repo_agent": "@aibast-agents-library/benefits-enrollment-assistant",
+   "executive_summary": "Guide employees through open enrollment and life-event benefit changes by explaining the enrollment window and change rules, comparing plan costs for their coverage tier, checking whether their providers are in network, tracking required documents, and preparing a draft election, while eligibility decisions and submissions stay with the employee and benefits staff.",
+   "industries": [
+    "Cross-Industry"
+   ],
+   "personas": [
+    "Employee",
+    "Benefits Specialist",
+    "HR Operations Staff"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Teams",
+    "Microsoft 365 Copilot"
+   ],
+   "customer_scenario": [
+    "Employees miss the short window after a life event because the rules are buried in long guides.",
+    "Comparing plan costs for a specific coverage tier means doing per-paycheck math by hand.",
+    "Employees choose a plan before checking whether their own doctors are in network.",
+    "Benefits staff field the same deadline and missing-document questions all season."
+   ],
+   "outcomes": [
+    "Fewer missed life-event windows: each employee sees their own change deadline and missing documents.",
+    "Clearer plan choices: annual costs for the employee's tier and network gaps appear side by side.",
+    "Lighter benefits help desk: routine enrollment questions get consistent, sourced answers."
+   ],
+   "capabilities": [
+    "Enrollment window explanation",
+    "Life-event change rules",
+    "Plan cost comparison",
+    "Provider network check",
+    "Document checklist",
+    "Election draft preview",
+    "Personal deadline list"
+   ],
+   "onepager": "63. Benefits Enrollment Agent one-pager.pptx",
+   "demo_video": "63-Benefits Enrollment Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Benefits Enrollment Agent",
+   "sharepoint_list_name": "Benefits Enrollment Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 64,
+   "advertised_name": "Warranty and Registration Agent",
+   "canonical_name": "Warranty and Registration Agent",
+   "repo_agent": "@aibast-agents-library/warranty-registration",
+   "executive_summary": "Give equipment dealers one place to check warranty coverage, pre-check claims, validate serials and prepare product registrations, so covered repairs move faster and no unit misses its registration window.",
+   "industries": [
+    "Manufacturing"
+   ],
+   "personas": [
+    "Dealer Service Managers",
+    "Warranty Administrators",
+    "Dealer Sales Staff"
+   ],
+   "featured_tools": [
+    "Microsoft Teams",
+    "Dynamics 365 Field Service",
+    "Microsoft Outlook"
+   ],
+   "customer_scenario": [
+    "Coverage lookups span several disconnected screens",
+    "Claims are rejected for lapsed or parts-only coverage",
+    "Sold units miss their registration window",
+    "Extension opportunities expire unnoticed"
+   ],
+   "outcomes": [
+    "Fewer rejected warranty claims",
+    "Registrations completed inside the window",
+    "More extensions sold before coverage ends"
+   ],
+   "capabilities": [
+    "Coverage overview",
+    "Claim pre-check",
+    "Unit warranty record",
+    "Serial check",
+    "Registration draft",
+    "Extended-coverage offers"
+   ],
+   "onepager": "64. Warranty and Registration Agent one-pager.pptx",
+   "demo_video": "64-Warranty and Registration Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Warranty and Registration Agent",
+   "sharepoint_list_name": "Warranty and Registration Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 65,
+   "advertised_name": "Staffing Territory Planning Agent",
+   "canonical_name": "Staffing Territory Planning Agent",
+   "repo_agent": "@aibast-agents-library/staffing-territory-planning",
+   "executive_summary": "Help staffing sales leaders size their territory, find where demand outruns recruiter coverage, read the competition and labor trends, and walk into the quarter with a draft plan grounded in the numbers.",
+   "industries": [
+    "Professional Services, Consulting"
+   ],
+   "personas": [
+    "Regional Sales Directors",
+    "Branch Managers",
+    "Sales Operations Analysts"
+   ],
+   "featured_tools": [
+    "Microsoft Teams",
+    "Dynamics 365 Sales",
+    "Microsoft Excel"
+   ],
+   "customer_scenario": [
+    "Territory reviews are assembled by hand",
+    "Coverage gaps are invisible until revenue misses",
+    "Competitive position is anecdotal",
+    "Plans are slow and inconsistent across regions"
+   ],
+   "outcomes": [
+    "Faster, consistent territory reviews",
+    "Recruiter capacity aimed at the biggest gaps",
+    "Plans leadership can act on sooner"
+   ],
+   "capabilities": [
+    "Territory snapshot",
+    "Market sizing",
+    "Coverage gaps",
+    "Competitive landscape",
+    "Labor trends",
+    "Draft territory plan"
+   ],
+   "onepager": "65. Staffing Territory Planning Agent one-pager.pptx",
+   "demo_video": "65-Staffing Territory Planning Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Staffing Territory Planning Agent",
+   "sharepoint_list_name": "Staffing Territory Planning Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 66,
+   "advertised_name": "Briefing Pack Builder Agent",
+   "canonical_name": "Briefing Pack Builder Agent",
+   "repo_agent": "@aibast-agents-library/briefing-pack-builder",
+   "executive_summary": "Turn a government team's source documents into cited, template-ready briefs in minutes, with conflicting figures flagged and missing content named, so specialists verify instead of rebuild.",
+   "industries": [
+    "State and Local Government"
+   ],
+   "personas": [
+    "Briefing Coordinators",
+    "Budget Analysts",
+    "Department Directors"
+   ],
+   "featured_tools": [
+    "Microsoft Word",
+    "SharePoint",
+    "Microsoft Teams"
+   ],
+   "customer_scenario": [
+    "Briefs are rebuilt by hand for every format",
+    "Superseded figures slip into briefs",
+    "Missing content surfaces only at review",
+    "Sign-off routes and timelines are unclear"
+   ],
+   "outcomes": [
+    "Faster first drafts that specialists verify, not rebuild",
+    "Fewer wrong figures in front of decision makers",
+    "Earlier requests for missing content"
+   ],
+   "capabilities": [
+    "Briefing formats",
+    "Content scan",
+    "Figure check",
+    "Cited draft brief",
+    "Gap report",
+    "Approval route"
+   ],
+   "onepager": "66. Briefing Pack Builder Agent one-pager.pptx",
+   "demo_video": "66-Briefing Pack Builder Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
+   "advertised_display": "Briefing Pack Builder Agent",
+   "sharepoint_list_name": "Briefing Pack Builder Agent",
+   "is_primary": true
   }
  ]
 }

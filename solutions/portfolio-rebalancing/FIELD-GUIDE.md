@@ -18,12 +18,6 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Native r5 regression accepted; workshop still partial
-
-On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified.
-
-See [evals/manual-pilot-review.json](evals/manual-pilot-review.json).
-
 
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
@@ -74,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PRB-01, PRB-02, PRB-03, PRB-04, PRB-05, PRB-06`.
+1. Which locked case IDs did you complete? Expected scope: `PRB-01, PRB-02, PRB-03, PRB-04, PRB-05, PRB-06, PRB-07, PRB-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -214,7 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Historical assisted/Easy and deterministic Brainstem evidence is retained separately; it is not native Manual r5 final-answer acceptance. No current Easy-lane regression or fresh-from-empty Manual construction is certified.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -224,6 +218,8 @@ Both Easy lanes preserve every recorded case prompt:
 - `PRB-04` — Which positions are loss candidates, and what controls stop us from treating that as tax advice?
 - `PRB-05` — Frame the retirement scenarios we need to model without inventing a success probability.
 - `PRB-06` — Prepare the controlled implementation checklist and make clear whether any order was sent.
+- `PRB-07` — Compare the risk profile of my client's old allocation with the new one.
+- `PRB-08` — Prepare the client presentation and summarize what we accomplished for my client.
 
 ## Manual mode — literal browser construction
 
@@ -237,15 +233,6 @@ Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 4. Compare each action with its reviewed reference and expected-result boundary.
 5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
 6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
-
-### Current Manual preparation
-
-1. Use the existing owned Portfolio Rebalancing Manual Draft when resuming. Do not create a duplicate or upload a second copy of a file already attached. Compare the existing full sources first; replace only a mismatched file.
-2. Use Claude Sonnet 4.6, exactly six skills and two knowledge files, zero configured Tools, and remove default web search. Do not bind production connectors. Native built-in skill and knowledge activity is allowed.
-3. Use the exact nine files in evals/manual-inputs-r5.json. Match each SKILL.md frontmatter name and description, not its folder name. Compare its complete body, and verify each knowledge attachment by its complete filename after ingestion.
-4. Save, leave through Agents, reopen the same Draft, and compare the full global policy and all six skill bodies, names and descriptions. An editor value or Save click alone does not prove persistence.
-5. Use New chat for each unchanged locked prompt and submit it once. Review the completed final answer, native skill/knowledge activity, citations and full safety boundary, not debug reasoning. Preserve failures; do not reroll an unchanged case until it passes or carry passes across source revisions.
-6. Saved-state readbacks and the controls upload/Ready board have explicitly limited scope. Step 1 and upload steps 7-13 still need their actual live evidence and personal review before certification; final inventory is not a substitute. Finish by confirming the same Draft. Do not choose Publish.
 
 
 ## Production replacement seams
@@ -284,9 +271,3 @@ an approved production tool returns evidence that it succeeded.
   part of scaffolding.
 - **Customer gate:** replacement connections, governance, telemetry, support,
   and success measures are agreed before production.
-
-## Pending evidence
-
-- solutions/portfolio-rebalancing/evals/manual-build-evidence.json does not record passed manual Preview evidence
-
-Pending items are not proof and must not be described as captured.

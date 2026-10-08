@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CLR-01, CLR-02, CLR-03, CLR-04`.
+1. Which locked case IDs did you complete? Expected scope: `CLR-01, CLR-02, CLR-03, CLR-04, CLR-05, CLR-06, CLR-07, CLR-08, CLR-09, CLR-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `CLR-02` — As CRM Manager, explain the synthetic Gold member balance without changing the ledger.
 - `CLR-03` — As Marketing Leader, show review-only reward options without creating offers or issuing benefits.
 - `CLR-04` — As Loyalty Program Director, review the synthetic tier structure without changing member status.
+- `CLR-05` — As Marketing Leader, help me identify loyalty members who are at risk of churning.
+- `CLR-06` — As Marketing Leader, show me the top at-risk members and their profiles.
+- `CLR-07` — As Marketing Leader, create personalized win-back offers for each at-risk segment.
+- `CLR-08` — As Marketing Leader, get the win-back campaigns ready to launch and show me the expected results.
+- `CLR-09` — As Marketing Leader, how can we improve the overall loyalty program?
+- `CLR-10` — As Marketing Leader, summarize everything we accomplished in this loyalty session.
 
 ## Manual mode — literal browser construction
 

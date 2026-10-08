@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/field-permit-to-work",
+  "onepager": "60. Field Permit to Work Agent one-pager.pptx",
+  "source_slide_sha256": "3076ab782f5880e99777e400ea172d54276c5427ead5585de96d47d6aa325817",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/energy_stacks/field_permit_to_work_stack/field_permit_to_work_agent.py",
+    "implemented_operations": [
+      "permit_queue",
+      "risk_assessment",
+      "isolation_check",
+      "authorization_route",
+      "crew_briefing",
+      "clearance_check",
+      "safety_kpis"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts, checks or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Shows every permit waiting today with its stage, risk and blocker",
+      "operations": [
+        "permit_queue"
+      ],
+      "demo_cases": [
+        "PTW-01"
+      ],
+      "synthetic_evidence": [
+        "PTW-4471",
+        "2 with a blocker",
+        "Live isolation not confirmed"
+      ]
+    },
+    {
+      "advertised_promise": "Drafts the risk assessment with hazards, controls, PPE and residual risk",
+      "operations": [
+        "risk_assessment"
+      ],
+      "demo_cases": [
+        "PTW-02"
+      ],
+      "synthetic_evidence": [
+        "60 of 100",
+        "Arc-rated coveralls",
+        "Draft for the authorized person"
+      ]
+    },
+    {
+      "advertised_promise": "Checks the isolation plan against required points and the live switching state",
+      "operations": [
+        "isolation_check"
+      ],
+      "demo_cases": [
+        "PTW-03"
+      ],
+      "synthetic_evidence": [
+        "CB-CH-02 lockout not applied",
+        "Do not start work",
+        "No device was operated"
+      ]
+    },
+    {
+      "advertised_promise": "Tracks sign-offs and timing so permits are ready for the planned start",
+      "operations": [
+        "authorization_route"
+      ],
+      "demo_cases": [
+        "PTW-04"
+      ],
+      "synthetic_evidence": [
+        "Lee Carter",
+        "Earliest issue",
+        "10:30"
+      ]
+    },
+    {
+      "advertised_promise": "Confirms every crew member has acknowledged the briefing before work starts",
+      "operations": [
+        "crew_briefing"
+      ],
+      "demo_cases": [
+        "PTW-05"
+      ],
+      "synthetic_evidence": [
+        "3 of 4 acknowledged",
+        "Chris Dale",
+        "no one was messaged"
+      ]
+    },
+    {
+      "advertised_promise": "Reconciles people, tools and site status before a permit is cleared",
+      "operations": [
+        "clearance_check"
+      ],
+      "demo_cases": [
+        "PTW-06"
+      ],
+      "synthetic_evidence": [
+        "Held for review",
+        "1 unaccounted for",
+        "The permit was not closed"
+      ]
+    },
+    {
+      "advertised_promise": "Rolls up permit safety performance and the hazards that matter most",
+      "operations": [
+        "safety_kpis"
+      ],
+      "demo_cases": [
+        "PTW-07"
+      ],
+      "synthetic_evidence": [
+        "212",
+        "Lockout gaps caught before work",
+        "Near misses"
+      ]
+    }
+  ]
+}

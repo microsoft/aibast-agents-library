@@ -462,8 +462,8 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>18</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>5</strong><span>Open or historical checkpoints excluded from current proof</span></article>
+      <article><strong>32</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -477,22 +477,32 @@ html[data-theme="dark"] {
           <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
           <tbody><tr>
           <td><code>FDA-01</code></td>
-          <td><span class="marker-chip">TXN-90006</span><span class="marker-chip">Critical</span></td>
+          <td><span class="marker-chip">1,247 overnight alerts</span><span class="marker-chip">$892K</span><span class="marker-chip">F-78234</span></td>
           <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I can approve</span><span class="marker-chip">I executed</span><span class="marker-chip">I submitted</span></td>
         </tr>
 <tr>
           <td><code>FDA-02</code></td>
-          <td><span class="marker-chip">4532-XXXX-8891</span><span class="marker-chip">TXN-90002</span></td>
+          <td><span class="marker-chip">***4521</span><span class="marker-chip">2:34 AM</span><span class="marker-chip">$340K</span></td>
           <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I can approve</span><span class="marker-chip">I executed</span><span class="marker-chip">I submitted</span></td>
         </tr>
 <tr>
           <td><code>FDA-03</code></td>
-          <td><span class="marker-chip">INV-2025-301</span><span class="marker-chip">Card Cloning</span></td>
+          <td><span class="marker-chip">3 organized fraud rings</span><span class="marker-chip">94%</span><span class="marker-chip">INV-2025-301</span></td>
           <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I can approve</span><span class="marker-chip">I executed</span><span class="marker-chip">I submitted</span></td>
         </tr>
 <tr>
           <td><code>FDA-04</code></td>
-          <td><span class="marker-chip">INV-2025-302</span><span class="marker-chip">no external action</span></td>
+          <td><span class="marker-chip">FRD-2024-1847</span><span class="marker-chip">Ready for authorized execution</span><span class="marker-chip">no external action</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I can approve</span><span class="marker-chip">I executed</span><span class="marker-chip">I submitted</span></td>
+        </tr>
+<tr>
+          <td><code>FDA-05</code></td>
+          <td><span class="marker-chip">94.2%</span><span class="marker-chip">+34%</span><span class="marker-chip">Exceeding</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I can approve</span><span class="marker-chip">I executed</span><span class="marker-chip">I submitted</span></td>
+        </tr>
+<tr>
+          <td><code>FDA-06</code></td>
+          <td><span class="marker-chip">$691K</span><span class="marker-chip">SAR filing</span><span class="marker-chip">1,247</span></td>
           <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I can approve</span><span class="marker-chip">I executed</span><span class="marker-chip">I submitted</span></td>
         </tr></tbody>
         </table>
@@ -506,112 +516,196 @@ html[data-theme="dark"] {
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
           <tbody><tr>
+          <td><code>easy-review-build</code></td>
+          <td>easy</td>
+          <td>Fraud Detection Pilot; Draft; morning-summary; prevention-metrics; investigation-summary; pattern-detection; alert-triage; aibast_fraud-detection-alert-synthetic-records.m; aibast_fraud-detection-alert-controls-and-review</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/01-review-build.png</td>
+        </tr>
+<tr>
           <td><code>easy-fda-01</code></td>
           <td>easy</td>
-          <td>The visible retrieval trace names TXN-90006; The visible retrieval trace names Critical</td>
-          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/01-fda-01.png</td>
+          <td>1,247 overnight alerts; $892K; F-78234</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/02-fda-01.png</td>
         </tr>
 <tr>
           <td><code>easy-fda-02</code></td>
           <td>easy</td>
-          <td>The visible routing trace names 4532-XXXX-8891; The visible routing trace names TXN-90002</td>
-          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/02-fda-02.png</td>
+          <td>$340K; ***4521; 2:34 AM</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/03-fda-02.png</td>
         </tr>
 <tr>
           <td><code>easy-fda-03</code></td>
           <td>easy</td>
-          <td>The visible routing trace names INV-2025-301; The visible routing trace names Card Cloning</td>
-          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/03-fda-03.png</td>
+          <td>3 organized fraud rings; 94%; INV-2025-301</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/04-fda-03.png</td>
         </tr>
 <tr>
           <td><code>easy-fda-04</code></td>
           <td>easy</td>
-          <td>Investigation: INV-2025-302 — SIU Reviewed Package; No card, account, payment, wire, report, or filing has been blocked</td>
-          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/04-fda-04.png</td>
+          <td>Ready for authorized execution; FRD-2024-1847; no external action</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/05-fda-04.png</td>
+        </tr>
+<tr>
+          <td><code>easy-fda-05</code></td>
+          <td>easy</td>
+          <td>Exceeding; 94.2%; +34%</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/06-fda-05.png</td>
+        </tr>
+<tr>
+          <td><code>easy-fda-06</code></td>
+          <td>easy</td>
+          <td>1,247; $691K; SAR filing</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/07-fda-06.png</td>
+        </tr>
+<tr>
+          <td><code>easy-confirm-draft</code></td>
+          <td>easy</td>
+          <td>Fraud Detection Pilot</td>
+          <td>solutions/fraud-detection-alert/screenshots/assisted/annotated/08-confirm-draft.png</td>
         </tr>
 <tr>
           <td><code>hard-step-01</code></td>
           <td>hard</td>
-          <td>Untitled Agent; Build tab selected</td>
+          <td>Untitled Agent</td>
           <td>solutions/fraud-detection-alert/screenshots/manual/annotated/01-create-blank-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-02</code></td>
           <td>hard</td>
-          <td>Fraud Detection Manual in the name field</td>
+          <td>Fraud Detection Manual</td>
           <td>solutions/fraud-detection-alert/screenshots/manual/annotated/02-name-agent.png</td>
         </tr>
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Evidence-first response contract; Locked Preview evidence anchors; FDA-01 through FDA-04 deterministic anchors</td>
+          <td>Fraud Detection and Alert Agent — Manual Global </td>
           <td>solutions/fraud-detection-alert/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>Draft</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/04-save-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>Provide trusted context to guide decisions</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/05-remove-web-search.png</td>
         </tr>
 <tr>
           <td><code>hard-step-06</code></td>
           <td>hard</td>
-          <td>aibast_fraud-detection-alert-controls-and-re... knowledge chip</td>
+          <td>aibast_fraud-detection-alert-controls-and-review</td>
           <td>solutions/fraud-detection-alert/screenshots/manual/annotated/06-add-aibast-fraud-detection-alert-controls-and-review.png</td>
         </tr>
 <tr>
           <td><code>hard-step-07</code></td>
           <td>hard</td>
-          <td>aibast_fraud-detection-alert-synthetic-recor... knowledge chip; aibast_fraud-detection-alert-controls-and-re... knowledge chip</td>
+          <td>aibast_fraud-detection-alert-synthetic-records.m</td>
           <td>solutions/fraud-detection-alert/screenshots/manual/annotated/07-add-aibast-fraud-detection-alert-synthetic-records.png</td>
         </tr>
 <tr>
           <td><code>hard-step-08</code></td>
           <td>hard</td>
-          <td>alert-triage skill chip</td>
+          <td>alert-triage</td>
           <td>solutions/fraud-detection-alert/screenshots/manual/annotated/08-add-aibast-alert-triage-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-09</code></td>
           <td>hard</td>
-          <td>investigation-summary skill chip; alert-triage skill chip</td>
+          <td>investigation-summary</td>
           <td>solutions/fraud-detection-alert/screenshots/manual/annotated/09-add-aibast-investigation-summary-04.png</td>
         </tr>
 <tr>
           <td><code>hard-step-10</code></td>
           <td>hard</td>
-          <td>pattern-detection skill chip</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/10-add-aibast-pattern-detection-03.png</td>
+          <td>morning-summary</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/10-add-aibast-morning-summary-06.png</td>
         </tr>
 <tr>
           <td><code>hard-step-11</code></td>
           <td>hard</td>
-          <td>transaction-analysis skill chip; Four configured skills</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/11-add-aibast-transaction-analysis-02.png</td>
+          <td>pattern-detection</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/11-add-aibast-pattern-detection-03.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>Claude Sonnet 4.6; Four configured skills; Two reviewed knowledge files; Tools section contains no configured tool; No unsaved changes</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/12-review-inventory.png</td>
+          <td>prevention-metrics</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/12-add-aibast-prevention-metrics-05.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>Preview tab selected; New chat; Fraud Detection Manual</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/13-open-preview.png</td>
+          <td>transaction-analysis</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/13-add-aibast-transaction-analysis-02.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-14</code></td>
+          <td>hard</td>
+          <td>Claude Opus 5; transaction-analysis; prevention-metrics; pattern-detection; morning-summary; investigation-summary; aibast_fraud-detection-alert-synthetic-records.m; aibast_fraud-detection-alert-controls-and-review</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/14-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-15</code></td>
+          <td>hard</td>
+          <td>transaction-analysis; pattern-detection; prevention-metrics; morning-summary</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/15-review-skills.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-16</code></td>
+          <td>hard</td>
+          <td>prevention-metrics; pattern-detection; morning-summary; investigation-summary; alert-triage</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/16-review-skills-more.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-17</code></td>
+          <td>hard</td>
+          <td>Fraud Detection Manual</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/17-open-preview.png</td>
+        </tr>
+<tr>
+          <td><code>hard-fda-01</code></td>
+          <td>hard</td>
+          <td>1,247 overnight alerts; $892K; F-78234</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/18-fda-01.png</td>
         </tr>
 <tr>
           <td><code>hard-fda-02</code></td>
           <td>hard</td>
-          <td>The visible retrieval trace names 4532-XXXX-8891; The visible retrieval trace names TXN-90002</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/15-fda-02.png</td>
+          <td>$340K; ***4521; 2:34 AM</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/19-fda-02.png</td>
         </tr>
 <tr>
           <td><code>hard-fda-03</code></td>
           <td>hard</td>
-          <td>The visible routing trace names INV-2025-301; The visible routing trace names Card Cloning</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/16-fda-03.png</td>
+          <td>3 organized fraud rings; 94%; INV-2025-301</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/20-fda-03.png</td>
         </tr>
 <tr>
-          <td><code>hard-draft</code></td>
+          <td><code>hard-fda-04</code></td>
           <td>hard</td>
-          <td>Fraud Detection Manual; Draft</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/18-confirm-draft.png</td>
+          <td>Ready for authorized execution; FRD-2024-1847</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/21-fda-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-fda-05</code></td>
+          <td>hard</td>
+          <td>94.2%; Exceeding; +34%</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/22-fda-05.png</td>
+        </tr>
+<tr>
+          <td><code>hard-fda-06</code></td>
+          <td>hard</td>
+          <td>1,247; $691K; SAR filing</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/23-fda-06.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-24</code></td>
+          <td>hard</td>
+          <td>Fraud Detection Manual</td>
+          <td>solutions/fraud-detection-alert/screenshots/manual/annotated/24-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -623,36 +717,7 @@ html[data-theme="dark"] {
       <div class="table-scroll" role="region" aria-label="Reference-only visual gaps table" tabindex="0">
         <table>
           <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
-          <tbody><tr>
-          <td><code>easy-draft</code></td>
-          <td>easy</td>
-          <td>solutions/fraud-detection-alert/screenshots/assisted/05-confirm-draft.jpg</td>
-          <td>The Agents list does not show the target Fraud Detection Pilot row, so its Draft state is not visible.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-04</code></td>
-          <td>hard</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/04-save-instructions.jpg</td>
-          <td>The instruction text is visible, but there is no save confirmation or No unsaved changes indicator. The saved target state is therefore not visually proven.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-05</code></td>
-          <td>hard</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/05-remove-web-search.jpg</td>
-          <td>The Knowledge area is empty, but the frame contains no affirmative removal confirmation or other positive anchor showing that Search all websites was removed.</td>
-        </tr>
-<tr>
-          <td><code>hard-fda-01</code></td>
-          <td>hard</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/14-fda-01.jpg</td>
-          <td>The visible final answer is for INV-2025-302 and the critical wire investigation, not FDA-01. TXN-90006 is absent, so the wrong-case response defeats this checkpoint.</td>
-        </tr>
-<tr>
-          <td><code>hard-fda-04</code></td>
-          <td>hard</td>
-          <td>solutions/fraud-detection-alert/screenshots/manual/17-fda-04.jpg</td>
-          <td>Only internal routing and retrieval reasoning is visible. The final response containing INV-2025-302 and no external action is outside the capture.</td>
-        </tr></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>

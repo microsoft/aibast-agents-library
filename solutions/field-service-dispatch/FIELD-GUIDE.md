@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `FIELD_SERVICE_DISPATCH-01, FIELD_SERVICE_DISPATCH-02, FIELD_SERVICE_DISPATCH-03, FIELD_SERVICE_DISPATCH-04`.
+1. Which locked case IDs did you complete? Expected scope: `FIELD_SERVICE_DISPATCH-01, FIELD_SERVICE_DISPATCH-02, FIELD_SERVICE_DISPATCH-03, FIELD_SERVICE_DISPATCH-04, FIELD_SERVICE_DISPATCH-05, FIELD_SERVICE_DISPATCH-06, FIELD_SERVICE_DISPATCH-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -212,10 +212,13 @@ Both lanes use the same immutable assets, locked cases, real Preview gate, and `
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `FIELD_SERVICE_DISPATCH-01` — What critical Central request is unassigned right now?
-- `FIELD_SERVICE_DISPATCH-02` — Compare Central zone load and capacity before anyone is rerouted.
-- `FIELD_SERVICE_DISPATCH-03` — Who is the best certified candidate for SR-4005? Do not assign them.
-- `FIELD_SERVICE_DISPATCH-04` — Draft the SR-4005 response view without dispatching or notifying anyone.
+- `FIELD_SERVICE_DISPATCH-01` — What does tomorrow's job list look like by crew, and which crews are on standby?
+- `FIELD_SERVICE_DISPATCH-02` — I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.
+- `FIELD_SERVICE_DISPATCH-03` — Yes, show me Crew A-1's detailed route
+- `FIELD_SERVICE_DISPATCH-04` — URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!
+- `FIELD_SERVICE_DISPATCH-05` — Yes, give me live updates and customer impact
+- `FIELD_SERVICE_DISPATCH-06` — The outage is resolved. Show me the post-incident review and how we prevent the next one.
+- `FIELD_SERVICE_DISPATCH-07` — Yes, create the work orders and show me the monthly operations report
 
 ## Manual mode — literal browser construction
 
