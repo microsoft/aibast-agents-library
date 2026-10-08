@@ -131,8 +131,8 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     assert isinstance(doc["daily"], list)
     assert isinstance(doc["sources"], list)
     workshops = doc["workshops"]
-    assert workshops["totals"]["workshops"] == 66
-    assert len(workshops["rows"]) == 66
+    assert workshops["totals"]["workshops"] == 65
+    assert len(workshops["rows"]) == 65
     assert workshops["coverage"]["status"] == "unavailable"
     assert all(
         row[field] is None
@@ -154,7 +154,7 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     assert achievements["as_of"] is None
     assert achievements["carried_forward"] is False
     assert achievements["profiles"] == []
-    assert len(achievements["workshops"]) == 66
+    assert len(achievements["workshops"]) == 65
     assert len(achievements["achievements"]) == 6
     assert all(value is None for value in achievements["totals"].values())
     assert all(
@@ -176,7 +176,7 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     assert certification["status"] == "unavailable"
     assert certification["facilitators"] == []
     assert certification["candidates"] == []
-    assert len(certification["workshops"]) == 66
+    assert len(certification["workshops"]) == 65
     assert all(value is None for value in certification["totals"].values())
     ecosystem = doc["ecosystem"]
     assert ecosystem["status"] == "unavailable"
@@ -1041,7 +1041,7 @@ def test_offline_carries_remote_blocks_and_recomputes_local_scope(tmp_path):
         if row["name"] == "@aibast-agents-library/account-intelligence"
     )
     assert account_agent["upvotes"] == 3
-    assert len(doc["workshops"]["rows"]) == 66
+    assert len(doc["workshops"]["rows"]) == 65
     account = next(
         row for row in doc["workshops"]["rows"]
         if row["slug"] == "account-intelligence"
@@ -1147,8 +1147,8 @@ def test_workshop_catalog_has_exact_advertised_quest_rows():
         )["solutions"]
     )
 
-    assert len(rows) == 66
-    assert len(slugs) == 66
+    assert len(rows) == 65
+    assert len(slugs) == 65
     assert {row["catalog_key"] for row in rows} == catalog_keys
     assert "grid-outage-response" not in slugs
     assert all(row["quest_url"] == f"solutions/{row['slug']}/quest.html" for row in rows)

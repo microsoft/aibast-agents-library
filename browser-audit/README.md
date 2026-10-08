@@ -1,6 +1,6 @@
 # Workshop browser certification
 
-This directory contains the fail-closed browser release gate for the 66
+This directory contains the fail-closed browser release gate for the 65
 advertised industry workshops.
 
 The gate:
@@ -28,7 +28,7 @@ npx playwright install chromium
 npm run certify
 ```
 
-`npm run certify` runs the exact mutation contract, the complete 66-workshop
+`npm run certify` runs the exact mutation contract, the complete 65-workshop
 audit, and the final current-state attestation in that order.
 
 Run certification from a committed input state, then commit only the generated

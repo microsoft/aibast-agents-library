@@ -1,23 +1,23 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-10-08T13:31:13.581017+00:00",
+  "generated_at": "2026-10-08T14:45:39.255365+00:00",
   "stats": {
-    "total_agents": 87,
+    "total_agents": 86,
     "publishers": 1,
     "categories": 12,
-    "total_stacks": 67,
+    "total_stacks": 66,
     "total_multi_agent_stacks": 2,
-    "total_solution_containers": 65,
+    "total_solution_containers": 64,
     "total_verticals": 12,
-    "advertised_solutions": 67,
-    "demo_proven_agents": 67,
-    "source_verified_solutions": 66,
-    "curated_copy_solutions": 66,
-    "solution_onepagers": 66,
-    "solution_demo_videos": 62,
-    "total_lines": 48100,
-    "total_kb": 2422.1,
+    "advertised_solutions": 66,
+    "demo_proven_agents": 66,
+    "source_verified_solutions": 65,
+    "curated_copy_solutions": 65,
+    "solution_onepagers": 65,
+    "solution_demo_videos": 61,
+    "total_lines": 47656,
+    "total_kb": 2397.6,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -62,7 +62,7 @@
       "software_digital_products"
     ],
     "tier_counts": {
-      "verified": 86,
+      "verified": 85,
       "pilot": 1
     }
   },
@@ -323,17 +323,6 @@
       "path": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack",
       "agents": [
         "@aibast-agents-library/fraud-detection-alert"
-      ],
-      "agent_count": 1,
-      "stack_type": "solution_container"
-    },
-    {
-      "stack": "insurance_book_cross_sell",
-      "vertical": "financial_services",
-      "display_name": "Insurance Book Cross Sell",
-      "path": "agents/@aibast-agents-library/financial_services_stacks/insurance_book_cross_sell_stack",
-      "agents": [
-        "@aibast-agents-library/insurance-book-cross-sell"
       ],
       "agent_count": 1,
       "stack_type": "solution_container"
@@ -6936,273 +6925,6 @@
           "Review overnight fraud activity and show me what needs immediate attention.",
           "Yes, investigate the account takeover ring and show me the accounts.",
           "Yes, show me the pattern analysis and connected activity."
-        ]
-      },
-      "_catalog_kind": "solution",
-      "_readiness": [
-        "Demo proven",
-        "Conversation tested",
-        "Synthetic data",
-        "Production pattern"
-      ]
-    },
-    {
-      "schema": "rapp-agent/1.0",
-      "name": "@aibast-agents-library/insurance-book-cross-sell",
-      "version": "1.0.0",
-      "display_name": "Book of Business Cross-Sell Agent",
-      "description": "Turn a broker's book of business into a confirmed, routed cross-sell plan: classify every line, match it to the underwriting units with appetite, find the white space, and draft the unit and broker confirmations before anything reaches a seller's pipeline.",
-      "author": "AIBAST",
-      "tags": [
-        "insurance",
-        "cross-sell",
-        "book-of-business",
-        "appetite",
-        "broker",
-        "commercial-lines"
-      ],
-      "category": "financial_services",
-      "quality_tier": "verified",
-      "requires_env": [],
-      "dependencies": [
-        "@rapp/basic-agent"
-      ],
-      "_file": "agents/@aibast-agents-library/financial_services_stacks/insurance_book_cross_sell_stack/insurance_book_cross_sell_agent.py",
-      "_size_kb": 24.5,
-      "_lines": 444,
-      "_sha256": "eeb27c377af2dd8d72d623a97ca24f69d4c4ae56b682646b779353b6d47f0efc",
-      "_install_prefix": "insurance_book_cross_sell__",
-      "_install_filename": "insurance_book_cross_sell__eeb27c377af2_agent.py",
-      "_stack": "insurance_book_cross_sell",
-      "_stack_vertical": "financial_services",
-      "_synthetic_data": true,
-      "_added_at": "2026-10-08T01:53:29-04:00",
-      "_solution": {
-        "advertised_name": "Book of Business Cross-Sell Agent",
-        "sharepoint_list_name": "Book of Business Cross-Sell Agent",
-        "slot": 52,
-        "executive_summary": "Turn a broker's book of business into a confirmed, routed cross-sell plan: classify every line, match it to the underwriting units with appetite, find the white space, and draft the unit and broker confirmations before anything reaches a seller's pipeline.",
-        "industries": [
-          "Financial Services",
-          "Insurance"
-        ],
-        "personas": [
-          "Cross-Sell Managers",
-          "Underwriting Unit Leads",
-          "Broker Relationship Managers"
-        ],
-        "featured_tools": [
-          "Microsoft Outlook",
-          "Microsoft Teams",
-          "Dynamics 365"
-        ],
-        "agent_requirements": [
-          "Microsoft Copilot Studio"
-        ],
-        "capabilities": [
-          "Profiles and classifies every line in the book, holding what it cannot classify",
-          "Matches lines to units with appetite and surfaces the white space",
-          "Drafts unit and broker confirmations for a person to send",
-          "Lays out a routing plan with follow-up timed ahead of each renewal"
-        ],
-        "outcomes": [
-          "Finds white space across a full book in one pass",
-          "Confirms every opportunity before it reaches a seller",
-          "Never misses a renewal follow-up window"
-        ],
-        "customer_scenario": [
-          "Expiration lists arrive in different shapes with missing classes",
-          "Matching each line to the right underwriting unit takes days",
-          "White space on existing accounts goes unnoticed",
-          "Confirmations and routing are inconsistent and late"
-        ],
-        "slide_title": "Book of Business Cross-Sell Agent",
-        "slide_summary": "Turns a broker's book of business into a confirmed, routed cross-sell plan with drafted unit and broker confirmations.",
-        "scenario_name": "A multi-unit commercial insurer",
-        "challenge_intro": "The marketplace team works each broker book by hand:",
-        "actions_intro": "The Book of Business Cross-Sell Agent:",
-        "outcomes_intro": "With the agent the team:",
-        "opportunity_statements": [
-          "Brokers send books of business as raw expiration lists",
-          "Industry classes are missing or outdated on many lines",
-          "Cross-sell white space is found too late for the renewal",
-          "Every unit and broker confirmation is written by hand"
-        ],
-        "module_name": null,
-        "module_description": null,
-        "source_verified": true,
-        "sales_headline": "Turn every broker's book of business into a confirmed cross-sell plan",
-        "card_pitch": "Give a commercial insurer's marketplace team one assistant that reads a broker's expiration list, classifies every line, matches it to the underwriting units with appetite, finds the white space, and drafts the unit and broker confirmations before anything reaches a seller.",
-        "why_try": "The demo walks a full broker book from intake to a routed plan in six plain questions, with every confirmation and routing step left as a draft for a person.",
-        "customer_challenge_copy": "Brokers send books of business as raw expiration lists with missing or outdated industry classes, so matching lines to the right underwriting unit is slow manual work and cross-sell white space is missed before renewals pass.",
-        "microsoft_ai_story": "Microsoft Copilot Studio hosts the conversation in Microsoft Teams or Microsoft 365 Copilot; approved connections to the shared intake mailbox in Outlook, the appetite guide and the Dynamics 365 pipeline can be bound later with least-privilege access and human approval.",
-        "business_value": [
-          "Finds cross-sell white space across a whole broker book in minutes instead of days.",
-          "Keeps every unit and broker confirmation consistent and evidence-backed before routing.",
-          "Times seller follow-up ahead of each renewal so opportunities are not missed."
-        ],
-        "search_terms": [
-          "Book of Business Cross-Sell Agent",
-          "Broker Relationship Manager",
-          "Cross-Sell Manager",
-          "Dynamics 365",
-          "Microsoft Copilot Studio",
-          "Microsoft Outlook",
-          "Microsoft Teams",
-          "Underwriting Unit Lead",
-          "appetite",
-          "appetite_match",
-          "book of business",
-          "book_summary",
-          "broker",
-          "broker_confirmation",
-          "classify_lines",
-          "commercial insurance",
-          "cross-sell",
-          "expiration list",
-          "routing_plan",
-          "unit_confirmation",
-          "white space"
-        ],
-        "journey_stage": "Engage",
-        "blueprint_role": "Establishes a governed intake-to-routing layer that separates book analysis and draft outreach from underwriting decisions and pipeline writes.",
-        "sample_prompts": [
-          {
-            "label": "Cross-Sell Manager: Book of business summary",
-            "prompt": "A broker just sent over their book of business. What's in it?",
-            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=insurance-book-cross-sell-book-summary"
-          },
-          {
-            "label": "Cross-Sell Manager: Industry class resolution",
-            "prompt": "Can you fill in the industry classes for those accounts and tell me which ones you couldn't figure out?",
-            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=insurance-book-cross-sell-classify-lines"
-          },
-          {
-            "label": "Cross-Sell Manager: Appetite and white-space match",
-            "prompt": "Which of these accounts fit our appetite, and where's the white space?",
-            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=insurance-book-cross-sell-appetite-match"
-          },
-          {
-            "label": "Underwriting Unit Lead: Unit appetite confirmation drafts",
-            "prompt": "Ask our underwriting units to confirm they want these before we route anything.",
-            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=insurance-book-cross-sell-unit-confirmation"
-          },
-          {
-            "label": "Broker Relationship Manager: Broker confirmation draft",
-            "prompt": "Now draft a note back to the broker to make sure none of these are dead or already placed.",
-            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=insurance-book-cross-sell-broker-confirmation"
-          },
-          {
-            "label": "Cross-Sell Manager: Cross-sell routing plan",
-            "prompt": "The replies are in. Route what's left to the right sellers with follow-up dates.",
-            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=insurance-book-cross-sell-routing-plan"
-          }
-        ],
-        "architecture": {
-          "business_flow": [
-            "Broker sends a book of business",
-            "Microsoft Teams or Microsoft 365 Copilot",
-            "Book of Business Cross-Sell Agent",
-            "Appetite guide and class crosswalk",
-            "Underwriting unit and broker confirmations (drafts)",
-            "Seller pipeline after human approval"
-          ],
-          "capabilities": [
-            {
-              "operation": "book_summary",
-              "name": "Book of business summary",
-              "purpose": "Use when someone asks what is in a broker's book of business or expiration list."
-            },
-            {
-              "operation": "classify_lines",
-              "name": "Industry class resolution",
-              "purpose": "Use when someone asks to fill in, fix or resolve the industry class for the accounts on the book."
-            },
-            {
-              "operation": "appetite_match",
-              "name": "Appetite and white-space match",
-              "purpose": "Use when someone asks which accounts fit the carrier's appetite, where the white space is, or what can be cross-sold."
-            },
-            {
-              "operation": "unit_confirmation",
-              "name": "Unit appetite confirmation drafts",
-              "purpose": "Use when someone wants the underwriting units to confirm appetite or wants a unit's shortlist before routing."
-            },
-            {
-              "operation": "broker_confirmation",
-              "name": "Broker confirmation draft",
-              "purpose": "Use when someone wants to go back to the broker to confirm the shortlist before routing."
-            },
-            {
-              "operation": "routing_plan",
-              "name": "Cross-sell routing plan",
-              "purpose": "Use when someone wants to route the confirmed opportunities to sellers with renewal follow-up dates."
-            }
-          ],
-          "easy_mode": [
-            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
-            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
-            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
-            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
-            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
-          ],
-          "local_install_prompt": "Install Book of Business Cross-Sell Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/insurance-book-cross-sell/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect customer systems or execute external actions.",
-          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Book of Business Cross-Sell Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/insurance-book-cross-sell/deployment.json. Upload the two synthetic knowledge files and 6 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
-          "required_connections": [
-            "Outlook shared intake mailbox (read only)",
-            "Approved appetite guide source",
-            "Dynamics 365 pipeline (write after human approval)"
-          ],
-          "manual_commands": [
-            "pac auth create",
-            "pac copilot init --name \"Book of Business Cross-Sell Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
-            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
-            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
-            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
-            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
-          ],
-          "acceptance_checks": [
-            "Every exposed operation has one persona-language case and one SKILL.md.",
-            "Exactly two synthetic knowledge files are present.",
-            "Responses state the relevant human approval or review boundary.",
-            "No operation claims an external write, communication, commitment, or protected decision.",
-            "Publishing remains a separate user-approved step."
-          ],
-          "hard_mode": [
-            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
-            "Author global instructions that preserve the packaged synthetic-only and human-approval boundaries.",
-            "Add the two knowledge files and one skill for every exposed operation.",
-            "Create dedicated connection references only for approved systems and verify least-privilege access.",
-            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
-          ]
-        },
-        "curated_copy": true,
-        "onepager": "52. Book of Business Cross-Sell Agent one-pager.pptx",
-        "demo_video": "52-Book of Business Cross-Sell Agent.mp4",
-        "has_onepager": true,
-        "has_demo_video": true,
-        "promise_coverage": 100,
-        "is_primary": true,
-        "aliases": [],
-        "package": {
-          "slug": "insurance-book-cross-sell",
-          "quest_url": "solutions/insurance-book-cross-sell/quest.html",
-          "manual_tutorial_url": "solutions/insurance-book-cross-sell/manual-tutorial.html",
-          "export_manifest_url": "solutions/insurance-book-cross-sell/export-manifest.json"
-        }
-      },
-      "_demo": {
-        "slug": "insurance-book-cross-sell",
-        "case_count": 6,
-        "personas": [
-          "Broker Relationship Manager",
-          "Cross-Sell Manager",
-          "Underwriting Unit Lead"
-        ],
-        "prompts": [
-          "A broker just sent over their book of business. What's in it?",
-          "Can you fill in the industry classes for those accounts and tell me which ones you couldn't figure out?",
-          "Which of these accounts fit our appetite, and where's the white space?"
         ]
       },
       "_catalog_kind": "solution",

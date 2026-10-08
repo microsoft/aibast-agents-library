@@ -393,8 +393,8 @@ def test_synthetic_fixture_passes_complete_gate(academy_fixture):
     report = run_fixture(data, html, integrations)
 
     assert report["status"] == "pass", json.dumps(report["failures"], indent=2)
-    assert report["measurements"]["academy_courses"] == 66
-    assert report["measurements"]["academy_skills"] == 491
+    assert report["measurements"]["academy_courses"] == 65
+    assert report["measurements"]["academy_skills"] == 485
     assert report["measurements"]["industries"] == 12
     assert report["measurements"]["milestone_points"] == 150
     assert set(data["summary"]) == {

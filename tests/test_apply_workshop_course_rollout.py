@@ -85,7 +85,7 @@ def rollout_fixture(tmp_path, *, assisted=True):
 def test_catalog_scope_is_exact_and_excludes_registry_only_grid():
     advertised = resolve_advertised_solutions(ROOT)
 
-    assert len(advertised) == 66
+    assert len(advertised) == 65
     assert "grid-outage-response" not in advertised
     assert "time-entry-billing" in advertised
     assert "product-line-optimization" in advertised
@@ -97,7 +97,7 @@ def test_all_scope_skips_the_reviewed_billing_reference():
 
     targets, skipped = select_targets(advertised, slug=None, all_packages=True)
 
-    assert len(targets) == 65
+    assert len(targets) == 64
     assert "time-entry-billing" not in {item.slug for item in targets}
     assert skipped == [
         {

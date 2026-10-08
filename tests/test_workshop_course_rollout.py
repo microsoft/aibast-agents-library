@@ -968,7 +968,7 @@ def test_repository_course_scope_uses_catalog_truth():
     failures = AUDIT.Failures()
     slugs, exclusions = AUDIT.course_scope(ROOT, failures)
     assert failures.items == []
-    assert len(slugs) == 66
+    assert len(slugs) == 65
     assert "time-entry-billing" in slugs
     assert "grid-outage-response" not in slugs
     assert [(item["slug"], item["status"]) for item in exclusions] == [
@@ -997,7 +997,7 @@ def test_playwright_academy_gate_is_exact_and_fail_closed():
     ).read_text(encoding="utf-8")
 
     assert package["scripts"]["academy"] == "node academy-course-audit.mjs"
-    assert "const expectedWorkshops = 66;" in source
+    assert "const expectedWorkshops = 65;" in source
     assert "const viewportWidths = [320, 360, 375];" in source
     assert 'const auditedPages = ["quest.html", "evidence-report.html"];' in source
     assert "attempts === expectedWorkshops * auditedPages.length" in source

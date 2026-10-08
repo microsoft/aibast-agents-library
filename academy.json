@@ -1,13 +1,13 @@
 {
   "schema": "aibast-academy/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-10-08T13:31:13.581017+00:00",
+  "generated_at": "2026-10-08T14:45:39.255365+00:00",
   "title": "Microsoft AI Academy",
   "description": "A hands-on catalog for exploring experimental AIBAST agents through scenario quests, guided builds, evidence reviews, and portable Microsoft implementation patterns.",
   "disclaimer": "Microsoft AI Academy is an experimental AIBAST learning experience. It is not an official Microsoft credential, certification, training program, or replacement for Microsoft Learn. Activities use synthetic data and self-reported milestones unless a course states otherwise.",
   "summary": {
-    "courses": 66,
-    "skills": 491,
+    "courses": 65,
+    "skills": 485,
     "paths": 6,
     "industries": 12,
     "points_per_course": 150
@@ -180,7 +180,6 @@
         "fraud-detection-alert",
         "fs-customer-onboarding",
         "fs-regulatory-compliance",
-        "insurance-book-cross-sell",
         "loan-origination-assistant",
         "ma-target-sourcing",
         "patient-intake",
@@ -193,7 +192,7 @@
         "utility-billing-assistance",
         "wealth-insights-generator"
       ],
-      "course_count": 22
+      "course_count": 21
     },
     {
       "id": "workforce-professional-productivity",
@@ -2782,91 +2781,6 @@
         }
       ],
       "skill_count": 7,
-      "primary_path": "regulated-public-services",
-      "path_ids": [
-        "regulated-public-services"
-      ]
-    },
-    {
-      "slug": "insurance-book-cross-sell",
-      "agent": "@aibast-agents-library/insurance-book-cross-sell",
-      "title": "Book of Business Cross-Sell Agent",
-      "description": "Give a commercial insurer's marketplace team one assistant that reads a broker's expiration list, classifies every line, matches it to the underwriting units with appetite, finds the white space, and drafts the unit and broker confirmations before anything reaches a seller.",
-      "category": "financial_services",
-      "industry": "Financial Services",
-      "journey_stage": "Engage",
-      "personas": [
-        "Broker Relationship Managers",
-        "Cross-Sell Managers",
-        "Underwriting Unit Leads"
-      ],
-      "platforms": [
-        "Dynamics 365",
-        "Microsoft Copilot Studio",
-        "Microsoft Outlook",
-        "Microsoft Teams"
-      ],
-      "tags": [
-        "appetite",
-        "book-of-business",
-        "broker",
-        "commercial-lines",
-        "cross-sell",
-        "insurance"
-      ],
-      "outcomes": [
-        "Confirms every opportunity before it reaches a seller",
-        "Finds white space across a full book in one pass",
-        "Never misses a renewal follow-up window"
-      ],
-      "quest_url": "solutions/insurance-book-cross-sell/quest.html",
-      "field_guide_url": "solutions/insurance-book-cross-sell/field-guide.html",
-      "manual_url": "solutions/insurance-book-cross-sell/manual-tutorial.html",
-      "evidence_url": "solutions/insurance-book-cross-sell/evidence-report.html",
-      "added_at": "2026-10-08T01:53:29-04:00",
-      "has_demo_video": true,
-      "has_onepager": true,
-      "demo_cases": 6,
-      "manual_steps": 24,
-      "skills": [
-        {
-          "name": "appetite-match",
-          "title": "Appetite and white-space match",
-          "description": "Use when someone asks which accounts fit the carrier's appetite, where the white space is, or what can be cross-sold.",
-          "path": "solutions/insurance-book-cross-sell/manual/skills/aibast_appetite-match_03/SKILL.md"
-        },
-        {
-          "name": "book-summary",
-          "title": "Book of business summary",
-          "description": "Use when someone asks what is in a broker's book of business or expiration list.",
-          "path": "solutions/insurance-book-cross-sell/manual/skills/aibast_book-summary_01/SKILL.md"
-        },
-        {
-          "name": "broker-confirmation",
-          "title": "Broker confirmation draft",
-          "description": "Use when someone wants to go back to the broker to confirm the shortlist before routing.",
-          "path": "solutions/insurance-book-cross-sell/manual/skills/aibast_broker-confirmation_05/SKILL.md"
-        },
-        {
-          "name": "classify-lines",
-          "title": "Industry class resolution",
-          "description": "Use when someone asks to fill in, fix or resolve the industry class for the accounts on the book.",
-          "path": "solutions/insurance-book-cross-sell/manual/skills/aibast_classify-lines_02/SKILL.md"
-        },
-        {
-          "name": "routing-plan",
-          "title": "Cross-sell routing plan",
-          "description": "Use when someone wants to route the confirmed opportunities to sellers with renewal follow-up dates.",
-          "path": "solutions/insurance-book-cross-sell/manual/skills/aibast_routing-plan_06/SKILL.md"
-        },
-        {
-          "name": "unit-confirmation",
-          "title": "Unit appetite confirmation drafts",
-          "description": "Use when someone wants the underwriting units to confirm appetite or wants a unit's shortlist before routing.",
-          "path": "solutions/insurance-book-cross-sell/manual/skills/aibast_unit-confirmation_04/SKILL.md"
-        }
-      ],
-      "skill_count": 6,
       "primary_path": "regulated-public-services",
       "path_ids": [
         "regulated-public-services"

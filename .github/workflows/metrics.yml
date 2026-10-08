@@ -134,8 +134,8 @@ jobs:
               f"achievement points={achievement_totals.get('points')}"
           )
           print(f"file metrics: {len(file_rows)} tracked files; agent metrics: {len(agent_rows)} rows")
-          if len(rows) != 66:
-              print('expected exactly 66 catalog-advertised workshop rows', file=sys.stderr)
+          if len(rows) != 65:
+              print('expected exactly 65 catalog-advertised workshop rows', file=sys.stderr)
               raise SystemExit(1)
           if 'grid-outage-response' in workshop_slugs:
               print('Grid Outage must remain excluded from advertised workshop metrics', file=sys.stderr)
@@ -191,10 +191,10 @@ jobs:
               if achievements.get('schema') != 'aibast-achievements/2.0':
                   print('Achievement snapshot schema is missing or unsupported', file=sys.stderr)
                   raise SystemExit(1)
-              if len(achievement_workshop_rows) != 66 or {
+              if len(achievement_workshop_rows) != 65 or {
                   row.get('slug') for row in achievement_workshop_rows
               } != workshop_slugs:
-                  print('Achievement workshop rows must match the canonical 66-workshop scope', file=sys.stderr)
+                  print('Achievement workshop rows must match the canonical 65-workshop scope', file=sys.stderr)
                   raise SystemExit(1)
               if any(set(profile) != allowed_profile_keys for profile in achievement_profiles):
                   print('Achievement profiles contain unexpected or privacy-unsafe fields', file=sys.stderr)
@@ -426,10 +426,10 @@ jobs:
                   print('Workshop certification schema is missing or unsupported', file=sys.stderr)
                   raise SystemExit(1)
               certification_rows = certification.get('workshops', [])
-              if len(certification_rows) != 66 or {
+              if len(certification_rows) != 65 or {
                   row.get('slug') for row in certification_rows
               } != workshop_slugs:
-                  print('Certification workshop rows must match the canonical 66-workshop scope', file=sys.stderr)
+                  print('Certification workshop rows must match the canonical 65-workshop scope', file=sys.stderr)
                   raise SystemExit(1)
               facilitator_keys = {
                   'login', 'verified_cohorts', 'attendees_reported', 'workshops'
