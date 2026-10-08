@@ -2,7 +2,7 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-08T22:48:00Z`
+**Snapshot:** `2026-10-08T23:09:58Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -28,7 +28,7 @@
 | GitHub stars | 8 | +1 (+14.3%) | +1 (+14.3%) |
 | GitHub forks | 7 | +0 (+0.0%) | +0 (+0.0%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 16 | -25 (-61.0%) | -6 (-27.3%) |
+| Open GitHub issues | 15 | -26 (-63.4%) | -7 (-31.8%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
 | Workshop usage events | 11 | +11 - partial | +11 - partial |
