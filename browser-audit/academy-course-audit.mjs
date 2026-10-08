@@ -16,7 +16,7 @@ const root = path.resolve(
     { encoding: "utf8" },
   ).trim(),
 );
-const expectedWorkshops = 66;
+const expectedWorkshops = 65;
 const viewportWidths = [320, 360, 375];
 const auditedPages = ["quest.html", "evidence-report.html"];
 const auditScope = process.env.ACADEMY_AUDIT_SCOPE || "all";

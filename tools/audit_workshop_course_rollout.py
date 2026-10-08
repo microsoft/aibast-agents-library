@@ -31,7 +31,7 @@ except ModuleNotFoundError:
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = "aibast-workshop-course-rollout-audit/1.0"
-EXPECTED_WORKSHOPS = 66
+EXPECTED_WORKSHOPS = 65
 VISUAL_SCHEMA = "aibast-visual-checkpoints/1.0"
 BROWSERFILM_SCHEMA = "rapp-browserfilm/1.0"
 RAW_SUFFIXES = {".md", ".json", ".py"}

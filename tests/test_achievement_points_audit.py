@@ -7,7 +7,7 @@ def test_repository_passes_fail_closed_achievement_points_audit():
     result = audit_achievement_points.audit()
 
     assert result["status"] == "pass", "\n".join(result["failures"])
-    assert result["workshops"] == 66
+    assert result["workshops"] == 65
 
 
 def test_point_contract_catches_local_server_drift(monkeypatch):

@@ -62,7 +62,6 @@ Building Permit Processing Agent
 Utility Billing and Assistance Agent
 License Renewal and Expansion Agent
 Product Feedback Synthesizer Agent
-Book of Business Cross-Sell Agent
 Build Materials Compliance Agent
 Order Entry Validation Agent
 M&A Target Sourcing Agent
@@ -532,7 +531,7 @@ def test_every_library_solution_maps_to_an_exact_microsoft_forms_choice():
         + ";\nconsole.log(JSON.stringify(agents.map(requestFormSolutionName)));"
     )
 
-    assert len(result) == 67
+    assert len(result) == 66
     assert len(set(result)) == len(result)
     assert set(result) == FORM_SOLUTION_CHOICES
 
