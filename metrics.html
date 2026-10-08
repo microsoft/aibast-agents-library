@@ -1709,7 +1709,8 @@ const HIDDEN_METRICS = new Set([
   'agent_upvotes',          // Discussion sync is refused by the workflow token
   'achievements',           // one opt-in participant so far
   'workshop_adoption',      // per-workshop signals are almost all zero
-  'repository_downloads'    // dominated by this repo's own CI clones
+  'repository_downloads',   // dominated by this repo's own CI clones
+  'catalog_size'            // lines of code say nothing about use
 ]);
 const showMetric = key => !HIDDEN_METRICS.has(key);
 
@@ -1732,7 +1733,7 @@ function renderKPIs() {
     { label: 'Repository stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues` },
     { label: 'Installer fetches', value: num(t.installer_downloads), sub: 'install.sh / .ps1 / .cmd served over the CDN — raw.githubusercontent installs are uncounted' },
     { label: 'Agents', value: num(t.agents), sub: `${num(t.stacks)} stacks · ${num(t.verticals)} verticals` },
-    { label: 'Catalog size', value: num(t.total_lines), sub: `lines of Python · ${num(t.total_kb)} KB across ${num(t.agents)} files` },
+    { metric: 'catalog_size', label: 'Catalog size', value: num(t.total_lines), sub: `lines of Python · ${num(t.total_kb)} KB across ${num(t.agents)} files` },
     { label: 'Unique cloners', value: num(t.clone_uniques_14d), sub: `last 14 days · ${num(t.clone_uniques_daily_sum)} daily-unique sum since ${t.tracking_since || '—'}` },
     { label: 'Page views', value: num(t.page_views), sub: `${num(t.view_uniques_14d)} unique visitors (14d)` }
   ].filter(card => !card.metric || showMetric(card.metric));
@@ -2031,7 +2032,7 @@ const AGENT_UPVOTE_BOARD = {
 const ALL_BOARDS = [
   BOARDS[0],
   ...(showMetric('agent_upvotes') ? [AGENT_UPVOTE_BOARD] : []),
-  ...BOARDS.slice(1)
+  ...BOARDS.slice(1).filter(board => board.id !== 'largest' || showMetric('catalog_size'))
 ];
 let activeBoard = 'most_downloaded';
 
