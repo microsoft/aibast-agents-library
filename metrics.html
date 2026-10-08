@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="data:," rel="icon">
 <title>Library Metrics — AIBAST Agents Library</title>
-<meta name="description" content="AIBAST agent downloads, signed-in GitHub Discussion upvotes, workshop adoption, and verified achievements.">
+<meta name="description" content="AIBAST agent downloads, library traffic, and catalog metrics.">
 <meta property="og:title" content="AIBAST Library Metrics">
 <meta property="og:description" content="AIBAST agent distribution, Discussion signals, workshop adoption, and verified achievements.">
 <meta property="og:type" content="website">
@@ -426,6 +426,7 @@ code,
   font-size: 1rem;
 }
 
+[hidden] { display: none !important; }
 .upvote-note {
   max-width: 900px;
   margin-top: 18px;
@@ -1234,8 +1235,8 @@ footer {
   <section class="page-head" aria-labelledby="page-title">
     <p class="eyebrow">AIBAST distribution, engagement, and learning impact</p>
     <h1 id="page-title">Public library metrics</h1>
-    <p>Every number below belongs to the AIBAST library and comes from a public, verifiable API — GitHub traffic, releases, Discussions and opt-in issues, the jsDelivr CDN, and the AIBAST catalog. RAR is intentionally excluded from these counts. There is no private analytics or tracking pixel. Identity appears only in verified achievement profiles whose GitHub users explicitly opted into public display by submitting a claim.</p>
-    <div class="upvote-note">
+    <p>Every number below belongs to the AIBAST library and comes from a public, verifiable API — GitHub traffic and releases, the jsDelivr CDN, and the AIBAST catalog. RAR is intentionally excluded from these counts. Identity appears only in verified achievement profiles whose GitHub users explicitly opted into public display by submitting a claim.</p>
+    <div class="upvote-note" data-metric="agent_upvotes">
       <p><b>Agent upvotes require a signed-in GitHub account.</b> Each agent has one canonical rating Discussion, and GitHub permits one active upvote per account. Upvotes record community preference; agent downloads are counted separately from GitHub Release assets.</p>
       <a class="upvote-action" href="library.html">Browse agents</a>
     </div>
@@ -1263,7 +1264,7 @@ footer {
     </div>
   </section>
 
-  <section class="section" id="achievements-points" aria-labelledby="achievements-heading">
+  <section class="section" data-metric="achievements" id="achievements-points" aria-labelledby="achievements-heading">
     <div class="section-head">
       <h2 id="achievements-heading">Verified workshop achievements</h2>
       <div class="hint">verified public progress synced through opt-in GitHub issues</div>
@@ -1312,7 +1313,7 @@ footer {
     </div>
   </section>
 
-  <section class="section" aria-labelledby="workshop-heading">
+  <section class="section" data-metric="workshop_adoption" aria-labelledby="workshop-heading">
     <div class="section-head">
       <h2 id="workshop-heading">Workshop adoption</h2>
       <div class="hint" id="workshop-hint">66 catalog-advertised workshop quests</div>
@@ -1699,6 +1700,23 @@ function render() {
   renderReferrers();
   renderReleases();
   renderSources();
+  hidePausedMetricSections();
+}
+
+// Metrics paused from display until their source works or carries signal.
+// Data still collects in state/metrics.json; flip an entry to show it again.
+const HIDDEN_METRICS = new Set([
+  'agent_upvotes',          // Discussion sync is refused by the workflow token
+  'achievements',           // one opt-in participant so far
+  'workshop_adoption',      // per-workshop signals are almost all zero
+  'repository_downloads'    // dominated by this repo's own CI clones
+]);
+const showMetric = key => !HIDDEN_METRICS.has(key);
+
+function hidePausedMetricSections() {
+  document.querySelectorAll('[data-metric]').forEach(el => {
+    if (!showMetric(el.dataset.metric)) el.hidden = true;
+  });
 }
 
 function renderKPIs() {
@@ -1707,17 +1725,17 @@ function renderKPIs() {
   const achievementTotals = (M.achievements || {}).totals || {};
   const cards = [
     { primary: true, label: 'Agent downloads', value: num(t.agent_file_downloads), sub: 'observable immutable agent.py release-asset transfers' },
-    { primary: true, label: 'AIBAST repository downloads', value: num(t.downloads), sub: `${num(t.clones)} repository clones (includes this repo's own CI) · ${num(t.cdn_hits)} CDN hits · ${num(t.release_downloads)} release assets` },
-    { primary: true, label: 'Verified achievement points', value: num(achievementTotals.points), sub: `${num(achievementTotals.participants)} opt-in public participants · ${num(achievementTotals.achievements)} badges · ${num(achievementTotals.starts)} starts · ${num(achievementTotals.workshop_completions)} workshop completions · ${num(achievementTotals.hard_completions)} hard completions` },
-    { label: 'Agent upvotes', value: num(t.agent_upvotes), sub: 'native rating-Discussion upvotes · one active signal per GitHub account and agent' },
-    { label: 'Workshop usage events', value: num(workshopTotals.usage_events), sub: `${num(workshopTotals.workshops)} advertised workshops · public event-count floor, not users` },
-    { label: 'Repository stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues · separate from agent upvotes` },
+    { primary: true, metric: 'repository_downloads', label: 'AIBAST repository downloads', value: num(t.downloads), sub: `${num(t.clones)} repository clones (includes this repo's own CI) · ${num(t.cdn_hits)} CDN hits · ${num(t.release_downloads)} release assets` },
+    { primary: true, metric: 'achievements', label: 'Verified achievement points', value: num(achievementTotals.points), sub: `${num(achievementTotals.participants)} opt-in public participants · ${num(achievementTotals.achievements)} badges · ${num(achievementTotals.starts)} starts · ${num(achievementTotals.workshop_completions)} workshop completions · ${num(achievementTotals.hard_completions)} hard completions` },
+    { metric: 'agent_upvotes', label: 'Agent upvotes', value: num(t.agent_upvotes), sub: 'native rating-Discussion upvotes · one active signal per GitHub account and agent' },
+    { metric: 'workshop_adoption', label: 'Workshop usage events', value: num(workshopTotals.usage_events), sub: `${num(workshopTotals.workshops)} advertised workshops · public event-count floor, not users` },
+    { label: 'Repository stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues` },
     { label: 'Installer fetches', value: num(t.installer_downloads), sub: 'install.sh / .ps1 / .cmd served over the CDN — raw.githubusercontent installs are uncounted' },
     { label: 'Agents', value: num(t.agents), sub: `${num(t.stacks)} stacks · ${num(t.verticals)} verticals` },
     { label: 'Catalog size', value: num(t.total_lines), sub: `lines of Python · ${num(t.total_kb)} KB across ${num(t.agents)} files` },
     { label: 'Unique cloners', value: num(t.clone_uniques_14d), sub: `last 14 days · ${num(t.clone_uniques_daily_sum)} daily-unique sum since ${t.tracking_since || '—'}` },
     { label: 'Page views', value: num(t.page_views), sub: `${num(t.view_uniques_14d)} unique visitors (14d)` }
-  ];
+  ].filter(card => !card.metric || showMetric(card.metric));
   $('kpis').innerHTML = cards.map(card =>
     `<article class="kpi${card.primary ? ' primary' : ''}">
        <div class="label">${esc(card.label)}</div>
@@ -2012,7 +2030,7 @@ const AGENT_UPVOTE_BOARD = {
 };
 const ALL_BOARDS = [
   BOARDS[0],
-  AGENT_UPVOTE_BOARD,
+  ...(showMetric('agent_upvotes') ? [AGENT_UPVOTE_BOARD] : []),
   ...BOARDS.slice(1)
 ];
 let activeBoard = 'most_downloaded';
@@ -2259,7 +2277,8 @@ function renderReleases() {
 }
 
 function renderSources() {
-  const rows = M.sources || [];
+  const rows = (M.sources || []).filter(s =>
+    s.name !== 'GitHub Discussions' || showMetric('agent_upvotes'));
   $('sources').innerHTML = rows.length
     ? rows.map(s => `<div class="src-item"><b>${esc(s.name)}</b><span>${esc(s.metric)} — <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url.replace('https://', ''))}</a></span></div>`).join('')
     : '<div class="empty">No source metadata is available in this snapshot.</div>';
