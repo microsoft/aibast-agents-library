@@ -688,6 +688,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: 0.73rem;
 }
 .results-head strong { color: var(--cp-text); }
+[hidden] { display: none !important; }
+/* Upvotes are paused until the Discussion sync works again (see metrics.html HIDDEN_METRICS). */
+.agent-upvote { display: none !important; }
 .upvote-explainer {
   margin: 0;
   padding: 10px 18px;
@@ -1608,7 +1611,7 @@ footer {
     </div>
 
     <div class="active-filters" id="active-filters"></div>
-    <p class="upvote-explainer">Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
+    <p class="upvote-explainer" hidden>Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
     <div class="results-head" id="workshops">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>

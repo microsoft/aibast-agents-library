@@ -19,6 +19,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from tools.clarity_tag import current_tag as clarity_current_tag  # noqa: E402
+from tools.design_tokens import current_block as design_block, stamp as design_stamp  # noqa: E402
 
 
 DEFAULT_METRICS = ROOT / "state" / "metrics.json"
@@ -51,10 +52,10 @@ THEME_CSS = """:root {
   --cp-accent-hover: #9a1a41;
   --cp-accent-soft: rgba(177, 31, 75, 0.08);
   --cp-accent-fg: #ffffff;
-  --cp-success: #16a34a;
-  --cp-danger: #dc2626;
+  --cp-success: #15803d;
+  --cp-danger: #c81e1e;
   --cp-warning: #b45309;
-  --cp-link: #0078d4;
+  --cp-link: #0f6cbd;
   --cp-shadow: 0 16px 40px rgba(24, 24, 27, 0.10);
   --cp-overlay: rgba(24, 24, 27, 0.55);
   --cp-panel: rgba(255, 255, 255, 0.86);
@@ -71,16 +72,16 @@ html[data-theme="dark"] {
   --cp-border: #34343a;
   --cp-border-strong: #54545c;
   --cp-text: #f4f4f5;
-  --cp-text-muted: #919191;
+  --cp-text-muted: #a9a9b2;
   --cp-text-soft: #c4c4cc;
   --cp-accent: #ff7a9c;
   --cp-accent-hover: #ff96b0;
   --cp-accent-soft: rgba(255, 122, 156, 0.14);
   --cp-accent-fg: #18181b;
   --cp-success: #4ade80;
-  --cp-danger: #f87171;
+  --cp-danger: #fb8a8a;
   --cp-warning: #fbbf24;
-  --cp-link: #4da6ff;
+  --cp-link: #66b3ff;
   --cp-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   --cp-overlay: rgba(9, 9, 11, 0.7);
   --cp-panel: rgba(31, 31, 35, 0.78);
@@ -1695,7 +1696,9 @@ def write_outputs(
             sort_keys=True,
         )
         + "\n",
-        out_dir / "impact-report.html": render_html(report),
+        out_dir / "impact-report.html": design_stamp(
+            render_html(report), design_block(ROOT)
+        ),
         out_dir / "impact-report-email.txt": render_email_text(report),
         out_dir / "impact-report-email.md": render_email_markdown(report),
     }
