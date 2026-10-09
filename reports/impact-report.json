@@ -9,28 +9,28 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-10-09T05:26:19Z",
+      "as_of": "2026-10-09T05:42:15Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-10-09T05:26:19Z",
+      "as_of": "2026-10-09T05:42:15Z",
       "status": "partial"
     },
     "agent_upvotes": {
-      "as_of": "2026-10-09T05:26:19Z",
+      "as_of": "2026-10-09T05:42:15Z",
       "status": "partial"
     },
     "file_downloads": {
-      "as_of": "2026-10-09T05:26:19Z",
+      "as_of": "2026-10-09T05:42:15Z",
       "status": "complete"
     },
     "traffic": {
-      "as_of": "2026-10-09T05:26:19Z",
+      "as_of": "2026-10-09T05:42:15Z",
       "reason": null,
       "status": "live"
     },
     "workshops": {
-      "as_of": "2026-10-09T05:26:19Z",
+      "as_of": "2026-10-09T05:42:15Z",
       "status": "partial"
     }
   },
@@ -570,7 +570,7 @@
         "source": "downloads",
         "status": "available",
         "unit": "count",
-        "value": 16081
+        "value": 16084
       },
       {
         "daily_fields": [
@@ -649,7 +649,7 @@
         "source": "releases",
         "status": "available",
         "unit": "count",
-        "value": 309
+        "value": 312
       },
       {
         "id": "agent_file_downloads",
@@ -691,7 +691,7 @@
         "source": "file_metrics",
         "status": "available",
         "unit": "count",
-        "value": 154
+        "value": 157
       },
       {
         "id": "clone_uniques_14d",
@@ -1968,7 +1968,7 @@
       }
     }
   },
-  "generated_at": "2026-10-09T05:26:19Z",
+  "generated_at": "2026-10-09T05:42:15Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -1979,7 +1979,7 @@
   },
   "periods": {
     "month": {
-      "baseline_at": "2026-09-08T05:31:36Z",
+      "baseline_at": "2026-09-09T05:31:44Z",
       "days": 30,
       "metrics": {
         "achievement_achievement_rate": {
@@ -2055,10 +2055,10 @@
           "value": null
         },
         "agent_file_downloads": {
-          "baseline": 14,
+          "baseline": 23,
           "calculation": "snapshot_change",
-          "change": 154,
-          "change_percent": 1100.0,
+          "change": 145,
+          "change_percent": 630.4,
           "status": "available",
           "value": 168
         },
@@ -2087,18 +2087,18 @@
           "value": 4
         },
         "clone_uniques_14d": {
-          "baseline": 225,
+          "baseline": 217,
           "calculation": "snapshot_change",
-          "change": 28,
-          "change_percent": 12.4,
+          "change": 36,
+          "change_percent": 16.6,
           "status": "available",
           "value": 253
         },
         "clones_excluding_ci": {
-          "baseline": 5377,
+          "baseline": 5495,
           "calculation": "snapshot_change",
-          "change": 9977,
-          "change_percent": 185.5,
+          "change": 9859,
+          "change_percent": 179.4,
           "status": "available",
           "value": 15354
         },
@@ -2119,12 +2119,12 @@
           "value": 9767
         },
         "installer_downloads": {
-          "baseline": 47,
+          "baseline": 50,
           "calculation": "snapshot_change",
           "change": 107,
-          "change_percent": 227.7,
+          "change_percent": 214.0,
           "status": "available",
-          "value": 154
+          "value": 157
         },
         "observed_files": {
           "baseline": 5509,
@@ -2151,12 +2151,12 @@
           "value": 152
         },
         "release_downloads": {
-          "baseline": 52,
+          "baseline": 64,
           "calculation": "snapshot_change",
-          "change": 257,
-          "change_percent": 494.2,
+          "change": 248,
+          "change_percent": 387.5,
           "status": "available",
-          "value": 309
+          "value": 312
         },
         "skill_downloads": {
           "baseline": 0,
@@ -2223,10 +2223,10 @@
           "value": 12
         },
         "view_uniques_14d": {
-          "baseline": 50,
+          "baseline": 52,
           "calculation": "snapshot_change",
-          "change": -18,
-          "change_percent": -36.0,
+          "change": -20,
+          "change_percent": -38.5,
           "status": "available",
           "value": 32
         },
@@ -2317,8 +2317,8 @@
           {
             "change": 3,
             "current": 3,
-            "id": "@aibast-agents-library/contract-risk-review",
-            "label": "Contract Risk Review Agent"
+            "id": "@aibast-agents-library/permit-license-management",
+            "label": "Permit Management Agent"
           }
         ],
         "agent_upvotes": [],
@@ -2339,7 +2339,7 @@
         ]
       },
       "name": "Monthly",
-      "observed_days": 31.0,
+      "observed_days": 30.0,
       "status": "complete"
     },
     "week": {
@@ -2485,10 +2485,10 @@
         "installer_downloads": {
           "baseline": 76,
           "calculation": "snapshot_change",
-          "change": 78,
-          "change_percent": 102.6,
+          "change": 81,
+          "change_percent": 106.6,
           "status": "available",
-          "value": 154
+          "value": 157
         },
         "observed_files": {
           "baseline": 5514,
@@ -2517,10 +2517,10 @@
         "release_downloads": {
           "baseline": 206,
           "calculation": "snapshot_change",
-          "change": 103,
-          "change_percent": 50.0,
+          "change": 106,
+          "change_percent": 51.5,
           "status": "available",
-          "value": 309
+          "value": 312
         },
         "skill_downloads": {
           "baseline": 0,
@@ -2708,7 +2708,7 @@
     }
   },
   "repo": {
-    "as_of": "2026-10-09T05:26:19Z",
+    "as_of": "2026-10-09T05:42:15Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
@@ -2717,7 +2717,7 @@
     "name": "aibast-agents-library",
     "open_issues": 15,
     "owner": "microsoft",
-    "pushed_at": "2026-10-09T03:03:28Z",
+    "pushed_at": "2026-10-09T05:26:37Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
     "size_kb": 4042189,
     "stars": 8,
