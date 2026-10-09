@@ -10,6 +10,7 @@ on:
       - 'scripts/build_metrics.py'
       - 'scripts/sync_agent_discussions.py'
       - 'scripts/collect_clarity.py'
+      - 'scripts/build_site_traffic.py'
       - 'scripts/build_impact_report.py'
       - 'scripts/impact-report-requirements.txt'
       - 'library.html'
@@ -86,6 +87,9 @@ jobs:
         env:
           CLARITY_API_TOKEN: ${{ secrets.CLARITY_API_TOKEN }}
         run: python scripts/collect_clarity.py
+
+      - name: Build site traffic report
+        run: python scripts/build_site_traffic.py
 
       - name: Build weekly and monthly impact report
         run: |
@@ -498,6 +502,9 @@ jobs:
             state/metrics_history.json \
             state/impact_history.json \
             state/clarity_history.json \
+            reports/site-traffic.html \
+            reports/site-traffic.json \
+            reports/site-traffic-raw.csv \
             reports/impact-report.pdf \
             reports/impact-report.html \
             reports/impact-report-email.txt \
