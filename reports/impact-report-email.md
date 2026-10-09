@@ -2,23 +2,23 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-09T05:42:15Z`
+**Snapshot:** `2026-10-09T13:08:31Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 16,084 | +385 observed - partial | +9,771 observed - partial |
-| Git clones | 15,354 | +385 observed | +9,767 observed |
-| Clones excluding CI estimate | 15,354 | +8,303 (+117.8%) | +9,859 (+179.4%) |
-| AIBAST repository and Pages views | 1,041 | +89 observed | +152 observed |
+| AIBAST observed repository downloads | 16,474 | +775 observed - partial | +10,161 observed - partial |
+| Git clones | 15,744 | +775 observed | +10,157 observed |
+| Clones excluding CI estimate | 15,744 | +8,693 (+123.3%) | +10,249 (+186.5%) |
+| AIBAST repository and Pages views | 1,051 | +99 observed | +162 observed |
 | jsDelivr file hits | 418 | +0 observed | +4 observed |
 | Release asset downloads | 312 | +106 (+51.5%) | +248 (+387.5%) |
 | AIBAST direct agent file downloads | 168 | +25 (+17.5%) | +145 (+630.4%) |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | AIBAST installer file downloads | 157 | +81 (+106.6%) | +107 (+214.0%) |
-| Unique cloners (14-day window) | 253 | -100 (-28.3%) snapshot change | +36 (+16.6%) snapshot change |
+| Unique cloners (14-day window) | 283 | -70 (-19.8%) snapshot change | +66 (+30.4%) snapshot change |
 | Unique visitors (14-day window) | 32 | -12 (-27.3%) snapshot change | -20 (-38.5%) snapshot change |
 
 ## Community engagement
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 9,360 | +3,846 (+69.7%) | +3,851 (+69.9%) |
-| Files covered by download observations | 9,360 | +3,846 (+69.7%) | +3,851 (+69.9%) |
+| Tracked repository files | 9,365 | +3,851 (+69.8%) | +3,856 (+70.0%) |
+| Files covered by download observations | 9,365 | +3,851 (+69.8%) | +3,856 (+70.0%) |
 | Catalog agents | 86 | +14 (+19.4%) | +14 (+19.4%) |
 | Tracked SKILL.md files | 491 | +257 (+109.8%) | +257 (+109.8%) |
 | Canonical workshops | 65 | +14 (+27.5%) | +14 (+27.5%) |
