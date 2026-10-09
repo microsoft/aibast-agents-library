@@ -9,6 +9,7 @@ on:
     paths:
       - 'scripts/build_metrics.py'
       - 'scripts/sync_agent_discussions.py'
+      - 'scripts/collect_clarity.py'
       - 'scripts/build_impact_report.py'
       - 'scripts/impact-report-requirements.txt'
       - 'library.html'
@@ -78,6 +79,13 @@ jobs:
           METRICS_REPO: ${{ github.event.repository.name }}
           METRICS_REF: ${{ github.ref_name }}
         run: python scripts/build_metrics.py
+
+      - name: Collect Clarity site traffic
+        # Daily, because Clarity's Data Export API only returns the last 1-3 days.
+        # Skips cleanly until the CLARITY_API_TOKEN secret exists.
+        env:
+          CLARITY_API_TOKEN: ${{ secrets.CLARITY_API_TOKEN }}
+        run: python scripts/collect_clarity.py
 
       - name: Build weekly and monthly impact report
         run: |
@@ -489,6 +497,7 @@ jobs:
             state/metrics.json \
             state/metrics_history.json \
             state/impact_history.json \
+            state/clarity_history.json \
             reports/impact-report.pdf \
             reports/impact-report.html \
             reports/impact-report-email.txt \
