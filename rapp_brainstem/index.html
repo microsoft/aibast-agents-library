@@ -6,6 +6,11 @@
 <title>RAPP Brainstem</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%2358a6ff'%3E%3Cpath d='M184 0c-30.9 0-56.5 22.7-61.1 52.3C54.5 67 0 130 0 206.8c0 41.6 17.4 79.2 45.3 105.9-2 9.2-3.3 18.8-3.3 28.7 0 55.3 35.8 102.2 85.5 119C142.2 493 172.6 512 208 512h16c35.3 0 64-28.7 64-64V86c0-8.8-7.2-16-16-16h-16c-8.8 0-16 7.2-16 16v16c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-35.3-28.7-64-64-64h40zm144 0c30.9 0 56.5 22.7 61.1 52.3C457.5 67 512 130 512 206.8c0 41.6-17.4 79.2-45.3 105.9 2 9.2 3.3 18.8 3.3 28.7 0 55.3-35.8 102.2-85.5 119C369.8 493 339.4 512 304 512h-16c-35.3 0-64-28.7-64-64V86c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8 7.2 16 16 16s16-7.2 16-16V64c0-35.3 28.7-64 64-64h-40z'/%3E%3C/svg%3E">
 <script>
+if (location.protocol === 'local-preview:' || location.protocol === 'file:') {
+  document.write('<script src="agents/experimental/scout/preview-config.js"><\/script>');
+}
+</script>
+<script>
 /* ── Vendored, self-contained Markdown renderer ──────────────────────────
    Replaces the former REMOTE `marked` CDN (cdn.jsdelivr.net/npm/marked).
    A local-first tool must not pull an unpinned "latest" script that runs with
@@ -1349,9 +1354,33 @@
     );
   }
 
-  // Same-origin: chat hits whichever brainstem served this page (parent on 7071,
-  // booted twin on 7081+, etc). For file:// or non-brainstem origins, fall back to 7071.
-  const API = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://127.0.0.1:7071';
+  // Server-served pages stay same-origin. Scout and file previews use the workspace
+  // controller's generated endpoint and secret, so this same static UI remains fully
+  // interactive inside the workspace without weakening localhost CORS.
+  const scoutPreviewConfig = window.__SCOUT_BRAINSTEM_PREVIEW__ || null;
+  const API = scoutPreviewConfig
+    ? scoutPreviewConfig.url.replace(/\/$/, '')
+    : ((location.protocol === 'http:' || location.protocol === 'https:')
+        ? ''
+        : 'http://127.0.0.1:7071');
+  if (scoutPreviewConfig?.secret) {
+    const nativeFetch = window.fetch.bind(window);
+    const apiOrigin = new URL(API).origin;
+    window.fetch = (resource, options = {}) => {
+      const rawUrl = resource instanceof Request ? resource.url : String(resource);
+      const target = new URL(rawUrl, location.href);
+      if (target.origin !== apiOrigin) {
+        return nativeFetch(resource, options);
+      }
+      const requestHeaders = resource instanceof Request ? resource.headers : undefined;
+      const headers = new Headers(options.headers || requestHeaders);
+      headers.set('X-Brainstem-Secret', scoutPreviewConfig.secret);
+      if (resource instanceof Request) {
+        return nativeFetch(new Request(resource, { ...options, headers }));
+      }
+      return nativeFetch(resource, { ...options, headers });
+    };
+  }
   let sessionId = null;
   let history = [];
   let fullTranscript = [];
