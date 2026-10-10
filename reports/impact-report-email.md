@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-10T05:23:46Z`
+**Snapshot:** `2026-10-10T05:38:15Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 16,475 | +692 observed - partial | +9,117 observed - partial |
+| AIBAST observed repository downloads | 16,478 | +692 observed - partial | +9,117 observed - partial |
 | Git clones | 15,744 | +692 observed | +9,113 observed |
 | Clones excluding CI estimate | 15,744 | +8,693 (+123.3%) | +10,249 (+186.5%) |
 | AIBAST repository and Pages views | 1,051 | +94 observed | +146 observed |
 | jsDelivr file hits | 418 | +0 observed | +4 observed |
-| Release asset downloads | 313 | +107 (+51.9%) | +249 (+389.1%) |
-| AIBAST direct agent file downloads | 168 | +25 (+17.5%) | +145 (+630.4%) |
+| Release asset downloads | 316 | +110 (+53.4%) | +230 (+267.4%) |
+| AIBAST direct agent file downloads | 168 | +25 (+17.5%) | +129 (+330.8%) |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| AIBAST installer file downloads | 158 | +82 (+107.9%) | +108 (+216.0%) |
+| AIBAST installer file downloads | 161 | +85 (+111.8%) | +105 (+187.5%) |
 | Unique cloners (14-day window) | 283 | -70 (-19.8%) snapshot change | +66 (+30.4%) snapshot change |
 | Unique visitors (14-day window) | 32 | -12 (-27.3%) snapshot change | -20 (-38.5%) snapshot change |
 
@@ -28,7 +28,7 @@
 | GitHub stars | 8 | +1 (+14.3%) | +1 (+14.3%) |
 | GitHub forks | 7 | +0 (+0.0%) | +0 (+0.0%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 15 | -26 (-63.4%) | -7 (-31.8%) |
+| Open GitHub issues | 15 | -26 (-63.4%) | -9 (-37.5%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
 | Workshop usage events | 11 | +11 - partial | +11 - partial |
@@ -86,8 +86,8 @@
 - Ask HR Agent: +5 (current 6)
 - Account Intelligence Agent: +4 (current 7)
 - Wealth Insights Generator Agent: +4 (current 4)
-- Care Gap Closure Agent: +3 (current 3)
 - Permit Management Agent: +3 (current 3)
+- Underwriting Support Agent: +3 (current 4)
 
 ## Measurement notes
 
