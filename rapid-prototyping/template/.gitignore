@@ -1,0 +1,9 @@
+out/
+.venv/
+__pycache__/
+*.pyc
+.proto-ports
+# discovery transcripts hold real names: never committed, never copied into the app
+discovery/*
+!discovery/README.md
+.playwright-cli/
