@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - October 10, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 11, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-10T05:38:15Z`
+**Snapshot:** `2026-10-11T05:22:36Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 16,478 | +692 observed - partial | +9,117 observed - partial |
-| Git clones | 15,744 | +692 observed | +9,113 observed |
-| Clones excluding CI estimate | 15,744 | +8,693 (+123.3%) | +10,249 (+186.5%) |
-| AIBAST repository and Pages views | 1,051 | +94 observed | +146 observed |
-| jsDelivr file hits | 418 | +0 observed | +4 observed |
-| Release asset downloads | 316 | +110 (+53.4%) | +230 (+267.4%) |
-| AIBAST direct agent file downloads | 168 | +25 (+17.5%) | +129 (+330.8%) |
+| AIBAST observed repository downloads | 16,777 | +837 observed - partial | +9,262 observed - partial |
+| Git clones | 15,967 | +837 observed | +9,262 observed |
+| Clones excluding CI estimate | 15,967 | +8,916 (+126.5%) | +10,472 (+190.6%) |
+| AIBAST repository and Pages views | 1,053 | +86 observed | +143 observed |
+| jsDelivr file hits | 418 | +0 observed | +0 observed |
+| Release asset downloads | 392 | +186 (+90.3%) | +306 (+355.8%) |
+| AIBAST direct agent file downloads | 241 | +98 (+68.5%) | +202 (+517.9%) |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| AIBAST installer file downloads | 161 | +85 (+111.8%) | +105 (+187.5%) |
-| Unique cloners (14-day window) | 283 | -70 (-19.8%) snapshot change | +66 (+30.4%) snapshot change |
-| Unique visitors (14-day window) | 32 | -12 (-27.3%) snapshot change | -20 (-38.5%) snapshot change |
+| AIBAST installer file downloads | 164 | +88 (+115.8%) | +108 (+192.9%) |
+| Unique cloners (14-day window) | 316 | -37 (-10.5%) snapshot change | +99 (+45.6%) snapshot change |
+| Unique visitors (14-day window) | 31 | -13 (-29.5%) snapshot change | -21 (-40.4%) snapshot change |
 
 ## Community engagement
 
@@ -70,11 +70,11 @@
 - Account Intelligence Agent: +2 (current 2)
 
 **Agent downloads**
-- Ask HR Agent: +3 (current 6)
-- Underwriting Support Agent: +2 (current 4)
-- Wealth Insights Generator Agent: +2 (current 4)
-- Account Messaging: +1 (current 3)
-- Action Prioritization: +1 (current 2)
+- Ask HR Agent: +4 (current 7)
+- Underwriting Support Agent: +3 (current 5)
+- Wealth Insights Generator Agent: +3 (current 5)
+- Account Messaging: +2 (current 4)
+- Action Prioritization: +2 (current 3)
 
 ## Top monthly movers
 
@@ -83,11 +83,11 @@
 - Account Intelligence Agent: +2 (current 2)
 
 **Agent downloads**
-- Ask HR Agent: +5 (current 6)
-- Account Intelligence Agent: +4 (current 7)
-- Wealth Insights Generator Agent: +4 (current 4)
-- Permit Management Agent: +3 (current 3)
-- Underwriting Support Agent: +3 (current 4)
+- Ask HR Agent: +6 (current 7)
+- Account Intelligence Agent: +5 (current 8)
+- Wealth Insights Generator Agent: +5 (current 5)
+- Permit Management Agent: +4 (current 4)
+- Underwriting Support Agent: +4 (current 5)
 
 ## Measurement notes
 
