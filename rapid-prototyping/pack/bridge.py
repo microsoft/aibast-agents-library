@@ -2,7 +2,8 @@
 
   brainstem-proto guide      # starts this bridge on 127.0.0.1:7090 and opens the guide, paired
 
-Security model (the guide is hosted on a shared origin, microsoft.github.io, so origin alone is not enough):
+Local only: the bridge serves the guide page itself on 127.0.0.1 and answers only that page; no website
+can reach it. Security model:
   1. Pairing: a one-time code is printed here and passed to the page in the URL fragment (never sent to
      any server). The page exchanges it once for a session token; every request must carry that token.
   2. Origin allowlist (exact) and Host must be localhost/127.0.0.1 (blocks other sites and DNS rebinding).
@@ -29,13 +30,15 @@ from pathlib import Path
 
 PROTO_HOME = Path(os.environ.get("PROTO_HOME", Path.home() / ".brainstem-proto"))
 PROJECTS = Path(os.environ.get("BRAINSTEM_PROTOTYPES", Path.home() / "BrainstemPrototypes"))
-ALLOWED_ORIGINS = {o.strip().rstrip("/") for o in os.environ.get(
-    "GUIDE_ORIGINS", "https://microsoft.github.io").split(",") if o.strip()}
+# Local only: the bridge serves the guide page itself and answers only that page's origin.
+# No website, Microsoft's included, can reach it. Set when the server starts.
+ALLOWED_ORIGINS: set[str] = set()
 ALLOWED_HOSTS = {"localhost", "127.0.0.1"}
 MAX_BODY = 200_000          # a transcript, not a file dump
 TOKEN_TTL = 4 * 3600
 IDLE_EXIT = 45 * 60
 
+LOCAL = {"on": False, "origin": ""}  # local mode: the bridge serves the guide page itself (no published site needed)
 STATE = {"pair": secrets.token_urlsafe(9), "tokens": {}, "last": time.time(), "building": False, "projects": {}}
 LOCK = threading.Lock()
 
@@ -53,6 +56,8 @@ class Bridge(BaseHTTPRequestHandler):
     # ---------- guards ----------
     def _origin_ok(self) -> str | None:
         origin = (self.headers.get("Origin") or "").rstrip("/")
+        if not origin and LOCAL["on"] and (self.headers.get("Sec-Fetch-Site") or "") == "same-origin":
+            origin = LOCAL["origin"]  # the guide this bridge serves itself (browsers omit Origin on same-origin GETs)
         return origin if origin in ALLOWED_ORIGINS else None
 
     def _host_ok(self) -> bool:
@@ -118,6 +123,19 @@ class Bridge(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        if LOCAL["on"] and self.path.split("?", 1)[0] == "/guide":
+            if not self._host_ok():
+                return self._reply(403, {"error": "bad host"})
+            page = PROTO_HOME / "guide" / "rapp-guide-live.html"
+            data = page.read_bytes() if page.exists() else b"<p>The guide page is missing; set up rapid prototyping again.</p>"
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("X-Frame-Options", "DENY")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(data)
+            return
         origin = self._gate(need_token=False)
         if not origin:
             return
@@ -260,16 +278,16 @@ def make_server(port: int) -> ThreadingHTTPServer:
 def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--port", type=int, default=int(os.environ.get("GUIDE_BRIDGE_PORT", 7090)))
-    ap.add_argument("--guide", default=os.environ.get("GUIDE_URL",
-                    "https://microsoft.github.io/aibast-agents-library/docs/rapp-guide-live.html"))
+    ap.add_argument("--guide", default="local", help=argparse.SUPPRESS)  # always local
     ap.add_argument("--no-open", action="store_true")
     a = ap.parse_args(argv)
-    if not os.environ.get("GUIDE_ORIGINS"):  # answer exactly the site this guide was opened from
-        from urllib.parse import urlsplit
-        u = urlsplit(a.guide)
-        ALLOWED_ORIGINS.clear()
-        ALLOWED_ORIGINS.add(f"{u.scheme}://{u.netloc}")
+    if os.environ.get("RAPID_PROTOTYPING_DISABLED"):
+        raise SystemExit("Rapid prototyping is turned off on this computer (RAPID_PROTOTYPING_DISABLED).")
     srv = make_server(a.port)
+    LOCAL["on"], LOCAL["origin"] = True, f"http://127.0.0.1:{a.port}"
+    ALLOWED_ORIGINS.clear()
+    ALLOWED_ORIGINS.add(LOCAL["origin"])
+    a.guide = f"{LOCAL['origin']}/guide"
     url = f"{a.guide}#pair={STATE['pair']}&port={a.port}"
     print(f"Guide bridge on http://127.0.0.1:{a.port} (answers only {', '.join(sorted(ALLOWED_ORIGINS))}).", flush=True)
     print(f"Pairing code: {STATE['pair']}", flush=True)

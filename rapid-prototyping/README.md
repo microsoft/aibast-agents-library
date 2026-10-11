@@ -4,7 +4,7 @@
 > around the Brainstem and never changes it. Then `brainstem-proto new "your idea"` (or
 > `--transcript discovery-call.txt`) gives anyone a running, checked prototype in about 20 seconds,
 > built further by whichever AI they already use. Start here: **[ONBOARDING.md](ONBOARDING.md)**.
-> The live, guided version for Solution Engineers is [docs/rapp-guide-live.html](../docs/rapp-guide-live.html) (run `brainstem-proto guide`).
+> For Solution Engineers: [docs/rapp-guide-live.html](../docs/rapp-guide-live.html) (download the agent, load it, say "open the RAPP live guide").
 
 **The pattern:** build a product's AI as Brainstem agent files, run them on a dedicated local
 Brainstem, and let the product's web app reach them through a tiny same-origin sidecar. Nothing

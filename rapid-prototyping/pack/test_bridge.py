@@ -9,11 +9,10 @@ import threading
 import unittest
 from pathlib import Path
 
-os.environ["GUIDE_ORIGINS"] = "https://microsoft.github.io"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bridge  # noqa: E402
 
-GOOD = "https://microsoft.github.io"
+GOOD = "http://127.0.0.1:7090"  # the origin of the guide page the bridge serves
 
 
 class BridgeSecurity(unittest.TestCase):
@@ -21,6 +20,8 @@ class BridgeSecurity(unittest.TestCase):
     def setUpClass(cls):
         cls.srv = bridge.make_server(0)
         cls.port = cls.srv.server_address[1]
+        bridge.ALLOWED_ORIGINS.clear()
+        bridge.ALLOWED_ORIGINS.add(GOOD)
         threading.Thread(target=cls.srv.serve_forever, daemon=True).start()
 
     @classmethod
@@ -46,7 +47,7 @@ class BridgeSecurity(unittest.TestCase):
         return j["token"]
 
     def test_other_sites_are_refused(self):
-        for origin in ("https://evil.example", "https://microsoft.github.io.evil.example", "null", None):
+        for origin in ("https://evil.example", "https://microsoft.github.io", "http://127.0.0.1:7090.evil.example", "null", None):
             code, _, _ = self.req("GET", "/hello", origin=origin)
             self.assertEqual(code, 403, origin)
 
@@ -55,7 +56,7 @@ class BridgeSecurity(unittest.TestCase):
         self.assertEqual(code, 403)
 
     def test_same_origin_without_pairing_gets_nothing(self):
-        """microsoft.github.io is shared by every Microsoft Pages site: origin alone must not be enough."""
+        """Pairing is required even for the guide page's own origin."""
         for path in ("/status",):
             self.assertEqual(self.req("GET", path)[0], 401)
         for path in ("/prototype", "/check", "/chat"):
@@ -96,6 +97,44 @@ class BridgeSecurity(unittest.TestCase):
         c.request("POST", "/prototype", body=b"x" * (bridge.MAX_BODY + 1),
                   headers={"Host": f"127.0.0.1:{self.port}", "Origin": GOOD, "Authorization": f"Bearer {tok}"})
         self.assertEqual(c.getresponse().status, 413)
+
+
+class LocalModeSecurity(unittest.TestCase):
+    """Local mode: the bridge serves the guide page itself at http://127.0.0.1:<port>/guide."""
+    @classmethod
+    def setUpClass(cls):
+        cls.srv = bridge.make_server(0)
+        cls.port = cls.srv.server_address[1]
+        bridge.LOCAL.update(on=True, origin=f"http://127.0.0.1:{cls.port}")
+        bridge.ALLOWED_ORIGINS.add(bridge.LOCAL["origin"])
+        threading.Thread(target=cls.srv.serve_forever, daemon=True).start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.srv.shutdown()
+        bridge.LOCAL.update(on=False, origin="")
+
+    def get(self, path, host="127.0.0.1", headers=None):
+        c = http.client.HTTPConnection("127.0.0.1", self.port, timeout=10)
+        c.request("GET", path, headers={"Host": f"{host}:{self.port}", **(headers or {})})
+        r = c.getresponse()
+        return r.status, r.read(), dict(r.getheaders())
+
+    def test_guide_page_served_with_frame_protection(self):
+        code, _, h = self.get("/guide")
+        self.assertEqual(code, 200)
+        self.assertEqual(h.get("X-Frame-Options"), "DENY")
+
+    def test_guide_page_refuses_rebinding_host(self):
+        self.assertEqual(self.get("/guide", host="attacker.example")[0], 403)
+
+    def test_missing_origin_accepted_only_as_same_origin(self):
+        self.assertEqual(self.get("/hello", headers={"Sec-Fetch-Site": "same-origin"})[0], 200)
+        self.assertEqual(self.get("/hello", headers={"Sec-Fetch-Site": "cross-site"})[0], 403)
+        self.assertEqual(self.get("/hello")[0], 403)  # no browser signal at all
+
+    def test_same_origin_still_needs_pairing(self):
+        self.assertEqual(self.get("/status", headers={"Sec-Fetch-Site": "same-origin"})[0], 401)
 
 
 if __name__ == "__main__":

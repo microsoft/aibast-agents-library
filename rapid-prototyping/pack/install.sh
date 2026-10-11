@@ -21,6 +21,7 @@ mkdir -p "$PROTO_HOME" "$BIN"
 rm -rf "$PROTO_HOME/template"; cp -R "$SRC/template" "$PROTO_HOME/template"; rm -rf "$PROTO_HOME/template/out"
 cp "$SRC/pack/bin/brainstem-proto" "$PROTO_HOME/brainstem-proto"; chmod +x "$PROTO_HOME/brainstem-proto"
 cp "$SRC/pack/bridge.py" "$PROTO_HOME/bridge.py"; cp "$SRC/pack/templates.py" "$PROTO_HOME/templates.py"
+mkdir -p "$PROTO_HOME/guide"; cp "$SRC/pack/guide/rapp-guide-live.html" "$PROTO_HOME/guide/rapp-guide-live.html"
 ln -sf "$PROTO_HOME/brainstem-proto" "$BIN/brainstem-proto"
 echo "Installed. Try:  brainstem-proto new \"an expense approval app for my team\""
 case ":$PATH:" in *":$BIN:"*) ;; *) echo "(Add $BIN to your PATH, or run $BIN/brainstem-proto)";; esac
