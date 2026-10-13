@@ -2,24 +2,24 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-13T05:27:50Z`
+**Snapshot:** `2026-10-13T05:44:00Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 17,043 | +963 observed - partial | +9,174 observed - partial |
+| AIBAST observed repository downloads | 17,046 | +963 observed - partial | +9,174 observed - partial |
 | Git clones | 16,225 | +963 observed | +9,174 observed |
-| Clones excluding CI estimate | 16,225 | +9,174 (+130.1%) | +9,594 (+144.7%) |
+| Clones excluding CI estimate | 16,225 | +9,174 (+130.1%) | +9,520 (+142.0%) |
 | AIBAST repository and Pages views | 1,065 | +33 observed | +138 observed |
 | jsDelivr file hits | 418 | +0 observed | +0 observed |
-| Release asset downloads | 400 | +194 (+94.2%) | +242 (+153.2%) |
-| AIBAST direct agent file downloads | 243 | +100 (+69.9%) | +140 (+135.9%) |
+| Release asset downloads | 403 | +197 (+95.6%) | +218 (+117.8%) |
+| AIBAST direct agent file downloads | 243 | +100 (+69.9%) | +116 (+91.3%) |
 | AIBAST skill file downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| AIBAST installer file downloads | 170 | +94 (+123.7%) | +106 (+165.6%) |
-| Unique cloners (14-day window) | 356 | +3 (+0.8%) snapshot change | +29 (+8.9%) snapshot change |
-| Unique visitors (14-day window) | 31 | -13 (-29.5%) snapshot change | -16 (-34.0%) snapshot change |
+| AIBAST installer file downloads | 173 | +97 (+127.6%) | +102 (+143.7%) |
+| Unique cloners (14-day window) | 356 | +3 (+0.8%) snapshot change | +18 (+5.3%) snapshot change |
+| Unique visitors (14-day window) | 31 | -13 (-29.5%) snapshot change | -14 (-31.1%) snapshot change |
 
 ## Community engagement
 
@@ -83,9 +83,9 @@
 **Agent downloads**
 - Ask HR Agent: +4 (current 7)
 - Building Permit Processing Agent: +4 (current 6)
-- Underwriting Support Agent: +4 (current 5)
-- Wealth Insights Generator Agent: +4 (current 5)
-- Account Intelligence Orchestrator: +3 (current 4)
+- Loan Origination Assistant: +3 (current 3)
+- Underwriting Support Agent: +3 (current 5)
+- Wealth Insights Generator Agent: +3 (current 5)
 
 ## Measurement notes
 
