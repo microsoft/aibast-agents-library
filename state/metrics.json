@@ -1,17 +1,17 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-10-13T05:44:00Z",
+ "generated_at": "2026-10-14T05:23:27Z",
  "repo": {
   "stars": 8,
   "forks": 7,
   "watchers": 0,
   "open_issues": 15,
-  "size_kb": 4043632,
+  "size_kb": 4043677,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-10-13T05:28:10Z",
+  "pushed_at": "2026-10-13T05:44:20Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,25 +19,25 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 17046,
-  "clones": 16225,
-  "cdn_hits": 418,
-  "release_downloads": 403,
-  "agent_file_downloads": 243,
+  "downloads": 17342,
+  "clones": 16419,
+  "cdn_hits": 517,
+  "release_downloads": 406,
+  "agent_file_downloads": 246,
   "installer_downloads": 173,
-  "skill_downloads": 0,
+  "skill_downloads": 99,
   "agent_upvotes": null,
   "agent_acquisitions": null,
-  "clones_excluding_ci_estimate": 16225,
+  "clones_excluding_ci_estimate": 16419,
   "ci_clone_estimate": 0,
-  "page_views": 1065,
-  "clone_uniques_14d": 356,
-  "view_uniques_14d": 31,
-  "clone_uniques_daily_sum": 1695,
-  "view_uniques_daily_sum": 235,
-  "days_tracked": 68,
+  "page_views": 1072,
+  "clone_uniques_14d": 367,
+  "view_uniques_14d": 28,
+  "clone_uniques_daily_sum": 1754,
+  "view_uniques_daily_sum": 238,
+  "days_tracked": 70,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 243,
+  "global_agent_distribution_fetch_events": 246,
   "agents": 86,
   "stacks": 66,
   "verticals": 12,
@@ -522,6 +522,20 @@
    "clone_uniques": 35,
    "views": 6,
    "cdn": 0
+  },
+  {
+   "date": "2026-10-12",
+   "clones": 89,
+   "clone_uniques": 22,
+   "views": 0,
+   "cdn": 99
+  },
+  {
+   "date": "2026-10-13",
+   "clones": 105,
+   "clone_uniques": 37,
+   "views": 7,
+   "cdn": 0
   }
  ],
  "traffic": {
@@ -529,14 +543,14 @@
    {
     "path": "/microsoft/aibast-agents-library",
     "title": "Overview",
-    "count": 19,
-    "uniques": 13
+    "count": 21,
+    "uniques": 14
    },
    {
     "path": "/microsoft/aibast-agents-library/issues",
     "title": "/issues",
-    "count": 7,
-    "uniques": 4
+    "count": 9,
+    "uniques": 5
    },
    {
     "path": "/microsoft/aibast-agents-library/blob/5e057551c4e2d4243caf7c67f22acff555a27db2/agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
@@ -551,6 +565,12 @@
     "uniques": 4
    },
    {
+    "path": "/microsoft/aibast-agents-library/pulls",
+    "title": "/pulls",
+    "count": 5,
+    "uniques": 4
+   },
+   {
     "path": "/microsoft/aibast-agents-library/blob/5e057551c4e2d4243caf7c67f22acff555a27db2/README.md",
     "title": "/blob/5e057551c4e2d4243caf7c67f22acff555a27db2/README.md",
     "count": 4,
@@ -561,12 +581,6 @@
     "title": "/tree/main/rapp",
     "count": 4,
     "uniques": 1
-   },
-   {
-    "path": "/microsoft/aibast-agents-library/pulls",
-    "title": "/pulls",
-    "count": 3,
-    "uniques": 3
    },
    {
     "path": "/microsoft/aibast-agents-library/tree/5e057551c4e2d4243caf7c67f22acff555a27db2/agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack",
@@ -599,6 +613,11 @@
     "uniques": 6
    },
    {
+    "referrer": "Google",
+    "count": 2,
+    "uniques": 2
+   },
+   {
     "referrer": "teams.public.onecdn.static.microsoft",
     "count": 2,
     "uniques": 2
@@ -607,25 +626,20 @@
     "referrer": "kody-w.github.io",
     "count": 2,
     "uniques": 1
-   },
-   {
-    "referrer": "Google",
-    "count": 1,
-    "uniques": 1
    }
   ],
-  "clones_14d": 8826,
-  "views_14d": 129,
+  "clones_14d": 6603,
+  "views_14d": 131,
   "live": true,
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
  "cdn": {
-  "total_hits": 30,
-  "bandwidth": 228386,
+  "total_hits": 129,
+  "bandwidth": 377363,
   "rank": null,
-  "agent_hits": 243,
+  "agent_hits": 246,
   "installer_hits": 173,
   "files": [
    {
@@ -662,14 +676,252 @@
     "agent": null,
     "workshop": null,
     "kind": "installer"
+   },
+   {
+    "file": "/skills/aibast-easy-mode-brainstem/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": null,
+    "kind": "skill"
+   },
+   {
+    "file": "/skills/aibast-staging-ring-test/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": null,
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/account-intelligence/manual/skills/account-overview/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "account-intelligence",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/account-intelligence/manual/skills/competitive-intel/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "account-intelligence",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/account-intelligence/manual/skills/risk-assessment/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "account-intelligence",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/account-intelligence/manual/skills/stakeholder-map/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "account-intelligence",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/account-intelligence/manual/skills/value-messaging/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "account-intelligence",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ai-customer-assistant/manual/skills/aibast_escalation-routing_03/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ai-customer-assistant",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ai-customer-assistant/manual/skills/aibast_handle-inquiry_01/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ai-customer-assistant",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ai-customer-assistant/manual/skills/aibast_knowledge-search_02/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ai-customer-assistant",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ai-customer-assistant/manual/skills/aibast_satisfaction-survey_04/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ai-customer-assistant",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ask-hr/manual/skills/aibast_benefits-summary_06/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ask-hr",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ask-hr/manual/skills/aibast_health-insurance_04/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ask-hr",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ask-hr/manual/skills/aibast_leave-balance_01/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ask-hr",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ask-hr/manual/skills/aibast_parental-leave_03/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ask-hr",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ask-hr/manual/skills/aibast_remote-work_05/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ask-hr",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/ask-hr/manual/skills/aibast_submit-time-off_02/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "ask-hr",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/building-permit-processing/manual/skills/aibast_permit-backlog_bp01/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "building-permit-processing",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/fs-customer-onboarding/manual/skills/aibast_document-checklist_03/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "fs-customer-onboarding",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/fs-customer-onboarding/manual/skills/aibast_kyc-verification_01/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "fs-customer-onboarding",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/portfolio-rebalancing/manual/skills/aibast_execution-plan_06/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "portfolio-rebalancing",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/portfolio-rebalancing/manual/skills/aibast_rebalance-recommendation_02/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "portfolio-rebalancing",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/portfolio-rebalancing/manual/skills/aibast_retirement-scenario_05/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "portfolio-rebalancing",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/portfolio-rebalancing/manual/skills/aibast_tax-impact_03/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "portfolio-rebalancing",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/portfolio-rebalancing/manual/skills/aibast_tax-loss-harvest_04/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "portfolio-rebalancing",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "prior-authorization",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/prior-authorization/manual/skills/criteria-evidence/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "prior-authorization",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/prior-authorization/manual/skills/request-evidence/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "prior-authorization",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/procurement-agent/manual/skills/aibast_purchase-request_01/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "procurement-agent",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "procurement-agent",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md",
+    "hits": 3,
+    "agent": null,
+    "workshop": "procurement-agent",
+    "kind": "skill"
+   },
+   {
+    "file": "/skills/aibast-easy-mode-copilot/SKILL.md",
+    "hits": 2,
+    "agent": null,
+    "workshop": null,
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/account-intelligence/manual/skills/executive-briefing/SKILL.md",
+    "hits": 2,
+    "agent": null,
+    "workshop": "account-intelligence",
+    "kind": "skill"
+   },
+   {
+    "file": "/solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md",
+    "hits": 2,
+    "agent": null,
+    "workshop": "procurement-agent",
+    "kind": "skill"
    }
   ],
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 403,
+  "total_downloads": 406,
   "count": 5,
   "releases": [
    {
@@ -713,7 +965,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 243,
+    "downloads": 246,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -722,7 +974,7 @@
      },
      {
       "name": "account_intelligence__1a8149d27ccf_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 29297
      },
      {
@@ -852,7 +1104,7 @@
      },
      {
       "name": "clinical_notes_summarizer__2240a9e11328_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 21302
      },
      {
@@ -1002,7 +1254,7 @@
      },
      {
       "name": "fs_customer_onboarding__0181993a2d3c_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 33293
      },
      {
@@ -1425,7 +1677,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1436,7 +1688,7 @@
     "publisher": "@aibast-agents-library",
     "category": "b2b_sales",
     "tier": "verified",
-    "downloads": 8,
+    "downloads": 9,
     "upvotes": 1,
     "acquisitions": 0,
     "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/19",
@@ -1651,6 +1903,26 @@
     "catalog_kind": "solution"
    },
    {
+    "name": "@aibast-agents-library/clinical-notes-summarizer",
+    "display_name": "Clinical Notes Summarizer Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "healthcare",
+    "tier": "verified",
+    "downloads": 4,
+    "upvotes": 0,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/47",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/48",
+    "lines": 470,
+    "size_kb": 20.8,
+    "added_at": "2026-08-15T22:26:47Z",
+    "file": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+    "description": "Handles synthetic clinical-note review: summarize encounters, list source-recorded medications, extract source-coded problem lists without confirming diagnoses, and summarize referral context; for pre-op clearance it assembles a patient snapshot, cardiopulmonary findings, a perioperative medication review, protocol-matched anesthesia considerations, ASA risk factors, re-evaluation criteria and a draft clearance note for physician signature. It requires clinician review and never diagnoses, recommends treatment, clears a patient, places a referral, schedules care, sends a message, or changes a record.",
+    "stack": "clinical_notes_summarizer",
+    "vertical": "healthcare",
+    "catalog_kind": "solution"
+   },
+   {
     "name": "@aibast-agents-library/contract-risk-review",
     "display_name": "Contract Risk Review Agent",
     "publisher": "@aibast-agents-library",
@@ -1709,26 +1981,6 @@
     "stack": "field_service_dispatch",
     "vertical": "energy",
     "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/permit-license-management",
-    "display_name": "Permit Management Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "energy",
-    "tier": "verified",
-    "downloads": 4,
-    "upvotes": 0,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/109",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/110",
-    "lines": 363,
-    "size_kb": 17.9,
-    "added_at": "2026-08-15T22:26:47Z",
-    "file": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
-    "description": "Review a synthetic renewables permit portfolio: status, permits expiring soon, renewal calendar, the emergency renewal package, compliance gaps, and application status. Use for permit and license tracking or audit-readiness questions. The agent never submits, renews, amends, or represents approval of a permit, and never sends notices; authorized staff must review and use future authenticated filing tools.",
-    "stack": "permit_license_management",
-    "vertical": "energy",
-    "catalog_kind": "solution"
    }
   ],
   "most_upvoted": [
@@ -1738,7 +1990,7 @@
     "publisher": "@aibast-agents-library",
     "category": "b2b_sales",
     "tier": "verified",
-    "downloads": 8,
+    "downloads": 9,
     "upvotes": 1,
     "acquisitions": 0,
     "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/19",
@@ -2403,7 +2655,7 @@
     "publisher": "@aibast-agents-library",
     "category": "b2b_sales",
     "tier": "verified",
-    "downloads": 8,
+    "downloads": 9,
     "upvotes": 1,
     "acquisitions": 0,
     "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/19",
@@ -2426,7 +2678,7 @@
     "path": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack",
     "agents": 9,
     "lines": 4074,
-    "downloads": 35
+    "downloads": 36
    },
    {
     "name": "deal_progression",
@@ -2492,6 +2744,15 @@
     "downloads": 4
    },
    {
+    "name": "clinical_notes_summarizer",
+    "display_name": "Clinical Notes Summarizer",
+    "vertical": "healthcare",
+    "path": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack",
+    "agents": 1,
+    "lines": 470,
+    "downloads": 4
+   },
+   {
     "name": "contract_risk_review",
     "display_name": "Contract Risk Review",
     "vertical": "professional_services",
@@ -2507,6 +2768,15 @@
     "path": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack",
     "agents": 1,
     "lines": 637,
+    "downloads": 4
+   },
+   {
+    "name": "customer_onboarding_fs",
+    "display_name": "Customer Onboarding Fs",
+    "vertical": "financial_services",
+    "path": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack",
+    "agents": 1,
+    "lines": 667,
     "downloads": 4
    },
    {
@@ -2573,15 +2843,6 @@
     "downloads": 3
    },
    {
-    "name": "clinical_notes_summarizer",
-    "display_name": "Clinical Notes Summarizer",
-    "vertical": "healthcare",
-    "path": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack",
-    "agents": 1,
-    "lines": 470,
-    "downloads": 3
-   },
-   {
     "name": "cross_selling_opportunities",
     "display_name": "Cross Selling Opportunities",
     "vertical": "general",
@@ -2589,28 +2850,19 @@
     "agents": 1,
     "lines": 540,
     "downloads": 3
-   },
-   {
-    "name": "customer_onboarding_fs",
-    "display_name": "Customer Onboarding Fs",
-    "vertical": "financial_services",
-    "path": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack",
-    "agents": 1,
-    "lines": 667,
-    "downloads": 3
    }
   ],
   "categories": [
    {
     "name": "b2b_sales",
     "agents": 23,
-    "downloads": 78,
+    "downloads": 79,
     "lines": 10753
    },
    {
     "name": "financial_services",
     "agents": 13,
-    "downloads": 34,
+    "downloads": 35,
     "lines": 8144
    },
    {
@@ -2652,7 +2904,7 @@
    {
     "name": "healthcare",
     "agents": 4,
-    "downloads": 13,
+    "downloads": 14,
     "lines": 1909
    },
    {
@@ -2678,13 +2930,13 @@
    {
     "name": "b2b_sales",
     "agents": 23,
-    "downloads": 78,
+    "downloads": 79,
     "stacks": 5
    },
    {
     "name": "financial_services",
     "agents": 13,
-    "downloads": 34,
+    "downloads": 35,
     "stacks": 13
    },
    {
@@ -2726,7 +2978,7 @@
    {
     "name": "healthcare",
     "agents": 4,
-    "downloads": 13,
+    "downloads": 14,
     "stacks": 4
    },
    {
@@ -2757,7 +3009,7 @@
   {
    "name": "@aibast-agents-library/account-intelligence",
    "display_name": "Account Intelligence Agent",
-   "downloads": 8,
+   "downloads": 9,
    "upvotes": 1,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/19",
@@ -2978,7 +3230,7 @@
   {
    "name": "@aibast-agents-library/clinical-notes-summarizer",
    "display_name": "Clinical Notes Summarizer Agent",
-   "downloads": 3,
+   "downloads": 4,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/47",
@@ -3225,7 +3477,7 @@
   {
    "name": "@aibast-agents-library/fs-customer-onboarding",
    "display_name": "Customer Onboarding Agent",
-   "downloads": 3,
+   "downloads": 4,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/81",
@@ -3875,7 +4127,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "partial",
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -3902,7 +4154,7 @@
  },
  "agent_upvote_coverage": {
   "status": "partial",
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3919,7 +4171,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "partial",
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -3937,12 +4189,12 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "carried_forward": false,
   "totals": {
    "files": 9365,
    "observed_files": 9365,
-   "downloads": 16,
+   "downloads": 115,
    "by_kind": {
     "agent": {
      "files": 86,
@@ -3952,7 +4204,7 @@
     "skill": {
      "files": 491,
      "observed_files": 491,
-     "downloads": 0
+     "downloads": 99
     },
     "workshop": {
      "files": 7969,
@@ -8437,24 +8689,24 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": null,
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "skills/aibast-easy-mode-copilot/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": null,
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 2,
+    "status": "observed"
    },
    {
     "path": "skills/aibast-staging-ring-test/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": null,
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solution.html",
@@ -8829,48 +9081,48 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "account-intelligence",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/account-intelligence/manual/skills/competitive-intel/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "account-intelligence",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/account-intelligence/manual/skills/executive-briefing/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "account-intelligence",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 2,
+    "status": "observed"
    },
    {
     "path": "solutions/account-intelligence/manual/skills/risk-assessment/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "account-intelligence",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/account-intelligence/manual/skills/stakeholder-map/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "account-intelligence",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/account-intelligence/manual/skills/value-messaging/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "account-intelligence",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/account-intelligence/quest.html",
@@ -9773,8 +10025,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ai-customer-assistant",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ai-customer-assistant/manual/skills/aibast_follow-up-plan_07/SKILL.md",
@@ -9789,8 +10041,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ai-customer-assistant",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ai-customer-assistant/manual/skills/aibast_interaction-summary_08/SKILL.md",
@@ -9805,8 +10057,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ai-customer-assistant",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ai-customer-assistant/manual/skills/aibast_prepare-actions_06/SKILL.md",
@@ -9829,8 +10081,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ai-customer-assistant",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ai-customer-assistant/quest.html",
@@ -10837,32 +11089,32 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ask-hr",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ask-hr/manual/skills/aibast_health-insurance_04/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ask-hr",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ask-hr/manual/skills/aibast_leave-balance_01/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ask-hr",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ask-hr/manual/skills/aibast_parental-leave_03/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ask-hr",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ask-hr/manual/skills/aibast_reminders_08/SKILL.md",
@@ -10877,16 +11129,16 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ask-hr",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ask-hr/manual/skills/aibast_submit-time-off_02/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "ask-hr",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/ask-hr/manual/skills/aibast_time-off-check_07/SKILL.md",
@@ -15629,8 +15881,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "building-permit-processing",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/building-permit-processing/manual/skills/aibast_permit-issuance_bp12/SKILL.md",
@@ -35029,8 +35281,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "fs-customer-onboarding",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/fs-customer-onboarding/manual/skills/aibast_initiate-onboarding_05/SKILL.md",
@@ -35045,8 +35297,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "fs-customer-onboarding",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/fs-customer-onboarding/manual/skills/aibast_onboarding-status_04/SKILL.md",
@@ -51893,8 +52145,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "portfolio-rebalancing",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/portfolio-rebalancing/manual/skills/aibast_portfolio-analysis_01/SKILL.md",
@@ -51909,16 +52161,16 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "portfolio-rebalancing",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/portfolio-rebalancing/manual/skills/aibast_retirement-scenario_05/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "portfolio-rebalancing",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/portfolio-rebalancing/manual/skills/aibast_risk-comparison_07/SKILL.md",
@@ -51933,16 +52185,16 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "portfolio-rebalancing",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/portfolio-rebalancing/manual/skills/aibast_tax-loss-harvest_04/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "portfolio-rebalancing",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/portfolio-rebalancing/quest.html",
@@ -53197,8 +53449,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "prior-authorization",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/prior-authorization/manual/skills/approval-outlook/SKILL.md",
@@ -53213,8 +53465,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "prior-authorization",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/prior-authorization/manual/skills/denial-review/SKILL.md",
@@ -53253,8 +53505,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "prior-authorization",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/prior-authorization/manual/skills/status-summary/SKILL.md",
@@ -54765,8 +55017,8 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "procurement-agent",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 2,
+    "status": "observed"
    },
    {
     "path": "solutions/procurement-agent/manual/skills/aibast_budget-impact_07/SKILL.md",
@@ -54805,24 +55057,24 @@
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "procurement-agent",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "procurement-agent",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": "procurement-agent",
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": 3,
+    "status": "observed"
    },
    {
     "path": "solutions/procurement-agent/quest.html",
@@ -78917,7 +79169,7 @@
    "duplicate_rows": 0,
    "conflicting_duplicates": [],
    "invalid_rows": 1,
-   "unmapped_rows": 5,
+   "unmapped_rows": 8,
    "unscoped_observed_files": 0
   },
   "caveat": "Only jsDelivr per-file observations are measurable. raw.githubusercontent.com, GitHub Pages, and direct GitHub downloads do not expose public per-file counters here."
@@ -78925,10 +79177,10 @@
  "workshops": {
   "totals": {
    "workshops": 65,
-   "usage_events": 9,
+   "usage_events": 100,
    "views_14d": 9,
    "view_uniques_14d": 6,
-   "file_downloads": 0,
+   "file_downloads": 91,
    "bundle_downloads": 0,
    "feedback_reports": 0,
    "feedback_open": 0,
@@ -78937,11 +79189,96 @@
   },
   "source_totals": {
    "views_14d": 9,
-   "file_downloads": 0,
+   "file_downloads": 91,
    "bundle_downloads": 0,
    "feedback_reports": 0
   },
   "rows": [
+   {
+    "catalog_key": "@aibast-agents-library/ask-hr",
+    "agent_name": "@aibast-agents-library/ask-hr",
+    "slug": "ask-hr",
+    "display_name": "Ask HR Agent",
+    "quest_url": "solutions/ask-hr/quest.html",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 18,
+    "bundle_downloads": 0,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 18
+   },
+   {
+    "catalog_key": "@aibast-agents-library/account-intelligence",
+    "agent_name": "@aibast-agents-library/account-intelligence",
+    "slug": "account-intelligence",
+    "display_name": "Account Intelligence Agent",
+    "quest_url": "solutions/account-intelligence/quest.html",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 17,
+    "bundle_downloads": 0,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 1,
+    "usage_events": 17
+   },
+   {
+    "catalog_key": "@aibast-agents-library/portfolio-rebalancing",
+    "agent_name": "@aibast-agents-library/portfolio-rebalancing",
+    "slug": "portfolio-rebalancing",
+    "display_name": "Portfolio Rebalancing Agent",
+    "quest_url": "solutions/portfolio-rebalancing/quest.html",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 15,
+    "bundle_downloads": 0,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 15
+   },
+   {
+    "catalog_key": "@aibast-agents-library/ai-customer-assistant",
+    "agent_name": "@aibast-agents-library/ai-customer-assistant",
+    "slug": "ai-customer-assistant",
+    "display_name": "Customer Escalations Agent",
+    "quest_url": "solutions/ai-customer-assistant/quest.html",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 12,
+    "bundle_downloads": 0,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 12
+   },
+   {
+    "catalog_key": "@aibast-agents-library/procurement-agent",
+    "agent_name": "@aibast-agents-library/procurement-agent",
+    "slug": "procurement-agent",
+    "display_name": "Procurement Agent",
+    "quest_url": "solutions/procurement-agent/quest.html",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 11,
+    "bundle_downloads": 0,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 11
+   },
    {
     "catalog_key": "@aibast-agents-library/production-line-optimization",
     "agent_name": "@aibast-agents-library/production-line-optimization",
@@ -78960,38 +79297,55 @@
     "usage_events": 9
    },
    {
-    "catalog_key": "@aibast-agents-library/account-intelligence",
-    "agent_name": "@aibast-agents-library/account-intelligence",
-    "slug": "account-intelligence",
-    "display_name": "Account Intelligence Agent",
-    "quest_url": "solutions/account-intelligence/quest.html",
+    "catalog_key": "@aibast-agents-library/prior-authorization",
+    "agent_name": "@aibast-agents-library/prior-authorization",
+    "slug": "prior-authorization",
+    "display_name": "Prior Authorization Agent",
+    "quest_url": "solutions/prior-authorization/quest.html",
     "views_14d": null,
     "view_uniques_14d": null,
     "view_observed": false,
-    "file_downloads": 0,
-    "bundle_downloads": 0,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 1,
-    "usage_events": 0
-   },
-   {
-    "catalog_key": "@aibast-agents-library/ask-hr",
-    "agent_name": "@aibast-agents-library/ask-hr",
-    "slug": "ask-hr",
-    "display_name": "Ask HR Agent",
-    "quest_url": "solutions/ask-hr/quest.html",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 0,
+    "file_downloads": 9,
     "bundle_downloads": 0,
     "feedback_reports": 0,
     "feedback_open": 0,
     "feedback_closed": 0,
     "agent_upvotes": 0,
-    "usage_events": 0
+    "usage_events": 9
+   },
+   {
+    "catalog_key": "@aibast-agents-library/fs-customer-onboarding",
+    "agent_name": "@aibast-agents-library/fs-customer-onboarding",
+    "slug": "fs-customer-onboarding",
+    "display_name": "Customer Onboarding Agent",
+    "quest_url": "solutions/fs-customer-onboarding/quest.html",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 6,
+    "bundle_downloads": 0,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 6
+   },
+   {
+    "catalog_key": "@aibast-agents-library/building-permit-processing",
+    "agent_name": "@aibast-agents-library/building-permit-processing",
+    "slug": "building-permit-processing",
+    "display_name": "Building Permit Processing Agent",
+    "quest_url": "solutions/building-permit-processing/quest.html",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 3,
+    "bundle_downloads": 0,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 1,
+    "usage_events": 3
    },
    {
     "catalog_key": "@aibast-agents-library/asset-maintenance-forecast",
@@ -79059,23 +79413,6 @@
     "feedback_open": 0,
     "feedback_closed": 0,
     "agent_upvotes": null,
-    "usage_events": 0
-   },
-   {
-    "catalog_key": "@aibast-agents-library/building-permit-processing",
-    "agent_name": "@aibast-agents-library/building-permit-processing",
-    "slug": "building-permit-processing",
-    "display_name": "Building Permit Processing Agent",
-    "quest_url": "solutions/building-permit-processing/quest.html",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 0,
-    "bundle_downloads": 0,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 1,
     "usage_events": 0
    },
    {
@@ -79198,45 +79535,11 @@
     "usage_events": 0
    },
    {
-    "catalog_key": "@aibast-agents-library/ai-customer-assistant",
-    "agent_name": "@aibast-agents-library/ai-customer-assistant",
-    "slug": "ai-customer-assistant",
-    "display_name": "Customer Escalations Agent",
-    "quest_url": "solutions/ai-customer-assistant/quest.html",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 0,
-    "bundle_downloads": 0,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 0
-   },
-   {
     "catalog_key": "@aibast-agents-library/customer-loyalty-rewards",
     "agent_name": "@aibast-agents-library/customer-loyalty-rewards",
     "slug": "customer-loyalty-rewards",
     "display_name": "Customer Loyalty and Rewards Agent",
     "quest_url": "solutions/customer-loyalty-rewards/quest.html",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 0,
-    "bundle_downloads": 0,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 0
-   },
-   {
-    "catalog_key": "@aibast-agents-library/fs-customer-onboarding",
-    "agent_name": "@aibast-agents-library/fs-customer-onboarding",
-    "slug": "fs-customer-onboarding",
-    "display_name": "Customer Onboarding Agent",
-    "quest_url": "solutions/fs-customer-onboarding/quest.html",
     "views_14d": null,
     "view_uniques_14d": null,
     "view_observed": false,
@@ -79640,57 +79943,6 @@
     "usage_events": 0
    },
    {
-    "catalog_key": "@aibast-agents-library/portfolio-rebalancing",
-    "agent_name": "@aibast-agents-library/portfolio-rebalancing",
-    "slug": "portfolio-rebalancing",
-    "display_name": "Portfolio Rebalancing Agent",
-    "quest_url": "solutions/portfolio-rebalancing/quest.html",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 0,
-    "bundle_downloads": 0,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 0
-   },
-   {
-    "catalog_key": "@aibast-agents-library/prior-authorization",
-    "agent_name": "@aibast-agents-library/prior-authorization",
-    "slug": "prior-authorization",
-    "display_name": "Prior Authorization Agent",
-    "quest_url": "solutions/prior-authorization/quest.html",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 0,
-    "bundle_downloads": 0,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 0
-   },
-   {
-    "catalog_key": "@aibast-agents-library/procurement-agent",
-    "agent_name": "@aibast-agents-library/procurement-agent",
-    "slug": "procurement-agent",
-    "display_name": "Procurement Agent",
-    "quest_url": "solutions/procurement-agent/quest.html",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 0,
-    "bundle_downloads": 0,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 0
-   },
-   {
     "catalog_key": "@aibast-agents-library/product-feedback-synthesizer",
     "agent_name": "@aibast-agents-library/product-feedback-synthesizer",
     "slug": "product-feedback-synthesizer",
@@ -80054,7 +80306,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-10-13T05:44:00Z",
+    "as_of": "2026-10-14T05:23:27Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -80068,20 +80320,20 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-10-13T05:44:00Z",
+    "as_of": "2026-10-14T05:23:27Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
      "duplicate_rows": 0,
      "conflicting_duplicates": [],
      "invalid_rows": 1,
-     "unmapped_rows": 5
+     "unmapped_rows": 8
     },
     "scope": "Validated jsDelivr observations from the canonical tracked-file ledger. Every file mapped to a workshop contributes once; source bundles are partitioned from non-bundle files. Package totals are not added. Raw GitHub, direct GitHub Pages, and unattributed releases are uncounted."
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-10-13T05:44:00Z",
+    "as_of": "2026-10-14T05:23:27Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -80093,7 +80345,7 @@
    },
    "agent_upvotes": {
     "status": "partial",
-    "as_of": "2026-10-13T05:44:00Z",
+    "as_of": "2026-10-14T05:23:27Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -80124,13 +80376,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -81671,7 +81923,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -82356,7 +82608,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-10-13T05:44:00Z",
+  "as_of": "2026-10-14T05:23:27Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -82368,8 +82620,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 243,
-   "combined_agent_distribution_fetch_events": 243,
+   "aibast_direct_agent_fetches": 246,
+   "combined_agent_distribution_fetch_events": 246,
    "distribution_entries": 86,
    "logical_agents": 86,
    "overlap_agents": 0
@@ -82382,8 +82634,8 @@
     "channels": [
      "aibast"
     ],
-    "aibast_direct_agent_fetches": 8,
-    "combined_distribution_fetch_events": 8
+    "aibast_direct_agent_fetches": 9,
+    "combined_distribution_fetch_events": 9
    },
    {
     "logical_name": "@aibast-agents-library/ask-hr",
@@ -82486,6 +82738,16 @@
     "combined_distribution_fetch_events": 4
    },
    {
+    "logical_name": "@aibast-agents-library/clinical-notes-summarizer",
+    "display_name": "Clinical Notes Summarizer Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 4,
+    "combined_distribution_fetch_events": 4
+   },
+   {
     "logical_name": "@aibast-agents-library/contract-risk-review",
     "display_name": "Contract Risk Review Agent",
     "publisher": "@aibast-agents-library",
@@ -82508,6 +82770,16 @@
    {
     "logical_name": "@aibast-agents-library/field-service-dispatch",
     "display_name": "Field Service Dispatch Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 4,
+    "combined_distribution_fetch_events": 4
+   },
+   {
+    "logical_name": "@aibast-agents-library/fs-customer-onboarding",
+    "display_name": "Customer Onboarding Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -82578,16 +82850,6 @@
    {
     "logical_name": "@aibast-agents-library/client-health-score",
     "display_name": "Client Health Score Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 3,
-    "combined_distribution_fetch_events": 3
-   },
-   {
-    "logical_name": "@aibast-agents-library/clinical-notes-summarizer",
-    "display_name": "Clinical Notes Summarizer Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -82718,16 +82980,6 @@
    {
     "logical_name": "@aibast-agents-library/fraud-detection-alert",
     "display_name": "Fraud Detection and Alert Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 3,
-    "combined_distribution_fetch_events": 3
-   },
-   {
-    "logical_name": "@aibast-agents-library/fs-customer-onboarding",
-    "display_name": "Customer Onboarding Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
