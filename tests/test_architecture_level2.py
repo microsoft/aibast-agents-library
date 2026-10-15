@@ -83,7 +83,8 @@ def test_level2_builder_reproduces_committed_catalog(tmp_path):
 
 def test_library_renders_level1_then_level2_architecture():
     text = LIBRARY.read_text(encoding="utf-8")
-    assert "state/architecture_level2.json${stamp}" in text
+    assert 'getJSON(["state/architecture_level2.json"' in text
+    assert "async function loadArchitectureLevel2()" in text
     assert "function architectureLevel2HTML(agentName)" in text
     assert "<span>L1</span>" in text
     assert "<span>L2</span>" in text

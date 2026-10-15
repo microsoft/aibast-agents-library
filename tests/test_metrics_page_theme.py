@@ -139,7 +139,7 @@ const $ = id => document.getElementById(id);
 let M = null;
 async function getJSON(paths) {
   for (const p of paths) {
-    const response = await fetch(p, {cache: 'no-store'});
+    const response = await fetch(p);
     if (response.ok) return response.json();
   }
   return null;
@@ -153,7 +153,7 @@ async function load() {
 async function liveTopUp() {
   $('stamp-mode').textContent = 'Checking live sources';
   const [repo, cdn] = await Promise.all([
-    getJSON([`https://api.github.com/repos/${OWNER}/${REPO}`]),
+    getJSON(['api/v1/github/repo.json']),
     getJSON([`https://data.jsdelivr.com/v1/stats/packages/gh/${OWNER}/${REPO}?period=year`])
   ]);
   if (repo) {
@@ -563,7 +563,7 @@ def test_missing_function_fails_closed():
 
 def test_get_json_fetch_behavior_fails_closed():
     html = valid_fixture().replace(
-        "const response = await fetch(p, {cache: 'no-store'});",
+        "const response = await fetch(p);",
         "const response = {ok: true, json: () => ({})};",
     )
     result = audit_html(html, CONTRACT)

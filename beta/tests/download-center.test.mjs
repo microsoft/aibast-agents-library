@@ -1281,3 +1281,62 @@ test("architecture detection uses explicit high-entropy data without guessing Ap
     null,
   );
 });
+
+function snapshotRelease() {
+  const packaged = asset("Frontier-1.2.3-win-x64.exe");
+  const manifest = manifestFor([packaged]);
+  return release({ assets: [packaged, manifestAsset(manifest)], body: manifestBody(manifest) });
+}
+
+function snapshotFetch(calls, { releases, commits, manifest }) {
+  return async (url) => {
+    calls.push(url);
+    if (url.endsWith("/api/v1/github/releases.json")) return jsonResponse(releases);
+    if (url.endsWith("/api/v1/github/release-commits.json")) return jsonResponse(commits);
+    if (url.includes("-binary-manifest.json")) return manifestResponse(manifest);
+    if (url.startsWith("https://api.github.com/repos/") && url.includes("/commits/")) {
+      return jsonResponse({ sha: commit });
+    }
+    if (url.startsWith("https://api.github.com/repos/")) return jsonResponse(releases);
+    return jsonResponse({}, { status: 404 });
+  };
+}
+
+const snapshotBase = "https://octo.github.io/frontier/api/v1/github/";
+
+test("release discovery reads the same-origin snapshot and makes no GitHub API call", async () => {
+  const selected = snapshotRelease();
+  const manifest = manifestFor([selected.assets[0]]);
+  const calls = [];
+  const result = await discoverRelease({
+    repository,
+    snapshotBase,
+    fetchImpl: snapshotFetch(calls, {
+      releases: [selected],
+      commits: { repository, commits: { [tag]: { sha: commit } } },
+      manifest,
+    }),
+  });
+  assert.equal(result.tag, tag);
+  assert.equal(result.commit, commit);
+  assert.equal(result.binaryAvailability.available, true);
+  assert.deepEqual(calls.filter((url) => url.includes("api.github.com")), []);
+});
+
+test("a snapshot for another repository or without the release falls back to the live API", async () => {
+  const selected = snapshotRelease();
+  const manifest = manifestFor([selected.assets[0]]);
+  for (const commits of [
+    { repository: "someone/else", commits: { [tag]: { sha: commit } } },
+    { repository, commits: {} },
+  ]) {
+    const calls = [];
+    const result = await discoverRelease({
+      repository,
+      snapshotBase,
+      fetchImpl: snapshotFetch(calls, { releases: [selected], commits, manifest }),
+    });
+    assert.equal(result.commit, commit);
+    assert.ok(calls.some((url) => url === `https://api.github.com/repos/${repository}/releases?per_page=100`));
+  }
+});
