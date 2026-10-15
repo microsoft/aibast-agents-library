@@ -384,7 +384,8 @@ async function init() {
               sols.find(s => s.sample_output) || sols[0];
   const agent = (reg?.agents || []).find(a => a.name === sol.repo_agent);
 
-  if (sol.sample_output) SAMPLE = await getJSON([sol.sample_output, SITE + sol.sample_output]);
+  // samples/ is not part of the Pages artifact; the raw file is the only copy, so it stays the source here.
+  if (sol.sample_output) SAMPLE = await getJSON([RAW + '/' + sol.sample_output]);
   render(sol, agent, sols);
 }
 
