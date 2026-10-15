@@ -94,6 +94,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Snapshot GitHub data for the artifact
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/snapshot_github_data.py --out "${{ runner.temp }}/snapshot" --repository "${{ github.repository }}"
+
       - name: Build slim Pages artifact
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -105,12 +110,8 @@ jobs:
           --repo "${{ github.event.repository.name }}"
           --ref "${{ github.sha }}"
           --ring-branch "${{ github.ref_name }}"
+          --overlay "${{ runner.temp }}/snapshot"
           --check-links
-
-      - name: Snapshot GitHub data into the artifact
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: python scripts/snapshot_github_data.py --out _site --repository "${{ github.repository }}"
 
       - name: Run Pages artifact tests
         env:
