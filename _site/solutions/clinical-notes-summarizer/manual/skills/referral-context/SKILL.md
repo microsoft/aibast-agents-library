@@ -1,0 +1,30 @@
+---
+name: clinical-notes-summarizer-referral-context
+description: Reproduce the deterministic Clinical Notes Agent — referral context workflow from packaged synthetic evidence.
+---
+<!-- bic:source=blank -->
+# Clinical Notes Agent — referral context
+
+## Locked persona prompt
+
+`What referral context is recorded for SYN-ENC-001, and what action has not occurred?`
+
+Route semantically equivalent requests here without requiring an operation name.
+
+## Source
+
+Use both packaged knowledge files. Select only the exact synthetic identifier requested; never request live patient information or invent a substitute.
+
+## Required output contract
+
+`# Referral Context Extract`; exact Orthopedics draft context, no-referral-action line, and authorized review line.
+
+Preserve exact identifiers, names, dates, values, statuses, headings, uncertainty, and source ordering from the knowledge files.
+
+## Review boundary
+
+This is read-only synthetic evidence. Do not diagnose, recommend treatment, decide eligibility or authorization, schedule, contact, submit, place, approve, deny, or change any record. Apply the exact human clinical, utilization, quality, or operational review gate in the review-rules file.
+
+## Fallback
+
+If the identifier or evidence is absent, say what is missing and list the known synthetic identifiers. Do not substitute another record.

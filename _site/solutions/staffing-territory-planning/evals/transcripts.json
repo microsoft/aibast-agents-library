@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:44:35.611260+00:00",
+  "solution": "@aibast-agents-library/staffing-territory-planning",
+  "onepager": "65. Staffing Territory Planning Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "StaffingTerritoryPlanningAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/professional_services_stacks/staffing_territory_planning_stack/staffing_territory_planning_agent.py",
+      "sha256": "b60864abd74fe4ec9f498528c18b4b6dada06c3aa805de22246dee6fa0fe6a84"
+    }
+  ],
+  "case_file": "tests/demo_cases/staffing-territory-planning.json",
+  "case_file_sha256": "6321805d6c18c7d6ae5b2b78f3fedcd9f892f77baae36a81ea78c4b03f2e2bae",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "STP-01",
+      "persona": "Regional Sales Director",
+      "onepager_promise": "Summarizes the territory's spend, revenue, share and recruiter coverage by metro in one view",
+      "prompt": "Give me a snapshot of my North Valley territory.",
+      "assistant_response": "Here's your North Valley snapshot (trailing 12 months):\n\n| Metro | Addressable spend | Our revenue | Share | Recruiters | Clients |\n|---|---|---|---|---|---|\n| Harbor City | $115.0M | $10.6M | 9.2% | 9 | 64 |\n| Millbrook | $52.0M | $6.2M | 11.9% | 5 | 38 |\n| Granite Ridge | $46.0M | $1.4M | 3.0% | 1 | 9 |\n| Ashford Junction | $28.0M | $3.2M | 11.4% | 2 | 17 |\n| **Total** | **$241.0M** | **$21.4M** | **8.9%** | **17** | **128** |\n\n**Key flag:** Granite Ridge has $46.0M in addressable spend but just 1 recruiter \u2014 spend-per-recruiter there is 3x+ the territory average, and penetration is lowest (3.0%). That's your biggest growth/understaffing signal.\n\nWant me to pull up the market sizing or coverage gaps for Granite Ridge specifically?",
+      "agent_logs": "[StaffingTerritoryPlanningAgent] **Territory Snapshot: Contoso Staffing North Valley territory**\n\nPrepared for Dana Whitfield, regional sales director | Data: trailing 12 months to June 30\n\n| Metro | Addressable spend | Our revenue | Our share | Recruiters | Spend per recruiter | Active clients |\n|---|---|---|---|---|---|---|\n| Harbor City | $115.0M | $10.6M | 9.2% | 9 | $12.8M | 64 |\n| Millbrook | $52.0M | $6.2M | 11.9% | 5 | $10.4M | 38 |\n| Granite Ridge | $46.0M | $1.4M | 3.0% | 1 | $46.0M | 9 |\n| Ashford Junction | $28.0M | $3.2M | 11.4% | 2 | $14.0M | 17 |\n| **Territory** | **$241.0M** | **$21.4M** | **8.9%** | **17** | **$14.2M** | **128** |\n\n**Read:** Granite Ridge carries $46.0M of spend with 1 recruiter, more than three times the territory's spend per recruiter.\n\n**Next step:** size the Granite Ridge market, then review coverage gaps.\n\nSynthetic planning snapshot only. This agent does not change headcount, quotas, account assignments or CRM records; the plan is a draft for sales leadership to decide.\n\nSource: [Synthetic Territory + Labor Market Snapshot]\nAgents: StaffingTerritoryPlanningAgent",
+      "expected_agent": "StaffingTerritoryPlanningAgent",
+      "must_include": [
+        "$241.0M",
+        "Granite Ridge",
+        "Spend per recruiter"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "STP-02",
+      "persona": "Regional Sales Director",
+      "onepager_promise": "Sizes the addressable market by service line for the territory or a single metro",
+      "prompt": "How big is the staffing market in Granite Ridge?",
+      "assistant_response": "Granite Ridge's staffing market: **$46M total addressable spend**, with Contoso capturing just **$1.4M (3.0% share)**.\n\nBreakdown:\n- **Light Industrial**: $18.0M market, only 4.4% captured \u2192 **$17.2M open** (biggest opportunity)\n- **IT and Engineering**: $12.0M market, **0% share**, fully open\n- **Healthcare Support**: $9.0M market, **0% share**, fully open\n- **Office and Admin**: $7.0M market, best relative share at 8.6%\n\nBottom line: $44.6M of open spend sitting on the table, with IT/Engineering and Healthcare Support completely unaddressed. Want me to pull coverage gaps or competitive landscape for this metro next?",
+      "agent_logs": "[StaffingTerritoryPlanningAgent] **Market Sizing: Granite Ridge**\n\n| Service line | Addressable spend | Our revenue | Our share | Open spend |\n|---|---|---|---|---|\n| Light Industrial | $18.0M | $0.8M | 4.4% | $17.2M |\n| Office and Admin | $7.0M | $0.6M | 8.6% | $6.4M |\n| IT and Engineering | $12.0M | $0.0M | 0.0% | $12.0M |\n| Healthcare Support | $9.0M | $0.0M | 0.0% | $9.0M |\n| **Total** | **$46.0M** | **$1.4M** | **3.0%** | **$44.6M** |\n\n**Largest open spend:** Light Industrial ($17.2M).\n\nAddressable spend is the synthetic annual temporary-labor spend; open spend is addressable spend not yet won by Contoso Staffing.\n\nSynthetic planning snapshot only. This agent does not change headcount, quotas, account assignments or CRM records; the plan is a draft for sales leadership to decide.\n\nSource: [Synthetic Territory + Labor Market Snapshot]\nAgents: StaffingTerritoryPlanningAgent",
+      "expected_agent": "StaffingTerritoryPlanningAgent",
+      "must_include": [
+        "Market Sizing: Granite Ridge",
+        "$44.6M",
+        "Largest open spend"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "STP-03",
+      "persona": "Sales Operations Analyst",
+      "onepager_promise": "Finds the service lines where demand outruns our share and recruiter coverage",
+      "prompt": "Where are our biggest coverage gaps?",
+      "assistant_response": "Your biggest coverage gaps (service lines under 5% share with $9M+ addressable spend):\n\n1. **Harbor City \u2013 IT and Engineering**: $31.0M addressable, only 3.5% share \u2192 $29.9M open\n2. **Granite Ridge \u2013 Light Industrial**: $18.0M addressable, 4.4% share \u2192 $17.2M open\n3. **Harbor City \u2013 Healthcare Support**: $14.0M addressable, 2.9% share \u2192 $13.6M open\n4. **Granite Ridge \u2013 IT and Engineering**: $12.0M addressable, 0% share \u2192 fully open\n5. **Granite Ridge \u2013 Healthcare Support**: $9.0M addressable, 0% share \u2192 fully open\n\nTotal open spend across these gaps: **$81.7M**. Harbor City IT/Engineering and Granite Ridge Light Industrial are the two biggest prizes. Want me to pull the competitive landscape to see who's currently holding that spend?",
+      "agent_logs": "[StaffingTerritoryPlanningAgent] **Coverage Gaps: North Valley territory**\n\nRule: a service line with at least $9.0M addressable spend where our share is under 5%.\n\n| Rank | Metro | Service line | Addressable | Our revenue | Our share | Open spend |\n|---|---|---|---|---|---|---|\n| 1 | Harbor City | IT and Engineering | $31.0M | $1.1M | 3.5% | $29.9M |\n| 2 | Granite Ridge | Light Industrial | $18.0M | $0.8M | 4.4% | $17.2M |\n| 3 | Harbor City | Healthcare Support | $14.0M | $0.4M | 2.9% | $13.6M |\n| 4 | Granite Ridge | IT and Engineering | $12.0M | $0.0M | 0.0% | $12.0M |\n| 5 | Granite Ridge | Healthcare Support | $9.0M | $0.0M | 0.0% | $9.0M |\n\n**5 gaps, $81.7M open spend.** The two largest are IT and Engineering in Harbor City and Light Industrial in Granite Ridge.\n\n**Next step:** check who holds these markets today before deciding where to add recruiters.\n\nSynthetic planning snapshot only. This agent does not change headcount, quotas, account assignments or CRM records; the plan is a draft for sales leadership to decide.\n\nSource: [Synthetic Territory + Labor Market Snapshot]\nAgents: StaffingTerritoryPlanningAgent",
+      "expected_agent": "StaffingTerritoryPlanningAgent",
+      "must_include": [
+        "5 gaps",
+        "$81.7M open spend",
+        "IT and Engineering"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "STP-04",
+      "persona": "Branch Manager",
+      "onepager_promise": "Shows who leads each metro and where we rank against the competition",
+      "prompt": "Who are we up against in each metro?",
+      "assistant_response": "Via the territory planning agent, here's the competitive breakdown:\n\n| Metro | Share leader | Our share | Our rank |\n|---|---|---|---|\n| Harbor City | Fabrikam Workforce (18%) | 9.2% | 3rd of 4 |\n| Millbrook | Northwind Staffing (15%) | 11.9% | 3rd of 4 |\n| Granite Ridge | Fabrikam Workforce (21%) | 3.0% | **last** |\n| Ashford Junction | Northwind Staffing (14%) | 11.4% | 2nd of 4 |\n\n**Key competitors:**\n- **Fabrikam Workforce** \u2014 volume light-industrial, dominant in Harbor City & Granite Ridge\n- **Northwind Staffing** \u2014 office/admin focus, leads Millbrook & Ashford Junction\n- **Litware Talent** \u2014 IT/engineering specialist, strong in Granite Ridge (17% share)\n\nWeakest spot is Granite Ridge \u2014 last place, and we have zero IT revenue there while Litware owns that niche. Want me to pull coverage gaps for that metro?",
+      "agent_logs": "[StaffingTerritoryPlanningAgent] **Competitive Landscape: North Valley territory**\n\n| Metro | Share leader | Contoso Staffing share | Our rank |\n|---|---|---|---|\n| Harbor City | Fabrikam Workforce (18.0%) | 9.2% | 3 of 4 |\n| Millbrook | Northwind Staffing (15.0%) | 11.9% | 3 of 4 |\n| Granite Ridge | Fabrikam Workforce (21.0%) | 3.0% | 4 of 4 |\n| Ashford Junction | Northwind Staffing (14.0%) | 11.4% | 2 of 4 |\n\n**Competitor profiles (synthetic):**\n- Fabrikam Workforce: volume light-industrial player; leads Harbor City and Granite Ridge.\n- Northwind Staffing: strongest in Millbrook and Ashford Junction office and admin.\n- Litware Talent: IT and engineering specialist; 17.0% of Granite Ridge.\n\n**Read:** we rank last in Granite Ridge, where Litware Talent's IT focus meets our zero IT revenue.\n\nSynthetic planning snapshot only. This agent does not change headcount, quotas, account assignments or CRM records; the plan is a draft for sales leadership to decide.\n\nSource: [Synthetic Territory + Labor Market Snapshot]\nAgents: StaffingTerritoryPlanningAgent",
+      "expected_agent": "StaffingTerritoryPlanningAgent",
+      "must_include": [
+        "Fabrikam Workforce",
+        "4 of 4",
+        "Litware Talent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "STP-05",
+      "persona": "Regional Sales Director",
+      "onepager_promise": "Reads job-posting, wage and time-to-fill trends that shape the plan",
+      "prompt": "What labor market trends should I plan around?",
+      "assistant_response": "Here's what to plan around in North Valley:\n\n- **IT & Engineering** is your growth lane but also your bottleneck: postings up 11% YoY, wages up 5.8%, and a 31-day time-to-fill \u2014 nearly 3x slower than Light Industrial. Recruiter capacity here is the real constraint, not demand.\n- **Light Industrial** is steady growth (+6% postings, +4.2% wages) with fast 9-day fills \u2014 reliable, efficient line to keep staffed.\n- **Healthcare Support** is heating up (+8% postings, +4.9% wages, 18-day fill) \u2014 worth watching for added recruiter investment.\n- **Office & Admin** is softening (-3% postings) even as wages creep up slightly \u2014 don't over-invest recruiting effort here.\n\n**Bottom line:** shift recruiter bandwidth toward IT/Engineering and Healthcare Support, keep Light Industrial running lean, and adjust bill rates to reflect rising wages rather than compete on volume in Office/Admin.\n\nWant me to pull coverage gaps or draft a full quarterly plan next?",
+      "agent_logs": "[StaffingTerritoryPlanningAgent] **Labor Trends: North Valley territory**\n\n| Service line | Job postings (YoY) | Median wage (YoY) | Time to fill |\n|---|---|---|---|\n| Light Industrial | +6% | +4.2% | 9 days |\n| Office and Admin | -3% | +2.1% | 12 days |\n| IT and Engineering | +11% | +5.8% | 31 days |\n| Healthcare Support | +8% | +4.9% | 18 days |\n\n**Read:** IT and Engineering postings are up 11% with a 31-day time to fill, the slowest fill and fastest growth; Office and Admin postings are down 3%.\n\n**Planning implication:** recruiter capacity for IT and Engineering is the constraint; bill rates should reflect the 5.8% wage movement.\n\nSynthetic planning snapshot only. This agent does not change headcount, quotas, account assignments or CRM records; the plan is a draft for sales leadership to decide.\n\nSource: [Synthetic Territory + Labor Market Snapshot]\nAgents: StaffingTerritoryPlanningAgent",
+      "expected_agent": "StaffingTerritoryPlanningAgent",
+      "must_include": [
+        "31 days",
+        "+11%",
+        "Planning implication"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "STP-06",
+      "persona": "Regional Sales Director",
+      "onepager_promise": "Drafts the quarterly territory plan with opportunities, risks, recommendations and one priority action",
+      "prompt": "Draft my quarterly territory plan.",
+      "assistant_response": "Drafted your quarterly plan via the Territory Planning agent \u2014 here's the gist:\n\n- **Territory:** $241M addressable, $21.4M ours (8.9% share), 17 recruiters\n- **Biggest opportunities:** Harbor City IT/Engineering ($29.9M open), Granite Ridge Light Industrial ($17.2M), Harbor City Healthcare Support ($13.6M)\n- **Biggest risk:** Granite Ridge is understaffed (1 recruiter for $46M spend) with competitors holding 38% share there\n- **Recommendations:** add 2 IT/Eng recruiters, shift 1 light-industrial recruiter to Granite Ridge, re-price IT/Eng rates before Q3 renewals\n- **Top action:** approve the 2 new reqs this quarter\n\nIt's a draft only \u2014 no headcount, quotas, or CRM records were touched. Want me to pull the coverage gaps or competitive landscape detail behind any of this?",
+      "agent_logs": "[StaffingTerritoryPlanningAgent] **Draft Quarterly Territory Plan: North Valley territory** (draft for sales leadership review)\n\n**Territory snapshot:** $241.0M addressable spend, $21.4M our revenue (8.9% share), 17 recruiters.\n\n**Top 3 opportunities:**\n1. Harbor City IT and Engineering: $29.9M open spend at 3.5% share.\n2. Granite Ridge Light Industrial: $17.2M open spend at 4.4% share.\n3. Harbor City Healthcare Support: $13.6M open spend at 2.9% share.\n\n**Top 2 risks:**\n1. Granite Ridge has 1 recruiter for $46.0M of spend; Fabrikam Workforce and Litware Talent hold 38.0% of it.\n2. Office and Admin postings are down 3%; Harbor City office revenue ($2.9M) is exposed.\n\n**3 recommendations:**\n1. Add 2 IT and Engineering recruiters split across Harbor City and Granite Ridge (31-day time to fill).\n2. Move 1 light-industrial recruiter from Harbor City to Granite Ridge to work its $17.2M open spend.\n3. Re-price IT and Engineering bill rates for the 5.8% wage movement before Q3 renewals.\n\n**Priority action:** approve the 2 IT and Engineering recruiter requisitions this quarter.\n\nStatus: Draft - no headcount, quota or account change was made.\n\nSynthetic planning snapshot only. This agent does not change headcount, quotas, account assignments or CRM records; the plan is a draft for sales leadership to decide.\n\nSource: [Synthetic Territory + Labor Market Snapshot]\nAgents: StaffingTerritoryPlanningAgent",
+      "expected_agent": "StaffingTerritoryPlanningAgent",
+      "must_include": [
+        "Priority action",
+        "Top 3 opportunities",
+        "no headcount, quota or account change was made"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

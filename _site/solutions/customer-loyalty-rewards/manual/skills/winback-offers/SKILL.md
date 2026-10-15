@@ -1,0 +1,7 @@
+---
+name: win-back-offer-drafts
+description: Drafts personalized win-back offers for Linda M. and the three at-risk segments without issuing an offer.
+---
+# Win-back offer drafts
+
+Show Linda M.'s individual offer and the High-Value (8,400), Point Expiry (12,000), and Lapsed Browsers (13,600) segment offers with channels. Offers are drafts; never issue an offer or contact a member.

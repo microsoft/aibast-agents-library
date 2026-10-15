@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T03:55:34.152197Z",
+  "solution": "@aibast-agents-library/build-materials-compliance",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Build Materials Compliance",
+  "schema_name": "aibast_BuildMaterialsCompliance",
+  "bot_id": "85d6bdab-cbd3-4aa2-ba16-1482ad003984",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 9 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "BM-01",
+      "must_include": [
+        "2 new lines and 2 quantity changes",
+        "Riverside Main Replacement",
+        "New this week"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BM-02",
+      "must_include": [
+        "2 newly non-compliant",
+        "Vendor certificate expired 2026-09-30",
+        "final assembly moved to a non-qualifying plant"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BM-03",
+      "must_include": [
+        "GV-08B",
+        "Contoso Pipe & Valve",
+        "certificate current to 2027-03-31"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BM-04",
+      "must_include": [
+        "3 vendors need a certificate renewal",
+        "Adatum Steel",
+        "Expired"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BM-05",
+      "must_include": [
+        "evidence is complete for 1 of 7",
+        "Not ready",
+        "Hillcrest Pump Station"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BM-06",
+      "must_include": [
+        "5 drafts prepared",
+        "Nothing was sent",
+        "Substitution change request"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "engineering-standards-advisor",
+  "agent": "@aibast-agents-library/engineering-standards-advisor",
+  "display_name": "Engineering Standards Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic standards snapshot",
+        "detail": "Four fictional distribution standards with revisions, sections and pages."
+      },
+      {
+        "name": "Vetted quick-reference table",
+        "detail": "Eight fictional vetted rows with value, citation, vetting date and status."
+      },
+      {
+        "name": "Interpretations, reviews and jobs",
+        "detail": "Fictional unvetted interpretations, a review queue, risk weights and two jobs to scope."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Two-tier answering",
+        "detail": "Returns a vetted value when one exists and a labeled, cited interpretation when it does not."
+      },
+      {
+        "name": "Review preparation",
+        "detail": "Builds a draft review request with sections cited, reviewer and target date."
+      },
+      {
+        "name": "Re-vetting detection",
+        "detail": "Flags quick-reference rows whose standard was revised since vetting."
+      },
+      {
+        "name": "Job scoping",
+        "detail": "Sums risk-factor weights into a band and computes crew-days from base and per-unit effort."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file agent exposes six routable operations through local Brainstem chat and API surfaces."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Six skills and two synthetic knowledge files support natural-language preview while the agent stays Draft."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Standards review queue",
+        "detail": "Pending reviews, waiting time against target and rows due for re-vetting."
+      },
+      {
+        "name": "Quick-reference sheet status",
+        "detail": "Rows per standard with vetted and re-vetting counts."
+      },
+      {
+        "name": "Job scope summary",
+        "detail": "Risk score and band, effort estimate, applicable standards and open items."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "EngineeringStandardsAgent portable RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the pilot with six skills and two knowledge files; publishing requires explicit confirmation."
+    },
+    {
+      "name": "Microsoft SharePoint",
+      "detail": "Approved production seam for the standards library and quick-reference tables; not connected."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Documented seam for review requests to standards engineers; the package submits nothing."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every standard, value, citation, review and job is fictional and never for design use."
+    },
+    {
+      "name": "Vetted versus unvetted labeling",
+      "detail": "Every answer states its tier; interpretations are never presented as approved."
+    },
+    {
+      "name": "Engineer authority",
+      "detail": "Only a standards engineer vets interpretations or re-vets rows."
+    },
+    {
+      "name": "No design approval or side effects",
+      "detail": "Never approves a design, changes a standard, submits a review or releases work."
+    }
+  ]
+}

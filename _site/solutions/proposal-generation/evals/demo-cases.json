@@ -1,0 +1,159 @@
+{
+  "schema": "aibast-locked-demo-cases/1.0",
+  "solution": "@aibast-agents-library/proposal-generation",
+  "source_mode": "synthetic",
+  "locked": true,
+  "canonical_capture_contract": "tests/demo_cases/proposal-generation.json",
+  "cases": [
+    {
+      "id": "PG-01",
+      "persona": "Bid Manager",
+      "onepager_bullet": "Perform rapid RFP analysis and requirement extraction to reduce risk and improve accuracy",
+      "prompt": "Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.",
+      "operation": "analyze_rfp",
+      "arguments": {
+        "operation": "analyze_rfp",
+        "data_source": "synthetic",
+        "rfp_name": "Meridian Healthcare"
+      },
+      "must_include": [
+        "RFP Analysis",
+        "Requirements Analysis",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "ProposalGenerationAgent"
+    },
+    {
+      "id": "PG-02",
+      "persona": "Account Executive",
+      "onepager_bullet": "Assemble personalized proposal content and positioning to strengthen differentiation and win probability",
+      "prompt": "Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.",
+      "operation": "executive_summary",
+      "arguments": {
+        "operation": "executive_summary",
+        "data_source": "synthetic",
+        "rfp_name": "Meridian Healthcare"
+      },
+      "must_include": [
+        "Executive Summary",
+        "Personalization Applied",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "ProposalGenerationAgent"
+    },
+    {
+      "id": "PG-03",
+      "persona": "Sales Leader",
+      "onepager_bullet": "Generate branded, professional proposal materials for same-day delivery to shorten sales cycles",
+      "prompt": "Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.",
+      "operation": "solution_pricing",
+      "arguments": {
+        "operation": "solution_pricing",
+        "data_source": "synthetic",
+        "rfp_name": "Meridian Healthcare"
+      },
+      "must_include": [
+        "Solution & Pricing",
+        "Budget Analysis",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "ProposalGenerationAgent"
+    },
+    {
+      "id": "PG-04",
+      "persona": "Bid Manager",
+      "onepager_bullet": "Assemble personalized proposal content and positioning to strengthen differentiation and win probability",
+      "prompt": "Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.",
+      "operation": "references_positioning",
+      "arguments": {
+        "operation": "references_positioning",
+        "data_source": "synthetic",
+        "rfp_name": "Meridian Healthcare"
+      },
+      "must_include": [
+        "References & Competitive Positioning",
+        "Win Theme",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "ProposalGenerationAgent"
+    },
+    {
+      "id": "PG-05",
+      "persona": "Bid Manager",
+      "onepager_bullet": "Generate branded, professional proposal materials for same-day delivery to shorten sales cycles",
+      "prompt": "Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.",
+      "operation": "compile_proposal",
+      "arguments": {
+        "operation": "compile_proposal",
+        "data_source": "synthetic",
+        "rfp_name": "Meridian Healthcare"
+      },
+      "must_include": [
+        "Proposal Package",
+        "Required Human Review Before Delivery",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "ProposalGenerationAgent"
+    },
+    {
+      "id": "PG-06",
+      "persona": "Sales Leader",
+      "onepager_bullet": "Generate branded, professional proposal materials for same-day delivery to shorten sales cycles",
+      "prompt": "Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.",
+      "operation": "delivery_summary",
+      "arguments": {
+        "operation": "delivery_summary",
+        "data_source": "synthetic",
+        "rfp_name": "Meridian Healthcare"
+      },
+      "must_include": [
+        "Delivery Summary",
+        "Human-Governed Next-Step Options",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "ProposalGenerationAgent"
+    }
+  ]
+}

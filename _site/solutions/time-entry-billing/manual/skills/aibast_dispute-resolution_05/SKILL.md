@@ -1,0 +1,9 @@
+---
+name: disputed-hours-evidence-brief
+description: Explains evidence gaps and approval paths for fictional disputes.
+---
+# Disputed-hours evidence brief
+
+For DSP-301 and DSP-302, show the client concern, evidence present, evidence
+missing, and recommended internal approval path. Do not invent narratives,
+alter time, concede charges, or contact a client.

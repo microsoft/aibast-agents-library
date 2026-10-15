@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "procurement-support",
+  "agent": "@aibast-agents-library/procurement-support",
+  "display_name": "Discount Finder Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic discount records",
+        "detail": "Three fictional pricing signals capture suppliers, categories, terms, spend, thresholds, gaps, review dates, and evidence sources."
+      },
+      {
+        "name": "Demand and timing evidence",
+        "detail": "Two facility-demand candidates and a fixed Northstar, MedSupply, and CareTech review sequence ground sourcing-review briefs."
+      },
+      {
+        "name": "Discount Finder rules and skills",
+        "detail": "Two uploaded knowledge files and four operation skills define routing, calculations, validation checks, and commercial guardrails."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Savings-opportunity scan",
+        "detail": "Surfaces DISC-101 through DISC-103 with exact contract evidence, thresholds, and gaps while labeling them review candidates."
+      },
+      {
+        "name": "Dated pricing review",
+        "detail": "Orders renewal, volume-tier, and price-change signals by synthetic review date and identifies evidence to verify before action."
+      },
+      {
+        "name": "Demand-consolidation analysis",
+        "detail": "Compares fragmented facility demand, supplier counts, combined spend, and tradeoffs to identify structured sourcing-review candidates."
+      },
+      {
+        "name": "Purchase-timing sequencing",
+        "detail": "Sequences Northstar, MedSupply, and CareTech reviews with demand, competition, storage, warranty, and cash-flow checks."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversation",
+        "detail": "Procurement managers, category buyers, and finance directors invoke four bounded operations through a Draft conversational agent."
+      },
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "The single-file RAPP agent runs locally through Brainstem chat surfaces using bundled evidence and no customer credentials."
+      },
+      {
+        "name": "Microsoft Teams sourcing review",
+        "detail": "Teams is the curated collaboration surface for an authorized category manager to review evidence and decide approved next steps."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Savings Opportunity Scan",
+        "detail": "Reports opportunity IDs, categories, suppliers, exact terms, thresholds, and gaps, with review-candidate and approval labels."
+      },
+      {
+        "name": "Time-Sensitive Pricing Review",
+        "detail": "Reports synthetic review dates, pricing signals, and source notices that require verification through approved procurement."
+      },
+      {
+        "name": "Demand Consolidation Candidates",
+        "detail": "Reports facilities, current supplier counts, combined spend, review candidates, and sourcing tradeoffs without recommending an award."
+      },
+      {
+        "name": "Purchase Timing Review",
+        "detail": "Reports a sequenced sourcing-review brief with verified-term and alternative checks for an authorized category manager."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "ProcurementSupportAgent RAPP tool",
+      "detail": "Portable Python BasicAgent exposes four deterministic Discount Finder operations over the fixed synthetic evidence snapshot."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes conversational chat, streaming, and health surfaces."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the Draft agent, two uploaded knowledge files, four operation skills, and locked preview validation."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Curated production seam for approved contract and forecast evidence; the packaged solution has no live connection or write action."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Supports human sourcing review after analysis; the agent does not contact suppliers, send notifications, or place purchases."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The deployment environment supplies the model used for natural-language routing and grounded presentation of tool results."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic snapshot",
+      "detail": "Only packaged records and four skills are authoritative; browsing, live pricing, enrichment, and invented commercial facts are forbidden."
+    },
+    {
+      "name": "Explicit four-operation routing",
+      "detail": "Natural-language intent maps only to savings scan, dated pricing, demand consolidation, or purchase-timing review."
+    },
+    {
+      "name": "Deterministic evidence and calculations",
+      "detail": "Locked IDs, dates, categories, evidence sources, and gap formulas make each review output reproducible and traceable."
+    },
+    {
+      "name": "Sourcing-review boundary",
+      "detail": "Outputs stop at review candidates and briefs: no supplier selection or contact, quote action, order, renewal, or spend commitment."
+    },
+    {
+      "name": "Authorized human decision gate",
+      "detail": "An authorized category manager and approved procurement process retain all sourcing, timing, validation, and commercial decisions."
+    },
+    {
+      "name": "Locked four-case validation",
+      "detail": "One persona-language case per operation passed strict Brainstem isolation and Copilot Studio preview with required evidence anchors."
+    },
+    {
+      "name": "Draft and publish separation",
+      "detail": "Validated Copilot Studio artifacts remain unpublished in Draft; production connections and publication require explicit approval."
+    }
+  ]
+}

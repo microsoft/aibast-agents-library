@@ -1,0 +1,105 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/public-correspondence-response",
+  "onepager": "58. Public Correspondence Agent one-pager.pptx",
+  "source_slide_sha256": "93daf5b048182d001f75e002f86525955f0c9a2d5b7341dd40dbbd319e55f955",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+    "implemented_operations": [
+      "inbox_queue",
+      "break_down_enquiry",
+      "find_precedents",
+      "route_and_refer",
+      "draft_response",
+      "library_update"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts, checks or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Triages incoming letters, emails, web forms and phone notes into one prioritized queue",
+      "operations": [
+        "inbox_queue"
+      ],
+      "demo_cases": [
+        "PCR-01"
+      ],
+      "synthetic_evidence": [
+        "4 items waiting",
+        "11 separate questions",
+        "COR-2042"
+      ]
+    },
+    {
+      "advertised_promise": "Breaks multi-part enquiries into separate questions so every part gets answered",
+      "operations": [
+        "break_down_enquiry"
+      ],
+      "demo_cases": [
+        "PCR-02"
+      ],
+      "synthetic_evidence": [
+        "4 separate questions",
+        "Compensation",
+        "Thu 19 Mar 2026"
+      ]
+    },
+    {
+      "advertised_promise": "Finds approved past responses for each question and cites them",
+      "operations": [
+        "find_precedents"
+      ],
+      "demo_cases": [
+        "PCR-03"
+      ],
+      "synthetic_evidence": [
+        "APR-104",
+        "3 of 4 questions covered",
+        "No approved precedent"
+      ]
+    },
+    {
+      "advertised_promise": "Routes unanswered points to the owning team with the exact question to ask",
+      "operations": [
+        "route_and_refer"
+      ],
+      "demo_cases": [
+        "PCR-04"
+      ],
+      "synthetic_evidence": [
+        "Property and Land",
+        "Tue 17 Mar 2026",
+        "No team was contacted"
+      ]
+    },
+    {
+      "advertised_promise": "Drafts a complete, cited reply for officer review, with gaps clearly flagged",
+      "operations": [
+        "draft_response"
+      ],
+      "demo_cases": [
+        "PCR-05"
+      ],
+      "synthetic_evidence": [
+        "DRAFT, NOT SENT",
+        "OFFICER TO DEVELOP",
+        "No email was sent"
+      ]
+    },
+    {
+      "advertised_promise": "Grows the approved-response library so the same question is never referred twice",
+      "operations": [
+        "library_update"
+      ],
+      "demo_cases": [
+        "PCR-06"
+      ],
+      "synthetic_evidence": [
+        "APR-109",
+        "pending knowledge-owner approval",
+        "Nothing was added to the library"
+      ]
+    }
+  ]
+}

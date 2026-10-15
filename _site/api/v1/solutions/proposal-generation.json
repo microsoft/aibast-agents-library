@@ -1,0 +1,154 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/proposal-generation",
+  "slug": "proposal-generation",
+  "name": "Proposal Generation Agent",
+  "headline": "Move from RFP requirements to a reviewable proposal structure",
+  "pitch": "Help bid teams extract requirements, tailor positioning, compare pricing assumptions, and prepare a proposal package outline while preserving legal, pricing, reference, and delivery approvals.",
+  "category": "b2b_sales",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Account Executive",
+    "Sales Leader",
+    "Bid Manager"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams",
+    "Word / PowerPoint"
+  ],
+  "journey_stage": "Create",
+  "why_try": "A bid manager can see how buyer requirements map to evidence and where human review is still required before anything becomes customer ready.",
+  "customer_challenge": "Urgent RFP work is fragmented across requirement analysis, reusable content, pricing, references, and approvals, creating inconsistency and avoidable rework.",
+  "microsoft_ai_story": "Microsoft Copilot Studio guides the proposal workflow. Dynamics 365 Sales contributes opportunity context, SharePoint provides approved response content, Microsoft Word and PowerPoint provide document surfaces, and Microsoft Teams supports bid-team review.",
+  "business_value": [
+    "Improves traceability from stated requirements to draft response content.",
+    "Creates a consistent structure for positioning, pricing review, and supporting evidence.",
+    "Keeps proposal delivery and commercial approvals under authorized human control."
+  ],
+  "business_flow": [
+    "Account executive, sales leader, or bid manager",
+    "Copilot experience",
+    "Proposal Generation Agent",
+    "Synthetic RFP and content evidence",
+    "Authorized proposal review"
+  ],
+  "capabilities": [
+    {
+      "operation": "analyze_rfp",
+      "name": "Analyze Rfp",
+      "purpose": "Extracts and maps requirements to synthetic capability evidence."
+    },
+    {
+      "operation": "executive_summary",
+      "name": "Executive Summary",
+      "purpose": "Drafts buyer-aligned executive positioning for review."
+    },
+    {
+      "operation": "solution_pricing",
+      "name": "Solution Pricing",
+      "purpose": "Compares solution, budget, discount, and margin assumptions without approval."
+    },
+    {
+      "operation": "references_positioning",
+      "name": "References Positioning",
+      "purpose": "Drafts reference and competitor positioning while requiring availability validation."
+    },
+    {
+      "operation": "compile_proposal",
+      "name": "Compile Proposal",
+      "purpose": "Builds a package outline and required human-review checklist."
+    },
+    {
+      "operation": "delivery_summary",
+      "name": "Delivery Summary",
+      "purpose": "Summarizes draft readiness and human-governed next-step options."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Analyze the RFP",
+      "prompt": "Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-analyze-rfp",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Bid Manager",
+        "prompt": "Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.",
+        "answer": "Here's the traceable requirement checklist for **Meridian Healthcare** (RFP-2024-0147, $1.2M, overall fit 95.7%):\n\n| ID | Requirement | Category | Weight | Fit | Evidence |\n|---|---|---|---|---|---|\n| R1 | EHR integration | Technical | 25% | 95% | Native Epic & Cerner connectors, certified |\n| R2 | HIPAA compliance | Compliance | 25% | 100% | SOC 2 Type II + HIPAA certified |\n| R3 | 24/7 support | Support | 15% | 98% | 24/7/365, 15-min response SLA |\n| R4 | 16-week implementation | Delivery | 20% | 92% | 12-week methodology + accelerators |\n| R5 | Training | Training | 15% | 92% | Role-based curriculum with certification |\n\nI also compiled the full draft package (38 pages: exec summary, architecture, implementation plan, pricing $1.18M, 3 references, HIPAA/SOC 2 docs). It still needs **legal review, pricing approval, and branding check** before anything goes to CIO Amanda Foster — nothing's been sent.\n\nWant the delivery readiness summary next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Draft the executive summary",
+      "prompt": "Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-executive-summary",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Executive",
+        "prompt": "Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.",
+        "answer": "Here's the draft executive summary for Meridian Healthcare, personalized to CIO Amanda Foster:\n\n**Key points:**\n- 95.7% match to stated requirements\n- Epic & Cerner EHR integration, SOC 2 + HIPAA compliant\n- 12-week deployment (vs. their 16-week ask), 24/7 support with 15-min SLA\n- Proof point: Memorial Health reference (34% efficiency gain, $2.4M savings)\n- Investment: $1.18M, inclusive of 3 years support + training\n\nThis is a **draft built from synthetic planning evidence** — the names, pricing, requirement IDs, and projections aren't real customer data and haven't been reviewed or approved. No pricing is finalized and nothing has been sent anywhere.\n\nWant me to move on to the solution & pricing section next, or pull references/competitive positioning first?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review pricing assumptions",
+      "prompt": "Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-solution-pricing",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Sales Leader",
+        "prompt": "Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.",
+        "answer": "Here's the draft comparison for Meridian Healthcare — **no pricing approved, nothing final**:\n\n**Plan:** 12 weeks — Foundation (1–4) → Rollout (5–10) → Optimization (11–12), covering infrastructure, deployment, training, and go-live support.\n\n**Pricing snapshot (draft only):**\n| Component | List | Proposed | Savings |\n|---|---|---|---|\n| Software | $681K | $620K | 9% |\n| Implementation | $382K | $340K | 11% |\n| Training/Support | $293K | $220K | 25% |\n| **Total** | **$1.356M** | **$1.18M** | **13%** |\n\n- Fits under the $1.25M budget ceiling with $70K headroom\n- Draft margin shown at 42% (target 40%+)\n\nThis is synthetic planning evidence — an authorized pricing approver still needs to review/approve any actual price, discount, or concession before anything goes out. Want me to pull in references and competitive positioning next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Prepare competitive positioning",
+      "prompt": "Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-references-positioning",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Bid Manager",
+        "prompt": "Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.",
+        "answer": "Here's the reference and positioning package for Meridian Healthcare:\n\n**References** (verify availability before scheduling calls):\n- Memorial Health — 34% efficiency gain, 8 facilities — marked contact-ready\n- Pacific Medical — $2.4M/year savings, 15 facilities — marked contact-ready\n- Summit Healthcare — 12-week go-live, 6 facilities — marked contact-ready\n\n*Note: \"contact-ready\" status is synthetic planning data — confirm each reference is actually willing and available before offering them for a call.*\n\n**Competitive Edge:**\n- Implementation: 12 weeks vs. competitors' 16–20\n- Native Epic integration (no third-party middleware)\n- 15-min support SLA vs. industry's 1–4 hours\n\n**Win Theme:** Speed + Compliance + Support\n\n**Pre-handled objections:**\n- Accelerators cut implementation ~40%\n- Native Epic integration kills middleware costs\n- Fastest support SLA in industry\n\nAll names, figures, and claims are synthetic evidence for drafting — not verified facts, and nothing here has been sent to a customer. Want me to compile the full proposal package next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Outline the proposal package",
+      "prompt": "Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-compile-proposal",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Bid Manager",
+        "prompt": "Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.",
+        "answer": "Here's the outline for the synthetic **Meridian Healthcare** proposal package:\n\n**Package (38 pages, draft):**\n1. Executive Summary (personalized) – 3 pp\n2. Company Overview + Industry Expertise – 4 pp\n3. Solution Architecture + Roadmap – 8 pp\n4. 12-Week Implementation Plan – 5 pp\n5. Pricing + Investment Summary – 4 pp ($1.18M)\n6. Customer References + Case Studies – 6 pp (3 references)\n7. Team Bios – 3 pp\n8. Terms + Conditions – 5 pp\n\nPlus: HIPAA/SOC 2 certs, a 12-slide exec presentation, and a pricing spreadsheet.\n\n**Required human review before delivery:**\n- **Legal** — review terms/conditions\n- **Pricing** — approval from an authorized approver\n- **Branding/editorial** — final check\n- **Requirement coverage** — synthetic fit model shows 95.7%, worth a sanity check against the actual RFP\n\nNothing goes out until a person reviews and sends it — this is a draft only, no approval, submission, or customer contact has happened.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Summarize draft readiness",
+      "prompt": "Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-delivery-summary",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Sales Leader",
+        "prompt": "Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.",
+        "answer": "Here's where the Meridian Healthcare draft stands (all synthetic, read-only):\n\n**Readiness snapshot**\n- Capability fit: 95.7% against the 5 stated requirements\n- Executive summary personalized to CIO Amanda Foster\n- Solution: 12-week implementation plan drafted\n- Pricing: $1.18M, 13% customer savings, 42% margin (above 40% target)\n- References: 3 healthcare examples identified, but availability unconfirmed\n- Compliance docs (HIPAA, SOC 2) attached\n- Synthetic win-probability: 89/100 (competitive position is the weakest factor, 16/25)\n\n**Decisions authorized reviewers need to make next**\n1. Review the draft against the 2-week decision window\n2. Decide whether a seller should request a confirmation meeting\n3. Validate reference availability before offering any customer calls\n4. Decide if executive sponsorship is warranted for this deal\n\nNothing here has been priced, finalized, or sent — it's draft material pending human sign-off. Want me to compile the full proposal package next for a structured review checklist?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fproposal-generation",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/proposal-generation/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/b2b_sales_stacks/proposal_generation_stack/proposal_generation_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Proposal%20Generation%20Agent%22"
+  }
+}

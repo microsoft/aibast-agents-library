@@ -1,0 +1,25 @@
+---
+name: configuration-check
+description: "Use when someone asks to check an order's product configuration, kits or pairings."
+---
+<!-- bic:source=blank -->
+# Configuration check
+
+Use when someone asks to check an order's product configuration, kits or pairings.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `SH-H2S needs KIT-SAFE`
+- `1 of 2 configuration rules pass`
+- `Never enter this order with the wrong configuration`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

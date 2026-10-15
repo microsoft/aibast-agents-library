@@ -1,0 +1,1459 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/license-renewal-expansion",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker, refusal, or visibly different locked case that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, a different locked case is visibly shown, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 44,
+    "reusable": 44,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal Pilot",
+        "Draft",
+        "deal-summary",
+        "negotiation-plan",
+        "competitive-defense",
+        "account-health",
+        "renewal-proposal",
+        "aibast_license-renewal-expansion-synthetic-recor",
+        "aibast_license-renewal-expansion-operating-rules"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 166,
+          "height": 20,
+          "label": "License Renewal Pilot"
+        },
+        {
+          "x": 261,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "deal-summary"
+        },
+        {
+          "x": 1214,
+          "y": 198,
+          "width": 114,
+          "height": 21,
+          "label": "negotiation-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 138,
+          "height": 22,
+          "label": "competitive-defense"
+        },
+        {
+          "x": 1252,
+          "y": 237,
+          "width": 104,
+          "height": 19,
+          "label": "account-health"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 118,
+          "height": 22,
+          "label": "renewal-proposal"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 302,
+          "height": 22,
+          "label": "aibast_license-renewal-expansion-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 303,
+          "height": 22,
+          "label": "aibast_license-renewal-expansion-operating-rules"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-01",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/02-lre-01.jpg",
+      "caption": "LRE-01 · Sales Leadership: Review the bundled synthetic renewal pipeline, risk bands, and preparation checklist without changing CRM or forecast recor",
+      "case_id": "LRE-01",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/02-lre-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Renewal Pipeline",
+        "Draft Renewal Preparation Checklist",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 454,
+          "width": 192,
+          "height": 32,
+          "label": "Renewal Pipeline"
+        },
+        {
+          "x": 286,
+          "y": 1493,
+          "width": 336,
+          "height": 28,
+          "label": "Draft Renewal Preparation Checklist"
+        },
+        {
+          "x": 372,
+          "y": 1526,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-02",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/03-lre-02.jpg",
+      "caption": "LRE-02 · Account Executive: Identify synthetic demand signals and draft packaging options that still require authorized pricing review.",
+      "case_id": "LRE-02",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/03-lre-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Expansion Opportunities",
+        "Draft Packaging Options",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 454,
+          "width": 277,
+          "height": 32,
+          "label": "Expansion Opportunities"
+        },
+        {
+          "x": 287,
+          "y": 2079,
+          "width": 276,
+          "height": 32,
+          "label": "Draft Packaging Options"
+        },
+        {
+          "x": 286,
+          "y": 2388,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-03",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/04-lre-03.jpg",
+      "caption": "LRE-03 · Customer Success Manager: Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?",
+      "case_id": "LRE-03",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/04-lre-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Churn Risk Assessment",
+        "Synthetic Switching-Cost Review",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 454,
+          "width": 262,
+          "height": 27,
+          "label": "Churn Risk Assessment"
+        },
+        {
+          "x": 390,
+          "y": 527,
+          "width": 74,
+          "height": 24,
+          "label": "Synthetic Switching-Cost Review"
+        },
+        {
+          "x": 392,
+          "y": 2764,
+          "width": 74,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-04",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/05-lre-04.jpg",
+      "caption": "LRE-04 · Sales Leadership: Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+      "case_id": "LRE-04",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/05-lre-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Revenue Scenario",
+        "Illustrative midpoint assumption",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 454,
+          "width": 311,
+          "height": 32,
+          "label": "Synthetic Revenue Scenario"
+        },
+        {
+          "x": 298,
+          "y": 968,
+          "width": 266,
+          "height": 26,
+          "label": "Illustrative midpoint assumption"
+        },
+        {
+          "x": 286,
+          "y": 2143,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-05",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/06-lre-05.jpg",
+      "caption": "LRE-05 · Account Executive: GlobalBank license expires in 45 days. Currently 2,000 seats at $1M ARR. Usage shows they need 500 more seats. Competitor ",
+      "case_id": "LRE-05",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/06-lre-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Account Analysis: GlobalBank",
+        "99.4%",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 454,
+          "width": 332,
+          "height": 32,
+          "label": "Account Analysis: GlobalBank"
+        },
+        {
+          "x": 447,
+          "y": 639,
+          "width": 55,
+          "height": 20,
+          "label": "99.4%"
+        },
+        {
+          "x": 286,
+          "y": 1066,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-06",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/07-lre-06.jpg",
+      "caption": "LRE-06 · Customer Success Manager: Yes, show me the competitive defense strategy.",
+      "case_id": "LRE-06",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/07-lre-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Competitive Defense Strategy",
+        "~$500K",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 428,
+          "width": 282,
+          "height": 28,
+          "label": "Competitive Defense Strategy"
+        },
+        {
+          "x": 678,
+          "y": 818,
+          "width": 65,
+          "height": 23,
+          "label": "~$500K"
+        },
+        {
+          "x": 286,
+          "y": 2075,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-07",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/08-lre-07.jpg",
+      "caption": "LRE-07 · Account Executive: Yes, build the renewal and expansion proposal.",
+      "case_id": "LRE-07",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/08-lre-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$787.5K/year",
+        "5.3x",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 666,
+          "y": 838,
+          "width": 106,
+          "height": 25,
+          "label": "$787.5K/year"
+        },
+        {
+          "x": 501,
+          "y": 1100,
+          "width": 41,
+          "height": 20,
+          "label": "5.3x"
+        },
+        {
+          "x": 306,
+          "y": 1306,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-08",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/09-lre-08.jpg",
+      "caption": "LRE-08 · Account Executive: Yes, create the executive presentation with talking points.",
+      "case_id": "LRE-08",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/09-lre-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Executive Presentation",
+        "Key Talking Points",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 427,
+          "width": 317,
+          "height": 27,
+          "label": "Draft Executive Presentation"
+        },
+        {
+          "x": 286,
+          "y": 996,
+          "width": 173,
+          "height": 28,
+          "label": "Key Talking Points"
+        },
+        {
+          "x": 286,
+          "y": 1320,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-09",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/10-lre-09.jpg",
+      "caption": "LRE-09 · Sales Leadership: Yes, show me negotiation strategy and what approvals I need.",
+      "case_id": "LRE-09",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/10-lre-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Negotiation Boundaries",
+        "Approvals to Request",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 428,
+          "width": 139,
+          "height": 31,
+          "label": "Negotiation Boundaries"
+        },
+        {
+          "x": 624,
+          "y": 427,
+          "width": 121,
+          "height": 32,
+          "label": "Approvals to Request"
+        },
+        {
+          "x": 286,
+          "y": 1661,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-10",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/11-lre-10.jpg",
+      "caption": "LRE-10 · Sales Leadership: Yes, send the proposal and summarize our renewal strategy.",
+      "case_id": "LRE-10",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/11-lre-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "not sent",
+        "$2.36M",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 959,
+          "y": 462,
+          "width": 84,
+          "height": 22,
+          "label": "not sent"
+        },
+        {
+          "x": 538,
+          "y": 1185,
+          "width": 64,
+          "height": 22,
+          "label": "$2.36M"
+        },
+        {
+          "x": 306,
+          "y": 1477,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/12-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 12 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/12-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 168,
+          "height": 21,
+          "label": "License Renewal Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name License Renewal Manual",
+      "step": 2,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 186,
+          "height": 20,
+          "label": "License Renewal Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal and Expansion Agent — Global Ins"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 252,
+          "height": 32,
+          "label": "License Renewal and Expansion Agent — Global Ins"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/06-add-aibast-license-renewal-expansion-operating-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_license-renewal-expansion-operating-rules.md",
+      "step": 6,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/06-add-aibast-license-renewal-expansion-operating-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_license-renewal-expansion-operating-rules"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_license-renewal-expansion-operating-rules"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/07-add-aibast-license-renewal-expansion-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_license-renewal-expansion-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/07-add-aibast-license-renewal-expansion-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_license-renewal-expansion-synthetic-recor"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 305,
+          "height": 33,
+          "label": "aibast_license-renewal-expansion-synthetic-recor"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/08-add-aibast-account-health-05.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_account-health_05",
+      "step": 8,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/08-add-aibast-account-health-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-health"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 103,
+          "height": 19,
+          "label": "account-health"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/09-add-aibast-churn-risk-03.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_churn-risk_03",
+      "step": 9,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/09-add-aibast-churn-risk-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-churn-risk"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 242,
+          "height": 22,
+          "label": "license-renewal-expansion-churn-risk"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/10-add-aibast-competitive-defense-06.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_competitive-defense_06",
+      "step": 10,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/10-add-aibast-competitive-defense-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "competitive-defense"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 138,
+          "height": 22,
+          "label": "competitive-defense"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/11-add-aibast-deal-summary-10.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_deal-summary_10",
+      "step": 11,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/11-add-aibast-deal-summary-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deal-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "deal-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/12-add-aibast-executive-brief-08.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_executive-brief_08",
+      "step": 12,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/12-add-aibast-executive-brief-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "executive-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 103,
+          "height": 19,
+          "label": "executive-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/13-add-aibast-expansion-opportunities-02.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_expansion-opportunities_02",
+      "step": 13,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/13-add-aibast-expansion-opportunities-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-expansion-opportunitie"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 315,
+          "height": 22,
+          "label": "license-renewal-expansion-expansion-opportunitie"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/14-add-aibast-negotiation-plan-09.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_negotiation-plan_09",
+      "step": 14,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/14-add-aibast-negotiation-plan-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "negotiation-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 114,
+          "height": 22,
+          "label": "negotiation-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/15-add-aibast-renewal-pipeline-01.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_renewal-pipeline_01",
+      "step": 15,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/15-add-aibast-renewal-pipeline-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-renewal-pipeline"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 282,
+          "height": 22,
+          "label": "license-renewal-expansion-renewal-pipeline"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/16-add-aibast-renewal-proposal-07.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_renewal-proposal_07",
+      "step": 16,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/16-add-aibast-renewal-proposal-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "renewal-proposal"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 118,
+          "height": 22,
+          "label": "renewal-proposal"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/17-add-aibast-revenue-impact-04.jpg",
+      "caption": "Manual step 17 · Add skill: aibast_revenue-impact_04",
+      "step": 17,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/17-add-aibast-revenue-impact-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-revenue-impact"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 277,
+          "height": 22,
+          "label": "license-renewal-expansion-revenue-impact"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/18-review-inventory.jpg",
+      "caption": "Manual step 18 · Review model, skills, knowledge, and safety boundaries",
+      "step": 18,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/18-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "license-renewal-expansion-revenue-impact",
+        "renewal-proposal",
+        "license-renewal-expansion-renewal-pipeline",
+        "negotiation-plan",
+        "license-renewal-expansion-expansion-opportunitie",
+        "aibast_license-renewal-expansion-synthetic-recor",
+        "aibast_license-renewal-expansion-operating-rules"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 277,
+          "height": 22,
+          "label": "license-renewal-expansion-revenue-impact"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 118,
+          "height": 22,
+          "label": "renewal-proposal"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 282,
+          "height": 22,
+          "label": "license-renewal-expansion-renewal-pipeline"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 114,
+          "height": 22,
+          "label": "negotiation-plan"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 315,
+          "height": 22,
+          "label": "license-renewal-expansion-expansion-opportunitie"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 312,
+          "height": 22,
+          "label": "aibast_license-renewal-expansion-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 605,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_license-renewal-expansion-operating-rules"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/19-review-skills.jpg",
+      "caption": "Manual step 19 · Review the skill list (10 skills)",
+      "step": 19,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/19-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-revenue-impact",
+        "renewal-proposal",
+        "license-renewal-expansion-renewal-pipeline",
+        "negotiation-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 277,
+          "height": 22,
+          "label": "license-renewal-expansion-revenue-impact"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 118,
+          "height": 22,
+          "label": "renewal-proposal"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 277,
+          "height": 22,
+          "label": "license-renewal-expansion-renewal-pipeline"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 114,
+          "height": 22,
+          "label": "negotiation-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/20-review-skills-more.jpg",
+      "caption": "Manual step 20 · Review the rest of the skill list",
+      "step": 20,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/20-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "executive-brief",
+        "deal-summary",
+        "competitive-defense",
+        "license-renewal-expansion-churn-risk",
+        "account-health"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 87,
+          "width": 61,
+          "height": 17,
+          "label": "executive-brief"
+        },
+        {
+          "x": 1055,
+          "y": 122,
+          "width": 100,
+          "height": 22,
+          "label": "deal-summary"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 138,
+          "height": 22,
+          "label": "competitive-defense"
+        },
+        {
+          "x": 1055,
+          "y": 318,
+          "width": 242,
+          "height": 22,
+          "label": "license-renewal-expansion-churn-risk"
+        },
+        {
+          "x": 1055,
+          "y": 396,
+          "width": 104,
+          "height": 19,
+          "label": "account-health"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/21-open-preview.jpg",
+      "caption": "Manual step 21 · Open a fresh Preview conversation",
+      "step": 21,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/21-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 186,
+          "height": 20,
+          "label": "License Renewal Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-01",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/22-lre-01.jpg",
+      "caption": "LRE-01 · Sales Leadership: Review the bundled synthetic renewal pipeline, risk bands, and preparation checklist without changing CRM or forecast recor",
+      "step": 22,
+      "case_id": "LRE-01",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/22-lre-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Renewal Pipeline",
+        "Evidence boundary",
+        "Draft Renewal Preparation Checklist"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 499,
+          "width": 192,
+          "height": 32,
+          "label": "Renewal Pipeline"
+        },
+        {
+          "x": 286,
+          "y": 990,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 286,
+          "y": 1230,
+          "width": 336,
+          "height": 28,
+          "label": "Draft Renewal Preparation Checklist"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-02",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/23-lre-02.jpg",
+      "caption": "LRE-02 · Account Executive: Identify synthetic demand signals and draft packaging options that still require authorized pricing review.",
+      "step": 23,
+      "case_id": "LRE-02",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/23-lre-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Expansion Opportunities",
+        "Draft Packaging Options",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 454,
+          "width": 277,
+          "height": 32,
+          "label": "Expansion Opportunities"
+        },
+        {
+          "x": 286,
+          "y": 2211,
+          "width": 233,
+          "height": 28,
+          "label": "Draft Packaging Options"
+        },
+        {
+          "x": 286,
+          "y": 2514,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-03",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/24-lre-03.jpg",
+      "caption": "LRE-03 · Customer Success Manager: Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?",
+      "step": 24,
+      "case_id": "LRE-03",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/24-lre-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Churn Risk Assessment",
+        "Synthetic Switching-Cost Review",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 499,
+          "width": 262,
+          "height": 27,
+          "label": "Churn Risk Assessment"
+        },
+        {
+          "x": 286,
+          "y": 533,
+          "width": 78,
+          "height": 24,
+          "label": "Synthetic Switching-Cost Review"
+        },
+        {
+          "x": 1008,
+          "y": 2056,
+          "width": 77,
+          "height": 22,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-04",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/25-lre-04.jpg",
+      "caption": "LRE-04 · Sales Leadership: Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+      "step": 25,
+      "case_id": "LRE-04",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/25-lre-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Revenue Scenario",
+        "Illustrative midpoint assumption",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 499,
+          "width": 311,
+          "height": 32,
+          "label": "Synthetic Revenue Scenario"
+        },
+        {
+          "x": 299,
+          "y": 756,
+          "width": 237,
+          "height": 24,
+          "label": "Illustrative midpoint assumption"
+        },
+        {
+          "x": 286,
+          "y": 876,
+          "width": 91,
+          "height": 23,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-05",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/26-lre-05.jpg",
+      "caption": "LRE-05 · Account Executive: GlobalBank license expires in 45 days. Currently 2,000 seats at $1M ARR. Usage shows they need 500 more seats. Competitor ",
+      "step": 26,
+      "case_id": "LRE-05",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/26-lre-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Account Analysis: GlobalBank",
+        "Evidence boundary",
+        "99.4%"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 489,
+          "width": 225,
+          "height": 24,
+          "label": "Account Analysis: GlobalBank"
+        },
+        {
+          "x": 303,
+          "y": 596,
+          "width": 75,
+          "height": 21,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 632,
+          "y": 747,
+          "width": 55,
+          "height": 20,
+          "label": "99.4%"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-06",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/27-lre-06.jpg",
+      "caption": "LRE-06 · Customer Success Manager: Yes, show me the competitive defense strategy.",
+      "step": 27,
+      "case_id": "LRE-06",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/27-lre-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Competitive Defense Strategy",
+        "Evidence boundary",
+        "~$500K"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 417,
+          "width": 227,
+          "height": 24,
+          "label": "Competitive Defense Strategy"
+        },
+        {
+          "x": 303,
+          "y": 526,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 581,
+          "y": 676,
+          "width": 65,
+          "height": 22,
+          "label": "~$500K"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-07",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/28-lre-07.jpg",
+      "caption": "LRE-07 · Account Executive: Yes, build the renewal and expansion proposal.",
+      "step": 28,
+      "case_id": "LRE-07",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/28-lre-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$787.5K/year",
+        "5.3x",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 760,
+          "y": 1279,
+          "width": 107,
+          "height": 25,
+          "label": "$787.5K/year"
+        },
+        {
+          "x": 784,
+          "y": 1412,
+          "width": 41,
+          "height": 20,
+          "label": "5.3x"
+        },
+        {
+          "x": 952,
+          "y": 1778,
+          "width": 74,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-08",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/29-lre-08.jpg",
+      "caption": "LRE-08 · Account Executive: Yes, create the executive presentation with talking points.",
+      "step": 29,
+      "case_id": "LRE-08",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/29-lre-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Executive Presentation",
+        "Key Talking Points",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 529,
+          "width": 267,
+          "height": 23,
+          "label": "Draft Executive Presentation"
+        },
+        {
+          "x": 286,
+          "y": 1076,
+          "width": 173,
+          "height": 27,
+          "label": "Key Talking Points"
+        },
+        {
+          "x": 286,
+          "y": 1277,
+          "width": 75,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-09",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/30-lre-09.jpg",
+      "caption": "LRE-09 · Sales Leadership: Yes, show me negotiation strategy and what approvals I need.",
+      "step": 30,
+      "case_id": "LRE-09",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/30-lre-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Negotiation Boundaries",
+        "Approvals to Request",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 473,
+          "width": 139,
+          "height": 31,
+          "label": "Negotiation Boundaries"
+        },
+        {
+          "x": 625,
+          "y": 472,
+          "width": 120,
+          "height": 32,
+          "label": "Approvals to Request"
+        },
+        {
+          "x": 286,
+          "y": 1326,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-10",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/31-lre-10.jpg",
+      "caption": "LRE-10 · Sales Leadership: Yes, send the proposal and summarize our renewal strategy.",
+      "step": 31,
+      "case_id": "LRE-10",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/31-lre-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "not sent",
+        "$2.36M",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 960,
+          "y": 547,
+          "width": 79,
+          "height": 22,
+          "label": "not sent"
+        },
+        {
+          "x": 538,
+          "y": 1042,
+          "width": 64,
+          "height": 22,
+          "label": "$2.36M"
+        },
+        {
+          "x": 865,
+          "y": 1376,
+          "width": 74,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-32",
+      "mode": "hard",
+      "source": "solutions/license-renewal-expansion/screenshots/manual/32-confirm-draft.jpg",
+      "caption": "Manual step 32 · Confirm Draft and stop before publish",
+      "step": 32,
+      "draft": true,
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/32-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 188,
+          "height": 21,
+          "label": "License Renewal Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:49:05.266091+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

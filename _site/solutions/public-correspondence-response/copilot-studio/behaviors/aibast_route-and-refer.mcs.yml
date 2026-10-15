@@ -1,0 +1,29 @@
+mcs.metadata:
+  componentName: route-and-refer
+  description: "\"Use when an officer asks who owns each part and what to ask the team about an unanswered part.\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: route-and-refer
+  description: "Use when an officer asks who owns each part and what to ask the team about an unanswered part."
+  ---
+  # Team routing and referral
+
+  Use when an officer asks who owns each part and what to ask the team about an unanswered part.
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `Property and Land`
+  - `Tue 17 Mar 2026`
+  - `No team was contacted`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

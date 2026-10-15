@@ -1,0 +1,27 @@
+---
+name: utility-billing-assistance-repair-assistance
+description: "Use when a Water Conservation Coordinator asks about free repair assistance for a leak."
+---
+# Utility Billing and Assistance Agent: Repair Assistance
+
+## Route
+
+Use the `repair_assistance` operation. The canonical persona prompt is:
+
+> Can we help the Maple Drive resident fix the leak at no cost?
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `repair_assistance` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- Water Conservation Assistance Program
+- Toilet flapper
+- not booked
+
+Never imply that a bill was adjusted, a credit applied, a plan created, an application submitted, a repair scheduled, or anything sent to the customer.

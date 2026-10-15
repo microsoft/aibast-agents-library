@@ -1,0 +1,138 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/time-entry-billing",
+  "slug": "time-entry-billing",
+  "name": "Time Entry and Billing Agent",
+  "headline": "Turn month-end billing exceptions into an approval-ready close",
+  "pitch": "Help finance and billing teams find blocked work, enforce time-entry rules, prepare support for eligible invoices, and resolve disputed-hour evidence without posting revenue or contacting a client.",
+  "category": "professional_services",
+  "industries": [
+    "Professional Services, Consulting"
+  ],
+  "personas": [
+    "Finance VP",
+    "Billing Manager"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Operate",
+  "why_try": "The demo shows exactly why work is blocked and separates invoice-ready support from entries that still need narrative, approval, or milestone evidence.",
+  "customer_challenge": "Professional services billing combines large time volumes, contract-specific rules, budget pressure, premium work, and client disputes. Manual review makes it easy to miss evidence, overstate invoice readiness, or treat fixed-fee time like time-and-materials billing.",
+  "microsoft_ai_story": "Microsoft Copilot Studio is the finance-facing entry point. Dynamics 365 provides project and billing context, SharePoint holds approval evidence, and Microsoft Teams supports governed exception review.",
+  "business_value": [
+    "Improves visibility into billing blockers and leakage.",
+    "Strengthens invoice support and audit consistency.",
+    "Gives finance teams a safer path for resolving disputed hours."
+  ],
+  "business_flow": [
+    "Finance and billing teams",
+    "Microsoft Copilot or Copilot Studio",
+    "Time Entry and Billing Agent",
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams",
+    "Authorized billing review"
+  ],
+  "capabilities": [
+    {
+      "operation": "unbilled_report",
+      "name": "Billing blocker review",
+      "purpose": "Finds unapproved billable work and the evidence needed to move it."
+    },
+    {
+      "operation": "billing_summary",
+      "name": "Close rollup",
+      "purpose": "Summarizes project and consultant activity without claiming posted revenue."
+    },
+    {
+      "operation": "time_entry_audit",
+      "name": "Time-entry control checks",
+      "purpose": "Flags narrative, hours, rate, approval, and budget conditions."
+    },
+    {
+      "operation": "invoice_preparation",
+      "name": "Approval-gated invoice support",
+      "purpose": "Groups eligible time-and-materials evidence and holds fixed-fee work for milestones."
+    },
+    {
+      "operation": "dispute_resolution",
+      "name": "Disputed-hours evidence brief",
+      "purpose": "Explains evidence gaps and the internal approval path before client outreach."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Find close blockers",
+      "prompt": "What billable work is still blocked from this close, and what has to happen before it can move?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=billing-blockers",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Billing Manager",
+        "prompt": "What billable work is still blocked from this close, and what has to happen before it can move?",
+        "answer": "Here's what's blocked, pulled via the unbilled-hours report:\n\n**Blocked billable work — $6,612 total:**\n- **TE-9004** — Michael Chen, Apex Analytics Platform, 8.0 hrs ($2,080): needs approval **and** is missing a narrative/description\n- **TE-9011** — Elena Vasquez, TechCorp Transformation, 11.0 hrs ($4,532): needs approval\n\n**To move these:**\n1. Chen's entry needs a written description added, then manager approval.\n2. Vasquez's entry just needs manager sign-off.\n3. Once approved, both feed into invoice preparation — but nothing gets billed automatically; an authorized person has to approve and send.\n\nSeparately (not blocking this cycle, but worth flagging): **$284,400 in outstanding invoices** already sent — Pinnacle Energy ($186K, 17 days out), Atlas Financial ($52.2K, 17 days out), and Metro Transit ($46.2K, **45 days overdue** — worth a collections nudge).\n\nWant me to check the time-entry audit for budget/rate risk on these two projects before they go to invoicing?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review the billing rollup",
+      "prompt": "Give me the month-end billing rollup by project and consultant without treating it as posted revenue.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=billing-rollup",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Finance Vice President",
+        "prompt": "Give me the month-end billing rollup by project and consultant without treating it as posted revenue.",
+        "answer": "Here's the month-end rollup — draft only, nothing posted yet.\n\n**Totals:** 96.5 hrs logged, 84.5 billable (87.6%), $24,479.50 total billable value.\n\n**By Project**\n- TechCorp Transformation (T&M): 28.5 hrs, $9,344.50, 80.3% budget used\n- Apex Analytics Platform (T&M): 15.5 hrs, $4,030.00, 76.5% budget used\n- Pinnacle Energy ERP (Fixed Fee): 18.0 hrs, $5,580.00, 62.0% budget used\n- Atlas Security Audit (T&M): 14.5 hrs, $4,205.00, 84.6% budget used (lowest remaining budget cushion: $28,400)\n- Metro Transit Portal (T&M): 8.0 hrs, $1,320.00, 64.1% budget used\n\n**By Consultant**\n- Elena Vasquez: 28.5 hrs, $9,344.50 ($327.88/hr)\n- Priya Sharma: 18.0 hrs, $5,580.00 ($310/hr)\n- Lisa Tanaka: 14.5 hrs, $4,205.00 ($290/hr)\n- Michael Chen: 15.5 hrs, $4,030.00 ($260/hr)\n- Amanda Foster: 8.0 hrs, $1,320.00 ($165/hr)\n\nThese are unposted, pre-approval figures (pulled via the billing agent's summary view) — nothing here has been invoiced or recognized as revenue. Want me to check for flagged hours or budget-overrun risk next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Audit time cards",
+      "prompt": "Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=billing-audit",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Billing Compliance Lead",
+        "prompt": "Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?",
+        "answer": "Here's the audit breakdown — 2 entries flagged out of 12:\n\n- **TE-9004** (Michael Chen, 3/11, 8.0 hrs @ $260) — missing description/narrative\n- **TE-9011** (Elena Vasquez, 3/12, 11.0 hrs @ $412) — exceeds the 10-hour daily limit\n\nAlso worth noting, two projects are approaching budget limits (not blocking, but risk):\n- **TechCorp Transformation** — 80.3% used, $167,600 left\n- **Atlas Security Audit** — 84.6% used, $28,400 left\n\nNo rate-exception flags beyond Elena's entry. These need manual correction/approval before billing — the agent doesn't auto-fix them. Want me to pull the budget overrun detail or check for other flagged hours across the month?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Prepare eligible invoice support",
+      "prompt": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=invoice-support",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Billing Manager",
+        "prompt": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+        "answer": "Invoice support is ready, properly gated:\n\n**Ready to invoice — $12,287.50 total (all T&M, approved entries):**\n- TechCorp Transformation: 17.5 hrs → $4,812.50\n- Apex Analytics Platform: 7.5 hrs → $1,950.00\n- Atlas Security Audit: 14.5 hrs → $4,205.00\n- Metro Transit Portal: 8.0 hrs → $1,320.00\n\n**Excluded, correctly held back:**\n- $6,612.00 in entries still pending approval — not included\n- Pinnacle Energy ERP (fixed-fee) — time kept only as delivery evidence; can't be invoiced until it hits a contractual milestone\n\nAlso flagging for awareness: Metro Transit's prior invoice ($46,200) is overdue and Pinnacle's ($186,000) is outstanding — worth a collections nudge separate from this prep.\n\nThese are draft packages only — nothing's been generated, posted, or sent. Someone authorized needs to approve and release them.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Resolve disputed-hour evidence",
+      "prompt": "What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=billing-disputes",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Client Finance Partner",
+        "prompt": "What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?",
+        "answer": "Here's the gap and safest path on each open dispute:\n\n**MegaCorp (DSP-303) — $23,400, 78 hrs, Sarah Chen**\n- Gap: Nothing missing on our side evidence-wise — we have SOW Section 3.4, 4 meeting minutes, and 7 email threads supporting the work was in scope. Root cause is a new client PM who wasn't briefed on SOW terms.\n- Safest path: Send the drafted SOW-reference email (after your review) and have the delivery lead call the PMO director directly. Win probability ~85%.\n\n**Apex Manufacturing (DSP-301) — TE-9004**\n- Gap: Time record exists, but there's no consultant narrative and no manager approval, so the client can't validate the charge.\n- Safest path: Get Michael Chen to supply a factual description, then route to the PM for sign-off before billing.\n\n**TechCorp Industries (DSP-302) — TE-9011**\n- Gap: Overtime rate was applied, but there's no attached cutover authorization or approval.\n- Safest path: Attach the approved cutover authorization and get billing-manager sign-off before invoicing.\n\nBottom line: MegaCorp is our strongest position (don't concede, just re-brief their PM); the other two need internal paperwork fixed before they're defensible to clients. None of these are being invoiced or sent yet — all drafts await your approval.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ftime-entry-billing",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/time-entry-billing/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Time%20and%20Entry%20Billing%20Agent%22"
+  }
+}

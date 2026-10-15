@@ -1,0 +1,1055 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/engineering-standards-advisor",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Engineering Standards Pilot",
+        "interpretation",
+        "review-queue",
+        "vetted-lookup",
+        "quick-reference",
+        "scope-job",
+        "aibast_engineering-standards-advisor-synthetic-r",
+        "aibast_engineering-standards-advisor-rules-and-g"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 211,
+          "height": 24,
+          "label": "Engineering Standards Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "interpretation"
+        },
+        {
+          "x": 1210,
+          "y": 197,
+          "width": 94,
+          "height": 22,
+          "label": "review-queue"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 99,
+          "height": 22,
+          "label": "vetted-lookup"
+        },
+        {
+          "x": 1213,
+          "y": 237,
+          "width": 108,
+          "height": 22,
+          "label": "quick-reference"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 72,
+          "height": 22,
+          "label": "scope-job"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_engineering-standards-advisor-synthetic-r"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_engineering-standards-advisor-rules-and-g"
+        }
+      ]
+    },
+    {
+      "id": "easy-esa-01",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/02-esa-01.jpg",
+      "caption": "ESA-01 · Design Technician: What is the minimum clearance for a primary conductor over a public road?",
+      "case_id": "ESA-01",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/02-esa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "QR-210-01",
+        "6.5 m"
+      ],
+      "boxes": [
+        {
+          "x": 415,
+          "y": 418,
+          "width": 85,
+          "height": 21,
+          "label": "QR-210-01"
+        },
+        {
+          "x": 831,
+          "y": 457,
+          "width": 50,
+          "height": 20,
+          "label": "6.5 m"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "page 14 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-esa-02",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/03-esa-02.jpg",
+      "caption": "ESA-02 · Design Technician: Can I use a Class 5 pole on a 35-degree corner that carries a 75 kVA transformer?",
+      "case_id": "ESA-02",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/03-esa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UNVETTED",
+        "Class 3"
+      ],
+      "boxes": [
+        {
+          "x": 474,
+          "y": 545,
+          "width": 122,
+          "height": 25,
+          "label": "UNVETTED"
+        },
+        {
+          "x": 419,
+          "y": 577,
+          "width": 61,
+          "height": 20,
+          "label": "Class 3"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Not authoritative not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-esa-03",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/04-esa-03.jpg",
+      "caption": "ESA-03 · Design Technician: Send the corner-pole interpretation to a standards engineer to confirm.",
+      "case_id": "ESA-03",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/04-esa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "REV-0318",
+        "Not Submitted",
+        "Nothing was submitted"
+      ],
+      "boxes": [
+        {
+          "x": 511,
+          "y": 473,
+          "width": 94,
+          "height": 23,
+          "label": "REV-0318"
+        },
+        {
+          "x": 601,
+          "y": 472,
+          "width": 159,
+          "height": 27,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 306,
+          "y": 1110,
+          "width": 102,
+          "height": 24,
+          "label": "Nothing was submitted"
+        }
+      ]
+    },
+    {
+      "id": "easy-esa-04",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/05-esa-04.jpg",
+      "caption": "ESA-04 · Standards Engineer: What is waiting in my standards review queue?",
+      "case_id": "ESA-04",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/05-esa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Pending reviews",
+        "REV-0311",
+        "QR-210-04"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 545,
+          "width": 237,
+          "height": 24,
+          "label": "Pending reviews"
+        },
+        {
+          "x": 299,
+          "y": 645,
+          "width": 75,
+          "height": 20,
+          "label": "REV-0311"
+        },
+        {
+          "x": 299,
+          "y": 993,
+          "width": 88,
+          "height": 22,
+          "label": "QR-210-04"
+        }
+      ]
+    },
+    {
+      "id": "easy-esa-05",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/06-esa-05.jpg",
+      "caption": "ESA-05 · Standards Engineer: Show the overhead clearances quick-reference sheet and anything due for re-vetting.",
+      "case_id": "ESA-05",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/06-esa-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Re-vetting due",
+        "QR-210-04",
+        "3 vetted and current"
+      ],
+      "boxes": [
+        {
+          "x": 700,
+          "y": 418,
+          "width": 79,
+          "height": 23,
+          "label": "Re-vetting due"
+        },
+        {
+          "x": 299,
+          "y": 613,
+          "width": 82,
+          "height": 22,
+          "label": "QR-210-04"
+        },
+        {
+          "x": 471,
+          "y": 808,
+          "width": 157,
+          "height": 22,
+          "label": "3 vetted and current"
+        }
+      ]
+    },
+    {
+      "id": "easy-esa-06",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/07-esa-06.jpg",
+      "caption": "ESA-06 · Field Engineering Lead: Scope the Maple Ridge pole replacement job: risk, effort and the standards that apply.",
+      "case_id": "ESA-06",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/07-esa-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Total risk score",
+        "7.4 crew-days",
+        "INT-0318"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 755,
+          "width": 119,
+          "height": 21,
+          "label": "Total risk score"
+        },
+        {
+          "x": 421,
+          "y": 878,
+          "width": 115,
+          "height": 23,
+          "label": "7.4 crew-days"
+        },
+        {
+          "x": 286,
+          "y": 1499,
+          "width": 76,
+          "height": 20,
+          "label": "INT-0318"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/engineering-standards-advisor/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Engineering Standards Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 211,
+          "height": 24,
+          "label": "Engineering Standards Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Engineering Standards Manual",
+      "step": 2,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Engineering Standards Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 232,
+          "height": 24,
+          "label": "Engineering Standards Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Engineering Standards Agent — Manual Global Inst"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 348,
+          "height": 39,
+          "label": "Engineering Standards Agent — Manual Global Inst"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 327,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/06-add-aibast-engineering-standards-advisor-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_engineering-standards-advisor-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/06-add-aibast-engineering-standards-advisor-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_engineering-standards-advisor-rules-and-g"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 305,
+          "height": 33,
+          "label": "aibast_engineering-standards-advisor-rules-and-g"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/07-add-aibast-engineering-standards-advisor-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_engineering-standards-advisor-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/07-add-aibast-engineering-standards-advisor-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_engineering-standards-advisor-synthetic-r"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 313,
+          "width": 304,
+          "height": 37,
+          "label": "aibast_engineering-standards-advisor-synthetic-r"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/08-add-aibast-flag-for-review-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_flag-for-review_03",
+      "step": 8,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/08-add-aibast-flag-for-review-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "flag-for-review"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 103,
+          "height": 22,
+          "label": "flag-for-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/09-add-aibast-interpretation-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_interpretation_02",
+      "step": 9,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/09-add-aibast-interpretation-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "interpretation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "interpretation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/10-add-aibast-quick-reference-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_quick-reference_05",
+      "step": 10,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/10-add-aibast-quick-reference-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "quick-reference"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 107,
+          "height": 22,
+          "label": "quick-reference"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/11-add-aibast-review-queue-04.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_review-queue_04",
+      "step": 11,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/11-add-aibast-review-queue-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "review-queue"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 21,
+          "label": "review-queue"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/12-add-aibast-scope-job-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_scope-job_06",
+      "step": 12,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/12-add-aibast-scope-job-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "scope-job"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 72,
+          "height": 22,
+          "label": "scope-job"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/13-add-aibast-vetted-lookup-01.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_vetted-lookup_01",
+      "step": 13,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/13-add-aibast-vetted-lookup-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vetted-lookup"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "vetted-lookup"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "vetted-lookup",
+        "scope-job",
+        "review-queue",
+        "quick-reference",
+        "interpretation",
+        "aibast_engineering-standards-advisor-synthetic-r",
+        "aibast_engineering-standards-advisor-rules-and-g"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "vetted-lookup"
+        },
+        {
+          "x": 1213,
+          "y": 197,
+          "width": 73,
+          "height": 22,
+          "label": "scope-job"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 95,
+          "height": 21,
+          "label": "review-queue"
+        },
+        {
+          "x": 1209,
+          "y": 237,
+          "width": 107,
+          "height": 22,
+          "label": "quick-reference"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 95,
+          "height": 22,
+          "label": "interpretation"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_engineering-standards-advisor-synthetic-r"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_engineering-standards-advisor-rules-and-g"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vetted-lookup",
+        "quick-reference",
+        "scope-job",
+        "review-queue",
+        "interpretation"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 99,
+          "height": 22,
+          "label": "vetted-lookup"
+        },
+        {
+          "x": 1173,
+          "y": 219,
+          "width": 93,
+          "height": 20,
+          "label": "quick-reference"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 73,
+          "height": 22,
+          "label": "scope-job"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 95,
+          "height": 22,
+          "label": "review-queue"
+        },
+        {
+          "x": 1031,
+          "y": 488,
+          "width": 119,
+          "height": 23,
+          "label": "interpretation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vetted-lookup",
+        "quick-reference",
+        "scope-job",
+        "review-queue",
+        "interpretation",
+        "flag-for-review"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 69,
+          "width": 99,
+          "height": 19,
+          "label": "vetted-lookup"
+        },
+        {
+          "x": 1173,
+          "y": 108,
+          "width": 93,
+          "height": 20,
+          "label": "quick-reference"
+        },
+        {
+          "x": 1055,
+          "y": 144,
+          "width": 73,
+          "height": 22,
+          "label": "scope-job"
+        },
+        {
+          "x": 1055,
+          "y": 222,
+          "width": 95,
+          "height": 22,
+          "label": "review-queue"
+        },
+        {
+          "x": 1055,
+          "y": 378,
+          "width": 95,
+          "height": 22,
+          "label": "interpretation"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 103,
+          "height": 22,
+          "label": "flag-for-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Engineering Standards Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 232,
+          "height": 24,
+          "label": "Engineering Standards Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-esa-01",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/18-esa-01.jpg",
+      "caption": "ESA-01 · Design Technician: What is the minimum clearance for a primary conductor over a public road?",
+      "step": 18,
+      "case_id": "ESA-01",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/18-esa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "QR-210-01"
+      ],
+      "boxes": [
+        {
+          "x": 463,
+          "y": 657,
+          "width": 82,
+          "height": 21,
+          "label": "QR-210-01"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "6.5 m, page 14 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-esa-02",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/19-esa-02.jpg",
+      "caption": "ESA-02 · Design Technician: Can I use a Class 5 pole on a 35-degree corner that carries a 75 kVA transformer?",
+      "step": 19,
+      "case_id": "ESA-02",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/19-esa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UNVETTED",
+        "Class 3",
+        "Not authoritative"
+      ],
+      "boxes": [
+        {
+          "x": 436,
+          "y": 418,
+          "width": 105,
+          "height": 22,
+          "label": "UNVETTED"
+        },
+        {
+          "x": 624,
+          "y": 417,
+          "width": 229,
+          "height": 21,
+          "label": "Class 3"
+        },
+        {
+          "x": 364,
+          "y": 770,
+          "width": 134,
+          "height": 21,
+          "label": "Not authoritative"
+        }
+      ]
+    },
+    {
+      "id": "hard-esa-03",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/20-esa-03.jpg",
+      "caption": "ESA-03 · Design Technician: Send the corner-pole interpretation to a standards engineer to confirm.",
+      "step": 20,
+      "case_id": "ESA-03",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/20-esa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "REV-0318"
+      ],
+      "boxes": [
+        {
+          "x": 521,
+          "y": 462,
+          "width": 129,
+          "height": 23,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 449,
+          "y": 463,
+          "width": 79,
+          "height": 20,
+          "label": "REV-0318"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Nothing was submitted not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-esa-04",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/21-esa-04.jpg",
+      "caption": "ESA-04 · Standards Engineer: What is waiting in my standards review queue?",
+      "step": 21,
+      "case_id": "ESA-04",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/21-esa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "REV-0311",
+        "Pending reviews",
+        "QR-210-04"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 570,
+          "width": 73,
+          "height": 20,
+          "label": "REV-0311"
+        },
+        {
+          "x": 286,
+          "y": 722,
+          "width": 132,
+          "height": 24,
+          "label": "Pending reviews"
+        },
+        {
+          "x": 577,
+          "y": 761,
+          "width": 89,
+          "height": 22,
+          "label": "QR-210-04"
+        }
+      ]
+    },
+    {
+      "id": "hard-esa-05",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/22-esa-05.jpg",
+      "caption": "ESA-05 · Standards Engineer: Show the overhead clearances quick-reference sheet and anything due for re-vetting.",
+      "step": 22,
+      "case_id": "ESA-05",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/22-esa-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "QR-210-04",
+        "3 vetted and current",
+        "Re-vetting due"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 526,
+          "width": 82,
+          "height": 21,
+          "label": "QR-210-04"
+        },
+        {
+          "x": 348,
+          "y": 720,
+          "width": 158,
+          "height": 22,
+          "label": "3 vetted and current"
+        },
+        {
+          "x": 565,
+          "y": 720,
+          "width": 80,
+          "height": 24,
+          "label": "Re-vetting due"
+        }
+      ]
+    },
+    {
+      "id": "hard-esa-06",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/23-esa-06.jpg",
+      "caption": "ESA-06 · Field Engineering Lead: Scope the Maple Ridge pole replacement job: risk, effort and the standards that apply.",
+      "step": 23,
+      "case_id": "ESA-06",
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/23-esa-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Total risk score",
+        "7.4 crew-days",
+        "INT-0318"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 782,
+          "width": 119,
+          "height": 20,
+          "label": "Total risk score"
+        },
+        {
+          "x": 551,
+          "y": 1081,
+          "width": 110,
+          "height": 24,
+          "label": "7.4 crew-days"
+        },
+        {
+          "x": 440,
+          "y": 1284,
+          "width": 73,
+          "height": 19,
+          "label": "INT-0318"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/engineering-standards-advisor/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/engineering-standards-advisor/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Engineering Standards Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 231,
+          "height": 24,
+          "label": "Engineering Standards Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:48:01.714073+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

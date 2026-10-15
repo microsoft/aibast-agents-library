@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "emission-tracking",
+  "agent": "@aibast-agents-library/emission-tracking",
+  "display_name": "Emissions Tracking Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic facility emissions inventory",
+        "detail": "Fixed facility records contain Scope 1, 2, and 3 figures, baselines, targets, thresholds, locations, and asset types."
+      },
+      {
+        "name": "Screening rules and evidence controls",
+        "detail": "Bundled rules define calculations, routing, synthetic labels, missing-record behavior, and prohibited compliance claims."
+      },
+      {
+        "name": "Synthetic offset candidate catalog",
+        "detail": "Fixed project types, credit volumes, prices, vintages, and named programs support a due-diligence shortlist only."
+      },
+      {
+        "name": "Approved production data seams",
+        "detail": "Verified emissions, environmental management, and approved registry connections are documented but not enabled."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Scope inventory consolidation",
+        "detail": "Aggregates synthetic facility Scope 1, 2, and 3 figures into facility and portfolio views with evidence limitations."
+      },
+      {
+        "name": "Non-legal threshold screening",
+        "detail": "Compares recorded Scope 1 figures with synthetic thresholds and targets without declaring regulatory compliance."
+      },
+      {
+        "name": "Reduction scenario analysis",
+        "detail": "Calculates target gaps and compares synthetic reduction actions, estimated tonnes, and costs for multidisciplinary review."
+      },
+      {
+        "name": "Offset due-diligence analysis",
+        "detail": "Compares a synthetic emissions gap with candidate credit volume and cost without purchase, retirement, or claim."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable RAPP Brainstem chat",
+        "detail": "The credential-free single-file agent exposes four read-only operations through local Brainstem chat and API routes."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Four skills and two knowledge files support persona-led preview flows while the validated agent remains unpublished."
+      },
+      {
+        "name": "Evidence-first review responses",
+        "detail": "Responses lead with synthetic results, explain limitations, name required reviewers, and end with the no-write boundary."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Emissions inventory review",
+        "detail": "Shows facility and portfolio scope totals while stating that the synthetic inventory is not verified emissions evidence."
+      },
+      {
+        "name": "Threshold and target screening",
+        "detail": "Reports threshold position and reduction progress as reviewable screening, not a legal compliance determination."
+      },
+      {
+        "name": "Reduction scenario review pack",
+        "detail": "Presents target gaps, candidate actions, estimated reductions, and costs for engineering, finance, and leadership review."
+      },
+      {
+        "name": "Offset due-diligence shortlist",
+        "detail": "Summarizes candidate projects, volumes, prices, and named programs without validating, buying, retiring, or claiming credits."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "EmissionTrackingAgent portable RAPP tool",
+      "detail": "Single-file Python BasicAgent provides four deterministic, read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable agent and exposes chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated draft pilot with four skills and two knowledge files; publication requires explicit confirmation."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from deterministic agent or skill results."
+    },
+    {
+      "name": "Verified emissions data platform",
+      "detail": "Approved production seam for source-backed inventory data; the current package has no live connection."
+    },
+    {
+      "name": "Environmental management system",
+      "detail": "Approved production seam for governed environmental records and workflows; no read or write integration is enabled."
+    },
+    {
+      "name": "Approved carbon registry connector",
+      "detail": "Future authenticated seam for registry evidence; purchases, retirements, disclosures, and claims remain outside the agent."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "All organizations, measurements, statuses, costs, and recommendations are fictional pilot evidence, not production facts."
+    },
+    {
+      "name": "Four independently routable operations",
+      "detail": "Dashboard, compliance screening, reduction planning, and offset analysis remain independently callable and reviewable."
+    },
+    {
+      "name": "Fail-closed identifier handling",
+      "detail": "Unknown facility identifiers return no substituted records, and the agent does not browse or invent missing evidence."
+    },
+    {
+      "name": "Human approval and authorization gates",
+      "detail": "Qualified sustainability, regulatory, engineering, finance, environmental, and executive reviewers retain decisions."
+    },
+    {
+      "name": "Read-only action boundary",
+      "detail": "No filing, attestation, credit transaction, disclosure, operational action, or external-system write is performed."
+    },
+    {
+      "name": "Validated evidence anchors",
+      "detail": "Four strict-isolation Brainstem captures and four Copilot Studio preview cases passed against locked synthetic anchors."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "The Copilot Studio pilot remains Draft and unpublished; validation and push do not authorize publication."
+    }
+  ]
+}

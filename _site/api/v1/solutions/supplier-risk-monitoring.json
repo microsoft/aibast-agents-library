@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/supplier-risk-monitoring",
+  "slug": "supplier-risk-monitoring",
+  "name": "Supply Risk Monitoring Agent",
+  "headline": "Turn scattered supplier signals into an explainable continuity review",
+  "pitch": "Unify supplier quality, delivery, financial, geopolitical, incident, and backup-option evidence so procurement leaders can prioritize review without contacting, qualifying, selecting, or ordering from suppliers.",
+  "category": "manufacturing",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Procurement Manager",
+    "Supply Chain Director"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Protect",
+  "why_try": "It makes supplier-risk AI concrete: leaders can ask where exposure is concentrated, understand why a relationship is elevated, and compare mitigation options with procurement authority preserved.",
+  "customer_challenge": "A manufacturer reviews supplier evidence across ERP, supplier-management, logistics, quality, and external-risk systems. Fragmented analysis delays continuity planning and can confuse recommendations with authorized sourcing action.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the governed conversational experience. Dynamics 365 Supply Chain Management contributes supplier, order, quality, and inventory context; approved financial and logistics feeds contribute risk signals; Power BI presents portfolio exposure; and Microsoft Teams supports procurement review and escalation.",
+  "business_value": [
+    "Improves visibility into supplier relationships and incidents that deserve continuity review.",
+    "Accelerates explanation of risk by connecting commercial, operational, financial, logistics, and geopolitical evidence.",
+    "Strengthens procurement governance by separating mitigation recommendations from supplier outreach, qualification, allocation, and ordering."
+  ],
+  "business_flow": [
+    "Procurement managers, supply chain directors, and continuity leaders",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Supply Risk Monitoring Agent",
+    "Dynamics 365 Supply Chain Management",
+    "Approved financial, quality, logistics, and external-risk sources",
+    "Power BI",
+    "Authorized procurement and supplier-management reviewers"
+  ],
+  "capabilities": [
+    {
+      "operation": "risk_dashboard",
+      "name": "Supplier risk portfolio overview",
+      "purpose": "Ranks the fixed supplier snapshot and shows where commercial exposure and incidents deserve review."
+    },
+    {
+      "operation": "supplier_scorecard",
+      "name": "Supplier evidence scorecards",
+      "purpose": "Explains quality, delivery, financial, geopolitical, and incident evidence by supplier."
+    },
+    {
+      "operation": "disruption_alerts",
+      "name": "Continuity disruption review",
+      "purpose": "Summarizes recorded incidents and potential exposure while requiring validation against approved sources."
+    },
+    {
+      "operation": "alternative_sourcing",
+      "name": "Alternative sourcing option review",
+      "purpose": "Compares synthetic backup options without contacting, qualifying, selecting, allocating, or ordering from a supplier."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Review concentrated supplier exposure",
+      "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
+        "answer": "**Exposure concentration** (per risk_dashboard/supplier_scorecard):\n- **Taiwan – TechnoCore**: 40% of MCU supply, $4.8M spend, risk score 8.2/10 (HIGH). Single-facility concentration plus cross-strait geopolitical tension (military exercises within 50nm).\n- **China – Shenzhen Electronics**: 35% of passives, $3.2M spend, risk score 6.5/10 (MEDIUM). Stressed financials (debt-to-equity +35%) and rising defect rate (2.3%).\n- **Malaysia Semicon**: 25% of power ICs, $2.1M spend, risk 3.8/10 (LOW) — stable, 120% spare capacity.\n\n**Bottom line:** 79% of your $10.1M semiconductor spend ($8M) sits in elevated-risk suppliers.\n\n**Review priority for leadership:**\n1. **TechnoCore (Taiwan)** — top priority given geopolitical severity and single-site dependency on 40% of MCU supply.\n2. **Shenzhen Electronics (China)** — financial stress + quality drift warrants near-term scrutiny.\n3. Malaysia Semicon is healthy and could be a diversification lever, not a review target.\n\nWant me to pull the mitigation strategies or financial impact next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Explain an elevated supplier",
+      "prompt": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-scorecard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Manager",
+        "prompt": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+        "answer": "TechnoCore (SUP-101) is HIGH risk (score 8.2/10) mainly because it supplies **40% of our MCU volume from a single facility** in Taiwan, amid real cross-strait tension (military exercises within 50nm recorded).\n\n**Evidence by dimension (0–100, higher = healthier):**\n- **Quality: 82** — solid, not a concern\n- **Delivery: 74** — decent but below top performer\n- **Financial: 68** — adequate but not strong\n- **Geopolitical: 42** — the clear weak spot, dragging composite health to 68.5/100\n\nSo it's not a quality or delivery problem — it's concentration risk (single facility, 40% of category) layered on top of genuine geopolitical exposure. That combination is what pushes the overall score into HIGH.\n\nWant me to pull the mitigation plan for TechnoCore next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review continuity threats",
+      "prompt": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-disruption-alerts",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+        "answer": "Here's the risk snapshot (synthetic data, needs validation before any action):\n\n**Highest-severity continuity threats:**\n- **TechnoCore (Taiwan)** – military exercises near the facility + a 5-day port closure delayed 3 shipments. $4.8M annual spend exposed (microcontrollers), backup suppliers exist.\n- **Midwest Casting & Forge** – force majeure from equipment failure, 7-day halt. $5.6M exposed (aluminum castings), backups available.\n\n**Lower-severity but worth tracking:**\n- **Shenzhen Electronics** – quality excursion (capacitor defect rate up to 2.3% vs. 0.5% spec) and a pending export-control compliance review.\n\n**Exposure to validate:**\n- Confirm actual shipment delay impact from TechnoCore's port closure against production schedules.\n- Verify Midwest's force majeure timeline and whether the 7-day halt has cascading effects downstream.\n- Check if Shenzhen's defect lot has already shipped into inventory, and get status on the export control review.\n\nWant me to pull the **supplier scorecard** for detailed risk ratings, or jump to **mitigation options**?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Compare backup sourcing options",
+      "prompt": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-alternative-sourcing",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Manager",
+        "prompt": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+        "answer": "Here's a comparison of backup sourcing options — purely for your team's review, nothing has been initiated:\n\n**TechnoCore (Taiwan, microcontrollers)** — $4.8M spend, risk 8.2/10\n- Hanseong Foundry (Korea): 26-wk lead, +8% cost, qualification in progress\n- Lakeside Foundry (USA): 16-wk lead, +15% cost, not yet started\n\n**Shenzhen Electronics (passive components)** — $3.2M spend, risk 6.5/10\n- Kansai Passives (Japan): 6-wk lead, +5% cost, in qualification\n- Keystone Passives (USA): 4-wk lead, +12% cost, in qualification\n\n**Midwest Casting & Forge (aluminum castings)** — $5.6M spend, risk 4.9/10\n- Great Lakes Precision Castings (USA): 8-wk lead, +6% cost, in progress\n\nFull diversification across these would run ~$880K/year in cost premium against $13.6M of modeled spend.\n\nThese are flagged as candidates for your procurement team to evaluate — no outreach, qualification, selection, or ordering has occurred. Want me to pull the mitigation plan or financial impact view next?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsupplier-risk-monitoring",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/supplier-risk-monitoring/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Supply%20Risk%20Monitoring%20Agent%22"
+  }
+}

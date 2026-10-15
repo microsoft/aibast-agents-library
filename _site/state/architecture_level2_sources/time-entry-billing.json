@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "time-entry-billing",
+  "agent": "@aibast-agents-library/time-entry-billing",
+  "display_name": "Time Entry and Billing Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic March 2026 time ledger",
+        "detail": "Twelve fixed entries capture consultants, projects, dates, hours, rates, narratives, billability, and approval state."
+      },
+      {
+        "name": "Billing rules and dispute controls",
+        "detail": "Packaged rules define narrative, daily-hours, rate, approval, budget, invoice eligibility, and dispute evidence checks."
+      },
+      {
+        "name": "Project budget and contract evidence",
+        "detail": "Five fictional projects provide clients, T&M or fixed-fee terms, budgets, billed-to-date values, and remaining amounts."
+      },
+      {
+        "name": "Invoice and authorization evidence",
+        "detail": "Fixed invoice history, approval gaps, milestone requirements, and two disputes ground month-end finance review."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Unbilled work triage",
+        "detail": "Identifies unapproved billable entries, computes blocked value, and presents outstanding invoices without changing status."
+      },
+      {
+        "name": "Project and consultant rollups",
+        "detail": "Aggregates billable hours and values by project and consultant while keeping amounts separate from posted revenue."
+      },
+      {
+        "name": "Time-entry and budget audit",
+        "detail": "Applies deterministic narrative, hours, rate, approval, and budget thresholds while leaving every source entry unchanged."
+      },
+      {
+        "name": "Approval-gated invoice support",
+        "detail": "Groups only approved billable T&M evidence and holds fixed-fee work until contractual milestone evidence is reviewed."
+      },
+      {
+        "name": "Disputed-hours evidence analysis",
+        "detail": "Separates evidence present from missing support and recommends authorized internal review paths for each dispute."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio draft conversation",
+        "detail": "Billing and finance personas invoke five grounded behaviors through an unpublished conversational agent experience."
+      },
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "The BasicAgent-compatible Python tool runs locally through Brainstem chat, streaming, UI, and health endpoints."
+      },
+      {
+        "name": "Evidence-first review responses",
+        "detail": "Outputs lead with ready, blocked, flagged, held, or disputed work and state the next authorized reviewer action."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Month-end billing blockers",
+        "detail": "Reports blocked entries, missing evidence, approval needs, unbilled value, and outstanding invoice history."
+      },
+      {
+        "name": "Project and consultant close summary",
+        "detail": "Shows hours, billable values, average rates, contract types, budget use, and remaining project amounts."
+      },
+      {
+        "name": "Audit and budget control report",
+        "detail": "Lists narrative and hours exceptions plus project budget warnings for project-manager and finance review."
+      },
+      {
+        "name": "Invoice and dispute review package",
+        "detail": "Presents eligible T&M support, fixed-fee holds, evidence gaps, and internal resolution paths without posting invoices."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable TimeEntryBillingAgent",
+      "detail": "A single BasicAgent-compatible Python file exposes five read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Deterministic billing functions",
+      "detail": "Python calculations derive hours, values, audit flags, budget status, invoice eligibility, and collection metrics."
+    },
+    {
+      "name": "Synthetic knowledge package",
+      "detail": "Two uploaded files provide the complete fictional ledger, billing rules, invoice history, and dispute evidence."
+    },
+    {
+      "name": "Brainstem RAPP runtime",
+      "detail": "The local-first server discovers the portable agent and serves grounded chat without customer credentials."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The environment-selected model routes natural-language requests and composes responses from bounded evidence."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the draft conversational agent, two knowledge files, and five skills; publication remains separate."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "An approved production seam for finance and project records; no live connection or write is enabled in the evidence."
+    },
+    {
+      "name": "SharePoint and Microsoft Teams",
+      "detail": "Approved seams for governed evidence and human review; the current package performs no upload, message, or approval action."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only grounding",
+      "detail": "The agent uses the frozen March 2026 snapshot and does not browse, query finance systems, or invent missing evidence."
+    },
+    {
+      "name": "Five bounded operations",
+      "detail": "Routing is limited to unbilled reports, billing summaries, time-entry audits, invoice support, and disputes."
+    },
+    {
+      "name": "Deterministic control calculations",
+      "detail": "Fixed formulas govern billable totals, unbilled value, rate checks, daily-hours limits, budgets, and collections."
+    },
+    {
+      "name": "Finance and project review gates",
+      "detail": "Consultant, project-manager, billing-manager, milestone, and authorized finance approvals remain human decisions."
+    },
+    {
+      "name": "Fixed-fee milestone boundary",
+      "detail": "Fixed-fee time remains delivery evidence and cannot determine invoice value without contractual milestone support."
+    },
+    {
+      "name": "No-write billing boundary",
+      "detail": "The agent never mutates time entries, grants approval, recognizes revenue, posts accounting entries, or generates invoices."
+    },
+    {
+      "name": "Validated draft lifecycle",
+      "detail": "All five locked cases passed manual and Copilot Studio preview evidence while the solution remained unpublished."
+    }
+  ]
+}

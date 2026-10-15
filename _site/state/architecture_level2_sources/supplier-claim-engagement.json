@@ -1,0 +1,112 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "supplier-claim-engagement",
+  "agent": "@aibast-agents-library/supplier-claim-engagement",
+  "display_name": "Supplier Claim Engagement Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic claims snapshot",
+        "detail": "Five fictional claims with suppliers, purchase orders, affected lines, evidence references, and status."
+      },
+      {
+        "name": "Supplier service terms",
+        "detail": "Severity, response window, and resolution window for damage, shortage, quality, and pricing claims."
+      },
+      {
+        "name": "Evidence requirements",
+        "detail": "Required photos and documents for each claim type used to judge pack completeness."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Claim triage",
+        "detail": "Assigns severity, responsible supplier, and response and resolution windows by claim type."
+      },
+      {
+        "name": "Evidence completeness check",
+        "detail": "Compares required evidence with what is on file and totals the claim value by line."
+      },
+      {
+        "name": "Deadline computation",
+        "detail": "Computes elapsed and remaining hours and business-day due dates from a fixed demo clock."
+      },
+      {
+        "name": "Supplier offer evaluation",
+        "detail": "Compares credit offered with the claim value and returns the unrecovered gap."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the Draft agent with seven skills and two synthetic knowledge files; publishing is gated."
+      },
+      {
+        "name": "Microsoft Teams access",
+        "detail": "Claims-team entry point once approved controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file SupplierClaimEngagementAgent locally with deterministic routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Claims queue view",
+        "detail": "Open claims, open value, severity, status, and recovery to date."
+      },
+      {
+        "name": "Deadline tracker",
+        "detail": "Breached, at-risk, and on-track claims against supplier response windows."
+      },
+      {
+        "name": "Acceptance evidence",
+        "detail": "Seven locked persona cases, transcripts, and the separate publish approval gate."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable SupplierClaimEngagementAgent",
+      "detail": "Single-file Python BasicAgent with seven deterministic read-only operations over synthetic data."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the seven-skill package in Draft; publishing needs explicit approval."
+    },
+    {
+      "name": "Power Automate agent flow",
+      "detail": "Materialized flow that returns the agent's exact outputs for each operation."
+    },
+    {
+      "name": "Microsoft Outlook",
+      "detail": "Cited send channel for approved supplier notices; the package sends nothing."
+    },
+    {
+      "name": "Authorized coordinator workflow",
+      "detail": "Cited human workflow for sends, credit acceptance, and escalations."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only bundled fictional claims and forbids browsing, live-system claims, or invented values."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never sends, accepts, rejects, escalates, or changes a case."
+    },
+    {
+      "name": "Coordinator decision gate",
+      "detail": "Every supplier send, credit decision, and escalation stays with an authorized coordinator."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Seven natural-language cases verify one operation each with exact evidence anchors."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "The Copilot Studio package stays Draft until an authorized publish decision."
+    }
+  ]
+}

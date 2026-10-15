@@ -1,0 +1,110 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/personalized-shopping-assistant",
+  "slug": "personalized-shopping-assistant",
+  "name": "Personalized Shopping Agent",
+  "headline": "Scale thoughtful styling with transparent, opt-in recommendations.",
+  "pitch": "Uses synthetic stated preferences to draft explainable product and outfit options, summarize style context, and show read-only availability.",
+  "category": "b2c_sales",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Personal Shoppers",
+    "Clienteling Specialists",
+    "Retail Managers"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Outlook"
+  ],
+  "journey_stage": "Discover and advise",
+  "why_try": "It helps personal shoppers and clienteling teams deliver consistent ideas without inferring sensitive traits or turning recommendations into orders.",
+  "customer_challenge": "High-touch styling can be slow and inconsistent when product knowledge, stated preferences, outfit coordination, and availability checks live in separate places.",
+  "microsoft_ai_story": "A portable agent combines CRM-style opt-in preferences and commerce-style product records into explainable drafts for associate review.",
+  "business_value": [
+    "More consistent styling preparation",
+    "Clearer explanations for recommendations",
+    "Safer use of preference and availability data"
+  ],
+  "business_flow": [
+    "Personal Shopper, Clienteling Specialist, and Retail Manager",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Personalized Shopping Agent",
+    "Approved consented preference data",
+    "Approved read-only catalog and inventory data",
+    "Authorized associate review"
+  ],
+  "capabilities": [
+    {
+      "operation": "product_recommendations",
+      "name": "Transparent product recommendations",
+      "purpose": "Explains options from stated non-sensitive preferences."
+    },
+    {
+      "operation": "style_profile",
+      "name": "Opt-in style profile",
+      "purpose": "Summarizes only preferences the synthetic shopper explicitly provided."
+    },
+    {
+      "operation": "inventory_check",
+      "name": "Read-only availability check",
+      "purpose": "Shows synthetic size-level stock with a verification gate."
+    },
+    {
+      "operation": "outfit_builder",
+      "name": "Review-only outfit builder",
+      "purpose": "Drafts coordinated options and totals without ordering or reserving."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Recommend products transparently",
+      "prompt": "Suggest transparent options for Synthetic Shopper A using only stated preferences.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-product-recommendations",
+      "recorded": false,
+      "recorded_answer": null
+    },
+    {
+      "label": "Summarize stated preferences",
+      "prompt": "Summarize Synthetic Shopper B’s opt-in preferences without inferring anything else.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-style-profile",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Clienteling Specialist",
+        "prompt": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+        "answer": "Here's Synthetic Shopper B's opt-in style profile — stated preferences only, nothing inferred:\n\n**Style**\n- Archetype: Relaxed Minimal\n- Colors: Black, white, camel\n- Fit: Easy, unstructured\n- Price range: $80–250/piece\n- Preferred brand: Vince\n\n**Sizing**\n- Tops: 8/Medium (easy fit)\n- Bottoms: 29/8 (mid-rise)\n- Dresses: 8 (knee length)\n- Shoes: 9 (flats preferred)\n\n**Purchase patterns**\n- Last purchase: 2 months ago (knit top)\n- Avg items/visit: 1.6\n- Return rate: 12%\n- YTD spend: $1,150\n\n**Noted preference (her own words):** \"Prefers comfort and simple shapes\"\n\nThat's the complete opt-in record — want me to pull product recommendations or check inventory next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Check availability safely",
+      "prompt": "Show the synthetic size-level availability and verification gate for the sweater.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-inventory-check",
+      "recorded": false,
+      "recorded_answer": null
+    },
+    {
+      "label": "Draft coordinated outfits",
+      "prompt": "Draft coordinated outfit options and transparent totals without ordering anything.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-outfit-builder",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Personal Shopper",
+        "prompt": "As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
+        "answer": "Here are three draft outfit options for Jennifer Hayes's business dinner (all synthetic, non-binding — nothing is ordered or reserved):\n\n**1. Power Suiting (recommended)** — blazer, silk shell top, tailored pant, pumps, tote → **$1,575**\n\n**2. Elegant Simplicity** — midi sheath dress + blazer, kitten heels, gold necklace → **$1,110**\n\n**3. Modern Edge** — tailored jumpsuit, belt, statement earrings, clutch → **$920**\n\nStylist pick: **Outfit 1**, closest match to her established preferences.\n\nWant me to check stock/sizes or pricing/loyalty offers next? (Still no purchase would be made — just more drafting.)",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpersonalized-shopping-assistant",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/personalized-shopping-assistant/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack/personalized_shopping_assistant_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Personalized%20Shopping%20Agent%22"
+  }
+}

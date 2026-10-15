@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "production-line-optimization",
+  "agent": "@aibast-agents-library/production-line-optimization",
+  "display_name": "Product Line Optimization Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic production-line snapshot",
+        "detail": "Fixed records cover three lines, products, capacity, output, availability, performance, quality, and operating scores."
+      },
+      {
+        "name": "Station, defect, and shift evidence",
+        "detail": "Bundled station cycle and takt times, defect rates and mixes, shift hours, staffing, premiums, and output plans support analysis."
+      },
+      {
+        "name": "Optimization rules and safety controls",
+        "detail": "Packaged formulas define OEE, gaps, bottlenecks, option gains, shift projections, response framing, and prohibited actions."
+      },
+      {
+        "name": "Approved production connection seams",
+        "detail": "Dynamics 365 ERP, Azure IoT Hub, and Power BI are documented future seams only; no live connector is configured."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Plant-wide line health ranking",
+        "detail": "Ranks all three lines against the 75% operating threshold and identifies availability, performance, quality, and output-loss drivers."
+      },
+      {
+        "name": "Constraining-station analysis",
+        "detail": "Compares cycle time with takt and defect evidence to identify each line's bottleneck and the first station for plant-team review."
+      },
+      {
+        "name": "Throughput option comparison",
+        "detail": "Compares cycle reduction, parallel capacity, and quality improvement with synthetic gains, costs, and visible quality tradeoffs."
+      },
+      {
+        "name": "Three-shift production projection",
+        "detail": "Builds Day, Swing, and Night output and staffing views, including night efficiency and premium, without committing a schedule."
+      },
+      {
+        "name": "Intent routing and fail-closed handling",
+        "detail": "Routes plant-floor language to four workflows, defaults to all three lines, and never substitutes or invents unknown records."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file BasicAgent exposes four deterministic operations through local Brainstem chat, streaming, and API surfaces."
+      },
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Four skills and two synthetic knowledge files support natural-language previews while the validated pilot remains unpublished."
+      },
+      {
+        "name": "Plant-leader review responses",
+        "detail": "Plant managers, engineers, and operations directors receive concise evidence, recommendations, tradeoffs, and no-action limits."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Production Line Efficiency Report",
+        "detail": "Reports OEE, availability, performance, quality, actual versus design output, daily loss, and synthetic annual quality cost."
+      },
+      {
+        "name": "Bottleneck Analysis",
+        "detail": "Reports each constraining station, cycle-versus-takt delta, defect rate, station table, defect mix, and review priority."
+      },
+      {
+        "name": "Throughput Optimization Recommendations",
+        "detail": "Reports three improvement options per line, expected gains, investment range, quality target, and projected operating score."
+      },
+      {
+        "name": "Shift Production Plan",
+        "detail": "Reports Day, Swing, and Night hours, staffing, premiums, projected line output, operator totals, and weekly capacity."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "ProductionLineOptimizationAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements four deterministic, recommendation-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable agent and exposes conversational chat, streaming, health, and tool routing."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft pilot with four skills and two knowledge files; publication requires explicit confirmation."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from deterministic agent or skill evidence."
+    },
+    {
+      "name": "Dynamics 365 ERP",
+      "detail": "Documented future seam for approved production context; the packaged pilot has no live read or write connection."
+    },
+    {
+      "name": "Azure IoT Hub approved connector",
+      "detail": "Documented future seam for verified equipment telemetry; the current package cannot read or control plant equipment."
+    },
+    {
+      "name": "Power BI reporting surface",
+      "detail": "Documented future seam for governed reporting; the current pilot neither reads dashboards nor publishes production results."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every line, station, output, cost, staffing value, gain, investment range, and projection is fictional pilot evidence."
+    },
+    {
+      "name": "Four independently routable workflows",
+      "detail": "Line health, bottleneck analysis, throughput options, and shift planning remain separately callable and reviewable."
+    },
+    {
+      "name": "Visible quality tradeoffs",
+      "detail": "Every throughput recommendation keeps defect and quality impact visible and retains quality improvement as an explicit option."
+    },
+    {
+      "name": "Plant-leader review gate",
+      "detail": "Plant managers, production engineers, and operations directors review recommendations before any operational decision."
+    },
+    {
+      "name": "No machine or schedule mutation",
+      "detail": "Never starts, stops, throttles, reconfigures, or reschedules equipment or shifts, dispatches maintenance, or changes staffing."
+    },
+    {
+      "name": "No commitment or external write",
+      "detail": "The agent cannot commit investment, headcount, or projected benefits and performs no write to ERP, IoT, Power BI, MES, or other systems."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four canonical cases passed strict Brainstem and Copilot Studio previews while validated agents remained Draft and unpublished."
+    }
+  ]
+}

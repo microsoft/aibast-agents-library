@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "customer-sentiment-churn",
+  "agent": "@aibast-agents-library/customer-sentiment-churn",
+  "display_name": "Customer Sentiment and Churn Prediction Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic customer snapshot",
+        "detail": "Bundled fictional customer, interaction, NPS, complaint, engagement, product, tenure, and segment records support review."
+      },
+      {
+        "name": "Transparent decision rules",
+        "detail": "Packaged thresholds, weights, retention options, costs, illustrative success rates, and segment benchmarks drive deterministic output."
+      },
+      {
+        "name": "Controls and review guidance",
+        "detail": "Uploaded instructions define evidence use, identifier handling, prohibited actions, response order, and authorized review gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Cross-channel sentiment aggregation",
+        "detail": "Summarizes synthetic interaction sentiment, NPS, products, and complaint counts across branch, phone, chat, email, and mobile."
+      },
+      {
+        "name": "Heuristic churn-review prioritization",
+        "detail": "Applies disclosed weighted indicators to rank human review; scores are heuristics and never predictions of individual outcomes."
+      },
+      {
+        "name": "Retention option preparation",
+        "detail": "Assembles reviewable service-recovery and outreach options from fixed rules without contacting customers or making offers."
+      },
+      {
+        "name": "Segment benchmark comparison",
+        "detail": "Compares synthetic segment NPS and product averages with fixed benchmarks to identify areas for human investigation."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access through a validated Draft agent with four behaviors and two synthetic knowledge files."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs CustomerSentimentChurnAgent through local Brainstem chat and UI endpoints using bundled synthetic records."
+      },
+      {
+        "name": "Role-based evidence review",
+        "detail": "Supports relationship managers, retention specialists, customer-success leads, and experience leaders with reviewable responses."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Customer Sentiment Dashboard",
+        "detail": "Reports average NPS, interaction totals, sentiment distribution, and customer-level NPS, products, and complaints."
+      },
+      {
+        "name": "Churn Prediction Report",
+        "detail": "Reports heuristic scores, evidence fields, review priority, and indicator weights without claiming that churn will occur."
+      },
+      {
+        "name": "Retention Action Recommendations",
+        "detail": "Lists bounded options, illustrative cost and success-rate fields, and customer-specific suggestions for authorized review only."
+      },
+      {
+        "name": "Segment Analysis",
+        "detail": "Reports fixed segment benchmarks and synthetic NPS and product averages to guide investigation, not automated action."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable CustomerSentimentChurnAgent RAPP tool",
+      "detail": "Single-file BasicAgent exposes four deterministic operations with bundled synthetic data and no required credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-behavior conversational package; validated agents remain Draft and require approval before publication."
+    },
+    {
+      "name": "Dynamics 365 Customer Service or CRM",
+      "detail": "Approved production seam for customer-service context; no live connection is configured in the synthetic package."
+    },
+    {
+      "name": "Approved interaction analytics",
+      "detail": "Potential read-only source for voice, chat, survey, and complaint signals; demonstrations use fixed synthetic evidence only."
+    },
+    {
+      "name": "Power BI",
+      "detail": "Named reporting seam for segment trends; the current package does not connect to live dashboards or datasets."
+    },
+    {
+      "name": "Microsoft Teams outreach review",
+      "detail": "Named collaboration seam for human review; no message, task, outreach, approval, or customer action is configured."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The deployment environment supplies the model for natural-language routing and evidence-first response generation."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence enforcement",
+      "detail": "Forbids browsing, live retrieval, enrichment, substitution, or invention; missing identifiers are reported as absent."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes sentiment dashboard, churn prioritization, retention options, and segment analysis from natural-language intent."
+    },
+    {
+      "name": "Evidence-first response contract",
+      "detail": "Separates synthetic evidence, observed sentiment, heuristic analysis, reviewable options, and the approval gate."
+    },
+    {
+      "name": "Human review and approval gates",
+      "detail": "Authorized relationship, retention, or customer-success reviewers must assess every priority and proposed option."
+    },
+    {
+      "name": "No autonomous customer contact",
+      "detail": "Prohibits outreach, messages, cases, tasks, fee changes, offers, approvals, transactions, and external record changes."
+    },
+    {
+      "name": "Locked demo and isolation validation",
+      "detail": "Maintains four persona-language cases with required evidence anchors and records four passing strict-isolation captures."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Keeps exported Copilot Studio agents unpublished and makes publication a separate administrator-approved step."
+    }
+  ]
+}

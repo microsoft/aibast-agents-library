@@ -1,0 +1,1049 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/reporting-package-validation",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reporting Package Validation",
+        "driver-reconciliation",
+        "exception-queue",
+        "package-intake",
+        "executive-summary",
+        "aibast_reporting-package-validation-synthetic-re",
+        "aibast_reporting-package-validation-rules-and-gu"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 223,
+          "height": 24,
+          "label": "Reporting Package Validation"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 134,
+          "height": 19,
+          "label": "driver-reconciliation"
+        },
+        {
+          "x": 1249,
+          "y": 197,
+          "width": 115,
+          "height": 22,
+          "label": "exception-queue"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 105,
+          "height": 22,
+          "label": "package-intake"
+        },
+        {
+          "x": 1219,
+          "y": 237,
+          "width": 131,
+          "height": 22,
+          "label": "executive-summary"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_reporting-package-validation-synthetic-re"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 303,
+          "height": 22,
+          "label": "aibast_reporting-package-validation-rules-and-gu"
+        }
+      ]
+    },
+    {
+      "id": "easy-rpv-01",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/02-rpv-01.jpg",
+      "caption": "RPV-01 · FP&A Manager: The June reporting package just landed. What did we receive and where did each file come from?",
+      "case_id": "RPV-01",
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/02-rpv-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PKG-2026-06",
+        "11 of 12"
+      ],
+      "boxes": [
+        {
+          "x": 453,
+          "y": 456,
+          "width": 129,
+          "height": 23,
+          "label": "PKG-2026-06"
+        },
+        {
+          "x": 362,
+          "y": 916,
+          "width": 61,
+          "height": 21,
+          "label": "11 of 12"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "6 files received not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-rpv-02",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/03-rpv-02.jpg",
+      "caption": "RPV-02 · Financial Controller: Run the integrity checks before anyone looks at the numbers.",
+      "case_id": "RPV-02",
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/03-rpv-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2 blocking",
+        "A missing cell is not a zero",
+        "Outdoor Forecast"
+      ],
+      "boxes": [
+        {
+          "x": 395,
+          "y": 505,
+          "width": 86,
+          "height": 24,
+          "label": "2 blocking"
+        },
+        {
+          "x": 285,
+          "y": 1042,
+          "width": 81,
+          "height": 24,
+          "label": "A missing cell is not a zero"
+        },
+        {
+          "x": 515,
+          "y": 1042,
+          "width": 135,
+          "height": 20,
+          "label": "Outdoor Forecast"
+        }
+      ]
+    },
+    {
+      "id": "easy-rpv-03",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/04-rpv-03.jpg",
+      "caption": "RPV-03 · FP&A Manager: How did each division do against budget, and which variances need an explanation?",
+      "case_id": "RPV-03",
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/04-rpv-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "+$320K",
+        "-7.6%",
+        "offset each other"
+      ],
+      "boxes": [
+        {
+          "x": 659,
+          "y": 529,
+          "width": 66,
+          "height": 22,
+          "label": "+$320K"
+        },
+        {
+          "x": 778,
+          "y": 573,
+          "width": 52,
+          "height": 20,
+          "label": "-7.6%"
+        },
+        {
+          "x": 814,
+          "y": 856,
+          "width": 135,
+          "height": 20,
+          "label": "offset each other"
+        }
+      ]
+    },
+    {
+      "id": "easy-rpv-04",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/05-rpv-04.jpg",
+      "caption": "RPV-04 · FP&A Manager: Does the driver bridge reconcile from budget to actual?",
+      "case_id": "RPV-04",
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/05-rpv-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Does not reconcile",
+        "Unexplained residual",
+        "$10,760K"
+      ],
+      "boxes": [
+        {
+          "x": 368,
+          "y": 461,
+          "width": 148,
+          "height": 21,
+          "label": "Does not reconcile"
+        },
+        {
+          "x": 590,
+          "y": 461,
+          "width": 155,
+          "height": 24,
+          "label": "Unexplained residual"
+        },
+        {
+          "x": 533,
+          "y": 827,
+          "width": 76,
+          "height": 23,
+          "label": "$10,760K"
+        }
+      ]
+    },
+    {
+      "id": "easy-rpv-05",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/06-rpv-05.jpg",
+      "caption": "RPV-05 · Financial Controller: Route the exceptions to the right owners.",
+      "case_id": "RPV-05",
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/06-rpv-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "EX-01",
+        "Consolidation lead",
+        "none has been sent"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 575,
+          "width": 50,
+          "height": 20,
+          "label": "EX-01"
+        },
+        {
+          "x": 1106,
+          "y": 617,
+          "width": 109,
+          "height": 21,
+          "label": "Consolidation lead"
+        },
+        {
+          "x": 606,
+          "y": 978,
+          "width": 152,
+          "height": 21,
+          "label": "none has been sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-rpv-06",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/07-rpv-06.jpg",
+      "caption": "RPV-06 · Finance Director: Draft the executive summary for the leadership pack.",
+      "case_id": "RPV-06",
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/07-rpv-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "on budget overall",
+        "Industrial +$320K",
+        "not released"
+      ],
+      "boxes": [
+        {
+          "x": 832,
+          "y": 594,
+          "width": 143,
+          "height": 24,
+          "label": "on budget overall"
+        },
+        {
+          "x": 299,
+          "y": 733,
+          "width": 426,
+          "height": 22,
+          "label": "Industrial +$320K"
+        },
+        {
+          "x": 326,
+          "y": 1373,
+          "width": 124,
+          "height": 20,
+          "label": "not released"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/reporting-package-validation/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/reporting-package-validation/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reporting Package Validation"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 222,
+          "height": 24,
+          "label": "Reporting Package Validation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Reporting Package Manual",
+      "step": 2,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reporting Package Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 205,
+          "height": 24,
+          "label": "Reporting Package Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reporting Package Validation Agent — Manual Glob"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 293,
+          "height": 39,
+          "label": "Reporting Package Validation Agent — Manual Glob"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 301,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/06-add-aibast-reporting-package-validation-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_reporting-package-validation-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/06-add-aibast-reporting-package-validation-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_reporting-package-validation-rules-and-gu"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_reporting-package-validation-rules-and-gu"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/07-add-aibast-reporting-package-validation-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_reporting-package-validation-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/07-add-aibast-reporting-package-validation-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_reporting-package-validation-synthetic-re"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 305,
+          "height": 33,
+          "label": "aibast_reporting-package-validation-synthetic-re"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/08-add-aibast-driver-reconciliation-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_driver-reconciliation_04",
+      "step": 8,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/08-add-aibast-driver-reconciliation-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "driver-reconciliation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 134,
+          "height": 19,
+          "label": "driver-reconciliation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/09-add-aibast-exception-queue-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_exception-queue_05",
+      "step": 9,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/09-add-aibast-exception-queue-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "exception-queue"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 115,
+          "height": 22,
+          "label": "exception-queue"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/10-add-aibast-executive-summary-06.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_executive-summary_06",
+      "step": 10,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/10-add-aibast-executive-summary-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "executive-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 131,
+          "height": 21,
+          "label": "executive-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/11-add-aibast-integrity-checks-02.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_integrity-checks_02",
+      "step": 11,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/11-add-aibast-integrity-checks-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "integrity-checks"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 109,
+          "height": 22,
+          "label": "integrity-checks"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/12-add-aibast-package-intake-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_package-intake_01",
+      "step": 12,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/12-add-aibast-package-intake-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "package-intake"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 105,
+          "height": 22,
+          "label": "package-intake"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/13-add-aibast-variance-analysis-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_variance-analysis_03",
+      "step": 13,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/13-add-aibast-variance-analysis-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "variance-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 22,
+          "label": "variance-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "variance-analysis",
+        "package-intake",
+        "integrity-checks",
+        "executive-summary",
+        "exception-queue",
+        "aibast_reporting-package-validation-synthetic-re",
+        "aibast_reporting-package-validation-rules-and-gu"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 22,
+          "label": "variance-analysis"
+        },
+        {
+          "x": 1230,
+          "y": 197,
+          "width": 105,
+          "height": 22,
+          "label": "package-intake"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 109,
+          "height": 22,
+          "label": "integrity-checks"
+        },
+        {
+          "x": 1223,
+          "y": 237,
+          "width": 131,
+          "height": 22,
+          "label": "executive-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 115,
+          "height": 22,
+          "label": "exception-queue"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_reporting-package-validation-synthetic-re"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 303,
+          "height": 22,
+          "label": "aibast_reporting-package-validation-rules-and-gu"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "variance-analysis",
+        "package-intake",
+        "integrity-checks",
+        "executive-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 116,
+          "height": 22,
+          "label": "variance-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 105,
+          "height": 22,
+          "label": "package-intake"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 109,
+          "height": 22,
+          "label": "integrity-checks"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 132,
+          "height": 22,
+          "label": "executive-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "package-intake",
+        "integrity-checks",
+        "executive-summary",
+        "exception-queue",
+        "driver-reconciliation"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 124,
+          "width": 105,
+          "height": 22,
+          "label": "package-intake"
+        },
+        {
+          "x": 1055,
+          "y": 202,
+          "width": 109,
+          "height": 22,
+          "label": "integrity-checks"
+        },
+        {
+          "x": 1055,
+          "y": 300,
+          "width": 131,
+          "height": 21,
+          "label": "executive-summary"
+        },
+        {
+          "x": 1055,
+          "y": 380,
+          "width": 116,
+          "height": 20,
+          "label": "exception-queue"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 135,
+          "height": 19,
+          "label": "driver-reconciliation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reporting Package Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 205,
+          "height": 24,
+          "label": "Reporting Package Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-rpv-01",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/18-rpv-01.jpg",
+      "caption": "RPV-01 · FP&A Manager: The June reporting package just landed. What did we receive and where did each file come from?",
+      "step": 18,
+      "case_id": "RPV-01",
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/18-rpv-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PKG-2026-06",
+        "6 files received",
+        "11 of 12"
+      ],
+      "boxes": [
+        {
+          "x": 486,
+          "y": 500,
+          "width": 153,
+          "height": 26,
+          "label": "PKG-2026-06"
+        },
+        {
+          "x": 286,
+          "y": 922,
+          "width": 121,
+          "height": 23,
+          "label": "6 files received"
+        },
+        {
+          "x": 667,
+          "y": 922,
+          "width": 63,
+          "height": 21,
+          "label": "11 of 12"
+        }
+      ]
+    },
+    {
+      "id": "hard-rpv-02",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/19-rpv-02.jpg",
+      "caption": "RPV-02 · Financial Controller: Run the integrity checks before anyone looks at the numbers.",
+      "step": 19,
+      "case_id": "RPV-02",
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/19-rpv-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2 blocking",
+        "Outdoor Forecast",
+        "A missing cell is not a zero"
+      ],
+      "boxes": [
+        {
+          "x": 339,
+          "y": 461,
+          "width": 90,
+          "height": 24,
+          "label": "2 blocking"
+        },
+        {
+          "x": 818,
+          "y": 612,
+          "width": 135,
+          "height": 20,
+          "label": "Outdoor Forecast"
+        },
+        {
+          "x": 285,
+          "y": 937,
+          "width": 79,
+          "height": 23,
+          "label": "A missing cell is not a zero"
+        }
+      ]
+    },
+    {
+      "id": "hard-rpv-03",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/20-rpv-03.jpg",
+      "caption": "RPV-03 · FP&A Manager: How did each division do against budget, and which variances need an explanation?",
+      "step": 20,
+      "case_id": "RPV-03",
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/20-rpv-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "+$320K",
+        "-7.6%"
+      ],
+      "boxes": [
+        {
+          "x": 659,
+          "y": 574,
+          "width": 65,
+          "height": 23,
+          "label": "+$320K"
+        },
+        {
+          "x": 778,
+          "y": 618,
+          "width": 51,
+          "height": 20,
+          "label": "-7.6%"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "offset each other not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-rpv-04",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/21-rpv-04.jpg",
+      "caption": "RPV-04 · FP&A Manager: Does the driver bridge reconcile from budget to actual?",
+      "step": 21,
+      "case_id": "RPV-04",
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/21-rpv-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Does not reconcile",
+        "$10,760K",
+        "Unexplained residual"
+      ],
+      "boxes": [
+        {
+          "x": 458,
+          "y": 462,
+          "width": 148,
+          "height": 21,
+          "label": "Does not reconcile"
+        },
+        {
+          "x": 533,
+          "y": 861,
+          "width": 73,
+          "height": 23,
+          "label": "$10,760K"
+        },
+        {
+          "x": 299,
+          "y": 947,
+          "width": 162,
+          "height": 24,
+          "label": "Unexplained residual"
+        }
+      ]
+    },
+    {
+      "id": "hard-rpv-05",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/22-rpv-05.jpg",
+      "caption": "RPV-05 · Financial Controller: Route the exceptions to the right owners.",
+      "step": 22,
+      "case_id": "RPV-05",
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/22-rpv-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "EX-01",
+        "Consolidation lead",
+        "none has been sent"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 570,
+          "width": 48,
+          "height": 20,
+          "label": "EX-01"
+        },
+        {
+          "x": 1011,
+          "y": 613,
+          "width": 141,
+          "height": 21,
+          "label": "Consolidation lead"
+        },
+        {
+          "x": 741,
+          "y": 891,
+          "width": 151,
+          "height": 20,
+          "label": "none has been sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-rpv-06",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/23-rpv-06.jpg",
+      "caption": "RPV-06 · Finance Director: Draft the executive summary for the leadership pack.",
+      "step": 23,
+      "case_id": "RPV-06",
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/23-rpv-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "on budget overall",
+        "Industrial +$320K",
+        "not released"
+      ],
+      "boxes": [
+        {
+          "x": 816,
+          "y": 506,
+          "width": 139,
+          "height": 24,
+          "label": "on budget overall"
+        },
+        {
+          "x": 424,
+          "y": 545,
+          "width": 142,
+          "height": 23,
+          "label": "Industrial +$320K"
+        },
+        {
+          "x": 401,
+          "y": 651,
+          "width": 103,
+          "height": 21,
+          "label": "not released"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/reporting-package-validation/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/reporting-package-validation/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reporting Package Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 204,
+          "height": 24,
+          "label": "Reporting Package Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:37.623159+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T04:55:55.169874Z",
+  "solution": "@aibast-agents-library/field-permit-to-work",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Field Permit to Work Pilot",
+  "schema_name": "aibast_FieldPermittoWorkPilot",
+  "bot_id": "3f100333-fb2d-41b9-b7d1-a34ba1942ae2",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 10 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "PTW-01",
+      "must_include": [
+        "PTW-4471",
+        "2 with a blocker",
+        "Live isolation not confirmed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PTW-02",
+      "must_include": [
+        "60 of 100",
+        "Arc-rated coveralls",
+        "Draft for the authorized person"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PTW-03",
+      "must_include": [
+        "CB-CH-02 lockout not applied",
+        "Do not start work",
+        "No device was operated"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PTW-04",
+      "must_include": [
+        "Lee Carter",
+        "Earliest issue",
+        "10:30"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PTW-05",
+      "must_include": [
+        "3 of 4 acknowledged",
+        "Chris Dale",
+        "no one was messaged"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PTW-06",
+      "must_include": [
+        "Held for review",
+        "1 unaccounted for",
+        "The permit was not closed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PTW-07",
+      "must_include": [
+        "212",
+        "Lockout gaps caught before work",
+        "Near misses"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+---
+name: clinical-notes-summarizer-preop-snapshot
+description: Reproduce the deterministic Clinical Notes Agent preop snapshot workflow, which assembles the pre-op patient snapshot for patient 78392.
+---
+<!-- bic:source=blank -->
+# Clinical Notes Agent — preop snapshot
+
+## Locked persona prompt
+
+`I need a pre-op clearance summary for Patient ID 78392.`
+
+Route semantically equivalent requests here without requiring an operation name or an identifier; the pre-op patient is John Martinez (Patient ID / MRN 78392).
+
+## Source
+
+Use both packaged knowledge files and the exact reference response for this workflow.
+
+## Required output contract
+
+`# Pre-Op Clearance Summary`; preserve `John Martinez`, `Right eye phacoemulsification`, `ASA class` and every value, medication and status from the reference response.
+
+## Review boundary
+
+This is read-only synthetic evidence. Do not diagnose, recommend treatment, or clear the patient; the clearance decision and signature are the physician's. Never sign, file, or send the note or notify a team; protocol flags and the distribution list are drafts.

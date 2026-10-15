@@ -1,0 +1,142 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-08T05:17:08.953457Z",
+  "solution": "@aibast-agents-library/staffing-territory-planning",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Staffing Territory Manual",
+    "bot_id": "2a3c658a-aba3-4b31-a701-c0fe7a79721b",
+    "created": true
+  },
+  "target_model": "Claude Opus 5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 6,
+      "confirmed": 6
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "STP-01",
+      "prompt": "Give me a snapshot of my North Valley territory.",
+      "must_include": [
+        "$241.0M",
+        "Granite Ridge",
+        "Spend per recruiter"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "18-stp-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "STP-02",
+      "prompt": "How big is the staffing market in Granite Ridge?",
+      "must_include": [
+        "Market Sizing: Granite Ridge",
+        "$44.6M",
+        "Largest open spend"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "19-stp-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "STP-03",
+      "prompt": "Where are our biggest coverage gaps?",
+      "must_include": [
+        "5 gaps",
+        "$81.7M open spend",
+        "IT and Engineering"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "20-stp-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "STP-04",
+      "prompt": "Who are we up against in each metro?",
+      "must_include": [
+        "Fabrikam Workforce",
+        "4 of 4",
+        "Litware Talent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "21-stp-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "STP-05",
+      "prompt": "What labor market trends should I plan around?",
+      "must_include": [
+        "31 days",
+        "+11%",
+        "Planning implication"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "22-stp-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "STP-06",
+      "prompt": "Draft my quarterly territory plan.",
+      "must_include": [
+        "Priority action",
+        "Top 3 opportunities",
+        "no headcount, quota or account change was made"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "23-stp-06.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/staffing-territory-planning/screenshots/manual/browserfilm.json",
+    "gif": "solutions/staffing-territory-planning/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/staffing-territory-planning/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "24-confirm-draft.jpg"
+  }
+}

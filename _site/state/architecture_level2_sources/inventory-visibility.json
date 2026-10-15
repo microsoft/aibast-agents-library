@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "inventory-visibility",
+  "agent": "@aibast-agents-library/inventory-visibility",
+  "display_name": "Inventory Visibility Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Frozen synthetic inventory network",
+        "detail": "Bundled stores, warehouses, SKUs, on-hand balances, safety stock, lead times, demand weights, and sell-through ground every view."
+      },
+      {
+        "name": "Inventory rules and locked case contract",
+        "detail": "Packaged rules define approved personas, exact routes, evidence anchors, identifier handling, verification, and the no-side-effect boundary."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Location and SKU visibility",
+        "detail": "Shows synthetic on-hand, safety stock, status, and days of supply by store or network, with system-of-record verification required."
+      },
+      {
+        "name": "Stock exception review",
+        "detail": "Identifies critical, out-of-stock, and low-stock review candidates without issuing a transfer or replenishment command."
+      },
+      {
+        "name": "Replenishment scenario modeling",
+        "detail": "Calculates a draft 14-day scenario with quantities, source warehouse, lead time, and estimated cost without creating an order."
+      },
+      {
+        "name": "Channel allocation scenario",
+        "detail": "Compares demand weights, planning units, and coverage across store, online, BOPIS, and marketplace channels without reserving stock."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Provides role-specific review for Inventory Planners, Store Managers, and Category Managers while the pilot remains an unpublished Draft."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file InventoryVisibilityAgent through local Brainstem chat and UI endpoints with synthetic data and no credentials."
+      },
+      {
+        "name": "Operator evidence review",
+        "detail": "Presents quantities, assumptions, exceptions, verification needs, and approval gates for an authorized operator to assess before action."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Inventory visibility snapshot",
+        "detail": "Reports store and SKU identity, on-hand quantity, safety stock, status, days of supply, and the synthetic network total."
+      },
+      {
+        "name": "Stock candidate and warning brief",
+        "detail": "Separates critical and out-of-stock candidates from low-stock warnings and labels suggested responses as review guidance only."
+      },
+      {
+        "name": "Planning scenario reports",
+        "detail": "Summarizes draft replenishment cost and channel coverage tradeoffs without recording an allocation, promise, transfer, or purchase."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable RAPP Inventory Visibility Agent",
+      "detail": "Single-file InventoryVisibilityAgent implements four deterministic read-only operations over bundled synthetic inventory records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts two knowledge files and four skills; manual and CLI-authored agents passed all four preview cases and remain unpublished Drafts."
+    },
+    {
+      "name": "Power Platform CLI",
+      "detail": "Initializes, pulls, validates, pushes, and exports the CLI-authored package while publication remains a separate authorized step."
+    },
+    {
+      "name": "Dynamics 365 Commerce or ERP",
+      "detail": "Approved production seam for read-only inventory data; the packaged pilot contains synthetic evidence and no live write integration."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Approved planning-review seam for operators; the current package sends no message and executes no inventory decision or workflow."
+    },
+    {
+      "name": "Foundation model selected by environment",
+      "detail": "The deployment environment supplies conversational routing and generation; preview evidence records Claude Sonnet 4.6."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Four deterministic inventory operations",
+      "detail": "Routes visibility, stock-alert, replenishment, and channel-planning intents to operation-specific synthetic evidence."
+    },
+    {
+      "name": "Synthetic-only grounding",
+      "detail": "Uses the bundled complete record set and rules; every quantity is fictional and requires authorized system-of-record verification."
+    },
+    {
+      "name": "Evidence-first response contract",
+      "detail": "Preserves persona headings, scenario headings, exact identifiers, planning assumptions, caveats, and locked acceptance anchors."
+    },
+    {
+      "name": "Identifier and source validation",
+      "detail": "Rejects unknown SKU or location identifiers and non-synthetic data-source requests instead of approximating or inventing evidence."
+    },
+    {
+      "name": "Authorized operator review gates",
+      "detail": "Keeps every output a draft, scenario, summary, or recommendation until an authorized operator verifies evidence and approves action."
+    },
+    {
+      "name": "No stock or promise mutation",
+      "detail": "Never reserves, transfers, replenishes, allocates, promises, sells, or purchases stock and never claims those actions occurred."
+    },
+    {
+      "name": "Draft, validation, and export controls",
+      "detail": "Records four passing locked cases, an unpublished Dataverse Draft, and an unmanaged export requiring administrator review before publish."
+    }
+  ]
+}

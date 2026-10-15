@@ -1,0 +1,1138 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/benefits-enrollment-assistant",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 35,
+    "reusable": 35,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benefits Enrollment Pilot",
+        "deadline-reminders",
+        "election-draft",
+        "life-event-change",
+        "provider-network",
+        "document-checklist",
+        "aibast_benefits-enrollment-assistant-synthetic-r",
+        "aibast_benefits-enrollment-assistant-rules-and-g"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 190,
+          "height": 20,
+          "label": "Benefits Enrollment Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 131,
+          "height": 19,
+          "label": "deadline-reminders"
+        },
+        {
+          "x": 1246,
+          "y": 197,
+          "width": 95,
+          "height": 19,
+          "label": "election-draft"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 119,
+          "height": 22,
+          "label": "life-event-change"
+        },
+        {
+          "x": 1234,
+          "y": 237,
+          "width": 118,
+          "height": 22,
+          "label": "provider-network"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 132,
+          "height": 19,
+          "label": "document-checklist"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_benefits-enrollment-assistant-synthetic-r"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 302,
+          "height": 21,
+          "label": "aibast_benefits-enrollment-assistant-rules-and-g"
+        }
+      ]
+    },
+    {
+      "id": "easy-be-01",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/02-be-01.jpg",
+      "caption": "BE-01 · Employee: When does open enrollment close, and what can I change?",
+      "case_id": "BE-01",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/02-be-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Nov 20, 2026",
+        "Jan 1, 2027"
+      ],
+      "boxes": [
+        {
+          "x": 571,
+          "y": 585,
+          "width": 204,
+          "height": 20,
+          "label": "Nov 20, 2026"
+        },
+        {
+          "x": 570,
+          "y": 672,
+          "width": 87,
+          "height": 22,
+          "label": "Jan 1, 2027"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Days left not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-be-02",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/03-be-02.jpg",
+      "caption": "BE-02 · Employee: We just had a baby. What benefit changes can I make, and by when?",
+      "case_id": "BE-02",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/03-be-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Birth or adoption",
+        "LE-1",
+        "Nov 27, 2026"
+      ],
+      "boxes": [
+        {
+          "x": 907,
+          "y": 417,
+          "width": 138,
+          "height": 24,
+          "label": "Birth or adoption"
+        },
+        {
+          "x": 1153,
+          "y": 417,
+          "width": 47,
+          "height": 22,
+          "label": "LE-1"
+        },
+        {
+          "x": 326,
+          "y": 917,
+          "width": 153,
+          "height": 22,
+          "label": "Nov 27, 2026"
+        }
+      ]
+    },
+    {
+      "id": "easy-be-03",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/04-be-03.jpg",
+      "caption": "BE-03 · Employee: Compare the three medical plans for family coverage.",
+      "case_id": "BE-03",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/04-be-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "3,692.00",
+        "Saver HDHP",
+        "not a plan recommendation"
+      ],
+      "boxes": [
+        {
+          "x": 538,
+          "y": 525,
+          "width": 78,
+          "height": 22,
+          "label": "3,692.00"
+        },
+        {
+          "x": 299,
+          "y": 612,
+          "width": 99,
+          "height": 20,
+          "label": "Saver HDHP"
+        },
+        {
+          "x": 470,
+          "y": 1057,
+          "width": 210,
+          "height": 24,
+          "label": "not a plan recommendation"
+        }
+      ]
+    },
+    {
+      "id": "easy-be-04",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/05-be-04.jpg",
+      "caption": "BE-04 · Employee: Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+      "case_id": "BE-04",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/05-be-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Riverbend Pediatrics",
+        "Out of network"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 568,
+          "width": 153,
+          "height": 20,
+          "label": "Riverbend Pediatrics"
+        },
+        {
+          "x": 612,
+          "y": 568,
+          "width": 117,
+          "height": 20,
+          "label": "Out of network"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Network gaps not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-be-05",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/06-be-05.jpg",
+      "caption": "BE-05 · Employee: What documents do I still need to send?",
+      "case_id": "BE-05",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/06-be-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Birth certificate",
+        "Still missing"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 525,
+          "width": 117,
+          "height": 20,
+          "label": "Birth certificate"
+        },
+        {
+          "x": 286,
+          "y": 676,
+          "width": 96,
+          "height": 24,
+          "label": "Still missing"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Due with the change request not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-be-06",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/07-be-06.jpg",
+      "caption": "BE-06 · Employee: Draft my election changes, but don't submit anything.",
+      "case_id": "BE-06",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/07-be-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "46.00",
+        "No election was submitted"
+      ],
+      "boxes": [
+        {
+          "x": 572,
+          "y": 417,
+          "width": 117,
+          "height": 23,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 623,
+          "y": 616,
+          "width": 76,
+          "height": 24,
+          "label": "46.00"
+        },
+        {
+          "x": 530,
+          "y": 1097,
+          "width": 404,
+          "height": 23,
+          "label": "No election was submitted"
+        }
+      ]
+    },
+    {
+      "id": "easy-be-07",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/08-be-07.jpg",
+      "caption": "BE-07 · Employee: What benefits deadlines should I put on my calendar?",
+      "case_id": "BE-07",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/08-be-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Days Left",
+        "Nov 20, 2026"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 481,
+          "width": 78,
+          "height": 24,
+          "label": "Days Left"
+        },
+        {
+          "x": 299,
+          "y": 525,
+          "width": 106,
+          "height": 22,
+          "label": "Nov 20, 2026"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "no reminder or invitation was sent not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benefits Enrollment Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 188,
+          "height": 21,
+          "label": "Benefits Enrollment Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Benefits Enrollment Manual",
+      "step": 2,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benefits Enrollment Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 210,
+          "height": 20,
+          "label": "Benefits Enrollment Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benefits Enrollment Agent — Manual Global Instru"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 304,
+          "height": 32,
+          "label": "Benefits Enrollment Agent — Manual Global Instru"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 306,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/06-add-aibast-benefits-enrollment-assistant-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_benefits-enrollment-assistant-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/06-add-aibast-benefits-enrollment-assistant-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_benefits-enrollment-assistant-rules-and-g"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 309,
+          "height": 21,
+          "label": "aibast_benefits-enrollment-assistant-rules-and-g"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/07-add-aibast-benefits-enrollment-assistant-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_benefits-enrollment-assistant-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/07-add-aibast-benefits-enrollment-assistant-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_benefits-enrollment-assistant-synthetic-r"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 305,
+          "height": 33,
+          "label": "aibast_benefits-enrollment-assistant-synthetic-r"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/08-add-aibast-compare-plans-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_compare-plans_03",
+      "step": 8,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/08-add-aibast-compare-plans-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "compare-plans"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 103,
+          "height": 22,
+          "label": "compare-plans"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/09-add-aibast-deadline-reminders-07.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_deadline-reminders_07",
+      "step": 9,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/09-add-aibast-deadline-reminders-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deadline-reminders"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 131,
+          "height": 19,
+          "label": "deadline-reminders"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/10-add-aibast-document-checklist-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_document-checklist_05",
+      "step": 10,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/10-add-aibast-document-checklist-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "document-checklist"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 132,
+          "height": 19,
+          "label": "document-checklist"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/11-add-aibast-election-draft-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_election-draft_06",
+      "step": 11,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/11-add-aibast-election-draft-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "election-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 19,
+          "label": "election-draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/12-add-aibast-enrollment-window-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_enrollment-window_01",
+      "step": 12,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/12-add-aibast-enrollment-window-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "enrollment-window"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 132,
+          "height": 19,
+          "label": "enrollment-window"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/13-add-aibast-life-event-change-02.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_life-event-change_02",
+      "step": 13,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/13-add-aibast-life-event-change-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "life-event-change"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 119,
+          "height": 22,
+          "label": "life-event-change"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/14-add-aibast-provider-network-04.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_provider-network_04",
+      "step": 14,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/14-add-aibast-provider-network-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "provider-network"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 118,
+          "height": 22,
+          "label": "provider-network"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "provider-network",
+        "life-event-change",
+        "enrollment-window",
+        "election-draft",
+        "document-checklist",
+        "aibast_benefits-enrollment-assistant-synthetic-r",
+        "aibast_benefits-enrollment-assistant-rules-and-g"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 118,
+          "height": 22,
+          "label": "provider-network"
+        },
+        {
+          "x": 1233,
+          "y": 197,
+          "width": 120,
+          "height": 22,
+          "label": "life-event-change"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 132,
+          "height": 19,
+          "label": "enrollment-window"
+        },
+        {
+          "x": 1246,
+          "y": 237,
+          "width": 95,
+          "height": 19,
+          "label": "election-draft"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 132,
+          "height": 19,
+          "label": "document-checklist"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_benefits-enrollment-assistant-synthetic-r"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 302,
+          "height": 21,
+          "label": "aibast_benefits-enrollment-assistant-rules-and-g"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "provider-network",
+        "life-event-change",
+        "enrollment-window",
+        "election-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 119,
+          "height": 22,
+          "label": "provider-network"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 119,
+          "height": 22,
+          "label": "life-event-change"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 132,
+          "height": 19,
+          "label": "enrollment-window"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 95,
+          "height": 19,
+          "label": "election-draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "enrollment-window",
+        "election-draft",
+        "document-checklist",
+        "deadline-reminders",
+        "compare-plans"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 106,
+          "width": 69,
+          "height": 17,
+          "label": "enrollment-window"
+        },
+        {
+          "x": 1055,
+          "y": 162,
+          "width": 95,
+          "height": 19,
+          "label": "election-draft"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 133,
+          "height": 19,
+          "label": "document-checklist"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 132,
+          "height": 19,
+          "label": "deadline-reminders"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 104,
+          "height": 22,
+          "label": "compare-plans"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benefits Enrollment Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 210,
+          "height": 20,
+          "label": "Benefits Enrollment Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-be-01",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/19-be-01.jpg",
+      "caption": "BE-01 · Employee: When does open enrollment close, and what can I change?",
+      "step": 19,
+      "case_id": "BE-01",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/19-be-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Nov 20, 2026",
+        "Days left",
+        "Jan 1, 2027"
+      ],
+      "boxes": [
+        {
+          "x": 523,
+          "y": 571,
+          "width": 210,
+          "height": 19,
+          "label": "Nov 20, 2026"
+        },
+        {
+          "x": 299,
+          "y": 613,
+          "width": 71,
+          "height": 24,
+          "label": "Days left"
+        },
+        {
+          "x": 522,
+          "y": 657,
+          "width": 87,
+          "height": 22,
+          "label": "Jan 1, 2027"
+        }
+      ]
+    },
+    {
+      "id": "hard-be-02",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/20-be-02.jpg",
+      "caption": "BE-02 · Employee: We just had a baby. What benefit changes can I make, and by when?",
+      "step": 20,
+      "case_id": "BE-02",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/20-be-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Nov 27, 2026",
+        "LE-1",
+        "Birth or adoption"
+      ],
+      "boxes": [
+        {
+          "x": 486,
+          "y": 463,
+          "width": 106,
+          "height": 21,
+          "label": "Nov 27, 2026"
+        },
+        {
+          "x": 779,
+          "y": 782,
+          "width": 41,
+          "height": 22,
+          "label": "LE-1"
+        },
+        {
+          "x": 613,
+          "y": 1121,
+          "width": 204,
+          "height": 23,
+          "label": "Birth or adoption"
+        }
+      ]
+    },
+    {
+      "id": "hard-be-03",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/21-be-03.jpg",
+      "caption": "BE-03 · Employee: Compare the three medical plans for family coverage.",
+      "step": 21,
+      "case_id": "BE-03",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/21-be-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "3,692.00",
+        "Saver HDHP"
+      ],
+      "boxes": [
+        {
+          "x": 538,
+          "y": 569,
+          "width": 78,
+          "height": 23,
+          "label": "3,692.00"
+        },
+        {
+          "x": 845,
+          "y": 722,
+          "width": 96,
+          "height": 20,
+          "label": "Saver HDHP"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "not a plan recommendation not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-be-04",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/22-be-04.jpg",
+      "caption": "BE-04 · Employee: Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+      "step": 22,
+      "case_id": "BE-04",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/22-be-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Riverbend Pediatrics",
+        "Out of network",
+        "Network gaps"
+      ],
+      "boxes": [
+        {
+          "x": 677,
+          "y": 463,
+          "width": 158,
+          "height": 20,
+          "label": "Riverbend Pediatrics"
+        },
+        {
+          "x": 844,
+          "y": 463,
+          "width": 119,
+          "height": 20,
+          "label": "Out of network"
+        },
+        {
+          "x": 286,
+          "y": 718,
+          "width": 116,
+          "height": 24,
+          "label": "Network gaps"
+        }
+      ]
+    },
+    {
+      "id": "hard-be-05",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/23-be-05.jpg",
+      "caption": "BE-05 · Employee: What documents do I still need to send?",
+      "step": 23,
+      "case_id": "BE-05",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/23-be-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Birth certificate",
+        "Still missing",
+        "Due with the change request"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 525,
+          "width": 117,
+          "height": 20,
+          "label": "Birth certificate"
+        },
+        {
+          "x": 286,
+          "y": 676,
+          "width": 96,
+          "height": 24,
+          "label": "Still missing"
+        },
+        {
+          "x": 652,
+          "y": 676,
+          "width": 219,
+          "height": 24,
+          "label": "Due with the change request"
+        }
+      ]
+    },
+    {
+      "id": "hard-be-06",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/24-be-06.jpg",
+      "caption": "BE-06 · Employee: Draft my election changes, but don't submit anything.",
+      "step": 24,
+      "case_id": "BE-06",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/24-be-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not Submitted",
+        "46.00",
+        "No election was submitted"
+      ],
+      "boxes": [
+        {
+          "x": 499,
+          "y": 417,
+          "width": 118,
+          "height": 21,
+          "label": "Not Submitted"
+        },
+        {
+          "x": 623,
+          "y": 567,
+          "width": 62,
+          "height": 24,
+          "label": "46.00"
+        },
+        {
+          "x": 527,
+          "y": 806,
+          "width": 126,
+          "height": 21,
+          "label": "No election was submitted"
+        }
+      ]
+    },
+    {
+      "id": "hard-be-07",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/25-be-07.jpg",
+      "caption": "BE-07 · Employee: What benefits deadlines should I put on my calendar?",
+      "step": 25,
+      "case_id": "BE-07",
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/25-be-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Days Left",
+        "Nov 20, 2026",
+        "no reminder or invitation was sent"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 527,
+          "width": 78,
+          "height": 24,
+          "label": "Days Left"
+        },
+        {
+          "x": 299,
+          "y": 570,
+          "width": 103,
+          "height": 22,
+          "label": "Nov 20, 2026"
+        },
+        {
+          "x": 286,
+          "y": 898,
+          "width": 380,
+          "height": 22,
+          "label": "no reminder or invitation was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/benefits-enrollment-assistant/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/benefits-enrollment-assistant/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benefits Enrollment Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 208,
+          "height": 21,
+          "label": "Benefits Enrollment Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:45:25.945286+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

@@ -1,0 +1,1202 @@
+#!/bin/bash
+set -e
+umask 077
+
+# RAPP Brainstem Installer
+# Usage: curl -fsSL https://kody-w.github.io/aibast-agents-library/install.sh | bash
+# Pin a version: curl ... install.sh | bash -s -- --version v0.6.0
+
+BRAINSTEM_HOME="$HOME/.brainstem"
+BRAINSTEM_BIN="$HOME/.local/bin"
+VENV_DIR="$BRAINSTEM_HOME/venv"
+SOURCE_OVERRIDE_REQUESTED=false
+if [[ -n "${BRAINSTEM_REPO_URL:-}" || -n "${BRAINSTEM_REPO_REF:-}" || -n "${BRAINSTEM_VERSION_URL:-}" ]]; then
+    SOURCE_OVERRIDE_REQUESTED=true
+fi
+REPO_URL="${BRAINSTEM_REPO_URL:-https://github.com/kody-w/aibast-agents-library.git}"
+REPO_REF="${BRAINSTEM_REPO_REF:-staging}"
+REMOTE_VERSION_URL="${BRAINSTEM_VERSION_URL:-https://raw.githubusercontent.com/kody-w/aibast-agents-library/staging/rapp_brainstem/VERSION}"
+PIN_VERSION=""
+NO_LAUNCH=false
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+run_with_heartbeat() {
+    local label="$1"
+    shift
+
+    if [ ! -t 1 ]; then
+        echo "  [..] $label..."
+        "$@"
+        return
+    fi
+
+    local log_file
+    log_file=$(mktemp "${TMPDIR:-/tmp}/brainstem-progress-XXXXXX")
+    "$@" >"$log_file" 2>&1 &
+    local pid=$!
+    local started=$SECONDS
+    local frame=0
+
+    while kill -0 "$pid" 2>/dev/null; do
+        local glyph
+        case "$frame" in
+            0) glyph='|' ;;
+            1) glyph='/' ;;
+            2) glyph='-' ;;
+            *) glyph='\' ;;
+        esac
+        printf "\r  [%s] %s (%ss)" "$glyph" "$label" "$((SECONDS - started))"
+        frame=$(( (frame + 1) % 4 ))
+        sleep 1
+    done
+
+    local status=0
+    wait "$pid" || status=$?
+    if [ "$status" -eq 0 ]; then
+        printf "\r  [✓] %s (%ss)\n" "$label" "$((SECONDS - started))"
+        rm -f "$log_file"
+        return 0
+    fi
+
+    printf "\r  [✗] %s failed after %ss\n" "$label" "$((SECONDS - started))"
+    cat "$log_file" >&2
+    rm -f "$log_file"
+    return "$status"
+}
+
+enable_brainstem_sparse_checkout() {
+    local repo_dir="$1"
+    git -C "$repo_dir" sparse-checkout init --cone >/dev/null 2>&1 || return 1
+    git -C "$repo_dir" sparse-checkout set rapp_brainstem >/dev/null 2>&1 || return 1
+    git -C "$repo_dir" config remote.origin.promisor true
+    git -C "$repo_dir" config remote.origin.partialclonefilter blob:none
+}
+
+brainstem_source_ready() {
+    local repo_dir="$1"
+    [ -f "$repo_dir/rapp_brainstem/brainstem.py" ] \
+        && [ -f "$repo_dir/rapp_brainstem/requirements.txt" ] \
+        && [ -f "$repo_dir/rapp_brainstem/VERSION" ]
+}
+
+repair_brainstem_source() {
+    local repo_dir="$1"
+    local repair_dir="${repo_dir}-repair-$$"
+    local old_dir="${repo_dir}-broken-$$"
+
+    rm -rf "$repair_dir" "$old_dir" 2>/dev/null || true
+    echo -e "  ${YELLOW}Existing checkout is incomplete — downloading a clean Brainstem copy...${NC}"
+    if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$repair_dir"; then
+        rm -rf "$repair_dir" 2>/dev/null || true
+        return 1
+    fi
+    if ! enable_brainstem_sparse_checkout "$repair_dir"; then
+        rm -rf "$repair_dir" 2>/dev/null || true
+        return 1
+    fi
+
+    if [ -n "$PIN_VERSION" ]; then
+        (
+            cd "$repair_dir"
+            git fetch --filter=blob:none --tags --quiet origin
+            local tag_ref=""
+            for cand in "$PIN_VERSION" "v${PIN_VERSION#v}" "brainstem-${PIN_VERSION#v}" "brainstem-v${PIN_VERSION#v}"; do
+                if git rev-parse "$cand" >/dev/null 2>&1; then tag_ref="$cand"; break; fi
+            done
+            [ -n "$tag_ref" ] && git checkout --quiet "$tag_ref"
+        ) || {
+            rm -rf "$repair_dir" 2>/dev/null || true
+            return 1
+        }
+    fi
+
+    if ! brainstem_source_ready "$repair_dir"; then
+        rm -rf "$repair_dir" 2>/dev/null || true
+        return 1
+    fi
+    if ! mv "$repo_dir" "$old_dir"; then
+        rm -rf "$repair_dir" 2>/dev/null || true
+        return 1
+    fi
+    if ! mv "$repair_dir" "$repo_dir"; then
+        mv "$old_dir" "$repo_dir" 2>/dev/null || true
+        return 1
+    fi
+    rm -rf "$old_dir" 2>/dev/null || true
+    echo -e "  ${GREEN}✓${NC} Clean sparse repair completed"
+}
+
+read_input() {
+    local prompt="$1" default="$2" result
+    if [ -t 0 ]; then
+        read -p "$prompt" result
+    else
+        read -p "$prompt" result < /dev/tty
+    fi
+    echo "${result:-$default}"
+}
+
+print_banner() {
+    echo ""
+    echo -e "${CYAN}"
+    echo "  🧠 RAPP Brainstem"
+    echo -e "${NC}"
+    echo "  Local-first AI agent server"
+    echo "  Powered by GitHub Copilot — no API keys needed"
+    echo ""
+}
+
+detect_os() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then echo "macos"
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then echo "linux"
+    else echo "unknown"
+    fi
+}
+
+# Ensure Homebrew is on PATH — curl|bash sessions don't source shell profiles
+ensure_brew_on_path() {
+    if command -v brew &> /dev/null; then return 0; fi
+    if [[ -x "/opt/homebrew/bin/brew" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -x "/usr/local/bin/brew" ]]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+}
+
+find_python() {
+    for cmd in python3.11 python3.12 python3.13 python3; do
+        if command -v "$cmd" &> /dev/null; then
+            version=$("$cmd" -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null) || continue
+            major=$(echo "$version" | cut -d. -f1)
+            minor=$(echo "$version" | cut -d. -f2)
+            if [[ -n "$major" && -n "$minor" ]] && [ "$major" -ge 3 ] 2>/dev/null && [ "$minor" -ge 11 ] 2>/dev/null; then
+                echo "$cmd"
+                return 0
+            fi
+        fi
+    done
+    if [[ "$(detect_os)" == "macos" ]]; then
+        for p in /opt/homebrew/bin/python3.11 /usr/local/bin/python3.11 /opt/homebrew/bin/python3.12 /usr/local/bin/python3.12; do
+            if [[ -x "$p" ]]; then echo "$p"; return 0; fi
+        done
+    fi
+    return 1
+}
+
+install_python() {
+    local os_type=$(detect_os)
+    echo -e "  ${YELLOW}Installing Python 3.11...${NC}"
+    echo "    This can take several minutes; package-manager progress will appear below."
+    if [[ "$os_type" == "macos" ]]; then
+        if ! command -v brew &> /dev/null; then
+            echo -e "  ${YELLOW}Installing Homebrew first...${NC}"
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            if [[ -f "/opt/homebrew/bin/brew" ]]; then eval "$(/opt/homebrew/bin/brew shellenv)"; fi
+        fi
+        brew install python@3.11
+        export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+    elif [[ "$os_type" == "linux" ]]; then
+        if command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y python3.11 python3.11-venv python3-pip
+        elif command -v dnf &> /dev/null; then
+            sudo dnf install -y python3.11 python3-pip
+        else
+            echo -e "  ${RED}✗${NC} Cannot auto-install Python 3.11 on this system"
+            echo "    Install manually from https://python.org"
+            exit 1
+        fi
+    fi
+}
+
+# Compare two semver strings. Returns 0 if $1 > $2, 1 otherwise.
+version_gt() {
+    local IFS=.
+    local i a=($1) b=($2)
+    for ((i=0; i<${#a[@]}; i++)); do
+        local va=${a[i]:-0}
+        local vb=${b[i]:-0}
+        if (( va > vb )); then return 0; fi
+        if (( va < vb )); then return 1; fi
+    done
+    return 1  # equal
+}
+
+check_for_upgrade() {
+    local version_file="$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
+
+    # No existing install — always proceed
+    if [ ! -f "$version_file" ]; then
+        return 0
+    fi
+
+    local local_version
+    local_version=$(cat "$version_file" 2>/dev/null | tr -d '[:space:]')
+
+    # Fetch remote version
+    local remote_version
+    remote_version=$(curl -fsSL --retry 3 --connect-timeout 10 --max-time 20 "$REMOTE_VERSION_URL" 2>/dev/null | tr -d '[:space:]') || true
+
+    if [[ -z "$remote_version" ]]; then
+        echo -e "  ${YELLOW}⚠${NC} Could not check remote version — upgrading anyway"
+        return 0
+    fi
+
+    echo -e "  Local version:  ${CYAN}${local_version}${NC}"
+    echo -e "  Remote version: ${CYAN}${remote_version}${NC}"
+
+    if [[ "$SOURCE_OVERRIDE_REQUESTED" == true ]]; then
+        echo -e "  ${YELLOW}↻${NC} Refreshing the explicitly requested repository/ref"
+        return 0
+    fi
+
+    if [[ "$local_version" == "$remote_version" ]]; then
+        echo ""
+        echo -e "  ${GREEN}✓ Already up to date (v${local_version})${NC}"
+        echo ""
+        return 1  # no upgrade needed
+    fi
+
+    if version_gt "$remote_version" "$local_version"; then
+        echo -e "  ${YELLOW}⬆${NC} Upgrade available: ${local_version} → ${remote_version}"
+        return 0
+    fi
+
+    echo -e "  ${GREEN}✓ Already up to date (v${local_version})${NC}"
+    echo ""
+    return 1
+}
+
+check_prereqs() {
+    echo "Checking prerequisites..."
+
+    # On macOS, ensure Homebrew is on PATH (curl|bash doesn't source shell profiles)
+    if [[ "$(detect_os)" == "macos" ]]; then
+        ensure_brew_on_path
+    fi
+
+    # Python 3.11+
+    PYTHON_CMD=$(find_python) || true
+    if [[ -n "$PYTHON_CMD" ]]; then
+        version=$("$PYTHON_CMD" -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+        echo -e "  ${GREEN}✓${NC} Python $version ($PYTHON_CMD)"
+    else
+        echo -e "  ${YELLOW}⚠${NC} Python 3.11+ not found"
+        install_python
+        PYTHON_CMD=$(find_python) || true
+        if [[ -z "$PYTHON_CMD" ]]; then
+            echo -e "  ${RED}✗${NC} Failed to install Python 3.11"
+            exit 1
+        fi
+        version=$("$PYTHON_CMD" -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+        echo -e "  ${GREEN}✓${NC} Python $version installed"
+    fi
+    export PYTHON_CMD
+
+    # Git
+    local git_version=""
+    git_version=$(git --version 2>/dev/null) || true
+    if [[ "$git_version" == git\ version\ * ]]; then
+        echo -e "  ${GREEN}✓${NC} Git $(echo "$git_version" | cut -d' ' -f3)"
+    else
+        echo -e "  ${YELLOW}⚠${NC} Git not found, installing..."
+        if [[ "$(detect_os)" == "macos" ]]; then
+            ensure_brew_on_path
+            if command -v brew &> /dev/null; then
+                brew install git
+            else
+                xcode-select --install 2>/dev/null || true
+                echo -e "  ${YELLOW}!${NC} Complete the macOS Command Line Tools installation, then rerun this command."
+                exit 1
+            fi
+        elif command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y git
+        else
+            echo -e "  ${RED}✗${NC} Git required — install from https://git-scm.com"
+            exit 1
+        fi
+        git_version=$(git --version 2>/dev/null) || true
+        if [[ "$git_version" != git\ version\ * ]]; then
+            echo -e "  ${RED}✗${NC} Git installation did not complete"
+            echo "    Install Git, open a new terminal, and rerun this command."
+            exit 1
+        fi
+        echo -e "  ${GREEN}✓${NC} Git $(echo "$git_version" | cut -d' ' -f3) installed"
+    fi
+
+    # GitHub CLI (required for Copilot token auth)
+    if command -v gh &> /dev/null; then
+        echo -e "  ${GREEN}✓${NC} GitHub CLI $(gh --version | head -1 | awk '{print $3}')"
+    else
+        echo -e "  ${YELLOW}⚠${NC} GitHub CLI not found, installing..."
+        local os_type=$(detect_os)
+        if [[ "$os_type" == "macos" ]]; then
+            if command -v brew &> /dev/null; then
+                brew install gh
+            else
+                echo -e "  ${YELLOW}⚠${NC} Installing Homebrew first..."
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+                ensure_brew_on_path
+                brew install gh
+            fi
+        elif [[ "$os_type" == "linux" ]]; then
+            if command -v apt-get &> /dev/null; then
+                (type -p wget >/dev/null || sudo apt-get install -y wget) \
+                    && sudo mkdir -p -m 755 /etc/apt/keyrings \
+                    && out=$(mktemp) && wget -nv -O"$out" https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+                    && cat "$out" | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+                    && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+                    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+                    && sudo apt-get update && sudo apt-get install -y gh
+            elif command -v dnf &> /dev/null; then
+                sudo dnf install -y 'dnf-command(config-manager)' \
+                    && sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo \
+                    && sudo dnf install -y gh
+            else
+                echo -e "  ${YELLOW}⚠${NC} Cannot auto-install GitHub CLI — install from https://cli.github.com"
+            fi
+        fi
+        if command -v gh &> /dev/null; then
+            echo -e "  ${GREEN}✓${NC} GitHub CLI installed"
+        else
+            echo -e "  ${YELLOW}!${NC} GitHub CLI not installed — install later from https://cli.github.com"
+        fi
+    fi
+}
+
+# On upgrade, decide what to do with the user's existing soul.md (issue #40).
+# Args: <old_soul> <new_default_soul>. The new checkout's default is already at
+# <new_default_soul>; <old_soul> is the pre-upgrade file we backed up.
+#   return 0 → refreshed: keep the new default in place, save the old one to
+#              soul.md.bak-<date>, and print one line saying so.
+#   return 1 → preserve : caller restores <old_soul> byte-for-byte (today's behavior).
+# It only returns 0 when the old soul is an UNMODIFIED historical default — its
+# normalized hash (rapp_brainstem/tests/soul_hash.py) is listed in the manifest —
+# AND the new default differs. Any customization, or any uncertainty (no python, no
+# manifest, unreadable/undecodable file), fails safe to preserve. It never clobbers.
+maybe_refresh_soul() {
+    local old="$1" newdef="$2"
+    local src_dir="$BRAINSTEM_HOME/src/rapp_brainstem"
+    local hasher="$src_dir/tests/soul_hash.py"
+    local manifest="$src_dir/tests/soul_defaults.sha256"
+
+    [ -n "${PYTHON_CMD:-}" ] && [ -f "$hasher" ] && [ -f "$manifest" ] || return 1
+
+    local oldhash newhash
+    oldhash=$("$PYTHON_CMD" "$hasher" "$old" 2>/dev/null) || return 1
+    [ -n "$oldhash" ] || return 1
+    # Not an unmodified default (customized or unrecognizable) → preserve.
+    awk -v h="$oldhash" '/^[[:space:]]*#/{next} $1==h{f=1; exit} END{exit !f}' "$manifest" || return 1
+    # A known default — only refresh if the new default actually differs.
+    newhash=$("$PYTHON_CMD" "$hasher" "$newdef" 2>/dev/null) || return 1
+    [ -n "$newhash" ] && [ "$oldhash" != "$newhash" ] || return 1
+
+    local bak="$src_dir/soul.md.bak-$(date +%Y%m%d)"
+    # Don't clobber an earlier same-day backup (a second refresh on the same date).
+    if [ -e "$bak" ]; then
+        local n=1
+        while [ -e "${bak}-${n}" ]; do n=$((n+1)); done
+        bak="${bak}-${n}"
+    fi
+    cp "$old" "$bak" 2>/dev/null || return 1
+    echo -e "  ${GREEN}✓${NC} Refreshed default soul (yours was an unmodified default); backup at ${bak}"
+    return 0
+}
+
+preserve_agent_collision() {
+    local agent_file="$1"
+    local recovery_dir="$BRAINSTEM_HOME/recovery/agent-collisions-$(date +%Y%m%d-%H%M%S)"
+    mkdir -p "$recovery_dir"
+    chmod 700 "$BRAINSTEM_HOME/recovery" "$recovery_dir" 2>/dev/null || true
+    cp "$agent_file" "$recovery_dir/$(basename "$agent_file")"
+    echo -e "  ${YELLOW}⚠${NC} Preserved custom-agent name collision at $recovery_dir/$(basename "$agent_file")"
+}
+
+install_brainstem() {
+    echo ""
+    echo "Installing RAPP Brainstem..."
+    mkdir -p "$BRAINSTEM_HOME"
+
+    local AGENTS_DIR="$BRAINSTEM_HOME/src/rapp_brainstem/agents"
+    local SOUL_FILE="$BRAINSTEM_HOME/src/rapp_brainstem/soul.md"
+    local ENV_FILE="$BRAINSTEM_HOME/src/rapp_brainstem/.env"
+    local DATA_DIR="$BRAINSTEM_HOME/src/rapp_brainstem/.brainstem_data"
+    local LOCAL_VERSION_FILE="$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
+
+    if [ -d "$BRAINSTEM_HOME/src/.git" ]; then
+        echo "  Limiting the install source to the Brainstem runtime..."
+        if ! enable_brainstem_sparse_checkout "$BRAINSTEM_HOME/src"; then
+            echo -e "  ${RED}✗${NC} Git 2.25+ is required for the lightweight Brainstem checkout"
+            exit 1
+        fi
+        echo -e "  ${GREEN}✓${NC} Solution bundles excluded from installer updates"
+
+        # ── SMART UPDATE: preserve local files, upgrade framework ──
+        local LOCAL_VER="0.0.0"
+        [ -f "$LOCAL_VERSION_FILE" ] && LOCAL_VER=$(cat "$LOCAL_VERSION_FILE" 2>/dev/null || echo "0.0.0")
+
+        local TARGET_VER
+        if [ -n "$PIN_VERSION" ]; then
+            # Strip leading 'v' for comparison (v0.6.0 → 0.6.0)
+            TARGET_VER="${PIN_VERSION#v}"
+        else
+            TARGET_VER=$(curl -sf --retry 3 --connect-timeout 10 --max-time 20 "$REMOTE_VERSION_URL" 2>/dev/null || echo "0.0.0")
+        fi
+
+        echo "  Local:  v${LOCAL_VER}"
+        echo "  Target: v${TARGET_VER}${PIN_VERSION:+ (pinned)}"
+
+        if [ "$LOCAL_VER" = "$TARGET_VER" ] \
+            && brainstem_source_ready "$BRAINSTEM_HOME/src" \
+            && [[ "$SOURCE_OVERRIDE_REQUESTED" != true ]]; then
+            echo -e "  ${GREEN}✓${NC} Already on v${LOCAL_VER}"
+        else
+            echo "  Switching v${LOCAL_VER} → v${TARGET_VER}..."
+
+            # 1. Backup user's local files (soul, custom agents, .env)
+            local BACKUP
+            BACKUP=$(mktemp -d "${TMPDIR:-/tmp}/brainstem-upgrade-XXXXXX")
+            chmod 700 "$BACKUP"
+            [ -f "$SOUL_FILE" ] && cp "$SOUL_FILE" "$BACKUP/soul.md"
+            [ -f "$ENV_FILE" ] && cp "$ENV_FILE" "$BACKUP/.env"
+            [ -d "$DATA_DIR" ] && cp -R "$DATA_DIR" "$BACKUP/.brainstem_data" 2>/dev/null || true
+            for state_file in .copilot_token .copilot_session .copilot_pending .brainstem_model .brainstem_book.json .brainstem_secret voice.zip; do
+                [ -f "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" ] \
+                    && cp "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" "$BACKUP/$state_file" 2>/dev/null || true
+            done
+            if [ -d "$AGENTS_DIR" ]; then
+                mkdir -p "$BACKUP/agents"
+                # Backup ALL agents — user-created ones will be restored
+                cp "$AGENTS_DIR"/*.py "$BACKUP/agents/" 2>/dev/null || true
+            fi
+            echo -e "  ${GREEN}✓${NC} Backed up soul, agents, config"
+
+            # 2. Fetch and checkout target version.
+            # Guard the fetch: offline (or a black-holed github) must not abort the
+            # whole script under `set -e` — we fall back to whatever is already local.
+            cd "$BRAINSTEM_HOME/src"
+            git remote set-url origin "$REPO_URL" 2>/dev/null || true
+            git stash --quiet 2>/dev/null || true
+            git fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
+            local update_succeeded=true
+            if [ -n "$PIN_VERSION" ]; then
+                # Resolve the pin against every tag form we ship: the documented
+                # v0.6.0 UX, a bare 0.6.0, and the actual release tag brainstem-v0.6.0.
+                TAG_REF=""
+                for cand in "$PIN_VERSION" "v${PIN_VERSION#v}" "brainstem-${PIN_VERSION#v}" "brainstem-v${PIN_VERSION#v}"; do
+                    if git rev-parse "$cand" >/dev/null 2>&1; then TAG_REF="$cand"; break; fi
+                done
+                if [ -n "$TAG_REF" ]; then
+                    git checkout "$TAG_REF" --quiet 2>/dev/null
+                    echo -e "  ${GREEN}✓${NC} Checked out ${TAG_REF}"
+                else
+                    echo -e "  ${RED}✗${NC} Version ${PIN_VERSION} not found. Available versions:"
+                    git tag -l 'brainstem-v*' 'v*' | sort -V | sed 's/^/    /'
+                    exit 1
+                fi
+            else
+                local update_ok=false
+                if git fetch --filter=blob:none --quiet origin "$REPO_REF" 2>/dev/null \
+                    && git reset --hard --quiet FETCH_HEAD 2>/dev/null; then
+                    update_ok=true
+                    echo -e "  ${GREEN}✓${NC} Framework updated"
+                fi
+                if [[ "$update_ok" != true ]] && ! brainstem_source_ready "$BRAINSTEM_HOME/src"; then
+                    if repair_brainstem_source "$BRAINSTEM_HOME/src"; then
+                        update_ok=true
+                    fi
+                fi
+                update_succeeded=$update_ok
+            fi
+
+            # 3. Restore user's local files (merge, don't overwrite)
+            # soul.md: refresh it only when the pre-upgrade file was an unmodified
+            # historical default (issue #40); any customization is preserved as-is.
+            if [ -f "$BACKUP/soul.md" ]; then
+                if ! maybe_refresh_soul "$BACKUP/soul.md" "$SOUL_FILE"; then
+                    cp "$BACKUP/soul.md" "$SOUL_FILE"
+                fi
+            fi
+            [ -f "$BACKUP/.env" ] && cp "$BACKUP/.env" "$ENV_FILE"
+            if [ -d "$BACKUP/.brainstem_data" ]; then
+                mkdir -p "$DATA_DIR"
+                cp -R "$BACKUP/.brainstem_data/." "$DATA_DIR/" 2>/dev/null || true
+            fi
+            for state_file in .copilot_token .copilot_session .copilot_pending .brainstem_model .brainstem_book.json .brainstem_secret voice.zip; do
+                [ -f "$BACKUP/$state_file" ] \
+                    && cp "$BACKUP/$state_file" "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" 2>/dev/null || true
+            done
+            if [ -d "$BACKUP/agents" ]; then
+                # Only restore genuinely user-added agents. Compute the set the repo
+                # now ships from the fresh checkout and skip-restore anything in it —
+                # otherwise bundled agents (context_memory, manage_memory, hacker_news)
+                # get reverted to the backed-up copies on every upgrade (issue #2), so
+                # bundled-agent fixes never reach existing users.
+                local SHIPPED=""
+                for shipped_file in "$AGENTS_DIR"/*.py; do
+                    [ -f "$shipped_file" ] || continue
+                    SHIPPED="$SHIPPED $(basename "$shipped_file")"
+                done
+                for agent_file in "$BACKUP/agents"/*.py; do
+                    [ -f "$agent_file" ] || continue
+                    local fname=$(basename "$agent_file")
+                    # Skip core agents that the repo manages
+                    case "$fname" in
+                        basic_agent.py|__init__.py) continue ;;
+                    esac
+                    # Skip anything shipped in the fresh checkout (bundled agents)
+                    case " $SHIPPED " in
+                        *" $fname "*)
+                            preserve_agent_collision "$agent_file"
+                            continue
+                            ;;
+                    esac
+                    # Genuinely user-added agent — keep it
+                    cp "$agent_file" "$AGENTS_DIR/$fname"
+                done
+                echo -e "  ${GREEN}✓${NC} Restored custom agents + soul + config"
+            fi
+
+            # 4. Clean up backup
+            rm -rf "$BACKUP"
+            if [[ "$update_succeeded" == true ]]; then
+                echo -e "  ${GREEN}✓${NC} ${PIN_VERSION:+Pinned to}${PIN_VERSION:-Upgrade complete:} v${TARGET_VER}"
+            elif [[ "$SOURCE_OVERRIDE_REQUESTED" == true ]]; then
+                echo -e "  ${RED}✗${NC} Could not refresh the requested repository/ref; existing files were restored"
+                return 1
+            else
+                echo -e "  ${YELLOW}Warning: Could not update — existing runtime preserved at v${LOCAL_VER}${NC}"
+            fi
+        fi
+    else
+        echo "  Fresh install — cloning repository..."
+        # A broken prior install (src present but .git gone) may still hold the user's
+        # soul, .env, and custom agents — none of which are in git. Preserve them
+        # before wiping so a re-run can't silently destroy the user's work. The common
+        # case (no existing src) leaves FRESH_BACKUP empty and skips all of this.
+        local FRESH_BACKUP=""
+        local SOURCE_STAGE="$BRAINSTEM_HOME/src-fresh-$$"
+        local OLD_SOURCE=""
+        rm -rf "$SOURCE_STAGE" 2>/dev/null || true
+        if [ -d "$BRAINSTEM_HOME/src/rapp_brainstem" ]; then
+            FRESH_BACKUP=$(mktemp -d "${TMPDIR:-/tmp}/brainstem-fresh-XXXXXX")
+            chmod 700 "$FRESH_BACKUP"
+            mkdir -p "$FRESH_BACKUP/agents"
+            [ -f "$SOUL_FILE" ] && cp "$SOUL_FILE" "$FRESH_BACKUP/soul.md" 2>/dev/null || true
+            [ -f "$ENV_FILE" ] && cp "$ENV_FILE" "$FRESH_BACKUP/.env" 2>/dev/null || true
+            [ -d "$AGENTS_DIR" ] && cp "$AGENTS_DIR"/*.py "$FRESH_BACKUP/agents/" 2>/dev/null || true
+            [ -d "$DATA_DIR" ] && cp -R "$DATA_DIR" "$FRESH_BACKUP/.brainstem_data" 2>/dev/null || true
+            for state_file in .copilot_token .copilot_session .copilot_pending .brainstem_model .brainstem_book.json .brainstem_secret voice.zip; do
+                [ -f "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" ] \
+                    && cp "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" "$FRESH_BACKUP/$state_file" 2>/dev/null || true
+            done
+        fi
+        echo "  Downloading only the Brainstem runtime; solution ZIPs stay in the web library."
+        if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$SOURCE_STAGE"; then
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+            echo -e "  ${RED}✗${NC} Failed to download the Brainstem source"
+            echo "    Your existing files were left untouched."
+            echo "    Git 2.25+ is required for the lightweight checkout."
+            exit 1
+        fi
+        if ! enable_brainstem_sparse_checkout "$SOURCE_STAGE"; then
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+            echo -e "  ${RED}✗${NC} Failed to limit the checkout to rapp_brainstem/"
+            echo "    Your existing files were left untouched."
+            exit 1
+        fi
+        # If pinning, checkout the specific tag after clone (accepts every tag form).
+        if [ -n "$PIN_VERSION" ]; then
+            git -C "$SOURCE_STAGE" fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
+            TAG_REF=""
+            for cand in "$PIN_VERSION" "v${PIN_VERSION#v}" "brainstem-${PIN_VERSION#v}" "brainstem-v${PIN_VERSION#v}"; do
+                if git -C "$SOURCE_STAGE" rev-parse "$cand" >/dev/null 2>&1; then TAG_REF="$cand"; break; fi
+            done
+            if [ -n "$TAG_REF" ]; then
+                git -C "$SOURCE_STAGE" checkout "$TAG_REF" --quiet 2>/dev/null
+                echo -e "  ${GREEN}✓${NC} Checked out ${TAG_REF}"
+            else
+                echo -e "  ${RED}✗${NC} Version ${PIN_VERSION} not found. Available versions:"
+                git -C "$SOURCE_STAGE" tag -l 'brainstem-v*' 'v*' | sort -V | sed 's/^/    /'
+                rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+                echo "    Your existing files were left untouched."
+                exit 1
+            fi
+        fi
+        if ! brainstem_source_ready "$SOURCE_STAGE"; then
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+            echo -e "  ${RED}✗${NC} Downloaded Brainstem source is incomplete"
+            echo "    Your existing files were left untouched."
+            exit 1
+        fi
+        if [ -d "$BRAINSTEM_HOME/src" ]; then
+            OLD_SOURCE="$BRAINSTEM_HOME/src-broken-$$"
+            rm -rf "$OLD_SOURCE" 2>/dev/null || true
+            if ! mv "$BRAINSTEM_HOME/src" "$OLD_SOURCE"; then
+                rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+                echo -e "  ${RED}✗${NC} Could not preserve the existing source directory"
+                exit 1
+            fi
+        fi
+        if ! mv "$SOURCE_STAGE" "$BRAINSTEM_HOME/src"; then
+            [ -n "$OLD_SOURCE" ] && mv "$OLD_SOURCE" "$BRAINSTEM_HOME/src" 2>/dev/null || true
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+            echo -e "  ${RED}✗${NC} Could not activate the downloaded Brainstem source"
+            exit 1
+        fi
+        # Restore any preserved user files over the fresh checkout.
+        if [ -n "$FRESH_BACKUP" ]; then
+            local FRESH_SHIPPED=""
+            for shipped_file in "$AGENTS_DIR"/*.py; do
+                [ -f "$shipped_file" ] || continue
+                FRESH_SHIPPED="$FRESH_SHIPPED $(basename "$shipped_file")"
+            done
+            [ -f "$FRESH_BACKUP/soul.md" ] && cp "$FRESH_BACKUP/soul.md" "$SOUL_FILE" 2>/dev/null || true
+            [ -f "$FRESH_BACKUP/.env" ] && cp "$FRESH_BACKUP/.env" "$ENV_FILE" 2>/dev/null || true
+            for af in "$FRESH_BACKUP/agents"/*.py; do
+                [ -f "$af" ] || continue
+                fn=$(basename "$af")
+                case "$fn" in basic_agent.py|__init__.py) continue ;; esac
+                case " $FRESH_SHIPPED " in
+                    *" $fn "*)
+                        preserve_agent_collision "$af"
+                        continue
+                        ;;
+                esac
+                cp "$af" "$AGENTS_DIR/$fn" 2>/dev/null || true
+            done
+            if [ -d "$FRESH_BACKUP/.brainstem_data" ]; then
+                mkdir -p "$DATA_DIR"
+                cp -R "$FRESH_BACKUP/.brainstem_data/." "$DATA_DIR/" 2>/dev/null || true
+            fi
+            for state_file in .copilot_token .copilot_session .copilot_pending .brainstem_model .brainstem_book.json .brainstem_secret voice.zip; do
+                [ -f "$FRESH_BACKUP/$state_file" ] \
+                    && cp "$FRESH_BACKUP/$state_file" "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" 2>/dev/null || true
+            done
+            rm -rf "$FRESH_BACKUP"
+            echo -e "  ${GREEN}✓${NC} Preserved your soul, agents, memories, and config"
+        fi
+        [ -n "$OLD_SOURCE" ] && rm -rf "$OLD_SOURCE" 2>/dev/null || true
+    fi
+    if ! brainstem_source_ready "$BRAINSTEM_HOME/src"; then
+        echo -e "  ${RED}✗${NC} Brainstem source is incomplete after install"
+        echo "    Missing: $BRAINSTEM_HOME/src/rapp_brainstem/brainstem.py"
+        exit 1
+    fi
+    echo -e "  ${GREEN}✓${NC} Source code ready"
+}
+
+setup_venv() {
+    local venv_python="$VENV_DIR/bin/python"
+
+    # Check if venv exists and is healthy
+    if [ -x "$venv_python" ]; then
+        if "$venv_python" -c "import sys; sys.exit(0)" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Virtual environment OK"
+            return 0
+        fi
+        echo -e "  ${YELLOW}⚠${NC} Virtual environment broken — recreating..."
+        rm -rf "$VENV_DIR"
+    fi
+
+    if ! run_with_heartbeat "Creating Python virtual environment" "$PYTHON_CMD" -m venv "$VENV_DIR"; then
+        # Some systems need ensurepip first
+        "$PYTHON_CMD" -m ensurepip 2>/dev/null || true
+        if ! run_with_heartbeat "Retrying Python virtual environment" "$PYTHON_CMD" -m venv "$VENV_DIR"; then
+            echo -e "  ${RED}✗${NC} Failed to create virtual environment"
+            echo "    Try: $PYTHON_CMD -m pip install virtualenv"
+            exit 1
+        fi
+    fi
+    # Ensure pip is up to date inside the venv
+    run_with_heartbeat "Updating pip" "$VENV_DIR/bin/python" -m pip install --upgrade pip --disable-pip-version-check || true
+    echo -e "  ${GREEN}✓${NC} Virtual environment ready"
+}
+
+setup_deps() {
+    echo ""
+    echo "Installing dependencies..."
+    local req_file="$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt"
+    if ! run_with_heartbeat "Installing Python dependencies" "$VENV_DIR/bin/python" -m pip install -r "$req_file" --disable-pip-version-check; then
+        echo -e "  ${YELLOW}⚠${NC} Retrying dependency install with full output..."
+        "$VENV_DIR/bin/python" -m pip install -r "$req_file" --progress-bar on
+    fi
+
+    # Verify the critical imports actually work
+    if ! "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
+        echo -e "  ${RED}✗${NC} Dependencies failed to install"
+        echo "    Try: $VENV_DIR/bin/pip install -r $req_file"
+        exit 1
+    fi
+    echo -e "  ${GREEN}✓${NC} Dependencies installed"
+}
+
+ensure_deps() {
+    # Quick import check — only install if something is missing
+    if "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
+        echo -e "  ${GREEN}✓${NC} Dependencies verified"
+        return 0
+    fi
+
+    echo -e "  ${YELLOW}⚠${NC} Missing dependencies — installing..."
+    local req_file="$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt"
+    if ! run_with_heartbeat "Installing missing Python dependencies" "$VENV_DIR/bin/python" -m pip install -r "$req_file" --disable-pip-version-check; then
+        "$VENV_DIR/bin/python" -m pip install -r "$req_file" --progress-bar on
+    fi
+
+    if ! "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
+        echo -e "  ${RED}✗${NC} Dependencies failed — try: $VENV_DIR/bin/pip install -r $req_file"
+        exit 1
+    fi
+    echo -e "  ${GREEN}✓${NC} Dependencies installed"
+}
+
+install_cli() {
+    echo ""
+    echo "Installing CLI..."
+    mkdir -p "$BRAINSTEM_BIN"
+
+    cat > "$BRAINSTEM_BIN/brainstem" << 'WRAPPER'
+#!/bin/bash
+BRAINSTEM_HOME="$HOME/.brainstem"
+VENV_PYTHON="$BRAINSTEM_HOME/venv/bin/python"
+cd "$BRAINSTEM_HOME/src/rapp_brainstem"
+
+# Use venv Python; fall back to creating venv if missing
+if [ ! -x "$VENV_PYTHON" ]; then
+    echo "  Setting up environment..."
+    PYTHON_CMD=$(command -v python3.11 || command -v python3.12 || command -v python3.13 || command -v python3)
+    "$PYTHON_CMD" -m venv "$BRAINSTEM_HOME/venv" 2>/dev/null
+    "$BRAINSTEM_HOME/venv/bin/pip" install -r requirements.txt --quiet 2>/dev/null || \
+        "$BRAINSTEM_HOME/venv/bin/pip" install -r requirements.txt
+    VENV_PYTHON="$BRAINSTEM_HOME/venv/bin/python"
+fi
+
+# Verify deps on every launch (fast no-op if already installed)
+if ! "$VENV_PYTHON" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
+    "$BRAINSTEM_HOME/venv/bin/pip" install -r requirements.txt --quiet 2>/dev/null || true
+fi
+
+exec "$VENV_PYTHON" brainstem.py "$@"
+WRAPPER
+
+    chmod +x "$BRAINSTEM_BIN/brainstem"
+
+    add_to_path() {
+        local file="$1"
+        # Create shell config if it doesn't exist (common on fresh macOS)
+        touch "$file"
+        if ! grep -q '\.local/bin' "$file" 2>/dev/null; then
+            echo '' >> "$file"
+            echo '# RAPP Brainstem' >> "$file"
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$file"
+        fi
+    }
+    add_to_path "$HOME/.bashrc"
+    add_to_path "$HOME/.zshrc"
+    add_to_path "$HOME/.bash_profile"
+
+    echo -e "  ${GREEN}✓${NC} CLI installed to $BRAINSTEM_BIN/brainstem"
+}
+
+create_env() {
+    local env_file="$BRAINSTEM_HOME/src/rapp_brainstem/.env"
+    if [ ! -f "$env_file" ]; then
+        cp "$BRAINSTEM_HOME/src/rapp_brainstem/.env.example" "$env_file" 2>/dev/null || true
+    fi
+    [ -f "$env_file" ] && chmod 600 "$env_file" 2>/dev/null || true
+}
+
+launch_brainstem() {
+    export PATH="$BRAINSTEM_BIN:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+    # Always pull latest code before launching
+    if [ -d "$BRAINSTEM_HOME/src/.git" ]; then
+        cd "$BRAINSTEM_HOME/src"
+        git pull --quiet 2>/dev/null || true
+    fi
+
+    local venv_python="$VENV_DIR/bin/python"
+
+    # Ensure venv exists (handles edge case where only launch is called)
+    if [ ! -x "$venv_python" ]; then
+        if [[ -z "$PYTHON_CMD" ]]; then
+            PYTHON_CMD=$(find_python) || true
+        fi
+        if [[ "$(detect_os)" == "macos" ]]; then
+            ensure_brew_on_path
+        fi
+        setup_venv
+        ensure_deps
+    fi
+
+    local token_file="$BRAINSTEM_HOME/src/rapp_brainstem/.copilot_token"
+    local client_id="Iv1.b507a08c87ecfe98"
+
+    # Step 1: Copilot authentication (device code flow)
+    local needs_auth=true
+    if [ -f "$token_file" ]; then
+        # Validate existing token against Copilot API
+        local saved_token
+        saved_token=$("$venv_python" -c "
+import json, sys
+try:
+    with open('$token_file') as f:
+        raw = f.read().strip()
+    if raw.startswith('{'):
+        print(json.loads(raw).get('access_token',''))
+    else:
+        print(raw)
+except: pass
+" 2>/dev/null)
+        if [[ -n "$saved_token" ]]; then
+            local auth_prefix="token"
+            if [[ "$saved_token" != ghu_* ]]; then auth_prefix="Bearer"; fi
+            local check_status
+            check_status=$(curl -s --max-time 15 -o /dev/null -w "%{http_code}" \
+                -H "Authorization: $auth_prefix $saved_token" \
+                -H "Accept: application/json" \
+                -H "Editor-Version: vscode/1.95.0" \
+                -H "Editor-Plugin-Version: copilot/1.0.0" \
+                "https://api.github.com/copilot_internal/v2/token" 2>/dev/null) || true
+            if [[ "$check_status" == "200" ]]; then
+                echo -e "  ${GREEN}✓${NC} Already authenticated with GitHub Copilot"
+                needs_auth=false
+            elif [[ -z "$check_status" || "$check_status" == "000" ]]; then
+                # curl never reached GitHub (offline, captive portal, timeout) — that
+                # says nothing about the token. Keep it; the server retries live.
+                echo -e "  ${YELLOW}⚠${NC} Couldn't verify the saved token (no network) — keeping it"
+                needs_auth=false
+            else
+                echo -e "  ${YELLOW}⚠${NC} Saved token expired — re-authenticating..."
+                rm -f "$token_file"
+            fi
+        else
+            rm -f "$token_file"
+        fi
+    fi
+
+    if [[ "$needs_auth" == true ]]; then
+        echo ""
+        echo -e "  ${CYAN}Authenticating with GitHub Copilot...${NC}"
+        echo ""
+
+        # Best-effort auth: disable `set -e` for the whole block. Every curl and JSON
+        # parse below tolerates failure (empty response when offline), and the code
+        # already handles those cases gracefully — but under `set -e` the very first
+        # failed command substitution would abort the installer before the server can
+        # start. The user can always finish signing in later at /login.
+        set +e
+
+        # Request device code
+        local device_resp
+        device_resp=$(curl -fsSL --max-time 15 -X POST "https://github.com/login/device/code" \
+            -H "Accept: application/json" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "client_id=${client_id}" 2>/dev/null)
+
+        local user_code device_code interval verify_uri
+        user_code=$(echo "$device_resp" | "$venv_python" -c "import sys,json; print(json.load(sys.stdin)['user_code'])" 2>/dev/null)
+        device_code=$(echo "$device_resp" | "$venv_python" -c "import sys,json; print(json.load(sys.stdin)['device_code'])" 2>/dev/null)
+        interval=$(echo "$device_resp" | "$venv_python" -c "import sys,json; print(json.load(sys.stdin).get('interval',5))" 2>/dev/null)
+        verify_uri=$(echo "$device_resp" | "$venv_python" -c "import sys,json; print(json.load(sys.stdin)['verification_uri'])" 2>/dev/null)
+
+        if [[ -z "$user_code" || -z "$device_code" ]]; then
+            echo -e "  ${YELLOW}!${NC} Could not start auth — you can sign in at http://localhost:7071/login"
+        else
+            echo "  ┌─────────────────────────────────────────┐"
+            echo -e "  │  Your code: ${CYAN}${user_code}${NC}                  │"
+            echo "  └─────────────────────────────────────────┘"
+            echo ""
+            echo "  Opening browser to authorize..."
+
+            # Open browser
+            open "$verify_uri" 2>/dev/null || xdg-open "$verify_uri" 2>/dev/null || true
+
+            echo "  Waiting for authorization..."
+            echo ""
+
+            local token_json=""
+            for i in $(seq 1 60); do
+                sleep "${interval:-5}"
+                local poll_resp
+                poll_resp=$(curl -fsSL --max-time 15 -X POST "https://github.com/login/oauth/access_token" \
+                    -H "Accept: application/json" \
+                    -H "Content-Type: application/x-www-form-urlencoded" \
+                    -d "client_id=${client_id}&device_code=${device_code}&grant_type=urn:ietf:params:oauth:grant-type:device_code" 2>/dev/null) || true
+
+                local access_token error
+                access_token=$(echo "$poll_resp" | "$venv_python" -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token',''))" 2>/dev/null)
+                error=$(echo "$poll_resp" | "$venv_python" -c "import sys,json; d=json.load(sys.stdin); print(d.get('error',''))" 2>/dev/null)
+
+                if [[ -n "$access_token" ]]; then
+                    # Save token file (same format brainstem.py expects)
+                    "$venv_python" -c "
+import sys, json
+d = json.loads(sys.argv[1])
+out = {'access_token': d['access_token']}
+if d.get('refresh_token'): out['refresh_token'] = d['refresh_token']
+with open(sys.argv[2], 'w') as f: json.dump(out, f)
+" "$poll_resp" "$token_file"
+                    chmod 600 "$token_file" 2>/dev/null || true
+
+                    # Validate Copilot access immediately
+                    local copilot_check copilot_status
+                    copilot_check=$(curl -s --max-time 15 -w "\n%{http_code}" \
+                        -H "Authorization: token $access_token" \
+                        -H "Accept: application/json" \
+                        -H "Editor-Version: vscode/1.95.0" \
+                        -H "Editor-Plugin-Version: copilot/1.0.0" \
+                        "https://api.github.com/copilot_internal/v2/token" 2>/dev/null) || true
+                    copilot_status=$(echo "$copilot_check" | tail -1)
+
+                    if [[ "$copilot_status" == "200" ]]; then
+                        echo -e "  ${GREEN}✓${NC} Authenticated — Copilot access confirmed"
+                    elif [[ "$copilot_status" == "403" ]]; then
+                        echo ""
+                        echo -e "  ${RED}✗${NC} This GitHub account does NOT have Copilot access."
+                        echo ""
+                        echo -e "  Either:"
+                        echo -e "    1. Sign up for Copilot: ${CYAN}https://github.com/github-copilot/signup${NC}"
+                        echo -e "    2. Re-run this installer and sign in with a different GitHub account"
+                        echo ""
+                        rm -f "$token_file"
+                    else
+                        echo -e "  ${GREEN}✓${NC} Authenticated with GitHub"
+                    fi
+                    break
+                fi
+
+                if [[ "$error" == "expired_token" ]]; then
+                    echo -e "  ${YELLOW}!${NC} Auth timed out — sign in at http://localhost:7071/login"
+                    break
+                fi
+
+                if [[ "$error" != "authorization_pending" && "$error" != "slow_down" && -n "$error" ]]; then
+                    echo -e "  ${YELLOW}!${NC} Auth error: $error — sign in at http://localhost:7071/login"
+                    break
+                fi
+            done
+        fi
+        set -e   # end best-effort auth block
+    fi
+
+    # Step 2: Launch brainstem
+    echo ""
+    echo -e "  ${CYAN}Starting RAPP Brainstem...${NC}"
+    echo ""
+
+    cd "$BRAINSTEM_HOME/src/rapp_brainstem"
+
+    # Kill any existing brainstem on port 7071 before starting
+    local existing_pid
+    existing_pid=$(lsof -ti:7071 2>/dev/null | head -1)
+    if [ -n "$existing_pid" ]; then
+        local existing_cmd=""
+        existing_cmd=$(ps -p "$existing_pid" -o command= 2>/dev/null) || true
+        if [[ "$existing_cmd" == *"brainstem.py"* || "$existing_cmd" == *"$BRAINSTEM_HOME"* ]]; then
+            echo -e "  ${YELLOW}⚠${NC} Stopping existing Brainstem server (PID $existing_pid)..."
+            kill "$existing_pid" 2>/dev/null
+            sleep 1
+        else
+            echo -e "  ${RED}✗${NC} Port 7071 is already used by another process (PID $existing_pid)."
+            echo "    Stop that process or set PORT in $BRAINSTEM_HOME/src/rapp_brainstem/.env, then rerun."
+            exit 1
+        fi
+    fi
+
+    # Detect whether a GUI browser can plausibly be opened. macOS always has
+    # `open`; Linux/BSD need both a display server and `xdg-open`. SSH sessions,
+    # headless boxes, and containers land here as false.
+    local gui_available=false
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        command -v open >/dev/null 2>&1 && gui_available=true
+    elif [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then
+        command -v xdg-open >/dev/null 2>&1 && gui_available=true
+    fi
+
+    if [[ "$gui_available" == true ]]; then
+        # Open the browser once the server actually answers (#14) — a fixed delay
+        # races cold startups (token exchange, dep installs) and lands the user on
+        # a dead-port error page. Poll /health, then open; after 60s open anyway so
+        # the user still gets the tab (with the URL bar filled in) on a slow start.
+        (
+            for _ in $(seq 1 60); do
+                if curl -sf -o /dev/null --max-time 1 "http://localhost:7071/health" 2>/dev/null; then
+                    break
+                fi
+                sleep 1
+            done
+            open "http://localhost:7071" 2>/dev/null || xdg-open "http://localhost:7071" 2>/dev/null || true
+        ) &
+    fi
+
+    # Final dep safety net — if somehow we got here without deps, fix it
+    if ! "$venv_python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
+        echo -e "  ${YELLOW}⚠${NC} Fixing missing dependencies..."
+        "$VENV_DIR/bin/pip" install -r "$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt" --quiet 2>/dev/null || \
+            "$VENV_DIR/bin/pip" install -r "$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt"
+    fi
+
+    # Mouse-first terminal fallback: when no GUI browser is available (SSH,
+    # headless, containers) but the terminal is real and interactive, offer a
+    # clickable/scrollable chat UI instead of a raw log dump. This is strictly
+    # additive — any terminal that can't satisfy every check below (old
+    # machines, dumb terminals, CI, a pinned source tree without tui.py, a
+    # partial/failed `textual` install, or an abnormal TUI exit) falls straight
+    # through to the unchanged raw-shell path below, which remains the
+    # permanent backward-compatible fallback and is NEVER `exec`'d away until
+    # the TUI has already exited cleanly.
+    #
+    # Use the same "usable controlling terminal" test as the raw-shell fallback
+    # below (not a bare `[ -t 0 ]`) so `curl | bash` sessions — where stdin is
+    # necessarily a pipe — still qualify when a real terminal is attached via
+    # /dev/tty (the exact case the raw fallback already handles at line ~1075).
+    local has_usable_tty=false
+    if [ -t 0 ] && [ -t 1 ]; then
+        has_usable_tty=true
+    elif [ -t 1 ] && ( : </dev/tty ) 2>/dev/null; then
+        has_usable_tty=true
+    fi
+
+    if [[ "$gui_available" != true ]] && [[ "$has_usable_tty" == true ]] \
+        && [[ "${TERM:-dumb}" != "dumb" ]] \
+        && [ -f "$BRAINSTEM_HOME/src/rapp_brainstem/tui.py" ]; then
+        local tui_ready=false
+        if "$venv_python" -c "import textual" >/dev/null 2>&1; then
+            tui_ready=true
+        else
+            # Bounded, best-effort install — an offline/captive-network machine
+            # must not hang here; a 30s timeout falls through to the raw path.
+            if command -v timeout >/dev/null 2>&1; then
+                timeout 30 "$VENV_DIR/bin/pip" install --quiet textual >/dev/null 2>&1
+            else
+                "$VENV_DIR/bin/pip" install --quiet textual >/dev/null 2>&1
+            fi
+            "$venv_python" -c "import textual" >/dev/null 2>&1 && tui_ready=true
+        fi
+
+        if [[ "$tui_ready" == true ]]; then
+            echo -e "  ${CYAN}No GUI browser detected — launching the mouse-first terminal UI...${NC}"
+            export BRAINSTEM_VENV_PYTHON="$venv_python"
+            local tui_status=0
+            if [ -t 0 ]; then
+                "$venv_python" tui.py || tui_status=$?
+            else
+                "$venv_python" tui.py </dev/tty || tui_status=$?
+            fi
+            # Exit code 0 means the user quit the TUI on purpose — that's a
+            # complete, successful launch; don't fall through to a second
+            # server. Anything else (crash, failed import at runtime, a
+            # terminal that reports a tty but can't actually render) falls
+            # through to the unchanged raw-shell path below, which is exactly
+            # the point of a fail-open compatibility fallback.
+            if [ "$tui_status" -eq 0 ]; then
+                return 0
+            fi
+            echo -e "  ${YELLOW}⚠${NC} Mouse terminal UI exited unexpectedly (status $tui_status) — falling back to plain output"
+        else
+            echo -e "  ${YELLOW}⚠${NC} Mouse terminal UI unavailable — falling back to plain output"
+        fi
+    fi
+
+    # Use exec to replace shell — but only if stdin is a terminal.
+    # When piped (curl | bash), exec can lose the TTY and hang.
+    if [ -t 0 ]; then
+        exec "$venv_python" brainstem.py
+    elif ( : </dev/tty ) 2>/dev/null; then
+        # Piped installer with a USABLE controlling terminal — reattach stdin.
+        # Test by opening it: the /dev/tty node exists even without a controlling
+        # terminal (ssh without -t, CI), where only the open fails — a bare `-e`
+        # check would take this branch and die on the redirect.
+        "$venv_python" brainstem.py </dev/tty
+    else
+        # No controlling terminal at all (ssh without -t, CI, a container). Reattaching
+        # /dev/tty would error out; just run the server on the inherited stdin.
+        "$venv_python" brainstem.py
+    fi
+}
+
+main() {
+    # Parse arguments (e.g. --version v0.6.0)
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --version)
+                PIN_VERSION="$2"
+                shift 2
+                ;;
+            --no-launch)
+                NO_LAUNCH=true
+                shift
+                ;;
+            *)
+                shift
+                ;;
+        esac
+    done
+
+    print_banner
+
+    if [ -n "$PIN_VERSION" ]; then
+        echo -e "  ${CYAN}Pinning to version: ${PIN_VERSION}${NC}"
+        echo ""
+    fi
+
+    # Check if this is an upgrade of an existing install
+    # Skip the shortcut when --version is specified (always go through install_brainstem)
+    if [ -z "$PIN_VERSION" ] && [ -d "$BRAINSTEM_HOME/src/.git" ]; then
+        echo "Checking for updates..."
+        if ! check_for_upgrade; then
+            if brainstem_source_ready "$BRAINSTEM_HOME/src"; then
+                # Already up to date — still verify everything works before launching
+                check_prereqs
+                setup_venv
+                ensure_deps
+                install_cli
+                create_env
+                if [[ "$NO_LAUNCH" == true ]]; then
+                    echo -e "  ${GREEN}✓${NC} Brainstem runtime is ready (launch skipped)"
+                    exit 0
+                fi
+                export PATH="$BRAINSTEM_BIN:/opt/homebrew/bin:/usr/local/bin:$PATH"
+                launch_brainstem
+                exit $?  # launch uses exec, but guard against fall-through
+            fi
+            echo -e "  ${YELLOW}⚠${NC} Installed version matches, but Brainstem source is incomplete — repairing"
+        fi
+        # Upgrade available — fall through to full install path
+    fi
+
+    check_prereqs
+    install_brainstem
+    setup_venv
+    setup_deps
+    install_cli
+    create_env
+
+    # Make sure brainstem and gh are on PATH for this session
+    export PATH="$BRAINSTEM_BIN:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+    local installed_version
+    installed_version=$(cat "$BRAINSTEM_HOME/src/rapp_brainstem/VERSION" 2>/dev/null | tr -d '[:space:]')
+
+    echo ""
+    echo "═══════════════════════════════════════════════════"
+    echo -e "  ${GREEN}✓ RAPP Brainstem v${installed_version} installed!${NC}"
+    echo "═══════════════════════════════════════════════════"
+    echo ""
+
+    if [[ "$NO_LAUNCH" == true ]]; then
+        echo -e "  ${GREEN}✓${NC} Brainstem runtime is ready (launch skipped)"
+        return 0
+    fi
+
+    launch_brainstem
+}
+
+main "$@"

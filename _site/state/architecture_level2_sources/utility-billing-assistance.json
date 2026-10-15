@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "utility-billing-assistance",
+  "agent": "@aibast-agents-library/utility-billing-assistance",
+  "display_name": "Utility Billing and Assistance Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic utility account records",
+        "detail": "Four fictional accounts provide services, balances, status, autopay, and payment history for read-only resident-service review."
+      },
+      {
+        "name": "Meter usage and rate evidence",
+        "detail": "Fixed water and sewer histories, tiered rates, and bill amounts support deterministic anomaly and draft-cost analysis."
+      },
+      {
+        "name": "Leak-adjustment policy controls",
+        "detail": "Packaged rules require repair evidence, prior-adjustment review, and billing-specialist approval before any adjustment."
+      },
+      {
+        "name": "Assistance and payment criteria",
+        "detail": "Synthetic program, poverty-level, document, discount, benefit, and installment rules ground preliminary screening."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Read-only account explanation",
+        "detail": "Summarizes balances, services, status, and payment history without changing the account, service, payment, or bill."
+      },
+      {
+        "name": "Usage and possible-leak screening",
+        "detail": "Compares meter history with a fixed baseline and flags possible anomalies without diagnosing a leak or ordering field work."
+      },
+      {
+        "name": "Draft adjustment evidence review",
+        "detail": "Calculates a non-binding policy estimate and lists evidence required for an authorized billing specialist to review."
+      },
+      {
+        "name": "Payment-plan option modeling",
+        "detail": "Calculates three-, six-, nine-, and twelve-month options without creating an agreement or changing a balance."
+      },
+      {
+        "name": "Preliminary assistance screening",
+        "detail": "Compares supplied household facts with synthetic criteria without determining eligibility, applying, or enrolling anyone."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "The BasicAgent-compatible Python tool exposes four grounded workflows through local chat, streaming, and tool routing."
+      },
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Four skills and two synthetic knowledge files passed locked preview cases while the exported agent remained unpublished."
+      },
+      {
+        "name": "Evidence-first staff responses",
+        "detail": "Service, billing, revenue, and assistance reviewers receive facts, estimates, criteria, and explicit approval boundaries."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Account balance review brief",
+        "detail": "Presents current and past-due balances, services, status, and payment history for authorized service-staff verification."
+      },
+      {
+        "name": "Usage and policy evidence brief",
+        "detail": "Shows meter periods, baselines, anomaly indicators, estimates, and missing evidence for billing-specialist review."
+      },
+      {
+        "name": "Payment option comparison",
+        "detail": "Lists installment durations and modeled amounts while reserving plan approval for billing staff and the resident."
+      },
+      {
+        "name": "Assistance screening summary",
+        "detail": "Reports potential matches, limits, benefits, and required documents without making an eligibility or enrollment decision."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "UtilityBillingAssistanceAgent tool",
+      "detail": "A single BasicAgent-compatible Python file implements four deterministic workflows over bundled synthetic evidence."
+    },
+    {
+      "name": "Deterministic billing functions",
+      "detail": "Python calculations derive balances, usage trends, draft credits, installment options, and income-threshold screens."
+    },
+    {
+      "name": "Synthetic knowledge package",
+      "detail": "Two packaged files supply fictional records, rules, controls, rate structures, and assistance criteria."
+    },
+    {
+      "name": "Brainstem RAPP runtime",
+      "detail": "The local-first server discovers the portable agent and serves grounded chat without utility-system credentials."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The environment model routes requests and composes answers from bounded agent or Copilot Studio evidence."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft agent, four skills, and two knowledge files; publication requires a separate decision."
+    },
+    {
+      "name": "Utility and metering systems",
+      "detail": "Approved future read seams for billing and meter records; the evidence package has no live connector or write action."
+    },
+    {
+      "name": "Assistance case-management system",
+      "detail": "An approved future read seam for program cases; no application, enrollment, outreach, or record update is enabled."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only grounding",
+      "detail": "All accounts, meter readings, policies, rates, programs, and applicant facts are fictional and fixed for evaluation."
+    },
+    {
+      "name": "Four bounded service workflows",
+      "detail": "Routing is limited to billing inquiry, usage analysis, payment-plan options, and assistance-program screening."
+    },
+    {
+      "name": "Service and billing reviewer authority",
+      "detail": "Authorized service and billing staff retain verification, adjustment, agreement, eligibility, and enrollment authority."
+    },
+    {
+      "name": "No bill or account adjustment",
+      "detail": "The agent never changes a balance, payment, service, account, discount, credit, payment plan, or assistance record."
+    },
+    {
+      "name": "No customer contact",
+      "detail": "Responses are internal decision support; the agent never sends notices, email, Teams messages, calls, or outreach."
+    },
+    {
+      "name": "No diagnosis or field action",
+      "detail": "An anomaly is not a leak diagnosis, and the agent never schedules inspection, repair, dispatch, or other field work."
+    },
+    {
+      "name": "Validated unpublished package",
+      "detail": "All four locked cases passed Brainstem and Copilot Studio evidence; the exported solution remains Draft and unpublished."
+    }
+  ]
+}

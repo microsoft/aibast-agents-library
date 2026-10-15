@@ -1,0 +1,1055 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/solution-design-review",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Solution Design Review Pilot",
+        "Draft",
+        "design-intake",
+        "current-state",
+        "requirements-matrix",
+        "architecture-vision",
+        "target-design",
+        "aibast_solution-design-review-synthetic-records.",
+        "aibast_solution-design-review-rules-and-guardrai"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 218,
+          "height": 24,
+          "label": "Solution Design Review Pilot"
+        },
+        {
+          "x": 313,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "design-intake"
+        },
+        {
+          "x": 1209,
+          "y": 199,
+          "width": 91,
+          "height": 17,
+          "label": "current-state"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 137,
+          "height": 22,
+          "label": "requirements-matrix"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 125,
+          "height": 19,
+          "label": "architecture-vision"
+        },
+        {
+          "x": 1240,
+          "y": 277,
+          "width": 95,
+          "height": 22,
+          "label": "target-design"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_solution-design-review-synthetic-records."
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_solution-design-review-rules-and-guardrai"
+        }
+      ]
+    },
+    {
+      "id": "easy-sdr-01",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/02-sdr-01.jpg",
+      "caption": "SDR-01 · Solution Architect: I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me ",
+      "case_id": "SDR-01",
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/02-sdr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "INIT-2026-031",
+        "3 inputs received",
+        "Recommended fill sequence"
+      ],
+      "boxes": [
+        {
+          "x": 471,
+          "y": 455,
+          "width": 162,
+          "height": 26,
+          "label": "INIT-2026-031"
+        },
+        {
+          "x": 286,
+          "y": 543,
+          "width": 169,
+          "height": 28,
+          "label": "3 inputs received"
+        },
+        {
+          "x": 286,
+          "y": 824,
+          "width": 271,
+          "height": 28,
+          "label": "Recommended fill sequence"
+        }
+      ]
+    },
+    {
+      "id": "easy-sdr-02",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/03-sdr-02.jpg",
+      "caption": "SDR-02 · Solution Architect: Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+      "case_id": "SDR-02",
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/03-sdr-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "4 of 4"
+      ],
+      "boxes": [
+        {
+          "x": 308,
+          "y": 1212,
+          "width": 53,
+          "height": 32,
+          "label": "4 of 4"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Avery Lindqvist, Data protection not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-sdr-03",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/04-sdr-03.jpg",
+      "caption": "SDR-03 · Solution Architect: What does the current state look like for the systems in scope?",
+      "case_id": "SDR-03",
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/04-sdr-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "End of support",
+        "no current-state baseline for the Business domai",
+        "CI-103"
+      ],
+      "boxes": [
+        {
+          "x": 982,
+          "y": 616,
+          "width": 117,
+          "height": 23,
+          "label": "End of support"
+        },
+        {
+          "x": 548,
+          "y": 1089,
+          "width": 127,
+          "height": 19,
+          "label": "no current-state baseline for the Business domai"
+        },
+        {
+          "x": 596,
+          "y": 1261,
+          "width": 56,
+          "height": 20,
+          "label": "CI-103"
+        }
+      ]
+    },
+    {
+      "id": "easy-sdr-04",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/05-sdr-04.jpg",
+      "caption": "SDR-04 · Enterprise Architecture Lead: Which non-functional requirements apply, and who owns each one?",
+      "case_id": "SDR-04",
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/05-sdr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "NFR-04",
+        "MISSING OWNER"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 526,
+          "width": 60,
+          "height": 20,
+          "label": "NFR-04"
+        },
+        {
+          "x": 917,
+          "y": 655,
+          "width": 137,
+          "height": 20,
+          "label": "MISSING OWNER"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "1 variance candidate not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-sdr-05",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/06-sdr-05.jpg",
+      "caption": "SDR-05 · Solution Architect: Draft the target design and list what changes in the inventory.",
+      "case_id": "SDR-05",
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/06-sdr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Notification Orchestrator",
+        "3 new, 2 changed, 2 retired",
+        "not registered by this agent"
+      ],
+      "boxes": [
+        {
+          "x": 455,
+          "y": 541,
+          "width": 187,
+          "height": 21,
+          "label": "Notification Orchestrator"
+        },
+        {
+          "x": 363,
+          "y": 1050,
+          "width": 215,
+          "height": 24,
+          "label": "3 new, 2 changed, 2 retired"
+        },
+        {
+          "x": 326,
+          "y": 1599,
+          "width": 460,
+          "height": 24,
+          "label": "not registered by this agent"
+        }
+      ]
+    },
+    {
+      "id": "easy-sdr-06",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/07-sdr-06.jpg",
+      "caption": "SDR-06 · Review Board Coordinator: Is this design ready for the review board?",
+      "case_id": "SDR-06",
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/07-sdr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "70%",
+        "Revise before the review board",
+        "Not submitted to the review board"
+      ],
+      "boxes": [
+        {
+          "x": 376,
+          "y": 479,
+          "width": 42,
+          "height": 20,
+          "label": "70%"
+        },
+        {
+          "x": 703,
+          "y": 478,
+          "width": 234,
+          "height": 21,
+          "label": "Revise before the review board"
+        },
+        {
+          "x": 490,
+          "y": 965,
+          "width": 256,
+          "height": 21,
+          "label": "Not submitted to the review board"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/solution-design-review/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/solution-design-review/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Solution Design Review Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 216,
+          "height": 24,
+          "label": "Solution Design Review Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Solution Design Review Manual",
+      "step": 2,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Solution Design Review Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 239,
+          "height": 24,
+          "label": "Solution Design Review Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Solution Design Review Agent — Manual Global Ins"
+      ],
+      "boxes": [
+        {
+          "x": 203,
+          "y": 131,
+          "width": 363,
+          "height": 39,
+          "label": "Solution Design Review Agent — Manual Global Ins"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 334,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/06-add-aibast-solution-design-review-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_solution-design-review-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/06-add-aibast-solution-design-review-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_solution-design-review-rules-and-guardrai"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 306,
+          "height": 33,
+          "label": "aibast_solution-design-review-rules-and-guardrai"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/07-add-aibast-solution-design-review-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_solution-design-review-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/07-add-aibast-solution-design-review-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_solution-design-review-synthetic-records."
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 304,
+          "height": 33,
+          "label": "aibast_solution-design-review-synthetic-records."
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/08-add-aibast-architecture-vision-02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_architecture-vision_02",
+      "step": 8,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/08-add-aibast-architecture-vision-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "architecture-vision"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 125,
+          "height": 19,
+          "label": "architecture-vision"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/09-add-aibast-current-state-03.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_current-state_03",
+      "step": 9,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/09-add-aibast-current-state-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "current-state"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 198,
+          "width": 91,
+          "height": 17,
+          "label": "current-state"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/10-add-aibast-design-intake-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_design-intake_01",
+      "step": 10,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/10-add-aibast-design-intake-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "design-intake"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "design-intake"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/11-add-aibast-readiness-check-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_readiness-check_06",
+      "step": 11,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/11-add-aibast-readiness-check-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "readiness-check"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 110,
+          "height": 19,
+          "label": "readiness-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/12-add-aibast-requirements-matrix-04.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_requirements-matrix_04",
+      "step": 12,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/12-add-aibast-requirements-matrix-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "requirements-matrix"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 137,
+          "height": 22,
+          "label": "requirements-matrix"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/13-add-aibast-target-design-05.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_target-design_05",
+      "step": 13,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/13-add-aibast-target-design-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "target-design"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "target-design"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "target-design",
+        "requirements-matrix",
+        "readiness-check",
+        "design-intake",
+        "current-state",
+        "aibast_solution-design-review-synthetic-records.",
+        "aibast_solution-design-review-rules-and-guardrai"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "target-design"
+        },
+        {
+          "x": 1209,
+          "y": 197,
+          "width": 137,
+          "height": 22,
+          "label": "requirements-matrix"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 110,
+          "height": 19,
+          "label": "readiness-check"
+        },
+        {
+          "x": 1224,
+          "y": 237,
+          "width": 95,
+          "height": 22,
+          "label": "design-intake"
+        },
+        {
+          "x": 1057,
+          "y": 278,
+          "width": 91,
+          "height": 17,
+          "label": "current-state"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_solution-design-review-synthetic-records."
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_solution-design-review-rules-and-guardrai"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "target-design",
+        "architecture-vision",
+        "requirements-matrix",
+        "readiness-check",
+        "design-intake"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 95,
+          "height": 22,
+          "label": "target-design"
+        },
+        {
+          "x": 1126,
+          "y": 200,
+          "width": 57,
+          "height": 17,
+          "label": "architecture-vision"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 137,
+          "height": 22,
+          "label": "requirements-matrix"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 110,
+          "height": 19,
+          "label": "readiness-check"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 95,
+          "height": 22,
+          "label": "design-intake"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "requirements-matrix",
+        "readiness-check",
+        "design-intake",
+        "architecture-vision",
+        "current-state"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 106,
+          "width": 81,
+          "height": 20,
+          "label": "requirements-matrix"
+        },
+        {
+          "x": 1055,
+          "y": 162,
+          "width": 110,
+          "height": 19,
+          "label": "readiness-check"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 95,
+          "height": 22,
+          "label": "design-intake"
+        },
+        {
+          "x": 1126,
+          "y": 284,
+          "width": 57,
+          "height": 16,
+          "label": "architecture-vision"
+        },
+        {
+          "x": 1055,
+          "y": 359,
+          "width": 91,
+          "height": 17,
+          "label": "current-state"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Solution Design Review Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 238,
+          "height": 24,
+          "label": "Solution Design Review Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-sdr-01",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/18-sdr-01.jpg",
+      "caption": "SDR-01 · Solution Architect: I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me ",
+      "step": 18,
+      "case_id": "SDR-01",
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/18-sdr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "INIT-2026-031",
+        "3 inputs received",
+        "Recommended fill sequence"
+      ],
+      "boxes": [
+        {
+          "x": 471,
+          "y": 500,
+          "width": 162,
+          "height": 26,
+          "label": "INIT-2026-031"
+        },
+        {
+          "x": 766,
+          "y": 533,
+          "width": 132,
+          "height": 24,
+          "label": "3 inputs received"
+        },
+        {
+          "x": 286,
+          "y": 793,
+          "width": 218,
+          "height": 23,
+          "label": "Recommended fill sequence"
+        }
+      ]
+    },
+    {
+      "id": "hard-sdr-02",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/19-sdr-02.jpg",
+      "caption": "SDR-02 · Solution Architect: Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+      "step": 19,
+      "case_id": "SDR-02",
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/19-sdr-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Avery Lindqvist",
+        "4 of 4",
+        "Data protection"
+      ],
+      "boxes": [
+        {
+          "x": 298,
+          "y": 668,
+          "width": 121,
+          "height": 24,
+          "label": "Avery Lindqvist"
+        },
+        {
+          "x": 425,
+          "y": 914,
+          "width": 66,
+          "height": 23,
+          "label": "4 of 4"
+        },
+        {
+          "x": 727,
+          "y": 1020,
+          "width": 124,
+          "height": 23,
+          "label": "Data protection"
+        }
+      ]
+    },
+    {
+      "id": "hard-sdr-03",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/20-sdr-03.jpg",
+      "caption": "SDR-03 · Solution Architect: What does the current state look like for the systems in scope?",
+      "step": 20,
+      "case_id": "SDR-03",
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/20-sdr-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "End of support",
+        "no current-state baseline for the Business domai"
+      ],
+      "boxes": [
+        {
+          "x": 982,
+          "y": 700,
+          "width": 114,
+          "height": 24,
+          "label": "End of support"
+        },
+        {
+          "x": 323,
+          "y": 1017,
+          "width": 360,
+          "height": 20,
+          "label": "no current-state baseline for the Business domai"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "CI-103 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-sdr-04",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/21-sdr-04.jpg",
+      "caption": "SDR-04 · Enterprise Architecture Lead: Which non-functional requirements apply, and who owns each one?",
+      "step": 21,
+      "case_id": "SDR-04",
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/21-sdr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "NFR-04",
+        "MISSING OWNER",
+        "1 variance candidate"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 614,
+          "width": 60,
+          "height": 20,
+          "label": "NFR-04"
+        },
+        {
+          "x": 936,
+          "y": 744,
+          "width": 137,
+          "height": 20,
+          "label": "MISSING OWNER"
+        },
+        {
+          "x": 736,
+          "y": 982,
+          "width": 153,
+          "height": 20,
+          "label": "1 variance candidate"
+        }
+      ]
+    },
+    {
+      "id": "hard-sdr-05",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/22-sdr-05.jpg",
+      "caption": "SDR-05 · Solution Architect: Draft the target design and list what changes in the inventory.",
+      "step": 22,
+      "case_id": "SDR-05",
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/22-sdr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Notification Orchestrator",
+        "not registered by this agent"
+      ],
+      "boxes": [
+        {
+          "x": 320,
+          "y": 506,
+          "width": 181,
+          "height": 21,
+          "label": "Notification Orchestrator"
+        },
+        {
+          "x": 912,
+          "y": 966,
+          "width": 215,
+          "height": 24,
+          "label": "not registered by this agent"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "3 new, 2 changed, 2 retired not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-sdr-06",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/23-sdr-06.jpg",
+      "caption": "SDR-06 · Review Board Coordinator: Is this design ready for the review board?",
+      "step": 23,
+      "case_id": "SDR-06",
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/23-sdr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "70%",
+        "Revise before the review board",
+        "Not submitted to the review board"
+      ],
+      "boxes": [
+        {
+          "x": 483,
+          "y": 462,
+          "width": 42,
+          "height": 20,
+          "label": "70%"
+        },
+        {
+          "x": 827,
+          "y": 461,
+          "width": 237,
+          "height": 21,
+          "label": "Revise before the review board"
+        },
+        {
+          "x": 714,
+          "y": 868,
+          "width": 157,
+          "height": 21,
+          "label": "Not submitted to the review board"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/solution-design-review/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/solution-design-review/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Solution Design Review Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 236,
+          "height": 24,
+          "label": "Solution Design Review Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:59.942448+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

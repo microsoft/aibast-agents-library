@@ -1,0 +1,27 @@
+---
+name: permit-license-management-compliance-gaps
+description: "Use when a Compliance Manager asks to triage missed renewal lead times and the obligations at risk without giving legal advice"
+---
+# Permit Management Agent: Compliance Gaps
+
+## Route
+
+Use the `compliance_gaps` operation. The canonical persona prompt is:
+
+> What permit evidence gap needs immediate authorized review?
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `compliance_gaps` operation behavior; it has demo defaults, so call it before asking anything.
+3. Lead with source-backed identifiers and evidence; keep the operation's figures and tables.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- renewal_lead_time_missed
+- CRITICAL
+- not legal advice
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

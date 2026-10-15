@@ -1,0 +1,11 @@
+---
+name: contract-clause-analysis
+description: Explains documented liability, IP, payment, and other clause findings.
+---
+# Contract clause analysis
+
+Use when counsel asks what language needs attention.
+
+Quote only sections in the synthetic evidence. Present section, clause, risk,
+issue, and recommended review position. Preserve HIGH and MEDIUM labels. Say
+that the excerpts are incomplete and are not a complete contract opinion.

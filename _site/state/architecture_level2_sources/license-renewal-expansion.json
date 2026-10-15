@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "license-renewal-expansion",
+  "agent": "@aibast-agents-library/license-renewal-expansion",
+  "display_name": "License Renewal and Expansion Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Subscription Agreement Snapshot",
+        "detail": "Synthetic plans, ARR, seats, renewal dates, ownership, and agreement context used only for read-only planning."
+      },
+      {
+        "name": "Product Adoption Evidence",
+        "detail": "Approved entitlement and telemetry evidence for seat utilization, feature adoption, and usage trends without source-system writes."
+      },
+      {
+        "name": "Customer Health and Support Signals",
+        "detail": "Health scores, NPS, ticket volume, stakeholder changes, demand signals, and churn indicators from the fixed snapshot."
+      },
+      {
+        "name": "Commercial Planning Assumptions",
+        "detail": "Synthetic pricing, packaging, switching-cost, and scenario assumptions labeled for review rather than quotation or commitment."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Renewal Pipeline Assessment",
+        "detail": "Orders renewal timing, health, ownership, ARR, and risk bands, then prepares a bounded internal review checklist."
+      },
+      {
+        "name": "Expansion Signal Analysis",
+        "detail": "Connects utilization and stated demand to draft package options while reserving pricing and concessions for authorized review."
+      },
+      {
+        "name": "Churn and Competitive Risk",
+        "detail": "Explains usage, support, sponsor, budget, and competitor signals with clearly identified switching-cost assumptions."
+      },
+      {
+        "name": "Revenue Scenario Modeling",
+        "detail": "Compares synthetic renewal, expansion, and churn cases as planning scenarios, never as forecasts or revenue commitments."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Seller and CSM Copilot Workspace",
+        "detail": "Natural-language access for account executives, customer-success managers, and sales leaders across four bounded operations."
+      },
+      {
+        "name": "Account-Team Review Brief",
+        "detail": "Evidence-first summaries and draft options prepared for account-team review before negotiation or customer-facing use."
+      },
+      {
+        "name": "Teams Review Handoff",
+        "detail": "Supports internal Microsoft Teams collaboration while prohibiting automated messages, meetings, tasks, alerts, or outreach."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Renewal Portfolio Dashboard",
+        "detail": "Summarizes renewal ARR, dates, health bands, ownership, and at-risk value using fixed synthetic evidence."
+      },
+      {
+        "name": "Risk and Expansion Summary",
+        "detail": "Ranks churn evidence and expansion potential while separating recorded signals from calculations and assumptions."
+      },
+      {
+        "name": "Approval and Evidence Trace",
+        "detail": "Records sources, assumptions, review gates, and the no-action boundary for pricing, legal, finance, and sales reviewers."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "LicenseRenewalExpansionAgent",
+      "detail": "Portable deterministic tool for renewal_pipeline, expansion_opportunities, churn_risk, and revenue_impact."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Conversational workspace that routes supported intents and presents evidence-first, human-governed planning results."
+    },
+    {
+      "name": "Dynamics 365 Sales",
+      "detail": "Production seam for approved read-only account and renewal context; CRM creation, updates, and forecast mutation stay disabled."
+    },
+    {
+      "name": "Subscription and Entitlement System",
+      "detail": "Approved production source for contract, license, plan, seat, and entitlement facts when replacing the synthetic route."
+    },
+    {
+      "name": "Approved Product Telemetry",
+      "detail": "Governed read-only source for adoption and usage signals, with no monitoring activation or product-state changes."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Internal review channel for account and commercial teams; the agent does not send messages or schedule meetings."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic Evidence Boundary",
+      "detail": "Labels exact customers, dates, ARR, prices, scores, percentages, and projections as synthetic planning evidence."
+    },
+    {
+      "name": "Account-Team Review Gate",
+      "detail": "Requires account and customer-success owners to validate evidence and engagement plans before any external use."
+    },
+    {
+      "name": "No-Outreach Control",
+      "detail": "Produces internal drafts only and never emails, messages, calls, schedules, or otherwise contacts a customer."
+    },
+    {
+      "name": "Commercial Mutation Guardrail",
+      "detail": "Prevents renewal execution, quote or proposal creation, pricing changes, forecast edits, and CRM mutation."
+    },
+    {
+      "name": "Authorized Approval Workflow",
+      "detail": "Reserves terms and customer materials for finance, pricing, legal, procurement, security, privacy, and sales approval."
+    }
+  ]
+}

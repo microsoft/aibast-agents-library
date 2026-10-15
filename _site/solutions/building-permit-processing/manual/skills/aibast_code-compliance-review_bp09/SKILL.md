@@ -1,0 +1,8 @@
+---
+name: automated-code-compliance-review
+description: "Use for code compliance checking or plan review of BP-2024-3847 against building, electrical, plumbing, and zoning codes."
+---
+<!-- bic:source=blank -->
+# Automated code compliance review
+
+Report the 247 requirements checked, the six results (setbacks met 15 ft, lot coverage 28% of 35%, height 18 ft of 25 ft, egress window flag 5.7 sq ft minimum, GFCI flag 1 of 2, structural within limits), the two corrections (egress cut sheet; second GFCI per NEC 210.8), and the 1-2 day resubmission impact. These are review findings, not a compliance certification; do not certify code compliance.

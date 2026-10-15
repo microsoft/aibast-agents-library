@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-10-08T13:15:47.774486+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "engineering-standards-advisor",
+    "solution": "@aibast-agents-library/engineering-standards-advisor",
+    "display_name": "Engineering Standards Manual",
+    "schema_name": "cr2bf_engineeringstandardsmanual_SKKmdC",
+    "bot_id": "66a04d3a-7a20-46a6-b703-ef034c7916db"
+  },
+  "record": {
+    "name": "Engineering Standards Manual",
+    "botid": "66a04d3a-7a20-46a6-b703-ef034c7916db",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-10-08T03:23:03Z",
+    "publishedon": null,
+    "versionnumber": 20366153,
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"20366153\""
+  },
+  "record_sha256": "a292f3a789882afc78c632c0517c7bd1e006afd42c32cb8fcbcbbba2d3ca3ee5",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

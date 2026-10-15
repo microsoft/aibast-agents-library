@@ -1,0 +1,206 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/underwriting-support",
+  "slug": "underwriting-support",
+  "name": "Underwriting Support Agent",
+  "headline": "Make underwriting evidence consistent before a coverage decision",
+  "pitch": "Give underwriters a single review surface for submission risk, rating factors, guideline checks, and exceptions while keeping quoting, binding, approval, and decline authority with humans.",
+  "category": "financial_services",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Underwriter",
+    "Risk Analyst"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Decide",
+  "why_try": "Ask which submission needs attention and surface the exact synthetic application, risk factor, guideline exception, document requirement, and senior-review path.",
+  "customer_challenge": "A commercial carrier is reviewing applications, loss history, rating factors, coverage limits, and authority rules manually. Review quality varies and senior underwriters spend time rebuilding evidence instead of judging complex risk.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the underwriter experience. Dynamics 365 holds submissions, approved document repositories supply evidence, rating services contribute controlled factors, and Microsoft Teams supports referral and authority workflows.",
+  "business_value": [
+    "Improves consistency in submission and guideline review.",
+    "Accelerates preparation of explainable pricing-factor and exception evidence.",
+    "Keeps all quote, bind, approve, and decline decisions with authorized underwriters."
+  ],
+  "business_flow": [
+    "Underwriter",
+    "Risk Analyst",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Underwriting Support Agent",
+    "Dynamics 365 insurance submission data",
+    "Approved underwriting document repository",
+    "Rating and policy-administration services",
+    "Microsoft Teams referrals and approvals"
+  ],
+  "capabilities": [
+    {
+      "operation": "risk_evaluation",
+      "name": "Submission risk evaluation",
+      "purpose": "Summarizes submission risk scores, tiers, and current review status."
+    },
+    {
+      "operation": "pricing_recommendation",
+      "name": "Illustrative pricing-factor review",
+      "purpose": "Displays synthetic rating inputs and loss history without quoting or binding coverage."
+    },
+    {
+      "operation": "guideline_check",
+      "name": "Guideline and document alignment",
+      "purpose": "Checks coverage limits, required documents, inspections, and stated risk rules."
+    },
+    {
+      "operation": "exception_review",
+      "name": "Exception review queue",
+      "purpose": "Prepares exceptions and human review paths without approving or declining risk."
+    },
+    {
+      "operation": "submission_review",
+      "name": "Submission Review",
+      "purpose": "Submission Review"
+    },
+    {
+      "operation": "risk_assessment",
+      "name": "Risk Assessment",
+      "purpose": "Risk Assessment"
+    },
+    {
+      "operation": "coverage_structure",
+      "name": "Coverage Structure",
+      "purpose": "Coverage Structure"
+    },
+    {
+      "operation": "compliance_check",
+      "name": "Compliance Check",
+      "purpose": "Compliance Check"
+    },
+    {
+      "operation": "underwriting_summary",
+      "name": "Underwriting Summary",
+      "purpose": "Underwriting Summary"
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Submission risk evaluation",
+      "prompt": "Which submission needs the most experienced underwriter, and why?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-evaluation",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Underwriter",
+        "prompt": "Which submission needs the most experienced underwriter, and why?",
+        "answer": "**UW-2025-103 — Downtown Medical Associates** (Professional Liability, $3M) needs your most experienced underwriter.\n\nWhy:\n- Highest risk score in the queue: **75** (Substandard tier, right at the edge of \"Outside Stated Appetite\")\n- Status is **Exception Review** — it's already flagged for non-standard handling, not a routine approval path\n- Professional liability exposure at this score typically means tighter coverage restrictions or surcharge decisions that require senior judgment\n\nThis is nonbinding decision support — final tier/authority call is yours as the authorized underwriter.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Illustrative pricing-factor review",
+      "prompt": "Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-pricing-recommendation",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Pricing Analyst",
+        "prompt": "Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
+        "answer": "Here's the rating picture for **Riverside Manufacturing (UW-2025-101)** — no quote issued, just factors and evidence:\n\n**Submission snapshot**\n- Line: Commercial Property, $5M coverage requested\n- Risk Score: 62 → **Substandard tier**\n- Indicated premium (illustrative only): $42,500\n\n**Rating factors in play**\n- Base rate: 0.85/100\n- Construction factor: varies by type (fire-resistive 0.8, masonry 1.0, frame 1.35)\n- Protection class factor: scales 0.75 (Class 1) up to 1.1 (Class 5)\n\n**Loss evidence on file**\n| Year | Type | Amount | Status |\n|---|---|---|---|\n| 2022 | Fire | $125,000 | Closed |\n| 2023 | Water Damage | $18,500 | Closed |\n\nTwo closed losses totaling ~$143,500 in the last two years — contributing to the Substandard risk score. The actual premium depends on which construction type and protection class apply to the specific property, which should be confirmed before any rate is finalized.\n\nThis is decision support only — an authorized underwriter needs to verify construction/protection class details and sign off before anything is quoted.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Guideline and document alignment",
+      "prompt": "Which applications are outside a stated guideline or missing required evidence?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-guideline-check",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Risk Analyst",
+        "prompt": "Which applications are outside a stated guideline or missing required evidence?",
+        "answer": "**UW-2025-103 — Downtown Medical Associates** is the only application flagged with a guideline exception.\n\n- **LOB:** Professional Liability, max $10M\n- **Issue:** Orthopedic Surgery is listed as a high-risk specialty, falling outside the stated guideline\n- Required docs on file: CV, board certifications, claims history\n\nAll other applications (Riverside Manufacturing, Sarah Mitchell, Harbor View Restaurant Group) show no stated guideline exceptions.\n\nThis is nonbinding decision support — needs explicit review by an authorized underwriter before any action.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Exception review queue",
+      "prompt": "Prepare the exception file I need to review and state whether any coverage decision was made.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-exception-review",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Senior Underwriter",
+        "prompt": "Prepare the exception file I need to review and state whether any coverage decision was made.",
+        "answer": "Exception file ready — **UW-2025-103, Downtown Medical Associates** (Professional Liability, $3M coverage, Substandard risk score 75, underwriter Patricia Graham).\n\n**Exception flagged:** High-risk specialty (Orthopedic Surgery) falls outside standard guidelines.\n\n**Required human review paths:**\n1. Validate missing evidence and authority limits\n2. Get actuarial/senior-underwriter review of rating assumptions\n3. Confirm whether the risk is within stated appetite\n4. Request additional info before any decision\n\n**Coverage decision status: None.** No approval, decline, quote, or binder has been issued — this is purely nonbinding decision support for an authorized underwriter to act on.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Underwriter: Submission Review",
+      "prompt": "Help me evaluate this commercial insurance application and tell me what is missing.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-submission-review",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Underwriter",
+        "prompt": "Help me evaluate this commercial insurance application and tell me what is missing.",
+        "answer": "Here's the evaluation of **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n**Overview:** Metal fabrication (NAICS 332312), $24M revenue, 145 employees, OH. Coverage requested: GL, Property, Products.\n\n**Risk profile:** Moderate — preliminary score 68/100\n- 40% of equipment is 15+ years old\n- Single-location concentration\n- Heavy machinery exposure\n\n**What's missing (95% complete):**\n- Current financial statements\n- Confirmed property valuation\n\nFor context, the broader queue flags **UW-2025-103 (Downtown Medical Associates)** as the one with actual guideline violations — a high-risk orthopedic surgery specialty outside normal appetite — so that's a separate case worth a second look if it's in your pipeline too.\n\nWant the full risk assessment or a pricing recommendation on Midwest next? (All nonbinding — final call is yours.)",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Risk Analyst: Risk Assessment",
+      "prompt": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-assessment",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Risk Analyst",
+        "prompt": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+        "answer": "Here's the full risk assessment for **Midwest Manufacturing Inc. (UW-2025-100)** — synthetic demo data, nonbinding, underwriter review required.\n\n**Risk Factor Scores:**\n| Factor | Score | Notes |\n|---|---|---|\n| Industry hazard | 72/100 | Metal fab = moderate risk |\n| Financial stability | 78/100 | Healthy ratios |\n| Loss experience | 82/100 | Better than class average |\n| Operations | 70/100 | Equipment age is a concern |\n\n**5-Year Loss History:**\n- Total incurred: **$237K** (below class average)\n- Notable claim: Year -3, products liability, **$180K** (defective bracket — QC gap since addressed)\n- Loss ratio: **0.42** vs class average **0.58** — better than peers\n\n**Preliminary Risk Score:** 68/100 — **Moderate**\n\nOverall: favorable history with one past claim that's since been remediated. Want me to pull the pricing recommendation next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Underwriter: Coverage Structure",
+      "prompt": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-coverage-structure",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Underwriter",
+        "prompt": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+        "answer": "Here's the recommended coverage structure for Midwest Manufacturing (UW-2025-100) — nonbinding, for underwriter review:\n\n**General Liability**\n- $1M per occurrence / $2M aggregate\n- $5K deductible\n\n**Property**\n- Total insured value: $8.2M\n  - Building: $4.2M\n  - Contents: $3.4M\n  - Scheduled equipment: $600K\n\n**Recommended Endorsements**\n- **Equipment breakdown** — aging machinery on site\n- **Contingent business income** — single-location exposure\n- **Blanket additional insured** — to support existing contracts\n\n**Subjectivities (needed before binding)**\n- Current financials\n- Equipment maintenance records\n- QC procedures documentation\n\nWant me to run the compliance check next to see if this structure clears authority/guideline requirements?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Senior Underwriter: Compliance Check",
+      "prompt": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-compliance-check",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Senior Underwriter",
+        "prompt": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+        "answer": "Compliance check for Midwest Manufacturing (UW-2025-100) is clear:\n\n- **Authority**: Within your $10M binding authority — no referral needed\n- **Rate adequacy**: Above minimum\n- **Reinsurance**: Within treaty capacity\n- **State filing**: OH rates filed and current\n\n**Before binding, still collect**: current financials, equipment maintenance records, QC procedures. Quote valid 30 days.\n\nThis clears the path for the bind decision — it's yours to make. Want me to pull the full underwriting summary to have everything in one place before you finalize?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Senior Underwriter: Underwriting Summary",
+      "prompt": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-underwriting-summary",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Senior Underwriter",
+        "prompt": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+        "answer": "Here's the complete underwriting summary for **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n- **Recommendation:** Approve with conditions\n- **Risk score:** 68/100 — Moderate\n- **Premium:** $88,100\n- **Authority:** Within limits (no escalation needed)\n- **Strengths:** Favorable loss history, strong financials, solid safety program\n- **Binding conditions:** Current financials, equipment maintenance records, QC procedures\n- **Quote package:** Drafted (letter, coverage summary, subjectivities) — ready for your review/issue\n\n⚠️ This is synthetic, nonbinding decision support — a human underwriter must review and formally approve before any quote is issued.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Funderwriting-support",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/underwriting-support/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Underwriting%20Support%20Agent%22"
+  }
+}

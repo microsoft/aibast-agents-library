@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "claims-processing",
+  "agent": "@aibast-agents-library/claims-processing",
+  "display_name": "Claims Processing Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic claims and policy snapshot",
+        "detail": "Bundled fictional claims, policy terms, loss facts, documents, notes, fraud scores, amounts, statuses, and dates support repeatable demos."
+      },
+      {
+        "name": "Claims controls and review rules",
+        "detail": "Packaged guidance separates claim facts, policy evidence, heuristic indicators, nonbinding estimates, human decisions, and external actions."
+      },
+      {
+        "name": "Operation skills and locked evidence anchors",
+        "detail": "Four skills define natural-language routing, source-backed procedures, required synthetic evidence, safety statements, and review gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Claims intake triage",
+        "detail": "Summarizes the fictional queue by claim, loss, amount, status, and fraud-review score to identify files needing specialized handling."
+      },
+      {
+        "name": "Claim-file readiness analysis",
+        "detail": "Combines policy terms, loss evidence, supporting documents, and adjuster notes to surface missing material for adjudicator review."
+      },
+      {
+        "name": "Explainable SIU indicator review",
+        "detail": "Applies fixed thresholds to surface fraud indicators and candidate SIU referrals while explicitly stating that a score does not prove fraud."
+      },
+      {
+        "name": "Policy-term settlement estimation",
+        "detail": "Produces nonbinding policy-limit and deductible estimates; it never determines coverage or autonomously approves, denies, settles, or pays."
+      },
+      {
+        "name": "Evidence-first request routing",
+        "detail": "Maps adjuster, claims-manager, SIU, and operations-leader language to one bounded operation and its matching synthetic evidence."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational workspace",
+        "detail": "Provides natural-language claims preparation through a validated Draft agent with four skills and two synthetic knowledge files."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP agent through local Brainstem chat and UI endpoints with deterministic synthetic-only operation routing."
+      },
+      {
+        "name": "Role-based claims review experience",
+        "detail": "Claims adjusters, adjudicators, managers, SIU investigators, and operations leaders receive evidence-first outputs with review gates."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Claims intake dashboard",
+        "detail": "Reports fictional claim counts, total claimed value, status distribution, loss context, assigned adjuster, and fraud-review scores."
+      },
+      {
+        "name": "Adjudication readiness report",
+        "detail": "Presents claim and policy details, available documents, missing evidence, and adjuster notes for authorized adjudicator review."
+      },
+      {
+        "name": "SIU indicator and referral report",
+        "detail": "Lists weighted indicator definitions, threshold-crossing claims, and candidate SIU referrals without declaring fraud or changing coverage."
+      },
+      {
+        "name": "Settlement estimate review",
+        "detail": "Shows claimed amounts, deductibles, fraud scores, and nonbinding estimates while confirming no approval, settlement, or payment occurred."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable ClaimsProcessingAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements four read-only operations over bundled synthetic claims and policy evidence."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the Draft conversational package, synthetic knowledge, and four operation skills; publication requires explicit confirmation."
+    },
+    {
+      "name": "Dynamics 365 claims case data",
+      "detail": "Approved production connection seam for claims context; it is not connected to the current fixed synthetic package."
+    },
+    {
+      "name": "Policy-administration system",
+      "detail": "Approved production seam for policy terms and coverage evidence; current calculations use only bundled fictional terms."
+    },
+    {
+      "name": "SharePoint or approved claims repository",
+      "detail": "Approved document-evidence seam for production use; the packaged agent uses uploaded synthetic knowledge files instead."
+    },
+    {
+      "name": "SIU case workflow",
+      "detail": "Approved seam for investigator review and referral handling; the agent only identifies review candidates and never opens or closes cases."
+    },
+    {
+      "name": "Microsoft Teams adjuster approvals",
+      "detail": "Approved collaboration seam for human decisions; the package does not send messages, request approvals, or execute claim actions."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence policy",
+      "detail": "Uses only bundled fictional records and forbids browsing, enrichment, substitution, or invention of missing claim and policy facts."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes claim intake, adjudication review, fraud flagging, and settlement-estimate requests from persona-language prompts."
+    },
+    {
+      "name": "Fail-closed record handling",
+      "detail": "Rejects unknown claim identifiers instead of silently substituting another record or fabricating supporting evidence."
+    },
+    {
+      "name": "Fraud-score interpretation boundary",
+      "detail": "Treats fraud scores as explainable review indicators only and preserves SIU authority to investigate and determine findings."
+    },
+    {
+      "name": "Authorized adjudicator review gate",
+      "detail": "Requires adjuster or claims adjudicator review plus SIU, legal, compliance, coverage, and payment authority where applicable."
+    },
+    {
+      "name": "No autonomous settlement or side effects",
+      "detail": "Prevents approval, denial, reserving, settlement, payment, claimant outreach, referrals, communications, and claim or policy record changes."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four persona cases verify deterministic evidence and safety boundaries; Copilot Studio stays Draft until publish is separately approved."
+    }
+  ]
+}

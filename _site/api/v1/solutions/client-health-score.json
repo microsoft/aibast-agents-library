@@ -1,0 +1,138 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/client-health-score",
+  "slug": "client-health-score",
+  "name": "Client Health Score Agent",
+  "headline": "Turn scattered relationship signals into an approval-ready retention plan",
+  "pitch": "Help client success leaders and account managers segment relationship health, spot weakening engagement, prioritize turnaround accounts, and prepare stakeholder-led recovery plans without presenting scenario indicators as certain outcomes.",
+  "category": "professional_services",
+  "industries": [
+    "Professional Services, Consulting"
+  ],
+  "personas": [
+    "Client Success Leaders",
+    "Account Manager"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams",
+    "Outlook"
+  ],
+  "journey_stage": "Optimize",
+  "why_try": "The demo moves from a portfolio question to the specific relationship signals, owners, evidence, and executive engagement needed for a governed intervention.",
+  "customer_challenge": "A professional services firm has relationship, delivery, financial, and satisfaction signals spread across teams. Manual reviews can surface risk late, overstate the meaning of a score, and produce incomplete retention plans without clear ownership.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the portfolio conversation. Dynamics 365 supplies governed account context, Microsoft Teams supports internal coordination, and Outlook supports approved executive engagement.",
+  "business_value": [
+    "Improves consistency in portfolio prioritization.",
+    "Helps teams connect risk signals with accountable recovery work.",
+    "Strengthens preparation for executive engagement and retention planning."
+  ],
+  "business_flow": [
+    "Client success leaders and account managers",
+    "Microsoft Copilot or Copilot Studio",
+    "Client Health Score Agent",
+    "Dynamics 365",
+    "Microsoft Teams",
+    "Outlook",
+    "Account-owner-approved intervention"
+  ],
+  "capabilities": [
+    {
+      "operation": "health_dashboard",
+      "name": "Portfolio health segmentation",
+      "purpose": "Ranks relationship health and clearly labels scenario churn indicators."
+    },
+    {
+      "operation": "engagement_analysis",
+      "name": "Engagement signal analysis",
+      "purpose": "Connects executive contact, escalations, billing direction, and utilization."
+    },
+    {
+      "operation": "satisfaction_trend",
+      "name": "Satisfaction trend review",
+      "purpose": "Shows which relationships are improving, stable, or declining."
+    },
+    {
+      "operation": "at_risk_clients",
+      "name": "At-risk account prioritization",
+      "purpose": "Explains the drivers and first recovery actions for accounts needing intervention."
+    },
+    {
+      "operation": "retention_plan",
+      "name": "Stakeholder-led retention planning",
+      "purpose": "Creates account-specific ownership, preparation, engagement, and approval gates."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Segment the portfolio",
+      "prompt": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=client-portfolio",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Client Success Leader",
+        "prompt": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+        "answer": "Here's the breakdown:\n\n**🔴 Critical — act now**\n- **TechCorp Industries** ($2.4M, health 42/100): dropped from 60→42 in 90 days, 78% churn indicator, NPS -15. Needs immediate intervention.\n\n**🟡 At Risk — 30-day plan**\n- **Global Finance Corp** ($1.5M, 58/100): NPS -20, low 45% utilization\n- **Healthcare Solutions Inc** ($1.2M, 61/100): milder, but trending down\n\n**🟢 Healthy — monitor** (7 clients, $17.2M): Northwind, Silverline, Summit, Metro Transit, National Logistics, Apex, Pinnacle — all positive NPS and strong utilization.\n\n**Where to focus first:** TechCorp is the fire — $2.4M at risk with multiple signals converging fast. Global Finance Corp is the next watch item given its steep NPS decline.\n\nWant me to pull TechCorp's risk-driver breakdown or a 30-day retention/outreach plan?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Inspect engagement weakness",
+      "prompt": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=client-engagement",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Manager",
+        "prompt": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+        "answer": "Here's the weak-signal picture across the portfolio:\n\n**🔴 TechCorp Industries — most concerning**\n- **Zero executive meetings in 90 days** — complete exec silence\n- **4 escalations** in the same window — highest in the portfolio\n- Billing trend is declining, utilization down to 64%\n- This is a classic disengagement spiral: no exec access + rising escalations + shrinking spend\n\n**🟡 Healthcare Solutions Inc — watch**\n- 3 escalations, only 1 exec touchpoint — trending the wrong way even though billing is flat\n\n**🟡 Global Finance Corp — different kind of risk**\n- Utilization at only 45% — they may be paying but not getting value, which tends to surface as a renewal/expansion risk later even without visible escalations\n\nEveryone else (Apex, Pinnacle, Metro Transit, National Logistics, Silverline, Northwind, Summit) looks healthy — regular exec contact, low/no escalations, flat-to-growing billing.\n\nWant me to pull TechCorp's full risk analysis or build a stakeholder outreach sequence to re-establish exec contact there?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review satisfaction movement",
+      "prompt": "Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=client-satisfaction",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Client Experience Director",
+        "prompt": "Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+        "answer": "Three accounts are trending the wrong way:\n\n- **TechCorp Industries**: steepest drop — 8.4 → 5.1 over four quarters (−3.3 pts), NPS now −15. Biggest, most urgent decline.\n- **Global Finance Corp**: 7.8 → 6.0 (−1.8 pts), NPS −20 — worst absolute NPS in the portfolio despite a smaller score drop.\n- **Healthcare Solutions Inc**: 8.0 → 6.8 (−1.2 pts), still NPS +5, so less alarming but moving steadily downward.\n\nBy contrast, Apex Manufacturing, Pinnacle Energy, National Logistics, Silverline Retail, and Metro Transit are all trending up with strong NPS (+22 to +52). Northwind and Summit are flat/stable.\n\nWant me to pull the at-risk drivers or a recovery plan for TechCorp or Global Finance Corp first?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Prioritize intervention",
+      "prompt": "Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=client-risk",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Client Success Leader",
+        "prompt": "Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+        "answer": "Three accounts need attention now — $5.1M total at risk:\n\n**🔴 TechCorp Industries — CRITICAL (42/100, $2.4M)**\n- Drivers: CTO champion left 3 months ago, replacement unbriefed; NPS crashed +10→-15; 9 open tickets; zero exec meetings in 90 days\n- First actions: Book exec sponsor meeting within 7 days, deploy SWAT team on open issues, build ROI/value summary for the new CTO\n\n**🟡 Global Finance Corp — AT RISK (58/100, $1.5M)**\n- Drivers: Only 45% utilization of contracted hours, NPS +15→-20, renewal in 90 days\n- First actions: Review scope alignment with CFO Jordan Patel, root-cause the NPS drop, prep value-delivered summary before renewal talks\n\n**🟡 Healthcare Solutions Inc — AT RISK (61/100, $1.2M)**\n- Drivers: 47-ticket backlog, new skeptical CTO, NPS slipping +12→+5\n- First actions: Deploy SWAT team to clear backlog, deliver proactive ROI summary to build new CTO's confidence\n\nPriority order: TechCorp first (critical + largest/fastest-decaying), then Global Finance (renewal clock), then Healthcare (lower urgency, longer runway). Want the stakeholder outreach sequence or a 30-day retention plan for any of these?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Prepare turnaround playbooks",
+      "prompt": "Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=client-retention",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Manager",
+        "prompt": "Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+        "answer": "Three accounts need turnaround: **TechCorp (critical, $2.4M)**, **Global Finance Corp**, and **Healthcare Solutions Inc** (both at-risk). Here's the consolidated plan:\n\n**TechCorp Industries — CRITICAL**\n- Stakeholders: Morgan Lee (COO, sponsor), Sarah Mitchell (new CTO, unbriefed), Rachel Adams (account owner), Elena Vasquez (delivery lead)\n- Outreach sequence: Tue–Sarah Mitchell (technical credibility, $4.2M savings), Wed–CFO (close invoice dispute), Thu–Morgan Lee (roadmap agreement), Fri–CEO (strategic commitment)\n- 30-day plan: Week1 stabilize (exec call, SWAT fix, invoice credit), Week2 trust rebuild, Week3 quick wins/dashboard, Week4 contract/QBR formalization\n- Investment $600K, 73% success probability\n\n**Global Finance Corp — AT_RISK**\n- Stakeholders: Jordan Patel (CFO, sponsor), Marcus Reed (account owner), Michael Chen (delivery lead)\n- Next move: value-realization workshop; address 45% utilization gap before 90-day renewal\n\n**Healthcare Solutions Inc — AT_RISK**\n- Stakeholders: Taylor Brooks (CIO, sponsor), Nina Shah (account owner), Priya Sharma (delivery lead)\n- Next move: clear the 47-ticket backlog, then escalation closure/roadmap review with new CIO\n\nAll are draft artifacts — nothing's been sent, and each requires account-owner sign-off before outreach. Want meeting invites or a session summary drafted next?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fclient-health-score",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/client-health-score/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Client%20Health%20Score%20Agent%22"
+  }
+}

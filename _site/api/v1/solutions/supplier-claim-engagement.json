@@ -1,0 +1,174 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/supplier-claim-engagement",
+  "slug": "supplier-claim-engagement",
+  "name": "Supplier Claim Engagement Agent",
+  "headline": "Recover more from suppliers without losing control of what gets sent",
+  "pitch": "Give supplier claims teams one conversational view to triage claims, assemble evidence, draft supplier notices, track response deadlines, and weigh supplier offers, while every send, credit decision, and escalation stays with an authorized coordinator.",
+  "category": "retail_cpg",
+  "industries": [
+    "Retail",
+    "Consumer Goods"
+  ],
+  "personas": [
+    "Supplier Claims Coordinator",
+    "Receiving Supervisor",
+    "Claims Team Lead",
+    "Category Manager"
+  ],
+  "microsoft_products": [
+    "Microsoft Teams",
+    "Microsoft Outlook",
+    "Dynamics 365"
+  ],
+  "journey_stage": "Optimize",
+  "why_try": "The demo lets a supplier claims coordinator ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "customer_challenge": "Retail claims teams rebuild evidence by hand, lose track of supplier response deadlines, and accept partial credits without checking the gap.",
+  "microsoft_ai_story": "Copilot Studio and Microsoft Teams give coordinators a conversational front door; approved order, receiving, and case systems can be bound through least-privilege connections, with Outlook sends kept behind human approval.",
+  "business_value": [
+    "Makes open claim value and recovery visible in one view.",
+    "Turns evidence gathering and supplier notices into reviewable drafts.",
+    "Flags breached and at-risk supplier deadlines with escalation drafts."
+  ],
+  "business_flow": [
+    "Supplier claims coordinators and receiving teams",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Supplier Claim Engagement Agent",
+    "Approved order and receiving records",
+    "Case system and supplier terms",
+    "Authorized coordinator approval and send"
+  ],
+  "capabilities": [
+    {
+      "operation": "claims_queue",
+      "name": "Supplier claims queue",
+      "purpose": "Use when a coordinator asks for open supplier claims, their value and severity, recovery to date, or what needs attention today."
+    },
+    {
+      "operation": "triage_claim",
+      "name": "Claim triage",
+      "purpose": "Use when a coordinator asks for a claim's severity, responsible supplier, purchase order, and supplier response and resolution windows."
+    },
+    {
+      "operation": "evidence_pack",
+      "name": "Evidence pack check",
+      "purpose": "Use when someone asks which photos and documents a claim needs, what is on file, and the claim value by line."
+    },
+    {
+      "operation": "draft_supplier_claim",
+      "name": "Supplier claim notice draft",
+      "purpose": "Use when a coordinator asks to prepare or draft the claim to a supplier; the notice stays Not Sent with the response dates it would carry."
+    },
+    {
+      "operation": "sla_tracker",
+      "name": "Response deadline tracker",
+      "purpose": "Use when the team asks which claims are breached, at risk, or on track against supplier response windows."
+    },
+    {
+      "operation": "supplier_response",
+      "name": "Supplier response evaluation",
+      "purpose": "Use when a coordinator asks what a supplier replied or offered and how it compares with the claim value."
+    },
+    {
+      "operation": "escalation_brief",
+      "name": "Escalation brief draft",
+      "purpose": "Use when the team asks to escalate a claim that is past its supplier response window; returns a draft for approval."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-10-08T01:53:29-04:00",
+  "prompts": [
+    {
+      "label": "Supplier Claims Coordinator: Supplier claims queue",
+      "prompt": "Show me our open supplier claims and what needs attention today.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supplier Claims Coordinator",
+        "prompt": "Show me our open supplier claims and what needs attention today.",
+        "answer": "Here's today's picture — 4 open claims, $1,631.80 total:\n\n**Needs attention now:**\n- **CLM-5202** (Tailspin Freight, shortage, $345) — response deadline **breached by 2h**. Ready to draft an escalation brief if you want.\n- **CLM-5203** (Alpine Dairy, quality, $620.80, Critical) — **only 1 hour left** before it breaches. Worth a reminder nudge now.\n- **CLM-5201** (Northwind Packaging, damage, $591) — brand new, not yet sent. Ready to draft.\n\n**On track:**\n- **CLM-5204** (Litware Snacks, pricing, $75) — supplier already responded within window, just needs review.\n- **CLM-5205** — closed, $410 credit received. ✅\n\nWant me to draft the escalation for CLM-5202, a reminder for CLM-5203, or the initial claim for CLM-5201?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Supplier Claims Coordinator: Claim triage",
+      "prompt": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-triage-claim",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supplier Claims Coordinator",
+        "prompt": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+        "answer": "Here's the triage on **CLM-5201**:\n\n- **Type:** Damage claim, Severity P2 (High)\n- **Responsible supplier:** Northwind Packaging (PO-77310, delivered Apr 10 to Distribution Center 2)\n- **Claim value:** $591.00\n- **Terms:** Supplier has a 24-hour response window, with a 5-business-day resolution window overall\n\nRouting goes through the supplier claims coordinator to Northwind's claims desk. Want me to pull the evidence pack next, or draft the supplier claim notice?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Receiving Supervisor: Evidence pack check",
+      "prompt": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-evidence-pack",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Receiving Supervisor",
+        "prompt": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+        "answer": "CLM-5201's evidence is **complete** — 3 damage photos, receiving inspection report (RIR-4471), and a signed delivery note with exception (DN-90318) are all on file.\n\nThe claim is worth **$591.00** total (18 units sparkling water + 6 cases of pasta sauce), owed by Northwind Packaging.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Supplier Claims Coordinator: Supplier claim notice draft",
+      "prompt": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-draft-supplier-claim",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supplier Claims Coordinator",
+        "prompt": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+        "answer": "Here's the draft claim notice for **CLM-5201** (Damage, P2 - High) — ready for your review:\n\n| Field | Value |\n|---|---|\n| Supplier | Northwind Packaging |\n| PO | PO-77310 (delivered Apr 10, 2026) |\n| Claim value | $591.00 |\n| Evidence | 3 photos, RIR-4471, DN-90318 |\n| Response due if sent | Apr 15, 10:00 (24h) |\n| Resolution due | Apr 21, 2026 |\n\n**Message:** \"Fabrikam Grocers is filing a damage claim on PO-77310. Affected items: 18x Sparkling water 12-pack ($387.00); 6x Pasta sauce glass jars, case of 12 ($204.00). Total $591.00. Evidence pack attached. Please respond within 24 hours with a credit or replacement proposal.\"\n\nThis is only a draft — nothing has been sent, and no response clock has started. Let me know if you want changes or if you're ready to send it through your own channels.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Claims Team Lead: Response deadline tracker",
+      "prompt": "Which supplier claims are at risk of missing their response deadline?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-sla-tracker",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Team Lead",
+        "prompt": "Which supplier claims are at risk of missing their response deadline?",
+        "answer": "Here's the risk picture as of this morning's snapshot:\n\n- **CLM-5202 (Tailspin Freight)** — already **breached**, 2 hours past its 36h window\n- **CLM-5203 (Alpine Dairy Co-op)** — **at risk**, only 1 hour left in its 8h window\n- CLM-5201 — not yet sent, no clock running\n- CLM-5204 — responded on time, no issue\n\nWant me to pull the escalation brief for CLM-5202 and draft a reminder for CLM-5203?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Supplier Claims Coordinator: Supplier response evaluation",
+      "prompt": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-supplier-response",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supplier Claims Coordinator",
+        "prompt": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+        "answer": "Litware Snacks partially accepted CLM-5204 (pricing dispute, $75 claimed on 50 units):\n\n- **Offered:** $45.00 credit for 30 units — their reason: those 20 disputed units shipped before the new price list took effect.\n- **Gap:** $30.00 (20 units) unrecovered.\n\nNext step: pull ship dates for the disputed 20 units and compare against the Jan 5, 2026 price list to verify their claim before deciding whether to accept the $45 or counter for the full $75. Want me to pull the evidence pack for that comparison?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Claims Team Lead: Escalation brief draft",
+      "prompt": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-escalation-brief",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Team Lead",
+        "prompt": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+        "answer": "**CLM-5202 Escalation Brief (draft, not sent)**\n\n- **Claim:** Shortage, Priority Medium — Tailspin Freight\n- **Value:** $345.00\n- **Window:** 36h, elapsed 38h → **breached by 2 hours**\n- **Escalate to:** Category manager, pantry and beverages\n\n**Draft message:**\n\"CLM-5202 with Tailspin Freight ($345.00) has had no response for 38 hours against a 36-hour window. Please raise it with the supplier's account contact and confirm a response date.\"\n\nNote: CLM-5203 (Alpine Dairy) is also at risk — only 1 hour left on its 8-hour window, if you want a reminder drafted for that one too.\n\nThis is a draft only — a coordinator needs to review and send it.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsupplier-claim-engagement",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/supplier-claim-engagement/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Supplier%20Claim%20Engagement%20Agent%22"
+  }
+}

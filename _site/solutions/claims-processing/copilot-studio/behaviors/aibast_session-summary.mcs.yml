@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: session-summary
+  description: "\"Use when a claims operations leader asks something like \\\"Yes, summarize everything we accomplished today\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: session-summary
+  description: "Use when a claims operations leader asks something like \"Yes, summarize everything we accomplished today\""
+  ---
+  <!-- bic:source=blank -->
+  # Session summary
+
+  Use when a claims operations leader asks something like "Yes, summarize everything we accomplished today"
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `2,847 total`
+  - `5,807 adjuster hours`
+  - `$290,350`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

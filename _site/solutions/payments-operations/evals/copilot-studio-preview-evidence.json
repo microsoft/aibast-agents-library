@@ -1,0 +1,107 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T04:50:02.650250Z",
+  "solution": "@aibast-agents-library/payments-operations",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Payments Operations Pilot",
+  "schema_name": "aibast_PaymentsOperationsPilot",
+  "bot_id": "95dd2c5d-f6f5-4989-bc75-1a3d85aa6977",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 10 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "PO-01",
+      "must_include": [
+        "Release Queue",
+        "PAY-3105",
+        "Needs attention"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-02",
+      "must_include": [
+        "AMOUNT_OVER_RAIL_LIMIT",
+        "BENEFICIARY_ACCOUNT_MISSING",
+        "Scheme Rule"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-03",
+      "must_include": [
+        "Not Executed",
+        "Domestic High-Value",
+        "Draft for analyst review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-04",
+      "must_include": [
+        "Risk band",
+        "8.9 times",
+        "Watchlist screening"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-05",
+      "must_include": [
+        "WGB-SETTLE-USD-01",
+        "BRK-02",
+        "9,846.90"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-06",
+      "must_include": [
+        "Scheme acknowledged",
+        "15:00",
+        "not sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-07",
+      "must_include": [
+        "99.07%",
+        "Cross-Border Wire",
+        "nothing was distributed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

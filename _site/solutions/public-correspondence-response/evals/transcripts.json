@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:53:40.494756+00:00",
+  "solution": "@aibast-agents-library/public-correspondence-response",
+  "onepager": "58. Public Correspondence Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "PublicCorrespondenceAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+      "sha256": "45564b5071ed5c0d1577e8a82d49b969f2d96a23615d505bbbaa29d4c2b7d09e"
+    }
+  ],
+  "case_file": "tests/demo_cases/public-correspondence-response.json",
+  "case_file_sha256": "7730dd9c36eeaf4e813b8cddec1c49c0996800897657726f325a7f694723d466",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PCR-01",
+      "persona": "Correspondence Officer",
+      "onepager_promise": "Triages incoming letters, emails, web forms and phone notes into one prioritized queue",
+      "prompt": "What correspondence do I need to answer this week?",
+      "assistant_response": "You've got 4 items this week:\n\n- **COR-2041** \u2013 Hannah Cole (email, Harbor Road Upgrade) \u2014 3 questions, all have precedents. **Due soonest: Mon Mar 16.**\n- **COR-2042** \u2013 E. Okafor (letter, Harbor Road Upgrade) \u2014 4 questions, 1 with no precedent. Due Thu Mar 19.\n- **COR-2043** \u2013 Dan Whitfield (web form, Mill Creek Bridge) \u2014 2 questions, all have precedents. Due Mon Mar 23.\n- **COR-2044** \u2013 Rosa Martinez (phone note, Central Station Bus Interchange) \u2014 2 questions, 1 with no precedent. Due Wed Mar 25.\n\nRecommended order: tackle **COR-2041** first (nearest deadline), but **COR-2042** is the most complex \u2014 want me to break it down into its separate questions now?",
+      "agent_logs": "[PublicCorrespondenceAgent] **Correspondence Queue: Northwind County Public Works** (snapshot Mon 9 Mar 2026)\n\n| Item | Sender | Channel | Project | Questions | No precedent | Due |\n|---|---|---|---|---|---|---|\n| COR-2041 | Hannah Cole | Email | Harbor Road Upgrade | 3 | 0 | Mon 16 Mar 2026 (5 business days) |\n| COR-2042 | E. Okafor | Scanned letter | Harbor Road Upgrade | 4 | 1 | Thu 19 Mar 2026 (8 business days) |\n| COR-2043 | Dan Whitfield | Web form | Mill Creek Bridge Renewal | 2 | 0 | Mon 23 Mar 2026 (10 business days) |\n| COR-2044 | Rosa Martinez | Phone note | Central Station Bus Interchange | 2 | 1 | Wed 25 Mar 2026 (12 business days) |\n\n**Totals:** 4 items waiting, 11 separate questions, 2 with no approved precedent. Response target: 15 business days from receipt.\n\n**Due soonest:** COR-2041 from Hannah Cole (5 business days).\n**Recommended next:** COR-2042 from E. Okafor is the most complex item: 4 questions, one with no approved precedent. Break it down first.\n\nSynthetic correspondence support only. This agent drafts and recommends; it does not send a reply, contact a resident or team, change a record, or approve wording. A correspondence officer reviews, edits and sends every response.\n\nSource: [Synthetic Correspondence Snapshot]\nAgents: PublicCorrespondenceAgent",
+      "expected_agent": "PublicCorrespondenceAgent",
+      "must_include": [
+        "4 items waiting",
+        "11 separate questions",
+        "COR-2042"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PCR-02",
+      "persona": "Correspondence Officer",
+      "onepager_promise": "Breaks multi-part enquiries into separate questions so every part gets answered",
+      "prompt": "Break down the scanned letter from E. Okafor into its separate questions.",
+      "assistant_response": "The letter from E. Okafor (Harbor Road Upgrade, due 19 Mar) contains **4 distinct questions**:\n\n1. **Night works** \u2014 timing and noise levels\n2. **Driveway access** \u2014 whether it stays usable during works\n3. **Street trees** \u2014 why removed and if replaced\n4. **Property value** \u2014 compensation concern\n\nWant me to find precedent answers for each, or route the unanswered parts to the owning teams?",
+      "agent_logs": "[PublicCorrespondenceAgent] **Enquiry Breakdown: COR-2042 from E. Okafor**\n\n| Detail | Value |\n|---|---|\n| Channel | Scanned letter |\n| Project | Harbor Road Upgrade |\n| Received | Thu 26 Feb 2026 |\n| Response due | Thu 19 Mar 2026 (8 business days left) |\n| Overall intent | Night works, driveway access, tree removal and a property-value concern |\n\n**4 separate questions** (every one must be answered in the reply):\n\n| # | Question | Topic |\n|---|---|---|\n| Q1 | When will the night works outside my house happen, and how loud will they be? | Noise and hours |\n| Q2 | Will I still be able to use my driveway during the works? | Property access |\n| Q3 | Why are the two street trees being removed, and will they be replaced? | Street trees |\n| Q4 | Will the upgrade reduce my property value, and can I claim compensation? | Compensation |\n\n**Next step:** match each question to an approved past response.\n\nSynthetic correspondence support only. This agent drafts and recommends; it does not send a reply, contact a resident or team, change a record, or approve wording. A correspondence officer reviews, edits and sends every response.\n\nSource: [Synthetic Correspondence Snapshot]\nAgents: PublicCorrespondenceAgent",
+      "expected_agent": "PublicCorrespondenceAgent",
+      "must_include": [
+        "4 separate questions",
+        "Compensation",
+        "Thu 19 Mar 2026"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PCR-03",
+      "persona": "Correspondence Officer",
+      "onepager_promise": "Finds approved past responses for each question and cites them",
+      "prompt": "Which approved past responses already answer each question in the Okafor letter?",
+      "assistant_response": "Here's the coverage for the Okafor letter (4 questions total):\n\n| Q | Topic | Approved precedent | Status |\n|---|---|---|---|\n| Q1 | Night works noise/hours | **APR-104** \u2013 Harbor Road night works schedule and noise limits | \u2705 Covered |\n| Q2 | Driveway access | **APR-102** \u2013 Driveway and property access during construction | \u2705 Covered |\n| Q3 | Street tree removal | **APR-106** \u2013 Street tree removal and replacement planting | \u2705 Covered |\n| Q4 | Property value/compensation | None (best match only 0.22) | \u274c Not covered |\n\n3 of 4 questions have strong approved matches. Q4 (compensation claim) has no precedent and needs routing to the owning team for approved wording \u2014 want me to run that next?",
+      "agent_logs": "[PublicCorrespondenceAgent] **Enquiry Breakdown: COR-2042 from E. Okafor**\n\n| Detail | Value |\n|---|---|\n| Channel | Scanned letter |\n| Project | Harbor Road Upgrade |\n| Received | Thu 26 Feb 2026 |\n| Response due | Thu 19 Mar 2026 (8 business days left) |\n| Overall intent | Night works, driveway access, tree removal and a property-value concern |\n\n**4 separate questions** (every one must be answered in the reply):\n\n| # | Question | Topic |\n|---|---|---|\n| Q1 | When will the night works outside my house happen, and how loud will they be? | Noise and hours |\n| Q2 | Will I still be able to use my driveway during the works? | Property access |\n| Q3 | Why are the two street trees being removed, and will they be replaced? | Street trees |\n| Q4 | Will the upgrade reduce my property value, and can I claim compensation? | Compensation |\n\n**Next step:** match each question to an approved past response.\n\nSynthetic correspondence support only. This agent drafts and recommends; it does not send a reply, contact a resident or team, change a record, or approve wording. A correspondence officer reviews, edits and sends every response.\n\nSource: [Synthetic Correspondence Snapshot]\nAgents: PublicCorrespondenceAgent\n[PublicCorrespondenceAgent] **Approved Precedent Match: COR-2042**\n\n| # | Topic | Closest approved response | Match | Result |\n|---|---|---|---|---|\n| Q1 | Noise and hours | APR-104: Harbor Road night works schedule and noise limits | 0.86 | Covered |\n| Q2 | Property access | APR-102: Driveway and property access during construction | 0.81 | Covered |\n| Q3 | Street trees | APR-106: Street tree removal and replacement planting | 0.78 | Covered |\n| Q4 | Compensation | None above threshold (best 0.22) | 0.22 | No approved precedent |\n\n**Coverage:** 3 of 4 questions covered by approved precedent; 1 with no approved precedent. Match threshold 0.50.\n\n**Next step:** route the uncovered question to its owning team for approved wording.\n\nSynthetic correspondence support only. This agent drafts and recommends; it does not send a reply, contact a resident or team, change a record, or approve wording. A correspondence officer reviews, edits and sends every response.\n\nSource: [Synthetic Approved Response Library]\nAgents: PublicCorrespondenceAgent",
+      "expected_agent": "PublicCorrespondenceAgent",
+      "must_include": [
+        "APR-104",
+        "3 of 4 questions covered",
+        "No approved precedent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PCR-04",
+      "persona": "Correspondence Team Lead",
+      "onepager_promise": "Routes unanswered points to the owning team with the exact question to ask",
+      "prompt": "Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+      "assistant_response": "Here's the breakdown for the Okafor letter (Harbor Road Upgrade), coordinated overall by **Project Delivery**:\n\n| Topic | Owning team | Status |\n|---|---|---|\n| Noise and hours | Environment and Noise | \u2705 Covered |\n| Property access | Project Delivery | \u2705 Covered |\n| Street trees | Landscape and Urban Forestry | \u2705 Covered |\n| **Compensation** | **Property and Land** | \u274c No approved answer yet |\n\n**What to ask Property and Land:** \"Please provide approved wording on how property-value concerns are handled on the Harbor Road Upgrade and whether/how an owner can lodge a compensation claim.\" Suggested input deadline: 2 business days before the reply is due.\n\nThis is just a draft routing note \u2014 nothing's been sent to anyone yet.",
+      "agent_logs": "[PublicCorrespondenceAgent] **Routing: COR-2042 from E. Okafor**\n\n**Coordinating team:** Project Delivery (owns the Harbor Road Upgrade response)\n\n| # | Topic | Owning team | Status |\n|---|---|---|---|\n| Q1 | Noise and hours | Environment and Noise | Covered by APR-104 |\n| Q2 | Property access | Project Delivery | Covered by APR-102 |\n| Q3 | Street trees | Landscape and Urban Forestry | Covered by APR-106 |\n| Q4 | Compensation | Property and Land | Needs team input |\n\n**Referral note (draft, not sent)**\n\n| Field | Value |\n|---|---|\n| To | Property and Land |\n| About | COR-2042 Q4: Compensation |\n| Question | Please provide approved wording on how property-value concerns are handled on the Harbor Road Upgrade and whether, and how, an owner can lodge a compensation claim. |\n| Input needed by | Tue 17 Mar 2026 (2 business days before the response is due) |\n\nThe referral note is a draft for the officer to send through the approved channel. No team was contacted.\n\nSynthetic correspondence support only. This agent drafts and recommends; it does not send a reply, contact a resident or team, change a record, or approve wording. A correspondence officer reviews, edits and sends every response.\n\nSource: [Synthetic Team Directory + Approved Response Library]\nAgents: PublicCorrespondenceAgent",
+      "expected_agent": "PublicCorrespondenceAgent",
+      "must_include": [
+        "Property and Land",
+        "Tue 17 Mar 2026",
+        "No team was contacted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PCR-05",
+      "persona": "Correspondence Officer",
+      "onepager_promise": "Drafts a complete, cited reply for officer review, with gaps clearly flagged",
+      "prompt": "Draft the reply to the Okafor letter for my review.",
+      "assistant_response": "Here's the draft for the Okafor letter \u2014 3 of 4 questions are fully answered with cited precedents, one needs your input:\n\n1. **Noise/hours** \u2014 covered (APR-104)\n2. **Property access** \u2014 covered (APR-102)\n3. **Street trees** \u2014 covered (APR-106)\n4. **Compensation** \u2014 no approved precedent exists yet; I flagged it for you to add wording or route to Property and Land before sending.\n\nNothing has been sent \u2014 this is ready for your edits and sign-off. Want me to route that compensation question to the right team, or draft the referral note for it?",
+      "agent_logs": "[PublicCorrespondenceAgent] **Draft Reply: COR-2042 (DRAFT, NOT SENT)**\n\n| Detail | Value |\n|---|---|\n| To | E. Okafor |\n| Re | Harbor Road Upgrade: your scanned letter received Thu 26 Feb 2026 |\n| Prepared for | Alex Rivera, correspondence officer |\n| Sign-off | Jamie Lee, Director of Community Relations |\n| Status | Draft for officer review |\n\nDear E. Okafor,\n\nThank you for writing to Northwind County Public Works about the Harbor Road Upgrade. You raised 4 questions, and we answer each one below.\n\n**1. Noise and hours.** Night works on Harbor Road run from 8 pm to 5 am, Monday to Thursday, for no more than 12 nights in total. Noise is monitored on site and the loudest activities finish before 11 pm. [Source: APR-104]\n\n**2. Property access.** Access to every driveway is kept open throughout the works. Where a driveway must close for concrete work, residents receive at least 48 hours' notice and the closure lasts no longer than 8 hours. [Source: APR-102]\n\n**3. Street trees.** Two street trees on Harbor Road are removed because the new footpath sits over their root zones. Each removed tree is replaced with two advanced trees in the autumn planting season. [Source: APR-106]\n\n**4. Compensation.** [OFFICER TO DEVELOP: no approved precedent for this question. Suggested approach: acknowledge the concern, confirm it has been referred to Property and Land, and insert their approved wording before sign-off.]\n\nYours sincerely,\nNorthwind County Public Works\n\n**Coverage:** 4 of 4 questions addressed; 3 cited from approved precedent; 1 flagged for officer development.\n\nReview the wording, complete any flagged section, and send through the approved channel. No email was sent.\n\nSynthetic correspondence support only. This agent drafts and recommends; it does not send a reply, contact a resident or team, change a record, or approve wording. A correspondence officer reviews, edits and sends every response.\n\nSource: [Synthetic Approved Response Library]\nAgents: PublicCorrespondenceAgent",
+      "expected_agent": "PublicCorrespondenceAgent",
+      "must_include": [
+        "DRAFT, NOT SENT",
+        "OFFICER TO DEVELOP",
+        "No email was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "PCR-06",
+      "persona": "Knowledge Owner",
+      "onepager_promise": "Grows the approved-response library so the same question is never referred twice",
+      "prompt": "Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?",
+      "assistant_response": "Here's the plan for the Okafor compensation wording:\n\n- **New entry:** APR-109 \u2014 \"Property value and compensation enquiries\"\n- **Owner:** Property and Land supplies the wording; a knowledge owner reviews and approves it before it's added\n- **Effect:** once approved, it directly closes the gap in COR-2042 (the compensation question), and future drafts will cite APR-109 automatically instead of routing a referral again\n\nNothing's added yet \u2014 this is just the proposal. When Property and Land's wording actually arrives, send it my way and I'll draft the entry for the knowledge owner to sign off.",
+      "agent_logs": "[PublicCorrespondenceAgent] **Precedent Library Update Proposal: APR-109**\n\n| Field | Value |\n|---|---|\n| Proposed entry | APR-109: Property value and compensation enquiries |\n| Fills gap | COR-2042 Q4 (Compensation) |\n| Wording owner | Property and Land |\n| Status | Proposed, pending knowledge-owner approval |\n| Library size | 7 approved responses, 8 once approved |\n\n**How it works:** when Property and Land returns approved wording, the knowledge owner reviews it and adds it as APR-109. From then on, questions on this topic match it like any other approved response and are cited in drafts instead of being referred again (1 open question on this topic in today's queue).\n\nNothing was added to the library; the knowledge owner approves every new entry.\n\nSynthetic correspondence support only. This agent drafts and recommends; it does not send a reply, contact a resident or team, change a record, or approve wording. A correspondence officer reviews, edits and sends every response.\n\nSource: [Synthetic Approved Response Library]\nAgents: PublicCorrespondenceAgent",
+      "expected_agent": "PublicCorrespondenceAgent",
+      "must_include": [
+        "APR-109",
+        "pending knowledge-owner approval",
+        "Nothing was added to the library"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

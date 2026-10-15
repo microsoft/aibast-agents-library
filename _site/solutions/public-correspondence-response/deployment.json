@@ -1,0 +1,129 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/public-correspondence-response",
+  "display_name": "Public Correspondence Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+  "source_path": "agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+  "target_filename": "public_correspondence_response_agent.py",
+  "expected_tool": "PublicCorrespondenceAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "What correspondence do I need to answer this week?",
+    "arguments": {
+      "operation": "inbox_queue"
+    },
+    "must_call": "PublicCorrespondenceAgent",
+    "must_include": [
+      "4 items waiting",
+      "11 separate questions"
+    ]
+  },
+  "demo_scenarios": [
+    {
+      "case_id": "PCR-01",
+      "persona": "Correspondence Officer",
+      "prompt": "What correspondence do I need to answer this week?",
+      "operation": "inbox_queue"
+    },
+    {
+      "case_id": "PCR-02",
+      "persona": "Correspondence Officer",
+      "prompt": "Break down the scanned letter from E. Okafor into its separate questions.",
+      "operation": "break_down_enquiry"
+    },
+    {
+      "case_id": "PCR-03",
+      "persona": "Correspondence Officer",
+      "prompt": "Which approved past responses already answer each question in the Okafor letter?",
+      "operation": "find_precedents"
+    },
+    {
+      "case_id": "PCR-04",
+      "persona": "Correspondence Team Lead",
+      "prompt": "Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+      "operation": "route_and_refer"
+    },
+    {
+      "case_id": "PCR-05",
+      "persona": "Correspondence Officer",
+      "prompt": "Draft the reply to the Okafor letter for my review.",
+      "operation": "draft_response"
+    },
+    {
+      "case_id": "PCR-06",
+      "persona": "Knowledge Owner",
+      "prompt": "Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?",
+      "operation": "library_update"
+    }
+  ],
+  "write_controls": {
+    "mode": "read-only-synthetic",
+    "external_writes": "none",
+    "statement": "Never send a reply, contact a resident or internal team, change a correspondence record, add or approve library wording, make a commitment on compensation, or speak for an elected official or the department.",
+    "human_gate": "A correspondence officer reviews every draft, completes any flagged section with wording approved by the owning team, and sends it through the approved channel; a knowledge owner approves every new library entry."
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "inbox_queue",
+      "break_down_enquiry",
+      "find_precedents",
+      "route_and_refer",
+      "draft_response",
+      "library_update"
+    ],
+    "manual_global_instructions": "solutions/public-correspondence-response/manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_public-correspondence-response-synthetic-records.md",
+      "manual/knowledge/aibast_public-correspondence-response-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 6,
+    "required_connections": [
+      "Bind only customer-approved systems after security, privacy, and business-owner review"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Public Correspondence Manual",
+      "bot_id": "dfcca2d3-9cfd-4ffd-875f-8b7a300cdd7e",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 6,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Public Correspondence Pilot",
+      "bot_id": "8fb108f7-065b-4c4b-bb4f-17a50318a6c2",
+      "schema_name": "aibast_PublicCorrespondencePilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Public Correspondence Manual",
+      "schema_name": "cr2bf_publiccorrespondencemanual_ypbfDR",
+      "solution_unique_name": "aibast_PublicCorrespondenceManualBuild",
+      "bot_id": "dfcca2d3-9cfd-4ffd-875f-8b7a300cdd7e",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  }
+}

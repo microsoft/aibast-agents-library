@@ -1,0 +1,23 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/field-permit-to-work",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "60. Field Permit to Work Agent one-pager.pptx",
+    "sha256": "3076ab782f5880e99777e400ea172d54276c5427ead5585de96d47d6aa325817"
+  },
+  "source_path": "agents/@aibast-agents-library/energy_stacks/field_permit_to_work_stack/field_permit_to_work_agent.py",
+  "findings": [
+    "New wave-2 template distilled from a recurring field workflow pattern; no prior library source existed.",
+    "The field pattern relied on live systems, runtime clocks, model calls and free-text inputs that cannot be reviewed deterministically.",
+    "The field pattern included steps that would change records or notify people if run against live systems."
+  ],
+  "fixes": [
+    "Rebuilt the workflow as a single stdlib-only agent over a fixed fictional snapshot with invented organizations, people, records and values.",
+    "Exposed 7 deterministic operations, one per story turn, with enum or name-resolver inputs and a not-found miss instead of free text.",
+    "Converted every write, send, approval or notification step into a draft, check or recommendation with an explicit human gate.",
+    "Added one locked persona-language case and one uploadable skill per operation, plus two synthetic knowledge files."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

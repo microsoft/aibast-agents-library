@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "financial-advisor-copilot",
+  "agent": "@aibast-agents-library/financial-advisor-copilot",
+  "display_name": "Financial Advisor Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic client and service snapshot",
+        "detail": "Bundled fictional clients, advisors, service requests, identity status, routing, ages, assets, and review dates support deterministic demos."
+      },
+      {
+        "name": "Portfolio, target, and risk evidence",
+        "detail": "Packaged holdings, current and target allocations, risk profiles, retirement context, and contribution values support review preparation."
+      },
+      {
+        "name": "Compliance controls and review rules",
+        "detail": "Fixed Reg BI, Form CRS, suitability, concentration, and senior-investor rules frame checkpoints without determining compliance."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Service intake and routing preparation",
+        "detail": "Summarizes who is waiting, requested service, pending identity-control status, and proposed route without verification or assignment."
+      },
+      {
+        "name": "Advisor book review",
+        "detail": "Consolidates client, advisor, risk, asset, age, retirement, and review-date evidence across the fixed synthetic book."
+      },
+      {
+        "name": "Portfolio allocation drift analysis",
+        "detail": "Compares current and target allocations and calculates maximum drift for a selected client without changing holdings."
+      },
+      {
+        "name": "Nonbinding discussion candidate preparation",
+        "detail": "Surfaces illustrative allocation differences and rationale for advisor review, not recommendations, advice, or orders."
+      },
+      {
+        "name": "Suitability and compliance checkpoint review",
+        "detail": "Relates risk, age, concentration, drift, Reg BI, Form CRS, and senior controls to required licensed and compliance review."
+      },
+      {
+        "name": "Banker-to-advisor handoff synthesis",
+        "detail": "Drafts request, identity status, route, risk context, drift, and flags without transferring a case or contacting a client."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access for branch bankers, advisors, advisory directors, and compliance officers in an unpublished Draft agent."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs FinancialAdvisorCopilotAgent through local Brainstem chat and UI endpoints with fixed synthetic evidence."
+      },
+      {
+        "name": "Evidence-first role review",
+        "detail": "Separates recorded facts, calculations, discussion candidates, review checkpoints, and proposed handoff steps for human review."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Branch service intake report",
+        "detail": "Reports synthetic clients, requests, pending identity checks, and proposed routing while confirming no service assignment occurred."
+      },
+      {
+        "name": "Client book and portfolio review",
+        "detail": "Summarizes advisor ownership, risk profiles, assets, retirement context, holdings, targets, and calculated drift."
+      },
+      {
+        "name": "Suitability and compliance review",
+        "detail": "Surfaces discussion candidates, client context, policy checkpoints, and senior-investor flags for licensed and compliance reviewers."
+      },
+      {
+        "name": "Draft advisor handoff report",
+        "detail": "Compiles request, identity status, route, risk, portfolio drift, and flags while confirming no case transfer or outreach."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable FinancialAdvisorCopilotAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements six read-only operations over bundled synthetic records with no credentials or side effects."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts two synthetic knowledge files and six operation skills; validated agents remain Draft and unpublished."
+    },
+    {
+      "name": "Dynamics 365 banking or CRM context",
+      "detail": "Approved future seam for customer and service context; it is not connected in the current fixed synthetic package."
+    },
+    {
+      "name": "Approved customer-identification workflow",
+      "detail": "Future authorization-gated seam for identity evidence; the package never verifies identity or clears a control."
+    },
+    {
+      "name": "Approved portfolio and research services",
+      "detail": "Future least-privilege seam for governed evidence; current portfolio values and research context are fixed and synthetic."
+    },
+    {
+      "name": "Microsoft 365",
+      "detail": "Approved preparation seam for governed documents and context; no file, record, approval, or communication is created."
+    },
+    {
+      "name": "Microsoft Teams handoffs",
+      "detail": "Approved collaboration seam for reviewed handoffs; no message, assignment, approval, or case transfer is executed."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence policy",
+      "detail": "Uses only packaged fictional records and forbids browsing, enrichment, substitution, inference, or invention of missing facts."
+    },
+    {
+      "name": "Six deterministic operations",
+      "detail": "Routes service intake, client review, portfolio summary, discussion candidates, compliance checks, and handoff preparation."
+    },
+    {
+      "name": "Fail-closed identifier handling",
+      "detail": "Rejects unknown client identifiers instead of silently substituting another fictional record or fabricating evidence."
+    },
+    {
+      "name": "Suitability and compliance human gates",
+      "detail": "Requires licensed-advisor and compliance review of objectives, risk tolerance, suitability, tax, disclosures, and consent."
+    },
+    {
+      "name": "No advice or execution boundary",
+      "detail": "Prevents advice, suitability decisions, identity verification, account action, outreach, orders, transactions, and record changes."
+    },
+    {
+      "name": "Locked evidence and isolation validation",
+      "detail": "Six persona-language cases passed with deterministic anchors and only FinancialAdvisorCopilotAgent loaded under strict isolation."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Validated Copilot Studio agents remain unpublished, web search is removed, and publication requires separate confirmation."
+    }
+  ]
+}

@@ -6,8 +6,8 @@ committed). Every file is plain static content served from the Pages CDN, so any
 agents can read it with no rate limit, and the same files work unchanged behind any other CDN.
 
   api/v1/index.json            what this API serves (schema, counts, endpoints)
-  api/v1/agents.json           every solution agent, one line each
-  api/v1/agents/<slug>.json    one agent: the business case, prompts with their recorded answers, links
+  api/v1/solutions.json           every solution agent, one line each
+  api/v1/solutions/<slug>.json    one agent: the business case, prompts with their recorded answers, links
   openapi.json                 OpenAPI 3.1 description of the endpoints above
   llms.txt / llms-full.txt     plain-text entry point for AI agents (llmstxt.org)
   sitemap.xml / robots.txt     for search engines
@@ -120,7 +120,7 @@ def build(root, site, repository):
             "prompts": prompts,
             "links": links,
         }
-        files[f"api/v1/agents/{slug}.json"] = document
+        files[f"api/v1/solutions/{slug}.json"] = document
         rows.append({
             "id": agent_id,
             "slug": slug,
@@ -131,13 +131,13 @@ def build(root, site, repository):
             "journey_stage": document["journey_stage"],
             "recorded_prompts": sum(p["recorded"] for p in prompts),
             "added_at": document["added_at"],
-            "url": f"{site}api/v1/agents/{slug}.json",
+            "url": f"{site}api/v1/solutions/{slug}.json",
             "page": links["page"],
         })
     source_hash = hashlib.sha256(
         b"".join((root / name).read_bytes() for name in ("registry.json", "solutions/catalog.json"))
     ).hexdigest()
-    files["api/v1/agents.json"] = {"schema": "aibast-public-agents/1.0", "count": len(rows), "agents": rows}
+    files["api/v1/solutions.json"] = {"schema": "aibast-public-solutions/1.0", "count": len(rows), "agents": rows}
     files["api/v1/index.json"] = {
         "schema": SCHEMA,
         "site": site,
@@ -145,8 +145,8 @@ def build(root, site, repository):
         "agents": len(rows),
         "recorded_prompts": sum(r["recorded_prompts"] for r in rows),
         "endpoints": {
-            "agents": f"{site}api/v1/agents.json",
-            "agent": f"{site}api/v1/agents/{{slug}}.json",
+            "agents": f"{site}api/v1/solutions.json",
+            "agent": f"{site}api/v1/solutions/{{slug}}.json",
             "demo_scenarios": f"{site}solutions/_shared/demo-scenarios.json",
             "github_snapshot": f"{site}api/v1/github/index.json",
             "openapi": f"{site}openapi.json",
@@ -178,12 +178,12 @@ def openapi(site):
         },
         "servers": [{"url": site.rstrip("/")}],
         "paths": {
-            "/api/v1/agents.json": {"get": {
+            "/api/v1/solutions.json": {"get": {
                 "operationId": "listAgents",
                 "summary": "List every agent solution in the library",
                 "responses": {"200": {"description": "All agents", "content": {"application/json": {}}}},
             }},
-            "/api/v1/agents/{slug}.json": {"get": {
+            "/api/v1/solutions/{slug}.json": {"get": {
                 "operationId": "getAgent",
                 "summary": "One agent: business case, industries, prompts with recorded answers, and links",
                 "parameters": [{"name": "slug", "in": "path", "required": True, "schema": {"type": "string"},
@@ -209,7 +209,7 @@ def llms(site, rows, full, documents):
         "answers on synthetic data, a hands-on workshop, and a one-pager and demo video on request.",
         "",
         f"- API index: {site}api/v1/index.json",
-        f"- All agents (JSON): {site}api/v1/agents.json",
+        f"- All agents (JSON): {site}api/v1/solutions.json",
         f"- OpenAPI: {site}openapi.json",
         f"- Library: {site}index.html",
         "",
@@ -219,7 +219,7 @@ def llms(site, rows, full, documents):
     for row in rows:
         lines.append(f"- [{row['name']}]({row['url']}): {row['pitch'] or ''}")
         if full:
-            document = documents[f"api/v1/agents/{row['slug']}.json"]
+            document = documents[f"api/v1/solutions/{row['slug']}.json"]
             if document["industries"]:
                 lines.append(f"  - Industries: {', '.join(document['industries'])}")
             if document["personas"]:
@@ -233,7 +233,7 @@ def llms(site, rows, full, documents):
 def sitemap(root, site, files):
     pages = [page for page in SITEMAP_PAGES if (root / page).exists()]
     pages += sorted(p.relative_to(root).as_posix() for p in (root / "solutions").glob("*/quest.html"))
-    pages += sorted(name for name in files if name.startswith("api/v1/agents/"))
+    pages += sorted(name for name in files if name.startswith("api/v1/solutions/"))
     body = "".join(f"  <url><loc>{escape(site + page)}</loc></url>\n" for page in pages)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{body}</urlset>\n'
 

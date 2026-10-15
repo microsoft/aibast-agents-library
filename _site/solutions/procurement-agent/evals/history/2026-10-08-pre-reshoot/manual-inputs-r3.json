@@ -1,0 +1,57 @@
+{
+  "schema": "aibast-manual-input-inventory/1.0",
+  "solution": "@aibast-agents-library/procurement-agent",
+  "build_revision": "grounding-r3",
+  "source_commit": "38a1c30d3cccfa1cab379f6a0bb94879cf4de496",
+  "as_of": "2026-09-14T12:45:45.401310+00:00",
+  "scope": "Seven exact source-only candidate inputs. No native component or case is accepted.",
+  "inputs": [
+    {
+      "path": "solutions/procurement-agent/manual/GLOBAL-INSTRUCTIONS.md",
+      "bytes": 6476,
+      "sha256": "f3ef5a14a3ae52acfdb0fb40a7d7849560ddbb4f2262ce460f23f1ca22f768d2",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/38a1c30d3cccfa1cab379f6a0bb94879cf4de496/solutions/procurement-agent/manual/GLOBAL-INSTRUCTIONS.md"
+    },
+    {
+      "path": "solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md",
+      "bytes": 3696,
+      "sha256": "8f349c43ed00f088bfd55c2ba36dabb06a484cfe2d6c2063a13b64873257f9a9",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/38a1c30d3cccfa1cab379f6a0bb94879cf4de496/solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md"
+    },
+    {
+      "path": "solutions/procurement-agent/manual/skills/aibast_purchase-request_01/SKILL.md",
+      "bytes": 4311,
+      "sha256": "6283b80fc92f8ffb40f1b3c2b5f78ffa9a126eb6ad467b0f25cf90b13b4f59df",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/38a1c30d3cccfa1cab379f6a0bb94879cf4de496/solutions/procurement-agent/manual/skills/aibast_purchase-request_01/SKILL.md"
+    },
+    {
+      "path": "solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md",
+      "bytes": 4567,
+      "sha256": "f8645e3a3ef94e6381fef5a29489363664a7e06a1c5636f0def94f2df5a3dd24",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/38a1c30d3cccfa1cab379f6a0bb94879cf4de496/solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md"
+    },
+    {
+      "path": "solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md",
+      "bytes": 4036,
+      "sha256": "6c8e18cd59350fc50db129415925fbfb974b471f86931c631122ece0a3553803",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/38a1c30d3cccfa1cab379f6a0bb94879cf4de496/solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md"
+    },
+    {
+      "path": "solutions/procurement-agent/manual/knowledge/aibast_procurement-agent-rules-and-guardrails.md",
+      "bytes": 6924,
+      "sha256": "075d114e980bc7cd24e871f7ea2c418bca9d931b65e0eec5301ba9e45d9a3f18",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/38a1c30d3cccfa1cab379f6a0bb94879cf4de496/solutions/procurement-agent/manual/knowledge/aibast_procurement-agent-rules-and-guardrails.md"
+    },
+    {
+      "path": "solutions/procurement-agent/manual/knowledge/aibast_procurement-agent-synthetic-records.md",
+      "bytes": 4524,
+      "sha256": "f3ff24b900de86dc98e4630787cbda7df459bd4d713e7353c7efb3a4c7baaffe",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/38a1c30d3cccfa1cab379f6a0bb94879cf4de496/solutions/procurement-agent/manual/knowledge/aibast_procurement-agent-synthetic-records.md"
+    }
+  ],
+  "locked_cases": {
+    "path": "tests/demo_cases/procurement-agent.json",
+    "bytes": 3196,
+    "sha256": "30c70a4e75fe85ba0cad7f716256693e1987f75459bdc99664488b518048928e"
+  }
+}

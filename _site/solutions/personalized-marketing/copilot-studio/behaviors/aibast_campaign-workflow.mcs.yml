@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "campaign-workflow"
+  description: "\"Use when a campaign manager asks something like \\\"As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: campaign-workflow
+  description: "Use when a campaign manager asks something like \"As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval\""
+  ---
+  <!-- bic:source=blank -->
+  # Campaign workflow
+  
+  Use when a campaign manager asks something like "As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `Draft VIP Launch Schedule`
+  - `Hour 48`
+  - `Nothing is scheduled or sent`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

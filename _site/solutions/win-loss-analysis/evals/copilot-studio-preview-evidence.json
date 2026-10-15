@@ -1,0 +1,111 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T05:49:20.252220Z",
+  "solution": "@aibast-agents-library/win-loss-analysis",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Win/Loss Analysis Pilot",
+  "schema_name": "aibast_WinLossAnalysisPilot",
+  "bot_id": "6346a181-d9a1-4094-9313-5f7234f91432",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "No local changes detected. Nothing to push.",
+  "cases": [
+    {
+      "case_id": "WL-01",
+      "must_include": [
+        "Q3 Win/Loss Overview",
+        "Loss by Competitor",
+        "CompetitorX 47%",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WL-02",
+      "must_include": [
+        "Root Cause Analysis",
+        "Buyer Key Insight",
+        "38%",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WL-03",
+      "must_include": [
+        "Counter-Strategies",
+        "Talk Track",
+        "FedRAMP in progress",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WL-04",
+      "must_include": [
+        "Synthetic Revenue Scenario Model",
+        "$4.2M",
+        "23:1",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WL-05",
+      "must_include": [
+        "Board Presentation",
+        "Decision for authorized leaders",
+        "32% Q4 win rate",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WL-06",
+      "must_include": [
+        "Complete Summary",
+        "Draft Next-Step Options",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    }
+  ]
+}

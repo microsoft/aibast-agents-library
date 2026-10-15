@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "cart-abandonment-recovery",
+  "agent": "@aibast-agents-library/cart-abandonment-recovery",
+  "display_name": "Cart Abandonment Recovery Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic cart evidence",
+        "detail": "Fixed carts, items, values, exits, devices, segments, contactability, campaign concepts, incentives, and metrics support demos."
+      },
+      {
+        "name": "Operating rules and evidence anchors",
+        "detail": "Uploaded rules define persona routing, exact headings, consent and approval gates, synthetic labels, and prohibited actions."
+      },
+      {
+        "name": "Approved aggregate analytics seam",
+        "detail": "Production replacement requires an approved read-only commerce analytics feed that preserves the reviewed input and output contract."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Anonymous abandonment analysis",
+        "detail": "Finds aggregate cart count, value, exit-page, device, segment, and review-state patterns without identifying a shopper."
+      },
+      {
+        "name": "Consent-aware campaign drafting",
+        "detail": "Outlines neutral channel timing, subject concepts, consent checks, and benchmark assumptions without sending or scheduling outreach."
+      },
+      {
+        "name": "Margin-aware incentive scenarios",
+        "detail": "Compares fixed cost impact, modeled lift, and net recovery value while keeping every incentive concept behind approval."
+      },
+      {
+        "name": "Synthetic conversion review",
+        "detail": "Summarizes fixed abandonment, recovery, revenue, and campaign figures while separating benchmarks from planning estimates."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access through a validated Draft agent with four operation skills and two synthetic knowledge files."
+      },
+      {
+        "name": "Microsoft 365 Copilot review surface",
+        "detail": "Supports governed review by marketing and growth personas before any approved system handles contact, offers, or activation."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP agent through local Brainstem chat and UI endpoints with deterministic synthetic-only routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Synthetic abandonment analysis",
+        "detail": "Reports cart count, value at risk, abandonment rate, cart details, and exit-page breakdown for human review."
+      },
+      {
+        "name": "Draft recovery campaign dashboard",
+        "detail": "Presents proposed sequence timing, neutral subjects, benchmark rates, pending carts, and missing consent paths as a draft."
+      },
+      {
+        "name": "Draft incentive scenario comparison",
+        "detail": "Shows fixed incentive options, margin impact, modeled lift, and net-value scenarios explicitly labeled for approval."
+      },
+      {
+        "name": "Synthetic 30-day conversion review",
+        "detail": "Summarizes recovery rate, recovered value and revenue, campaign performance, and active cart value at risk."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable RAPP Cart Abandonment Recovery Agent",
+      "detail": "Single-file CartAbandonmentRecoveryAgent implements four read-only operations with bundled synthetic data and no credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the conversational package; the exported unmanaged agent remains unpublished and requires approval before publication."
+    },
+    {
+      "name": "Microsoft 365 Copilot",
+      "detail": "Provides a cited conversational surface for governed review of analysis, campaign drafts, incentives, and measurement summaries."
+    },
+    {
+      "name": "Approved aggregate commerce analytics feed",
+      "detail": "May replace synthetic inputs only as an authorized read-only production connection; none is configured in the package."
+    },
+    {
+      "name": "Consent and campaign review workflow",
+      "detail": "Provides the approved review seam required before any campaign or incentive could move beyond planning."
+    },
+    {
+      "name": "Outlook or Teams activation seam",
+      "detail": "Cited only for separate approval and implementation; the current package sends no message and schedules no outreach."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic aggregate privacy boundary",
+      "detail": "Uses fictional records and forbids shopper identification, live lookups, identity stitching, or invention of missing facts."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes abandonment analysis, campaign drafting, incentive comparison, and conversion review from persona-language requests."
+    },
+    {
+      "name": "Consent and approval controls",
+      "detail": "Requires assumptions, consent checks, authorization, auditability, and explicit human approval before any external action."
+    },
+    {
+      "name": "No-side-effect operating boundary",
+      "detail": "Prevents contact, sending, scheduling, retargeting, offer issuance, cart changes, stock reservation, and purchase completion."
+    },
+    {
+      "name": "Locked demo and Preview validation",
+      "detail": "Maintains one persona-language case per operation and records four passing Preview cases with exact evidence anchors."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Keeps Copilot Studio artifacts unpublished and makes import review, connection mapping, and publication separate approved steps."
+    },
+    {
+      "name": "Portable package and evidence trail",
+      "detail": "Includes the RAPP source, deployment recipe, skills, knowledge, export bundle, hashes, screenshots, and validation evidence."
+    }
+  ]
+}

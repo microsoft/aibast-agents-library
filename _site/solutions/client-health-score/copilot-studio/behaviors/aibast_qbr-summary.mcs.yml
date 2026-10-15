@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: qbr-summary
+  description: "\"Use when a client success leader asks something like \\\"Wrap up my quarterly business review prep with a summary of the portfolio, the risks and the retention plan\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: qbr-summary
+  description: "Use when a client success leader asks something like \"Wrap up my quarterly business review prep with a summary of the portfolio, the risks and the retention plan\""
+  ---
+  <!-- bic:source=blank -->
+  # Qbr summary
+
+  Use when a client success leader asks something like "Wrap up my quarterly business review prep with a summary of the portfolio, the risks and the retention plan"
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `$17.2M`
+  - `300%`
+  - `ready for you to send`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

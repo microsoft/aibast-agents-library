@@ -1,0 +1,54 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/sales-qualification",
+  "onepager": "21. Sales Qualification Agent one-pager.pptx",
+  "source_slide_sha256": "01daa31c095ca12cbfaa66d4d54264a318c0aba5ccc3dbc58012702a838859b3",
+  "promises": [
+    {
+      "advertised_promise": "Perform intelligent lead enrichment to prioritize high-potential opportunities",
+      "operations": [
+        "score_leads",
+        "bant_analysis"
+      ],
+      "demo_cases": [
+        "SQ-01",
+        "SQ-02"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Automate qualification scoring to identify conversion-ready prospects",
+      "operations": [
+        "score_leads",
+        "qualification_report"
+      ],
+      "demo_cases": [
+        "SQ-01",
+        "SQ-06"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Generate personalized outreach sequences to boost engagement",
+      "operations": [
+        "create_outreach"
+      ],
+      "demo_cases": [
+        "SQ-03"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Coordinate SLA-based assignments and tracking to drive timely engagement",
+      "operations": [
+        "assign_leads",
+        "setup_tracking"
+      ],
+      "demo_cases": [
+        "SQ-04",
+        "SQ-05"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    }
+  ]
+}

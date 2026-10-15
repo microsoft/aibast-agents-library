@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "draft-purchase-order"
+  description: "\"Use when a procurement manager asks something like \\\"Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: draft-purchase-order
+  description: "Use when a procurement manager asks something like \"Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team\""
+  ---
+  <!-- bic:source=blank -->
+  # Draft purchase order
+  
+  Use when a procurement manager asks something like "Create the purchase order for the 50 Dell Latitude 7440 laptops for the new engineering team"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `PO-2024-ENG-0892`
+  - `$81,893`
+  - `No purchase order is created`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

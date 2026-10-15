@@ -1,0 +1,154 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/procurement-support",
+  "slug": "procurement-support",
+  "name": "Discount Finder Agent",
+  "headline": "Find savings signals before the window closes",
+  "pitch": "Surface contract tiers, dated pricing notices, fragmented demand, and timing tradeoffs in a sourcing-review brief that helps category teams investigate savings without contacting a supplier or placing an order.",
+  "category": "general",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Procurement Manager",
+    "Finance Director",
+    "Category Buyer"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Optimize",
+  "why_try": "The demo lets a procurement manager ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "customer_challenge": "Discounts and pricing changes are scattered across contracts and notices, while distributed demand hides potential sourcing leverage and review deadlines.",
+  "microsoft_ai_story": "Copilot Studio can unify approved contract, forecast, and vendor-notice evidence from Dynamics 365 and collaboration systems, then route a sourcing brief to Teams for authorized review.",
+  "business_value": [
+    "Improves visibility into dated pricing and contract signals.",
+    "Helps teams identify demand worth structured sourcing review.",
+    "Keeps commercial commitments behind approved procurement controls."
+  ],
+  "business_flow": [
+    "Category buyers and finance leaders",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Discount Finder Agent",
+    "Contract and forecast data",
+    "Microsoft Teams sourcing review",
+    "Authorized category manager"
+  ],
+  "capabilities": [
+    {
+      "operation": "savings_scan",
+      "name": "Savings Scan",
+      "purpose": "All available discounts for the upcoming purchase orders."
+    },
+    {
+      "operation": "time_sensitive_deals",
+      "name": "Time Sensitive Deals",
+      "purpose": "Expiring IT equipment deals and what to lock in now."
+    },
+    {
+      "operation": "consolidation_analysis",
+      "name": "Consolidation Analysis",
+      "purpose": "Office-supply bulk strategy and the Q1 total savings projection."
+    },
+    {
+      "operation": "purchase_timing",
+      "name": "Purchase Timing",
+      "purpose": "Implementation plan / action timeline with savings at risk."
+    },
+    {
+      "operation": "draft_purchase_order",
+      "name": "Draft Purchase Order",
+      "purpose": "Draft Dell PO plus the software license savings."
+    },
+    {
+      "operation": "license_optimization",
+      "name": "License Optimization",
+      "purpose": "License conversions, price-increase avoidance and duplicate licenses."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Procurement Manager: Savings Scan",
+      "prompt": "I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-savings-scan",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Manager",
+        "prompt": "I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.",
+        "answer": "Found **$47,850 in potential savings (23%)** across your planned $210,000 spend:\n\n- **IT Equipment** ($85K planned): 20% quarter-end discount → **$17,000 saved** — Dell pricing expires **Friday**\n- **Software Licenses** ($78K planned): 35% annual commit discount → **$27,300 saved** — Microsoft price increase hits next month\n- **Office Supplies** ($47K planned): 15% bulk tier → **$3,550 saved** — needs $5K minimum order (Office Depot)\n\nTwo of these are time-sensitive. Want me to pull up the expiring IT equipment deals next so you know what to lock in before Friday?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Category Buyer: Time Sensitive Deals",
+      "prompt": "Which IT equipment deals expire this week, and what should we lock in immediately?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-time-sensitive-deals",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Category Buyer",
+        "prompt": "Which IT equipment deals expire this week, and what should we lock in immediately?",
+        "answer": "Here's what's expiring this week:\n\n**Lock in today/tomorrow (Thursday 5 PM deadline):**\n- **Dell**: 20% off laptops/monitors — biggest value. 25 Latitude 7440s + 40 4K monitors saves ~$9,050, plus free dock stations on 50+ unit orders. *Expires Friday.*\n- **HP**: 18% off printers/accessories. *Expires Friday.*\n\n**A bit more runway:**\n- **Lenovo**: 15% off desktops. *Expires Sunday.*\n\n**Recommendation:** Prioritize Dell — highest savings and tightest deadline (PO needs to be in by Thursday 5 PM to hold pricing). This is just a savings analysis — no order gets placed without your sign-off.\n\nWant me to draft the Dell PO now and pull up the software license savings too?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Finance Director: Consolidation Analysis",
+      "prompt": "Model the office-supply bulk order strategy and the total savings projection for the quarter.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-consolidation-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Finance Director",
+        "prompt": "Model the office-supply bulk order strategy and the total savings projection for the quarter.",
+        "answer": "Here's the office-supply bulk order model (via the Discount Finder Agent):\n\n**Strategy**: Consolidate 6 scattered orders into 2 quarterly orders with one primary vendor (Office Depot), timed with promotions. This pushes monthly spend from ~$7,800 to $23,400/quarter — qualifying for the **Gold tier (15% discount)** instead of the standard 8%.\n\n**Savings breakdown**:\n- Consolidation efficiency: $3,550\n- Promo-timed ordering: +$1,200\n- Single-vendor leverage: +$890\n- **Office supplies total: $5,640**\n\n**Full Q1 projection** (all categories): **$56,400** (~27% of spend) — including IT equipment deals, software commitments, and price-lock avoidance.\n\nNote: this is a draft analysis only — no supplier is selected or committed to, and consolidating vendors trades off some supply resilience/diversity worth weighing.\n\nWant the implementation timeline with deadlines next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Category Buyer: Purchase Timing",
+      "prompt": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-purchase-timing",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Category Buyer",
+        "prompt": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
+        "answer": "Here's the implementation plan — nothing has been ordered or committed, just drafted for your review:\n\n**This Week (Critical)**\n- Today: Approve Dell PO-2024-Q1-0234 → **$9,050** savings at risk\n- Thursday: Submit Microsoft annual commitment → **$21,760** savings at risk\n- Friday: Lock HP printer deal → **$2,400** savings at risk\n\n**Next Week**\n- Mon: Consolidate office supply orders\n- Tue: Review Adobe Enterprise proposal\n- Wed: Finalize Salesforce annual terms\n\n**End of Month**\n- Submit consolidated Q1 supply order\n- Complete all license conversions\n\n**Total savings at risk if deadlines slip: ~$33,210**\n\nEverything above is pending your sign-off — no supplier contact, order, or commitment has been made. Want me to set up tracking reminders, or pull an exec summary report?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Procurement Manager: Draft Purchase Order",
+      "prompt": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-draft-purchase-order",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Manager",
+        "prompt": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+        "answer": "Here's the draft summary:\n\n**Dell PO-2024-Q1-0234 (pending your approval — nothing submitted yet)**\n- 25 Latitude 7440 laptops + 40 27\" 4K monitors + 50 docking stations\n- List: $45,250 → Net: **$36,200** (20% quarter-end discount + free shipping)\n- Savings: **$9,050**\n\n**Software License Savings (switching to annual commitments)**\n| Product | Savings |\n|---|---|\n| Microsoft 365 | $12,400 |\n| Adobe Creative | $8,200 |\n| Salesforce | $4,800 |\n| Zoom | $1,900 |\n| **Total** | **$27,300/yr** |\n\nBonus: Microsoft's raising prices 12% next month — locking in annual now avoids an extra $9,360 hit.\n\nEverything above is draft-only — I haven't contacted Dell or renewed anything. Say the word to approve, or want me to run the office-supply bulk order strategy next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "IT Asset Manager: License Optimization",
+      "prompt": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-license-optimization",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "IT Asset Manager",
+        "prompt": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+        "answer": "Here's the breakdown (via the Discount Finder agent's license analysis):\n\n**Move to annual/enterprise terms:**\n- Microsoft 365 (monthly → annual): $12,400/yr saved\n- Adobe Creative (per-seat → enterprise): $8,200/yr saved\n- Salesforce (standard → annual): $4,800/yr saved\n- Zoom (monthly → annual): $1,900/yr saved\n- **Total: $27,300/yr**\n\n**Time pressure:** Microsoft is raising prices 12% next month on $78K of planned spend — locking in now avoids $9,360 of that increase.\n\n**Duplicate licenses found:**\n- 40 users paying for both Zoom and Teams meeting licenses\n- 12 users with standalone Adobe Acrobat on top of Adobe Creative (which includes Acrobat)\n\nThis is all analysis — nothing's been ordered or committed. Want me to draft the purchase order reflecting these changes for your review?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fprocurement-support",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/procurement-support/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Discount%20Finder%20Agent%22"
+  }
+}

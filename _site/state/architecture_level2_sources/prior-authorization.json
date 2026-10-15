@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "prior-authorization",
+  "agent": "@aibast-agents-library/prior-authorization",
+  "display_name": "Prior Authorization Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic authorization request records",
+        "detail": "Fixed fictional requests provide service, payer, source-recorded state, date, policy reference, and present or missing evidence."
+      },
+      {
+        "name": "Synthetic payer policy checklists",
+        "detail": "Bundled fictional imaging and procedure checklists provide named requirements and effective dates for evidence review only."
+      },
+      {
+        "name": "Healthcare review rules and controls",
+        "detail": "Packaged guidance separates evidence organization from clinical judgment, medical necessity, eligibility, and authorization outcomes."
+      },
+      {
+        "name": "Operation skills and locked evidence anchors",
+        "detail": "Four skills define natural-language routing, source-backed procedures, exact demo evidence, safety language, and reviewer gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Request evidence inventory",
+        "detail": "Organizes source-backed clinical and administrative evidence and identifies missing fields without submitting or deciding a request."
+      },
+      {
+        "name": "Criteria-to-evidence crosswalk",
+        "detail": "Presents payer checklist requirements beside available evidence while reserving policy interpretation and medical necessity for reviewers."
+      },
+      {
+        "name": "Source-recorded status transcription",
+        "detail": "Reports the workflow state and source date as recorded, explicitly distinguishing that evidence from an agent determination."
+      },
+      {
+        "name": "Reconsideration evidence drafting",
+        "detail": "Builds a minimum-necessary outline for reviewer consideration without recommending, filing, or claiming an appeal is appropriate."
+      },
+      {
+        "name": "Deterministic intent routing and failure handling",
+        "detail": "Maps persona-language requests to four bounded operations and returns no substituted record when a synthetic identifier is unknown."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio review workspace",
+        "detail": "Provides a natural-language Draft agent with four operation skills, two synthetic knowledge files, and web search removed."
+      },
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "Runs the single-file RAPP tool through local chat, streaming, health, and agent endpoints using bundled synthetic data."
+      },
+      {
+        "name": "Role-based evidence review experience",
+        "detail": "Utilization coordinators, nurse case managers, and schedulers receive compact evidence outputs with explicit reviewer ownership."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Authorization evidence inventory report",
+        "detail": "Shows request identity, payer, source state, policy reference, and present or missing evidence for utilization review."
+      },
+      {
+        "name": "Payer criteria checklist review",
+        "detail": "Lists policy title, effective date, and reviewer checks without asserting that evidence establishes eligibility or medical necessity."
+      },
+      {
+        "name": "Recorded workflow status brief",
+        "detail": "Summarizes source-recorded authorization states and dates without predicting, granting, denying, or changing an outcome."
+      },
+      {
+        "name": "Reconsideration evidence outline",
+        "detail": "Presents minimum-necessary evidence and policy references while qualified reviewers retain rationale, completeness, and submission control."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable PriorAuthorizationAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements four deterministic, read-only operations over bundled synthetic requests and policies."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft package, four skills, and two synthetic knowledge files; publication requires separate confirmation."
+    },
+    {
+      "name": "Microsoft 365 Copilot",
+      "detail": "Provides a governed conversational front door for evidence questions when the solution is deployed through approved channels."
+    },
+    {
+      "name": "Approved read-only EHR or FHIR source",
+      "detail": "Future least-privilege seam for clinical evidence; the current package has no live connection and uses fictional records only."
+    },
+    {
+      "name": "Approved payer policy source",
+      "detail": "Future governed seam for current criteria; qualified payer or utilization reviewers must verify authoritative policy."
+    },
+    {
+      "name": "Microsoft Teams utilization-review coordination",
+      "detail": "Future collaboration seam for human review; the package sends no messages, approval requests, submissions, or notifications."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The deployment environment supplies the model for conversational routing and evidence drafting within the packaged controls."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "All people, identifiers, payers, policies, dates, records, and workflow states are fictional and limited to packaged evidence."
+    },
+    {
+      "name": "Four deterministic read-only operations",
+      "detail": "Routes evidence inventory, criteria crosswalk, recorded status, and reconsideration drafting to explicit bounded handlers."
+    },
+    {
+      "name": "Strict schema and fail-closed identifiers",
+      "detail": "Rejects extra tool arguments and unknown request identifiers without browsing, substituting, or inventing clinical or payer facts."
+    },
+    {
+      "name": "Clinical and payer reviewer authority",
+      "detail": "Qualified clinical, utilization, and payer-policy reviewers retain interpretation, medical-necessity reasoning, and every outcome."
+    },
+    {
+      "name": "No approval or denial automation",
+      "detail": "The agent never predicts, grants, denies, recommends, submits, or changes an authorization, eligibility result, or appeal."
+    },
+    {
+      "name": "Minimum-necessary privacy controls",
+      "detail": "Outputs use only authorized minimum-necessary evidence and prohibit live patient data, diagnosis, treatment advice, and outreach."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four isolated persona cases pass with exact evidence anchors; Copilot Studio artifacts remain Draft until separately approved."
+    }
+  ]
+}

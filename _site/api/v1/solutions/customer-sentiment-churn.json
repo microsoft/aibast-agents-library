@@ -1,0 +1,157 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/customer-sentiment-churn",
+  "slug": "customer-sentiment-churn",
+  "name": "Customer Sentiment and Churn Prediction Agent",
+  "headline": "See relationship risk before outreach becomes reactive",
+  "pitch": "Unify sentiment, complaints, engagement, and product context into a transparent review queue with human-controlled retention options and no automated customer action.",
+  "category": "financial_services",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Relationship Managers",
+    "Retention Specialists",
+    "Customer Success Teams"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Engage",
+  "why_try": "A relationship manager can ask who needs attention, see the exact synthetic signals behind the priority, and prepare outreach options without treating a score as a fact.",
+  "customer_challenge": "A regional bank has customer feedback, complaints, surveys, and engagement signals spread across channels. Teams react late and may apply generic offers without a clear evidence trail or review control.",
+  "microsoft_ai_story": "Microsoft Copilot Studio gives relationship teams a governed conversational view. Dynamics 365 supplies customer-service context, approved interaction analytics contribute signals, Power BI shows segment trends, and Microsoft Teams supports outreach review.",
+  "business_value": [
+    "Improves visibility into cross-channel experience signals.",
+    "Makes churn prioritization explainable rather than presenting a hidden prediction as fact.",
+    "Keeps outreach, offers, fee changes, and account actions under authorized human control."
+  ],
+  "business_flow": [
+    "Relationship Manager",
+    "Retention Specialist",
+    "Customer Success Lead",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Customer Sentiment and Churn Prediction Agent",
+    "Dynamics 365 Customer Service or CRM",
+    "Approved voice, chat, survey, and complaint analytics",
+    "Power BI",
+    "Microsoft Teams outreach review"
+  ],
+  "capabilities": [
+    {
+      "operation": "sentiment_dashboard",
+      "name": "Cross-channel sentiment view",
+      "purpose": "Aggregates fictional interaction sentiment and NPS evidence across touchpoints."
+    },
+    {
+      "operation": "churn_prediction",
+      "name": "Churn-review prioritization",
+      "purpose": "Applies a transparent heuristic to prioritize human review without predicting an individual outcome."
+    },
+    {
+      "operation": "retention_actions",
+      "name": "Retention option preparation",
+      "purpose": "Prepares reviewable service-recovery and outreach options without contacting customers or making offers."
+    },
+    {
+      "operation": "segment_analysis",
+      "name": "Segment context",
+      "purpose": "Compares synthetic segment aggregates with fixed benchmarks."
+    },
+    {
+      "operation": "early_warning_signals",
+      "name": "Early warning signals",
+      "purpose": "Lists fictional predictive signals, critical combinations and today's alerts with the highest-value customers at risk."
+    },
+    {
+      "operation": "outreach_plan",
+      "name": "Outreach assignment plan",
+      "purpose": "Proposes owners, channels, due times, tracking and escalation rules for the manager to confirm; nothing is sent."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Cross-channel sentiment view",
+      "prompt": "Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-sentiment-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Success Lead",
+        "prompt": "Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
+        "answer": "Here's the portfolio snapshot (synthetic demo data, human review required):\n\n**Sentiment split** (180K customers): 40% Promoters, 45% Passives, 15% Detractors (up 18% this month). Top complaints: digital banking, fee transparency, wait times.\n\n**Highest churn risk:** 2,400 customers / $8.2M revenue at risk — 840 critical (>80%), 1,560 high (60-80%).\n\n**Top 5 highest-value at-risk:**\n| Priority | Customer | Deposits | Risk | Key Signal |\n|---|---|---|---|---|\n| 1 | Robert Martinez | $890K | 84% | Downloaded competitor's app |\n| 2 | Sarah Thompson | $450K | 78% | Deposit pattern change |\n| 3 | James Lee | $340K | 76% | 3 complaints |\n| 4 | Marcus Johnson | $280K | 64% | 5 complaints |\n| 5 | Priya Sharma | $220K | 62% | Reduced logins |\n\nCombined: $2.18M deposits / $35K revenue at risk.\n\nWant me to pull the early warning signals to watch for, or generate retention strategies for these five?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Churn-review prioritization",
+      "prompt": "Show me profiles of our highest-value at-risk customers.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-churn-prediction",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Retention Specialist",
+        "prompt": "Yes, what are the early warning signals we should watch for?",
+        "answer": "Here's the early warning picture (synthetic demo data, human review required before any action):\n\n**4 predictive signals** (appear 30-60 days before churn):\n- Direct deposit change → 78% churn rate\n- Reduced logins → 72%\n- Competitor app download → 68%\n- Balance decline >30% → 54%\n\n**Dangerous combos:**\n- Competitor app + balance decline → 89% churn\n- Deposit change + reduced logins → 82%\n- 2+ complaints → 67%\n\n**Firing right now:**\n- 47 customers with competitor app detected\n- 23 with transfers >$10K out\n- 12 with changed direct deposit\n\n**High-value at-risk today:** Robert Martinez ($890K, competitor app), Sarah Thompson ($450K, deposit changed), James Lee ($340K, 3 complaints).\n\nWant me to pull full churn-risk profiles on these three, or set up outreach tracking for the review team?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Retention option preparation",
+      "prompt": "Prepare options for Marcus that I can review before anyone contacts him or changes a fee.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-retention-actions",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Success Lead",
+        "prompt": "Yes, assign the outreach and set up tracking.",
+        "answer": "Outreach plan is staged — nothing's been sent yet, it's all pending your confirmation in the CRM.\n\n**Assignments (proposed):**\n| Customer | Owner | Channel | Due |\n|---|---|---|---|\n| R. Martinez | VP Chen | Phone | Today 2 PM |\n| S. Thompson | Sr. RM Johnson | Video | Tomorrow |\n| J. Lee | Sr. RM Williams | In-person | Tomorrow |\n| M. Johnson | RM Patel | Phone | Day 3 |\n| P. Sharma | RM Garcia | Phone+email | Day 3 |\n\n**Tracking set up:** real-time contact attempts, RM-logged outcomes, immediate offer-acceptance tracking, 30-day balance/activity monitoring.\n\n**Escalation rules:** no contact in 48h → manager alert; declined offer → VP escalation; balance withdrawal → instant notification.\n\nNothing goes out to customers until you approve each brief/offer in the CRM — want me to pull up the talking points for any one of them first?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Segment context",
+      "prompt": "Which segment is under its experience benchmark, and what should we investigate?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-segment-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Head of Customer Experience",
+        "prompt": "Which segment is under its experience benchmark, and what should we investigate?",
+        "answer": "The **Affluent** segment has the widest gap: NPS of 5.0 vs. an 8.2 benchmark (3.2-point shortfall), plus product holdings lagging (3.0 vs 4.1). Mass Market also underperforms (4.0 vs 6.5 NPS) but on a single customer, so less statistically meaningful.\n\nWorth investigating for Affluent:\n- Whether service/advisory experience matches the tier they're paying for (relationship manager responsiveness, wait times)\n- Fee-to-value perception — affluent clients are sensitive to feeling \"nickel-and-dimed\"\n- Why product penetration is below benchmark — missed cross-sell or unmet needs driving them elsewhere\n- Any recent incidents (outages, errors, rate changes) concentrated in this segment\n\nWant me to pull churn predictions or early warning signals specifically for the affluent customers to see if this NPS gap is translating into flight risk?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Early warning signals",
+      "prompt": "Yes, what are the early warning signals we should watch for?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-churn-prediction",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Retention Specialist",
+        "prompt": "Yes, what are the early warning signals we should watch for?",
+        "answer": "Here's the early warning picture (synthetic demo data, human review required before any action):\n\n**4 predictive signals** (appear 30-60 days before churn):\n- Direct deposit change → 78% churn rate\n- Reduced logins → 72%\n- Competitor app download → 68%\n- Balance decline >30% → 54%\n\n**Dangerous combos:**\n- Competitor app + balance decline → 89% churn\n- Deposit change + reduced logins → 82%\n- 2+ complaints → 67%\n\n**Firing right now:**\n- 47 customers with competitor app detected\n- 23 with transfers >$10K out\n- 12 with changed direct deposit\n\n**High-value at-risk today:** Robert Martinez ($890K, competitor app), Sarah Thompson ($450K, deposit changed), James Lee ($340K, 3 complaints).\n\nWant me to pull full churn-risk profiles on these three, or set up outreach tracking for the review team?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Outreach assignment plan",
+      "prompt": "Yes, assign the outreach and set up tracking.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-retention-actions",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Success Lead",
+        "prompt": "Yes, assign the outreach and set up tracking.",
+        "answer": "Outreach plan is staged — nothing's been sent yet, it's all pending your confirmation in the CRM.\n\n**Assignments (proposed):**\n| Customer | Owner | Channel | Due |\n|---|---|---|---|\n| R. Martinez | VP Chen | Phone | Today 2 PM |\n| S. Thompson | Sr. RM Johnson | Video | Tomorrow |\n| J. Lee | Sr. RM Williams | In-person | Tomorrow |\n| M. Johnson | RM Patel | Phone | Day 3 |\n| P. Sharma | RM Garcia | Phone+email | Day 3 |\n\n**Tracking set up:** real-time contact attempts, RM-logged outcomes, immediate offer-acceptance tracking, 30-day balance/activity monitoring.\n\n**Escalation rules:** no contact in 48h → manager alert; declined offer → VP escalation; balance withdrawal → instant notification.\n\nNothing goes out to customers until you approve each brief/offer in the CRM — want me to pull up the talking points for any one of them first?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcustomer-sentiment-churn",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/customer-sentiment-churn/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Customer%20Sentiment%20and%20Churn%20Prediction%20Agent%22"
+  }
+}

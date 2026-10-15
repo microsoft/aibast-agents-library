@@ -1,0 +1,316 @@
+{
+  "schema": "aibast-historical-annotation-reference/1.0",
+  "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "status": "historical_only",
+  "annotation_date": "2026-09-10",
+  "integrated_date": "2026-09-14",
+  "source_commits": {
+    "base": "2cc050754d237d7c13a9f66feff8da2b9deb2230",
+    "staging": "c2e2be939273e912aa63a8237f48776ba33ff73a",
+    "upstream": "0783cc219124b4a6dff1c41f0c5eb5c285ae9436"
+  },
+  "boundary": "Verbatim upstream metadata and corrected annotation images, retained as a dated historical reference. Upstream reusable/release labels describe its older evidence, not the repaired current source. No native operation, new capture, personal screenshot review, or acceptance was performed by this source merge.",
+  "new_native_acceptance": {
+    "accepted_components": 0,
+    "accepted_cases": 0,
+    "reviewed_images": 0
+  },
+  "path_resolution": "The archived visual metadata preserves upstream path strings verbatim. Resolve a changed annotated path through archived_annotations.original_path to archived_annotations.path. All other source/annotated paths resolve at their original paths and are pinned by unchanged_upstream_media_sha256. The old original files remain pinned separately by retained_original_media_sha256. Never treat this archive's statuses as the current visual-checkpoints statuses.",
+  "upstream_visual_metadata": {
+    "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/visual-checkpoints.json",
+    "bytes": 19205,
+    "sha256": "8e4956cfe119b75fe0c2c7ccfb950deb9998f6608b985578f68298e1f85e143e",
+    "original_path": "solutions/fs-customer-onboarding/evals/visual-checkpoints.json"
+  },
+  "staging_visual_metadata_sha256": "979582b4687ecfadbf6a9035633b3f228f03c358b89b9026b937226142611e54",
+  "current_visual_projection": {
+    "excluded_key": "historical_annotation_reference",
+    "encoding": "json.dumps(value, sort_keys=True, ensure_ascii=True), UTF-8",
+    "sha256": "e20ea433f5bf578856bd5afa9fab255fec8d42ccf6d4b270f3145554a30c263f",
+    "boundary": "Every existing current field, status, reason, review and scope is unchanged."
+  },
+  "archived_annotations": [
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/05-remove-web-search.png",
+      "bytes": 401637,
+      "sha256": "f0cdb5dab90a175e8f1f6b84c3aba77072ee7a433b2c6cab1665e2c2c14a5390",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/05-remove-web-search.png",
+      "retained_original_sha256": "04a977d53081bd81fac47ebcbdd34f01a3b91c90ca0b890e7b8fc301363dad61",
+      "capture_id": "hard-step-05",
+      "upstream_note": "Label pill covered helper text in the empty Tools/Knowledge area; regenerated with the pill inside the empty box 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1015,
+          "y": 194,
+          "width": 392,
+          "height": 190,
+          "label": "Web search removed; no tools configured"
+        }
+      ]
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png",
+      "bytes": 409011,
+      "sha256": "50ae819dab05bb0d56bd2cd9db5094d934a726a2fc8d72cb67747392b11d10f6",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png",
+      "retained_original_sha256": "4fd6de8d8e0c7d06c2e9bdeb2766f93d21e214b3e9672429cee656c410667cf5",
+      "capture_id": "hard-step-06",
+      "upstream_note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1025,
+          "y": 307,
+          "width": 374,
+          "height": 48,
+          "label": "Controls and review knowledge added"
+        }
+      ]
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png",
+      "bytes": 422298,
+      "sha256": "23a229a0b498d301b6258a6802607984686e1090d433e82118314e95cb27d8d7",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png",
+      "retained_original_sha256": "abee399602590240af72977773b1d065272fb9bc0760e7f7b609afe26601cbfe",
+      "capture_id": "hard-step-07",
+      "upstream_note": "Label pill covered the Knowledge helper text; regenerated with the pill moved clear of UI copy 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1024,
+          "y": 306,
+          "width": 376,
+          "height": 92,
+          "label": "Both packaged knowledge files added"
+        }
+      ]
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/08-add-aibast-account-setup-02.png",
+      "bytes": 425722,
+      "sha256": "8f4f794bc0b80f79213961d93d73b3cf6bab1e49f2e0cef7b263e622e07c5279",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/08-add-aibast-account-setup-02.png",
+      "retained_original_sha256": "7204ff4d09e25ebd6b7385dd4e896aff7f045470b760be7d1bda1e71242d51a7",
+      "capture_id": "hard-step-08",
+      "upstream_note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1025,
+          "y": 187,
+          "width": 201,
+          "height": 43,
+          "label": "account-setup skill added"
+        }
+      ]
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/09-add-aibast-document-checklist-03.png",
+      "bytes": 433032,
+      "sha256": "cb839a50a089792cc417219449dc6f522a7eca41984c65625153a80f6f5f5c3b",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/09-add-aibast-document-checklist-03.png",
+      "retained_original_sha256": "999b60a6040bf5d2ffbe6df9dfa28ac321e51c7439dda64986e260c43afe1bcb",
+      "capture_id": "hard-step-09",
+      "upstream_note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1024,
+          "y": 187,
+          "width": 373,
+          "height": 44,
+          "label": "document-checklist skill added"
+        }
+      ]
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/10-add-aibast-kyc-verification-01.png",
+      "bytes": 438761,
+      "sha256": "c4a935bd6a6a9cc0c22e5da078d7a427b0419c8c323489843df7595dcf57b4a0",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/10-add-aibast-kyc-verification-01.png",
+      "retained_original_sha256": "0b949a0d833a7b6011f603480b106483f5084763bb162cfddef8534a1f70ecf3",
+      "capture_id": "hard-step-10",
+      "upstream_note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1024,
+          "y": 187,
+          "width": 374,
+          "height": 80,
+          "label": "kyc-verification skill added"
+        }
+      ]
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/11-add-aibast-onboarding-status-04.png",
+      "bytes": 445060,
+      "sha256": "135e5cc29c8b72d2d92319dfa036b3df885e70de1952abcbdf34b513177955ee",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/11-add-aibast-onboarding-status-04.png",
+      "retained_original_sha256": "25e0bf3548e3ebbf00e326bc940c1b62ac6b26b16e3ea51a0c31b4b4c4be98c3",
+      "capture_id": "hard-step-11",
+      "upstream_note": "Label pill covered the Skills helper text; regenerated with the pill moved clear of UI copy 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1024,
+          "y": 187,
+          "width": 374,
+          "height": 81,
+          "label": "Four packaged skills configured"
+        }
+      ]
+    },
+    {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/screenshots/manual/annotated/12-review-inventory.png",
+      "bytes": 463094,
+      "sha256": "bf03b9d4cd2b15673f585aaa4cfca4093b14b308f85300289f1b02ead72f0159",
+      "original_path": "solutions/fs-customer-onboarding/screenshots/manual/annotated/12-review-inventory.png",
+      "retained_original_sha256": "b0df7f31d9feb7cb54d151f1c987fbed9d64ad2a226ea77bbc1b5e2ef595e58b",
+      "capture_id": "hard-step-12",
+      "upstream_note": "Several label pills covered helper text in the Skills/Tools/Knowledge panel; regenerated with the pills moved into clear whitespace 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 1047,
+          "y": 45,
+          "width": 206,
+          "height": 51,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1203,
+          "y": 86,
+          "width": 193,
+          "height": 40,
+          "label": "Claude Sonnet 4.6"
+        },
+        {
+          "x": 1024,
+          "y": 184,
+          "width": 374,
+          "height": 125,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1024,
+          "y": 357,
+          "width": 374,
+          "height": 156,
+          "label": "No tools and two knowledge files"
+        }
+      ]
+    }
+  ],
+  "unchanged_upstream_media_sha256": {
+    "solutions/fs-customer-onboarding/screenshots/assisted/01-fco-01.jpg": "338eb2ffbbc07d36f50e257531d170de8b62ff37cef45c8cf3ef625340fda149",
+    "solutions/fs-customer-onboarding/screenshots/assisted/02-fco-02.jpg": "4f81ba2b49df66e2a3c245560bb8b77fa2798e7a6308c797ea242ccb7c8bfccd",
+    "solutions/fs-customer-onboarding/screenshots/assisted/03-fco-03.jpg": "f3cb7f0a64787d58d23a9236fdbc8f839b2af51a7a6640df596449fc64a12f5d",
+    "solutions/fs-customer-onboarding/screenshots/assisted/04-fco-04.jpg": "f1f46a6d3c66c473520045239cf2ca2b7249f04e53d1d79fbb8e56b889824295",
+    "solutions/fs-customer-onboarding/screenshots/assisted/05-confirm-draft.jpg": "6dc0d8c8b19880ae1dc89f00e8f7890cf7e4ac44d9572e5f6d1064ff7aba5e4d",
+    "solutions/fs-customer-onboarding/screenshots/assisted/annotated/01-fco-01.png": "849523d696f93fc47d1c137534f53ab3140a6e1e6172187820e72d599b836fae",
+    "solutions/fs-customer-onboarding/screenshots/assisted/annotated/03-fco-03.png": "8e67f963e77c16d491e68c64dff5b0252b5302504d055238f63859c7e8c54bed",
+    "solutions/fs-customer-onboarding/screenshots/assisted/annotated/04-fco-04.png": "645509a5e254fcd48922a9c15badde66d0fb4d62da7515056da472c05254065a",
+    "solutions/fs-customer-onboarding/screenshots/manual/01-create-blank-agent.jpg": "bdef77ab524afafe95e6ae93325393dc9f56a149e2296c1aa2f10c3d48534088",
+    "solutions/fs-customer-onboarding/screenshots/manual/02-name-agent.jpg": "04e5846aeb3cc5f4ad85b8d638a16473dde7fffc31a7a98ebe72f02851ed6e9a",
+    "solutions/fs-customer-onboarding/screenshots/manual/03-enter-instructions.jpg": "f2744cf01c51e31985937d8ddba59dff22e0d14844003b1a5278bc66d1b7a59d",
+    "solutions/fs-customer-onboarding/screenshots/manual/04-save-instructions.jpg": "e029b04e8771f2219e5a6d3f0d4303c9d338060a61ec8a2edee5ad5cfb30961a",
+    "solutions/fs-customer-onboarding/screenshots/manual/05-remove-web-search.jpg": "b0127d550fbccfbeb6714508be6f2993759a38088e47616d0b8be336dcb39fce",
+    "solutions/fs-customer-onboarding/screenshots/manual/06-add-aibast-fs-customer-onboarding-controls-and-review.jpg": "66c066fb35093870bcc90d694997f4761d21d251586d6e6a115edfb876f55a06",
+    "solutions/fs-customer-onboarding/screenshots/manual/07-add-aibast-fs-customer-onboarding-synthetic-records.jpg": "3cde96a8cb8e8b8ffccfdb5c9335228120af4095f1ae191f30c04a44a4e8ea3f",
+    "solutions/fs-customer-onboarding/screenshots/manual/08-add-aibast-account-setup-02.jpg": "574e69998268943af89287f53443820ebe93dfa0d878d7c9a01f404cc3732351",
+    "solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-document-checklist-03.jpg": "a6acac70b3001aae24b291de2f11afecdd55fa58c473b95b2faae35f7b722cf2",
+    "solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-kyc-verification-01.jpg": "d755a82053780af9821d774f298cafa39113ec7d5089b771672ca7a0ffd79713",
+    "solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-onboarding-status-04.jpg": "4aded8c4d1c8fb73925c3132a64889743ee637e1c01c14b5ab037a076fd8b2f1",
+    "solutions/fs-customer-onboarding/screenshots/manual/12-review-inventory.jpg": "081cbfbe9a0599c4564753ff6056cbcf14b7bd30094499932e389321aaa81ad7",
+    "solutions/fs-customer-onboarding/screenshots/manual/13-open-preview.jpg": "5e2d66ffa64e7dcdcc4b380b88e2b90dbc4a7397803d38b6985db5838cb715d6",
+    "solutions/fs-customer-onboarding/screenshots/manual/14-fco-01.jpg": "ff9565b8aa9a90a58bc340f6700b4b30721f8f312b5255ee1ae5ac8dadcc6150",
+    "solutions/fs-customer-onboarding/screenshots/manual/15-fco-02.jpg": "a5d57953d2e19f5318e44d8473af0a93d22b51abaf45afccf670058e618b8eb7",
+    "solutions/fs-customer-onboarding/screenshots/manual/16-fco-03.jpg": "68f46b8c8cd20b9f0d88b8a8add03a7a84079b94ec7bd8076dcf6b9f310cd020",
+    "solutions/fs-customer-onboarding/screenshots/manual/17-fco-04.jpg": "a73889fa8151d72c0226d9a613f52cc08d0ee433840bf4bb26f958c0744aee40",
+    "solutions/fs-customer-onboarding/screenshots/manual/18-confirm-draft.jpg": "004c25af3c25ccc44b41ee60ca1de728c28958c315d9c06b3dde8cc11cd5a599",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/02-name-agent.png": "864923277feda5dda002c39a59dde64c02e150b7b4e97105e72dbe899c564a1a",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/03-enter-instructions.png": "4c71f7d2b5236bbe2b1daee58a993a677315b8a19f90e6f3aebf91d9824718dc",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/13-open-preview.png": "826c5c900994c95ae7f2329ebfadda249bdca4517351cf4205ae58353044dd6d",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/14-fco-01.png": "0056ba657e8e20f038cea444c967cd7e85c431137edfe89366a3587b18623686",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/15-fco-02.png": "5cd187ab5c3b7f8d2f735d846cc75fa2fa18fae578cd0518e312f264d2d8d48a",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/16-fco-03.png": "8bcfaefd7b4f70cc51d4f1d779b0d93bea18fb7a8abc7949e4f556a989220b93",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/17-fco-04.png": "ad53c5e35b50bcc451ac1685e3dcb140309ff9fa00f8e4c134cfb2c20a9367b7",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/18-confirm-draft.png": "6337fe2cf9643e255aa718095c28edabe7c804ed93667f84b8b0e4796a1aaa04"
+  },
+  "retained_original_media_sha256": {
+    "solutions/fs-customer-onboarding/screenshots/assisted/01-fco-01.jpg": "338eb2ffbbc07d36f50e257531d170de8b62ff37cef45c8cf3ef625340fda149",
+    "solutions/fs-customer-onboarding/screenshots/assisted/02-fco-02.jpg": "4f81ba2b49df66e2a3c245560bb8b77fa2798e7a6308c797ea242ccb7c8bfccd",
+    "solutions/fs-customer-onboarding/screenshots/assisted/03-fco-03.jpg": "f3cb7f0a64787d58d23a9236fdbc8f839b2af51a7a6640df596449fc64a12f5d",
+    "solutions/fs-customer-onboarding/screenshots/assisted/04-fco-04.jpg": "f1f46a6d3c66c473520045239cf2ca2b7249f04e53d1d79fbb8e56b889824295",
+    "solutions/fs-customer-onboarding/screenshots/assisted/05-confirm-draft.jpg": "6dc0d8c8b19880ae1dc89f00e8f7890cf7e4ac44d9572e5f6d1064ff7aba5e4d",
+    "solutions/fs-customer-onboarding/screenshots/assisted/annotated/01-fco-01.png": "849523d696f93fc47d1c137534f53ab3140a6e1e6172187820e72d599b836fae",
+    "solutions/fs-customer-onboarding/screenshots/assisted/annotated/03-fco-03.png": "8e67f963e77c16d491e68c64dff5b0252b5302504d055238f63859c7e8c54bed",
+    "solutions/fs-customer-onboarding/screenshots/assisted/annotated/04-fco-04.png": "645509a5e254fcd48922a9c15badde66d0fb4d62da7515056da472c05254065a",
+    "solutions/fs-customer-onboarding/screenshots/manual/01-create-blank-agent.jpg": "bdef77ab524afafe95e6ae93325393dc9f56a149e2296c1aa2f10c3d48534088",
+    "solutions/fs-customer-onboarding/screenshots/manual/02-name-agent.jpg": "04e5846aeb3cc5f4ad85b8d638a16473dde7fffc31a7a98ebe72f02851ed6e9a",
+    "solutions/fs-customer-onboarding/screenshots/manual/03-enter-instructions.jpg": "f2744cf01c51e31985937d8ddba59dff22e0d14844003b1a5278bc66d1b7a59d",
+    "solutions/fs-customer-onboarding/screenshots/manual/04-save-instructions.jpg": "e029b04e8771f2219e5a6d3f0d4303c9d338060a61ec8a2edee5ad5cfb30961a",
+    "solutions/fs-customer-onboarding/screenshots/manual/05-remove-web-search.jpg": "b0127d550fbccfbeb6714508be6f2993759a38088e47616d0b8be336dcb39fce",
+    "solutions/fs-customer-onboarding/screenshots/manual/06-add-aibast-fs-customer-onboarding-controls-and-review.jpg": "66c066fb35093870bcc90d694997f4761d21d251586d6e6a115edfb876f55a06",
+    "solutions/fs-customer-onboarding/screenshots/manual/07-add-aibast-fs-customer-onboarding-synthetic-records.jpg": "3cde96a8cb8e8b8ffccfdb5c9335228120af4095f1ae191f30c04a44a4e8ea3f",
+    "solutions/fs-customer-onboarding/screenshots/manual/08-add-aibast-account-setup-02.jpg": "574e69998268943af89287f53443820ebe93dfa0d878d7c9a01f404cc3732351",
+    "solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-document-checklist-03.jpg": "a6acac70b3001aae24b291de2f11afecdd55fa58c473b95b2faae35f7b722cf2",
+    "solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-kyc-verification-01.jpg": "d755a82053780af9821d774f298cafa39113ec7d5089b771672ca7a0ffd79713",
+    "solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-onboarding-status-04.jpg": "4aded8c4d1c8fb73925c3132a64889743ee637e1c01c14b5ab037a076fd8b2f1",
+    "solutions/fs-customer-onboarding/screenshots/manual/12-review-inventory.jpg": "081cbfbe9a0599c4564753ff6056cbcf14b7bd30094499932e389321aaa81ad7",
+    "solutions/fs-customer-onboarding/screenshots/manual/13-open-preview.jpg": "5e2d66ffa64e7dcdcc4b380b88e2b90dbc4a7397803d38b6985db5838cb715d6",
+    "solutions/fs-customer-onboarding/screenshots/manual/14-fco-01.jpg": "ff9565b8aa9a90a58bc340f6700b4b30721f8f312b5255ee1ae5ac8dadcc6150",
+    "solutions/fs-customer-onboarding/screenshots/manual/15-fco-02.jpg": "a5d57953d2e19f5318e44d8473af0a93d22b51abaf45afccf670058e618b8eb7",
+    "solutions/fs-customer-onboarding/screenshots/manual/16-fco-03.jpg": "68f46b8c8cd20b9f0d88b8a8add03a7a84079b94ec7bd8076dcf6b9f310cd020",
+    "solutions/fs-customer-onboarding/screenshots/manual/17-fco-04.jpg": "a73889fa8151d72c0226d9a613f52cc08d0ee433840bf4bb26f958c0744aee40",
+    "solutions/fs-customer-onboarding/screenshots/manual/18-confirm-draft.jpg": "004c25af3c25ccc44b41ee60ca1de728c28958c315d9c06b3dde8cc11cd5a599",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/02-name-agent.png": "864923277feda5dda002c39a59dde64c02e150b7b4e97105e72dbe899c564a1a",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/03-enter-instructions.png": "4c71f7d2b5236bbe2b1daee58a993a677315b8a19f90e6f3aebf91d9824718dc",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/05-remove-web-search.png": "04a977d53081bd81fac47ebcbdd34f01a3b91c90ca0b890e7b8fc301363dad61",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png": "4fd6de8d8e0c7d06c2e9bdeb2766f93d21e214b3e9672429cee656c410667cf5",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png": "abee399602590240af72977773b1d065272fb9bc0760e7f7b609afe26601cbfe",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/08-add-aibast-account-setup-02.png": "7204ff4d09e25ebd6b7385dd4e896aff7f045470b760be7d1bda1e71242d51a7",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/09-add-aibast-document-checklist-03.png": "999b60a6040bf5d2ffbe6df9dfa28ac321e51c7439dda64986e260c43afe1bcb",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/10-add-aibast-kyc-verification-01.png": "0b949a0d833a7b6011f603480b106483f5084763bb162cfddef8534a1f70ecf3",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/11-add-aibast-onboarding-status-04.png": "25e0bf3548e3ebbf00e326bc940c1b62ac6b26b16e3ea51a0c31b4b4c4be98c3",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/12-review-inventory.png": "b0df7f31d9feb7cb54d151f1c987fbed9d64ad2a226ea77bbc1b5e2ef595e58b",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/13-open-preview.png": "826c5c900994c95ae7f2329ebfadda249bdca4517351cf4205ae58353044dd6d",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/14-fco-01.png": "0056ba657e8e20f038cea444c967cd7e85c431137edfe89366a3587b18623686",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/15-fco-02.png": "5cd187ab5c3b7f8d2f735d846cc75fa2fa18fae578cd0518e312f264d2d8d48a",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/16-fco-03.png": "8bcfaefd7b4f70cc51d4f1d779b0d93bea18fb7a8abc7949e4f556a989220b93",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/17-fco-04.png": "ad53c5e35b50bcc451ac1685e3dcb140309ff9fa00f8e4c134cfb2c20a9367b7",
+    "solutions/fs-customer-onboarding/screenshots/manual/annotated/18-confirm-draft.png": "6337fe2cf9643e255aa718095c28edabe7c804ed93667f84b8b0e4796a1aaa04"
+  },
+  "instruction_resolution": {
+    "upstream_instructions": {
+      "path": "solutions/fs-customer-onboarding/evals/history/2026-09-10-upstream/GLOBAL-INSTRUCTIONS.md",
+      "bytes": 3115,
+      "sha256": "27e5a8884655ff6feb1fea73863bd2dd5083e2e5dc6d67b78c6379469506744c",
+      "original_path": "solutions/fs-customer-onboarding/manual/GLOBAL-INSTRUCTIONS.md",
+      "source_commit": "0783cc219124b4a6dff1c41f0c5eb5c285ae9436"
+    },
+    "preserved_current_instructions": {
+      "path": "solutions/fs-customer-onboarding/manual/GLOBAL-INSTRUCTIONS.md",
+      "bytes": 5225,
+      "sha256": "40550c9b62c7649028bdd9e3fd6fd3619434d563d1cf39320605014fa328ee26",
+      "restored_from": "c2e2be939273e912aa63a8237f48776ba33ff73a"
+    },
+    "original_auto_merge_sha256": "c6316491130ebb7e9ad5f1dca04911eae4ab99a2c13660812ad531a68941b484",
+    "upstream_skill_routing_names": [
+      "kyc-verification",
+      "account-setup",
+      "document-checklist",
+      "onboarding-status"
+    ],
+    "current_payload_changed": false,
+    "incoming_policy_is_current": false,
+    "passes_transferred_to_incoming_policy": false,
+    "payload_identity_transferred_to_incoming_policy": false,
+    "new_acceptance_claimed": false,
+    "decision": "Retain the exact c2e2be93 current policy bytes, including its repaired content outside the locked-anchor section. The upstream real-skill routing map and retry/citation guard are a traceable historical improvement, not a replacement under the current payload fingerprint. Changing only that section still changes the native policy and its content identity. No old response finding, pass, source revision or saved-state identity may be assigned to the incoming policy.",
+    "future_adoption_gate": "Adopt the incoming routing improvement only as a separately identified source revision, retaining the prior payload hashes and evidence. Verify a complete native save/reopen, retrieved sources, real skill routing, all locked final answers and personally reviewed evidence. A source merge, unchanged delivery URL target, or historical annotation does not satisfy these native gates.",
+    "current_source_identity": {
+      "reviewed_on": "2026-09-12",
+      "tested_source_commit": "2819766b789dfff55d4a710351d24622b802f4b8",
+      "instruction_sha256": "40550c9b62c7649028bdd9e3fd6fd3619434d563d1cf39320605014fa328ee26",
+      "status": "blocked",
+      "certified": false
+    },
+    "acceptance_boundary": "The preserved 2026-09-12 review is blocked and not certified. Its response findings and reviewed-payload fingerprints are not acceptance of this assembled workshop and cannot transfer to a different routing policy. The current native regression, saved-state and visual gates remain open; review fingerprints and reported outcomes are unchanged."
+  }
+}

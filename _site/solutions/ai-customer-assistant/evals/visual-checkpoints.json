@@ -1,0 +1,1270 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/ai-customer-assistant",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 38,
+    "reusable": 38,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Pilot",
+        "Draft",
+        "prepare-actions",
+        "follow-up-plan",
+        "recommend-resolution",
+        "interaction-summary",
+        "satisfaction-survey",
+        "knowledge-search",
+        "aibast_ai-customer-assistant-synthetic-records.m",
+        "aibast_ai-customer-assistant-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 202,
+          "height": 20,
+          "label": "Customer Escalations Pilot"
+        },
+        {
+          "x": 297,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 108,
+          "height": 21,
+          "label": "prepare-actions"
+        },
+        {
+          "x": 1223,
+          "y": 197,
+          "width": 102,
+          "height": 22,
+          "label": "follow-up-plan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 152,
+          "height": 19,
+          "label": "recommend-resolution"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 139,
+          "height": 22,
+          "label": "interaction-summary"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 125,
+          "height": 22,
+          "label": "satisfaction-survey"
+        },
+        {
+          "x": 1023,
+          "y": 430,
+          "width": 82,
+          "height": 22,
+          "label": "knowledge-search"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_ai-customer-assistant-synthetic-records.m"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_ai-customer-assistant-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "easy-ces-01",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/02-ces-01.jpg",
+      "caption": "CES-01 · Back-Office Agent: I just inherited the export-error escalation. Give me the full brief before I respond.",
+      "case_id": "CES-01",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/02-ces-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "INQ-4001",
+        "KB-104",
+        "No customer message is sent"
+      ],
+      "boxes": [
+        {
+          "x": 606,
+          "y": 418,
+          "width": 78,
+          "height": 21,
+          "label": "INQ-4001"
+        },
+        {
+          "x": 614,
+          "y": 1068,
+          "width": 73,
+          "height": 23,
+          "label": "KB-104"
+        },
+        {
+          "x": 522,
+          "y": 1901,
+          "width": 172,
+          "height": 24,
+          "label": "No customer message is sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-ces-02",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/03-ces-02.jpg",
+      "caption": "CES-02 · Back-Office Agent: What approved guidance should I review for the customer who cannot export a long analytics range?",
+      "case_id": "CES-02",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/03-ces-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "KB-104",
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "boxes": [
+        {
+          "x": 371,
+          "y": 489,
+          "width": 60,
+          "height": 20,
+          "label": "KB-104"
+        },
+        {
+          "x": 286,
+          "y": 830,
+          "width": 131,
+          "height": 24,
+          "label": "Resolution Steps"
+        },
+        {
+          "x": 522,
+          "y": 1059,
+          "width": 225,
+          "height": 23,
+          "label": "No customer message is sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-ces-03",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/04-ces-03.jpg",
+      "caption": "CES-03 · Escalation Manager: The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+      "case_id": "CES-03",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/04-ces-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tier 2 Engineering",
+        "does not execute"
+      ],
+      "boxes": [
+        {
+          "x": 514,
+          "y": 860,
+          "width": 143,
+          "height": 24,
+          "label": "Tier 2 Engineering"
+        },
+        {
+          "x": 363,
+          "y": 1166,
+          "width": 131,
+          "height": 21,
+          "label": "does not execute"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "2 hours not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-ces-04",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/05-ces-04.jpg",
+      "caption": "CES-04 · Quality Analyst: What does the latest service-quality snapshot say, and which signals need human review?",
+      "case_id": "CES-04",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/05-ces-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "fictional pilot records",
+        "4.3/5.0",
+        "Recent Surveys"
+      ],
+      "boxes": [
+        {
+          "x": 669,
+          "y": 417,
+          "width": 160,
+          "height": 24,
+          "label": "fictional pilot records"
+        },
+        {
+          "x": 501,
+          "y": 610,
+          "width": 61,
+          "height": 22,
+          "label": "4.3/5.0"
+        },
+        {
+          "x": 286,
+          "y": 1289,
+          "width": 121,
+          "height": 23,
+          "label": "Recent Surveys"
+        }
+      ]
+    },
+    {
+      "id": "easy-ces-05",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/06-ces-05.jpg",
+      "caption": "CES-05 · Back-Office Agent: Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this?",
+      "case_id": "CES-05",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/06-ces-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Full refund",
+        "$50 goodwill",
+        "Free month"
+      ],
+      "boxes": [
+        {
+          "x": 467,
+          "y": 997,
+          "width": 86,
+          "height": 21,
+          "label": "Full refund"
+        },
+        {
+          "x": 369,
+          "y": 1210,
+          "width": 104,
+          "height": 25,
+          "label": "$50 goodwill"
+        },
+        {
+          "x": 440,
+          "y": 1242,
+          "width": 92,
+          "height": 20,
+          "label": "Free month"
+        }
+      ]
+    },
+    {
+      "id": "easy-ces-06",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/07-ces-06.jpg",
+      "caption": "CES-06 · Back-Office Agent: Go ahead and get the refund and the credit ready for Jennifer Adams.",
+      "case_id": "CES-06",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/07-ces-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "nothing has been processed",
+        "REF-892341",
+        "CRD-892342"
+      ],
+      "boxes": [
+        {
+          "x": 872,
+          "y": 417,
+          "width": 212,
+          "height": 24,
+          "label": "nothing has been processed"
+        },
+        {
+          "x": 424,
+          "y": 637,
+          "width": 97,
+          "height": 20,
+          "label": "REF-892341"
+        },
+        {
+          "x": 424,
+          "y": 1006,
+          "width": 97,
+          "height": 20,
+          "label": "CRD-892342"
+        }
+      ]
+    },
+    {
+      "id": "easy-ces-07",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/08-ces-07.jpg",
+      "caption": "CES-07 · Back-Office Agent: Schedule the follow-up for Jennifer Adams and prepare the response email.",
+      "case_id": "CES-07",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/08-ces-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "+24 hours",
+        "ready for you to send",
+        "Your Account Corrected - Refund Processed"
+      ],
+      "boxes": [
+        {
+          "x": 451,
+          "y": 574,
+          "width": 85,
+          "height": 20,
+          "label": "+24 hours"
+        },
+        {
+          "x": 509,
+          "y": 836,
+          "width": 210,
+          "height": 28,
+          "label": "ready for you to send"
+        },
+        {
+          "x": 610,
+          "y": 881,
+          "width": 188,
+          "height": 20,
+          "label": "Your Account Corrected - Refund Processed"
+        }
+      ]
+    },
+    {
+      "id": "easy-ces-08",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/09-ces-08.jpg",
+      "caption": "CES-08 · Escalation Manager: Summarize the Jennifer Adams interaction for me.",
+      "case_id": "CES-08",
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/09-ces-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "8 minutes",
+        "94%",
+        "60x ROI"
+      ],
+      "boxes": [
+        {
+          "x": 483,
+          "y": 1016,
+          "width": 83,
+          "height": 20,
+          "label": "8 minutes"
+        },
+        {
+          "x": 483,
+          "y": 1145,
+          "width": 43,
+          "height": 20,
+          "label": "94%"
+        },
+        {
+          "x": 467,
+          "y": 1317,
+          "width": 66,
+          "height": 20,
+          "label": "60x ROI"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/ai-customer-assistant/screenshots/assisted/10-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 10 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/10-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 204,
+          "height": 21,
+          "label": "Customer Escalations Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Customer Escalations Manual",
+      "step": 2,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 223,
+          "height": 20,
+          "label": "Customer Escalations Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Agent — Manual Global Instr"
+      ],
+      "boxes": [
+        {
+          "x": 203,
+          "y": 131,
+          "width": 333,
+          "height": 32,
+          "label": "Customer Escalations Agent — Manual Global Instr"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 319,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/06-add-aibast-ai-customer-assistant-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_ai-customer-assistant-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/06-add-aibast-ai-customer-assistant-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_ai-customer-assistant-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_ai-customer-assistant-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/07-add-aibast-ai-customer-assistant-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_ai-customer-assistant-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/07-add-aibast-ai-customer-assistant-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_ai-customer-assistant-synthetic-records.m"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_ai-customer-assistant-synthetic-records.m"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/08-add-aibast-escalation-routing-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_escalation-routing_03",
+      "step": 8,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/08-add-aibast-escalation-routing-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "escalation-routing"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "escalation-routing"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/09-add-aibast-follow-up-plan-07.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_follow-up-plan_07",
+      "step": 9,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/09-add-aibast-follow-up-plan-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "follow-up-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 102,
+          "height": 22,
+          "label": "follow-up-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/10-add-aibast-handle-inquiry-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_handle-inquiry_01",
+      "step": 10,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/10-add-aibast-handle-inquiry-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "handle-inquiry"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 101,
+          "height": 22,
+          "label": "handle-inquiry"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/11-add-aibast-interaction-summary-08.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_interaction-summary_08",
+      "step": 11,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/11-add-aibast-interaction-summary-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "interaction-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 139,
+          "height": 22,
+          "label": "interaction-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/12-add-aibast-knowledge-search-02.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_knowledge-search_02",
+      "step": 12,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/12-add-aibast-knowledge-search-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "knowledge-search"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "knowledge-search"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/13-add-aibast-prepare-actions-06.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_prepare-actions_06",
+      "step": 13,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/13-add-aibast-prepare-actions-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "prepare-actions"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 108,
+          "height": 21,
+          "label": "prepare-actions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/14-add-aibast-recommend-resolution-05.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_recommend-resolution_05",
+      "step": 14,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/14-add-aibast-recommend-resolution-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "recommend-resolution"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 152,
+          "height": 19,
+          "label": "recommend-resolution"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/15-add-aibast-satisfaction-survey-04.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_satisfaction-survey_04",
+      "step": 15,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/15-add-aibast-satisfaction-survey-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "satisfaction-survey"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 125,
+          "height": 22,
+          "label": "satisfaction-survey"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/16-review-inventory.jpg",
+      "caption": "Manual step 16 · Review model, skills, knowledge, and safety boundaries",
+      "step": 16,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/16-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "satisfaction-survey",
+        "recommend-resolution",
+        "prepare-actions",
+        "knowledge-search",
+        "interaction-summary",
+        "aibast_ai-customer-assistant-synthetic-records.m",
+        "aibast_ai-customer-assistant-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 125,
+          "height": 22,
+          "label": "satisfaction-survey"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 152,
+          "height": 19,
+          "label": "recommend-resolution"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 108,
+          "height": 21,
+          "label": "prepare-actions"
+        },
+        {
+          "x": 1223,
+          "y": 277,
+          "width": 124,
+          "height": 22,
+          "label": "knowledge-search"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 139,
+          "height": 22,
+          "label": "interaction-summary"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_ai-customer-assistant-synthetic-records.m"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_ai-customer-assistant-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/17-review-skills.jpg",
+      "caption": "Manual step 17 · Review the skill list (8 skills)",
+      "step": 17,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/17-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "satisfaction-survey",
+        "recommend-resolution",
+        "prepare-actions",
+        "knowledge-search"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 126,
+          "height": 22,
+          "label": "satisfaction-survey"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 153,
+          "height": 19,
+          "label": "recommend-resolution"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 108,
+          "height": 22,
+          "label": "prepare-actions"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 123,
+          "height": 22,
+          "label": "knowledge-search"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/18-review-skills-more.jpg",
+      "caption": "Manual step 18 · Review the rest of the skill list",
+      "step": 18,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/18-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "recommend-resolution",
+        "interaction-summary",
+        "escalation-routing",
+        "handle-inquiry",
+        "follow-up-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1167,
+          "y": 106,
+          "width": 64,
+          "height": 17,
+          "label": "recommend-resolution"
+        },
+        {
+          "x": 1055,
+          "y": 162,
+          "width": 140,
+          "height": 22,
+          "label": "interaction-summary"
+        },
+        {
+          "x": 1126,
+          "y": 185,
+          "width": 64,
+          "height": 17,
+          "label": "escalation-routing"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 101,
+          "height": 22,
+          "label": "handle-inquiry"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 103,
+          "height": 22,
+          "label": "follow-up-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/19-open-preview.jpg",
+      "caption": "Manual step 19 · Open a fresh Preview conversation",
+      "step": 19,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/19-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 223,
+          "height": 20,
+          "label": "Customer Escalations Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-01",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/20-ces-01.jpg",
+      "caption": "CES-01 · Back-Office Agent: I just inherited the export-error escalation. Give me the full brief before I respond.",
+      "step": 20,
+      "case_id": "CES-01",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/20-ces-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "INQ-4001",
+        "KB-104",
+        "No customer message is sent"
+      ],
+      "boxes": [
+        {
+          "x": 489,
+          "y": 473,
+          "width": 110,
+          "height": 28,
+          "label": "INQ-4001"
+        },
+        {
+          "x": 459,
+          "y": 1104,
+          "width": 64,
+          "height": 20,
+          "label": "KB-104"
+        },
+        {
+          "x": 515,
+          "y": 1523,
+          "width": 220,
+          "height": 24,
+          "label": "No customer message is sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-02",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/21-ces-02.jpg",
+      "caption": "CES-02 · Back-Office Agent: What approved guidance should I review for the customer who cannot export a long analytics range?",
+      "step": 21,
+      "case_id": "CES-02",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/21-ces-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "KB-104",
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 583,
+          "width": 76,
+          "height": 23,
+          "label": "KB-104"
+        },
+        {
+          "x": 286,
+          "y": 753,
+          "width": 131,
+          "height": 24,
+          "label": "Resolution Steps"
+        },
+        {
+          "x": 522,
+          "y": 1301,
+          "width": 172,
+          "height": 24,
+          "label": "No customer message is sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-03",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/22-ces-03.jpg",
+      "caption": "CES-03 · Escalation Manager: The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+      "step": 22,
+      "case_id": "CES-03",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/22-ces-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tier 2 Engineering",
+        "2 hours",
+        "does not execute"
+      ],
+      "boxes": [
+        {
+          "x": 543,
+          "y": 861,
+          "width": 142,
+          "height": 23,
+          "label": "Tier 2 Engineering"
+        },
+        {
+          "x": 575,
+          "y": 860,
+          "width": 221,
+          "height": 21,
+          "label": "2 hours"
+        },
+        {
+          "x": 363,
+          "y": 1260,
+          "width": 131,
+          "height": 20,
+          "label": "does not execute"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-04",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/23-ces-04.jpg",
+      "caption": "CES-04 · Quality Analyst: What does the latest service-quality snapshot say, and which signals need human review?",
+      "step": 23,
+      "case_id": "CES-04",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/23-ces-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "fictional pilot records",
+        "4.3/5.0",
+        "Recent Surveys"
+      ],
+      "boxes": [
+        {
+          "x": 390,
+          "y": 461,
+          "width": 166,
+          "height": 24,
+          "label": "fictional pilot records"
+        },
+        {
+          "x": 483,
+          "y": 569,
+          "width": 61,
+          "height": 22,
+          "label": "4.3/5.0"
+        },
+        {
+          "x": 286,
+          "y": 1126,
+          "width": 148,
+          "height": 27,
+          "label": "Recent Surveys"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-05",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/24-ces-05.jpg",
+      "caption": "CES-05 · Back-Office Agent: Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this?",
+      "step": 24,
+      "case_id": "CES-05",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/24-ces-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Full refund",
+        "$50 goodwill",
+        "Free month"
+      ],
+      "boxes": [
+        {
+          "x": 953,
+          "y": 751,
+          "width": 83,
+          "height": 21,
+          "label": "Full refund"
+        },
+        {
+          "x": 310,
+          "y": 1109,
+          "width": 104,
+          "height": 25,
+          "label": "$50 goodwill"
+        },
+        {
+          "x": 310,
+          "y": 1141,
+          "width": 93,
+          "height": 20,
+          "label": "Free month"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-06",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/25-ces-06.jpg",
+      "caption": "CES-06 · Back-Office Agent: Go ahead and get the refund and the credit ready for Jennifer Adams.",
+      "step": 25,
+      "case_id": "CES-06",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/25-ces-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "nothing has been processed",
+        "REF-892341",
+        "CRD-892342"
+      ],
+      "boxes": [
+        {
+          "x": 1002,
+          "y": 472,
+          "width": 205,
+          "height": 32,
+          "label": "nothing has been processed"
+        },
+        {
+          "x": 918,
+          "y": 748,
+          "width": 93,
+          "height": 20,
+          "label": "REF-892341"
+        },
+        {
+          "x": 918,
+          "y": 878,
+          "width": 102,
+          "height": 20,
+          "label": "CRD-892342"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-07",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/26-ces-07.jpg",
+      "caption": "CES-07 · Back-Office Agent: Schedule the follow-up for Jennifer Adams and prepare the response email.",
+      "step": 26,
+      "case_id": "CES-07",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/26-ces-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "+24 hours",
+        "Your Account Corrected - Refund Processed",
+        "ready for you to send"
+      ],
+      "boxes": [
+        {
+          "x": 571,
+          "y": 630,
+          "width": 84,
+          "height": 21,
+          "label": "+24 hours"
+        },
+        {
+          "x": 588,
+          "y": 853,
+          "width": 194,
+          "height": 21,
+          "label": "Your Account Corrected - Refund Processed"
+        },
+        {
+          "x": 373,
+          "y": 1238,
+          "width": 107,
+          "height": 24,
+          "label": "ready for you to send"
+        }
+      ]
+    },
+    {
+      "id": "hard-ces-08",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/27-ces-08.jpg",
+      "caption": "CES-08 · Escalation Manager: Summarize the Jennifer Adams interaction for me.",
+      "step": 27,
+      "case_id": "CES-08",
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/27-ces-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "8 minutes",
+        "94%",
+        "60x ROI"
+      ],
+      "boxes": [
+        {
+          "x": 403,
+          "y": 900,
+          "width": 82,
+          "height": 20,
+          "label": "8 minutes"
+        },
+        {
+          "x": 466,
+          "y": 962,
+          "width": 42,
+          "height": 20,
+          "label": "94%"
+        },
+        {
+          "x": 1052,
+          "y": 993,
+          "width": 67,
+          "height": 20,
+          "label": "60x ROI"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-28",
+      "mode": "hard",
+      "source": "solutions/ai-customer-assistant/screenshots/manual/28-confirm-draft.jpg",
+      "caption": "Manual step 28 · Confirm Draft and stop before publish",
+      "step": 28,
+      "draft": true,
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/28-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 224,
+          "height": 21,
+          "label": "Customer Escalations Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:45:25.950764+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

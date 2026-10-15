@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-10-08T13:15:47.774486+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "financial-advisor-copilot",
+    "solution": "@aibast-agents-library/financial-advisor-copilot",
+    "display_name": "Financial Advisor Pilot",
+    "schema_name": "aibast_FinancialAdvisorPilot",
+    "bot_id": "fb1eebff-36f7-4595-8cf0-172fa78234e5"
+  },
+  "record": {
+    "name": "Financial Advisor Pilot",
+    "botid": "fb1eebff-36f7-4595-8cf0-172fa78234e5",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-10-07T11:01:48Z",
+    "publishedon": null,
+    "versionnumber": 20328445,
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": null,
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"20328445\""
+  },
+  "record_sha256": "b9f79dbd63f1f2c6f924d5a2b41dd5aa32f0f76e9cc450be4187c024b90bddd9",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

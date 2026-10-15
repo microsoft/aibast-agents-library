@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T02:00:45.123139+00:00",
+  "solution": "@aibast-agents-library/engineering-standards-advisor",
+  "onepager": "59. Engineering Standards Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "EngineeringStandardsAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/engineering_standards_advisor_stack/engineering_standards_advisor_agent.py",
+      "sha256": "6f7027d46f502bf0eb9af051378c4b991477047fceacaa997b68c005f2e13b9c"
+    }
+  ],
+  "case_file": "tests/demo_cases/engineering-standards-advisor.json",
+  "case_file_sha256": "2192e69edf642776f42469a276919e34a520700e9af57de3689ae40a516449b2",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "ESA-01",
+      "persona": "Design Technician",
+      "onepager_promise": "Answers standards questions in seconds with vetted values and exact section and page citations",
+      "prompt": "What is the minimum clearance for a primary conductor over a public road?",
+      "assistant_response": "The minimum vertical clearance for a primary conductor over a public road is **6.5 m** (per DS-210, section 4.2, Table 4-1 \u2014 vetted). For comparison, over a driveway it's 5.5 m.",
+      "agent_logs": "[EngineeringStandardsAgent] **Tier 1 Answer (VETTED): Primary conductor over a public road, minimum vertical clearance**\n\n| Detail | Value |\n|---|---|\n| Answer | 6.5 m |\n| Citation | DS-210 Overhead Line Clearances, section 4.2, Table 4-1, page 14 |\n| Quick-reference row | QR-210-01 (Rev 4, 2025) |\n| Vetted | 3 Nov 2025 by Sam Ortiz, standards engineer |\n| Status | Vetted |\n\n**Related vetted value:** Primary conductor over a driveway or private lane: 5.5 m (DS-210 section 4.2, Table 4-1).\n\nConfirm site conditions and any local exceptions in the design record before use.\n\nSynthetic engineering guidance only. Vetted values are authoritative only after engineer vetting; unvetted interpretations are not design approval. This agent does not approve a design, change a standard, submit a review, or release work.\n\nSource: [Synthetic Vetted Quick-Reference Table]\nAgents: EngineeringStandardsAgent",
+      "expected_agent": "EngineeringStandardsAgent",
+      "must_include": [
+        "6.5 m",
+        "QR-210-01",
+        "page 14"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ESA-02",
+      "persona": "Design Technician",
+      "onepager_promise": "Interprets the full standard text when no vetted value exists, clearly labeled as unvetted",
+      "prompt": "Can I use a Class 5 pole on a 35-degree corner that carries a 75 kVA transformer?",
+      "assistant_response": "**No \u2014 Class 5 isn't enough.** Per unvetted interpretation INT-0318 (DS-315 \u00a73.1, 3.2, 3.6): a 35\u00b0 angle (>30\u00b0) steps up one class, and a 75 kVA transformer (>50 kVA) steps up another \u2014 pointing to **Class 3**.\n\nThis is a Tier 2 interpretation, not an approved standard. Want me to flag it for an engineer to confirm before you use it in the design?",
+      "agent_logs": "[EngineeringStandardsAgent] **Tier 2 Interpretation (UNVETTED): INT-0318**\n\n**Question:** Can a Class 5 pole be used on a 35-degree corner structure carrying a 75 kVA transformer?\n\n**Interpretation:** Class 3 is indicated (two class steps above the Class 5 tangent minimum).\n\n| Cited section | What it says |\n|---|---|\n| DS-315 Pole Selection and Loading, section 3.2, page 9 | Angle structures above 30 degrees step up one pole class. |\n| DS-315 Pole Selection and Loading, section 3.6, page 12 | A pole-mounted transformer above 50 kVA adds one further class step. |\n| DS-315 Pole Selection and Loading, section 3.1, page 8 | The straight-line minimum is Class 5 (vetted row QR-315-01). |\n\n**Why unvetted:** The answer combines two sections; no vetted row covers angle plus transformer loading.\n\nNot authoritative. Confirm with a standards engineer before using it in a design.\n\nSynthetic engineering guidance only. Vetted values are authoritative only after engineer vetting; unvetted interpretations are not design approval. This agent does not approve a design, change a standard, submit a review, or release work.\n\nSource: [Synthetic Standards Text Snapshot]\nAgents: EngineeringStandardsAgent",
+      "expected_agent": "EngineeringStandardsAgent",
+      "must_include": [
+        "UNVETTED",
+        "Class 3",
+        "Not authoritative"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ESA-03",
+      "persona": "Design Technician",
+      "onepager_promise": "Routes interpretations to a standards engineer so good answers become vetted guidance",
+      "prompt": "Send the corner-pole interpretation to a standards engineer to confirm.",
+      "assistant_response": "I prepared the review draft (REV-0318) for engineer Sam Ortiz on the Class 5 corner/transformer interpretation, citing DS-315 \u00a73.2/3.6/3.1 \u2014 it's queued 4th with a 3-day target, but it hasn't actually been submitted yet since this tool only drafts reviews. Want me to let you know it's ready to send, or is there a separate submission step on your end?",
+      "agent_logs": "[EngineeringStandardsAgent] **Review Request Draft: REV-0318 (Not Submitted)**\n\n| Field | Value |\n|---|---|\n| Interpretation | INT-0318: Class 3 is indicated (two class steps above the Class 5 tangent minimum) |\n| Original question | Can a Class 5 pole be used on a 35-degree corner structure carrying a 75 kVA transformer? |\n| Sections cited | DS-315 section 3.2; DS-315 section 3.6; DS-315 section 3.1 |\n| Reviewer | Sam Ortiz, standards engineer |\n| Review target | 3 business days (Thu 12 Mar 2026) |\n| Queue position | 4 of 4 once submitted |\n| Status | Draft for requester review |\n\n**If approved:** the engineer promotes the answer to a vetted quick-reference row, so the next person who asks gets a Tier 1 answer. **If rejected:** the engineer records the correct reading.\n\nSubmit it through the standards review workflow. Nothing was submitted.\n\nSynthetic engineering guidance only. Vetted values are authoritative only after engineer vetting; unvetted interpretations are not design approval. This agent does not approve a design, change a standard, submit a review, or release work.\n\nSource: [Synthetic Review Queue]\nAgents: EngineeringStandardsAgent",
+      "expected_agent": "EngineeringStandardsAgent",
+      "must_include": [
+        "REV-0318",
+        "Not Submitted",
+        "Nothing was submitted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ESA-04",
+      "persona": "Standards Engineer",
+      "onepager_promise": "Gives standards engineers one queue of interpretations to confirm and rows to re-vet",
+      "prompt": "What is waiting in my standards review queue?",
+      "assistant_response": "Here's your standards review queue (as of Mon Mar 9):\n\n- **REV-0311** \u2014 Guy anchor spacing on soft ground (DS-315), waiting 6 days \u26a0\ufe0f overdue\n- **REV-0314** \u2014 Fence bonding near a pad-mount transformer (DS-505), waiting 4 days \u26a0\ufe0f overdue\n- **REV-0316** \u2014 Service drop clearance over a carport (DS-210), waiting 2 days\n\nAlso flagged: a quick-reference sheet (QR-210-04) is due for re-vetting after a recent standard revision, and REV-0318 (corner pole with transformer) is expected once submitted.\n\nTwo items are past the 3-day target \u2014 REV-0311 is the oldest at 6 days.",
+      "agent_logs": "[EngineeringStandardsAgent] **Standards Review Queue: Sam Ortiz, standards engineer** (snapshot Mon 9 Mar 2026)\n\n| Review | Topic | Standard | Raised by | Waiting |\n|---|---|---|---|---|\n| REV-0311 | Guy anchor spacing on soft ground | DS-315 | Field crew, North depot | 6 business days |\n| REV-0314 | Bonding of a fence near a pad-mount transformer | DS-505 | Design technician | 4 business days |\n| REV-0316 | Service drop clearance over a carport | DS-210 | Design technician | 2 business days |\n\n**Pending reviews:** 3; 2 past the 3-business-day target (oldest REV-0311, 6 business days).\n**Re-vetting due:** 1 quick-reference row (QR-210-04) after a standard revision.\n**Expected next:** REV-0318 (corner pole with transformer) once its requester submits it.\n\nApproving promotes an interpretation to a vetted row; rejecting records the correct reading. Both are the engineer's decision.\n\nSynthetic engineering guidance only. Vetted values are authoritative only after engineer vetting; unvetted interpretations are not design approval. This agent does not approve a design, change a standard, submit a review, or release work.\n\nSource: [Synthetic Review Queue]\nAgents: EngineeringStandardsAgent",
+      "expected_agent": "EngineeringStandardsAgent",
+      "must_include": [
+        "REV-0311",
+        "Pending reviews",
+        "QR-210-04"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ESA-05",
+      "persona": "Standards Engineer",
+      "onepager_promise": "Keeps quick-reference sheets current by showing what is vetted and what needs re-vetting",
+      "prompt": "Show the overhead clearances quick-reference sheet and anything due for re-vetting.",
+      "assistant_response": "Here's the DS-210 overhead clearances quick-reference sheet:\n\n| Row | Item | Value | Status |\n|---|---|---|---|\n| QR-210-01 | Primary conductor over public road | 6.5 m | Vetted |\n| QR-210-02 | Primary conductor over driveway/private lane | 5.5 m | Vetted |\n| QR-210-03 | Service drop over public road | 5.0 m | Vetted |\n| QR-210-04 | Primary conductor horizontal clearance to building | 2.5 m | **Re-vetting due** (standard revised) |\n\n**Due for re-vetting:** only QR-210-04 (horizontal clearance to a building) \u2014 the standard was revised and an engineer needs to re-confirm this value before relying on it for design. Everything else is current and vetted.",
+      "agent_logs": "[EngineeringStandardsAgent] **Quick-Reference Sheet: DS-210 Overhead Line Clearances** (Rev 4, 2025)\n\n| Row | Item | Value | Section | Page | Status |\n|---|---|---|---|---|---|\n| QR-210-01 | Primary conductor over a public road, minimum vertical clearance | 6.5 m | 4.2, Table 4-1 | 14 | Vetted |\n| QR-210-02 | Primary conductor over a driveway or private lane | 5.5 m | 4.2, Table 4-1 | 14 | Vetted |\n| QR-210-03 | Service drop over a public road | 5.0 m | 4.3 | 16 | Vetted |\n| QR-210-04 | Primary conductor horizontal clearance to a building | 2.5 m | 5.1, Table 5-2 | 21 | Re-vetting due (standard revised) |\n\n**Rows:** 4; 3 vetted and current; 1 due for re-vetting.\n\nUse a row marked for re-vetting only after a standards engineer confirms it against the current revision.\n\nSynthetic engineering guidance only. Vetted values are authoritative only after engineer vetting; unvetted interpretations are not design approval. This agent does not approve a design, change a standard, submit a review, or release work.\n\nSource: [Synthetic Vetted Quick-Reference Table]\nAgents: EngineeringStandardsAgent",
+      "expected_agent": "EngineeringStandardsAgent",
+      "must_include": [
+        "QR-210-04",
+        "Re-vetting due",
+        "3 vetted and current"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ESA-06",
+      "persona": "Field Engineering Lead",
+      "onepager_promise": "Scopes jobs against the standards and risk factors that apply, before design starts",
+      "prompt": "Scope the Maple Ridge pole replacement job: risk, effort and the standards that apply.",
+      "assistant_response": "Here's the scope for **JOB-7712 Maple Ridge pole replacement**:\n\n**Risk: High (score 9)** \u2014 driven by work near energized lines, a span over a public road, steep access at two sites, and a planned outage.\n\n**Effort:** ~7.4 crew-days for 8 poles (5-day base + 0.3/pole).\n\n**Standards that apply:**\n- DS-210 \u2014 Overhead Line Clearances\n- DS-315 \u2014 Pole Selection and Loading\n- DS-505 \u2014 Grounding and Bonding\n\n**Heads up:** Pole 6 is a corner structure with a transformer, and the interpretation covering that config (INT-0318) is still unvetted \u2014 flag it for engineer review before the design is issued.\n\nFor reference, the other queued job (Aspen Lane underground conversion) is lower risk (4, Low) at ~7.0 crew-days, with its own open item pending review.",
+      "agent_logs": "[EngineeringStandardsAgent] **Job Scope: JOB-7712 Maple Ridge feeder pole replacement**\n\n| Risk factor | Weight |\n|---|---|\n| Work near energized conductors | 3 |\n| Span over a public road | 2 |\n| Steep access to two pole sites | 2 |\n| Planned customer outage | 2 |\n| **Total risk score** | **9 (High)** |\n\n| Effort | Value |\n|---|---|\n| Work type | Batch pole replacement |\n| Units | 8 poles |\n| Estimate | 5 base + 0.3 x 8 = 7.4 crew-days |\n\n**Applicable standards:**\n- DS-210 Overhead Line Clearances (Rev 4, 2025)\n- DS-315 Pole Selection and Loading (Rev 3, 2024)\n- DS-505 Grounding and Bonding (Rev 5, 2025)\n\n**Open item:** INT-0318 (corner pole with transformer at pole 6) is still unvetted; resolve it before the design is issued.\n\n**Also in the planning queue:** JOB-7720 Aspen Lane underground service conversion: risk 4 (Low), 7.0 crew-days, open item INT-0319 (service crossing under Aspen Lane).\n\nRisk bands: Low 0-4, Medium 5-8, High 9 or more. The estimate is a planning aid; the design engineer confirms scope, crews and outages.\n\nSynthetic engineering guidance only. Vetted values are authoritative only after engineer vetting; unvetted interpretations are not design approval. This agent does not approve a design, change a standard, submit a review, or release work.\n\nSource: [Synthetic Work Snapshot + Standards Snapshot]\nAgents: EngineeringStandardsAgent",
+      "expected_agent": "EngineeringStandardsAgent",
+      "must_include": [
+        "7.4 crew-days",
+        "INT-0318",
+        "Total risk score"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

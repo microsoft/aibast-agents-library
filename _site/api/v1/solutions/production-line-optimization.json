@@ -1,0 +1,122 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/production-line-optimization",
+  "slug": "production-line-optimization",
+  "name": "Product Line Optimization Agent",
+  "headline": "Find the constraint before it becomes the production plan",
+  "pitch": "Turn line efficiency, station cycle time, quality, and shift data into an operating view that exposes bottlenecks, compares improvement paths, and gives plant leaders a practical plan for protecting throughput and quality.",
+  "category": "manufacturing",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Plant Manager",
+    "Production Engineer",
+    "Operations Director"
+  ],
+  "microsoft_products": [
+    "Dynamics 365 for ERP",
+    "Power BI",
+    "Azure IoT Hub"
+  ],
+  "journey_stage": "Optimize",
+  "why_try": "It makes operational AI concrete: a plant manager can ask where output is being lost, see the constraining station, and evaluate process, equipment, quality, or staffing responses.",
+  "customer_challenge": "A manufacturer facing demand pressure lacks one shared view of line performance. Bottlenecks, shift constraints, and defect patterns are reviewed manually, making it harder to respond without trading away quality.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the natural-language experience. Dynamics 365 ERP contributes production and resource context, Azure IoT Hub supplies equipment signals, and Power BI presents line health and improvement scenarios.",
+  "business_value": [
+    "Improves visibility into where capacity and quality are being lost across production lines.",
+    "Accelerates bottleneck analysis and turns operational signals into targeted improvement options.",
+    "Strengthens shift planning and investment decisions while keeping quality and disruption risk visible."
+  ],
+  "business_flow": [
+    "Plant leaders and production engineers",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Product Line Optimization Agent",
+    "Dynamics 365 ERP",
+    "Azure IoT Hub",
+    "Power BI",
+    "Production and maintenance teams"
+  ],
+  "capabilities": [
+    {
+      "operation": "line_efficiency",
+      "name": "Line health overview",
+      "purpose": "Combines availability, performance, quality, and output context to show where operating attention is needed."
+    },
+    {
+      "operation": "bottleneck_analysis",
+      "name": "Station-level constraint analysis",
+      "purpose": "Compares cycle time with takt time and quality signals to identify the station constraining each line."
+    },
+    {
+      "operation": "throughput_optimization",
+      "name": "Improvement option planning",
+      "purpose": "Frames process, equipment, and quality interventions so plant leaders can compare practical response paths."
+    },
+    {
+      "operation": "shift_planning",
+      "name": "Shift production planning",
+      "purpose": "Translates line performance and staffing context into a shift-level operating plan."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "See which production line needs attention",
+      "prompt": "Which production line needs attention today, and what is driving the loss?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=production-line-health",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Plant Manager",
+        "prompt": "Which production line needs attention today, and what is driving the loss?",
+        "answer": "Biggest concern today: **Polymer Molding Line C** — it has the lowest OEE (68%) and the largest output gap (1,728 units/day lost), plus the highest annual quality cost ($352,800).\n\nWhat's driving it:\n- **Availability is the main culprit** — only 78%, well below the others, meaning more downtime/stoppages than any other line.\n- Performance (89.7%) and quality (97.2%) are actually decent, so this isn't a speed or defect problem — it's a *reliability/uptime* problem (changeovers, breakdowns, or stoppages).\n\nWorth noting: Electronics Assembly Line A and Production Line 3 are also both below target OEE (70.9%), driven more by performance losses (82%) than availability. But Line C is the one bleeding the most output and dollars right now.\n\nWant me to pull the bottleneck analysis for Line C to see exactly which station is causing the downtime?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Find the constraining station",
+      "prompt": "Where is the bottleneck on each line, and which station should the plant team address first?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=production-bottleneck",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Production Engineer",
+        "prompt": "Where is the bottleneck on each line, and which station should the plant team address first?",
+        "answer": "Here's the bottleneck on each line:\n\n- **Line 3** – SMT Placement Station 3B: +37.4% over takt (worst overage on the plant)\n- **Line A** – Functional Test: +26.5% over takt\n- **Line B** – Robotic Welding: +18.3% over takt\n- **Line C** – Injection Molding: +22.7% over takt, also the highest defect rate (0.45%)\n\n**Address first: SMT Placement Station 3B on Line 3.** It has the largest takt overage of any station plant-wide, and with Line 3's 40% holiday surge demand coming, it'll constrain throughput the hardest if left unaddressed. Injection Molding on Line C is a close second priority given its defect rate is driving quality losses.\n\nWant the optimization plan for Line 3's bottleneck?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Compare throughput improvement options",
+      "prompt": "Give me the practical options to improve throughput without hiding the quality tradeoffs.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=production-options",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Operations Director",
+        "prompt": "Give me the practical options to improve throughput without hiding the quality tradeoffs.",
+        "answer": "Here's the throughput picture across all four lines, each with a real quality angle:\n\n**Line 3** (gap 20 uph): cycle-time cut on SMT Station 3B is cheapest (+12 uph, process/tooling only), parallel station adds +17 uph but costs $45K–$120K, quality fix on the same station only buys +4 uph — tradeoff: cycle-time cuts push the bottleneck harder, which is exactly where the 0.1% defect already lives, so squeezing speed without the quality fix risks defect rate creeping up.\n\n**Line A** (gap 38 uph): same pattern — Functional Test cycle-time cut (+23) or parallel unit (+32, $45K–$120K). The real defect risk is downstream at Final Assembly (0.18%), not at the station you'd be speeding up, so there's less direct tension here.\n\n**Line B** (gap 39 uph): Robotic Welding is both the bottleneck and the defect hotspot (0.3%, highest of the four). Cycle-time cut or parallel station speeds up the exact process generating defects — this is the one where \"faster\" and \"lower quality\" are most likely to collide.\n\n**Line C** (gap 72 uph, biggest gap): Injection Molding cuts give the largest raw gains (+43 to +61 uph) but it's also running the highest defect rate (0.45%). Chasing throughput here without the quality option risks the worst scrap/rework blowback of the four lines.\n\nBottom line: parallel-station options buy the most uph but cost real money ($45K–$120K) and don't fix defects; cycle-time cuts are cheaper but stress the bottleneck station, which is often also the defect source — worst on Line B and Line C. Want the full financial/ROI breakdown for any one line?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Build the three-shift production plan",
+      "prompt": "Translate the current line performance into a day, swing, and night shift plan.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=production-shift-plan",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Plant Manager",
+        "prompt": "Translate the current line performance into a day, swing, and night shift plan.",
+        "answer": "Here's the shift plan across all four lines, built on current performance data:\n\n**Schedule:** Day (6a–2p, 24 ops), Swing (2p–10p, 22 ops), Night (10p–6a, 18 ops, +15% premium pay)\n\n**Daily output split evenly across all 3 shifts per line:**\n- Line 3: 800/800/800 = 2,400/day\n- Line A: 1,136/1,136/1,136 = 3,408/day\n- Line B: 2,088/2,088/2,088 = 6,264/day\n- Line C: 1,344/1,344/1,344 = 4,032/day\n\n**Line 3 holiday surge note:** adding a 4th overlap shift with 12 extra operators adds +400 units/day — key lever for hitting the 40% surge target.\n\n**Weekly capacity** scales cleanly at 5/6/7-day operation (e.g., Line 3 hits 16,800/week at 7 days).\n\nWant me to layer in the Line 3 bottleneck fixes to see how they shift these per-shift numbers?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fproduction-line-optimization",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/product-line-optimization/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Product%20Line%20Optimization%20Agent%22"
+  }
+}

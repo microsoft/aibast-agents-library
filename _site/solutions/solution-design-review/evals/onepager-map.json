@@ -1,0 +1,87 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/solution-design-review",
+  "onepager": "56. Solution Design Review Agent one-pager.pptx",
+  "source_slide_sha256": "03260e7f45e05035f9722c7eeec965f5ca59533b2da77786143302de4a6b2c4c",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/professional_services_stacks/solution_design_review_stack/solution_design_review_agent.py",
+    "implemented_operations": [
+      "design_intake",
+      "architecture_vision",
+      "current_state",
+      "requirements_matrix",
+      "target_design",
+      "readiness_check"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Turn discovery notes and an initiative brief into a structured design draft",
+      "operations": [
+        "design_intake",
+        "architecture_vision"
+      ],
+      "demo_cases": [
+        "SDR-01",
+        "SDR-02"
+      ],
+      "synthetic_evidence": [
+        "INIT-2026-031",
+        "3 inputs received",
+        "Recommended fill sequence",
+        "Avery Lindqvist",
+        "4 of 4",
+        "Data protection"
+      ]
+    },
+    {
+      "advertised_promise": "Assemble the current state and target design with every inventory change listed",
+      "operations": [
+        "current_state",
+        "target_design"
+      ],
+      "demo_cases": [
+        "SDR-03",
+        "SDR-05"
+      ],
+      "synthetic_evidence": [
+        "CI-103",
+        "End of support",
+        "no current-state baseline for the Business domain",
+        "Notification Orchestrator",
+        "3 new, 2 changed, 2 retired",
+        "not registered by this agent"
+      ]
+    },
+    {
+      "advertised_promise": "Map non-functional requirements to owners and surface gaps and variances early",
+      "operations": [
+        "requirements_matrix"
+      ],
+      "demo_cases": [
+        "SDR-04"
+      ],
+      "synthetic_evidence": [
+        "NFR-04",
+        "MISSING OWNER",
+        "1 variance candidate"
+      ]
+    },
+    {
+      "advertised_promise": "Self-check readiness before the review board with a confidence score and ranked gaps",
+      "operations": [
+        "readiness_check"
+      ],
+      "demo_cases": [
+        "SDR-06"
+      ],
+      "synthetic_evidence": [
+        "70%",
+        "Revise before the review board",
+        "Not submitted to the review board"
+      ]
+    }
+  ]
+}

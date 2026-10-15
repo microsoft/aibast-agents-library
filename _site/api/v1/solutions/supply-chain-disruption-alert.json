@@ -1,0 +1,217 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/supply-chain-disruption-alert",
+  "slug": "supply-chain-disruption-alert",
+  "name": "Supply Chain Disruption Alert Agent",
+  "headline": "See disruption trade-offs before anyone changes the network",
+  "pitch": "Turn synthetic disruption events, route risk, mitigation costs, and supplier candidates into a shared continuity brief while keeping sourcing, ordering, routing, communication, and inventory movement under human control.",
+  "category": "retail_cpg",
+  "industries": [],
+  "personas": [],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Optimize",
+  "why_try": "A supply chain planner can ask what is at risk and receive the exact route, event, SKU, cost, alternative, and approval boundary.",
+  "customer_challenge": "Supplier, logistics, order, and external-risk signals are scattered, so disruption impacts surface late and reactive mitigation can increase cost or create new operational risk.",
+  "microsoft_ai_story": "Microsoft Copilot Studio can unify governed review across Dynamics 365 Supply Chain Management, approved supplier-risk feeds, transportation management, Teams, and controlled procurement workflows.",
+  "business_value": [
+    "Improves visibility into disruption severity and modeled exposure.",
+    "Supports consistent comparison of mitigation and supplier alternatives.",
+    "Preserves procurement and inventory authority by separating recommendations from network execution."
+  ],
+  "business_flow": [
+    "Supply chain planners, operations leaders, procurement managers, and customer fulfillment leads",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Supply Chain Disruption Alert Agent",
+    "Dynamics 365 Supply Chain Management",
+    "Approved supplier-risk and logistics feeds",
+    "Transportation management and Microsoft Teams",
+    "Authorized procurement and operations owners"
+  ],
+  "capabilities": [
+    {
+      "operation": "disruption_dashboard",
+      "name": "Active disruption brief",
+      "purpose": "Summarizes synthetic events, routes, SKUs, delay, and modeled exposure."
+    },
+    {
+      "operation": "risk_assessment",
+      "name": "Route risk explanation",
+      "purpose": "Explains synthetic geopolitical, weather, infrastructure, labor, regulatory, and financial factors."
+    },
+    {
+      "operation": "mitigation_plan",
+      "name": "Approval-gated mitigation scenario",
+      "purpose": "Compares response actions and costs without changing a purchase order, shipment, supplier, or inventory position."
+    },
+    {
+      "operation": "supplier_alternatives",
+      "name": "Supplier due-diligence candidates",
+      "purpose": "Presents synthetic supplier evidence without qualification, contracting, activation, or ordering."
+    },
+    {
+      "operation": "root_cause_analysis",
+      "name": "Northwest root-cause analysis",
+      "purpose": "Explains the Portland DC disruption: issue, impact and status table, affected categories and customer impact."
+    },
+    {
+      "operation": "emergency_options",
+      "name": "Emergency response options",
+      "purpose": "Compares the Denver DC emergency transfer with partial fill and wait by timeline, coverage, cost, recovery and ROI."
+    },
+    {
+      "operation": "transfer_plan",
+      "name": "Ready-to-release transfer plan",
+      "purpose": "Prepares the Seattle and five-store transfer plan and coordination drafts without dispatching anything."
+    },
+    {
+      "operation": "recovery_plan",
+      "name": "DC recovery plan",
+      "purpose": "Shows the shipment tracking snapshot, Portland DC recovery actions, backlog clearance and prevention recommendation."
+    },
+    {
+      "operation": "incident_report",
+      "name": "Executive incident report",
+      "purpose": "Drafts financial impact, response performance, lessons learned and prevention value for leadership review."
+    },
+    {
+      "operation": "incident_summary",
+      "name": "Crisis response summary",
+      "purpose": "Summarizes the response end to end as a draft package ready for the user to distribute."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": false,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Customer Fulfillment Lead: Active disruption brief",
+      "prompt": "Which active disruption has the largest modeled impact and what is affected?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Distribute the report and summarize what we accomplished.",
+        "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Supply Chain Planner: Route risk explanation",
+      "prompt": "Why is RT-APAC-01 high risk?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-risk-assessment",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Planner",
+        "prompt": "Why is RT-APAC-01 high risk?",
+        "answer": "RT-APAC-01 scores **0.78 (HIGH)** overall, driven mainly by:\n\n- **Weather (0.82)** — top risk factor, typhoon/monsoon exposure\n- **Labor (0.75)** — strikes/disruption risk at ports or carriers\n- **Infrastructure (0.70)** — port/congestion vulnerabilities\n- **Geopolitical (0.65)** — regional tension exposure\n\nRegulatory (0.40) and financial (0.35) risks are comparatively low — the risk here is operational/environmental, not policy-driven. Want me to pull a mitigation plan for this route?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Operations Leader: Approval-gated mitigation scenario",
+      "prompt": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-mitigation-plan",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Operations Leader",
+        "prompt": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
+        "answer": "Here's the draft **DISR-002** scenario (typhoon, South China Sea), structured to exclude rerouting and inventory moves — everything stays a proposal pending your approval:\n\n**Estimated cost:** $520,000 | **Expected risk reduction:** 55%\n\n**0–48 hrs:**\n- Expedite air freight for high-priority SKUs with <7 days supply\n- *(Skipped: vessel rerouting and warehouse inventory activation — excluded per your request)*\n\n**1–2 weeks:**\n- Shift demand to in-stock alternatives via merchandising\n- Enable backorders with guaranteed delivery dates\n- Proactively communicate revised timelines to B2B customers\n\n**1–3 months:**\n- Integrate real-time weather monitoring into planning\n- Build seasonal safety stock buffers for typhoon season\n- Qualify backup suppliers in diverse regions\n\nNothing here touches POs, routes, or inventory positions — it's a ready-to-review draft. Want me to pull supplier alternatives or a cost breakdown next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Procurement Manager: Supplier due-diligence candidates",
+      "prompt": "Show Electronics alternatives without activating a supplier.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-supplier-alternatives",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Manager",
+        "prompt": "Show Electronics alternatives without activating a supplier.",
+        "answer": "Here are the Electronics backup options (for review only, nothing activated):\n\n| Supplier | Location | Lead Time | Quality | Capacity/Mo | Price Premium | MOQ |\n|---|---|---|---|---|---|---|\n| TechSource Taiwan | Taipei | 21d | 4.5/5.0 | 15,000 | +8.0% | 500 |\n| KoreanTech Partners | Incheon | 19d | 4.7/5.0 | 10,000 | +12.0% | 300 |\n\n**Certs:** TechSource – ISO 9001/14001 · KoreanTech – ISO 9001, IATF 16949\n\nKoreanTech Partners is fastest (19d) but carries a higher price premium; TechSource has more capacity. There are 8 qualified alternatives total across 5 categories if you want to see others. Let me know if you want due diligence on any of these — activation still needs your approval through a procurement system.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Regional Retail Manager: Northwest root-cause analysis",
+      "prompt": "I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Distribute the report and summarize what we accomplished.",
+        "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Regional Operations Director: Emergency response options",
+      "prompt": "What are our emergency options and costs?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Distribute the report and summarize what we accomplished.",
+        "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Store Operations Manager: Ready-to-release transfer plan",
+      "prompt": "Approved. Execute both Seattle and the 5 additional stores.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Distribute the report and summarize what we accomplished.",
+        "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Distribution Center Manager: DC recovery plan",
+      "prompt": "Activate tracking and show me the Portland DC recovery plan.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Distribute the report and summarize what we accomplished.",
+        "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Finance Business Partner: Executive incident report",
+      "prompt": "Create the executive report with financial impact.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Distribute the report and summarize what we accomplished.",
+        "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Supply Chain Director: Crisis response summary",
+      "prompt": "Distribute the report and summarize what we accomplished.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supply Chain Director",
+        "prompt": "Distribute the report and summarize what we accomplished.",
+        "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsupply-chain-disruption-alert",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/supply-chain-disruption-alert/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Supply%20Chain%20Disruption%20Alert%20Agent%22"
+  }
+}

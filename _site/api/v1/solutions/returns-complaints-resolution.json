@@ -1,0 +1,121 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/returns-complaints-resolution",
+  "slug": "returns-complaints-resolution",
+  "name": "Returns and Complaints Resolution Agent",
+  "headline": "Bring consistency and empathy to return review without automating the decision.",
+  "pitch": "Summarizes anonymous synthetic return evidence, classifies complaint themes, drafts policy-grounded options, and surfaces aggregate quality trends.",
+  "category": "retail_cpg",
+  "industries": [
+    "Retail",
+    "Consumable Products Industry"
+  ],
+  "personas": [
+    "Customer Service Agents",
+    "Quality Teams",
+    "Loss Prevention Teams"
+  ],
+  "microsoft_products": [
+    "Dynamics 365, Outlook,",
+    "SharePoint, Teams"
+  ],
+  "journey_stage": "Resolve and learn",
+  "why_try": "It helps service, quality, and loss-prevention teams review the same evidence while preserving authorization, privacy, and non-accusatory language.",
+  "customer_challenge": "Return and complaint workflows can become inconsistent, slow, and difficult to learn from when policy evidence, product signals, and service context are fragmented.",
+  "microsoft_ai_story": "The agent converts CRM- and ERP-style synthetic case records into structured decision support for human review in Microsoft collaboration workflows.",
+  "business_value": [
+    "More consistent review summaries",
+    "Faster visibility into aggregate quality patterns",
+    "Clearer approval and communication boundaries"
+  ],
+  "business_flow": [
+    "Customer Service Agent, Quality Team, and Loss Prevention Team",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Returns and Complaints Resolution Agent",
+    "Approved read-only CRM, order, and policy evidence",
+    "SharePoint governed policy knowledge",
+    "Authorized service resolution workflow"
+  ],
+  "capabilities": [
+    {
+      "operation": "return_processing",
+      "name": "Anonymous return review",
+      "purpose": "Summarizes policy evidence without approving or processing a return."
+    },
+    {
+      "operation": "complaint_classification",
+      "name": "Privacy-safe complaint classification",
+      "purpose": "Classifies a concern without echoing personal or sensitive text."
+    },
+    {
+      "operation": "resolution_recommendation",
+      "name": "Human-approved resolution options",
+      "purpose": "Drafts policy-grounded options without refund, credit, replacement, shipment, or messaging actions."
+    },
+    {
+      "operation": "trend_analysis",
+      "name": "Aggregate returns and quality trends",
+      "purpose": "Surfaces product and service patterns without accusing an individual."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Review an anonymous return case",
+      "prompt": "Summarize the anonymous return review evidence and approval boundary.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-return-processing",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Service Agent",
+        "prompt": "As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.",
+        "answer": "## Return Queue Summary (Customer Service Agent view)\n\n**6 synthetic cases in queue**, $554.94 total value:\n\n- **RET-4001** (Denim Jacket, $89.99) – wrong size, unworn/tagged, 16 days → pending\n- **RET-4002** (Fitness Tracker, $129.99) – defective sensor, 49 days → policy match candidate\n- **RET-4003** (Running Shoes, $149.99) – color mismatch, lightly used, 8 days → pending\n- **RET-4004** (Earbuds, $59.99) – changed mind, opened unused, 11 days → pending\n- **RET-4005** (Crossbody Bag, $79.99) – strap broke, 86 days (outside 60-day window) → **escalated**\n- **RET-4006** (Sunglasses, $44.99) – wrong item shipped, unopened, 10 days → policy match candidate\n\n**Approval boundary:** This is decision support only — I can draft reviews and recommendations, but no refund, replacement, exchange, or customer communication is actually approved or sent. RET-4005 needs human escalation review since it falls outside the standard return window despite a plausible defect claim. Everything else is routine pending-review pending your sign-off.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Classify a complaint safely",
+      "prompt": "Classify this product concern without echoing personal information or sending a response.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-complaint-classification",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Service Agent",
+        "prompt": "As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
+        "answer": "Classified as **Service Experience** — severity weight 0.6, ~48h average resolution time, 22% escalation rate historically (higher than other categories, worth monitoring). No response was sent and no personal details were included.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Draft a resolution option",
+      "prompt": "Draft a policy-grounded option and keep all actions behind authorization.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-resolution-recommendation",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Service Agent",
+        "prompt": "As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.",
+        "answer": "Here's the draft resolution set for the synthetic return queue — note every item is a proposal only, nothing is executed:\n\n**RET-4001 (size mismatch, $89.99 jacket)** → recommended: **Product Exchange**\n- Verify replacement stock separately, draft eligibility for approval, outline logistics/tracking language — no shipment or exchange actually created.\n\n**RET-4003 (not-as-described, $149.99 shoes)** → recommended: **Partial Refund**\n- Review condition evidence, apply any disclosed fee rule, draft a refund range — no funds processed.\n\n**RET-4004 (changed mind, $59.99 earbuds)** → recommended: **Store Credit**\n- Confirm condition meets policy, draft credit terms — no loyalty account touched, no message sent.\n\nAll three require explicit human sign-off before anything moves (refund, exchange, shipment, or customer message). Want me to pull the broader policy playbook (full refund, warranty replacement, etc.) for comparison, or focus deeper on one case?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Analyze aggregate quality trends",
+      "prompt": "Summarize aggregate defect and return patterns without accusing any person.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-trend-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Quality Team",
+        "prompt": "As Quality Team, summarize aggregate defect and return patterns without accusing any person.",
+        "answer": "Here's the aggregate pattern summary, Quality Team:\n\n**Overall trend: Stable**, with a seasonal spike in December.\n\n**Return reasons (6-month totals):**\n- Wrong size: 715 (highest driver — avg 119/month)\n- Changed mind: 511\n- Defective: 466\n- Not as described: 320\n- Wrong item: 218\n\n**Notable patterns:**\n- December saw a 44% returns spike, mostly changed-mind (holiday gifting), pushing CSAT down to 3.6 and resolution time up to 38.7h\n- Both metrics recovered by Feb–Mar (CSAT back to 4.1, resolution ~28–29h)\n- Resolution time is trending ~3% slower overall vs. period start\n- $140,920 refunded across 6 months\n\n**Process-level opportunities (no individual attribution):**\n- Wrong-size being the top category suggests a sizing/fit information gap — stronger size guides or fit-prediction tools could reduce volume\n- Defective-related returns (466) warrant a supplier/batch quality review to catch systemic issues before shipment\n- Resolution-time creep correlates with volume surges, pointing to capacity/staffing elasticity needs during peak periods rather than individual performance\n\nWant me to pull the detailed resolution recommendation for a specific return case, or drill into the defective-returns category further?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Freturns-complaints-resolution",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/returns-complaints-resolution/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Returns%20and%20Complaints%20Resolution%20Agent%22"
+  }
+}

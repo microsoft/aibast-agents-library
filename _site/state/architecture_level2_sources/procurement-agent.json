@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "procurement-agent",
+  "agent": "@aibast-agents-library/procurement-agent",
+  "display_name": "Procurement Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Frozen synthetic procurement snapshot",
+        "detail": "Bundled requests, vendors, ratings, terms, approval thresholds, budgets, and spend records provide deterministic review evidence."
+      },
+      {
+        "name": "Procurement rules and guardrails",
+        "detail": "Uploaded rules define evidence anchors, review gates, required disclosures, missing-evidence handling, and prohibited purchasing actions."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Purchase-request review",
+        "detail": "Summarizes synthetic request context, amount, justification, budget code, status, preferred vendor evidence, and applicable reviewer."
+      },
+      {
+        "name": "Vendor evidence comparison",
+        "detail": "Compares synthetic vendor category, tier, rating, annual spend, and payment terms neutrally without selecting or endorsing a supplier."
+      },
+      {
+        "name": "Approval-path recommendation",
+        "detail": "Matches a synthetic request amount to the recorded authorization threshold, approver, and SLA without recording an approval."
+      },
+      {
+        "name": "Spend and budget review",
+        "detail": "Calculates category utilization and highlights over-budget or at-risk synthetic spend for authorized finance and procurement review."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Provides natural-language review for procurement managers, category buyers, department approvers, and finance directors."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file ProcurementAgent through local Brainstem chat and UI endpoints with bundled synthetic data and no credentials."
+      },
+      {
+        "name": "Evidence-first review responses",
+        "detail": "Presents exact synthetic evidence, prerequisites, control gaps, missing inputs, and the authorized human or workflow review required next."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Purchase request and approval brief",
+        "detail": "Reports request identity, amount, status, justification, budget code, required approver, threshold, and review SLA."
+      },
+      {
+        "name": "Neutral vendor comparison report",
+        "detail": "Shows vendor ratings, tiers, terms, and annual spend as comparison evidence that is explicitly not a supplier award."
+      },
+      {
+        "name": "Budget pressure and control review",
+        "detail": "Summarizes total and category budgets, spent and committed amounts, availability, trends, and review priorities before more spend."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable RAPP Procurement Agent",
+      "detail": "Single-file ProcurementAgent implements four read-only review operations with bundled synthetic data and no external credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the conversational package with two knowledge files and four skills; validated and exported agents remain unpublished Drafts."
+    },
+    {
+      "name": "Power Platform CLI",
+      "detail": "Initializes, pulls, validates, pushes, and exports the CLI-authored package while publication remains a separate approved step."
+    },
+    {
+      "name": "Dynamics 365 procurement and finance",
+      "detail": "Approved production seam for governed request and finance data; the current package has no connection reference or live-system access."
+    },
+    {
+      "name": "Microsoft Teams approvals",
+      "detail": "Approved collaboration seam for authenticated human review; no approval, message, routing, or supplier action is configured."
+    },
+    {
+      "name": "Foundation model selected by environment",
+      "detail": "The deployment environment supplies conversational routing and generation; preview evidence records Claude Sonnet 4.6."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Four deterministic review operations",
+      "detail": "Routes purchase-request, vendor-comparison, approval-routing, and spend-analysis intents to operation-specific evidence."
+    },
+    {
+      "name": "Synthetic-only grounding",
+      "detail": "Uses only two bundled knowledge files and forbids browsing, supplier queries, enrichment, or invention of missing procurement facts."
+    },
+    {
+      "name": "Evidence-first response contract",
+      "detail": "Requires exact request, amount, vendor, category, or threshold evidence plus prerequisites, control gaps, and the next human review."
+    },
+    {
+      "name": "Human authorization gates",
+      "detail": "Preserves budget, legal, security, competition, diversity, conflict, business-owner, and explicit publication reviews."
+    },
+    {
+      "name": "Non-transactional purchasing boundary",
+      "detail": "Provides procurement review only: no request or purchase-order write, supplier contact or selection, terms acceptance, or funds commitment."
+    },
+    {
+      "name": "Locked case and isolation validation",
+      "detail": "Maintains one persona-language case per operation and records four passing strict-isolation and Copilot Studio preview cases."
+    },
+    {
+      "name": "Draft and export controls",
+      "detail": "Packages an unmanaged export with no connection references, keeps the agent unpublished, and requires administrator review before publish."
+    }
+  ]
+}

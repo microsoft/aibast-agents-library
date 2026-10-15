@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: approval-route
+  description: "\"Use when a department director asks something like \\\"Who signs this brief off, and how long does it take\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: approval-route
+  description: "Use when a department director asks something like \"Who signs this brief off, and how long does it take\""
+  ---
+  <!-- bic:source=blank -->
+  # Approval route
+
+  Use when someone asks who reviews or signs off a brief and how long approval takes.
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `Deputy City Manager`
+  - `8 working days`
+  - `No brief was sent for approval`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

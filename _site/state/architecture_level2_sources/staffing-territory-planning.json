@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "staffing-territory-planning",
+  "agent": "@aibast-agents-library/staffing-territory-planning",
+  "display_name": "Staffing Territory Planning Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic territory snapshot",
+        "detail": "Four fictional metros with addressable spend, revenue, recruiters and clients by service line."
+      },
+      {
+        "name": "Synthetic competitor and labor data",
+        "detail": "Fictional competitor shares by metro and posting, wage and time-to-fill trends by line."
+      },
+      {
+        "name": "Planning rules and guardrails",
+        "detail": "Coverage-gap rule, draft-only plan status and the no-headcount, no-quota, no-CRM-change boundary."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Territory roll-up",
+        "detail": "Totals spend, revenue, share, recruiters and spend per recruiter for each metro and the territory."
+      },
+      {
+        "name": "Market sizing",
+        "detail": "Breaks addressable and open spend down by service line for the territory or one metro."
+      },
+      {
+        "name": "Coverage-gap detection",
+        "detail": "Flags lines with at least $9.0M spend and under 5% share, ranked by open spend."
+      },
+      {
+        "name": "Competitive ranking",
+        "detail": "Ranks our share against three fictional competitors in every metro."
+      },
+      {
+        "name": "Labor trend reading",
+        "detail": "Turns posting, wage and time-to-fill movement into a planning implication."
+      },
+      {
+        "name": "Draft plan synthesis",
+        "detail": "Combines gaps, risks and trends into opportunities, recommendations and one priority action."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the Draft agent with six skills and two synthetic knowledge files; publishing is gated."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Gives sales leaders a planning conversation once approved controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file StaffingTerritoryPlanningAgent locally with deterministic operations."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Territory review tables",
+        "detail": "Metro and service-line tables with share, open spend and spend per recruiter."
+      },
+      {
+        "name": "Draft quarterly plan",
+        "detail": "Opportunities, risks, recommendations and a priority action, clearly marked as a draft."
+      },
+      {
+        "name": "Acceptance evidence",
+        "detail": "Six passing persona cases, package integrity and the unpublished Draft state."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable StaffingTerritoryPlanningAgent tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only planning operations."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server that discovers the agent and exposes chat, health and tool routing."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; publishing requires explicit approval."
+    },
+    {
+      "name": "Microsoft Teams and Microsoft 365 Copilot",
+      "detail": "User surfaces for approved deployments; the package changes no records."
+    },
+    {
+      "name": "Approved CRM and placement data",
+      "detail": "Production seam for account and placement history; not connected in the demonstration."
+    },
+    {
+      "name": "Approved labor-market feed",
+      "detail": "Production seam for posting and wage trends; the demonstration uses fixed synthetic values."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only the bundled fictional territory data and forbids browsing or outside market data."
+    },
+    {
+      "name": "Fictional market entities",
+      "detail": "Metros and competitors are invented so no real company or market is profiled."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never changes headcount, quotas, account assignments, requisitions or CRM records."
+    },
+    {
+      "name": "Leadership decision gate",
+      "detail": "The plan is a draft; every recommendation is a decision for sales leadership."
+    },
+    {
+      "name": "Deterministic arithmetic",
+      "detail": "Shares, open spend and rankings are computed from the same fixed figures every time."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Six persona cases verify one operation each with exact evidence anchors."
+    }
+  ]
+}

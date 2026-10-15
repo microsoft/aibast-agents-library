@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "energy-regulatory-reporting",
+  "agent": "@aibast-agents-library/energy-regulatory-reporting",
+  "display_name": "Regulatory Reporting Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic regulatory report portfolio",
+        "detail": "Fixed EPA, FERC, PHMSA, and state report records include facility, period, deadline, status, owner, completeness, and quality."
+      },
+      {
+        "name": "Validation rules and source mappings",
+        "detail": "Bundled rules map emissions, financial, and safety checks to synthetic systems such as CEMS, SAP, PIMS, and GIS."
+      },
+      {
+        "name": "Audit finding evidence",
+        "detail": "Fixed findings link report IDs to evidence gaps, severity, remediation state, and due dates for deterministic review."
+      },
+      {
+        "name": "Reporting controls and operating rules",
+        "detail": "Uploaded instructions define operation routing, required evidence anchors, authorized reviewers, and filing prohibitions."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Report portfolio status analysis",
+        "detail": "Sorts the selected portfolio by deadline and summarizes submitted, overdue, in-progress, and not-started records."
+      },
+      {
+        "name": "Source-data quality screening",
+        "detail": "Checks completeness and quality thresholds, calculates a pass rate, and identifies exceptions before owner attestation."
+      },
+      {
+        "name": "Recorded submission-state tracking",
+        "detail": "Presents authority, owner, deadline, status, and last update as read-only evidence without transmitting a filing."
+      },
+      {
+        "name": "Audit-readiness triage",
+        "detail": "Groups findings by report and counts open and high-severity items without predicting an audit or legal outcome."
+      },
+      {
+        "name": "Scoped report filtering",
+        "detail": "Limits analysis to a requested synthetic report ID and returns no substituted record when the identifier is unknown."
+      },
+      {
+        "name": "Evidence-first response assembly",
+        "detail": "Formats traceable tables and explicit limitations so reviewers can separate recorded evidence from future actions."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "Runs the single-file RAPP tool through local chat and streaming endpoints with bundled synthetic evidence."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Provides four natural-language operation skills and two uploaded knowledge files in an unpublished Draft agent."
+      },
+      {
+        "name": "Persona-guided review flows",
+        "detail": "Supports Regulatory Reporting Lead, Data Analyst, Compliance Manager, and Internal Auditor evidence-review scenarios."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Regulatory Report Status",
+        "detail": "Reports portfolio totals, authorities, facilities, owners, deadlines, status, completeness, and data-quality scores."
+      },
+      {
+        "name": "Data Validation Results",
+        "detail": "Reports pass rate, quality scores, completeness, threshold exceptions, and the need for authorized owner attestation."
+      },
+      {
+        "name": "Submission Tracker",
+        "detail": "Reports recorded filing state and last-update evidence while stating that no filing, signature, or transmission occurred."
+      },
+      {
+        "name": "Audit Readiness Assessment",
+        "detail": "Reports finding counts, severity, status, due dates, and source discrepancies for remediation review."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "RegulatoryReportingAgent RAPP tool",
+      "detail": "Portable Python BasicAgent exposes four deterministic, read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the tool and provides chat, streaming, health, and model-selection endpoints."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The deployment environment supplies the model for request interpretation and grounded response presentation."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the Draft conversational agent, operation skills, and knowledge files; publication requires confirmation."
+    },
+    {
+      "name": "Synthetic knowledge and skill files",
+      "detail": "Two knowledge files and four operation skills preserve the same evidence, routing, and safety controls."
+    },
+    {
+      "name": "Documented production connection seams",
+      "detail": "A regulatory data lake, controlled workspace, and approved filing connector are future seams, not configured tools."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed four-operation routing",
+      "detail": "An explicit enum dispatches report status, data validation, submission tracking, or audit-readiness review."
+    },
+    {
+      "name": "Synthetic-only fail-closed evidence",
+      "detail": "The package uses fixed fictional records, does not browse for replacements, and does not invent unknown identifiers."
+    },
+    {
+      "name": "Audit-ready evidence traceability",
+      "detail": "Report IDs, owners, deadlines, quality measures, source-system references, findings, severity, and due dates stay visible."
+    },
+    {
+      "name": "Authorized human approval gates",
+      "detail": "Report owners must resolve and attest evidence; any future write requires authentication, authorization, approval, and an audit event."
+    },
+    {
+      "name": "No automatic filing boundary",
+      "detail": "The agent never signs, certifies, files, publishes, or transmits a report and never treats a model response as proof of action."
+    },
+    {
+      "name": "Locked validation and draft control",
+      "detail": "Four persona cases passed strict isolation and Copilot Studio preview while both validated agents remained unpublished."
+    }
+  ]
+}

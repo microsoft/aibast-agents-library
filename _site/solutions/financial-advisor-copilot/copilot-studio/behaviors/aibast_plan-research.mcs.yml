@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "plan-research"
+  description: "\"Use when a branch customer asks something like \\\"I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: plan-research
+  description: "Use when a branch customer asks something like \"I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month\""
+  ---
+  <!-- bic:source=blank -->
+  # Plan research
+  
+  Use when a branch customer asks something like "I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `California ScholarShare 529`
+  - `~$65,730`
+  - `~31%`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

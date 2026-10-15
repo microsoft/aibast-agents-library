@@ -1,0 +1,25 @@
+---
+name: content-scan
+description: "Use when a budget analyst asks something like \"What do we hold on the Elm Street Bridge Replacement\""
+---
+<!-- bic:source=blank -->
+# Content scan
+
+Use when someone asks what the content set holds or has on a topic.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `8 passages on topic`
+- `Quarterly Capital Status Report`
+- `Measures with conflicting values`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

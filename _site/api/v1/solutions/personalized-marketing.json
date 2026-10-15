@@ -1,0 +1,109 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/personalized-marketing",
+  "slug": "personalized-marketing",
+  "name": "Personalized Marketing Agent",
+  "headline": "Move from slow campaign planning to governed, review-ready audience and content decisions.",
+  "pitch": "Helps retail marketing teams understand aggregate commercial segments, compare campaign concepts, draft relevant content, and review synthetic performance evidence without sensitive profiling or activation.",
+  "category": "retail_cpg",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Marketing Director",
+    "Campaign Manager"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Plan and evaluate",
+  "why_try": "It gives leaders and campaign operators a common planning surface while keeping audience selection, copy, incentives, and launch decisions behind human approval.",
+  "customer_challenge": "Retail marketing teams often work across fragmented aggregate signals, long planning cycles, inconsistent content, and delayed performance insight.",
+  "microsoft_ai_story": "A portable agent turns synthetic CRM-style segment and campaign records into governed planning briefs that can be reviewed in Microsoft collaboration workflows before any production activation.",
+  "business_value": [
+    "Shorter planning discussions with clearer assumptions",
+    "More consistent review of audience, content, and measurement choices",
+    "Stronger privacy and approval boundaries for personalization"
+  ],
+  "business_flow": [
+    "Marketing Director and Campaign Manager",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Personalized Marketing Agent",
+    "Approved read-only CRM or customer-insights data",
+    "Microsoft Teams review",
+    "Authorized marketing approval"
+  ],
+  "capabilities": [
+    {
+      "operation": "customer_segmentation",
+      "name": "Aggregate customer segmentation",
+      "purpose": "Compares non-sensitive commercial segment signals without identifying or profiling a person."
+    },
+    {
+      "operation": "campaign_design",
+      "name": "Campaign concept design",
+      "purpose": "Builds review-only multi-wave campaign concepts with approval gates."
+    },
+    {
+      "operation": "content_personalization",
+      "name": "Draft content personalization",
+      "purpose": "Produces segment-level draft copy and product ideas from non-sensitive aggregate signals."
+    },
+    {
+      "operation": "performance_analysis",
+      "name": "Synthetic performance analysis",
+      "purpose": "Compares fixed test and campaign scenarios without claiming live results."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Review aggregate segments",
+      "prompt": "Summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-customer-segmentation",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Marketing Director",
+        "prompt": "As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.",
+        "answer": "Here's the aggregate segment portfolio — no demographic traits, purely behavioral/transactional:\n\n**Total base:** 240,000 active customers, $8.4M addressable holiday revenue\n\n| Segment | Size | Avg Order | Open Rate | Conversion |\n|---|---|---|---|---|\n| VIP Shoppers | 12,400 | $340 | 68% | 12.4% |\n| Frequent Buyers | 38,200 | $185 | 52% | 9.6% |\n| Seasonal Shoppers | 67,800 | $210 | 44% | 7.2% |\n| Lapsed Customers | 84,300 | $165 | 28% | 3.1% |\n| New Subscribers | 37,300 | $0 | 71% | 15.8% |\n\n**Portfolio review priorities:**\n1. **VIP Shoppers** — smallest group but highest revenue density (12.4% conversion, $340 AOV); top priority to protect and grow.\n2. **Lapsed Customers** — largest segment (84.3K) but weakest performance (28% open, 3.1% conversion); biggest reactivation opportunity or cost drain — needs a win-back decision.\n3. **New Subscribers** — no purchase history yet but best engagement (71% open, 15.8% conversion); priority for conversion-focused nurture before they go cold.\n4. **Seasonal Shoppers** — largest mid-tier pool (67.8K); worth testing whether holiday timing can lift them toward Frequent-Buyer behavior.\n\nRecommended sequencing: lead with VIP, then New Subscribers, then decide Lapsed treatment before broad Seasonal rollout.\n\nWant me to move to the multi-wave campaign design next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Design a governed campaign concept",
+      "prompt": "Outline the review-only win-back sequence, assumptions, and approval gates.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-campaign-design",
+      "recorded": false,
+      "recorded_answer": null
+    },
+    {
+      "label": "Draft privacy-safe content",
+      "prompt": "Draft neutral content ideas for New Explorers and explain the non-sensitive signals used.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-content-personalization",
+      "recorded": false,
+      "recorded_answer": null
+    },
+    {
+      "label": "Evaluate synthetic performance",
+      "prompt": "Compare the synthetic tests and call out measurement limitations before any decision.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-performance-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Marketing Director",
+        "prompt": "As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.",
+        "answer": "Here's the comparison with the caveats you asked for up front.\n\n**Measurement limitations (read before deciding anything):**\n- All three tests (ABT-001/002/003) and the benchmark table are **synthetic planning data** — not real customer behavior. They're useful for structuring a plan, not for forecasting actual revenue.\n- Sample sizes vary a lot (11.8K–36K), so confidence levels (88–94%) aren't directly comparable across tests.\n- \"Personalization beats generic by 15.8%\" is a synthetic benchmark, not a measured causal effect — treat it as a planning assumption, not a proven lift.\n\n**Test comparison:**\n| Test | Winner | Confidence | Lift |\n|---|---|---|---|\n| VIP early access | Variant B | 94% | +15.3% |\n| Frequent-buyer sale | Variant A | 91% | +14.4% |\n| Generic vs. personalized | Variant B | 88% | +15.8% |\n\nTakeaway: personalized/Variant-B approaches outperform in two of three tests, and personalization direction is consistent — but given the synthetic basis, I'd treat this as directional evidence supporting a personalized VIP strategy, not a final ROI case. Recommend validating with a live pilot before committing full budget.\n\nWant me to pull the segmentation or campaign design next so you can see how this maps to the actual holiday plan?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpersonalized-marketing",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/personalized-marketing/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack/personalized_marketing_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Personalized%20Marketing%20Agent%22"
+  }
+}

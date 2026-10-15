@@ -1,0 +1,183 @@
+{
+  "schema": "rapp-browserfilm/1.0",
+  "kind": "reviewed-reference-set",
+  "build_revision": "repaired-r5",
+  "title": "Portfolio Rebalancing Manual r5 reviewed reference set",
+  "status": "partial",
+  "boundary": "Thirteen distinct personally reviewed PNG assets support steps 2-6 and 14-22. Steps 2-5 are saved-state readbacks. Step 6 pairs actual earlier r5 staging with later Ready status. Step 1 and upload steps 7-13 remain open. No new upload, regression, creation or continuous walkthrough is claimed.",
+  "frames": [
+    {
+      "step": 1,
+      "label": "Create a blank Copilot Studio agent",
+      "source_path": "deployment.json",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 2,
+      "label": "Name Portfolio Rebalancing Manual",
+      "source_path": "deployment.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-name-readback.png",
+      "evidence_stage": "post_regression_readback"
+    },
+    {
+      "step": 3,
+      "label": "Enter the reviewed global instructions",
+      "source_path": "manual/GLOBAL-INSTRUCTIONS.md",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-persisted-policy-board.png",
+      "evidence_stage": "post_regression_readback"
+    },
+    {
+      "step": 4,
+      "label": "Save, leave through Agents, reopen the same Draft and verify persistence",
+      "source_path": "manual/GLOBAL-INSTRUCTIONS.md",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-persisted-policy-board.png",
+      "evidence_stage": "post_regression_readback"
+    },
+    {
+      "step": 5,
+      "label": "Remove default web search",
+      "source_path": "deployment.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-empty-tools.png",
+      "evidence_stage": "post_regression_readback"
+    },
+    {
+      "step": 6,
+      "label": "Add knowledge: aibast_portfolio-rebalancing-controls-and-review.md",
+      "source_path": "manual/knowledge/aibast_portfolio-rebalancing-controls-and-review.md",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-controls-upload-ready-board.png",
+      "evidence_stage": "r5_upload_and_later_ready"
+    },
+    {
+      "step": 7,
+      "label": "Add knowledge: aibast_portfolio-rebalancing-synthetic-records.md",
+      "source_path": "manual/knowledge/aibast_portfolio-rebalancing-synthetic-records.md",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 8,
+      "label": "Add skill: execution-plan (exact SKILL.md frontmatter name)",
+      "source_path": "manual/skills/aibast_execution-plan_06/SKILL.md",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 9,
+      "label": "Add skill: portfolio-analysis (exact SKILL.md frontmatter name)",
+      "source_path": "manual/skills/aibast_portfolio-analysis_01/SKILL.md",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 10,
+      "label": "Add skill: rebalance-recommendation (exact SKILL.md frontmatter name)",
+      "source_path": "manual/skills/aibast_rebalance-recommendation_02/SKILL.md",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 11,
+      "label": "Add skill: retirement-scenario (exact SKILL.md frontmatter name)",
+      "source_path": "manual/skills/aibast_retirement-scenario_05/SKILL.md",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 12,
+      "label": "Add skill: tax-impact (exact SKILL.md frontmatter name)",
+      "source_path": "manual/skills/aibast_tax-impact_03/SKILL.md",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 13,
+      "label": "Add skill: tax-loss-harvest (exact SKILL.md frontmatter name)",
+      "source_path": "manual/skills/aibast_tax-loss-harvest_04/SKILL.md",
+      "captured": false,
+      "status": "reshoot_required"
+    },
+    {
+      "step": 14,
+      "label": "Review the reopened model, exact sources, inventory and safety boundaries",
+      "source_path": "evals/manual-inputs-r5.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-saved-configuration-board.png"
+    },
+    {
+      "step": 15,
+      "label": "Open a fresh Preview conversation",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-fresh-preview.png"
+    },
+    {
+      "step": 16,
+      "label": "Run PRB-01 once in a fresh Preview conversation",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "PRB-01-response-board.png"
+    },
+    {
+      "step": 17,
+      "label": "Run PRB-02 once in a fresh Preview conversation",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "PRB-02-response-board.png"
+    },
+    {
+      "step": 18,
+      "label": "Run PRB-03 once in a fresh Preview conversation",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "PRB-03-response-board.png"
+    },
+    {
+      "step": 19,
+      "label": "Run PRB-04 once in a fresh Preview conversation",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "PRB-04-response-board.png"
+    },
+    {
+      "step": 20,
+      "label": "Run PRB-05 once in a fresh Preview conversation",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "PRB-05-response-board.png"
+    },
+    {
+      "step": 21,
+      "label": "Run PRB-06 once in a fresh Preview conversation",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "PRB-06-response-board.png"
+    },
+    {
+      "step": 22,
+      "label": "Confirm Draft and stop before publish",
+      "source_path": "evals/manual-build-evidence.json",
+      "captured": true,
+      "status": "reviewed",
+      "file": "UI-final-draft.png"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "onepager": "Customer Onboarding Agent one-pager.pptx",
+  "source_slide_sha256": "879eedd2183848c84f31bb56f9eec54301a8404f7ca3708c51cdf0e297ab5503",
+  "promises": [
+    {
+      "advertised_promise": "Automate identity verification, document collection, and analysis",
+      "operations": [
+        "kyc_verification",
+        "document_checklist",
+        "beneficial_ownership"
+      ],
+      "demo_cases": [
+        "FCO-01",
+        "FCO-03",
+        "FCO-06"
+      ],
+      "synthetic_evidence": [
+        "KYC evidence review returns deterministic fictional identifiers and review context",
+        "Document readiness returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Marcus Chen",
+        "2 of 3 Verified",
+        "67%"
+      ]
+    },
+    {
+      "advertised_promise": "Perform sanctions screening and regulatory checks",
+      "operations": [
+        "kyc_verification",
+        "risk_assessment"
+      ],
+      "demo_cases": [
+        "FCO-01",
+        "FCO-08"
+      ],
+      "synthetic_evidence": [
+        "KYC evidence review returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "No significant red flags",
+        "Moderate-low",
+        "OFAC screening on wire transfers"
+      ]
+    },
+    {
+      "advertised_promise": "Configure accounts, treasury services, and credit facilities",
+      "operations": [
+        "account_setup"
+      ],
+      "demo_cases": [
+        "FCO-02"
+      ],
+      "synthetic_evidence": [
+        "Account setup preparation returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Gain real-time updates on client profiles and KYC processes",
+      "operations": [
+        "onboarding_status",
+        "initiate_onboarding",
+        "onboarding_timeline",
+        "status_summary"
+      ],
+      "demo_cases": [
+        "FCO-04",
+        "FCO-05",
+        "FCO-07",
+        "FCO-09"
+      ],
+      "synthetic_evidence": [
+        "Onboarding pipeline returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Nexus Industries Inc.",
+        "ONB-2025-4782",
+        "KYC Verification In Progress",
+        "5-Day Fast Track",
+        "Credit committee review at 2 PM",
+        "67% faster",
+        "Status Summary",
+        "ONB-2025-4782",
+        "No message was sent"
+      ]
+    }
+  ]
+}

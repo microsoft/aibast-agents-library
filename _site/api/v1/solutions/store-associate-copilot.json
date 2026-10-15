@@ -1,0 +1,115 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/store-associate-copilot",
+  "slug": "store-associate-copilot",
+  "name": "Retail Store Associate Copilot",
+  "headline": "Put consistent product guidance and floor planning at the associate’s fingertips.",
+  "pitch": "Provides synthetic product facts, respectful customer-language drafts, shift planning, and role-cohort coaching signals while leaving availability, pricing, returns, and transactions to authorized systems and people.",
+  "category": "retail_cpg",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Store Associate",
+    "Sales Manager",
+    "Floor Specialist"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Serve and coordinate",
+  "why_try": "It demonstrates how associates can get faster context without creating inventory promises, pressure-based selling, or workforce profiling.",
+  "customer_challenge": "Store teams lose time searching for product details, coordinating floor work, and translating service expectations into consistent customer conversations.",
+  "microsoft_ai_story": "The portable agent combines catalog-style records and store planning data into concise associate and manager views suitable for collaborative review.",
+  "business_value": [
+    "Faster access to consistent product context",
+    "Clearer shift planning and service language",
+    "Safer aggregate coaching without personnel decisions"
+  ],
+  "business_flow": [
+    "Store Associate, Floor Specialist, and Sales Manager",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Retail Store Associate Copilot",
+    "Approved commerce catalog and inventory data",
+    "Microsoft Teams review",
+    "Authorized store and transaction systems"
+  ],
+  "capabilities": [
+    {
+      "operation": "product_lookup",
+      "name": "Verified product lookup",
+      "purpose": "Surfaces product facts, floor location, and a synthetic availability snapshot with a verification gate."
+    },
+    {
+      "operation": "customer_assist",
+      "name": "Respectful assistance drafts",
+      "purpose": "Drafts pressure-free customer language without messaging or transacting."
+    },
+    {
+      "operation": "task_checklist",
+      "name": "Shift planning checklist",
+      "purpose": "Organizes opening, midday, and closing work without claiming execution."
+    },
+    {
+      "operation": "performance_dashboard",
+      "name": "Role-cohort coaching review",
+      "purpose": "Summarizes aggregate workflow signals without profiling employees or making personnel decisions."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Look up a product safely",
+      "prompt": "Give me the product facts, floor location, optional complements, and availability caveat for the running shoes.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-product-lookup",
+      "recorded": false,
+      "recorded_answer": null
+    },
+    {
+      "label": "Draft customer-assistance language",
+      "prompt": "Draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-customer-assist",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Store Associate",
+        "prompt": "As Store Associate, draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.",
+        "answer": "Here's a respectful draft that keeps the final call with an authorized reviewer:\n\n**Script:**\n\"I completely understand your frustration, and I want to make sure this gets handled right. Let me make sure I've got it correctly — [restate the issue back to them]. I'm not able to make the final call on this myself, but I'm going to bring in [manager/authorized reviewer] who can look into it properly and get you the best resolution. Thank you for your patience while we sort this out.\"\n\n**Tips for delivery:**\n- Stay calm and don't argue, even if they push back\n- Validate their feelings before explaining next steps (\"That's frustrating, I'd feel the same way\")\n- Be clear you're looping in someone with authority — don't imply you're stalling\n- If they ask for specifics (refund, replacement), say you'll flag it but can't confirm until reviewed\n- Follow through immediately — don't let them wait around\n\nWant me to also draft a quick handoff note for the manager summarizing the complaint?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Plan the store shift",
+      "prompt": "Turn the opening work into a prioritized planning checklist without claiming execution.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-task-checklist",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Floor Specialist",
+        "prompt": "As Floor Specialist, turn the opening work into a prioritized planning checklist without claiming execution.",
+        "answer": "Here's the opening-shift planning checklist — **this is a plan only, nothing has been executed yet** (doors still locked, POS still off, signage not yet updated, etc.):\n\n**Opening Shift — ~57 min total, prioritized**\n\n| # | Task | Priority | Est. Time |\n|---|------|----------|-----------|\n| 1 | Unlock entrance doors, disable alarm | CRITICAL | 2 min |\n| 2 | Power on POS terminals, verify connectivity | CRITICAL | 5 min |\n| 3 | Walk floor to check overnight display condition | HIGH | 10 min |\n| 4 | Review daily promotions, update signage | HIGH | 15 min |\n| 5 | Check inventory alerts, pull items for replenishment | HIGH | 20 min |\n| 6 | Restock fitting rooms with hangers | MEDIUM | 5 min |\n\nSuggested order follows the priority column — critical safety/systems tasks first, then customer-facing prep, then lower-priority upkeep. Let me know if you want this re-sequenced by zone or split across multiple associates — I can regenerate the checklist, but someone on the floor still needs to actually carry it out.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review aggregate coaching signals",
+      "prompt": "Summarize aggregate role-cohort coaching signals without ranking employees.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-performance-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Sales Manager",
+        "prompt": "As Sales Manager, summarize aggregate role-cohort coaching signals without ranking employees.",
+        "answer": "Here's the aggregate cohort snapshot — no individual rankings:\n\n**Store-wide:** $6,539 revenue / 52 transactions / $125.75 avg basket\n\n**Cohort signals by shift-role group:**\n- **Opening Lead Associate Cohort** — strongest reference group across revenue, CSAT (4.9), and task completion (100%); worth studying for replicable workflow habits\n- **Opening Senior Associate Cohort** — solid upsell rate (35%) and CSAT (4.8), near-complete task follow-through\n- **Midday Associate Cohort** — moderate basket size, upsell rate (22%) trailing opening shifts — possible coaching opportunity around add-on conversations\n- **Closing Associate Cohort** — lowest attach rate (18%) and task completion (78%) — likely reflects end-of-day time pressure rather than individual performance\n\n**Takeaway for coaching:** differences track more with shift timing and staffing structure (lead presence, opening vs. closing flow) than with individuals. Suggest reviewing opening-shift upsell scripts and task-pacing for midday/closing teams rather than singling out associates.\n\nWant me to pull a customer-assist script template for upsell coaching during midday/closing shifts?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fstore-associate-copilot",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/store-associate-copilot/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Retail%20Store%20Associate%20Copilot%22"
+  }
+}
