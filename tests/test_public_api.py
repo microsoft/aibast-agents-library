@@ -20,10 +20,10 @@ def build(tmp_path):
 def test_every_catalog_agent_gets_its_own_document(tmp_path):
     out = build(tmp_path)
     catalog = json.loads((ROOT / "solutions" / "catalog.json").read_text(encoding="utf-8"))["solutions"]
-    listing = json.loads((out / "api/v1/agents.json").read_text(encoding="utf-8"))
+    listing = json.loads((out / "api/v1/solutions.json").read_text(encoding="utf-8"))
     assert listing["count"] == len(catalog) == len(listing["agents"])
     for row in listing["agents"]:
-        document = json.loads((out / "api/v1/agents" / f"{row['slug']}.json").read_text(encoding="utf-8"))
+        document = json.loads((out / "api/v1/solutions" / f"{row['slug']}.json").read_text(encoding="utf-8"))
         assert document["schema"] == "aibast-public-agent/1.0"
         assert document["id"] in catalog
         assert document["links"]["page"].startswith(SITE)
@@ -34,7 +34,7 @@ def test_every_catalog_agent_gets_its_own_document(tmp_path):
 
 def test_recorded_answers_are_the_transcripts_word_for_word(tmp_path):
     out = build(tmp_path)
-    document = json.loads((out / "api/v1/agents/account-intelligence.json").read_text(encoding="utf-8"))
+    document = json.loads((out / "api/v1/solutions/account-intelligence.json").read_text(encoding="utf-8"))
     transcripts = json.loads((ROOT / "solutions/account-intelligence/evals/transcripts.json").read_text(encoding="utf-8"))
     answers = {t["prompt"]: t["assistant_response"] for t in transcripts["transcripts"]}
     recorded = [p["recorded_answer"] for p in document["prompts"] if p["recorded"]]
@@ -50,7 +50,7 @@ def test_discovery_files_are_well_formed_and_point_at_the_site(tmp_path):
     assert openapi["servers"][0]["url"] == SITE.rstrip("/")
     llms = (out / "llms.txt").read_text(encoding="utf-8")
     assert llms.startswith("# AI BAST Agents Library\n")
-    assert f"{SITE}api/v1/agents.json" in llms
+    assert f"{SITE}api/v1/solutions.json" in llms
     assert (out / "robots.txt").read_text(encoding="utf-8").endswith(f"Sitemap: {SITE}sitemap.xml\n")
     urls = [loc.text for url in ET.parse(out / "sitemap.xml").getroot() for loc in url]
     assert urls and all(url.startswith(SITE) for url in urls)
