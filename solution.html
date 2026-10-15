@@ -384,7 +384,7 @@ async function init() {
               sols.find(s => s.sample_output) || sols[0];
   const agent = (reg?.agents || []).find(a => a.name === sol.repo_agent);
 
-  if (sol.sample_output) SAMPLE = await getJSON([sol.sample_output + t, RAW + '/' + sol.sample_output + t]);
+  if (sol.sample_output) SAMPLE = await getJSON([sol.sample_output, SITE + sol.sample_output]);
   render(sol, agent, sols);
 }
 
