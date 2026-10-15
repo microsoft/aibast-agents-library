@@ -1,0 +1,140 @@
+/* Microsoft 365 Copilot chat look for the library's recorded demos (m365-mirror.js).
+ * Sizes are measured from Microsoft 365 Copilot chat. Segoe UI is used only when the visitor's computer has it
+ * (Windows does); other systems fall back to their own UI font. No font files are shipped.
+ */
+@font-face { font-family: "Segoe UI"; font-weight: 400; font-display: block;
+  src: local("Segoe UI"), local("SegoeUI"); }
+@font-face { font-family: "Segoe UI"; font-weight: 600; font-display: block;
+  src: local("Segoe UI Semibold"), local("SegoeUI-Semibold"); }
+@font-face { font-family: "Segoe UI"; font-weight: 700; font-display: block;
+  src: local("Segoe UI Bold"), local("SegoeUI-Bold"); }
+.m365 {
+  --m-ink: #242424; --m-ink-2: #242424; --m-soft: #6F6F6F; --m-faint: #6F6F6F; --m-line: #E0E0E0;
+  --m-box: #C8C8C8; --m-box-rest: #DDDDDD; --m-bubble: #F5F5F5; --m-tile: #056774; --m-zoom: 1;
+  position: fixed; inset: 0; height: calc(100vh / var(--m-zoom)); width: calc(100vw / var(--m-zoom));
+  display: grid; grid-template-columns: 44.8px 1fr; grid-template-rows: 100%; background: #fff; color: var(--m-ink);
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; font-size: 12.8px; line-height: 20px;
+  overflow: hidden;
+}
+.m365 *, .m365 *::before, .m365 *::after { box-sizing: border-box; }
+.m365 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: default; }
+.m365 svg { display: block; }
+.m365-rail { border-right: 1px solid var(--m-line); display: flex; flex-direction: column; align-items: center; padding-top: 6px; }
+.m365-rail .m365-ic { width: 32px; height: 32px; display: grid; place-items: center; color: #5A5A5A; }
+.m365-rail .m365-logo { margin-bottom: 10px; color: var(--m-ink); }
+.m365-rail .m365-ic + .m365-ic { margin-top: -3px; }
+.m365-rail .m365-ic:nth-child(3) svg { transform: translateX(.8px); }
+.m365-rail .m365-me { margin-top: auto; margin-bottom: 14px; width: 20px; height: 20px; border-radius: 50%; background: #E2E2E2;
+  color: var(--m-soft); font-size: 7px; line-height: 20px; text-align: center; font-weight: 600; letter-spacing: .2px; }
+.m365-page { position: relative; min-width: 0; min-height: 0; display: flex; flex-direction: column; height: 100%; padding-top: 48px; }
+.m365-top { position: absolute; top: 8px; right: 12px; display: flex; gap: 0; z-index: 3; }
+.m365-top .m365-ic { width: 32px; height: 32px; display: grid; place-items: center; color: var(--m-ink); }
+.m365-top .m365-shield { color: #107C10; }
+.m365-top [data-when="chat"] { display: none; }
+.m365.m365-chatting .m365-top [data-when="chat"] { display: grid; }
+.m365-main { position: relative; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; }
+.m365-main::-webkit-scrollbar { display: none; }
+.m365-col { width: 566px; max-width: calc(100% - 48px); margin: 0 auto; padding: 3.2px 0 24px; }
+.m365-hero { width: 656px; max-width: calc(100% - 48px); margin: 0 auto; padding-top: calc(50vh / var(--m-zoom) - 162.6px); }
+.m365.m365-chatting .m365-hero { display: none; }
+.m365-hero-id { display: grid; grid-template-columns: 26px 1fr; column-gap: 9.2px; margin-left: 12.6px; align-items: center; }
+.m365-hero-id .m365-tile { width: 26px; height: 26px; border-radius: 5px; }
+.m365-hero-name { font-size: 19.2px; line-height: 26px; font-weight: 400; white-space: nowrap; position: relative; top: -1.2px; }
+.m365-hero-by { grid-column: 2; font-size: 11.2px; line-height: 16px; color: #6C6C6C; margin-top: 7.3px; }
+.m365-hero-by b { font-weight: 400; color: var(--m-ink); }
+.m365-hero .m365-composer { margin-top: 24.6px; }
+.m365-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12.8px; margin: 31.4px 18.8px 0; }
+.m365 .m365-card { border: 1px solid #E0E0E0; border-radius: 16px; height: 103.6px; padding: 0 10px 12px 13.2px; text-align: left;
+  display: flex; flex-direction: column; justify-content: flex-start; padding-top: 17.2px; }
+.m365-card-title { display: flex; align-items: center; gap: 8.4px; margin: -1.6px 0 0 -.4px; font-weight: 600; font-size: 11.2px; line-height: 16px; white-space: nowrap; }
+.m365-card-title span { overflow: hidden; text-overflow: ellipsis; }
+.m365-card-title svg { flex: none; color: #424242; }
+.m365-card-text { margin-top: 8px; font-size: 11.2px; line-height: 16px; color: #5B5B5B; font-weight: 600; display: -webkit-box;
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.m365-more-starters { display: flex; justify-content: flex-end; align-items: center; gap: 5.6px; margin: 16.4px 27.6px 0 0;
+  font-size: 9.6px; color: var(--m-ink); }
+.m365-dock { flex: none; display: none; padding: 0 0 32.8px; }
+.m365.m365-chatting .m365-dock { display: block; }
+.m365-composer { position: relative; width: 656px; max-width: calc(100% - 48px); margin: 0 auto; height: 47.6px; border: 1px solid var(--m-box);
+  border-radius: 23.8px; background: #fff; display: flex; align-items: center; padding: 0 10.6px 0 18px; }
+.m365-hero .m365-composer { width: 100%; max-width: none; height: 48px; border-color: var(--m-box-rest); }
+.m365-hero .m365-composer:focus-within { border-color: #CCCCCC; }
+.m365-typeahead { display: none; margin: 14.4px 0 0 44.6px; padding: 0; list-style: none; font-size: 11.2px; line-height: 32px; }
+.m365-typeahead li { white-space: nowrap; overflow: hidden; }
+.m365-typeahead b { font-weight: 600; }
+.m365-hero.m365-suggesting .m365-typeahead { display: block; }
+.m365-hero.m365-suggesting .m365-cards, .m365-hero.m365-suggesting .m365-more-starters { opacity: .3; }
+.m365-hero.m365-suggesting .m365-cards { margin-top: 20px; }
+.m365-composer .m365-plus { width: 16px; height: 16px; color: var(--m-ink-2); flex: none; }
+.m365-input { flex: 1; min-width: 0; margin: 0 8px 0 11px; border: 0; outline: 0; background: transparent; font: inherit;
+  font-size: 12.8px; color: var(--m-ink); caret-color: var(--m-ink); padding: 0; height: 24px; }
+.m365-input::placeholder { color: var(--m-soft); opacity: 1; }
+.m365-field { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; }
+.m365-caret { position: absolute; left: 11px; top: 50%; width: .8px; height: 15.2px; margin-top: -7.6px; background: var(--m-ink); display: none; }
+.m365-composer[data-focus="1"] .m365-input { caret-color: transparent; }
+.m365-composer[data-focus="1"] .m365-caret { display: block; animation: m365-blink 1.06s steps(1) infinite; }
+@keyframes m365-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+.m365-mic { width: 26px; height: 26px; display: grid; place-items: center; color: var(--m-ink-2); flex: none; }
+.m365 .m365-go { width: 26px; height: 26px; border-radius: 50%; background: #1A1A1A; color: #fff; display: none; place-items: center;
+  margin-left: 6px; flex: none; }
+.m365-composer[data-mode="send"] .m365-go, .m365-composer[data-mode="stop"] .m365-go { display: grid; }
+.m365-go .m365-stop { width: 10.6px; height: 10.6px; background: #fff; border-radius: 2.4px; display: none; }
+.m365-go .m365-arrow { display: block; }
+.m365-composer[data-mode="stop"] .m365-go .m365-stop { display: block; }
+.m365-composer[data-mode="stop"] .m365-go .m365-arrow { display: none; }
+.m365-note { text-align: center; color: var(--m-faint); font-size: 9.6px; line-height: 12px; margin-top: 10px; }
+.m365 .m365-down { position: absolute; left: 50%; bottom: 115px; transform: translateX(-50%); width: 26px; height: 26px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--m-line); box-shadow: 0 2px 4px rgba(0,0,0,.08); display: none; place-items: center;
+  color: var(--m-ink-2); z-index: 2; }
+.m365-down.m365-show { display: grid; }
+.m365-user { display: flex; justify-content: flex-end; margin: 0; }
+.m365-user p { margin: 0 1.2px 0 0; max-width: 430px; background: var(--m-bubble); border-radius: 8px; padding: 6.5px 12.5px 6.1px 12px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .05);
+  font-size: 12.8px; line-height: 22px; white-space: pre-wrap; }
+.m365-agent { margin: 42.6px 0 46px; position: relative; }
+.m365-head { display: flex; align-items: center; gap: 6.2px; height: 20px; transition: none; }
+.m365-agent.m365-thinking .m365-head { padding-left: 25.6px; }
+.m365-head .m365-tile { position: relative; top: 3.8px; }
+.m365-tile { width: 19.2px; height: 19.2px; border-radius: 3.6px; background: var(--m-tile); display: grid; place-items: center; flex: none; overflow: hidden; }
+.m365-tile svg { width: 100%; height: 100%; }
+.m365-name, .m365-agent .m365-name, .m365-agent.m365-thinking .m365-name { font-weight: 600; font-size: 12.8px; white-space: nowrap; }
+.m365-status { display: none; align-items: center; margin-top: 7.6px; height: 18px; }
+.m365-agent.m365-thinking .m365-status { display: flex; }
+.m365-status .m365-glyph { width: 25.6px; flex: none; padding-top: 1.4px; }
+.m365-status span { font-size: 12.8px; }
+.m365-bars rect { fill: var(--m-ink); shape-rendering: crispEdges; transition: opacity 40ms linear; }
+.m365-md { margin-top: 9.15px; font-size: 12.8px; line-height: 22.4px; overflow-wrap: anywhere; }
+.m365-md > .m365-block:first-child > :first-child { margin-top: 0; }
+.m365-md > .m365-block:last-child > :last-child { margin-bottom: 0; }
+.m365-md > :first-child { margin-top: 0; }
+.m365-md p { margin: 0 0 9.6px; }
+.m365-md strong, .m365-md b { font-weight: 600; }
+.m365-md em { font-style: italic; }
+.m365-md a { color: inherit; font-weight: 600; text-decoration: underline dotted var(--m-ink); text-underline-offset: 2.2px; text-decoration-thickness: 1.1px; }
+.m365-md code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 12px; background: #F5F5F5; border-radius: 3px; padding: 0 3px; }
+.m365-md ul, .m365-md ol { margin: 0 0 9.6px; padding-left: 22.3px; }
+.m365-md .m365-block:has(> :is(p, h1, h2, h3, h4)) + .m365-block > :is(ul, ol):first-child, .m365-md :is(p, h1, h2, h3, h4) + :is(ul, ol) { margin-top: -3.2px; }
+.m365-md li { margin: 0; }
+.m365-md ul { list-style: none; }
+.m365-md ul > li { position: relative; }
+.m365-md ul > li::before { content: ""; position: absolute; left: -14.6px; top: 10.4px; width: 3.6px; height: 3.6px; border-radius: 50%; background: currentColor; }
+.m365-md ol > li::marker { font-size: 12px; }
+.m365-md ul ul, .m365-md ol ul, .m365-md ul ol { margin: 0; }
+.m365-md h1, .m365-md h2, .m365-md h3, .m365-md h4 { font-weight: 600; margin: 20px 0 12px; }
+.m365-md h1 { font-size: 22.4px; line-height: 30px; }
+.m365-md h2 { font-size: 20.8px; line-height: 28px; }
+.m365-md h3 { font-size: 16px; line-height: 22px; margin: 13px 0 10px; }
+.m365-md h4 { font-size: 13px; line-height: 22px; }
+.m365-md hr { border: 0; border-top: 1px solid #DBDBDB; margin: 22px 0 27.6px; }
+.m365-md > .m365-block:first-child > hr:first-child { margin-top: 22.4px; }
+.m365-md table { border-collapse: collapse; margin: 4px 0 12px; font-size: 12px; line-height: 18px; width: auto; max-width: 100%; }
+.m365-md th, .m365-md td { text-align: left; padding: 7px 16px 7px 0; border-bottom: 1px solid var(--m-line); vertical-align: top; }
+.m365-md th { font-weight: 600; border-bottom-color: #D1D1D1; }
+.m365-md tr:last-child td { border-bottom: 0; }
+.m365-fresh { animation: m365-in .42s ease-out both; }
+@keyframes m365-in { from { opacity: .3; } to { opacity: 1; } }
+.m365-actions { display: flex; gap: 6px; margin: 26.2px 0 0 -1.2px; }
+.m365-actions .m365-ic { width: 26px; height: 26px; display: grid; place-items: center; color: var(--m-ink); }
+.m365 .m365-thumb { position: absolute; right: 1.4px; width: 4.8px; border-radius: 2.4px; background: #7E7E7E; opacity: 0;
+  transition: opacity .25s linear; pointer-events: none; z-index: 4; }
+.m365 .m365-thumb.m365-show { opacity: 1; transition: none; }
