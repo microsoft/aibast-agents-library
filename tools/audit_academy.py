@@ -20,8 +20,8 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 AUDIT_SCHEMA = "aibast-academy-audit/1.0"
 ACADEMY_SCHEMA = "aibast-academy/1.0"
-EXPECTED_COURSES = 66
-EXPECTED_SKILLS = 491
+EXPECTED_COURSES = 65
+EXPECTED_SKILLS = 485
 EXPECTED_PATHS = 6
 EXPECTED_INDUSTRIES = 12
 EXPECTED_MILESTONES = 6

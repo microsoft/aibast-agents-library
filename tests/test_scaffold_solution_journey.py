@@ -17,7 +17,6 @@ from tools.scaffold_solution_journey import (
     choose_frame_resources,
     expected_result,
     load_context,
-    production_seam,
     scaffold,
 )
 from tools import build_solution_export
@@ -312,14 +311,12 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert "Clawpilot" not in generated
     for generated in (guide_html, quest, tutorial):
         assert "localStorage" in generated
-    assert "GitHub Copilot + Brainstem (optional)" in quest
+    assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
     assert "Personless harness article" not in quest
     assert "kodyw.com" not in quest
     assert "Download generic workshop agent" in quest
-    assert "Skeptic comparison" not in quest
-    assert "Default lane — GitHub Copilot only:" in quest
-    assert "Optional Brainstem lane:" in quest
+    assert "Skeptic comparison" in quest
     assert "aibast:workshop-engine" in quest
     assert 'data-easy-lane-button' not in quest
     assert "Workshop settings" in quest
@@ -1045,31 +1042,3 @@ def test_explicit_source_bundle_rejects_unsafe_or_ambiguous_selection(tmp_path, 
     }))
     with pytest.raises(ValueError):
         build_solution_export.build(manifest)
-
-
-def test_production_seam_keeps_system_names_in_the_connection_template():
-    assert production_seam("Dynamics 365 Customer Service") == (
-        "Replace packaged synthetic inputs with an approved Dynamics 365 Customer Service connection; "
-        "preserve the reviewed input and output contract."
-    )
-
-
-def test_production_seam_renders_binding_policies_as_readable_instructions():
-    seam = production_seam("Bind only customer-approved systems after security, privacy, and business-owner review")
-    assert seam == (
-        "Replace packaged synthetic inputs only through approved connections: bind only customer-approved "
-        "systems after security, privacy, and business-owner review; preserve the reviewed input and output contract."
-    )
-    assert "an approved Bind" not in seam
-
-
-def test_published_field_guides_never_wrap_a_policy_as_a_connection_name():
-    root = Path(__file__).resolve().parents[1]
-    wrapped = re.compile(r"with an approved (?:Bind|Connect|Keep|Never|Only|Replace|Use)\b")
-    offenders = [
-        str(path.relative_to(root))
-        for pattern in ("solutions/*/FIELD-GUIDE.md", "solutions/*/field-guide.html")
-        for path in sorted(root.glob(pattern))
-        if wrapped.search(path.read_text(encoding="utf-8"))
-    ]
-    assert not offenders, f"garbled production seam in: {offenders}"

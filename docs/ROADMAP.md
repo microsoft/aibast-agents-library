@@ -13,7 +13,6 @@ use the linked issues, pull requests, and release gates for current status.
 | M3 Grail species regression | Species contract and drift ledger in CI; installer fixes that belong upstream returned to the Grail |
 | M4 Academy promotion | Microsoft AI Academy promoted from staging to production after soaking on the ring |
 | M5 v1 GA blockers | Upstream licensing, Discussions and metrics token on the Microsoft repository, Microsoft-owned auth worker |
-| M6 AIBAST Frontier way forward | Decisions, impact clock, evergreen engine and FY27 plan in [WAY-FORWARD.md](WAY-FORWARD.md) |
 
 Principles that do not change between milestones:
 

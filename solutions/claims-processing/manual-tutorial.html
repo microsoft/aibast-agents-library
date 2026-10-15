@@ -66,9 +66,9 @@
       try {
         backend = globalThis.localStorage;
         const storedEngine =
-          localStorage.getItem("aibast:workshop-engine") === "brainstem"
-            ? "brainstem"
-            : "copilot";
+          localStorage.getItem("aibast:workshop-engine") === "copilot"
+            ? "copilot"
+            : "brainstem";
         memory.set(engineKey, storedEngine);
         const probeKey = "aibast:workshop-storage-probe";
         backend.setItem(probeKey, "1");

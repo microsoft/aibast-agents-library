@@ -72,25 +72,11 @@ python -m pytest tests/test_local_agents.py::TestLocalStorage::test_write_and_re
 python build_registry.py
 python -m pytest tests -v
 
-# Generate and check the pilot runbooks (repository root)
-python tools/build_solution_runbooks.py
-python tools/build_solution_runbooks.py --check
-python -m pytest tests/test_solution_runbooks.py -q
-
 # Health check
 curl -s localhost:7071/health | python3 -m json.tool
 ```
 
 No linter or type-checker is configured.
-
-The runbook generator currently writes the `ask-hr` and
-`building-permit-processing` pilots; add another solution to `RUNBOOK_SOLUTIONS`
-only after its notes file is authored and validates, then regenerate rather
-than hand-editing `01-solutions/`.
-
-The runbooks are example templates covering the full path to a production
-build; the customer or partner must adapt them to specific requirements and
-connect their own systems, identity, data, and governance.
 
 ## API Endpoints
 
@@ -164,13 +150,3 @@ class MyAgent(BasicAgent):
 ## Downstream Sync Safety
 
 Never overwrite AIBAST-owned content with Grail equivalents: `agents/@aibast-agents-library/`, `registry.json`, `build_registry.py`, `rapp_ai/`, root `README.md`/`index.html`/`CLAUDE.md`, `docs/index.html`, `docs/tutorial.html`, `docs/rapp-guide.html`, `.github/`, legal/governance files, `.vscode/`, and `tools/`. Rewrite only Grail repository-identity URLs to `microsoft/aibast-agents-library`; review content-repository links such as CommunityRAPP individually.
-
-Also preserve these AIBAST-owned runbook surfaces during every kernel sync:
-
-- `00-overview/` — hand-authored narrative with a generated taxonomy block
-- `01-solutions/` — generated solution runbooks; never hand-edit
-- `02-patterns/` — reusable-pattern guidance and the `patterns.json` index
-- `03-references/` — delivery references and glossary
-- `solutions/runbook-notes/<slug>.json` — hand-authored per-solution delivery guidance
-- `tools/build_solution_runbooks.py` and `tools/markdown_links.py` — generator and case-exact Markdown link checker
-- `tests/test_solution_runbooks.py` — repository-level runbook gate, not a vendored kernel test

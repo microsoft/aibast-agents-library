@@ -25,10 +25,10 @@ items, refunds funds, creates orders, or completes purchases.
 | --- | --- |
 | Customer field guide | `solutions/personalized-shopping-assistant/field-guide.html` |
 | Evidence report | `solutions/personalized-shopping-assistant/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/personalized-shopping-assistant/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/personalized-shopping-assistant/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/personalized-shopping-assistant/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/personalized-shopping-assistant/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/personalized-shopping-assistant/quest.html` |
 | Literal browser tutorial | `solutions/personalized-shopping-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/personalized-shopping-assistant/export-manifest.json` |

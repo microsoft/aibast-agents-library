@@ -32,10 +32,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/reporting-package-validation/field-guide.html` |
 | Evidence report | `solutions/reporting-package-validation/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/reporting-package-validation/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/reporting-package-validation/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/reporting-package-validation/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/reporting-package-validation/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/reporting-package-validation/quest.html` |
 | Literal browser tutorial | `solutions/reporting-package-validation/manual-tutorial.html` |
 | Raw export manifest | `solutions/reporting-package-validation/export-manifest.json` |

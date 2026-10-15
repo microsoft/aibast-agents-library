@@ -158,10 +158,10 @@ def test_shared_demo_loads_exact_regulatory_transcripts():
     demo = (
         ROOT / "solutions" / "_shared" / "m365-copilot-demo.html"
     ).read_text(encoding="utf-8")
+    scenarios = read_json(ROOT / "solutions" / "_shared" / "demo-scenarios.json")["scenarios"]
     for scenario, case_id in SCENARIO_CASES.items():
-        assert f'"{scenario}": {{' in demo
-        assert f'caseId: "{case_id}"' in demo
-    assert 'solution: "fs-regulatory-compliance"' in demo
+        assert scenarios[scenario]["case_id"] == case_id
+        assert scenarios[scenario]["folder"] == "fs-regulatory-compliance"
     assert "Exact Brainstem transcript" in demo
 
 

@@ -688,6 +688,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: 0.73rem;
 }
 .results-head strong { color: var(--cp-text); }
+[hidden] { display: none !important; }
+/* Upvotes are paused until the Discussion sync works again (see metrics.html HIDDEN_METRICS). */
+.agent-upvote { display: none !important; }
 .upvote-explainer {
   margin: 0;
   padding: 10px 18px;
@@ -781,6 +784,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   color: var(--cp-text-muted);
   font-size: 0.6rem;
   font-weight: 750;
+}
+.badge-request {
+  color: var(--cp-link);
+  text-decoration: none;
+}
+.badge-request:hover,
+.badge-request:focus-visible {
+  border-color: currentColor;
+  text-decoration: underline;
 }
 .badge.proven {
   border-color: var(--cp-success);
@@ -1608,7 +1620,7 @@ footer {
     </div>
 
     <div class="active-filters" id="active-filters"></div>
-    <p class="upvote-explainer">Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
+    <p class="upvote-explainer" hidden>Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
     <div class="results-head" id="workshops">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
@@ -2685,7 +2697,7 @@ function agentCard(agent) {
   badges.push(`<span class="badge stage-badge">${esc(journeyStage(agent))}</span>`);
   if (agent._demo && agent._demo.case_count) badges.push(`<span class="badge proven">Demo proven</span>`);
   else if (solution.has_demo_video) badges.push(`<span class="badge demo">Demo available</span>`);
-  if (solution.has_onepager) badges.push(`<span class="badge">One-pager</span>`);
+  if (solution.has_onepager) badges.push(onepagerRequestBadge(agent));
   if ((solution.sample_prompts || []).length) badges.push(`<span class="badge demo">${solution.sample_prompts.length} demos</span>`);
   return `
     <article class="agent-card" tabindex="0" data-action="open-agent" data-name="${enc(agent.name)}">
@@ -2923,9 +2935,9 @@ function architectureHTML(architecture, solution, agentName) {
   const fieldGuideUrl = packageInfo.slug
     ? `solutions/${packageInfo.slug}/field-guide.html`
     : "";
-  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "brainstem"
-    ? "GitHub Copilot + Brainstem (optional)"
-    : "GitHub Copilot";
+  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "copilot"
+    ? "GitHub Copilot"
+    : "GitHub Copilot + Brainstem";
   return `
     <div class="architecture-body">
       <h3>Solution architecture</h3>
@@ -2949,12 +2961,12 @@ function architectureHTML(architecture, solution, agentName) {
         `).join("")}
       </div>
       <h3>Learn and build</h3>
-      <p>The workshop is the single entry point, and it is fully completable with GitHub Copilot and Copilot Studio; no RAPP Brainstem install is required. Step one opens GitHub Copilot Chat in VS Code; the remaining steps teach the use case, run the globally configured Easy harness, and keep the complete Manual mode inline on the same page.</p>
+      <p>The workshop is the single entry point. Step one lets GitHub Copilot in VS Code install the stable RAPP Brainstem from its canonical onboarding skill; the remaining steps teach the use case, run the globally configured Easy harness, and keep the complete Manual mode inline on the same page.</p>
       <div class="capability-grid">
         <article class="capability-card">
           <code>Step 1</code>
-          <strong>Open the workshop</strong>
-          <p>Select Open workshop below, then open GitHub Copilot Chat in VS Code and choose Agent mode. The lane skill carries discovery, testing, and Draft deployment; no RAPP Brainstem install is needed.</p>
+          <strong>Install RAPP Brainstem with Copilot</strong>
+          <p>Paste one setup prompt into GitHub Copilot Agent mode. Copilot runs the stable installer, pauses only for authentication or approval, verifies the health endpoint, and opens the chat.</p>
         </article>
         <article class="capability-card">
           <code>Guided Easy mode</code>
@@ -2965,11 +2977,6 @@ function architectureHTML(architecture, solution, agentName) {
           <code>Build it yourself</code>
           <strong>Manual mode — inline manual tutorial</strong>
           <p>Use the Manual tab inside the same workshop to reproduce every reviewed Copilot Studio action and Preview gate. No separate prompt or PAC command block is required here.</p>
-        </article>
-        <article class="capability-card">
-          <code>Optional</code>
-          <strong>RAPP Brainstem (optional)</strong>
-          <p>Not needed for any workshop. To add a personal, on-device training AI alongside Copilot, <a href="docs/installer.html">set up the RAPP Brainstem</a>, then choose GitHub Copilot + Brainstem (optional) in Workshop settings.</p>
         </article>
       </div>
       <div class="detail-actions">
@@ -2989,6 +2996,13 @@ function requestFormSolutionName(agent) {
 function requestFormUrl(agent) {
   const solutionName = requestFormSolutionName(agent);
   return `${REQUEST_FORM}&${REQUEST_FORM_SOLUTION_FIELD}=${enc(JSON.stringify(solutionName))}`;
+}
+
+// One-pagers and demo videos are gated by the request form, so the badge goes straight there.
+function onepagerRequestBadge(agent) {
+  return `<a class="badge badge-request" href="${esc(requestFormUrl(agent))}" target="_blank"
+    rel="noopener" data-action="stop"
+    aria-label="Request the one-pager for ${esc(shown(agent))}">Request one-pager ↗</a>`;
 }
 
 function fieldAssetRow(label, filename, available, formUrl) {
@@ -3040,7 +3054,7 @@ function openAgent(name) {
           <div class="badges">
             ${agent._demo && agent._demo.case_count ? `<span class="badge proven">Demo proven</span>` : ""}
             ${solution.has_demo_video ? `<span class="badge demo">Recorded demo</span>` : ""}
-            ${solution.has_onepager ? `<span class="badge">One-pager</span>` : ""}
+            ${solution.has_onepager ? onepagerRequestBadge(agent) : ""}
           </div>
           ${agentUpvoteControl(agent)}
         </div>

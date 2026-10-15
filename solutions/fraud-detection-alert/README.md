@@ -35,10 +35,10 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | --- | --- |
 | Customer field guide | `solutions/fraud-detection-alert/field-guide.html` |
 | Evidence report | `solutions/fraud-detection-alert/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/fraud-detection-alert/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/fraud-detection-alert/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/fraud-detection-alert/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/fraud-detection-alert/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/fraud-detection-alert/quest.html` |
 | Literal browser tutorial | `solutions/fraud-detection-alert/manual-tutorial.html` |
 | Raw export manifest | `solutions/fraud-detection-alert/export-manifest.json` |

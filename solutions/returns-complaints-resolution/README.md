@@ -25,10 +25,10 @@ refund, credit, replacement, shipment, reservation, or customer message.
 | --- | --- |
 | Customer field guide | `solutions/returns-complaints-resolution/field-guide.html` |
 | Evidence report | `solutions/returns-complaints-resolution/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/returns-complaints-resolution/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/returns-complaints-resolution/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/returns-complaints-resolution/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/returns-complaints-resolution/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/returns-complaints-resolution/quest.html` |
 | Literal browser tutorial | `solutions/returns-complaints-resolution/manual-tutorial.html` |
 | Raw export manifest | `solutions/returns-complaints-resolution/export-manifest.json` |

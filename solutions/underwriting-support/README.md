@@ -35,10 +35,10 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | --- | --- |
 | Customer field guide | `solutions/underwriting-support/field-guide.html` |
 | Evidence report | `solutions/underwriting-support/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/underwriting-support/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/underwriting-support/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/underwriting-support/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/underwriting-support/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/underwriting-support/quest.html` |
 | Literal browser tutorial | `solutions/underwriting-support/manual-tutorial.html` |
 | Raw export manifest | `solutions/underwriting-support/export-manifest.json` |

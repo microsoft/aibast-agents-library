@@ -52,10 +52,10 @@ side effect.
 | --- | --- |
 | Customer field guide | `solutions/inventory-rebalancing/field-guide.html` |
 | Evidence report | `solutions/inventory-rebalancing/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/inventory-rebalancing/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/inventory-rebalancing/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/inventory-rebalancing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/inventory-rebalancing/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/inventory-rebalancing/quest.html` |
 | Literal browser tutorial | `solutions/inventory-rebalancing/manual-tutorial.html` |
 | Raw export manifest | `solutions/inventory-rebalancing/export-manifest.json` |

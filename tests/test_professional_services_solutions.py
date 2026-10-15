@@ -355,13 +355,11 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "brainstem" not in copilot_skill.lower()
     assert len(cases) == 9
 
-    assert "GitHub Copilot + Brainstem (optional)" in quest
+    assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
     assert "Personless harness" not in quest
     assert "kodyw.com/the-personless-harness" not in quest
-    assert "Skeptic comparison" not in quest
-    assert "Default lane — GitHub Copilot only:" in quest
-    assert "Optional Brainstem lane:" in quest
+    assert "Skeptic comparison" in quest
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest

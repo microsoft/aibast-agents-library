@@ -180,9 +180,7 @@ def mode_button_records(page):
     ]
 
 
-def run_easy_runtime(page, path, stored_engine=None, marked_lane=None):
-    engine_lane = "brainstem" if stored_engine == "brainstem" else "copilot"
-    lane = marked_lane or engine_lane
+def run_easy_runtime(page, path):
     quest_script = scripts(page)[-1]
     start = quest_script.index("const ACHIEVEMENT_PROFILE_KEY")
     end = quest_script.index("const ACHIEVEMENT_CANONICAL_AGENT")
@@ -202,7 +200,7 @@ def run_easy_runtime(page, path, stored_engine=None, marked_lane=None):
     button_records = mode_button_records(page)
     assert button_records
     expected_total = sum(
-        record["dataset"]["achievementsPath"] in {engine_lane, "shared"}
+        record["dataset"]["achievementsPath"] in {"brainstem", "shared"}
         for record in records
     )
     probe = f"""
@@ -211,9 +209,6 @@ global.localStorage = {{
   getItem(key) {{ return values.has(key) ? values.get(key) : null; }},
   setItem(key, value) {{ values.set(key, value); }},
 }};
-const storedEngine = {json.dumps(stored_engine)};
-if (storedEngine !== null) localStorage.setItem("aibast:workshop-engine", storedEngine);
-const lane = {json.dumps(lane)};
 function readWorkshopStorage(key, fallback = null) {{
   try {{
     const value = localStorage.getItem(key);
@@ -251,7 +246,7 @@ function markGroup(group) {{
   boxes
     .filter((box) =>
       box.dataset.achievementsGroup === group &&
-      [lane, "shared"].includes(box.dataset.achievementsPath))
+      ["brainstem", "shared"].includes(box.dataset.achievementsPath))
     .forEach((box) => {{ box.checked = true; }});
   evaluateAchievement(false, true);
   return snapshot();
@@ -262,7 +257,7 @@ const stages = {{
   preview: markGroup("preview-proven"),
 }};
 boxes
-  .filter((box) => [lane, "shared"].includes(box.dataset.achievementsPath))
+  .filter((box) => ["brainstem", "shared"].includes(box.dataset.achievementsPath))
   .forEach((box) => {{ box.checked = true; }});
 evaluateAchievement(false, true);
 stages.complete = snapshot();
@@ -381,27 +376,7 @@ def test_easy_runtime_executes_checkpoint_groups_and_completion(
     assert_easy_runtime_complete(result, expected_total)
 
 
-def test_brainstem_lane_counts_only_after_the_learner_opts_in(
-    achievement_pages,
-    tmp_path,
-):
-    without_opt_in, _ = run_easy_runtime(
-        achievement_pages["quest"],
-        tmp_path / "brainstem-lane-without-opt-in.js",
-        marked_lane="brainstem",
-    )
-    assert "workshop-complete" not in without_opt_in["complete"]["achievements"]
-    assert without_opt_in["complete"]["progress"].get("easyComplete") is not True
-
-    opted_in, expected_total = run_easy_runtime(
-        achievement_pages["quest"],
-        tmp_path / "brainstem-lane-opted-in.js",
-        stored_engine="brainstem",
-    )
-    assert_easy_runtime_complete(opted_in, expected_total)
-
-
-def test_visual_and_achievement_engines_fail_closed_to_copilot(
+def test_visual_and_achievement_engines_fail_closed_to_brainstem(
     achievement_pages,
     tmp_path,
 ):
@@ -469,16 +444,16 @@ console.log(JSON.stringify({{
     )
 
     assert result["visual"] == [
-        {"selected": "copilot", "error": None},
+        {"selected": "brainstem", "error": None},
+        {"selected": "brainstem", "error": None},
         {"selected": "brainstem", "error": None},
         {"selected": "copilot", "error": None},
-        {"selected": "copilot", "error": None},
     ]
-    assert result["visualDenied"] == {"selected": "copilot", "error": None}
+    assert result["visualDenied"] == {"selected": "brainstem", "error": None}
     assert result["achievement"] == [
-        "copilot",
         "brainstem",
-        "copilot",
+        "brainstem",
+        "brainstem",
         "copilot",
     ]
 
@@ -517,10 +492,9 @@ def test_named_checkpoint_conditions_and_existing_persistence(achievement_pages)
     assert 'parsed.filter((step) => typeof step === "string")' in manual
     assert "saved.includes(box.dataset.step)" in manual
     assert re.search(
-        r'===\s*"brainstem"\s*\?\s*"brainstem"\s*:\s*"copilot"',
+        r'===\s*"copilot"\s*\?\s*"copilot"\s*:\s*"brainstem"',
         quest,
     )
-    assert not re.search(r'\?\s*"copilot"\s*:\s*"brainstem"', quest)
 
 
 def test_quest_syncs_all_earned_ids_without_automatic_submission(achievement_pages):

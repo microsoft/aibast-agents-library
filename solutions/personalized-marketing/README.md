@@ -29,10 +29,10 @@ offer, launches a campaign, issues a reward, or completes a purchase.
 | --- | --- |
 | Customer field guide | `solutions/personalized-marketing/field-guide.html` |
 | Evidence report | `solutions/personalized-marketing/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/personalized-marketing/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/personalized-marketing/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/personalized-marketing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/personalized-marketing/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/personalized-marketing/quest.html` |
 | Literal browser tutorial | `solutions/personalized-marketing/manual-tutorial.html` |
 | Raw export manifest | `solutions/personalized-marketing/export-manifest.json` |

@@ -32,10 +32,10 @@ The local agent uses fictional records and produces decision support only. It do
 | --- | --- |
 | Customer field guide | `solutions/supply-chain-disruption-alert/field-guide.html` |
 | Evidence report | `solutions/supply-chain-disruption-alert/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/supply-chain-disruption-alert/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/supply-chain-disruption-alert/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/supply-chain-disruption-alert/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/supply-chain-disruption-alert/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/supply-chain-disruption-alert/quest.html` |
 | Literal browser tutorial | `solutions/supply-chain-disruption-alert/manual-tutorial.html` |
 | Raw export manifest | `solutions/supply-chain-disruption-alert/export-manifest.json` |

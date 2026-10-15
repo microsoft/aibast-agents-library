@@ -24,10 +24,10 @@ concepts, and incentive scenarios only; it contacts nobody and changes no cart.
 | --- | --- |
 | Customer field guide | `solutions/cart-abandonment-recovery/field-guide.html` |
 | Evidence report | `solutions/cart-abandonment-recovery/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/cart-abandonment-recovery/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/cart-abandonment-recovery/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/cart-abandonment-recovery/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/cart-abandonment-recovery/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/cart-abandonment-recovery/quest.html` |
 | Literal browser tutorial | `solutions/cart-abandonment-recovery/manual-tutorial.html` |
 | Raw export manifest | `solutions/cart-abandonment-recovery/export-manifest.json` |

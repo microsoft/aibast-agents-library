@@ -23,7 +23,7 @@ def test_rollout_audit_tracks_every_advertised_onepager_solution():
         if agent.get("_solution") and agent["_solution"].get("has_onepager")
     }
     assert {row["name"] for row in rows} == expected
-    assert len(rows) == 66
+    assert len(rows) == 65
 
 
 def test_completed_journeys_pass_every_rollout_gate():

@@ -1925,7 +1925,7 @@ html[data-theme="dark"] {
         <div>
           <p class="section-kicker">Capability journey</p>
           <h2 id="ecosystem-title">From hosted skill to Microsoft impact.</h2>
-          <p class="section-intro">Each course builds and tests through GitHub Copilot, then stops at a reviewed Copilot Studio Draft; no RAPP Brainstem install is required, and the Brainstem remains an optional track. Product names on course cards describe business context, not a promise that every integration is taught.</p>
+          <p class="section-intro">Each course builds and tests through GitHub Copilot or RAPP Brainstem, then stops at a reviewed Copilot Studio Draft. Product names on course cards describe business context, not a promise that every integration is taught.</p>
         </div>
       </div>
       <ol class="ecosystem-strip" id="ecosystemStrip" aria-live="polite" aria-busy="true">
@@ -3414,13 +3414,13 @@ html[data-theme="dark"] {
         appendText(
           buildSection,
           "p",
-          "GitHub Copilot → Copilot Studio Draft (RAPP Brainstem optional)",
+          "GitHub Copilot / RAPP Brainstem → Copilot Studio Draft",
           "context-label"
         );
         const buildPath = document.createElement("ol");
         buildPath.className = "build-path";
         [
-          ["1", "Build and test", "GitHub Copilot with synthetic, reviewable evidence; the RAPP Brainstem is an optional track, never a requirement."],
+          ["1", "Build and test", "GitHub Copilot or RAPP Brainstem with synthetic, reviewable evidence."],
           ["2", "Deploy for review", "Copilot Studio Draft, kept unpublished unless separate approval is granted."]
         ].forEach(([index, titleText, descriptionText]) => {
           const item = document.createElement("li");

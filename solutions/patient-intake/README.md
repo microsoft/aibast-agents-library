@@ -39,10 +39,10 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | --- | --- |
 | Customer field guide | `solutions/patient-intake/field-guide.html` |
 | Evidence report | `solutions/patient-intake/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/patient-intake/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/patient-intake/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/patient-intake/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/patient-intake/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/patient-intake/quest.html` |
 | Literal browser tutorial | `solutions/patient-intake/manual-tutorial.html` |
 | Raw export manifest | `solutions/patient-intake/export-manifest.json` |

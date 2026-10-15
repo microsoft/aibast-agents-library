@@ -892,7 +892,7 @@ def test_rejects_reshoot_source_download_link(tmp_path):
     )
 
 
-def test_repository_requires_exactly_66_advertised_slugs(monkeypatch, tmp_path):
+def test_repository_requires_exactly_65_advertised_slugs(monkeypatch, tmp_path):
     slugs = [f"workshop-{index:02d}" for index in range(50)]
     monkeypatch.setattr(
         audit.course,
@@ -934,6 +934,6 @@ def test_repository_requires_exactly_66_advertised_slugs(monkeypatch, tmp_path):
     assert report["totals"]["workshops"] == 50
     assert report["totals"]["failed"] == 50
     assert report["global_failures"] == [
-        "advertised workshop count 50 != 66",
-        "base course audit did not resolve exactly 66 workshops",
+        "advertised workshop count 50 != 65",
+        "base course audit did not resolve exactly 65 workshops",
     ]

@@ -107,10 +107,10 @@ local file availability alone is not public-delivery evidence.
 | --- | --- |
 | Customer field guide | `solutions/portfolio-rebalancing/field-guide.html` |
 | Evidence report | `solutions/portfolio-rebalancing/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/portfolio-rebalancing/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/portfolio-rebalancing/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/portfolio-rebalancing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/portfolio-rebalancing/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/portfolio-rebalancing/quest.html` |
 | Literal browser tutorial | `solutions/portfolio-rebalancing/manual-tutorial.html` |
 | Raw export manifest | `solutions/portfolio-rebalancing/export-manifest.json` |

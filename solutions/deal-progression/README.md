@@ -43,10 +43,10 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | --- | --- |
 | Customer field guide | `solutions/deal-progression/field-guide.html` |
 | Evidence report | `solutions/deal-progression/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/deal-progression/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/deal-progression/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/deal-progression/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/deal-progression/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/deal-progression/quest.html` |
 | Literal browser tutorial | `solutions/deal-progression/manual-tutorial.html` |
 | Raw export manifest | `solutions/deal-progression/export-manifest.json` |

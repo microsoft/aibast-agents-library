@@ -31,7 +31,7 @@ except ModuleNotFoundError:
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = "aibast-workshop-course-rollout-audit/1.0"
-EXPECTED_WORKSHOPS = 66
+EXPECTED_WORKSHOPS = 65
 VISUAL_SCHEMA = "aibast-visual-checkpoints/1.0"
 BROWSERFILM_SCHEMA = "rapp-browserfilm/1.0"
 RAW_SUFFIXES = {".md", ".json", ".py"}
@@ -726,20 +726,20 @@ def check_quest_runtime_contract(
     label = "quest.html"
     source = script_source(parser)
     engine_defaults = re.findall(
-        r"===\s*['\"]brainstem['\"]\s*\?\s*['\"]brainstem['\"]"
-        r"\s*:\s*['\"]copilot['\"]",
+        r"===\s*['\"]copilot['\"]\s*\?\s*['\"]copilot['\"]"
+        r"\s*:\s*['\"]brainstem['\"]",
         source,
     )
     if len(engine_defaults) < 2:
         failures.add(
-            f"{label}: visual and achievement engines must both default to copilot"
+            f"{label}: visual and achievement engines must both default to brainstem"
         )
     if re.search(
-        r"===\s*['\"]copilot['\"]\s*\?\s*['\"]copilot['\"]"
-        r"\s*:\s*['\"]brainstem['\"]",
+        r"===\s*['\"]brainstem['\"]\s*\?\s*['\"]brainstem['\"]"
+        r"\s*:\s*['\"]copilot['\"]",
         source,
     ):
-        failures.add(f"{label}: legacy Brainstem-default engine selection remains")
+        failures.add(f"{label}: legacy Copilot-default engine selection remains")
 
     checkpoint_tags = [
         tag
@@ -1148,17 +1148,17 @@ def check_field_guide(
         if token not in script_text:
             failures.add(f"{label}: theme/global engine script lacks {token}")
     if not re.search(
-        r"===\s*['\"]brainstem['\"]\s*\?\s*['\"]brainstem['\"]"
-        r"\s*:\s*['\"]copilot['\"]",
-        script_text,
-    ):
-        failures.add(f"{label}: visual engine does not default to copilot")
-    if re.search(
         r"===\s*['\"]copilot['\"]\s*\?\s*['\"]copilot['\"]"
         r"\s*:\s*['\"]brainstem['\"]",
         script_text,
     ):
-        failures.add(f"{label}: legacy Brainstem-default engine selection remains")
+        failures.add(f"{label}: visual engine does not default to brainstem")
+    if re.search(
+        r"===\s*['\"]brainstem['\"]\s*\?\s*['\"]brainstem['\"]"
+        r"\s*:\s*['\"]copilot['\"]",
+        script_text,
+    ):
+        failures.add(f"{label}: legacy Copilot-default engine selection remains")
     if "aibast field guide" not in parser.visible_text.lower():
         failures.add(f"{label}: missing AIBAST field-guide branding")
     if not has_href(parser, "workshop-settings.html"):

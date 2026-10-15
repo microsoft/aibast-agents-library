@@ -25,10 +25,10 @@ replenishes, allocates, promises, or purchases inventory.
 | --- | --- |
 | Customer field guide | `solutions/inventory-visibility/field-guide.html` |
 | Evidence report | `solutions/inventory-visibility/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/inventory-visibility/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/inventory-visibility/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/inventory-visibility/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/inventory-visibility/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/inventory-visibility/quest.html` |
 | Literal browser tutorial | `solutions/inventory-visibility/manual-tutorial.html` |
 | Raw export manifest | `solutions/inventory-visibility/export-manifest.json` |

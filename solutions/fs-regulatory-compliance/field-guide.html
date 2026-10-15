@@ -66,9 +66,9 @@
       try {
         backend = globalThis.localStorage;
         const storedEngine =
-          localStorage.getItem("aibast:workshop-engine") === "brainstem"
-            ? "brainstem"
-            : "copilot";
+          localStorage.getItem("aibast:workshop-engine") === "copilot"
+            ? "copilot"
+            : "brainstem";
         memory.set(engineKey, storedEngine);
         const probeKey = "aibast:workshop-storage-probe";
         backend.setItem(probeKey, "1");
@@ -124,7 +124,7 @@
       const storedEngine =
         globalThis.aibastWorkshopStorage.getItem("aibast:workshop-engine");
       const engine =
-        storedEngine === "brainstem" ? "brainstem" : "copilot";
+        storedEngine === "copilot" ? "copilot" : "brainstem";
       document.documentElement.setAttribute("data-workshop-engine", engine);
     })();
   </script>
@@ -619,11 +619,10 @@ html[data-theme="dark"] {
     <details class="card brainstem-crash-course">
       <summary>Facilitator crash course: optional Brainstem track</summary>
       <div class="certification-content">
-        <div class="notice"><strong>Optional:</strong> skip this crash course unless participants choose <strong>GitHub Copilot + Brainstem (optional)</strong> in Workshop settings. Every workshop is fully completable with GitHub Copilot and Copilot Studio; the default lane needs no Brainstem install.</div>
         <p>Brainstem is the learner's local-first, inspectable agent runtime. GitHub Copilot remains the familiar work surface; Brainstem adds persistent local workshop context, hot-loaded Python agents, and a visible tool-calling loop. Core setup uses the learner's GitHub account with Copilot access and requires no separate model API key.</p>
         <div class="notice"><strong>Canonical preparation source:</strong> this guide uses the <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Microsoft AIBAST Brainstem installer</a>. The former upstream Grail installer is not used by this Microsoft/AIBAST workshop path.</div>
 
-        <h3>Optional pre-work: only Brainstem-track participants install it</h3>
+        <h3>Pre-work: participants install it themselves</h3>
         <div class="certification-grid">
           <section>
             <h3>macOS / Linux</h3>
@@ -678,15 +677,15 @@ html[data-theme="dark"] {
 
     <h2>Use your configured Easy-mode harness</h2>
     <section class="engine-panel copilot card">
-      <h3>GitHub Copilot only (default)</h3>
-      <p>Attach the Copilot-only skill. It carries discovery, local testing, Draft deployment, and Preview validation directly in the active Copilot session. No Brainstem install is needed.</p>
+      <h3>GitHub Copilot only</h3>
+      <p>Attach the Copilot-only skill. It carries discovery, local testing, Draft deployment, and Preview validation directly in the active Copilot session.</p>
       <p><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></p>
       <div class="prompt">Give me Regulatory Compliance using Easy Mode and test it for me.</div>
       <div class="prompt">Deploy it into Copilot Studio for me.</div>
     </section>
     <section class="engine-panel brainstem card">
-      <h3>GitHub Copilot + Brainstem (optional)</h3>
-      <p>Optional lane for learners who select it in Workshop settings. Attach the Brainstem skill. Copilot remains the work surface while the personal, on-device training AI persists the workshop and executes the generic engine handoffs.</p>
+      <h3>GitHub Copilot + Brainstem</h3>
+      <p>Attach the Brainstem skill. Copilot remains the work surface while the personal, on-device training AI persists the workshop and executes the generic engine handoffs.</p>
       <p><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></p>
       <div class="prompt">Give me Regulatory Compliance using Easy Mode and test it for me.</div>
       <div class="prompt">Deploy it into Copilot Studio for me.</div>

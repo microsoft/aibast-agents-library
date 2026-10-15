@@ -52,10 +52,10 @@ customer KPIs, measured operational results, or commitments.
 | --- | --- |
 | Customer field guide | `solutions/product-line-optimization/field-guide.html` |
 | Evidence report | `solutions/product-line-optimization/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/product-line-optimization/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/product-line-optimization/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/product-line-optimization/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/product-line-optimization/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/product-line-optimization/quest.html` |
 | Literal browser tutorial | `solutions/product-line-optimization/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-line-optimization/export-manifest.json` |

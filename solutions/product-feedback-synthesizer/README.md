@@ -31,10 +31,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/product-feedback-synthesizer/field-guide.html` |
 | Evidence report | `solutions/product-feedback-synthesizer/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/product-feedback-synthesizer/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/product-feedback-synthesizer/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/product-feedback-synthesizer/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/product-feedback-synthesizer/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/product-feedback-synthesizer/quest.html` |
 | Literal browser tutorial | `solutions/product-feedback-synthesizer/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-feedback-synthesizer/export-manifest.json` |

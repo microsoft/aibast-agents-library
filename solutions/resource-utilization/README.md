@@ -26,10 +26,10 @@ employment records, book revenue, approve training, or contact anyone.
 | --- | --- |
 | Customer field guide | `solutions/resource-utilization/field-guide.html` |
 | Evidence report | `solutions/resource-utilization/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/resource-utilization/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/resource-utilization/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/resource-utilization/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/resource-utilization/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/resource-utilization/quest.html` |
 | Literal browser tutorial | `solutions/resource-utilization/manual-tutorial.html` |
 | Raw export manifest | `solutions/resource-utilization/export-manifest.json` |

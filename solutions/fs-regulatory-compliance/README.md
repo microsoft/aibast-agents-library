@@ -84,10 +84,10 @@ reproduce this manual build.
 | --- | --- |
 | Customer field guide | `solutions/fs-regulatory-compliance/field-guide.html` |
 | Evidence report | `solutions/fs-regulatory-compliance/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/fs-regulatory-compliance/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/fs-regulatory-compliance/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/fs-regulatory-compliance/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/fs-regulatory-compliance/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/fs-regulatory-compliance/quest.html` |
 | Literal browser tutorial | `solutions/fs-regulatory-compliance/manual-tutorial.html` |
 | Raw export manifest | `solutions/fs-regulatory-compliance/export-manifest.json` |

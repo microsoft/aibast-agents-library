@@ -32,10 +32,10 @@ The local agent uses fictional records and produces decision support only. It do
 | --- | --- |
 | Customer field guide | `solutions/asset-maintenance-forecast/field-guide.html` |
 | Evidence report | `solutions/asset-maintenance-forecast/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/asset-maintenance-forecast/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/asset-maintenance-forecast/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/asset-maintenance-forecast/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/asset-maintenance-forecast/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/asset-maintenance-forecast/quest.html` |
 | Literal browser tutorial | `solutions/asset-maintenance-forecast/manual-tutorial.html` |
 | Raw export manifest | `solutions/asset-maintenance-forecast/export-manifest.json` |

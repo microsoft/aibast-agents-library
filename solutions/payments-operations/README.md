@@ -34,10 +34,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/payments-operations/field-guide.html` |
 | Evidence report | `solutions/payments-operations/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/payments-operations/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/payments-operations/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/payments-operations/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/payments-operations/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/payments-operations/quest.html` |
 | Literal browser tutorial | `solutions/payments-operations/manual-tutorial.html` |
 | Raw export manifest | `solutions/payments-operations/export-manifest.json` |

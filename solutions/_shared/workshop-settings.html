@@ -311,26 +311,17 @@ html[data-theme="dark"] {
     }
     .option strong, .option span { display: block; }
     .option span { margin-top: 4px; color: var(--cp-text-muted); }
-    .option a { color: var(--cp-link); }
-    .option .recommended,
-    .option .optional-badge {
+    .recommended {
       display: inline-flex;
       width: max-content;
-      margin: 0 0 5px;
+      margin-bottom: 5px;
       padding: 3px 7px;
       border-radius: 999px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-    }
-    .option .recommended {
-      background: var(--cp-accent);
-      color: var(--cp-accent-fg);
-    }
-    .option .optional-badge {
-      padding: 2px 6px;
-      border: 1px solid var(--cp-border-strong);
-      color: var(--cp-text-muted);
     }
     .actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .button {
@@ -410,17 +401,16 @@ html[data-theme="dark"] {
         <label class="option">
           <input type="radio" name="engine" value="copilot">
           <span>
-            <span class="recommended">Recommended: no local install</span>
             <strong>GitHub Copilot only</strong>
-            <span>The default. Use the familiar VS Code Copilot surface with the lane-specific skill carrying discovery, testing, deployment, and validation. Every workshop is fully completable with GitHub Copilot and Copilot Studio.</span>
+            <span>Use the familiar VS Code Copilot surface with the lane-specific skill carrying discovery, testing, deployment, and validation.</span>
           </span>
         </label>
         <label class="option">
           <input type="radio" name="engine" value="brainstem">
           <span>
-            <span class="optional-badge">Optional</span>
-            <strong>GitHub Copilot + Brainstem (optional)</strong>
-            <span>Add the personal, on-device training AI for persistent workshop state, hot-loaded agents, and autonomous handoffs. No workshop needs it; choose it only after you set up the <a href="../../docs/installer.html">RAPP Brainstem</a>.</span>
+            <span class="recommended">Default</span>
+            <strong>GitHub Copilot + Brainstem</strong>
+            <span>Add the optional personal, on-device training AI for persistent workshop state, hot-loaded agents, and autonomous handoffs.</span>
           </span>
         </label>
       </div>
@@ -454,9 +444,9 @@ html[data-theme="dark"] {
         return fallbackReturn.href;
       };
       const safeReturn = resolveReturn(requestedReturn);
-      const current = localStorage.getItem(key) === "brainstem"
-        ? "brainstem"
-        : "copilot";
+      const current = localStorage.getItem(key) === "copilot"
+        ? "copilot"
+        : "brainstem";
       const form = document.getElementById("settings-form");
       const back = document.getElementById("back-link");
       form.elements.engine.value = current;

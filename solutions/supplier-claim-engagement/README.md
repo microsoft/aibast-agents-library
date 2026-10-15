@@ -34,10 +34,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/supplier-claim-engagement/field-guide.html` |
 | Evidence report | `solutions/supplier-claim-engagement/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/supplier-claim-engagement/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/supplier-claim-engagement/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/supplier-claim-engagement/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/supplier-claim-engagement/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/supplier-claim-engagement/quest.html` |
 | Literal browser tutorial | `solutions/supplier-claim-engagement/manual-tutorial.html` |
 | Raw export manifest | `solutions/supplier-claim-engagement/export-manifest.json` |

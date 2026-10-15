@@ -50,10 +50,10 @@ staging deployment never substitute for live native evidence.
 | --- | --- |
 | Customer field guide | `solutions/procurement-agent/field-guide.html` |
 | Evidence report | `solutions/procurement-agent/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/procurement-agent/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/procurement-agent/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/procurement-agent/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/procurement-agent/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/procurement-agent/quest.html` |
 | Literal browser tutorial | `solutions/procurement-agent/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-agent/export-manifest.json` |

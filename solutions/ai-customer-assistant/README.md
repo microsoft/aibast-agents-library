@@ -41,10 +41,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/ai-customer-assistant/field-guide.html` |
 | Evidence report | `solutions/ai-customer-assistant/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/ai-customer-assistant/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/ai-customer-assistant/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/ai-customer-assistant/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/ai-customer-assistant/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/ai-customer-assistant/quest.html` |
 | Literal browser tutorial | `solutions/ai-customer-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/ai-customer-assistant/export-manifest.json` |

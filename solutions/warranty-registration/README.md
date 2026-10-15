@@ -32,10 +32,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/warranty-registration/field-guide.html` |
 | Evidence report | `solutions/warranty-registration/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/warranty-registration/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/warranty-registration/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/warranty-registration/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/warranty-registration/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/warranty-registration/quest.html` |
 | Literal browser tutorial | `solutions/warranty-registration/manual-tutorial.html` |
 | Raw export manifest | `solutions/warranty-registration/export-manifest.json` |

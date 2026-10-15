@@ -66,9 +66,9 @@
       try {
         backend = globalThis.localStorage;
         const storedEngine =
-          localStorage.getItem("aibast:workshop-engine") === "brainstem"
-            ? "brainstem"
-            : "copilot";
+          localStorage.getItem("aibast:workshop-engine") === "copilot"
+            ? "copilot"
+            : "brainstem";
         memory.set(engineKey, storedEngine);
         const probeKey = "aibast:workshop-storage-probe";
         backend.setItem(probeKey, "1");
@@ -124,7 +124,7 @@
       const storedEngine =
         globalThis.aibastWorkshopStorage.getItem("aibast:workshop-engine");
       const engine =
-        storedEngine === "brainstem" ? "brainstem" : "copilot";
+        storedEngine === "copilot" ? "copilot" : "brainstem";
       document.documentElement.setAttribute("data-workshop-engine", engine);
     })();
   </script>
@@ -695,7 +695,7 @@ html[data-theme="dark"] {
     <section class="learn-step" id="workshop-step-1">
       <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Open GitHub Copilot Chat</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: open GitHub Copilot Chat" data-report-expected="GitHub Copilot Chat is open in VS Code Agent mode, signed in with Copilot access." data-report-evidence="">Report an issue</button></header>
       <div class="learn-step-body">
-        <p>Start in GitHub Copilot Chat. No RAPP Brainstem or Frontier desktop app is needed: the default GitHub Copilot lane runs the whole workshop here, and the optional Brainstem lane's skill handles its own setup only if you choose it in Workshop settings.</p>
+        <p>Start in GitHub Copilot Chat. No Frontier desktop app is required; the selected lane's skill handles any additional setup.</p>
         <div class="action-panel">
           <strong>Get ready</strong>
           <ol>
@@ -727,53 +727,16 @@ html[data-theme="dark"] {
             <li>Use VS Code with GitHub Copilot Chat in Agent mode.</li>
             <li>Sign in to GitHub with Copilot access.</li>
             <li>Have access to a Copilot Studio environment.</li>
-            <li>No Brainstem install is needed: GitHub Copilot is the default harness, and the RAPP Brainstem is an optional track.</li>
             <li>Your workshop preference is saved globally; use <strong>Workshop settings</strong> to change it.</li>
             <li>Do not publish. This module ends with a validated Draft.</li>
           </ul>
         </article>
       </div>
 
-      <h2>Easy mode <span class="engine-label copilot">— GitHub Copilot only</span><span class="engine-label brainstem">— GitHub Copilot + Brainstem (optional)</span></h2>
-
-      <div class="easy-lane" data-easy-lane="copilot">
-        <div class="notice"><strong>Default lane — GitHub Copilot only:</strong> no Brainstem install is needed. GitHub Copilot carries the complete harness directly in the active session; the skill discovers every asset and runs every gate.</div>
-
-      <article class="learn-step" id="copilot-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
-        <div class="learn-step-body">
-          <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
-          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
-          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-achievements-group="onboarding" data-achievements-path="copilot"><span>I attached the correct lane skill.</span></label>
-        </div>
-      </article>
-
-      <article class="learn-step" id="copilot-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Customer Sentiment and Churn Prediction</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 6/6 locked local cases passed." data-report-evidence="">Report an issue</button></header>
-        <div class="learn-step-body">
-          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
-          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
-          <pre class="prompt-block" id="copilot-build-prompt">Give me Customer Sentiment and Churn Prediction using Easy Mode and test it for me.</pre>
-          <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 6/6 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local" data-achievements-group="local-proof" data-achievements-path="copilot"><span>I saw every locked local case pass.</span></label>
-        </div>
-      </article>
-
-      <article class="learn-step" id="copilot-step-4">
-        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 4: Draft deployment" data-report-expected="Draft Customer Sentiment Manual; model Claude Opus 5; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
-        <div class="learn-step-body">
-          <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
-          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
-          <pre class="prompt-block" id="copilot-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
-          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Customer Sentiment Manual</code></li><li>Model: <code>Claude Opus 5</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-draft" data-achievements-group="draft-builder" data-achievements-path="copilot"><span>I saw the Draft identity and unpublished state.</span></label>
-        </div>
-      </article>
-      </div>
+      <h2>Easy mode <span class="engine-label copilot">— GitHub Copilot only</span><span class="engine-label brainstem">— GitHub Copilot + Brainstem</span></h2>
 
       <div class="easy-lane" data-easy-lane="brainstem">
-        <div class="comparison-note"><strong>Optional Brainstem lane:</strong> for learners who choose GitHub Copilot + Brainstem (optional) in Workshop settings. Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
+        <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
 
       <article class="learn-step" id="brainstem-step-2">
         <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
@@ -804,6 +767,42 @@ html[data-theme="dark"] {
           <pre class="prompt-block" id="brainstem-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
           <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Customer Sentiment Manual</code></li><li>Model: <code>Claude Opus 5</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-draft" data-achievements-group="draft-builder" data-achievements-path="brainstem"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
+      </article>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="copilot">
+        <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
+
+      <article class="learn-step" id="copilot-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-achievements-group="onboarding" data-achievements-path="copilot"><span>I attached the correct lane skill.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Customer Sentiment and Churn Prediction</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 6/6 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-build-prompt">Give me Customer Sentiment and Churn Prediction using Easy Mode and test it for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 6/6 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local" data-achievements-group="local-proof" data-achievements-path="copilot"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 4: Draft deployment" data-report-expected="Draft Customer Sentiment Manual; model Claude Opus 5; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Customer Sentiment Manual</code></li><li>Model: <code>Claude Opus 5</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-draft" data-achievements-group="draft-builder" data-achievements-path="copilot"><span>I saw the Draft identity and unpublished state.</span></label>
         </div>
       </article>
       </div>
@@ -1674,9 +1673,9 @@ These skill names above are the ONLY valid skill identifiers. Never invent, gues
       });
 
       function currentEasyPath() {
-        return localStorage.getItem(globalEngineKey) === "brainstem"
-          ? "brainstem"
-          : "copilot";
+        return localStorage.getItem(globalEngineKey) === "copilot"
+          ? "copilot"
+          : "brainstem";
       }
 
       function requiredEasyBoxes() {

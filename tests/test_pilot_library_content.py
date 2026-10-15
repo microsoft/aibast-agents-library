@@ -23,7 +23,7 @@ def load_copy():
 def test_pilot_copy_is_hand_authored_and_complete():
     solutions = load_copy()
     assert PILOTS <= set(solutions)
-    assert len(solutions) == 66
+    assert len(solutions) == 65
     required = {
         "display_name",
         "sales_headline",
@@ -76,13 +76,13 @@ def test_public_sales_copy_uses_qualitative_claims():
 
 def test_every_pilot_prompt_opens_a_real_canned_demo():
     solutions = load_copy()
-    demo_html = DEMO.read_text(encoding="utf-8")
+    scenarios = json.loads(DEMO.with_name("demo-scenarios.json").read_text(encoding="utf-8"))["scenarios"]
     for name in PILOTS:
         solution = solutions[name]
         for prompt in solution["sample_prompts"]:
             match = re.search(r"[?&]scenario=([a-z0-9-]+)", prompt["demo_url"])
             assert match, (name, prompt)
-            assert f'"{match.group(1)}": {{' in demo_html, (name, prompt["demo_url"])
+            assert scenarios[match.group(1)]["recorded"], (name, prompt["demo_url"])
 
 
 def test_every_pilot_registry_entry_links_its_journey_package():

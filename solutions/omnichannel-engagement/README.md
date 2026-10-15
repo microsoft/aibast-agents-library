@@ -24,10 +24,10 @@ message, offer, reward, or purchase action occurs.
 | --- | --- |
 | Customer field guide | `solutions/omnichannel-engagement/field-guide.html` |
 | Evidence report | `solutions/omnichannel-engagement/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/omnichannel-engagement/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/omnichannel-engagement/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/omnichannel-engagement/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/omnichannel-engagement/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/omnichannel-engagement/quest.html` |
 | Literal browser tutorial | `solutions/omnichannel-engagement/manual-tutorial.html` |
 | Raw export manifest | `solutions/omnichannel-engagement/export-manifest.json` |

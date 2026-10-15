@@ -32,10 +32,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/engineering-standards-advisor/field-guide.html` |
 | Evidence report | `solutions/engineering-standards-advisor/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/engineering-standards-advisor/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/engineering-standards-advisor/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/engineering-standards-advisor/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/engineering-standards-advisor/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/engineering-standards-advisor/quest.html` |
 | Literal browser tutorial | `solutions/engineering-standards-advisor/manual-tutorial.html` |
 | Raw export manifest | `solutions/engineering-standards-advisor/export-manifest.json` |

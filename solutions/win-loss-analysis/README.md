@@ -43,10 +43,10 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | --- | --- |
 | Customer field guide | `solutions/win-loss-analysis/field-guide.html` |
 | Evidence report | `solutions/win-loss-analysis/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/win-loss-analysis/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/win-loss-analysis/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/win-loss-analysis/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/win-loss-analysis/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/win-loss-analysis/quest.html` |
 | Literal browser tutorial | `solutions/win-loss-analysis/manual-tutorial.html` |
 | Raw export manifest | `solutions/win-loss-analysis/export-manifest.json` |

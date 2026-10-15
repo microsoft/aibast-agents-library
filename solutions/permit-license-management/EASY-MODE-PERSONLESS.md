@@ -1,9 +1,4 @@
-# Permit Management Agent — personless Easy mode (optional Brainstem lane)
-
-> **Optional lane.** Use this guide only if you selected **GitHub Copilot +
-> Brainstem (optional)** in Workshop settings. The default GitHub Copilot lane
-> needs no Brainstem install; see
-> [EASY-MODE-COPILOT-CHAT.md](EASY-MODE-COPILOT-CHAT.md).
+# Permit Management Agent — personless Easy mode
 
 ## 1. Attach the Brainstem skill
 

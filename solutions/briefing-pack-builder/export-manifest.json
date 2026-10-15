@@ -84,34 +84,34 @@
     },
     {
       "id": "easy-personless-guide",
-      "label": "Optional Brainstem Easy-mode guide",
+      "label": "Personless Easy-mode guide",
       "path": "solutions/briefing-pack-builder/EASY-MODE-PERSONLESS.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/briefing-pack-builder/EASY-MODE-PERSONLESS.md",
-      "use": "Optional Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
       "status": "ready"
     },
     {
       "id": "easy-copilot-chat-prompts",
-      "label": "GitHub Copilot Easy-mode guide (default)",
+      "label": "Copilot-only Easy-mode comparison",
       "path": "solutions/briefing-pack-builder/EASY-MODE-COPILOT-CHAT.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/briefing-pack-builder/EASY-MODE-COPILOT-CHAT.md",
-      "use": "Default Copilot-only lane skill attachment and the same two workshop messages; no Brainstem install",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
       "status": "ready"
     },
     {
       "id": "easy-mode-brainstem-skill",
-      "label": "Optional Brainstem Easy Mode skill",
+      "label": "Brainstem Easy Mode skill",
       "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
-      "use": "Download-and-drag harness for the optional Brainstem lane, used only when selected in Workshop settings",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
       "status": "ready"
     },
     {
       "id": "easy-mode-copilot-skill",
-      "label": "Copilot-only Easy Mode skill (default)",
+      "label": "Copilot-only Easy Mode skill",
       "path": "skills/aibast-easy-mode-copilot/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
-      "use": "Default download-and-drag harness that runs the workshop directly in GitHub Copilot; no Brainstem install",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
       "status": "ready"
     },
     {
@@ -119,7 +119,7 @@
       "label": "Generic AIBAST Workshop agent",
       "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
-      "use": "Registry-driven engine for the optional Brainstem lane, shared by every packaged solution",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
     {

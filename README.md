@@ -91,7 +91,7 @@ class WeatherAgent(BasicAgent):
 
 ### Browse the AIBAST Agent Library
 
-The [**Microsoft AI Academy**](academy.html) is an experimental learning surface for **66 certified workshops** and their packaged, reusable skills. Progress stays private in local browser storage by default; learners may optionally publish GitHub-attributed proof. The workshop path starts in GitHub Copilot with no RAPP Brainstem install required (the Brainstem is an optional track), then carries the same skills into Copilot Studio, Teams, and Microsoft 365 Copilot. Academy completion is not an official credential or certification, and the Academy is not a replacement for Microsoft Learn.
+The [**Microsoft AI Academy**](academy.html) is an experimental learning surface for **65 certified workshops** and their packaged, reusable skills. Progress stays private in local browser storage by default; learners may optionally publish GitHub-attributed proof. The workshop path starts in GitHub Copilot and the local RAPP Brainstem, then carries the same skills into Copilot Studio, Teams, and Microsoft 365 Copilot. Academy completion is not an official credential or certification, and the Academy is not a replacement for Microsoft Learn.
 
 The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/) is the browsable catalog: search across every industry template, filter by vertical, and copy the install command for one agent or a whole stack. Industry groups have shareable deep links, such as [Financial Services](https://microsoft.github.io/aibast-agents-library/?industry=financial-services#library), so recipients land on the preselected group instead of choosing it manually. The library reads `registry.json`, which `build_registry.py` regenerates from the agent manifests on every push.
 
@@ -100,26 +100,6 @@ The files themselves live under [`agents/@aibast-agents-library/`](agents/@aibas
 [**Workshop achievements**](https://microsoft.github.io/aibast-agents-library/achievements.html) record self-paced milestones locally and let learners explicitly sync canonical badges to a public GitHub-attributed profile. The profile page shows the learner's achievement score.
 
 [**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes AIBAST-only public downloads, every-file observations, per-agent rating Discussion upvotes, signed-in acquisition Discussion signals, workshop adoption, and opt-in achievement rollups. Each run also generates a shareable weekly/monthly PDF plus email-ready text under `reports/`. `scripts/build_metrics.py` builds the snapshot, and `scripts/build_impact_report.py` turns its dated history into the exportable impact report without converting unavailable coverage to zero. Visitor behavior on the published site (heatmaps, session recordings) comes from [Microsoft Clarity](https://clarity.microsoft.com/); the tag is stamped on every public page from `clarity.json` by `scripts/apply_clarity_tag.py` (setup in [docs/CLARITY.md](docs/CLARITY.md)).
-
-### Library structure
-
-| Path | Purpose |
-|------|---------|
-| [`00-overview/`](00-overview/README.md) | Start here: navigation, runbook anatomy, and solution taxonomy. |
-| [`01-solutions/`](01-solutions/README.md) | Generated solution overviews, architecture, runbooks, prompts, and evidence pointers. |
-| [`02-patterns/`](02-patterns/README.md) | Reusable-pattern index, with planned AIBAST patterns and links to AI Agent Runbooks. |
-| [`03-references/`](03-references/README.md) | Delivery references, glossary, and release-process pointers. |
-| [`solutions/`](solutions/README.md) | Existing workshop packages, source assets, and acceptance evidence; paths stay unchanged. |
-
-Compare **AIBAST Frontier (experimental)**—an early, experimental learning lane where one portable `agents/@aibast-agents-library/.../*_agent.py` file lets you learn, teach, and change behavior immediately in the Brainstem—with the **Runbook lane**, a manual Copilot Studio build guided by the runbooks in `01-solutions/` and needing no Python or local tooling; see [Two Delivery Lanes](00-overview/README.md#two-delivery-lanes).
-
-The runbooks are example templates covering the full path to a production
-build; the customer or partner must adapt them to specific requirements and
-connect their own systems, identity, data, and governance.
-
-The initial pilot runbooks are `ask-hr` and `building-permit-processing`.
-Further solutions are added one by one after their notes files are authored
-and validated; generated files in `01-solutions/` are never hand-edited.
 
 ---
 

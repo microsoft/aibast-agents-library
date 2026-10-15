@@ -32,10 +32,10 @@ passing.
 | --- | --- |
 | Customer field guide | `solutions/client-health-score/field-guide.html` |
 | Evidence report | `solutions/client-health-score/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/client-health-score/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/client-health-score/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/client-health-score/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/client-health-score/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/client-health-score/quest.html` |
 | Literal browser tutorial | `solutions/client-health-score/manual-tutorial.html` |
 | Raw export manifest | `solutions/client-health-score/export-manifest.json` |

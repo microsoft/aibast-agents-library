@@ -32,10 +32,10 @@ The local agent uses fictional records and produces decision support only. It do
 | --- | --- |
 | Customer field guide | `solutions/utility-billing-assistance/field-guide.html` |
 | Evidence report | `solutions/utility-billing-assistance/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/utility-billing-assistance/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/utility-billing-assistance/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/utility-billing-assistance/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/utility-billing-assistance/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/utility-billing-assistance/quest.html` |
 | Literal browser tutorial | `solutions/utility-billing-assistance/manual-tutorial.html` |
 | Raw export manifest | `solutions/utility-billing-assistance/export-manifest.json` |

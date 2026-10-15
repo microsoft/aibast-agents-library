@@ -32,10 +32,10 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | --- | --- |
 | Customer field guide | `solutions/order-entry-validation/field-guide.html` |
 | Evidence report | `solutions/order-entry-validation/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/order-entry-validation/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/order-entry-validation/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/order-entry-validation/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/order-entry-validation/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/order-entry-validation/quest.html` |
 | Literal browser tutorial | `solutions/order-entry-validation/manual-tutorial.html` |
 | Raw export manifest | `solutions/order-entry-validation/export-manifest.json` |

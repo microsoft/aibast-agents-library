@@ -285,11 +285,10 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert "Open standalone Manual-mode guide" in quest
     assert 'data-easy-lane="copilot"' in quest
     assert 'data-easy-lane="brainstem"' in quest
-    assert 'localStorage.getItem("aibast:workshop-engine") === "brainstem"' in quest
-    assert re.search(r'\?\s*"brainstem"\s*:\s*"copilot"', quest)
-    assert not re.search(r'\?\s*"copilot"\s*:\s*"brainstem"', quest)
+    assert 'localStorage.getItem("aibast:workshop-engine") === "copilot"' in quest
+    assert re.search(r'\?\s*"copilot"\s*:\s*"brainstem"', quest)
     assert "GitHub Copilot only" in quest
-    assert "GitHub Copilot + Brainstem (optional)" in quest
+    assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
         8 + len(cases) + len(manual_frames)  # 1 workshop-setup + 3+3 lane steps + 1 easy verdict
     )

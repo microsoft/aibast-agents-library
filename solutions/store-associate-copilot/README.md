@@ -25,10 +25,10 @@ inventory, apply promotions, send messages, process returns, or transact.
 | --- | --- |
 | Customer field guide | `solutions/store-associate-copilot/field-guide.html` |
 | Evidence report | `solutions/store-associate-copilot/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/store-associate-copilot/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/store-associate-copilot/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/store-associate-copilot/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/store-associate-copilot/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/store-associate-copilot/quest.html` |
 | Literal browser tutorial | `solutions/store-associate-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/store-associate-copilot/export-manifest.json` |

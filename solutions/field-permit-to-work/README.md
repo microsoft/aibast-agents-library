@@ -32,10 +32,10 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/field-permit-to-work/field-guide.html` |
 | Evidence report | `solutions/field-permit-to-work/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/field-permit-to-work/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/field-permit-to-work/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/field-permit-to-work/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/field-permit-to-work/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/field-permit-to-work/quest.html` |
 | Literal browser tutorial | `solutions/field-permit-to-work/manual-tutorial.html` |
 | Raw export manifest | `solutions/field-permit-to-work/export-manifest.json` |

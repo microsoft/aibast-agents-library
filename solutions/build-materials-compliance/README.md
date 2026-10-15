@@ -32,10 +32,10 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | --- | --- |
 | Customer field guide | `solutions/build-materials-compliance/field-guide.html` |
 | Evidence report | `solutions/build-materials-compliance/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/build-materials-compliance/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/build-materials-compliance/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/build-materials-compliance/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/build-materials-compliance/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/build-materials-compliance/quest.html` |
 | Literal browser tutorial | `solutions/build-materials-compliance/manual-tutorial.html` |
 | Raw export manifest | `solutions/build-materials-compliance/export-manifest.json` |

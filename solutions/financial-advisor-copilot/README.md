@@ -37,10 +37,10 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | --- | --- |
 | Customer field guide | `solutions/financial-advisor-copilot/field-guide.html` |
 | Evidence report | `solutions/financial-advisor-copilot/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/financial-advisor-copilot/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/financial-advisor-copilot/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/financial-advisor-copilot/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/financial-advisor-copilot/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/financial-advisor-copilot/quest.html` |
 | Literal browser tutorial | `solutions/financial-advisor-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/financial-advisor-copilot/export-manifest.json` |

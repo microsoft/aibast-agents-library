@@ -36,13 +36,6 @@ or add beta routing fields/endpoints to `brainstem.py`.
 - `rapp_brainstem/` — The core brainstem server (see `rapp_brainstem/CLAUDE.md` for deep internals)
 - `agents/@aibast-agents-library/` — AIBAST-owned industry templates and stacks; never replace this tree from Grail
 - `registry.json`, `build_registry.py` — generated catalog and its AIBAST-owned builder
-- `00-overview/` — Hand-authored library overview and navigation, with a generated solution taxonomy
-- `01-solutions/` — Generated solution runbooks; never hand-edit
-- `02-patterns/` — Reusable-pattern guidance and the `patterns.json` index
-- `03-references/` — Delivery references and glossary
-- `solutions/runbook-notes/<slug>.json` — Hand-authored per-solution delivery guidance, separate from the existing `solutions/<slug>/` packages
-- `tools/build_solution_runbooks.py`, `tools/markdown_links.py` — Deterministic runbook generator and case-exact Markdown link checker
-- `tests/test_solution_runbooks.py` — Repository-level runbook identity, structure, drift, and link gate
 - `install.sh`, `install.ps1`, `install.cmd` — One-liner installers (Brainstem path). **These are sacred** — any change must be tested end-to-end on a fresh machine.
 - `community_rapp/` — Hippocampus (Tier 2) installer scripts. Parallel path, no dependency on brainstem.
 - `rapp_ai/` — AIBAST-owned Azure Functions implementation and documentation
@@ -74,11 +67,6 @@ cd rapp_brainstem && python -m pytest tests/test_local_agents.py::TestLocalStora
 python build_registry.py
 python -m pytest tests -v
 
-# Generate and check the pilot runbooks (repository root)
-python tools/build_solution_runbooks.py
-python tools/build_solution_runbooks.py --check
-python -m pytest tests/test_solution_runbooks.py -q
-
 # Refresh the public metrics snapshot (state/metrics.json)
 python scripts/build_metrics.py            # live; GITHUB_TOKEN with admin:read unlocks traffic
 python scripts/build_metrics.py --offline  # no network, catalog composition only
@@ -91,15 +79,6 @@ bash tests/test_installer.sh
 ```
 
 No linter, formatter, or type checker is configured.
-
-The runbook generator currently writes the `ask-hr` and
-`building-permit-processing` pilots; add another solution to `RUNBOOK_SOLUTIONS`
-only after its notes file is authored and validates, then regenerate rather
-than hand-editing `01-solutions/`.
-
-The runbooks are example templates covering the full path to a production
-build; the customer or partner must adapt them to specific requirements and
-connect their own systems, identity, data, and governance.
 
 ## Architecture: Three Tiers
 
@@ -150,8 +129,6 @@ Shared Brainstem releases flow from the pinned Grail source, but this repository
 - `rapp_ai/`
 - `README.md`, `index.html`, `CLAUDE.md`, `docs/index.html`, `docs/tutorial.html`, and `docs/rapp-guide.html`
 - `.github/`, `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `.vscode/`, and `tools/`
-- `00-overview/`, `01-solutions/`, `02-patterns/`, and `03-references/`
-- `solutions/runbook-notes/<slug>.json`, `tools/build_solution_runbooks.py`, `tools/markdown_links.py`, and `tests/test_solution_runbooks.py`
 
 Only repository-identity references are rewritten mechanically: Grail product/support identity becomes `microsoft/aibast-agents-library`, and Brainstem support drafts target that Microsoft repository. The pinned upstream provenance stays truthful. Content repositories such as CommunityRAPP are separate dependencies and must be reviewed rather than globally replaced. Installer mirrors under `docs/install.*` must remain byte-identical to their root counterparts.
 

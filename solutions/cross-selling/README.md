@@ -41,10 +41,10 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | --- | --- |
 | Customer field guide | `solutions/cross-selling/field-guide.html` |
 | Evidence report | `solutions/cross-selling/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/cross-selling/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/cross-selling/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/cross-selling/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/cross-selling/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/cross-selling/quest.html` |
 | Literal browser tutorial | `solutions/cross-selling/manual-tutorial.html` |
 | Raw export manifest | `solutions/cross-selling/export-manifest.json` |

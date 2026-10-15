@@ -103,10 +103,10 @@ copied verbatim into the generated tutorial and quest.
 | --- | --- |
 | Customer field guide | `solutions/building-permit-processing/field-guide.html` |
 | Evidence report | `solutions/building-permit-processing/evidence-report.html` |
-| Copilot-only Easy Mode skill (default) | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Optional Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| GitHub Copilot Easy-mode guide (default) | `solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md` |
-| Optional Brainstem Easy-mode guide | `solutions/building-permit-processing/EASY-MODE-PERSONLESS.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/building-permit-processing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Manual quest | `solutions/building-permit-processing/quest.html` |
 | Literal browser tutorial | `solutions/building-permit-processing/manual-tutorial.html` |
 | Raw export manifest | `solutions/building-permit-processing/export-manifest.json` |

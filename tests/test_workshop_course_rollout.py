@@ -1,6 +1,5 @@
 import importlib.util
 import json
-import re
 import shutil
 import sys
 from pathlib import Path
@@ -79,8 +78,8 @@ def valid_pages() -> dict[str, str]:
     <script>
     (() => {{
     {storage}
-    const engine = readWorkshopStorage("aibast:workshop-engine") === "brainstem"
-      ? "brainstem" : "copilot";
+    const engine = readWorkshopStorage("aibast:workshop-engine") === "copilot"
+      ? "copilot" : "brainstem";
     document.documentElement.setAttribute("data-workshop-engine", engine);
     }})();
     </script>
@@ -113,9 +112,9 @@ def valid_pages() -> dict[str, str]:
 <section data-easy-lane="brainstem">Brainstem lane</section>
 <section data-easy-lane="copilot">GitHub Copilot only lane</section>
 <label><input type="checkbox" data-checkpoint="local"
- data-achievements-group="local-proof" data-achievements-path="copilot">Local</label>
+ data-achievements-group="local-proof" data-achievements-path="brainstem">Local</label>
 <label><input type="checkbox" data-checkpoint="draft"
- data-achievements-group="draft-builder" data-achievements-path="copilot">Draft</label>
+ data-achievements-group="draft-builder" data-achievements-path="brainstem">Draft</label>
 {reports}
 <article class="preview-case">
 <button data-copy-target="preview-prompt-case-01">Copy Preview prompt</button>
@@ -156,8 +155,8 @@ function announcePersistenceFailure() {{
     "Storage unavailable; progress is not saved, but remains usable in memory for this session.";
 }}
 function currentEasyPath() {{
-  return readWorkshopStorage(globalEngineKey) === "brainstem"
-    ? "brainstem" : "copilot";
+  return readWorkshopStorage(globalEngineKey) === "copilot"
+    ? "copilot" : "brainstem";
 }}
 function requiredEasyBoxes() {{
   const path = currentEasyPath();
@@ -879,43 +878,21 @@ def test_mutation_catches_removed_overflow_containment(tmp_path):
     )
 
 
-def test_mutation_catches_brainstem_default_engine(tmp_path):
+def test_mutation_catches_copilot_default_engine(tmp_path):
     package = create_fixture(tmp_path)
     path = package / "quest.html"
-    legacy, replaced = re.subn(
-        r'=== "brainstem"(\s*)\? "brainstem" : "copilot"',
-        r'=== "copilot"\1? "copilot" : "brainstem"',
-        path.read_text(encoding="utf-8"),
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            '? "copilot" : "brainstem"',
+            '? "brainstem" : "copilot"',
+        ),
+        encoding="utf-8",
     )
-    assert replaced == 2
-    path.write_text(legacy, encoding="utf-8")
     build_zip(tmp_path)
 
-    result = audit_fixture(tmp_path)
     assert_failure(
-        result,
-        "visual and achievement engines must both default to copilot",
-    )
-    assert_failure(result, "legacy Brainstem-default engine selection remains")
-
-
-def test_mutation_catches_brainstem_default_field_guide_engine(tmp_path):
-    package = create_fixture(tmp_path)
-    path = package / "field-guide.html"
-    legacy, replaced = re.subn(
-        r'=== "brainstem"(\s*)\? "brainstem" : "copilot"',
-        r'=== "copilot"\1? "copilot" : "brainstem"',
-        path.read_text(encoding="utf-8"),
-    )
-    assert replaced == 1
-    path.write_text(legacy, encoding="utf-8")
-    build_zip(tmp_path)
-
-    result = audit_fixture(tmp_path)
-    assert_failure(result, "field-guide.html: visual engine does not default to copilot")
-    assert_failure(
-        result,
-        "field-guide.html: legacy Brainstem-default engine selection remains",
+        audit_fixture(tmp_path),
+        "visual and achievement engines must both default to brainstem",
     )
 
 
@@ -991,7 +968,7 @@ def test_repository_course_scope_uses_catalog_truth():
     failures = AUDIT.Failures()
     slugs, exclusions = AUDIT.course_scope(ROOT, failures)
     assert failures.items == []
-    assert len(slugs) == 66
+    assert len(slugs) == 65
     assert "time-entry-billing" in slugs
     assert "grid-outage-response" not in slugs
     assert [(item["slug"], item["status"]) for item in exclusions] == [
@@ -1020,7 +997,7 @@ def test_playwright_academy_gate_is_exact_and_fail_closed():
     ).read_text(encoding="utf-8")
 
     assert package["scripts"]["academy"] == "node academy-course-audit.mjs"
-    assert "const expectedWorkshops = 66;" in source
+    assert "const expectedWorkshops = 65;" in source
     assert "const viewportWidths = [320, 360, 375];" in source
     assert 'const auditedPages = ["quest.html", "evidence-report.html"];' in source
     assert "attempts === expectedWorkshops * auditedPages.length" in source
