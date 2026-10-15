@@ -1,17 +1,17 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-10-14T05:37:33Z",
+ "generated_at": "2026-10-15T05:16:03Z",
  "repo": {
   "stars": 8,
   "forks": 7,
   "watchers": 0,
   "open_issues": 15,
-  "size_kb": 4043677,
+  "size_kb": 5415433,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-10-14T05:23:41Z",
+  "pushed_at": "2026-10-14T05:37:48Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,25 +19,25 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 17345,
-  "clones": 16419,
+  "downloads": 17504,
+  "clones": 16576,
   "cdn_hits": 517,
-  "release_downloads": 409,
-  "agent_file_downloads": 246,
+  "release_downloads": 411,
+  "agent_file_downloads": 248,
   "installer_downloads": 176,
   "skill_downloads": 99,
   "agent_upvotes": null,
   "agent_acquisitions": null,
-  "clones_excluding_ci_estimate": 16419,
+  "clones_excluding_ci_estimate": 16576,
   "ci_clone_estimate": 0,
-  "page_views": 1072,
-  "clone_uniques_14d": 367,
+  "page_views": 1078,
+  "clone_uniques_14d": 371,
   "view_uniques_14d": 28,
-  "clone_uniques_daily_sum": 1754,
-  "view_uniques_daily_sum": 238,
-  "days_tracked": 70,
+  "clone_uniques_daily_sum": 1777,
+  "view_uniques_daily_sum": 239,
+  "days_tracked": 71,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 246,
+  "global_agent_distribution_fetch_events": 248,
   "agents": 86,
   "stacks": 66,
   "verticals": 12,
@@ -536,6 +536,13 @@
    "clone_uniques": 37,
    "views": 7,
    "cdn": 0
+  },
+  {
+   "date": "2026-10-14",
+   "clones": 157,
+   "clone_uniques": 23,
+   "views": 6,
+   "cdn": 0
   }
  ],
  "traffic": {
@@ -628,10 +635,10 @@
     "uniques": 1
    }
   ],
-  "clones_14d": 6603,
-  "views_14d": 131,
+  "clones_14d": 5403,
+  "views_14d": 137,
   "live": true,
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -639,7 +646,7 @@
   "total_hits": 129,
   "bandwidth": 377363,
   "rank": null,
-  "agent_hits": 246,
+  "agent_hits": 248,
   "installer_hits": 176,
   "files": [
    {
@@ -916,12 +923,12 @@
     "kind": "skill"
    }
   ],
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 409,
+  "total_downloads": 411,
   "count": 5,
   "releases": [
    {
@@ -965,7 +972,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 246,
+    "downloads": 248,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -1064,7 +1071,7 @@
      },
      {
       "name": "care_gap_closure__110f062d29d7_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 20049
      },
      {
@@ -1224,7 +1231,7 @@
      },
      {
       "name": "field_service_dispatch__49452ef7f2a1_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 25954
      },
      {
@@ -1677,7 +1684,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1740,6 +1747,46 @@
     "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
     "stack": "building_permit_processing",
     "vertical": "slg_government",
+    "catalog_kind": "solution"
+   },
+   {
+    "name": "@aibast-agents-library/care-gap-closure",
+    "display_name": "Care Gap Closure Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "healthcare",
+    "tier": "verified",
+    "downloads": 5,
+    "upvotes": 1,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/39",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/40",
+    "lines": 477,
+    "size_kb": 19.6,
+    "added_at": "2026-08-15T22:26:47Z",
+    "file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+    "description": "Prioritizes synthetic Medicare Advantage care gaps before the HEDIS deadline: panel status, top gaps by revenue and reachability, diabetes risk tiers and barriers, a barrier-specific outreach strategy, campaign projection, and monitoring alerts, plus source-evidence views (gap_analysis, cohort_review, outreach_draft, quality_dashboard). Human clinical and quality review is required; it never determines eligibility, launches campaigns, or contacts patients.",
+    "stack": "care_gap_closure",
+    "vertical": "healthcare",
+    "catalog_kind": "solution"
+   },
+   {
+    "name": "@aibast-agents-library/field-service-dispatch",
+    "display_name": "Field Service Dispatch Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "energy",
+    "tier": "verified",
+    "downloads": 5,
+    "upvotes": 0,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/75",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/76",
+    "lines": 488,
+    "size_kb": 25.3,
+    "added_at": "2026-08-15T22:26:47Z",
+    "file": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
+    "description": "Provide read-only field-service decision support from a synthetic metro-utility snapshot: tomorrow's job dashboard, schedule optimization with travel savings, skill-matched crew routes, an emergency outage response draft, live outage status with customer impact, the post-incident review, and prevention work orders with the monthly operations report. The agent never dispatches or reroutes a crew, changes a job, contacts a customer, stages inventory, creates a work order, or authorizes field action; a human dispatcher must approve work through future authenticated tools.",
+    "stack": "field_service_dispatch",
+    "vertical": "energy",
     "catalog_kind": "solution"
    },
    {
@@ -1883,26 +1930,6 @@
     "catalog_kind": "solution"
    },
    {
-    "name": "@aibast-agents-library/care-gap-closure",
-    "display_name": "Care Gap Closure Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "healthcare",
-    "tier": "verified",
-    "downloads": 4,
-    "upvotes": 1,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/39",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/40",
-    "lines": 477,
-    "size_kb": 19.6,
-    "added_at": "2026-08-15T22:26:47Z",
-    "file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
-    "description": "Prioritizes synthetic Medicare Advantage care gaps before the HEDIS deadline: panel status, top gaps by revenue and reachability, diabetes risk tiers and barriers, a barrier-specific outreach strategy, campaign projection, and monitoring alerts, plus source-evidence views (gap_analysis, cohort_review, outreach_draft, quality_dashboard). Human clinical and quality review is required; it never determines eligibility, launches campaigns, or contacts patients.",
-    "stack": "care_gap_closure",
-    "vertical": "healthcare",
-    "catalog_kind": "solution"
-   },
-   {
     "name": "@aibast-agents-library/clinical-notes-summarizer",
     "display_name": "Clinical Notes Summarizer Agent",
     "publisher": "@aibast-agents-library",
@@ -1961,26 +1988,6 @@
     "stack": "customer_loyalty_rewards",
     "vertical": "b2c_sales",
     "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/field-service-dispatch",
-    "display_name": "Field Service Dispatch Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "energy",
-    "tier": "verified",
-    "downloads": 4,
-    "upvotes": 0,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/75",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/76",
-    "lines": 488,
-    "size_kb": 25.3,
-    "added_at": "2026-08-15T22:26:47Z",
-    "file": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
-    "description": "Provide read-only field-service decision support from a synthetic metro-utility snapshot: tomorrow's job dashboard, schedule optimization with travel savings, skill-matched crew routes, an emergency outage response draft, live outage status with customer impact, the post-incident review, and prevention work orders with the monthly operations report. The agent never dispatches or reroutes a crew, changes a job, contacts a customer, stages inventory, creates a work order, or authorizes field action; a human dispatcher must approve work through future authenticated tools.",
-    "stack": "field_service_dispatch",
-    "vertical": "energy",
-    "catalog_kind": "solution"
    }
   ],
   "most_upvoted": [
@@ -2025,6 +2032,26 @@
     "catalog_kind": "solution"
    },
    {
+    "name": "@aibast-agents-library/care-gap-closure",
+    "display_name": "Care Gap Closure Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "healthcare",
+    "tier": "verified",
+    "downloads": 5,
+    "upvotes": 1,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/39",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/40",
+    "lines": 477,
+    "size_kb": 19.6,
+    "added_at": "2026-08-15T22:26:47Z",
+    "file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+    "description": "Prioritizes synthetic Medicare Advantage care gaps before the HEDIS deadline: panel status, top gaps by revenue and reachability, diabetes risk tiers and barriers, a barrier-specific outreach strategy, campaign projection, and monitoring alerts, plus source-evidence views (gap_analysis, cohort_review, outreach_draft, quality_dashboard). Human clinical and quality review is required; it never determines eligibility, launches campaigns, or contacts patients.",
+    "stack": "care_gap_closure",
+    "vertical": "healthcare",
+    "catalog_kind": "solution"
+   },
+   {
     "name": "@aibast-agents-library/underwriting-support",
     "display_name": "Underwriting Support Agent",
     "publisher": "@aibast-agents-library",
@@ -2042,26 +2069,6 @@
     "description": "Automate commercial underwriting analysis to accelerate evaluations, improve pricing accuracy, and maintain full compliance.",
     "stack": "underwriting_support",
     "vertical": "financial_services",
-    "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/care-gap-closure",
-    "display_name": "Care Gap Closure Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "healthcare",
-    "tier": "verified",
-    "downloads": 4,
-    "upvotes": 1,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/39",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/40",
-    "lines": 477,
-    "size_kb": 19.6,
-    "added_at": "2026-08-15T22:26:47Z",
-    "file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
-    "description": "Prioritizes synthetic Medicare Advantage care gaps before the HEDIS deadline: panel status, top gaps by revenue and reachability, diabetes risk tiers and barriers, a barrier-specific outreach strategy, campaign projection, and monitoring alerts, plus source-evidence views (gap_analysis, cohort_review, outreach_draft, quality_dashboard). Human clinical and quality review is required; it never determines eligibility, launches campaigns, or contacts patients.",
-    "stack": "care_gap_closure",
-    "vertical": "healthcare",
     "catalog_kind": "solution"
    }
   ],
@@ -2708,6 +2715,24 @@
     "downloads": 6
    },
    {
+    "name": "care_gap_closure",
+    "display_name": "Care Gap Closure",
+    "vertical": "healthcare",
+    "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack",
+    "agents": 1,
+    "lines": 477,
+    "downloads": 5
+   },
+   {
+    "name": "field_service_dispatch",
+    "display_name": "Field Service Dispatch",
+    "vertical": "energy",
+    "path": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack",
+    "agents": 1,
+    "lines": 488,
+    "downloads": 5
+   },
+   {
     "name": "underwriting_support",
     "display_name": "Underwriting Support",
     "vertical": "financial_services",
@@ -2732,15 +2757,6 @@
     "path": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack",
     "agents": 1,
     "lines": 353,
-    "downloads": 4
-   },
-   {
-    "name": "care_gap_closure",
-    "display_name": "Care Gap Closure",
-    "vertical": "healthcare",
-    "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack",
-    "agents": 1,
-    "lines": 477,
     "downloads": 4
    },
    {
@@ -2777,15 +2793,6 @@
     "path": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack",
     "agents": 1,
     "lines": 667,
-    "downloads": 4
-   },
-   {
-    "name": "field_service_dispatch",
-    "display_name": "Field Service Dispatch",
-    "vertical": "energy",
-    "path": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack",
-    "agents": 1,
-    "lines": 488,
     "downloads": 4
    },
    {
@@ -2874,7 +2881,7 @@
    {
     "name": "energy",
     "agents": 7,
-    "downloads": 18,
+    "downloads": 19,
     "lines": 3052
    },
    {
@@ -2904,7 +2911,7 @@
    {
     "name": "healthcare",
     "agents": 4,
-    "downloads": 14,
+    "downloads": 15,
     "lines": 1909
    },
    {
@@ -2948,7 +2955,7 @@
    {
     "name": "energy",
     "agents": 7,
-    "downloads": 18,
+    "downloads": 19,
     "stacks": 7
    },
    {
@@ -2978,7 +2985,7 @@
    {
     "name": "healthcare",
     "agents": 4,
-    "downloads": 14,
+    "downloads": 15,
     "stacks": 4
    },
    {
@@ -3178,7 +3185,7 @@
   {
    "name": "@aibast-agents-library/care-gap-closure",
    "display_name": "Care Gap Closure Agent",
-   "downloads": 4,
+   "downloads": 5,
    "upvotes": 1,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/39",
@@ -3438,7 +3445,7 @@
   {
    "name": "@aibast-agents-library/field-service-dispatch",
    "display_name": "Field Service Dispatch Agent",
-   "downloads": 4,
+   "downloads": 5,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/75",
@@ -4127,7 +4134,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "partial",
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -4154,7 +4161,7 @@
  },
  "agent_upvote_coverage": {
   "status": "partial",
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -4171,7 +4178,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "partial",
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -4189,7 +4196,7 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "carried_forward": false,
   "totals": {
    "files": 9365,
@@ -80306,7 +80313,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-10-14T05:37:33Z",
+    "as_of": "2026-10-15T05:16:03Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -80320,7 +80327,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-10-14T05:37:33Z",
+    "as_of": "2026-10-15T05:16:03Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -80333,7 +80340,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-10-14T05:37:33Z",
+    "as_of": "2026-10-15T05:16:03Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -80345,7 +80352,7 @@
    },
    "agent_upvotes": {
     "status": "partial",
-    "as_of": "2026-10-14T05:37:33Z",
+    "as_of": "2026-10-15T05:16:03Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -80376,13 +80383,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -81923,7 +81930,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -82608,7 +82615,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-10-14T05:37:33Z",
+  "as_of": "2026-10-15T05:16:03Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -82620,8 +82627,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 246,
-   "combined_agent_distribution_fetch_events": 246,
+   "aibast_direct_agent_fetches": 248,
+   "combined_agent_distribution_fetch_events": 248,
    "distribution_entries": 86,
    "logical_agents": 86,
    "overlap_agents": 0
@@ -82656,6 +82663,26 @@
     ],
     "aibast_direct_agent_fetches": 6,
     "combined_distribution_fetch_events": 6
+   },
+   {
+    "logical_name": "@aibast-agents-library/care-gap-closure",
+    "display_name": "Care Gap Closure Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 5,
+    "combined_distribution_fetch_events": 5
+   },
+   {
+    "logical_name": "@aibast-agents-library/field-service-dispatch",
+    "display_name": "Field Service Dispatch Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 5,
+    "combined_distribution_fetch_events": 5
    },
    {
     "logical_name": "@aibast-agents-library/underwriting-support",
@@ -82728,16 +82755,6 @@
     "combined_distribution_fetch_events": 4
    },
    {
-    "logical_name": "@aibast-agents-library/care-gap-closure",
-    "display_name": "Care Gap Closure Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 4,
-    "combined_distribution_fetch_events": 4
-   },
-   {
     "logical_name": "@aibast-agents-library/clinical-notes-summarizer",
     "display_name": "Clinical Notes Summarizer Agent",
     "publisher": "@aibast-agents-library",
@@ -82760,16 +82777,6 @@
    {
     "logical_name": "@aibast-agents-library/customer-loyalty-rewards",
     "display_name": "Customer Loyalty and Rewards Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 4,
-    "combined_distribution_fetch_events": 4
-   },
-   {
-    "logical_name": "@aibast-agents-library/field-service-dispatch",
-    "display_name": "Field Service Dispatch Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"

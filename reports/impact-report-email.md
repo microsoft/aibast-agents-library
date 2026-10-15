@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - October 14, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 15, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-14T05:37:33Z`
+**Snapshot:** `2026-10-15T05:16:03Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 17,345 | +1,164 observed - partial | +9,467 observed - partial |
-| Git clones | 16,419 | +1,065 observed | +9,368 observed |
-| Clones excluding CI estimate | 16,419 | +9,368 (+132.9%) | +9,714 (+144.9%) |
-| AIBAST repository and Pages views | 1,072 | +31 observed | +145 observed |
+| AIBAST observed repository downloads | 17,504 | +931 observed - partial | +9,624 observed - partial |
+| Git clones | 16,576 | +832 observed | +9,525 observed |
+| Clones excluding CI estimate | 16,576 | +9,525 (+135.1%) | +9,525 (+135.1%) |
+| AIBAST repository and Pages views | 1,078 | +27 observed | +151 observed |
 | jsDelivr file hits | 517 | +99 observed | +99 observed |
-| Release asset downloads | 409 | +203 (+98.5%) | +224 (+121.1%) |
-| AIBAST direct agent file downloads | 246 | +103 (+72.0%) | +119 (+93.7%) |
+| Release asset downloads | 411 | +205 (+99.5%) | +205 (+99.5%) |
+| AIBAST direct agent file downloads | 248 | +105 (+73.4%) | +105 (+73.4%) |
 | AIBAST skill file downloads | 99 | +99 | +99 |
-| AIBAST installer file downloads | 176 | +100 (+131.6%) | +105 (+147.9%) |
-| Unique cloners (14-day window) | 367 | +14 (+4.0%) snapshot change | +29 (+8.6%) snapshot change |
-| Unique visitors (14-day window) | 28 | -16 (-36.4%) snapshot change | -17 (-37.8%) snapshot change |
+| AIBAST installer file downloads | 176 | +100 (+131.6%) | +100 (+131.6%) |
+| Unique cloners (14-day window) | 371 | +18 (+5.1%) snapshot change | +18 (+5.1%) snapshot change |
+| Unique visitors (14-day window) | 28 | -16 (-36.4%) snapshot change | -16 (-36.4%) snapshot change |
 
 ## Community engagement
 
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 9,365 | +3,851 (+69.8%) | +3,856 (+70.0%) |
-| Files covered by download observations | 9,365 | +3,851 (+69.8%) | +3,856 (+70.0%) |
+| Tracked repository files | 9,365 | +3,851 (+69.8%) | +3,851 (+69.8%) |
+| Files covered by download observations | 9,365 | +3,851 (+69.8%) | +3,851 (+69.8%) |
 | Catalog agents | 86 | +14 (+19.4%) | +14 (+19.4%) |
 | Tracked SKILL.md files | 491 | +257 (+109.8%) | +257 (+109.8%) |
 | Canonical workshops | 65 | +14 (+27.5%) | +14 (+27.5%) |
@@ -75,9 +75,9 @@
 **Agent downloads**
 - Ask HR Agent: +4 (current 7)
 - Building Permit Processing Agent: +3 (current 6)
+- Care Gap Closure Agent: +3 (current 5)
 - Customer Onboarding Agent: +3 (current 4)
-- Underwriting Support Agent: +3 (current 5)
-- Wealth Insights Generator Agent: +3 (current 5)
+- Field Service Dispatch Agent: +3 (current 5)
 
 ## Top monthly movers
 
@@ -90,10 +90,10 @@
 
 **Agent downloads**
 - Ask HR Agent: +4 (current 7)
-- Building Permit Processing Agent: +4 (current 6)
+- Building Permit Processing Agent: +3 (current 6)
+- Care Gap Closure Agent: +3 (current 5)
 - Customer Onboarding Agent: +3 (current 4)
-- Loan Origination Assistant: +3 (current 3)
-- Underwriting Support Agent: +3 (current 5)
+- Field Service Dispatch Agent: +3 (current 5)
 
 ## Measurement notes
 
