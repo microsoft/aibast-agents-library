@@ -1120,6 +1120,30 @@ def _copy_artifact(
         destination.chmod(0o644)
 
 
+def _copy_overlay(overlay: Path, output: Path) -> None:
+    """Add build-time generated JSON (e.g. the GitHub data snapshot) before the manifest is written.
+
+    Only regular .json files are taken, and none may replace a file copied from the repository.
+    A missing overlay directory is allowed: the snapshot step skips itself when GitHub is unreachable.
+    """
+    if not overlay.exists():
+        return
+    if overlay.is_symlink() or not overlay.is_dir():
+        raise BuildError(f"Overlay is not a directory: {overlay}")
+    for source in sorted(overlay.rglob("*")):
+        if source.is_dir() and not source.is_symlink():
+            continue
+        relative = source.relative_to(overlay)
+        if source.is_symlink() or not source.is_file() or source.suffix != ".json":
+            raise BuildError(f"Overlay may only contain regular .json files: {relative}")
+        destination = output.joinpath(*relative.parts)
+        if destination.exists():
+            raise BuildError(f"Overlay would replace a repository file: {relative}")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+        destination.chmod(0o644)
+
+
 def _serialized_manifest(manifest: dict[str, object]) -> bytes:
     return (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8")
 
@@ -1320,6 +1344,7 @@ def build_site(
     ref: str,
     check_links: bool = True,
     ring_branch: str = CANONICAL_BRANCH,
+    overlay_value: str | os.PathLike[str] | None = None,
 ) -> dict[str, object]:
     root_input = Path(root_value).expanduser()
     if root_input.is_symlink():
@@ -1349,6 +1374,8 @@ def build_site(
         _copy_artifact(
             root, output, included, {**prepared_html, **prepared_installers}
         )
+        if overlay_value is not None:
+            _copy_overlay(Path(overlay_value).expanduser(), output)
         _write_manifest(
             output,
             owner,
@@ -1383,6 +1410,11 @@ def parse_args(arguments: Iterable[str] | None = None) -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--overlay",
+        default=None,
+        help="Directory of build-time generated .json files to add to the artifact",
+    )
+    parser.add_argument(
         "--check-links",
         action=argparse.BooleanOptionalAction,
         default=True,
@@ -1402,6 +1434,7 @@ def main(arguments: Iterable[str] | None = None) -> int:
             args.ref,
             check_links=args.check_links,
             ring_branch=args.ring_branch,
+            overlay_value=args.overlay,
         )
     except (BuildError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)
