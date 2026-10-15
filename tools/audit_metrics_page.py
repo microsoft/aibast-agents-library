@@ -300,14 +300,13 @@ FUNCTION_DATA = {
     "getJSON": [
         "paths",
         "fetch(",
-        "cache: 'no-store'",
         ".ok",
         ".json()",
         "return null",
     ],
     "load": ["state/metrics.json", "M=", "render()", "liveTopUp()"],
     "liveTopUp": [
-        "api.github.com/repos/",
+        "api/v1/github/repo.json",
         "data.jsdelivr.com/v1/stats/packages/gh/",
         "M.repo.stars",
         "M.repo.forks",
@@ -754,7 +753,7 @@ def build_contract() -> dict:
             "public_data_sources": [
                 "state/metrics.json",
                 "https://microsoft.github.io/aibast-agents-library/state/metrics.json",
-                "https://api.github.com/repos/${OWNER}/${REPO}",
+                "api/v1/github/repo.json",
                 "https://data.jsdelivr.com/v1/stats/packages/gh/${OWNER}/${REPO}?period=year",
             ],
             "functions": REQUIRED_FUNCTIONS,

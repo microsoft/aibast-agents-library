@@ -931,10 +931,36 @@ function normalizeCommit(commitData) {
   return rawCommit.toLowerCase();
 }
 
+// The Pages build (scripts/snapshot_github_data.py) writes the release list and each release's commit under
+// api/v1/github/ with the GitHub API's own field names. Reading them same-origin means a visit makes no
+// api.github.com call, so a room of visitors behind one network address cannot hit GitHub's rate limit.
+// Returns null whenever the snapshot is missing, for another repository, or lacks the release; the caller
+// then asks the live API as before.
+async function readReleaseSnapshot({ snapshotBase, repository, requestedTag, fetchImpl }) {
+  if (!snapshotBase || typeof fetchImpl !== "function") return null;
+  try {
+    const [releasesResponse, commitsResponse] = await Promise.all([
+      fetchImpl(new URL("releases.json", snapshotBase).href),
+      fetchImpl(new URL("release-commits.json", snapshotBase).href),
+    ]);
+    if (!releasesResponse?.ok || !commitsResponse?.ok) return null;
+    const [releases, commits] = await Promise.all([releasesResponse.json(), commitsResponse.json()]);
+    if (!Array.isArray(releases) || commits?.repository !== repository) return null;
+    const release = requestedTag
+      ? releases.find((item) => item && item.draft !== true && item.tag_name === requestedTag) || null
+      : selectRelease(releases);
+    const commitData = release ? commits.commits?.[release.tag_name] : null;
+    return release && commitData ? { release, commitData } : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function discoverRelease({
   repository,
   requestedTag = null,
   fetchImpl = globalThis.fetch,
+  snapshotBase = null,
 } = {}) {
   if (!validRepository(repository)) {
     throw new DownloadCenterError("The release repository is invalid.", {
@@ -942,8 +968,9 @@ export async function discoverRelease({
     });
   }
 
-  let release;
-  if (requestedTag) {
+  const snapshot = await readReleaseSnapshot({ snapshotBase, repository, requestedTag, fetchImpl });
+  let release = snapshot ? snapshot.release : null;
+  if (!snapshot && requestedTag) {
     release = await fetchGitHubJson(
       `https://api.github.com/repos/${repository}/releases/tags/${encodeURIComponent(requestedTag)}`,
       { fetchImpl, operation: `checking ${requestedTag} in ${repository}` },
@@ -959,7 +986,7 @@ export async function discoverRelease({
         { code: "RELEASE_NOT_FOUND" },
       );
     }
-  } else {
+  } else if (!snapshot) {
     const releases = await fetchGitHubJson(
       `https://api.github.com/repos/${repository}/releases?per_page=100`,
       { fetchImpl, operation: `checking releases for ${repository}` },
@@ -974,7 +1001,7 @@ export async function discoverRelease({
   }
 
   const metadata = normalizeReleaseMetadata(release, { repository, requestedTag });
-  const commitData = await fetchGitHubJson(
+  const commitData = snapshot ? snapshot.commitData : await fetchGitHubJson(
     `https://api.github.com/repos/${repository}/commits/${encodeURIComponent(metadata.tag)}`,
     { fetchImpl, operation: `resolving ${metadata.tag} to a commit` },
   );
@@ -2135,6 +2162,9 @@ export async function initializeDownloadCenter({
       repository: context.repository,
       requestedTag: context.requestedTag,
       fetchImpl: fetchImpl || windowObject.fetch?.bind(windowObject),
+      snapshotBase: context.authority === "github-pages-origin"
+        ? new URL("../api/v1/github/", windowObject.location.href).href
+        : null,
     });
     applyReleaseTransaction({
       documentObject,
