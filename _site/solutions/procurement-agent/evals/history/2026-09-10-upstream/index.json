@@ -1,0 +1,223 @@
+{
+  "schema": "aibast-historical-annotation-reference/1.0",
+  "solution": "@aibast-agents-library/procurement-agent",
+  "status": "historical_only",
+  "annotation_date": "2026-09-10",
+  "integrated_date": "2026-09-14",
+  "source_commits": {
+    "base": "2cc050754d237d7c13a9f66feff8da2b9deb2230",
+    "staging": "c2e2be939273e912aa63a8237f48776ba33ff73a",
+    "upstream": "0783cc219124b4a6dff1c41f0c5eb5c285ae9436"
+  },
+  "boundary": "Verbatim upstream metadata and corrected annotation images, retained as a dated historical reference. Upstream reusable/release labels describe its older evidence, not the repaired current source. No native operation, new capture, personal screenshot review, or acceptance was performed by this source merge.",
+  "new_native_acceptance": {
+    "accepted_components": 0,
+    "accepted_cases": 0,
+    "reviewed_images": 0
+  },
+  "path_resolution": "The archived visual metadata preserves upstream path strings verbatim. Resolve a changed annotated path through archived_annotations.original_path to archived_annotations.path. All other source/annotated paths resolve at their original paths and are pinned by unchanged_upstream_media_sha256. The old original files remain pinned separately by retained_original_media_sha256. Never treat this archive's statuses as the current visual-checkpoints statuses.",
+  "upstream_visual_metadata": {
+    "path": "solutions/procurement-agent/evals/history/2026-09-10-upstream/visual-checkpoints.json",
+    "bytes": 16728,
+    "sha256": "a7204c3005af4c333785051f13d7d3fcdc4fcc814686df95e2e91f2ae419ee35",
+    "original_path": "solutions/procurement-agent/evals/visual-checkpoints.json"
+  },
+  "staging_visual_metadata_sha256": "8a7295dd04a665a8adc329c9cfecbf3081415dd844b821195faa0451d09d46cf",
+  "current_visual_projection": {
+    "excluded_key": "historical_annotation_reference",
+    "encoding": "json.dumps(value, sort_keys=True, ensure_ascii=True), UTF-8",
+    "sha256": "b6b59db7b7ab98ba227db39a7aff525c58d05c4e6c89d4f5fc4d466cd80a0f81",
+    "boundary": "Every existing current field, status, reason, review and scope is unchanged."
+  },
+  "archived_annotations": [
+    {
+      "path": "solutions/procurement-agent/evals/history/2026-09-10-upstream/screenshots/assisted/annotated/03-proc-03.png",
+      "bytes": 349367,
+      "sha256": "cf8d879a5f112a65878d64ef1e61b6b2f83572ff566af4a56ffcc3301adfbbcd",
+      "original_path": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png",
+      "retained_original_sha256": "1a98bf80b4196b7c7131eb26aaf84c3db0c2565c9d387f74c3babdf09e44b349",
+      "capture_id": "easy-proc-03",
+      "upstream_note": "Lower label pill was covering the bullet above the approval paragraph; kept the evidence box and moved the pill below the box with a compact font 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 286,
+          "y": 186,
+          "width": 935,
+          "height": 77,
+          "label": "CFO gate and 48-hour review"
+        },
+        {
+          "x": 286,
+          "y": 403,
+          "width": 935,
+          "height": 92,
+          "label": "Recommendation does not record approval"
+        }
+      ]
+    },
+    {
+      "path": "solutions/procurement-agent/evals/history/2026-09-10-upstream/screenshots/manual/annotated/16-proc-03.png",
+      "bytes": 389011,
+      "sha256": "3218f7207fab204f37cb3dae46d9d24090f93e5a4283ec3c8be140c2141a2b42",
+      "original_path": "solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png",
+      "retained_original_sha256": "a27cdd4d0d535fa4edf2c0497941633810381c052ae663b00b89ff2b8d59a681",
+      "capture_id": "hard-step-16",
+      "upstream_note": "Both label pills were sitting on top of neighboring text near the CFO gate and approval-warning callout; tightened the CFO gate box to avoid crossing the next bullet and moved both pills into open whitespace 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 286,
+          "y": 210,
+          "width": 940,
+          "height": 74,
+          "label": "CFO authorization and 48-hour gate"
+        },
+        {
+          "x": 286,
+          "y": 474,
+          "width": 940,
+          "height": 95,
+          "label": "Recommendation does not record approval"
+        }
+      ]
+    },
+    {
+      "path": "solutions/procurement-agent/evals/history/2026-09-10-upstream/screenshots/manual/annotated/17-proc-04.png",
+      "bytes": 461595,
+      "sha256": "f508de7f8667dd6ab4e57f75072f109573da1c6fc813775cb3a74d29a60f3f69",
+      "original_path": "solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png",
+      "retained_original_sha256": "cf86032de33609a094bb09f84bc97629f53d148679d9935f8b93515bbc43998d",
+      "capture_id": "hard-step-17",
+      "upstream_note": "The two boxes/labels were stacked into each other, with the top pill crowding the lines above and the second pill crossing the next row. Tightened the two boxes to their respective bullet groups and moved the pills into whitespace 2026-09-10.",
+      "upstream_boxes": [
+        {
+          "x": 286,
+          "y": 123,
+          "width": 940,
+          "height": 84,
+          "label": "Software budget pressure"
+        },
+        {
+          "x": 286,
+          "y": 220,
+          "width": 940,
+          "height": 110,
+          "label": "Open request and CFO threshold"
+        }
+      ]
+    }
+  ],
+  "unchanged_upstream_media_sha256": {
+    "solutions/procurement-agent/screenshots/assisted/01-proc-01.jpg": "2c7afec5a31dadcdb3d7fb9d3dfdbafb296f116cf740de660a9f99fde1757891",
+    "solutions/procurement-agent/screenshots/assisted/02-proc-02.jpg": "ad6dded13458434ac8562389ea579ea445d80f8d19326c6b4c088eb2d177c7b4",
+    "solutions/procurement-agent/screenshots/assisted/03-proc-03.jpg": "fefd43d93454b95f1c068e72c7dd3f3f6645126a0f532a3f1f1a9a8e4ce5f20a",
+    "solutions/procurement-agent/screenshots/assisted/04-proc-04.jpg": "a9dfeb589bfc974a264a9c1761b127ab280278c52a7aa537a61876588b59d94d",
+    "solutions/procurement-agent/screenshots/assisted/05-confirm-draft.jpg": "6dc0d8c8b19880ae1dc89f00e8f7890cf7e4ac44d9572e5f6d1064ff7aba5e4d",
+    "solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png": "cd70d367286f4df202aa58df6ba9b0dd4d5f49e2ad306545fd2bcbaf64d2b43b",
+    "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png": "e514668434c0cc6e822bcbb15ef91ed791ad5dca9c05f621af2311fe2848f2c6",
+    "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png": "8b1b412079c50ba1d3a2bb3d4fc9d6a2ddad7e5f169e55ba28e99bc5bf8a5845",
+    "solutions/procurement-agent/screenshots/manual/01-create-blank-agent.jpg": "ec51aa22df90327146aada8c0e89011f701d61977b98c6c254b75e8e26ce4bab",
+    "solutions/procurement-agent/screenshots/manual/02-name-agent.jpg": "0bc5049abcb2284143fe2d22d329cb3b920c4f3adce01585ef18c44f43e72d5f",
+    "solutions/procurement-agent/screenshots/manual/03-enter-instructions.jpg": "f04d9b669276a8f1be0cbd011e040c914b82e23ac4a1ede69d471bc5033c3158",
+    "solutions/procurement-agent/screenshots/manual/04-save-instructions.jpg": "35c513d8901b0704dbaef80ca481ec0add869cd698ecf047ecf450960ee35d4c",
+    "solutions/procurement-agent/screenshots/manual/05-remove-web-search.jpg": "c1c8992536ea91d9bbeecac768029bf239fed0b97928f4a241a15c36b8a29c5f",
+    "solutions/procurement-agent/screenshots/manual/06-add-aibast-procurement-agent-rules-and-guardrails.jpg": "306a5df4a9ddc871717bad0ee78a6235a87e3f3ab157ed85dd96b277a8cdc690",
+    "solutions/procurement-agent/screenshots/manual/07-add-aibast-procurement-agent-synthetic-records.jpg": "306a5df4a9ddc871717bad0ee78a6235a87e3f3ab157ed85dd96b277a8cdc690",
+    "solutions/procurement-agent/screenshots/manual/08-add-aibast-approval-routing-03.jpg": "7ed7ad565211411d963386b8fbb18075bb598af97ce4cb4cdcb765681c8abe2b",
+    "solutions/procurement-agent/screenshots/manual/09-add-aibast-purchase-request-01.jpg": "7ed7ad565211411d963386b8fbb18075bb598af97ce4cb4cdcb765681c8abe2b",
+    "solutions/procurement-agent/screenshots/manual/10-add-aibast-spend-analysis-04.jpg": "5b757aa59264f982c8f8d3d4361a50414858454d6041b613bc32593e67971e77",
+    "solutions/procurement-agent/screenshots/manual/11-add-aibast-vendor-comparison-02.jpg": "8bcb02a7c9cf07ee9ac322db31a4dd8a2cf635efe1f3ff50a75e9daf95fab051",
+    "solutions/procurement-agent/screenshots/manual/12-review-inventory.jpg": "9e402032a3ee9d4ffd3b44610619fb24029cc1cd413a00f02c82efa33492ea5b",
+    "solutions/procurement-agent/screenshots/manual/13-open-preview.jpg": "f54660990c5d132a6d836208fe4f7f03fdb7f21f7901bab052320a1e66700e51",
+    "solutions/procurement-agent/screenshots/manual/14-proc-01.jpg": "7a47d60a2f6c2d5a5277a27c601401693e108be9ef6a947d0ad541fba332be60",
+    "solutions/procurement-agent/screenshots/manual/15-proc-02.jpg": "64fbf5a7634ced8118397de4b6a04d04fed03740a42bc48962453bb524802db7",
+    "solutions/procurement-agent/screenshots/manual/16-proc-03.jpg": "a68a74741b83c7942c232196a6b0c0e852498b8d25f6937b7cbd064ca119e262",
+    "solutions/procurement-agent/screenshots/manual/17-proc-04.jpg": "2ab7c82e184d88725a8a6c1ba7302a2930ca902cd481c0aaad03ecf3aca826df",
+    "solutions/procurement-agent/screenshots/manual/18-confirm-draft.jpg": "881775d3999fec091d0baf8a190ae50c908994c4e659a2a42400433cd634fa1d",
+    "solutions/procurement-agent/screenshots/manual/annotated/02-name-agent.png": "bca1801eec4612df6188bb8d53fc77089a80a3b0ec166c9bba65a894beba7060",
+    "solutions/procurement-agent/screenshots/manual/annotated/03-enter-instructions.png": "063a6e32c2b16d5b509bb0beca24a37fff8428b942077f9a5fe57610fc95711e",
+    "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png": "6f394077c3f249f591b112b32104eea58e4129f504a270a2a09ba68b47c4308e",
+    "solutions/procurement-agent/screenshots/manual/annotated/08-add-aibast-approval-routing-03.png": "b6f367262528fc658d296a5eee135d12598f7ab07332cdeeed04bb8ee73e41bc",
+    "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png": "d18ddde46378cca2aeb265ef3d7ec7a8c34a38285d68ee74302c87b562e8e245",
+    "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png": "ae78f3c80aca35ec4a445d4b025b36ebdc66b346bc3bc649030e7a928b66a8cf",
+    "solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png": "c973377e3426d27af04757cf58bdbad84249c6139057d0b20186f3f4a0d38acc",
+    "solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png": "0198b84fbd78b52e523091bbd6ebfb9a4ae4cdbc82cc1092801aa546766ccd32"
+  },
+  "retained_original_media_sha256": {
+    "solutions/procurement-agent/screenshots/assisted/01-proc-01.jpg": "2c7afec5a31dadcdb3d7fb9d3dfdbafb296f116cf740de660a9f99fde1757891",
+    "solutions/procurement-agent/screenshots/assisted/02-proc-02.jpg": "ad6dded13458434ac8562389ea579ea445d80f8d19326c6b4c088eb2d177c7b4",
+    "solutions/procurement-agent/screenshots/assisted/03-proc-03.jpg": "fefd43d93454b95f1c068e72c7dd3f3f6645126a0f532a3f1f1a9a8e4ce5f20a",
+    "solutions/procurement-agent/screenshots/assisted/04-proc-04.jpg": "a9dfeb589bfc974a264a9c1761b127ab280278c52a7aa537a61876588b59d94d",
+    "solutions/procurement-agent/screenshots/assisted/05-confirm-draft.jpg": "6dc0d8c8b19880ae1dc89f00e8f7890cf7e4ac44d9572e5f6d1064ff7aba5e4d",
+    "solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png": "cd70d367286f4df202aa58df6ba9b0dd4d5f49e2ad306545fd2bcbaf64d2b43b",
+    "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png": "e514668434c0cc6e822bcbb15ef91ed791ad5dca9c05f621af2311fe2848f2c6",
+    "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png": "1a98bf80b4196b7c7131eb26aaf84c3db0c2565c9d387f74c3babdf09e44b349",
+    "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png": "8b1b412079c50ba1d3a2bb3d4fc9d6a2ddad7e5f169e55ba28e99bc5bf8a5845",
+    "solutions/procurement-agent/screenshots/manual/01-create-blank-agent.jpg": "ec51aa22df90327146aada8c0e89011f701d61977b98c6c254b75e8e26ce4bab",
+    "solutions/procurement-agent/screenshots/manual/02-name-agent.jpg": "0bc5049abcb2284143fe2d22d329cb3b920c4f3adce01585ef18c44f43e72d5f",
+    "solutions/procurement-agent/screenshots/manual/03-enter-instructions.jpg": "f04d9b669276a8f1be0cbd011e040c914b82e23ac4a1ede69d471bc5033c3158",
+    "solutions/procurement-agent/screenshots/manual/04-save-instructions.jpg": "35c513d8901b0704dbaef80ca481ec0add869cd698ecf047ecf450960ee35d4c",
+    "solutions/procurement-agent/screenshots/manual/05-remove-web-search.jpg": "c1c8992536ea91d9bbeecac768029bf239fed0b97928f4a241a15c36b8a29c5f",
+    "solutions/procurement-agent/screenshots/manual/06-add-aibast-procurement-agent-rules-and-guardrails.jpg": "306a5df4a9ddc871717bad0ee78a6235a87e3f3ab157ed85dd96b277a8cdc690",
+    "solutions/procurement-agent/screenshots/manual/07-add-aibast-procurement-agent-synthetic-records.jpg": "306a5df4a9ddc871717bad0ee78a6235a87e3f3ab157ed85dd96b277a8cdc690",
+    "solutions/procurement-agent/screenshots/manual/08-add-aibast-approval-routing-03.jpg": "7ed7ad565211411d963386b8fbb18075bb598af97ce4cb4cdcb765681c8abe2b",
+    "solutions/procurement-agent/screenshots/manual/09-add-aibast-purchase-request-01.jpg": "7ed7ad565211411d963386b8fbb18075bb598af97ce4cb4cdcb765681c8abe2b",
+    "solutions/procurement-agent/screenshots/manual/10-add-aibast-spend-analysis-04.jpg": "5b757aa59264f982c8f8d3d4361a50414858454d6041b613bc32593e67971e77",
+    "solutions/procurement-agent/screenshots/manual/11-add-aibast-vendor-comparison-02.jpg": "8bcb02a7c9cf07ee9ac322db31a4dd8a2cf635efe1f3ff50a75e9daf95fab051",
+    "solutions/procurement-agent/screenshots/manual/12-review-inventory.jpg": "9e402032a3ee9d4ffd3b44610619fb24029cc1cd413a00f02c82efa33492ea5b",
+    "solutions/procurement-agent/screenshots/manual/13-open-preview.jpg": "f54660990c5d132a6d836208fe4f7f03fdb7f21f7901bab052320a1e66700e51",
+    "solutions/procurement-agent/screenshots/manual/14-proc-01.jpg": "7a47d60a2f6c2d5a5277a27c601401693e108be9ef6a947d0ad541fba332be60",
+    "solutions/procurement-agent/screenshots/manual/15-proc-02.jpg": "64fbf5a7634ced8118397de4b6a04d04fed03740a42bc48962453bb524802db7",
+    "solutions/procurement-agent/screenshots/manual/16-proc-03.jpg": "a68a74741b83c7942c232196a6b0c0e852498b8d25f6937b7cbd064ca119e262",
+    "solutions/procurement-agent/screenshots/manual/17-proc-04.jpg": "2ab7c82e184d88725a8a6c1ba7302a2930ca902cd481c0aaad03ecf3aca826df",
+    "solutions/procurement-agent/screenshots/manual/18-confirm-draft.jpg": "881775d3999fec091d0baf8a190ae50c908994c4e659a2a42400433cd634fa1d",
+    "solutions/procurement-agent/screenshots/manual/annotated/02-name-agent.png": "bca1801eec4612df6188bb8d53fc77089a80a3b0ec166c9bba65a894beba7060",
+    "solutions/procurement-agent/screenshots/manual/annotated/03-enter-instructions.png": "063a6e32c2b16d5b509bb0beca24a37fff8428b942077f9a5fe57610fc95711e",
+    "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png": "6f394077c3f249f591b112b32104eea58e4129f504a270a2a09ba68b47c4308e",
+    "solutions/procurement-agent/screenshots/manual/annotated/08-add-aibast-approval-routing-03.png": "b6f367262528fc658d296a5eee135d12598f7ab07332cdeeed04bb8ee73e41bc",
+    "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png": "d18ddde46378cca2aeb265ef3d7ec7a8c34a38285d68ee74302c87b562e8e245",
+    "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png": "ae78f3c80aca35ec4a445d4b025b36ebdc66b346bc3bc649030e7a928b66a8cf",
+    "solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png": "c973377e3426d27af04757cf58bdbad84249c6139057d0b20186f3f4a0d38acc",
+    "solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png": "a27cdd4d0d535fa4edf2c0497941633810381c052ae663b00b89ff2b8d59a681",
+    "solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png": "cf86032de33609a094bb09f84bc97629f53d148679d9935f8b93515bbc43998d",
+    "solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png": "0198b84fbd78b52e523091bbd6ebfb9a4ae4cdbc82cc1092801aa546766ccd32"
+  },
+  "instruction_resolution": {
+    "upstream_instructions": {
+      "path": "solutions/procurement-agent/evals/history/2026-09-10-upstream/GLOBAL-INSTRUCTIONS.md",
+      "bytes": 3076,
+      "sha256": "6c78e4dfd539a86c10f83804c9879a73b983b3294ffae5cca86d9eafbcfde002",
+      "original_path": "solutions/procurement-agent/manual/GLOBAL-INSTRUCTIONS.md",
+      "source_commit": "0783cc219124b4a6dff1c41f0c5eb5c285ae9436"
+    },
+    "preserved_current_instructions": {
+      "path": "solutions/procurement-agent/manual/GLOBAL-INSTRUCTIONS.md",
+      "bytes": 6476,
+      "sha256": "f3ef5a14a3ae52acfdb0fb40a7d7849560ddbb4f2262ce460f23f1ca22f768d2",
+      "restored_from": "c2e2be939273e912aa63a8237f48776ba33ff73a"
+    },
+    "original_auto_merge_sha256": "a5b331509287e346f250bcc82b0b2eaf57a908e5e8a6cb08d63633697accb068",
+    "upstream_skill_routing_names": [
+      "purchase-request",
+      "vendor-comparison",
+      "approval-routing",
+      "spend-analysis"
+    ],
+    "current_payload_changed": false,
+    "incoming_policy_is_current": false,
+    "passes_transferred_to_incoming_policy": false,
+    "payload_identity_transferred_to_incoming_policy": false,
+    "new_acceptance_claimed": false,
+    "decision": "Retain the exact c2e2be93 current policy bytes, including its repaired content outside the locked-anchor section. The upstream real-skill routing map and retry/citation guard are a traceable historical improvement, not a replacement under the current payload fingerprint. Changing only that section still changes the native policy and its content identity. No old response finding, pass, source revision or saved-state identity may be assigned to the incoming policy.",
+    "future_adoption_gate": "Adopt the incoming routing improvement only as a separately identified source revision, retaining the prior payload hashes and evidence. Verify a complete native save/reopen, retrieved sources, real skill routing, all locked final answers and personally reviewed evidence. A source merge, unchanged delivery URL target, or historical annotation does not satisfy these native gates.",
+    "current_source_identity": {
+      "build_revision": "grounding-r3",
+      "source_commit": "38a1c30d3cccfa1cab379f6a0bb94879cf4de496",
+      "input_count": 7,
+      "instruction_sha256": "f3ef5a14a3ae52acfdb0fb40a7d7849560ddbb4f2262ce460f23f1ca22f768d2",
+      "status": "source_only_unaccepted_candidate",
+      "accepted_native_components": 0,
+      "accepted_native_cases": 0
+    },
+    "acceptance_boundary": "grounding-r3 remains an unaccepted seven-input candidate. Preserving its exact hashes does not accept it, and the incoming policy cannot inherit either its source identity or any older native pass. No inventory, locked case, native case record or delivery alias is changed."
+  }
+}

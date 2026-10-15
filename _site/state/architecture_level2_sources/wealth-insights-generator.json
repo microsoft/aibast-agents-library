@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "wealth-insights-generator",
+  "agent": "@aibast-agents-library/wealth-insights-generator",
+  "display_name": "Wealth Insights Generator Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic wealth and market snapshot",
+        "detail": "Bundled fictional clients, assets, returns, benchmarks, life events, planning signals, market values, and dates support deterministic demos."
+      },
+      {
+        "name": "Wealth controls and review rules",
+        "detail": "Packaged guidance separates evidence, calculations, preparation, advice, suitability decisions, specialist review, and external actions."
+      },
+      {
+        "name": "Operation skills and locked evidence anchors",
+        "detail": "Five skills define routing, procedures, synthetic evidence, safety statements, and review checkpoints."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Fixed market snapshot briefing",
+        "detail": "Presents packaged index, yield, and practice-AUM context with synthetic and non-current labels instead of live market claims."
+      },
+      {
+        "name": "Unified client wealth analysis",
+        "detail": "Combines managed and held-away assets, performance, risk profiles, review dates, and life events into an advisor-ready client view."
+      },
+      {
+        "name": "Planning-signal prioritization",
+        "detail": "Ranks fixed education, liquidity, estate, RMD, and reallocation signals for review without giving advice or contacting clients."
+      },
+      {
+        "name": "Performance attribution context",
+        "detail": "Compares synthetic returns with fixed strategy benchmarks and labels alpha and attribution without forecasts or suitability findings."
+      },
+      {
+        "name": "Advisor meeting preparation",
+        "detail": "Drafts household facts and prompts while requiring advisor and client validation of facts, suitability, consent, and disclosures."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational workspace",
+        "detail": "Provides natural-language access for advisors, relationship managers, directors, and strategists in a validated Draft agent."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs WealthInsightsGeneratorAgent through local Brainstem chat and UI endpoints with deterministic synthetic-only routing."
+      },
+      {
+        "name": "Advisor and client review experience",
+        "detail": "Presents evidence-first briefs for licensed-advisor validation and client confirmation before any recommendation or external use."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Synthetic market and practice brief",
+        "detail": "Reports fixed market values, returns, yields, observations, and total practice AUM while clearly denying current-data status."
+      },
+      {
+        "name": "Client wealth and opportunity overview",
+        "detail": "Shows managed and held-away assets, alpha, relationship health, review dates, life events, and prioritized planning signals."
+      },
+      {
+        "name": "Performance attribution report",
+        "detail": "Lists strategy benchmarks, client returns, benchmark returns, alpha, attribution labels, and AUM-weighted alpha for review."
+      },
+      {
+        "name": "Draft advisor meeting brief",
+        "detail": "Summarizes household assets, risk profile, next review, facts to validate, and discussion prompts without advice or outreach."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable WealthInsightsGeneratorAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements five read-only operations over bundled synthetic wealth and market evidence."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the tool and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the Draft package, two synthetic knowledge files, and five skills; publication requires explicit confirmation."
+    },
+    {
+      "name": "Dynamics 365 wealth-management CRM",
+      "detail": "Approved future seam for relationship context; it is not connected to the current fixed synthetic package."
+    },
+    {
+      "name": "Approved portfolio aggregation",
+      "detail": "Future least-privilege seam for managed and held-away asset evidence; no live account aggregation is configured."
+    },
+    {
+      "name": "Financial planning and performance systems",
+      "detail": "Approved future seam for planning and performance evidence; current calculations use only bundled fictional records."
+    },
+    {
+      "name": "Microsoft Outlook",
+      "detail": "Approved preparation seam for reviewed materials; the agent does not send outreach, schedule meetings, or contact clients."
+    },
+    {
+      "name": "Microsoft Teams specialist review",
+      "detail": "Approved collaboration seam for human review; the package sends no messages, requests no approvals, and executes no actions."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence policy",
+      "detail": "Uses only bundled fictional records and forbids browsing, freshness claims, enrichment, substitution, or invention of missing facts."
+    },
+    {
+      "name": "Five deterministic operations",
+      "detail": "Routes market brief, client insights, opportunity alerts, performance attribution, and meeting brief requests to explicit handlers."
+    },
+    {
+      "name": "Fail-closed identifier handling",
+      "detail": "Rejects unknown client IDs instead of substituting another household or fabricating wealth, planning, or performance evidence."
+    },
+    {
+      "name": "Regulated decision-support boundary",
+      "detail": "Provides no investment, tax, legal, estate, retirement, or financial advice, suitability findings, or performance promises."
+    },
+    {
+      "name": "Advisor and client review gate",
+      "detail": "Requires licensed-advisor validation and client confirmation, plus compliance, tax, legal, estate, or trading review as applicable."
+    },
+    {
+      "name": "No transaction execution or side effects",
+      "detail": "Prevents outreach, CRM changes, live aggregation, opportunity creation, orders, transactions, approvals, and record updates."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Five persona cases verify deterministic evidence and safety boundaries; Copilot Studio artifacts remain Draft until separately approved."
+    }
+  ]
+}

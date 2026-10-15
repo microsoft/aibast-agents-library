@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "fraud-detection-alert",
+  "agent": "@aibast-agents-library/fraud-detection-alert",
+  "display_name": "Fraud Detection and Alert Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic fraud operating snapshot",
+        "detail": "Bundled fictional transactions, accounts, rules, risk scores, patterns, and cases provide deterministic evidence for investigation demos."
+      },
+      {
+        "name": "Fraud controls and evidence boundaries",
+        "detail": "Packaged guidance separates observed activity, rule triggers, hypotheses, proposed review steps, human decisions, and prohibited actions."
+      },
+      {
+        "name": "Operation skills and locked case anchors",
+        "detail": "Four skills route persona-language requests and preserve source-backed anchors for alert, account, pattern, and SIU case scenarios."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Explainable overnight alert triage",
+        "detail": "Ranks the fictional queue by transaction risk and rule severity, then exposes the exact evidence behind urgent investigator attention."
+      },
+      {
+        "name": "Account sequence evidence analysis",
+        "detail": "Summarizes amounts, merchants, countries, channels, timing, and account totals to support analyst review of suspicious sequences."
+      },
+      {
+        "name": "Fraud-pattern hypothesis comparison",
+        "detail": "Compares active cases with packaged card-cloning, account-takeover, bust-out, and synthetic-identity indicators without determining fraud."
+      },
+      {
+        "name": "Investigation packet preparation",
+        "detail": "Assembles case status, priority, analyst, notes, linked transactions, triggered rules, and action status for authorized investigator review."
+      },
+      {
+        "name": "Human-authorized escalation routing",
+        "detail": "Proposes SIU or fraud-operations queues while leaving routing, filings, customer contact, and protective actions to authorized people."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio investigator workspace",
+        "detail": "Provides a Draft agent with four operation behaviors, two synthetic knowledge files, integrated authentication, and no web search."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file FraudDetectionAlertAgent through local chat and streaming endpoints with deterministic synthetic-only tool execution."
+      },
+      {
+        "name": "Persona-focused fraud review",
+        "detail": "Fraud analysts, operations managers, SIU investigators, and risk leaders receive evidence-first answers with explicit review boundaries."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Alert queue risk report",
+        "detail": "Reports high-risk transaction count, flagged amount, open cases, risk level, merchant, country, and triggered rule severity."
+      },
+      {
+        "name": "Account transaction sequence view",
+        "detail": "Presents transaction-level evidence and account totals so analysts can inspect sequences such as the two Dubai card-present purchases."
+      },
+      {
+        "name": "Pattern hypothesis report",
+        "detail": "Lists known indicator definitions and active case matches while stating that a score or pattern is an investigative signal, not proof."
+      },
+      {
+        "name": "SIU case preparation report",
+        "detail": "Shows case facts, evidence, proposed queue, and whether any external action occurred before authorized SIU, legal, or compliance review."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable FraudDetectionAlertAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements alert triage, transaction analysis, pattern detection, and investigation summaries."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable agent and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the Draft investigator workspace, synthetic knowledge, and four behaviors; publishing remains a separate confirmed action."
+    },
+    {
+      "name": "Approved transaction-monitoring data",
+      "detail": "Production connection seam for monitored transaction evidence; the current package uses only the fixed fictional snapshot."
+    },
+    {
+      "name": "Dynamics 365 investigation cases",
+      "detail": "Production seam for governed fraud case context and workflow; the packaged agent does not create, update, or route a case."
+    },
+    {
+      "name": "Microsoft Sentinel security signals",
+      "detail": "Approved seam for device, identity, and security evidence; no live Sentinel signal is connected to the synthetic package."
+    },
+    {
+      "name": "Microsoft Teams SIU escalation",
+      "detail": "Approved collaboration seam for investigator escalation and review; the package does not send messages or request approvals."
+    },
+    {
+      "name": "Authorized protective-action workflows",
+      "detail": "Governed seam for filings, blocks, releases, and payment actions; none can be initiated by the packaged agent."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence policy",
+      "detail": "Uses only bundled fictional records and forbids browsing, enrichment, substitution, or invention of customer and fraud evidence."
+    },
+    {
+      "name": "Four deterministic investigation operations",
+      "detail": "Routes alert urgency, account activity, pattern hypotheses, and named-case preparation requests to one bounded operation."
+    },
+    {
+      "name": "Evidence-first response contract",
+      "detail": "Separates observed transactions, triggered rules, hypotheses, and proposed review actions while citing exact packaged identifiers."
+    },
+    {
+      "name": "Fail-closed identifier handling",
+      "detail": "Rejects unknown case and account identifiers instead of substituting another fictional record or fabricating corroboration."
+    },
+    {
+      "name": "Fraud hypothesis boundary",
+      "detail": "Treats scores, rule matches, and pattern indicators as investigation signals and never as proof, accusation, or fraud determination."
+    },
+    {
+      "name": "Investigation and escalation gate",
+      "detail": "Requires authorized investigators, SIU, operations, legal, compliance, or filing officers to review and decide every next step."
+    },
+    {
+      "name": "No autonomous blocking or external action",
+      "detail": "Prevents card, account, wire, payment, or fund blocks; releases; outreach; case actions; filings; messages; and record changes."
+    }
+  ]
+}

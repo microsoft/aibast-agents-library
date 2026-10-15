@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "supply-chain-disruption-alert",
+  "agent": "@aibast-agents-library/supply-chain-disruption-alert",
+  "display_name": "Supply Chain Disruption Alert Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic supply-chain snapshot",
+        "detail": "Bundled routes, disruption events, risk scores, mitigation playbooks, and supplier candidates provide deterministic review evidence."
+      },
+      {
+        "name": "Disruption rules and operational controls",
+        "detail": "Packaged rules define risk bands, impact calculations, scenario logic, evidence anchors, approval gates, and prohibited actions."
+      },
+      {
+        "name": "Locked persona and operation cases",
+        "detail": "Four cases preserve exact disruption, route, mitigation, and supplier evidence for repeatable Brainstem and Copilot Studio validation."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Active disruption impact review",
+        "detail": "Aggregates active events, affected routes and SKUs, modeled delays, resolution dates, and synthetic revenue exposure for review."
+      },
+      {
+        "name": "Route risk-factor assessment",
+        "detail": "Classifies route scores by fixed thresholds and explains weather, labor, infrastructure, regulatory, financial, and geopolitical factors."
+      },
+      {
+        "name": "Draft mitigation scenario preparation",
+        "detail": "Maps a disruption type to immediate, short-term, and long-term playbook options with modeled cost and risk reduction."
+      },
+      {
+        "name": "Alternative-supplier due-diligence comparison",
+        "detail": "Compares synthetic lead time, quality, capacity, premium, minimum quantity, and certifications without substituting a supplier."
+      },
+      {
+        "name": "Fail-closed evidence filtering",
+        "detail": "Filters only exact route, disruption, or category identifiers and returns no invented or substituted record when evidence is absent."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file agent through local chat and streaming endpoints with four independently routable, read-only operations."
+      },
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Hosts four behaviors and two synthetic knowledge files with integrated authentication, no web search, and no published agent."
+      },
+      {
+        "name": "Operations review responses",
+        "detail": "Gives planners, operations leaders, procurement managers, and fulfillment leads evidence-first results for human review."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Supply Chain Disruption Dashboard",
+        "detail": "Reports active events, affected routes and SKUs, delays, severity, resolution estimates, and modeled revenue at risk."
+      },
+      {
+        "name": "Supply Chain Risk Assessment",
+        "detail": "Reports route-level overall risk, fixed risk labels, factor scores, distribution, and highest contributing factors."
+      },
+      {
+        "name": "Draft Disruption Mitigation Scenario",
+        "detail": "Reports proposed playbook options, time horizons, modeled investment, and expected risk reduction for authorized review."
+      },
+      {
+        "name": "Alternative Supplier Directory",
+        "detail": "Reports due-diligence candidates and comparison attributes while making no supplier qualification, substitution, award, or activation."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "SupplyChainDisruptionAlertAgent RAPP tool",
+      "detail": "Portable single-file Python BasicAgent implements four deterministic operations over bundled synthetic supply-chain records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the agent and exposes conversational chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft pilot with four behaviors and two knowledge files; publication requires separate confirmation."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "Routes natural-language requests to one operation and composes responses from deterministic evidence and package instructions."
+    },
+    {
+      "name": "Dynamics 365 Supply Chain Management",
+      "detail": "Approved future seam for governed operational data; the packaged pilot has no live connection and performs no system write."
+    },
+    {
+      "name": "Approved supplier-risk feed",
+      "detail": "Future least-privilege input for risk evidence; this agent reviews disruption continuity rather than monitoring supplier health."
+    },
+    {
+      "name": "Transportation management system",
+      "detail": "Future approved source for route and shipment state; the current package cannot reroute, dispatch, or modify a shipment."
+    },
+    {
+      "name": "Microsoft Teams authorized collaboration",
+      "detail": "Future review seam for authorized collaboration; the current package sends no alert, message, approval, or notification."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Four preserved review operations",
+      "detail": "Keeps disruption_dashboard, risk_assessment, mitigation_plan, and supplier_alternatives independently routable and read-only."
+    },
+    {
+      "name": "Disruption-continuity scope",
+      "detail": "Focuses on events, routes, impacts, mitigation scenarios, and candidate review, distinct from supplier-risk monitoring."
+    },
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Uses bundled fictional records only and forbids browsing, enrichment, replacement facts, or invention of missing evidence."
+    },
+    {
+      "name": "Human operations and procurement gates",
+      "detail": "Operations and procurement owners retain every decision; future writes require authorization, confirmation, and audit logging."
+    },
+    {
+      "name": "No supplier substitution or order action",
+      "detail": "Prevents supplier qualification, selection, substitution, contracting, activation, purchase-order changes, and inventory movement."
+    },
+    {
+      "name": "No autonomous routing or alert sending",
+      "detail": "Prevents shipment rerouting, dispatch, customer contact, counterparty outreach, alert delivery, messages, and notifications."
+    },
+    {
+      "name": "Locked validation and Draft control",
+      "detail": "Four persona cases passed deterministic and Copilot Studio previews while validated builds remained Draft and unpublished."
+    }
+  ]
+}

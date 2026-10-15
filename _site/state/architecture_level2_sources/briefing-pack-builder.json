@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "briefing-pack-builder",
+  "agent": "@aibast-agents-library/briefing-pack-builder",
+  "display_name": "Briefing Pack Builder Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic content set",
+        "detail": "Eight fictional documents and ten tagged passages on two city capital projects."
+      },
+      {
+        "name": "Briefing templates and routes",
+        "detail": "Five formats with audience, sections, reviewer, approver and working-day turnaround."
+      },
+      {
+        "name": "Drafting rules and guardrails",
+        "detail": "Citation, conflicting-figure, gap and no-approval rules that bound every draft."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Template catalog",
+        "detail": "Lists each format's audience and section structure from the template set."
+      },
+      {
+        "name": "Topic content scan",
+        "detail": "Counts on-topic passages per document and reports measures with conflicting values."
+      },
+      {
+        "name": "Cross-document figure check",
+        "detail": "Compares each measure across documents and lists every value with its sources."
+      },
+      {
+        "name": "Cited section drafting",
+        "detail": "Fills each template section from tagged passages with an inline document citation."
+      },
+      {
+        "name": "Gap detection",
+        "detail": "Marks sections with no supporting passage and names who should supply the content."
+      },
+      {
+        "name": "Approval routing",
+        "detail": "Returns the reviewer, approver and turnaround for the chosen format."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the Draft agent with six skills and two synthetic knowledge files; publishing is gated."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Gives briefing teams a drafting conversation once approved controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file BriefingPackBuilderAgent locally with deterministic operations."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Draft brief with sources",
+        "detail": "Section-by-section draft with citations, a source list and a not-approved status."
+      },
+      {
+        "name": "Figure and gap registers",
+        "detail": "Lists measures needing confirmation and sections needing input."
+      },
+      {
+        "name": "Acceptance evidence",
+        "detail": "Six passing persona cases, package integrity and the unpublished Draft state."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable BriefingPackBuilderAgent tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only briefing operations."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server that discovers the agent and exposes chat, health and tool routing."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; publishing requires explicit approval."
+    },
+    {
+      "name": "SharePoint document library",
+      "detail": "Production seam for the governed source documents; not connected in the demonstration."
+    },
+    {
+      "name": "Microsoft Word",
+      "detail": "Where officers finalize a draft; the agent itself writes no file in the demonstration."
+    },
+    {
+      "name": "Microsoft Teams and Microsoft 365 Copilot",
+      "detail": "User surfaces for approved deployments; the package sends nothing."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only the bundled fictional content set and forbids browsing or outside facts."
+    },
+    {
+      "name": "Citation on every statement",
+      "detail": "Each drafted section names the document it came from."
+    },
+    {
+      "name": "No silent figure choice",
+      "detail": "Conflicting values are listed with their documents for a person to confirm."
+    },
+    {
+      "name": "Named gaps, never invented content",
+      "detail": "Uncovered sections are marked for the owning department instead of written from general knowledge."
+    },
+    {
+      "name": "Human sign-off gate",
+      "detail": "Review and approval follow the format's route; the agent never approves, files or sends."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Six persona cases verify one operation each with exact evidence anchors."
+    }
+  ]
+}

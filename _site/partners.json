@@ -1,0 +1,319 @@
+{
+  "schema": "aibast-partners/1.0",
+  "note": "Curated, non-exhaustive highlights from Microsoft partner AI agent libraries, selected to show real breadth from each partner's catalog rather than a redundant copy of AIBAST's own lineup. Descriptions, what_it_does, problem_it_solves, and who_it_helps are paraphrased in our own words for what the partner publicly states the agent does; they are not endorsements, resale offers, or verified benchmarks. Where the partner's own page states a quantified result (partner_reported_outcome), it is quoted verbatim and is explicitly partner-reported, not independently verified by AIBAST. See each agent's source_url for the partner's own listing.",
+  "guidance": "Use this catalog to learn what other Microsoft ecosystem partners are building with Copilot Studio and Dynamics 365 — patterns and use cases you can borrow ideas from, independent of AIBAST's own catalog. Every entry here follows the same research and verification standard documented at partner-standards.html.",
+  "snapshot_date": "2026-09-06",
+  "partners": [
+    {
+      "id": "congruentx",
+      "name": "CongruentX",
+      "url": "https://congruentx.com/ai-agents-library/",
+      "description": "Microsoft Dynamics 365 and Power Platform partner publishing a public library of 40+ Copilot-based sales, insurance, distribution, and professional-services agents."
+    }
+  ],
+  "count": 12,
+  "agents": [
+    {
+      "id": "congruentx-buyer-intent-enrichment",
+      "partner_id": "congruentx",
+      "name": "Buyer Intent Enrichment (web + CRM)",
+      "category": "b2b_sales",
+      "product": "Copilot Studio · Dynamics 365 Sales",
+      "description": "Enriches anonymous web and CRM signals into scored buyer intent so marketing and sales can prioritize outreach to the accounts showing real interest.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Detects buying intent from web and CRM activity",
+        "Prioritizes outreach toward the accounts showing the strongest intent",
+        "Personalizes content and timing to match where each account is in its journey"
+      ],
+      "problem_it_solves": [
+        "Anonymous intent signals go uncaptured",
+        "Lead quality and volume are inconsistent",
+        "Generic content underperforms with in-market buyers"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "20–50% higher campaign ROI vs broad programs"
+    },
+    {
+      "id": "congruentx-hyper-targeted-market-segmentation",
+      "partner_id": "congruentx",
+      "name": "Hyper-Targeted Market Segmentation",
+      "category": "b2b_sales",
+      "product": "Copilot Studio · Dynamics 365 Marketing",
+      "description": "Segments the addressable market at a granular level so campaigns can be targeted to the highest-propensity segments instead of broad, unfocused programs.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Detects intent and prioritizes outreach by market segment",
+        "Personalizes content and timing to each segment"
+      ],
+      "problem_it_solves": [
+        "Intent signals go uncaptured at the segment level",
+        "Marketing spend is spread across low-fit segments",
+        "Generic content underperforms across a broad audience"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "+5–15% marketing ROI, reduced spend on low-impact segments"
+    },
+    {
+      "id": "congruentx-dynamic-journey-orchestration",
+      "partner_id": "congruentx",
+      "name": "Dynamic Journey Orchestration (CI Journeys Copilot)",
+      "category": "b2b_sales",
+      "product": "Copilot Studio · Dynamics 365 Marketing",
+      "description": "Orchestrates multi-channel nurture journeys and next-best-action sequencing across email, web, and ads based on real-time engagement signals.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights",
+        "Aggregates research to equip early discovery conversations",
+        "Builds next-best-action sequences across email, web, and ads",
+        "Auto-enrolls segments into targeted journeys"
+      ],
+      "problem_it_solves": [
+        "ICP and message-market fit are fragmented across channels",
+        "Discovery quality is low and leads are poorly qualified",
+        "Manual journey-building slows down campaign cycles"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "10–15% lift in journey revenue"
+    },
+    {
+      "id": "congruentx-event-webinar-persona-journeys",
+      "partner_id": "congruentx",
+      "name": "Event/Webinar Persona Journeys",
+      "category": "b2b_sales",
+      "product": "Copilot Studio · Dynamics 365 Marketing",
+      "description": "Builds automated, persona-specific follow-up journeys for event and webinar attendees based on how engaged each attendee was.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Builds automated follow-up journeys segmented by persona and engagement level"
+      ],
+      "problem_it_solves": [
+        "Event and webinar follow-up is created manually and inconsistently"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success"
+      ],
+      "partner_reported_outcome": "+10–20% higher MQL→SQL conversion on event leads"
+    },
+    {
+      "id": "congruentx-first-impact-claims-portal",
+      "partner_id": "congruentx",
+      "name": "First-Impact: Claims Setup & Portal",
+      "category": "financial_services",
+      "product": "Copilot Studio · Dynamics 365 Customer Service",
+      "description": "Guides a policyholder through their first claim and first portal use so the initial experience builds trust instead of confusion.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Guides first claim and first portal use step by step"
+      ],
+      "problem_it_solves": [
+        "First-time claim and portal experiences lack visibility and guidance",
+        "Engagement and volume are inconsistent during early claim interactions"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "+5–10 NPS points post-claim, better retention"
+    },
+    {
+      "id": "congruentx-icp-targeting-by-line",
+      "partner_id": "congruentx",
+      "name": "ICP Targeting by Line (P&C/Life)",
+      "category": "financial_services",
+      "product": "Copilot Studio · Dynamics 365 Sales",
+      "description": "Targets prospects by ideal-customer-profile fit for a specific insurance line (P&C or Life), aggregating research to equip early discovery conversations.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights by insurance line",
+        "Aggregates research to equip early discovery conversations"
+      ],
+      "problem_it_solves": [
+        "ICP and message-market fit are fragmented across lines of business",
+        "Discovery quality is low and leads are poorly qualified",
+        "Manual research slows down the sales cycle"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Underwriter / Claims"
+      ],
+      "partner_reported_outcome": "10–15% higher win rate"
+    },
+    {
+      "id": "congruentx-risk-loss-ratio-storytelling",
+      "partner_id": "congruentx",
+      "name": "Risk & Loss Ratio Storytelling",
+      "category": "financial_services",
+      "product": "Copilot Studio · Dynamics 365 Customer Service",
+      "description": "Turns loss-ratio and risk data into a next-best-action narrative so underwriters and account teams can explain risk trends and engage the right stakeholders.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights from loss-ratio data",
+        "Aggregates research to equip risk conversations",
+        "Builds next-best-action sequences across channels"
+      ],
+      "problem_it_solves": [
+        "Loss-ratio and risk data is fragmented across systems",
+        "Risk conversations lack supporting research",
+        "Manual analysis slows down underwriting and account reviews"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ]
+    },
+    {
+      "id": "congruentx-loyalty-tier-triggers",
+      "partner_id": "congruentx",
+      "name": "Loyalty Tier Triggers → Offers",
+      "category": "retail_cpg",
+      "product": "Copilot Studio · Dynamics 365 Customer Service",
+      "description": "Watches loyalty-tier signals and automatically triggers the next relevant offer or advocacy ask at the right moment in the customer relationship.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces cross-sell and upsell moments from loyalty-tier signals",
+        "Activates advocacy and reference requests at the right moment"
+      ],
+      "problem_it_solves": [
+        "No systematic trigger exists for cross-sell moments",
+        "Advocates and references are hard to find",
+        "Attach rates and loyalty stay flat without a structured trigger"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Branch / Inside Sales",
+        "Supply Chain"
+      ]
+    },
+    {
+      "id": "congruentx-dormant-account-reactivation",
+      "partner_id": "congruentx",
+      "name": "Dormant Account Reactivation (Leads)",
+      "category": "retail_cpg",
+      "product": "Copilot Studio · Dynamics 365 Marketing",
+      "description": "Finds inactive accounts and builds a re-engagement play with an updated offer and story to win them back.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Finds and re-engages inactive accounts",
+        "Builds a targeted, updated offer and story for reactivation"
+      ],
+      "problem_it_solves": [
+        "Dormant accounts go untouched without a systematic reactivation play",
+        "Offers and messaging go stale for lapsed accounts"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "10–20% of dormant accounts reactivated"
+    },
+    {
+      "id": "congruentx-service-contracts-attach-rate",
+      "partner_id": "congruentx",
+      "name": "Service Contracts & Attach Rate Signals",
+      "category": "retail_cpg",
+      "product": "Copilot Studio · Dynamics 365 Sales",
+      "description": "Prompts the right warranty or service contract at the point of sale, using signal detection to raise attach rates without a manual upsell script.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Prompts warranties and service contracts at the point of sale"
+      ],
+      "problem_it_solves": [
+        "Visibility into attach-rate benchmarks is limited",
+        "Retention stays low without a point-of-sale service prompt"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops"
+      ],
+      "partner_reported_outcome": "10–30% higher attach rate"
+    },
+    {
+      "id": "congruentx-target-accounts-buying-committee",
+      "partner_id": "congruentx",
+      "name": "Target Accounts by Buying Committee",
+      "category": "professional_services",
+      "product": "Copilot Studio · Dynamics 365 Project Operations",
+      "description": "Maps the buying committee inside a target account and prioritizes outreach to the specific roles involved in the decision.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Detects buying-committee membership and prioritizes outreach",
+        "Personalizes content and timing per stakeholder role"
+      ],
+      "problem_it_solves": [
+        "Buying-committee signals go uncaptured",
+        "Lead quality and volume are inconsistent",
+        "Generic content underperforms with mixed-role buying committees"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Engagement Manager / PM",
+        "Practice Lead"
+      ],
+      "partner_reported_outcome": "Higher win rate, larger average deal size (5–15%)"
+    },
+    {
+      "id": "congruentx-thought-leadership-orchestration",
+      "partner_id": "congruentx",
+      "name": "Thought Leadership Orchestration",
+      "category": "professional_services",
+      "product": "Copilot Studio · Dynamics 365 Marketing",
+      "description": "Orchestrates thought-leadership content and next-best-action sequencing across channels to build pipeline influence over a longer sales cycle.",
+      "source_url": "https://congruentx.com/ai-agents-library/",
+      "what_it_does": [
+        "Surfaces ICP fit and segment insights for content targeting",
+        "Aggregates research to equip early discovery",
+        "Builds next-best-action sequences across email, web, and ads",
+        "Auto-enrolls segments into targeted content journeys"
+      ],
+      "problem_it_solves": [
+        "ICP and message-market fit are fragmented across content channels",
+        "Discovery quality is low without supporting research",
+        "Manual content sequencing slows down pipeline influence"
+      ],
+      "who_it_helps": [
+        "Sales Rep, Manager",
+        "Marketing",
+        "Customer Success",
+        "Ops",
+        "Engagement Manager / PM",
+        "Practice Lead"
+      ],
+      "partner_reported_outcome": "Strong influence on pipeline; higher engagement, 5–10% more opps sourced"
+    }
+  ]
+}

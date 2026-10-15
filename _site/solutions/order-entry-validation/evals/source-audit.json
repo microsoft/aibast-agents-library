@@ -1,0 +1,22 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/order-entry-validation",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "54. Order Entry Validation Agent one-pager.pptx",
+    "sha256": "c6d72ed8955f7352fc6eec084243a6cfe2c56b83b4062fc0d9fe6402d779152e"
+  },
+  "source_path": "agents/@aibast-agents-library/manufacturing_stacks/order_entry_validation_stack/order_entry_validation_agent.py",
+  "findings": [
+    "New wave-2 template distilled from a field workflow pattern; the field implementation depended on live mailbox, CRM and document-store connections and customer data that cannot ship in a public library.",
+    "The field pattern spread the workflow across several cooperating agents with shared mutable state.",
+    "Outreach and write-back steps in the field pattern acted on external systems once a person approved them."
+  ],
+  "fixes": [
+    "Re-authored the workflow as one single-file agent over a fixed, fully fictional synthetic snapshot with no customer names, identifiers, tenants or record values.",
+    "Collapsed the stages into 7 deterministic, stateless operations with an operation enum and enum or resolver inputs only, so every output is reproducible.",
+    "Every outreach, write-back and submission step returns a reviewable draft marked not sent, and the response states the human approval boundary."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

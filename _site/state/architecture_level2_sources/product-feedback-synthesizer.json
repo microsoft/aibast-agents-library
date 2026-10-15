@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "product-feedback-synthesizer",
+  "agent": "@aibast-agents-library/product-feedback-synthesizer",
+  "display_name": "Product Feedback Synthesizer Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed Synthetic Feedback Snapshot",
+        "detail": "Six fictional entries provide stable channels, categories, sentiment, scores, excerpts, dates, and synthetic ARR context."
+      },
+      {
+        "name": "Feature Request and NPS Evidence",
+        "detail": "Six fixed requests provide votes, ARR weights, effort, review status, and linked feedback alongside two quarterly NPS snapshots."
+      },
+      {
+        "name": "Product Review Rules and Anchors",
+        "detail": "Two uploaded knowledge files define evidence IDs, review labels, locked demo anchors, prohibited inferences, and human gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Cross-Channel Feedback Aggregation",
+        "detail": "Summarizes synthetic volume, sentiment, categories, channels, average score, and represented ARR for product-team review."
+      },
+      {
+        "name": "Feature-Request Evidence Ranking",
+        "detail": "Ranks fixed requests by supplied ARR weight and presents votes, effort, and review status without creating delivery priority."
+      },
+      {
+        "name": "Sentiment and NPS Synthesis",
+        "detail": "Calculates positive and negative shares, presents fictional excerpts, and compares the two bundled quarterly NPS snapshots."
+      },
+      {
+        "name": "Roadmap Tradeoff Framing",
+        "detail": "Computes a transparent synthetic impact score and frames validation questions without sequencing work or committing a roadmap."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem Chat",
+        "detail": "Runs ProductFeedbackSynthesizerAgent through local Brainstem chat and UI endpoints using bundled synthetic records."
+      },
+      {
+        "name": "Copilot Studio Draft Experience",
+        "detail": "Provides natural-language access through a validated Draft agent with four behaviors and two synthetic knowledge files."
+      },
+      {
+        "name": "Cross-Functional Product Review",
+        "detail": "Supports product managers, engineering leads, and product directors preparing evidence for product-trio and Teams review."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Product Feedback Summary",
+        "detail": "Reports entry totals, average score, synthetic ARR context, and sentiment, category, and channel distributions."
+      },
+      {
+        "name": "Feature Request Review",
+        "detail": "Reports review candidates by fixed ARR weight with votes, effort labels, and non-commitment statuses."
+      },
+      {
+        "name": "Sentiment and NPS Review",
+        "detail": "Reports sentiment percentages, fictional customer excerpts, categories, scores, and the bundled quarterly NPS trend."
+      },
+      {
+        "name": "Roadmap Impact Assessment",
+        "detail": "Presents synthetic impact rankings and review candidates while reserving prioritization and sequencing for product owners."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable ProductFeedbackSynthesizerAgent",
+      "detail": "Single-file BasicAgent exposes four deterministic read-only operations with bundled synthetic data and no required credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-behavior conversational package; validated agents remain Draft and require explicit approval before publish."
+    },
+    {
+      "name": "Deployment-Selected Foundation Model",
+      "detail": "The deployment environment supplies the model used for natural-language routing and evidence-first response generation."
+    },
+    {
+      "name": "Synthetic Knowledge Package",
+      "detail": "Two uploaded files provide fixed records plus product-review rules for credential-free and reproducible demonstrations."
+    },
+    {
+      "name": "Copilot Studio Skills and Behaviors",
+      "detail": "Four operation-specific skills and behaviors mirror the portable agent's feedback, request, sentiment, and impact paths."
+    },
+    {
+      "name": "Dynamics 365 Feedback Seam",
+      "detail": "Named production source for approved customer context; the packaged solution has no live customer-system connection."
+    },
+    {
+      "name": "Microsoft Teams Review Seam",
+      "detail": "Named collaboration surface for human product review; no notification, task, ticket, or customer action is configured."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-Only Evidence Enforcement",
+      "detail": "Forbids browsing, live retrieval, enrichment, substitution, or invention beyond the fixed feedback and request snapshot."
+    },
+    {
+      "name": "Four Deterministic Operations",
+      "detail": "Routes feedback summary, feature-request ranking, sentiment analysis, and roadmap-impact requests from natural language."
+    },
+    {
+      "name": "Evidence-First Response Contract",
+      "detail": "Requires stable IDs, supplied evidence, assumptions, conflicting signals, validation owners, and explicit synthetic labeling."
+    },
+    {
+      "name": "Product-Team Review Governance",
+      "detail": "Product, engineering, design, security, support, and commercial owners retain prioritization and sequencing authority."
+    },
+    {
+      "name": "No External Mutation Boundary",
+      "detail": "Prohibits roadmap commitments, Jira changes, backlog edits, team notifications, customer outreach, and account actions."
+    },
+    {
+      "name": "Inference Safety Boundary",
+      "detail": "Prevents inferring churn, intent, or protected traits from sentiment, scores, ARR weights, votes, or a single excerpt."
+    },
+    {
+      "name": "Locked Demo and Draft Validation",
+      "detail": "Maintains four passing persona cases with required evidence anchors while keeping Copilot Studio artifacts unpublished."
+    }
+  ]
+}

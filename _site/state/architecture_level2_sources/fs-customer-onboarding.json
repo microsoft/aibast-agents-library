@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "fs-customer-onboarding",
+  "agent": "@aibast-agents-library/fs-customer-onboarding",
+  "display_name": "Customer Onboarding Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic onboarding records",
+        "detail": "Fixed applications, verification statuses, KYC document rules, products, owners, dates, and amounts support deterministic demos."
+      },
+      {
+        "name": "Onboarding controls and review rules",
+        "detail": "Packaged guidance defines evidence routing, regulated boundaries, demo anchors, missing-evidence handling, and human gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "KYC evidence review",
+        "detail": "Summarizes identity, OFAC, PEP, adverse-media, source-of-wealth, and enhanced-due-diligence evidence without clearing checks."
+      },
+      {
+        "name": "Document readiness assessment",
+        "detail": "Builds applicant-specific individual or business checklists, including beneficial-ownership evidence, for authorized KYC and AML review."
+      },
+      {
+        "name": "Account setup preparation",
+        "detail": "Presents setup-ready applications, product terms, fees, rates, and features without opening or provisioning accounts."
+      },
+      {
+        "name": "Onboarding workflow analysis",
+        "detail": "Consolidates application status, risk, assets, ownership, bottlenecks, and next-review context across the synthetic pipeline."
+      },
+      {
+        "name": "Deterministic routing and calculation",
+        "detail": "Routes four operations, rejects unknown identifiers, calculates KYC completion and pipeline totals, and avoids substitution."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access for onboarding, relationship, compliance, and leadership personas in a Draft agent."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs FSCustomerOnboardingAgent through local Brainstem chat and UI endpoints with a single read-only tool and bundled synthetic data."
+      },
+      {
+        "name": "Evidence-first review outputs",
+        "detail": "Shows application evidence, checks, missing items, prepared configuration, ownership, limits, and the authorized reviewer."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "KYC and enhanced-due-diligence review",
+        "detail": "Reports progress and unresolved PEP, adverse-media, address, beneficial-ownership, or source-of-wealth items for review."
+      },
+      {
+        "name": "Application pipeline and ownership overview",
+        "detail": "Summarizes status counts, application risk, requested product, assets, bottlenecks, and relationship-manager ownership."
+      },
+      {
+        "name": "Setup and document readiness review",
+        "detail": "Surfaces setup-review-ready files, product configuration references, required documents, optional documents, and compliance-review handoffs."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable RAPP Customer Onboarding Agent",
+      "detail": "Single-file FSCustomerOnboardingAgent implements four read-only operations with synthetic records and no external side effects."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the conversational package with two knowledge files and four skills; validated artifacts remain Draft and unpublished."
+    },
+    {
+      "name": "Dynamics 365 onboarding or CRM case data",
+      "detail": "Approved future seam for onboarding cases and ownership; it is not connected in the current synthetic package."
+    },
+    {
+      "name": "SharePoint controlled-document library",
+      "detail": "Approved future seam for governed onboarding documents; the current package uses bundled synthetic knowledge instead."
+    },
+    {
+      "name": "Approved identity and sanctions-screening services",
+      "detail": "Future least-privilege seam for identity, OFAC, PEP, and related evidence; no live verification or clearance is configured."
+    },
+    {
+      "name": "Core-banking provisioning workflow",
+      "detail": "Future authorization-gated seam for account and service provisioning; the current agent only prepares review references."
+    },
+    {
+      "name": "Microsoft Teams approvals",
+      "detail": "Future review and escalation seam for authorized personnel; no approval, outreach, message, or external action is configured."
+    },
+    {
+      "name": "Foundation model selected by deployment environment",
+      "detail": "The deployment environment supplies the model used for conversational routing and response generation."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence policy",
+      "detail": "Uses only packaged fictional records and forbids browsing, enrichment, inference, substitution, or invention when evidence is absent."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes KYC evidence review, account setup preparation, document readiness, and onboarding pipeline requests to explicit handlers."
+    },
+    {
+      "name": "Regulated decision-support boundary",
+      "detail": "Provides no legal, regulatory, lending, tax, investment, financial, or compliance advice and does not claim KYC satisfaction."
+    },
+    {
+      "name": "Authorized human review gates",
+      "detail": "Requires onboarding, relationship, KYC or AML, identity-verification, and provisioning reviewers before consequential action."
+    },
+    {
+      "name": "Read-only workflow governance",
+      "detail": "Prevents identity clearance, applicant decisions, outreach, account opening, provisioning, approvals, transactions, and record changes."
+    },
+    {
+      "name": "Locked evidence and isolation validation",
+      "detail": "Preserves four persona-language cases and records all four passing with only FSCustomerOnboardingAgent loaded under strict isolation."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Keeps validated Copilot Studio agents unpublished, removes web search, and requires separate confirmation before publication."
+    }
+  ]
+}

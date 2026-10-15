@@ -1,0 +1,87 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/ma-target-sourcing",
+  "onepager": "55. M&A Target Sourcing Agent one-pager.pptx",
+  "source_slide_sha256": "ec0f9c44712874d8a22f290e3b5e631046598445e31be11c5fdb0b77529c511c",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py",
+    "implemented_operations": [
+      "build_thesis",
+      "screen_targets",
+      "target_dossier",
+      "challenge_ranking",
+      "evidence_gaps",
+      "ic_memo_draft"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Turn an acquisition thesis into explicit, reviewable screening criteria",
+      "operations": [
+        "build_thesis"
+      ],
+      "demo_cases": [
+        "MATS-01"
+      ],
+      "synthetic_evidence": [
+        "TH-2026-014",
+        "5 of 8 pass",
+        "Cindral Risk Labs"
+      ]
+    },
+    {
+      "advertised_promise": "Rank targets with transparent weights and test the ranking before it is trusted",
+      "operations": [
+        "screen_targets",
+        "challenge_ranking"
+      ],
+      "demo_cases": [
+        "MATS-02",
+        "MATS-04"
+      ],
+      "synthetic_evidence": [
+        "Lumenrock Compliance Systems",
+        "85.7",
+        "79.8",
+        "Financial-first",
+        "84.5",
+        "top 3 holds under all 3 weightings"
+      ]
+    },
+    {
+      "advertised_promise": "Build cited dossiers and close evidence gaps before outreach",
+      "operations": [
+        "target_dossier",
+        "evidence_gaps"
+      ],
+      "demo_cases": [
+        "MATS-03",
+        "MATS-05"
+      ],
+      "synthetic_evidence": [
+        "T-01-S1",
+        "22.0% margin",
+        "Diligence questions",
+        "RR-01",
+        "6 evidence gaps across 4 targets",
+        "none has been sent"
+      ]
+    },
+    {
+      "advertised_promise": "Draft the investment committee screening memo for human approval",
+      "operations": [
+        "ic_memo_draft"
+      ],
+      "demo_cases": [
+        "MATS-06"
+      ],
+      "synthetic_evidence": [
+        "ICM-2026-07-01",
+        "$149M",
+        "Not sent; no target contacted"
+      ]
+    }
+  ]
+}

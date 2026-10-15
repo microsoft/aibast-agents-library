@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/benefits-enrollment-assistant",
+  "onepager": "63. Benefits Enrollment Agent one-pager.pptx",
+  "source_slide_sha256": "ed6d97e9314eb4e40b344884c82a262e3f2bc8efaa5d46424508b0a7961714c7",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/human_resources_stacks/benefits_enrollment_assistant_stack/benefits_enrollment_assistant_agent.py",
+    "implemented_operations": [
+      "enrollment_window",
+      "life_event_change",
+      "compare_plans",
+      "provider_network",
+      "document_checklist",
+      "election_draft",
+      "deadline_reminders"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Explains the enrollment window and life-event change rules in plain language",
+      "operations": [
+        "enrollment_window",
+        "life_event_change"
+      ],
+      "demo_cases": [
+        "BE-01",
+        "BE-02"
+      ],
+      "synthetic_evidence": [
+        "Nov 20, 2026",
+        "Days left",
+        "Jan 1, 2027",
+        "Nov 27, 2026",
+        "Birth or adoption",
+        "LE-1"
+      ]
+    },
+    {
+      "advertised_promise": "Compares plan costs for the employee's coverage tier and checks provider networks",
+      "operations": [
+        "compare_plans",
+        "provider_network"
+      ],
+      "demo_cases": [
+        "BE-03",
+        "BE-04"
+      ],
+      "synthetic_evidence": [
+        "3,692.00",
+        "Saver HDHP",
+        "not a plan recommendation",
+        "Riverbend Pediatrics",
+        "Out of network",
+        "Network gaps"
+      ]
+    },
+    {
+      "advertised_promise": "Tracks required documents and personal deadlines so changes are not missed",
+      "operations": [
+        "document_checklist",
+        "deadline_reminders"
+      ],
+      "demo_cases": [
+        "BE-05",
+        "BE-07"
+      ],
+      "synthetic_evidence": [
+        "Still missing",
+        "Birth certificate",
+        "Due with the change request",
+        "Days Left",
+        "Nov 20, 2026",
+        "no reminder or invitation was sent"
+      ]
+    },
+    {
+      "advertised_promise": "Prepares a draft election for the employee to review and submit",
+      "operations": [
+        "election_draft"
+      ],
+      "demo_cases": [
+        "BE-06"
+      ],
+      "synthetic_evidence": [
+        "Not Submitted",
+        "46.00",
+        "No election was submitted"
+      ]
+    }
+  ]
+}

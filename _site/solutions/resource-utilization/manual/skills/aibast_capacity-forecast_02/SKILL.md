@@ -1,0 +1,11 @@
+---
+name: workforce-capacity-forecast
+description: Compares near-term project endings with weighted fictional demand.
+---
+# Workforce capacity forecast
+
+List project endings through the fixed ninety-day horizon, then show pipeline
+start, duration, probability, and requested roles. Use the exact headings
+`Upcoming Project Endings` and `Pipeline Demand`, and include the exact summary
+label `Total roles in pipeline`. Do not call probability committed work and do
+not assign a person.

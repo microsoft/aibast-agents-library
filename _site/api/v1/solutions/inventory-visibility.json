@@ -1,0 +1,115 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/inventory-visibility",
+  "slug": "inventory-visibility",
+  "name": "Inventory Visibility Agent",
+  "headline": "Give planners and stores a common inventory picture without making an inventory move.",
+  "pitch": "Provides synthetic location and SKU visibility, exception review, replenishment scenarios, and channel planning while keeping every quantity read-only.",
+  "category": "retail_cpg",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Inventory Planners",
+    "Store Managers",
+    "Category Managers"
+  ],
+  "microsoft_products": [
+    "Dynamics 365 Commerce",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Plan and fulfill",
+  "why_try": "It demonstrates how inventory teams can prioritize review with clear assumptions before authorized systems execute any transfer, replenishment, or allocation.",
+  "customer_challenge": "Teams often spend too much time reconciling availability and too little time evaluating stockout, overstock, lead-time, and channel tradeoffs.",
+  "microsoft_ai_story": "The portable agent converts ERP- and commerce-style synthetic records into role-specific planning views suitable for operational review in Teams.",
+  "business_value": [
+    "Faster exception review",
+    "More transparent replenishment assumptions",
+    "Clearer category and channel tradeoffs"
+  ],
+  "business_flow": [
+    "Inventory Planner, Store Manager, and Category Manager",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Inventory Visibility Agent",
+    "Approved read-only ERP, commerce, and warehouse data",
+    "Microsoft Teams review",
+    "Authorized inventory systems"
+  ],
+  "capabilities": [
+    {
+      "operation": "inventory_dashboard",
+      "name": "Read-only inventory visibility",
+      "purpose": "Shows location and SKU evidence with system-of-record verification."
+    },
+    {
+      "operation": "stock_alerts",
+      "name": "Stock review candidates",
+      "purpose": "Identifies exceptions without issuing transfer or replenishment commands."
+    },
+    {
+      "operation": "replenishment_plan",
+      "name": "Draft replenishment scenario",
+      "purpose": "Models quantities, sources, lead times, and cost without creating orders."
+    },
+    {
+      "operation": "channel_allocation",
+      "name": "Channel allocation scenario",
+      "purpose": "Compares planning weights without reserving or allocating stock."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Review an inventory snapshot",
+      "prompt": "Summarize the store snapshot and verification boundary.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-inventory-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Inventory Planner",
+        "prompt": "As Inventory Planner, summarize the store snapshot and verification boundary.",
+        "answer": "Here's the store snapshot, as your Inventory Planner:\n\n**Network overview** (Alpine Pro Winter Jacket, SKU-2001, 51 locations, 3,200 units total):\n- Stores: 1,847 units (58%) — **unbalanced**\n- Warehouses: 940 units (29%) — healthy\n- In-transit: 285 units (9%)\n- E-comm reserve: 128 units (4%) — low\n\n**Critical imbalance:**\n- Portland Flagship: 0 units (sold out 3 days)\n- Portland Mall: 3 units left, selling 8/day\n- Seattle stores: 247 units excess, moving only 4/day\n\n**Opportunity flagged:** shifting 120 units Seattle → Portland could recover ~$18,400 in sales.\n\n**Verification boundary:** this is a synthetic, read-only snapshot — nothing is reserved, transferred, or ordered. It's a planning view only; all quantities should be confirmed against your system of record before any action is taken.\n\nWant me to pull the transfer plan with cost/timing details for the Seattle→Portland move?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Inspect stock exceptions",
+      "prompt": "Identify urgent review candidates without issuing transfer or replenishment commands.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-stock-alerts",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Store Manager",
+        "prompt": "As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.",
+        "answer": "Here are the urgent review candidates (flagged for review only — nothing has been transferred or replenished):\n\n**Critical/Out-of-Stock (SKU-2001 Alpine Pro Winter Jacket):**\n- **Portland Flagship**: 0 on-hand (vs. 24 safety stock, 8/day sales) — OUT_OF_STOCK\n- **Portland Mall**: 3 on-hand — CRITICAL\n\nNearest available stock for both: Seattle Flagship (97 units, ~175 mi away).\n\n**Overstock sources to watch (same SKU, 60+ days of supply):**\n- Seattle Flagship — 97 units\n- Bellevue Store — 52 units\n- Northgate Store — 50 units\n- Renton Store — 48 units\n\n**Low-stock warnings (other SKUs, <8 days remaining):**\n- Northgate — Premium Running Shoes (7.0 days)\n- Renton — Classic Denim Jacket (7.5 days)\n- Renton — Smart Fitness Tracker (7.5 days)\n\nThis is just a flagged list for your review — want me to pull a draft transfer plan for the Portland shortfall so you have numbers ready when you decide to act?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Model replenishment",
+      "prompt": "Show the replenishment scenario and its assumptions.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-replenishment-plan",
+      "recorded": false,
+      "recorded_answer": null
+    },
+    {
+      "label": "Compare channel allocation",
+      "prompt": "Compare the channel planning scenario without reserving any stock.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-channel-allocation",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Category Manager",
+        "prompt": "As Category Manager, compare the channel planning scenario without reserving any stock.",
+        "answer": "Here's the channel allocation scenario for SKU-2001 (Alpine Pro Winter Jacket) with no stock held back — all 1,190 units modeled as fully distributable:\n\n**Allocation by channel:**\n- **In Store (45%):** 536 units → 1.7 days coverage\n- **Online Ship (30%):** 357 units → 1.7 days coverage\n- **BOPIS (15%):** 178 units → 1.6 days coverage\n- **Marketplace (10%):** 119 units → 1.7 days coverage\n\n**Key observation:** Without a reserve, coverage is razor-thin (~1.6–1.7 days) across every channel — any demand spike in one channel burns through its share fast with no cushion to pull from. The tool still flags soft guardrails worth modeling even in a no-reserve scenario:\n- Skew more toward in-store for flagship/mall traffic\n- Build a 3-day buffer for online shipping\n- Add a pickup buffer for BOPIS\n- Cap marketplace to avoid channel conflict\n\nThis is a draft scenario only — nothing is reserved or moved. Want me to pull the stock alerts or a transfer plan to shore up coverage instead?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Finventory-visibility",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/inventory-visibility/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack/inventory_visibility_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Inventory%20Visibility%20Agent%22"
+  }
+}

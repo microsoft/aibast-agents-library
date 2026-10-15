@@ -1,0 +1,137 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/fs-regulatory-compliance",
+  "slug": "fs-regulatory-compliance",
+  "name": "Regulatory Compliance Agent",
+  "headline": "Turn compliance evidence into action before the next escalation",
+  "pitch": "Give compliance and trading leaders one governed view of reporting exceptions, execution-quality signals, algorithm documentation, remediation readiness, and trader certifications.",
+  "category": "financial_services",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Chief Compliance Officers",
+    "Compliance Managers",
+    "Trading Desk Supervisors"
+  ],
+  "microsoft_products": [
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Govern",
+  "why_try": "This demo makes regulated-workflow AI concrete: ask a plain-language question and surface the exact trade, trader, algorithm, field, evidence source, and approval step requiring attention.",
+  "customer_challenge": "An investment firm is relying on manual review to reconcile transaction reports, venue data, execution evidence, strategy documentation, regulatory submissions, and trader credentials across disconnected operating systems.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the governed conversational experience. Microsoft Teams brings escalations and approvals to desk supervisors, while Power Automate and approved connectors can integrate order-management data, an Approved Reporting Mechanism, and learning-management workflows.",
+  "business_value": [
+    "Improves visibility into reporting, documentation, and certification risks before they become audit findings.",
+    "Accelerates investigation by connecting each exception to the specific record, evidence source, owner, and next action.",
+    "Strengthens remediation governance by separating prepared corrections from authorized external submissions."
+  ],
+  "business_flow": [
+    "Chief compliance officers, compliance managers, and trading-desk supervisors",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Regulatory Compliance Agent",
+    "Order-management and transaction-reporting data",
+    "Approved Reporting Mechanism",
+    "Learning management system",
+    "Microsoft Teams approvals and escalations"
+  ],
+  "capabilities": [
+    {
+      "operation": "compliance_dashboard",
+      "name": "Desk-wide compliance readiness",
+      "purpose": "Summarizes reporting, submission, execution-quality, algorithm-documentation, and certification risks for executive action."
+    },
+    {
+      "operation": "trade_surveillance",
+      "name": "Transaction-reporting and execution surveillance",
+      "purpose": "Checks required reporting fields, venue evidence, submission state, and execution-quality signals at trade level."
+    },
+    {
+      "operation": "documentation_review",
+      "name": "Algorithm documentation and go-live control",
+      "purpose": "Identifies incomplete, never-validated, or expired strategy documentation before or after an algorithm enters production."
+    },
+    {
+      "operation": "remediation_submission",
+      "name": "Correction and submission preparation",
+      "purpose": "Stages source-backed corrections and prepares new or correction-report payloads behind an explicit reviewer approval gate."
+    },
+    {
+      "operation": "certification_tracker",
+      "name": "Trader certification readiness",
+      "purpose": "Finds lapsed and upcoming credentials, identifies desk coverage risk, and proposes training-session and supervisor actions."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "See what threatens audit readiness",
+      "prompt": "Are we going to fail our next MiFID audit? What's actually broken on the desk right now?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=regulatory-audit-readiness",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Chief Compliance Officer",
+        "prompt": "Are we going to fail our next MiFID audit? What's actually broken on the desk right now?",
+        "answer": "I can't predict pass/fail — that's not something this tool (or I) can determine. Here's what's actually flagged right now:\n\n- **24 transaction reports** need amendment today (23 auto-fixable, 1 — APX-2024-8847 — needs manual review for an expired counterparty LEI at settlement)\n- **Strategy ALGO-MOM-05** (momentum algo) is missing required testing documentation\n- **3 traders** have certifications expiring within 30 days\n- Best execution and market-making uptime are both within thresholds (97% / 98.5%)\n\nThese are control gaps, not confirmed violations — overall 99.8% compliance. Want me to pull the detailed trade-by-trade breakdown or stage the batch fix for the 24 reports?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Find who cannot trade today",
+      "prompt": "Which of my traders can't legally trade today, and who do I have to call?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=regulatory-certification-readiness",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Trading Desk Supervisor",
+        "prompt": "Which of my traders can't legally trade today, and who do I have to call?",
+        "answer": "Good news — nobody's actually barred from trading today. All 12 traders are currently certified. But three are close to expiry and need action soon:\n\n- **James Morrison** — MiFID II Algo cert expires in 15 days (urgent)\n- **Sarah Chen** — Best Execution cert expires in 22 days\n- **Michael Torres** — Transaction Reporting cert expires in 28 days\n\n**Who to call:** the desk supervisor — to confirm James's recertification enrollment and schedule sessions for Sarah and Michael before their certs lapse. Nothing's been submitted or sent yet; I only drafted/prepped these, pending your sign-off.\n\nRisk if ignored: £50K+ penalty per trader who ends up operating uncertified. Want the executive compliance report next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Identify reports likely to be rejected",
+      "prompt": "We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=regulatory-trade-surveillance",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Compliance Manager",
+        "prompt": "We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?",
+        "answer": "Out of this week's batch, 24 trades have transaction-reporting issues that a regulator would flag:\n\n**By cause:**\n- **Venue ID mismatch (11 trades)** — reported venue doesn't match where the instrument is actually admitted to trading (e.g. trade APX-2024-8812 reported as XPAR, but the instrument trades on XLON). Auto-fixable.\n- **Counterparty LEI problems (8 trades)** — missing or invalid LEI field (e.g. APX-2024-8829 has an empty buyer LEI). Auto-fixable.\n- **Timestamp formatting (4 trades)** — execution time not reported in UTC microseconds/ISO 8601 as MiFIR requires (e.g. APX-2024-8853). Auto-fixable.\n- **1 trade needs manual review** — APX-2024-8847, Standard National Bank: the counterparty's LEI had *expired* by settlement, not just malformed. This can't be auto-corrected — you need an updated LEI from the client before resubmitting.\n\n**Bottom line:** 23 of 24 can be fixed in an automated batch correction; one requires the client to act first. I'm not stating whether this would ultimately pass or fail a regulator's review — just flagging the control gap.\n\nWant me to stage the batch correction for the 23 auto-fixable trades (synthetic staging only — nothing gets transmitted without your sign-off)?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Block an unsafe algorithm go-live",
+      "prompt": "Is anything about to go live that shouldn't?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=regulatory-algorithm-go-live",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Head of Quant Execution",
+        "prompt": "Is anything about to go live that shouldn't?",
+        "answer": "Yes — **ALGO-MOM-05**, the new momentum algo, is pre-deployment but only 2 of 4 required MiFID II (RTS 6) docs are done:\n\n- ✅ Kill switch test, audit trail\n- ❌ Pre-trade testing (12-month backtest w/ volatility scenarios) — missing\n- ❌ Stress scenarios — missing\n\nIt needs Quant sign-off and a completed compliance-register filing before it should go live, deadline end of week. Everything else live (VWAP, IS, POV, Dark Aggregator) is fully documented.\n\nThis is an at-risk flag for your review, not a go/no-go verdict — the actual deployment decision stays with Quant/Compliance.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Prepare board-ready reporting evidence",
+      "prompt": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=regulatory-board-evidence",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Chief Risk Officer",
+        "prompt": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
+        "answer": "Here's what contradicts \"reporting is fine,\" with specifics for the board:\n\n**24 of 12,000 trades (0.2%) have transaction reporting errors** — not catastrophic, but real and MiFID II-reportable:\n\n| Issue | Count | Severity |\n|---|---|---|\n| Venue ID mismatch | 11 | High |\n| Counterparty LEI errors | 8 | High |\n| Timestamp format (not UTC microseconds) | 4 | Medium |\n| Expired LEI — manual review | 1 | **Critical** |\n\n**The one he can't wave away:** Trade APX-2024-8847, Standard National Bank — counterparty LEI expired *during settlement*. That's not a formatting glitch; it's a trade sitting non-compliant right now with no automated fix available. Requires the client to supply an updated LEI before it can even be corrected.\n\n**Concrete examples already found in the data:**\n- APX-2024-8812 — reported venue XPAR, but instrument was actually admitted to trading on XLON\n- APX-2024-8829 — buyer LEI field is empty\n- APX-2024-8853 — trading timestamp not in required ISO 8601 UTC microsecond format\n\n**Beyond reporting**, two more things undercut \"it's fine\":\n- Algo strategy **ALGO-MOM-05** (momentum) is missing required testing documentation — a gap on a live-trading algo\n- **3 traders** are overdue on certifications within 30 days\n\n23 of the 24 reporting errors are auto-fixable in a batch (~8 min), but that doesn't erase the fact they existed unreported until now. I can stage that batch correction for authorized review, or pull the algo documentation/certification details next — want either?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffs-regulatory-compliance",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/fs-regulatory-compliance/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Regulatory%20Compliance%20Agent%22"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/clinical-notes-summarizer",
+  "slug": "clinical-notes-summarizer",
+  "name": "Clinical Notes Summarizer Agent",
+  "headline": "Turn long source notes into drafts clinicians can verify quickly",
+  "pitch": "Give clinical teams consistent synthetic encounter, medication, problem-list, and referral-context drafts while keeping diagnosis, treatment, clearance, urgency, scheduling, and record changes with qualified humans.",
+  "category": "healthcare",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Primary care physicians",
+    "Surgeons",
+    "Anesthesia teams"
+  ],
+  "microsoft_products": [
+    "Dynamics 365"
+  ],
+  "journey_stage": "Activate",
+  "why_try": "The demo shows a transparent summarization pattern: every output separates source facts from clinical interpretation and reminds the reviewer to compare the draft with the authorized record.",
+  "customer_challenge": "A multispecialty practice faces slow and inconsistent chart review across encounters, medications, problem lists, and referrals, increasing coordination friction and the chance that source details are overlooked.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the conversational experience. Dynamics 365 or an approved healthcare data interface supplies governed clinical context; the package uses fictional records and has no clinical write path.",
+  "business_value": [
+    "Makes source-fact review more consistent across encounter, medication, problem-list, and referral contexts.",
+    "Reduces coordination friction by producing concise drafts with explicit source uncertainty.",
+    "Protects clinical accountability by reserving diagnosis, treatment, clearance, urgency, and record changes for qualified reviewers."
+  ],
+  "business_flow": [
+    "Physicians, surgeons, anesthesia teams, and clinical coordinators",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Clinical Notes Summarizer Agent",
+    "Dynamics 365 or approved read-only healthcare record interface",
+    "Qualified clinicians and pharmacists"
+  ],
+  "capabilities": [
+    {
+      "operation": "encounter_summary",
+      "name": "Source-grounded encounter summary",
+      "purpose": "Extracts synthetic encounter facts without clinical inference."
+    },
+    {
+      "operation": "medication_inventory",
+      "name": "Medication source inventory",
+      "purpose": "Lists source-recorded synthetic medications for clinician or pharmacist reconciliation."
+    },
+    {
+      "operation": "problem_list_extract",
+      "name": "Problem-list source extract",
+      "purpose": "Extracts source-coded problems without confirming or changing a diagnosis."
+    },
+    {
+      "operation": "referral_context",
+      "name": "Referral context extract",
+      "purpose": "Summarizes source-recorded referral context without placing or scheduling it."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Summarize the source encounter",
+      "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-encounter",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Primary Care Physician",
+        "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+        "answer": "Here's the source-grounded summary for **SYN-ENC-001** (Synthetic Patient Alpha, 2026-07-28):\n\n- **Visit type:** Follow-up\n- **Reported concern:** Knee discomfort with stairs; no trauma noted\n- **Recorded vitals/labs:** BP 148/92; HbA1c 8.2%\n- No clinical interpretation was made — this is raw source data only, pending clinician review.\n\nThis is synthetic demo data, not a real patient record.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Inventory recorded medications",
+      "prompt": "List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-medications",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Anesthesia Clinician",
+        "prompt": "List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+        "answer": "Here's the source-recorded medication list for SYN-ENC-001 (Synthetic Patient Alpha):\n\n- **Metformin** 1000 mg twice daily\n- **Lisinopril** 20 mg daily\n\nThis is a read-only draft pulled from synthetic demo data — a clinician/pharmacist still needs to review it against the authorized record for accuracy, interactions, and any needed changes.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Extract the problem list",
+      "prompt": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-problems",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Surgeon",
+        "prompt": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+        "answer": "Here's the source-coded problem list for SYN-ENC-001 (Synthetic Patient Alpha), as recorded in the source — these are not confirmed or validated diagnoses:\n\n- Source-coded type 2 diabetes\n- Source-coded hypertension\n- Knee discomfort\n\nThis is a read-only extract for reconciliation; it needs clinician review against the authorized record before any clinical use.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review referral context",
+      "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-referral",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Primary Care Physician",
+        "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+        "answer": "For SYN-ENC-001, the source record notes a draft **orthopedics referral**, but its status is unconfirmed — and importantly, **no referral has actually been placed, scheduled, or changed**. That requires clinician/staff review and action.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fclinical-notes-summarizer",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/clinical-notes-summarizer/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Clinical%20Notes%20Summarizer%20Agent%22"
+  }
+}

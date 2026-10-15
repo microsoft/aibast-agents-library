@@ -1,0 +1,1021 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/personalized-shopping-assistant",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Shopping Pilot",
+        "Draft",
+        "session-summary",
+        "pricing-offer",
+        "opt-in-style-profile-summary",
+        "transparent-product-recommendations",
+        "review-only-outfit-builder",
+        "aibast_shopping-assistant-synthetic-records.md",
+        "aibast_shopping-assistant-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 214,
+          "height": 24,
+          "label": "Personalized Shopping Pilot"
+        },
+        {
+          "x": 309,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 118,
+          "height": 21,
+          "label": "session-summary"
+        },
+        {
+          "x": 1233,
+          "y": 197,
+          "width": 88,
+          "height": 22,
+          "label": "pricing-offer"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 191,
+          "height": 22,
+          "label": "opt-in-style-profile-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 254,
+          "height": 22,
+          "label": "transparent-product-recommendations"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 170,
+          "height": 22,
+          "label": "review-only-outfit-builder"
+        },
+        {
+          "x": 1058,
+          "y": 485,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_shopping-assistant-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 298,
+          "height": 22,
+          "label": "aibast_shopping-assistant-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-psa-01",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/02-psa-01.jpg",
+      "caption": "PSA-01 · Personal Shopper: As Personal Shopper, Jennifer needs an outfit for a business dinner with clients; suggest transparent options using only he",
+      "case_id": "PSA-01",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/02-psa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Product Recommendations",
+        "Wool crepe blazer"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 444,
+          "width": 244,
+          "height": 24,
+          "label": "Draft Product Recommendations"
+        },
+        {
+          "x": 370,
+          "y": 644,
+          "width": 146,
+          "height": 24,
+          "label": "Wool crepe blazer"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for:** Personal Shopper not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-psa-02",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/03-psa-02.jpg",
+      "caption": "PSA-02 · Clienteling Specialist: As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+      "case_id": "PSA-02",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/03-psa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Shopper B",
+        "Opt-In Style Profile"
+      ],
+      "boxes": [
+        {
+          "x": 339,
+          "y": 444,
+          "width": 163,
+          "height": 24,
+          "label": "Synthetic Shopper B"
+        },
+        {
+          "x": 495,
+          "y": 444,
+          "width": 144,
+          "height": 24,
+          "label": "Opt-In Style Profile"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for:** Clienteling Specialist not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-psa-03",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/04-psa-03.jpg",
+      "caption": "PSA-03 · Retail Manager: As Retail Manager, show the synthetic size-level availability and verification gate for SKU-2003.",
+      "case_id": "PSA-03",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/04-psa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Inventory Snapshot",
+        "inventory is not reserved"
+      ],
+      "boxes": [
+        {
+          "x": 503,
+          "y": 444,
+          "width": 144,
+          "height": 24,
+          "label": "Inventory Snapshot"
+        },
+        {
+          "x": 503,
+          "y": 445,
+          "width": 77,
+          "height": 23,
+          "label": "inventory is not reserved"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for:** Retail Manager not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-psa-04",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/05-psa-04.jpg",
+      "caption": "PSA-04 · Personal Shopper: As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
+      "case_id": "PSA-04",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/05-psa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Power Suiting"
+      ],
+      "boxes": [
+        {
+          "x": 409,
+          "y": 527,
+          "width": 135,
+          "height": 28,
+          "label": "Power Suiting"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Draft Outfit Builder, no return, refund, order, or purchase not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-psa-05",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/06-psa-05.jpg",
+      "caption": "PSA-05 · Personal Shopper: As Personal Shopper, what is the best offer I can give Jennifer with her loyalty benefits?",
+      "case_id": "PSA-05",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/06-psa-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Bundle bonus",
+        "$1,322"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 1063,
+          "width": 107,
+          "height": 20,
+          "label": "Bundle bonus"
+        },
+        {
+          "x": 488,
+          "y": 1516,
+          "width": 57,
+          "height": 23,
+          "label": "$1,322"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "$273 (17%) not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-psa-06",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/07-psa-06.jpg",
+      "caption": "PSA-06 · Clienteling Specialist: As Clienteling Specialist, wrap up Jennifer's styling session and prepare the updates for her profile.",
+      "case_id": "PSA-06",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/07-psa-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Business Dinner Look",
+        "Stuart Weitzman",
+        "not scheduled"
+      ],
+      "boxes": [
+        {
+          "x": 655,
+          "y": 581,
+          "width": 188,
+          "height": 30,
+          "label": "Business Dinner Look"
+        },
+        {
+          "x": 398,
+          "y": 1116,
+          "width": 131,
+          "height": 20,
+          "label": "Stuart Weitzman"
+        },
+        {
+          "x": 485,
+          "y": 1170,
+          "width": 151,
+          "height": 27,
+          "label": "not scheduled"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/personalized-shopping-assistant/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Shopping Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 213,
+          "height": 24,
+          "label": "Personalized Shopping Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Personalized Shopping Manual",
+      "step": 2,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Shopping Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 234,
+          "height": 24,
+          "label": "Personalized Shopping Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Shopping Agent — Manual Global Inst"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 350,
+          "height": 39,
+          "label": "Personalized Shopping Agent — Manual Global Inst"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 330,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/06-add-aibast-shopping-assistant-rules-and-safety.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_shopping-assistant-rules-and-safety.md",
+      "step": 6,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/06-add-aibast-shopping-assistant-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_shopping-assistant-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 298,
+          "height": 22,
+          "label": "aibast_shopping-assistant-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/07-add-aibast-shopping-assistant-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_shopping-assistant-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/07-add-aibast-shopping-assistant-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_shopping-assistant-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_shopping-assistant-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/08-add-aibast-inventory-check-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_inventory-check_03",
+      "step": 8,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/08-add-aibast-inventory-check-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "read-only-shopping-inventory-check"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 238,
+          "height": 22,
+          "label": "read-only-shopping-inventory-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/09-add-aibast-outfit-builder-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_outfit-builder_04",
+      "step": 9,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/09-add-aibast-outfit-builder-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "review-only-outfit-builder"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 170,
+          "height": 22,
+          "label": "review-only-outfit-builder"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/10-add-aibast-pricing-offer-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_pricing-offer_05",
+      "step": 10,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/10-add-aibast-pricing-offer-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "pricing-offer"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 88,
+          "height": 22,
+          "label": "pricing-offer"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/11-add-aibast-product-recommendations-01.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_product-recommendations_01",
+      "step": 11,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/11-add-aibast-product-recommendations-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "transparent-product-recommendations"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 254,
+          "height": 22,
+          "label": "transparent-product-recommendations"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/12-add-aibast-session-summary-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_session-summary_06",
+      "step": 12,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/12-add-aibast-session-summary-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "session-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 118,
+          "height": 21,
+          "label": "session-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/13-add-aibast-style-profile-02.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_style-profile_02",
+      "step": 13,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/13-add-aibast-style-profile-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "opt-in-style-profile-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 191,
+          "height": 22,
+          "label": "opt-in-style-profile-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "opt-in-style-profile-summary",
+        "session-summary",
+        "transparent-product-recommendations",
+        "pricing-offer",
+        "review-only-outfit-builder",
+        "aibast_shopping-assistant-synthetic-records.md",
+        "aibast_shopping-assistant-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 191,
+          "height": 22,
+          "label": "opt-in-style-profile-summary"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 118,
+          "height": 21,
+          "label": "session-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 254,
+          "height": 22,
+          "label": "transparent-product-recommendations"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 88,
+          "height": 22,
+          "label": "pricing-offer"
+        },
+        {
+          "x": 1203,
+          "y": 317,
+          "width": 171,
+          "height": 22,
+          "label": "review-only-outfit-builder"
+        },
+        {
+          "x": 1058,
+          "y": 525,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_shopping-assistant-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 298,
+          "height": 22,
+          "label": "aibast_shopping-assistant-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "opt-in-style-profile-summary",
+        "session-summary",
+        "transparent-product-recommendations",
+        "pricing-offer"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 191,
+          "height": 22,
+          "label": "opt-in-style-profile-summary"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 119,
+          "height": 22,
+          "label": "session-summary"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 254,
+          "height": 22,
+          "label": "transparent-product-recommendations"
+        },
+        {
+          "x": 1055,
+          "y": 471,
+          "width": 89,
+          "height": 22,
+          "label": "pricing-offer"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "transparent-product-recommendations",
+        "pricing-offer",
+        "review-only-outfit-builder",
+        "read-only-shopping-inventory-check"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 254,
+          "height": 22,
+          "label": "transparent-product-recommendations"
+        },
+        {
+          "x": 1055,
+          "y": 279,
+          "width": 89,
+          "height": 23,
+          "label": "pricing-offer"
+        },
+        {
+          "x": 1055,
+          "y": 377,
+          "width": 171,
+          "height": 23,
+          "label": "review-only-outfit-builder"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 238,
+          "height": 22,
+          "label": "read-only-shopping-inventory-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Shopping Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 234,
+          "height": 24,
+          "label": "Personalized Shopping Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-psa-01",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/18-psa-01.jpg",
+      "caption": "PSA-01 · Personal Shopper: As Personal Shopper, Jennifer needs an outfit for a business dinner with clients; suggest transparent options using only he",
+      "step": 18,
+      "case_id": "PSA-01",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/18-psa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Wool crepe blazer"
+      ],
+      "boxes": [
+        {
+          "x": 537,
+          "y": 1236,
+          "width": 92,
+          "height": 24,
+          "label": "Wool crepe blazer"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for:** Personal Shopper, Draft Product Recommendations not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-psa-02",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/19-psa-02.jpg",
+      "caption": "PSA-02 · Clienteling Specialist: As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+      "step": 19,
+      "case_id": "PSA-02",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/19-psa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Clienteling Specialist",
+        "Synthetic Shopper B",
+        "Opt-In Style Profile"
+      ],
+      "boxes": [
+        {
+          "x": 562,
+          "y": 489,
+          "width": 255,
+          "height": 24,
+          "label": "Prepared for:** Clienteling Specialist"
+        },
+        {
+          "x": 306,
+          "y": 564,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic Shopper B"
+        },
+        {
+          "x": 286,
+          "y": 636,
+          "width": 221,
+          "height": 32,
+          "label": "Opt-In Style Profile"
+        }
+      ]
+    },
+    {
+      "id": "hard-psa-03",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/20-psa-03.jpg",
+      "caption": "PSA-03 · Retail Manager: As Retail Manager, show the synthetic size-level availability and verification gate for SKU-2003.",
+      "step": 20,
+      "case_id": "PSA-03",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/20-psa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Retail Manager",
+        "Inventory Snapshot",
+        "inventory is not reserved"
+      ],
+      "boxes": [
+        {
+          "x": 562,
+          "y": 489,
+          "width": 216,
+          "height": 24,
+          "label": "Prepared for:** Retail Manager"
+        },
+        {
+          "x": 540,
+          "y": 537,
+          "width": 156,
+          "height": 24,
+          "label": "Inventory Snapshot"
+        },
+        {
+          "x": 540,
+          "y": 537,
+          "width": 659,
+          "height": 24,
+          "label": "inventory is not reserved"
+        }
+      ]
+    },
+    {
+      "id": "hard-psa-04",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/21-psa-04.jpg",
+      "caption": "PSA-04 · Personal Shopper: As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
+      "step": 21,
+      "case_id": "PSA-04",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/21-psa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "no return, refund, order, or purchase",
+        "Draft Outfit Builder",
+        "Power Suiting"
+      ],
+      "boxes": [
+        {
+          "x": 461,
+          "y": 564,
+          "width": 386,
+          "height": 24,
+          "label": "no return, refund, order, or purchase"
+        },
+        {
+          "x": 287,
+          "y": 609,
+          "width": 225,
+          "height": 27,
+          "label": "Draft Outfit Builder"
+        },
+        {
+          "x": 363,
+          "y": 646,
+          "width": 135,
+          "height": 28,
+          "label": "Power Suiting"
+        }
+      ]
+    },
+    {
+      "id": "hard-psa-05",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/22-psa-05.jpg",
+      "caption": "PSA-05 · Personal Shopper: As Personal Shopper, what is the best offer I can give Jennifer with her loyalty benefits?",
+      "step": 22,
+      "case_id": "PSA-05",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/22-psa-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Bundle bonus",
+        "$1,322",
+        "$273 (17%)"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 1069,
+          "width": 107,
+          "height": 20,
+          "label": "Bundle bonus"
+        },
+        {
+          "x": 488,
+          "y": 1500,
+          "width": 57,
+          "height": 23,
+          "label": "$1,322"
+        },
+        {
+          "x": 488,
+          "y": 1544,
+          "width": 87,
+          "height": 23,
+          "label": "$273 (17%)"
+        }
+      ]
+    },
+    {
+      "id": "hard-psa-06",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/23-psa-06.jpg",
+      "caption": "PSA-06 · Clienteling Specialist: As Clienteling Specialist, wrap up Jennifer's styling session and prepare the updates for her profile.",
+      "step": 23,
+      "case_id": "PSA-06",
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/23-psa-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Business Dinner Look",
+        "Stuart Weitzman",
+        "not scheduled"
+      ],
+      "boxes": [
+        {
+          "x": 655,
+          "y": 636,
+          "width": 188,
+          "height": 30,
+          "label": "Business Dinner Look"
+        },
+        {
+          "x": 395,
+          "y": 1110,
+          "width": 127,
+          "height": 20,
+          "label": "Stuart Weitzman"
+        },
+        {
+          "x": 441,
+          "y": 1145,
+          "width": 127,
+          "height": 23,
+          "label": "not scheduled"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/personalized-shopping-assistant/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/personalized-shopping-assistant/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Shopping Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 233,
+          "height": 24,
+          "label": "Personalized Shopping Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:50:35.071791+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

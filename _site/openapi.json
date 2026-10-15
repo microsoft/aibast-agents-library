@@ -1,0 +1,97 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AI BAST Agents Library",
+    "version": "1.0.0",
+    "description": "Static, read-only API over the AI BAST Agents Library: Microsoft agent solutions with their business case, example prompts and recorded answers on synthetic data."
+  },
+  "servers": [
+    {
+      "url": "https://kody-w.github.io/aibast-agents-library"
+    }
+  ],
+  "paths": {
+    "/api/v1/solutions.json": {
+      "get": {
+        "operationId": "listAgents",
+        "summary": "List every agent solution in the library",
+        "responses": {
+          "200": {
+            "description": "All agents",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/solutions/{slug}.json": {
+      "get": {
+        "operationId": "getAgent",
+        "summary": "One agent: business case, industries, prompts with recorded answers, and links",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The agent's slug from listAgents, e.g. account-intelligence"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Agent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pitch": {
+            "type": "string"
+          },
+          "industries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "personas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prompts": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "links": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

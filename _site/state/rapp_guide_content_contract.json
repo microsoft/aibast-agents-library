@@ -1,0 +1,350 @@
+{
+  "schema": "aibast-rapp-guide-content-contract/1.0",
+  "version": 1,
+  "source": "docs/rapp-guide.html",
+  "trusted_source_commit": "90ce1827be168159e41586ac35f0e0b12299282d",
+  "trusted_source_blob_oid": "6178d0096dca16841d69ca1af07fda68a4c728c0",
+  "normalization": "Remove script, style, template, and comments; join rendered text with spaces; collapse Unicode whitespace.",
+  "content_section_ids": [
+    "overview",
+    "architecture",
+    "principles",
+    "step1",
+    "step2",
+    "step3",
+    "step4",
+    "step5",
+    "step6",
+    "step7",
+    "step8",
+    "step9",
+    "step10",
+    "step11",
+    "step12",
+    "step13",
+    "step14",
+    "team-setup",
+    "scaling",
+    "roadmap",
+    "tools"
+  ],
+  "content_sections": [
+    {
+      "id": "overview",
+      "normalized_visible_text_sha256": "1aaa1bbb85f9d4d3871732d938cec8f415d9fae600d8e980c378e9540da840d3"
+    },
+    {
+      "id": "architecture",
+      "normalized_visible_text_sha256": "4ed6ea38cf018d0a7f9e13c5672151654f7d4b40954d6447ccdf7ed71b9ea8d8"
+    },
+    {
+      "id": "principles",
+      "normalized_visible_text_sha256": "22ec900092b67d9207b821e9fd2b4c51f71aef46af797195ab83e23ed672c142"
+    },
+    {
+      "id": "step1",
+      "normalized_visible_text_sha256": "0ad3cad32444ccd5ea1f0e63eaf3a4cb4d560bcff45ae833cfc00a3f996f6973"
+    },
+    {
+      "id": "step2",
+      "normalized_visible_text_sha256": "f1b945853eb36a93d97f5c754223900bf822396cd2620fb864c416e18be66b77"
+    },
+    {
+      "id": "step3",
+      "normalized_visible_text_sha256": "d29a929faf56c3ae29a0ca66b47b7aeef00c38e7bbe656bccf0b1a30558def2f"
+    },
+    {
+      "id": "step4",
+      "normalized_visible_text_sha256": "5608c7c07b03d13971672d9a8d53be5da7a8260fc2736ff01e72c0413c2c02fd"
+    },
+    {
+      "id": "step5",
+      "normalized_visible_text_sha256": "7c8dd47040c004be1a4efc0c986863985d500bb5bb728bce867ea4a34c33774b"
+    },
+    {
+      "id": "step6",
+      "normalized_visible_text_sha256": "719467def73b0de5c74ff2099c61ccbbb7b19f622e1458946a5571e9b717dd5d"
+    },
+    {
+      "id": "step7",
+      "normalized_visible_text_sha256": "b0b570377ca0948a060c8c7ee773621e4bf3777d679caa23d1a821a68056ea86"
+    },
+    {
+      "id": "step8",
+      "normalized_visible_text_sha256": "98b7d0f8ccfd17e454f53e796dc7697b5c995b489479cdba3fa53cdfff6ce017"
+    },
+    {
+      "id": "step9",
+      "normalized_visible_text_sha256": "4a3bcff5d5afa6db0d64de54a25e40316adf742c0ed0be09cf1e89eb5e371a07"
+    },
+    {
+      "id": "step10",
+      "normalized_visible_text_sha256": "5d9c5597cf8c51ac971ea233fbcdba7e0bf522b416f758e278160035a9e10391"
+    },
+    {
+      "id": "step11",
+      "normalized_visible_text_sha256": "d69579446befd53840ebb2ab888724f1f6e8d153a34f211d02cd4517d4a6cbd3"
+    },
+    {
+      "id": "step12",
+      "normalized_visible_text_sha256": "9132ac2b311d1a36a2ed61cb5093d33d79b1720ef525b6fff3c25a5445c709d6"
+    },
+    {
+      "id": "step13",
+      "normalized_visible_text_sha256": "f232dc206f72cb7dbef48e35c73d6d759932c9b1050aea731d56e1708b6a0217"
+    },
+    {
+      "id": "step14",
+      "normalized_visible_text_sha256": "9414561da72095c23792ebaecc2ddca8807fd11d82c73812f550ae0674b3d3e5"
+    },
+    {
+      "id": "team-setup",
+      "normalized_visible_text_sha256": "46bc9fb72da7044d969bad9da062deb99b5a5e143d6f1200a8f00e92f1bad8d1"
+    },
+    {
+      "id": "scaling",
+      "normalized_visible_text_sha256": "c295f59905dc105bd42f318f120bf2eac8a2b5cdad9bb39885ca8d30c622af24"
+    },
+    {
+      "id": "roadmap",
+      "normalized_visible_text_sha256": "b7acb84b5b077523a9ab12d4eb435db073ed16b97996ec175073e2441cb9c835"
+    },
+    {
+      "id": "tools",
+      "normalized_visible_text_sha256": "d8ed58a5c5a3370ef6efb87c18b90b6aa0171fdee802ad3403e11614a0526c50"
+    }
+  ],
+  "sidebar_links": [
+    {
+      "href": "#overview",
+      "label": "§ Introduction"
+    },
+    {
+      "href": "#architecture",
+      "label": "§ Architecture"
+    },
+    {
+      "href": "#principles",
+      "label": "§ Core Principles"
+    },
+    {
+      "href": "#step1",
+      "label": "1 Discovery Call"
+    },
+    {
+      "href": "#step2",
+      "label": "2 Audit: Transcript Analysis"
+    },
+    {
+      "href": "#step3",
+      "label": "3 Generate MVP \"Poke\""
+    },
+    {
+      "href": "#step4",
+      "label": "4 Audit: Customer Validation"
+    },
+    {
+      "href": "#step5",
+      "label": "5 Generate Agent Code"
+    },
+    {
+      "href": "#step6",
+      "label": "6 Audit: Code Quality Review"
+    },
+    {
+      "href": "#step7",
+      "label": "7 Deploy Prototype"
+    },
+    {
+      "href": "#step8",
+      "label": "8 Audit: Demo Review"
+    },
+    {
+      "href": "#step9",
+      "label": "9 Generate Video Demo"
+    },
+    {
+      "href": "#step10",
+      "label": "10 Audit: Final Demo Review"
+    },
+    {
+      "href": "#step11",
+      "label": "11 Production Planning"
+    },
+    {
+      "href": "#step12",
+      "label": "12 Audit: Security Sign-off"
+    },
+    {
+      "href": "#step13",
+      "label": "13 Production Deployment"
+    },
+    {
+      "href": "#step14",
+      "label": "14 Post-Deployment Review"
+    },
+    {
+      "href": "#team-setup",
+      "label": "§ Team Setup Guide"
+    },
+    {
+      "href": "#scaling",
+      "label": "§ Scaling to 20+ Projects"
+    },
+    {
+      "href": "#roadmap",
+      "label": "§ Speed Barriers Broken"
+    },
+    {
+      "href": "#tools",
+      "label": "§ Tool Browser"
+    },
+    {
+      "href": "../index.html",
+      "label": "↗ Agents Library"
+    },
+    {
+      "href": "index.html",
+      "label": "↗ Quick Start"
+    }
+  ],
+  "external_hrefs": [
+    "https://github.com/microsoft/aibast-agents-library/issues/new?title=%5BProduction%20Guide%5D%20Feedback&body=Page%3A%20docs%2Frapp-guide.html%0ASection%3A%20overview",
+    "https://github.com/microsoft/aibast-agents-library/issues",
+    "https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder",
+    "https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2",
+    "https://copilotstudio.microsoft.com",
+    "https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder"
+  ],
+  "content_external_links": [
+    {
+      "section_id": "step2",
+      "href": "https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder"
+    },
+    {
+      "section_id": "step5",
+      "href": "https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2"
+    },
+    {
+      "section_id": "step7",
+      "href": "https://copilotstudio.microsoft.com"
+    },
+    {
+      "section_id": "step9",
+      "href": "https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder"
+    }
+  ],
+  "quiz_ids": [
+    "quiz-principles"
+  ],
+  "quizzes": [
+    {
+      "id": "quiz-principles",
+      "option_visible_texts": [
+        "To slow down the process so AI doesn't make too many mistakes",
+        "To apply human judgment and prevent wasted cycles by catching problems early",
+        "To replace AI completely for critical decisions",
+        "To generate documentation for compliance purposes"
+      ],
+      "submit_quiz_correct_index": 1,
+      "data_correct": "✓ Correct! The 6 quality gates are strategic checkpoints where humans apply taste and judgment. Each gate takes 15-60 minutes but prevents days or weeks of wasted work.",
+      "data_incorrect": "✗ Not quite. The gates aren't about slowing things down or replacing AI - they're strategic checkpoints to prevent wasted cycles. Review the Core Principles section.",
+      "data_review_section": "principles",
+      "persistent_completion_key": "quiz-completed"
+    }
+  ],
+  "copy_button_count": 7,
+  "copy_button_mappings": [
+    {
+      "button_label": "Copy",
+      "target_id": null,
+      "target_tag": "pre",
+      "target_tag_ordinal": 1,
+      "target_normalized_text_sha256": "ca3def2dae1cdd799aa721fdf95380189960e65a6acedb3a87cf11a3b343f563"
+    },
+    {
+      "button_label": "Copy",
+      "target_id": null,
+      "target_tag": "pre",
+      "target_tag_ordinal": 2,
+      "target_normalized_text_sha256": "9c0c26955aac408fb43c8d975a03c02e00903c7a003f7208a102fd742ea4cd33"
+    },
+    {
+      "button_label": "Copy",
+      "target_id": "transcript-fallback",
+      "target_tag": "pre",
+      "target_tag_ordinal": 3,
+      "target_normalized_text_sha256": "e5d4876ffebe939eaea8b8f6400ae23f4238900234bf04097cffe71a3f6370b7"
+    },
+    {
+      "button_label": "Copy",
+      "target_id": null,
+      "target_tag": "pre",
+      "target_tag_ordinal": 5,
+      "target_normalized_text_sha256": "33a5cb37cf828268cc06758a3f3d3abd01a5e2b5a10bdbd704c6b937ac48fd83"
+    },
+    {
+      "button_label": "Copy",
+      "target_id": "agent-generator-fallback",
+      "target_tag": "pre",
+      "target_tag_ordinal": 7,
+      "target_normalized_text_sha256": "3f7bc4d966da776f6d62b125ad34a5cd3cd5f9da627967173f3a9868c0be536a"
+    },
+    {
+      "button_label": "Copy",
+      "target_id": null,
+      "target_tag": "pre",
+      "target_tag_ordinal": 9,
+      "target_normalized_text_sha256": "402b777a8523ce5f27298e5751738dbd87e489eb54b78677bd21d0d9afa030db"
+    },
+    {
+      "button_label": "Copy",
+      "target_id": "video-demo-fallback",
+      "target_tag": "pre",
+      "target_tag_ordinal": 30,
+      "target_normalized_text_sha256": "dc45e4d1119e8c40fbad5f35dfe6b2c4286cfeafde75c0fa374bc7e984dceb32"
+    }
+  ],
+  "fallback_toggle_mappings": [
+    {
+      "toggle_label": "Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)",
+      "aria_controls": "transcript-fallback",
+      "target_id": "transcript-fallback",
+      "target_normalized_text_sha256": "e5d4876ffebe939eaea8b8f6400ae23f4238900234bf04097cffe71a3f6370b7",
+      "initial_hidden": true
+    },
+    {
+      "toggle_label": "Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)",
+      "aria_controls": "agent-generator-fallback",
+      "target_id": "agent-generator-fallback",
+      "target_normalized_text_sha256": "3f7bc4d966da776f6d62b125ad34a5cd3cd5f9da627967173f3a9868c0be536a",
+      "initial_hidden": true
+    },
+    {
+      "toggle_label": "Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)",
+      "aria_controls": "video-demo-fallback",
+      "target_id": "video-demo-fallback",
+      "target_normalized_text_sha256": "dc45e4d1119e8c40fbad5f35dfe6b2c4286cfeafde75c0fa374bc7e984dceb32",
+      "initial_hidden": true
+    }
+  ],
+  "interactive_functions": [
+    "navigateToSection",
+    "nextSection",
+    "previousSection",
+    "updateProgress",
+    "toggleSidebar",
+    "syncSidebarForViewport",
+    "copyCode",
+    "toggleFallback",
+    "toggleQuiz",
+    "selectQuizOption",
+    "submitQuiz",
+    "scrollToSection",
+    "initializeQuizzes",
+    "handleHashNavigation"
+  ],
+  "persistent_local_storage_keys": [
+    "quiz-completed"
+  ]
+}

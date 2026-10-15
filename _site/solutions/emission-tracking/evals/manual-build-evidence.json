@@ -1,0 +1,112 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-07T07:19:47.713981Z",
+  "solution": "@aibast-agents-library/emission-tracking",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Emissions Tracking Manual",
+    "bot_id": "1e58a4e3-0391-467e-b7b1-7730df6942c6",
+    "created": true
+  },
+  "target_model": "Claude Opus 5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 5,
+      "confirmed": 5
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "EMISSION_TRACKING-01",
+      "prompt": "I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.",
+      "must_include": [
+        "47,340",
+        "Boston Hub",
+        "not verified emissions evidence"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-emission_tracking-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-02",
+      "prompt": "Screen the Northeast portfolio against its threshold without making a legal compliance claim.",
+      "must_include": [
+        "BELOW SCREENING THRESHOLD",
+        "AT RISK (+340 MT)",
+        "not a legal compliance determination"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-emission_tracking-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-03",
+      "prompt": "What are the top reduction opportunities for the Northeast facilities, and who must review them?",
+      "must_include": [
+        "Boston Hub LDAR",
+        "10 months",
+        "engineering, finance, environmental, and executive review"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-emission_tracking-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-04",
+      "prompt": "Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.",
+      "must_include": [
+        "Appalachian Reforestation",
+        "No credit purchase",
+        "offset claim"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "18-emission_tracking-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-05",
+      "prompt": "Create the implementation roadmap for our emissions reductions.",
+      "must_include": [
+        "Phase 1 (Next 90 days)",
+        "$810K",
+        "27% emissions reduction"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "19-emission_tracking-05.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/emission-tracking/screenshots/manual/browserfilm.json",
+    "gif": "solutions/emission-tracking/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/emission-tracking/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "20-confirm-draft.jpg"
+  }
+}

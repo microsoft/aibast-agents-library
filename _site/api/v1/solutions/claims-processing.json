@@ -1,0 +1,176 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/claims-processing",
+  "slug": "claims-processing",
+  "name": "Claims Processing Agent",
+  "headline": "Prepare every claim for the right human review",
+  "pitch": "Bring intake, policy terms, documents, fraud indicators, and nonbinding settlement estimates into one adjuster workspace without claiming approval, denial, payment, or coverage action.",
+  "category": "financial_services",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Claims Adjusters / Managers",
+    "SIU Teams",
+    "Operations Leaders"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Decide",
+  "why_try": "A claims manager can ask which file needs attention and see the exact synthetic claim, missing evidence, SIU indicator, policy term, and next review checkpoint.",
+  "customer_challenge": "An insurer is processing claims through separate intake, policy, document, SIU, and adjudication systems. Adjusters spend time rebuilding files while automated scoring can be mistaken for a coverage or fraud decision.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the adjuster-facing experience. Dynamics 365 manages the claim, SharePoint or an approved content service stores evidence, policy administration supplies terms, and Microsoft Teams supports adjuster and SIU review.",
+  "business_value": [
+    "Improves consistency in claim intake and file-readiness review.",
+    "Connects fraud indicators to source evidence without presenting a score as proof.",
+    "Keeps approval, denial, reserving, settlement, and payment with authorized claims professionals."
+  ],
+  "business_flow": [
+    "Claims Adjuster",
+    "Claims Manager",
+    "SIU Investigator",
+    "Operations Leader",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Claims Processing Agent",
+    "Dynamics 365 claims case data",
+    "Policy-administration system",
+    "SharePoint or approved claims document repository",
+    "SIU case workflow",
+    "Microsoft Teams adjuster approvals"
+  ],
+  "capabilities": [
+    {
+      "operation": "claim_intake",
+      "name": "Claims intake triage",
+      "purpose": "Summarizes fictional claims by loss, amount, status, and fraud-review score."
+    },
+    {
+      "operation": "adjudication_review",
+      "name": "Claim-file readiness",
+      "purpose": "Combines policy terms, loss evidence, documents, and adjuster notes for human review."
+    },
+    {
+      "operation": "fraud_flag",
+      "name": "SIU indicator review",
+      "purpose": "Surfaces explainable fraud indicators without declaring fraud or changing coverage."
+    },
+    {
+      "operation": "settlement_recommendation",
+      "name": "Policy-term settlement estimate",
+      "purpose": "Calculates a nonbinding coverage-limit and deductible estimate without approving, denying, reserving, settling, or paying."
+    },
+    {
+      "operation": "auto_adjudication",
+      "name": "Auto-adjudication recommendations",
+      "purpose": "Recommends approve, deny or needs-info outcomes for eligible claims with efficiency and quality metrics; adjusters release them."
+    },
+    {
+      "operation": "processing_metrics",
+      "name": "Processing metrics and improvements",
+      "purpose": "Compares before/after cycle time, auto-adjudication rate, cost per claim and CSAT and lists optimization opportunities."
+    },
+    {
+      "operation": "session_summary",
+      "name": "Session summary",
+      "purpose": "Summarizes today's processing, fraud, complex-file and efficiency results without claiming any payment."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Claims intake triage",
+      "prompt": "Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Operations Leader",
+        "prompt": "Yes, summarize everything we accomplished today.",
+        "answer": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Claim-file readiness",
+      "prompt": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-adjudication-review",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Adjuster",
+        "prompt": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+        "answer": "Called the ClaimsProcessingAgent (adjudication_review) on CLM-2025-7004.\n\nJennifer Liu's theft file (CLM-2025-7004) has a police report and photos on file, but is missing two things before it can be evaluated:\n\n- **Itemized list of stolen items**\n- **Receipts or appraisals** (especially needed for the jewelry and collectibles)\n\nAdjuster Sandra Ortiz has already requested these; no suspects have been identified in the police report. Fraud score is 45/100 — noted but not conclusive of anything. No approval/payment decision has been made.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "SIU indicator review",
+      "prompt": "Yes, show me the fraud detection results and high-risk claims.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-fraud-flag",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "SIU Investigator",
+        "prompt": "Yes, show me the fraud detection results and high-risk claims.",
+        "answer": "Here's the fraud detection snapshot (synthetic demo data, SIU adjuster review required):\n\n**Overall:** 89 suspicious claims flagged, $2.4M total exposure — 12 are high-confidence (not proof of fraud).\n\n| Risk | Count | Value | Action |\n|---|---|---|---|\n| High (80%+) | 12 | $890K | SIU immediate |\n| Medium (50-79%) | 41 | $1.1M | Enhanced review |\n| Low (25-49%) | 36 | $420K | Adjuster flag |\n\n**Top high-risk claims:**\n- CLM-78234 (Auto) — staged accident pattern, 3 claims in 18 months, body shop on watch list\n- CLM-78156 (Medical) — provider billing anomaly\n- CLM-78089 (Property) — recent policy change before loss\n\n**SIU referral threshold (score ≥60):**\n- CLM-2025-7003 — Apex Commercial Properties, $485K, score 68 → under investigation\n- CLM-2025-7004 — Jennifer Liu, $42K, score 45 → pending docs (below SIU threshold)\n\nNo claims have been approved, paid, or adjudicated — these are flags for human adjuster review only. Want me to pull the SIU evidence package for CLM-78234 or run auto-adjudication on the eligible (non-flagged) claims?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Policy-term settlement estimate",
+      "prompt": "Show the policy-term estimates and state clearly whether any claim was approved or paid.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-settlement-recommendation",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Manager",
+        "prompt": "Show the policy-term estimates and state clearly whether any claim was approved or paid.",
+        "answer": "Here are the policy-term estimates (synthetic demo data, adjuster review required):\n\n| Claim | Claimant | Claimed | Deductible | Fraud Score | Review Estimate |\n|---|---|---|---|---|---|\n| CLM-78445 | Water-damage homeowner | $127,000 | $2,500 | 8 | $124,500 |\n| CLM-2025-7001 | Margaret Sullivan | $28,500 | $1,500 | 12 | $27,000 |\n| CLM-2025-7002 | David Park | $14,200 | $500 | 5 | $13,700 |\n| CLM-2025-7003 | Apex Commercial Properties | $485,000 | $10,000 | 68 | **Hold pending SIU** |\n| CLM-2025-7004 | Jennifer Liu | $42,000 | $2,000 | 45 | $40,000 |\n\n**Total claimed:** $696,700 | **Aggregate review estimate (excl. SIU hold):** $205,200\n\n**Clear answer: No claim has been approved, denied, settled, or paid.** These are nonbinding review estimates only — fraud scores don't prove fraud or reduce coverage, and every figure still requires sign-off from an authorized human adjuster before any money moves.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Auto-adjudication recommendations",
+      "prompt": "Yes, auto-adjudicate the eligible claims and show me the results.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Operations Leader",
+        "prompt": "Yes, summarize everything we accomplished today.",
+        "answer": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Processing metrics and improvements",
+      "prompt": "Yes, show me the metrics and where we can improve further.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Operations Leader",
+        "prompt": "Yes, summarize everything we accomplished today.",
+        "answer": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Session summary",
+      "prompt": "Yes, summarize everything we accomplished today.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Claims Operations Leader",
+        "prompt": "Yes, summarize everything we accomplished today.",
+        "answer": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fclaims-processing",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/claims-processing/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack/claims_processing_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Claims%20Processing%20Agent%22"
+  }
+}

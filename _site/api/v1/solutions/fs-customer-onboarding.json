@@ -1,0 +1,126 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/fs-customer-onboarding",
+  "slug": "fs-customer-onboarding",
+  "name": "Customer Onboarding Agent",
+  "headline": "Move every onboarding file to the next controlled review",
+  "pitch": "Give onboarding, relationship, and compliance teams one governed view of KYC evidence, missing documents, service-setup preparation, and application ownership without claiming an identity check or account activation occurred.",
+  "category": "financial_services",
+  "industries": [
+    "Cross-Industry",
+    "Financial Services"
+  ],
+  "personas": [
+    "Onboarding Specialist",
+    "Relationship Manager",
+    "Compliance Officer"
+  ],
+  "microsoft_products": [
+    "Dynamics365 for ERP",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Govern",
+  "why_try": "Ask a plain-language question and see the exact synthetic application, screening signal, missing document, owner, and human checkpoint that needs attention.",
+  "customer_challenge": "A financial institution is coordinating identity evidence, sanctions and PEP review, document collection, product setup, and customer updates across disconnected systems. Manual handoffs create delays while making it difficult to prove that required checks occurred before activation.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the governed conversational layer. Dynamics 365 holds the onboarding case, SharePoint stores controlled documents, and Microsoft Teams supports reviewer escalation and approval. Approved identity, screening, and core-banking connectors remain behind explicit authorization gates.",
+  "business_value": [
+    "Improves visibility into KYC evidence, missing documents, and application ownership.",
+    "Reduces avoidable handoff friction by presenting one review-ready onboarding record.",
+    "Preserves control boundaries by separating preparation from identity verification, approval, and account provisioning."
+  ],
+  "business_flow": [
+    "Onboarding Specialist",
+    "Relationship Manager",
+    "Compliance Officer",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Customer Onboarding Agent",
+    "Dynamics 365 onboarding or CRM case data",
+    "SharePoint controlled-document library",
+    "Approved identity and sanctions-screening services",
+    "Core-banking provisioning workflow",
+    "Microsoft Teams approvals"
+  ],
+  "capabilities": [
+    {
+      "operation": "kyc_verification",
+      "name": "KYC evidence review",
+      "purpose": "Summarizes identity, sanctions, PEP, adverse-media, and enhanced-due-diligence evidence without verifying a real person."
+    },
+    {
+      "operation": "account_setup",
+      "name": "Account setup preparation",
+      "purpose": "Builds a review-ready service configuration reference without opening or provisioning an account."
+    },
+    {
+      "operation": "document_checklist",
+      "name": "Document readiness",
+      "purpose": "Creates an applicant-specific KYC document checklist for authorized review."
+    },
+    {
+      "operation": "onboarding_status",
+      "name": "Onboarding pipeline",
+      "purpose": "Surfaces application status, risk tier, owner, and next-review context across the synthetic pipeline."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "KYC evidence review",
+      "prompt": "What is holding up the enhanced due diligence case, and which checks need my review?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-kyc-verification",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Compliance Officer",
+        "prompt": "What is holding up the enhanced due diligence case, and which checks need my review?",
+        "answer": "Here's what's stuck on Ahmed Al-Rashid's EDD case (APP-6003, High risk, Wealth Management, RM: Jessica Nguyen):\n\n**Blocking the case (57.1% through KYC):**\n- **PEP screening** — flagged, needs relationship documentation\n- **Adverse media** — review needed\n- **Source of wealth** — verification still pending\n\n**Needs your review:**\n1. PEP relationship documentation\n2. Adverse media findings\n3. Source of wealth evidence\n4. Enhanced transaction monitoring parameters (to be set once above clear)\n\nID, SSN, address are already verified and OFAC is clear — the holdup is entirely the PEP/adverse-media/source-of-wealth trio. All three require human sign-off before this can move past EDD.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Account setup preparation",
+      "prompt": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-account-setup",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Onboarding Specialist",
+        "prompt": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+        "answer": "The file ready for account setup review is **APP-6004: Maria Fontaine**, and the product being prepared is a **Basic Savings** account ($25 min deposit; online banking, mobile deposit, ATM access).\n\nSeparately, Nexus Industries (APP-6005) is 80% through provisioning for a Commercial Banking Suite — all set except the $5M credit line, which awaits credit committee approval tomorrow. No accounts have actually been opened; all of this still needs authorized human review.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Document readiness",
+      "prompt": "Give me the business onboarding document list for Blackwood before I call them.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-document-checklist",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Relationship Manager",
+        "prompt": "Give me the business onboarding document list for Blackwood before I call them.",
+        "answer": "Here's Blackwood Capital Partners' (APP-6002) document checklist:\n\n**Required:**\n- Articles of Incorporation / Formation\n- EIN verification letter\n- Certificate of Good Standing\n- Operating Agreement / Bylaws\n- Beneficial ownership declaration (FinCEN BOI)\n- Government ID for all authorized signers\n\n**Optional:**\n- Business license\n- Financial statements (last 2 years)\n\n**Notes:** Documents must be current (within 90 days), certified/notarized copies required, and standard BSA/AML + CIP verification applies.\n\n⚠️ Synthetic demo data — confirm actual requirements with compliance before the call.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Onboarding pipeline",
+      "prompt": "Where is the onboarding queue stuck, and who owns each application?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-onboarding-status",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Head of Onboarding",
+        "prompt": "Where is the onboarding queue stuck, and who owns each application?",
+        "answer": "Here's the pipeline snapshot (synthetic demo data, needs human review):\n\n**Stuck/bottleneck points:**\n- **APP-6003 (Ahmed Al-Rashid)** — stuck in Enhanced Due Diligence, high risk, $5.8M — owned by **Jessica Nguyen**\n- **APP-6002 (Blackwood Capital Partners)** — stuck in Document Review, $2.4M — owned by **Jessica Nguyen**\n- **APP-6001 (Elena Brooks)** & **APP-6005 (Nexus Industries)** — both still in KYC In Progress — owned by **Michael Torres** and **Jessica Nguyen** respectively\n\n**Flowing fine:**\n- **APP-6004 (Maria Fontaine)** — ready for setup review, owned by **Michael Torres**\n\n**Observation:** Jessica Nguyen owns 3 of the 5 applications, including both of the slowest-moving ones (EDD and doc review) — she looks like the bottleneck concentration point. Worth checking her workload.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffs-customer-onboarding",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/fs-customer-onboarding/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Customer%20Onboarding%20Agent%22"
+  }
+}

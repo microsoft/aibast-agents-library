@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "personalized-marketing",
+  "agent": "@aibast-agents-library/personalized-marketing",
+  "display_name": "Personalized Marketing Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic marketing records",
+        "detail": "Fixed segment, campaign, content, test, conversion, revenue, and engagement records support deterministic planning reviews."
+      },
+      {
+        "name": "Marketing rules and safety knowledge",
+        "detail": "Uploaded guidance defines approved personas, aggregate-only analysis, evidence anchors, approval gates, and prohibited actions."
+      },
+      {
+        "name": "Approved solution architecture",
+        "detail": "The curated package identifies Dynamics 365 and Teams as governed seams; it does not claim configured live connections."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Aggregate customer segment analysis",
+        "detail": "Compares synthetic commercial behavior, value, engagement, and churn signals without identifying people or using demographics."
+      },
+      {
+        "name": "Review-only campaign concept design",
+        "detail": "Builds multi-stage campaign concepts, draft sequences, assumptions, benchmarks, and approval gates without launching them."
+      },
+      {
+        "name": "Privacy-safe content personalization",
+        "detail": "Drafts segment-level hero copy and product ideas from non-sensitive aggregate preferences for marketer review."
+      },
+      {
+        "name": "Synthetic performance analysis",
+        "detail": "Compares fixed A/B tests, confidence, lift, conversion, revenue, and ROAS while distinguishing scenarios from live results."
+      },
+      {
+        "name": "Persona-aligned decision preparation",
+        "detail": "Frames evidence and review-only options for Marketing Directors and Campaign Managers without authorizing external action."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access through a validated Draft agent with four skills, two knowledge files, and no write tools."
+      },
+      {
+        "name": "Microsoft 365 Copilot review surface",
+        "detail": "Supports governed review of aggregate segments, campaign concepts, content drafts, and measurement scenarios."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP agent through local chat and UI endpoints with synthetic-only deterministic routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Customer Segmentation Overview",
+        "detail": "Reports synthetic segment size, spend, orders, lifetime value, churn risk, engagement, and revenue contribution."
+      },
+      {
+        "name": "Draft Campaign Design Portfolio",
+        "detail": "Presents audience, duration, stages, offer concepts, unsent sequences, benchmarks, and illustrative revenue for approval."
+      },
+      {
+        "name": "Draft Content Personalization Matrix",
+        "detail": "Presents segment-level hero copy, product ideas, preferred channels, and categories as neutral drafts for review."
+      },
+      {
+        "name": "Marketing Performance Analysis",
+        "detail": "Reports synthetic A/B test evidence and campaign scenarios with confidence, lift, conversion, revenue, and ROAS limitations."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable PersonalizedMarketingAgent RAPP tool",
+      "detail": "Single-file BasicAgent exposes four deterministic read-only operations using bundled synthetic data and no credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-skill conversational package; validated artifacts remain Draft and require marketer approval before publish."
+    },
+    {
+      "name": "Microsoft 365 Copilot",
+      "detail": "Provides a collaboration surface for governed review of evidence and recommendations without customer-facing action."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Named as a potential approved read-only CRM or customer-insights seam; no live connector is configured."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Provides the documented human review surface; the package does not send messages or contact customers."
+    },
+    {
+      "name": "Approved read-only customer insights feed",
+      "detail": "Authorized aggregate production data may replace synthetic records after governance review; current cases remain synthetic."
+    },
+    {
+      "name": "Approved campaign review workflow",
+      "detail": "Documented approval seam for marketers; it is separate from activation and cannot launch campaigns in the local package."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic aggregate data boundary",
+      "detail": "Accepts only fixed synthetic planning records and prohibits claims of live customer, campaign, or performance access."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes segmentation, campaign design, content personalization, and performance analysis from persona-language intent."
+    },
+    {
+      "name": "Sensitive-profiling guardrail",
+      "detail": "Prohibits demographic or sensitive-trait profiling, identity enrichment, and invention of missing customer facts."
+    },
+    {
+      "name": "Explicit marketer approval gate",
+      "detail": "Keeps audience, copy, offer, timing, and publication decisions behind authorized Marketing Director or Campaign Manager review."
+    },
+    {
+      "name": "No contact or campaign activation",
+      "detail": "The agent never contacts customers, sends or schedules messages, creates offers, issues rewards, or launches campaigns."
+    },
+    {
+      "name": "Locked case and isolation validation",
+      "detail": "Records four passing persona-language cases with required evidence anchors and only the expected marketing tool loaded."
+    },
+    {
+      "name": "Draft package and publication control",
+      "detail": "Includes source, recipe, skills, knowledge, evidence, and export artifacts while keeping Studio packages unpublished."
+    }
+  ]
+}

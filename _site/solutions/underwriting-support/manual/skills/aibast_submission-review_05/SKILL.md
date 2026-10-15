@@ -1,0 +1,25 @@
+---
+name: submission-review
+description: "Use when an underwriter asks something like \"Help me evaluate this commercial insurance application and tell me what is missing\""
+---
+<!-- bic:source=blank -->
+# Submission review
+
+Use when an underwriter asks something like "Help me evaluate this commercial insurance application and tell me what is missing"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Midwest Manufacturing Inc.`
+- `95% complete`
+- `68/100 (Moderate)`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

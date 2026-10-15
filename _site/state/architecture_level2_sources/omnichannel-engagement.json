@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "omnichannel-engagement",
+  "agent": "@aibast-agents-library/omnichannel-engagement",
+  "display_name": "Omnichannel Engagement Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic omnichannel evidence",
+        "detail": "Fixed channel, journey, campaign, conversion, cost, revenue, ROI, and bounce-rate records support deterministic demonstrations."
+      },
+      {
+        "name": "Operating rules and safety anchors",
+        "detail": "Uploaded rules define persona routing, required evidence headings, aggregate-only analysis, consent controls, and prohibited actions."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Aggregate channel performance analysis",
+        "detail": "Compares synthetic sessions, conversions, revenue, cost, ROAS, bounce rate, and revenue share without identity stitching."
+      },
+      {
+        "name": "Privacy-safe journey friction analysis",
+        "detail": "Reviews four aggregate journey archetypes for touchpoint order, duration, conversion, handoff friction, and service continuity."
+      },
+      {
+        "name": "Consent-aware engagement optimization",
+        "detail": "Ranks aggregate channel efficiency and drafts controlled experiments with optional preferences, consent, and frequency caps."
+      },
+      {
+        "name": "Synthetic campaign attribution review",
+        "detail": "Summarizes campaign channel, conversions, revenue, cost, ROI, and limitations while distinguishing attribution from causality."
+      },
+      {
+        "name": "Persona-aligned recommendation preparation",
+        "detail": "Frames evidence and review-only options for customer-experience, digital-engagement, and contact-center leaders."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access through a validated Draft agent with four skills, two knowledge files, and no configured write tools."
+      },
+      {
+        "name": "Microsoft 365 Copilot review surface",
+        "detail": "Supports governed conversational review of aggregate channel, journey, optimization, and attribution findings without taking action."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP agent through local Brainstem chat and UI endpoints with synthetic-only deterministic routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Channel performance scorecard",
+        "detail": "Reports synthetic sessions, conversions, CVR, revenue, cost, ROAS, bounce rate, and channel revenue share for review."
+      },
+      {
+        "name": "Journey friction and continuity review",
+        "detail": "Presents archetype sequences, duration, touchpoint counts, conversion rates, friction observations, and draft next steps."
+      },
+      {
+        "name": "Campaign efficiency and attribution brief",
+        "detail": "Reports fixed campaign conversions, revenue, cost, ROI, and click metrics with explicit non-causal interpretation limits."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable RAPP Omnichannel Engagement Agent",
+      "detail": "Single-file OmnichannelEngagementAgent implements four read-only operations with bundled synthetic data and no credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-skill conversational package; validated artifacts remain Draft and require explicit human approval before publish."
+    },
+    {
+      "name": "Microsoft 365 Copilot",
+      "detail": "Provides a cited collaboration surface for governed review of aggregate insights and draft recommendations without side effects."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Cited production seam for approved aggregate CRM and commerce context; it is not connected in the synthetic package."
+    },
+    {
+      "name": "Outlook",
+      "detail": "Cited review surface for engagement context; the package never sends, schedules, or drafts customer outreach automatically."
+    },
+    {
+      "name": "Approved aggregate CRM and commerce analytics",
+      "detail": "Human-reviewed read-only integration may replace synthetic evidence after authorization; no live connection is configured."
+    },
+    {
+      "name": "Approved contact-center analytics",
+      "detail": "Governed aggregate feed may support handoff analysis after review; the current implementation uses fixed synthetic archetypes."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Aggregate-only privacy boundary",
+      "detail": "Prohibits identity stitching, individual journey reconstruction, sensitive profiling, and invention of missing customer facts."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes channel performance, journey analysis, engagement optimization, and campaign attribution requests from persona language."
+    },
+    {
+      "name": "Consent and frequency controls",
+      "detail": "Requires optimization options to preserve consent, optional preferences, frequency caps, stated assumptions, and review gates."
+    },
+    {
+      "name": "Human review and no-side-effect seam",
+      "detail": "Keeps outputs advisory and forbids outreach, messages, offers, rewards, record changes, purchases, or silent authorization."
+    },
+    {
+      "name": "Locked case and isolation validation",
+      "detail": "Maintains one persona-language case per operation and records four passing captures with only the expected RAPP tool loaded."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Keeps Copilot Studio artifacts unpublished, validates four preview cases, and makes publication a separate approved step."
+    },
+    {
+      "name": "Portable package and evidence trail",
+      "detail": "Includes source RAPP, deployment recipe, skills, knowledge, export bundle, hashes, screenshots, and review evidence."
+    }
+  ]
+}

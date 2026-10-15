@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "inventory-rebalancing",
+  "agent": "@aibast-agents-library/inventory-rebalancing",
+  "display_name": "Inventory Rebalancing Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Facility and SKU Snapshot",
+        "detail": "Fixed synthetic records for four warehouses, six SKUs, capacity, on-hand quantities, unit values, weights, and reorder points."
+      },
+      {
+        "name": "Forecast, Cost, and Review Rules",
+        "detail": "Synthetic demand forecasts, portfolio classes, holding rates, transfer lanes, tolerances, and authorization boundaries."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Capacity and Reorder Exposure",
+        "detail": "Calculates facility utilization, inventory value, and SKU positions below fixed reorder points from the approved snapshot."
+      },
+      {
+        "name": "Forecast Imbalance Classification",
+        "detail": "Compares on-hand stock with forecasts and labels material surplus, deficit, velocity, strategic value, and lifecycle risk."
+      },
+      {
+        "name": "Proposed Transfer Planning",
+        "detail": "Pairs synthetic surplus and deficit positions into review-ready warehouse moves with quantities, lanes, weights, and estimated cost."
+      },
+      {
+        "name": "Inventory Cost Trade-offs",
+        "detail": "Compares holding cost, reorder shortfall value, and proposed transfer estimates for a human planning discussion."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio Conversation",
+        "detail": "Routes persona-language requests to four governed skills for snapshot, imbalance, transfer-plan, and cost-analysis responses."
+      },
+      {
+        "name": "Microsoft 365 Copilot Entry",
+        "detail": "Provides a conversational entry point for supply chain, inventory, procurement, and warehouse planning personas."
+      },
+      {
+        "name": "Review-Ready Evidence Views",
+        "detail": "Presents facility, SKU, transfer, and cost evidence in concise tables while separating facts from recommendations."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Capacity and Inventory Review",
+        "detail": "Reports utilization, pallets, inventory value, reorder exposure, and the synthetic identifiers supporting each finding."
+      },
+      {
+        "name": "Imbalance and Lifecycle Review",
+        "detail": "Summarizes forecast-relative shortages, excess, slow-moving classifications, and lifecycle flags without declaring obsolescence."
+      },
+      {
+        "name": "Planner Transfer and Cost Pack",
+        "detail": "Packages proposed moves and synthetic cost trade-offs for authorized planner review; no inventory movement is performed."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "InventoryRebalancingAgent",
+      "detail": "Portable Brainstem tool exposing deterministic snapshot, recommendation, proposed transfer, and cost-analysis operations."
+    },
+    {
+      "name": "Copilot Studio Operation Skills",
+      "detail": "Four inline skills route persona requests and enforce synthetic evidence, review language, and no-side-effect boundaries."
+    },
+    {
+      "name": "Dynamics 365 Supply Chain Management",
+      "detail": "Approved production inventory, demand, and policy source to bind through a dedicated connection reference."
+    },
+    {
+      "name": "Warehouse and Transportation Systems",
+      "detail": "Approved WMS and transportation sources for validated planning data and separately authorized execution."
+    },
+    {
+      "name": "Power BI",
+      "detail": "Planned reporting surface for portfolio, facility-capacity, inventory-exposure, and planning-review views."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Planned collaboration surface for inventory, warehouse, transportation, procurement, and finance review."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Claude Sonnet 4.6",
+      "detail": "Validated Copilot Studio authoring model for the current draft pilot package."
+    },
+    {
+      "name": "Fixed Synthetic Evidence",
+      "detail": "Every warehouse, SKU, quantity, classification, duration, and cost is labeled as fictional pilot evidence."
+    },
+    {
+      "name": "Human Authorization Gate",
+      "detail": "Inventory and warehouse owners must review proposals before any reservation, transfer, reorder, return, or policy change."
+    },
+    {
+      "name": "No Inventory Side Effects",
+      "detail": "The solution does not reserve, pick, ship, move, reorder, return, liquidate, or change inventory policy."
+    },
+    {
+      "name": "Deterministic Case Evidence",
+      "detail": "Four persona-language cases verify routing, expected records, cost framing, and recommendation-only behavior."
+    },
+    {
+      "name": "Draft and Unpublished State",
+      "detail": "The exported unmanaged Copilot Studio solution remains draft and requires explicit administrator review before publication."
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/care-gap-closure",
+  "slug": "care-gap-closure",
+  "name": "Care Gap Closure Agent",
+  "headline": "Turn aggregate quality evidence into a safer human review queue",
+  "pitch": "Help quality and care-coordination teams inspect synthetic measure evidence, organize operational review cohorts, and draft unsent outreach while preserving clinical eligibility and privacy review.",
+  "category": "healthcare",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Quality Managers",
+    "Care Coordinators",
+    "Clinical Operation Leads"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Govern",
+  "why_try": "The demo shows where an AI assistant can reduce review friction without pretending to decide who is eligible, overdue, high risk, or ready for outreach.",
+  "customer_challenge": "A regional health organization has large volumes of quality evidence, inconsistent barrier review, manual outreach preparation, and limited shared visibility—but cannot compromise clinical eligibility rules or privacy controls.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the conversational experience. Dynamics 365 supports governed care-coordination work, and Microsoft Teams routes approved review tasks; the package itself uses aggregate synthetic evidence and sends nothing.",
+  "business_value": [
+    "Makes aggregate source limitations and review queues easier for quality teams to see.",
+    "Supports consistent operational cohorting without substituting an algorithm for clinical risk or eligibility review.",
+    "Speeds outreach drafting while keeping consent, privacy, accessibility, and clinical approval explicit."
+  ],
+  "business_flow": [
+    "Quality managers and care coordinators",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Care Gap Closure Agent",
+    "Dynamics 365 care-coordination workflow",
+    "Microsoft Teams review and approval",
+    "Quality and clinical reviewers"
+  ],
+  "capabilities": [
+    {
+      "operation": "gap_analysis",
+      "name": "Source-evidence gap analysis",
+      "purpose": "Summarizes aggregate synthetic source counts and limitations without deciding measure eligibility."
+    },
+    {
+      "operation": "cohort_review",
+      "name": "Aggregate cohort review",
+      "purpose": "Organizes operational evidence-review cohorts without clinical risk scoring."
+    },
+    {
+      "operation": "outreach_draft",
+      "name": "Unsent outreach draft",
+      "purpose": "Drafts privacy-aware language but does not contact anyone."
+    },
+    {
+      "operation": "quality_dashboard",
+      "name": "Qualitative quality dashboard",
+      "purpose": "Shows source-completeness signals for quality and clinical validation."
+    },
+    {
+      "operation": "hedis_status",
+      "name": "Hedis Status",
+      "purpose": "Hedis Status"
+    },
+    {
+      "operation": "top_gaps",
+      "name": "Top Gaps",
+      "purpose": "Top Gaps"
+    },
+    {
+      "operation": "risk_stratification",
+      "name": "Risk Stratification",
+      "purpose": "Risk Stratification"
+    },
+    {
+      "operation": "outreach_strategy",
+      "name": "Outreach Strategy",
+      "purpose": "Outreach Strategy"
+    },
+    {
+      "operation": "campaign_projection",
+      "name": "Campaign Projection",
+      "purpose": "Campaign Projection"
+    },
+    {
+      "operation": "monitoring_plan",
+      "name": "Monitoring Plan",
+      "purpose": "Monitoring Plan"
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Quality Manager: Gap Analysis",
+      "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-gap-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Quality Manager",
+        "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
+        "answer": "**SYN-COL** (colorectal screening) has the largest queue — 182 records needing evidence review out of 520, vs. 108 for SYN-BCS and 53 for SYN-CDC. All of these still need clinical/quality reviewer validation before any eligibility or exclusion decisions are made.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Care Coordinator: Cohort Review",
+      "prompt": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-cohort-review",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Care Coordinator",
+        "prompt": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+        "answer": "Here's the cohort organization — grouped purely by evidence-completeness/operational status, no clinical risk scoring involved:\n\n- **Multiple Source Gaps (42)** — mixed evidence completeness → routed to staff review queue\n- **Single Source Gap (117)** — recent evidence may be missing → routed to portal draft\n- **Contact Data Review (19)** — contact preference not confirmed → routed to privacy review queue\n\nAll of this is synthetic aggregate data for triage purposes only — eligibility, exclusions, and outreach approval still require your quality/clinical reviewers. Want me to pull the matching evidence-review queue (`gap_analysis`) for any of these cohorts?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Care Coordinator: Outreach Draft",
+      "prompt": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-outreach-draft",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Care Coordinator",
+        "prompt": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+        "answer": "Here's a neutral draft for the screening measures (SYN-BCS/SYN-COL, since \"screening\" could mean either):\n\n**Draft message:**\n\"We are reviewing our records and invite you to contact the care team if you have any questions.\"\n\n**Guardrails applied:**\n- Nothing is sent — this is a draft only\n- No statement of eligibility or overdue care — those require reviewer validation first\n- Approval path: quality reviewer → clinician (if needed) → authorized outreach operator\n\nLet me know if you meant a specific one (breast vs. colorectal) and I can tailor the draft further.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Clinical Operations Lead: Quality Dashboard",
+      "prompt": "Show the qualitative source-completeness dashboard and its limitations.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-quality-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Clinical Operations Lead",
+        "prompt": "Show the qualitative source-completeness dashboard and its limitations.",
+        "answer": "Here's the dashboard — it's a qualitative signal, not a clinical determination. Key limitations:\n\n- **SYN-BCS**: 73% recorded closed, but eligibility/exclusions are unvalidated synthetic fields\n- **SYN-COL**: 65% recorded closed, with possible gaps in clinical exclusions and external claims data\n- **SYN-CDC**: 82.9% recorded closed, but recent labs and measure-year attribution still need reviewer validation\n\nAll data is synthetic/aggregate as of 2026-07-31. None of this determines actual member eligibility, exclusions, or outreach approval — that still requires your quality and clinical team's sign-off. The agent surfaces patterns, it doesn't make the call.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Quality Manager: Hedis Status",
+      "prompt": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-hedis-status",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Quality Manager",
+        "prompt": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+        "answer": "Here's where you stand (all synthetic demo data, final calls stay with your clinical/quality team):\n\n- **2,847** MA patients, **1,142 (40%)** have open care gaps\n- HEDIS score **72.3%** vs. target **75%** — currently costing you **-0.5 stars**\n- **$428,900** in revenue at risk, **23 days** left to the deadline\n- Biggest driver: diabetes A1C testing gaps — **387 patients**, **$189,450** in incentives\n\nWant me to pull the top gaps ranked by revenue and reachability, or drill into the diabetes cohort's risk tiers and barriers next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Quality Manager: Top Gaps",
+      "prompt": "Show me the top care gaps and which ones are most actionable.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-top-gaps",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Quality Manager",
+        "prompt": "Show me the top care gaps and which ones are most actionable.",
+        "answer": "Here's the lineup (all synthetic data, pending clinical/quality review):\n\n| Measure | Patients | Revenue Risk | Reachable |\n|---|---|---|---|\n| Diabetes A1C test | 387 | $189,450 | 76% |\n| Breast cancer screen | 243 | $94,170 | 89% |\n| Colorectal screen | 198 | $76,890 | 62% |\n| Statin therapy | 176 | $43,120 | 91% |\n| Blood pressure control | 138 | $25,270 | 84% |\n\n**Most actionable:**\n- **Diabetes A1C test** — biggest prize: 387 patients, $189K at stake, good reachability. Top priority.\n- **Statin therapy** — 91% reachable, easiest to close even though smaller dollar value.\n- **Breast cancer screen** — strong combo of size, revenue ($94K), and 89% reachability.\n- **Colorectal screen** — lowest reachability (62%), so harder to move even with real dollars on the line.\n\nWant me to dig into the diabetes cohort risk breakdown or draft an outreach strategy for one of these?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Care Coordinator: Risk Stratification",
+      "prompt": "Show me the diabetes cohort analysis with risk tiers and engagement barriers.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-risk-stratification",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Care Coordinator",
+        "prompt": "Show me the diabetes cohort analysis with risk tiers and engagement barriers.",
+        "answer": "Here's the diabetes cohort breakdown (387 patients, synthetic data, for reviewer prioritization only):\n\n**Risk Tiers**\n- **Critical** (A1C >9.0): avg gap 8.7 months — immediate priority\n- **Moderate** (A1C 7–9): avg gap 7.2 months — high priority\n- **Never tested**: new diagnoses — high priority\n\n**Engagement Barriers**\n- Transportation: 34% (132 patients)\n- No-show history: 28% (108 patients)\n- Spanish language: 18% (70 patients)\n- Lapsed insurance: 12% (46 patients)\n- Complexity: avg 4.2 chronic conditions/patient\n\nThis is reviewer-facing analysis — clinical judgment and outreach approval still sit with your team. Want me to draft a barrier-specific outreach strategy (e.g., transportation-first or language-matched approach) for review?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Care Coordinator: Outreach Strategy",
+      "prompt": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-outreach-strategy",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Care Coordinator",
+        "prompt": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+        "answer": "Here's the barrier-specific plan for the 387-patient diabetes cohort:\n\n**By barrier:**\n- **Transportation (34%, 132 pts):** Mobile clinic slots + ride vouchers\n- **No-show history (28%, 108 pts):** Staggered SMS reminders (48h/24h/2h before appointment)\n- **Spanish language (18%, 70 pts):** Spanish-speaking staff + translated materials\n- **Critical A1C >9.0:** Direct RN callback within 48 hours, regardless of other barriers\n\n**Drafted campaign scope:**\n- 294 SMS messages\n- 387 voicemails\n- 312 portal messages\n- 94 prioritized RN callbacks\n\nThis is a draft only — nothing launches until an authorized outreach operator approves it. Want me to pull up the projected impact/deployment timeline next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Clinical Operations Lead: Campaign Projection",
+      "prompt": "Show me the campaign deployment plan and projected impact.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-campaign-projection",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Clinical Operations Lead",
+        "prompt": "Show me the campaign deployment plan and projected impact.",
+        "answer": "Here's the campaign deployment plan (synthetic demo data, pending clinical/quality approval):\n\n**Channels & volumes:**\n- SMS: 294 patients → 42% expected response\n- Patient portal: 312 msgs → 28% expected\n- Voice calls: 387 queued → 35% expected\n- RN outreach: 94 scheduled → 78% expected (highest-touch, highest yield)\n\n**Resources needing approval:**\n- 47 mobile clinic slots (next 2 weeks)\n- 132 ride vouchers\n- Next-day Tue/Thu appointment capacity to open\n\n**Projected impact:**\n- 68% close rate (based on historical campaigns) → ~263 of 387 patients closed\n- ~$128,700 of $189,450 at-risk revenue recovered\n\nThis is a proposal only — nothing launches until a human reviewer approves eligibility and outreach. Want me to pull up the monitoring/alerts plan next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Clinical Operations Lead: Monitoring Plan",
+      "prompt": "Configure monitoring for the campaign and alert me if performance drops.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-monitoring-plan",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Clinical Operations Lead",
+        "prompt": "Configure monitoring for the campaign and alert me if performance drops.",
+        "answer": "Monitoring's set up on synthetic sample data — here's what it watches:\n\n**Dashboard:** daily 8 AM summary, real-time close rate, weekly trend vs. last cycle, barrier breakdown by cohort (data lake → Power BI → Teams).\n\n**Alerts fire if:**\n- Close rate drops below 60%\n- A patient hits 3 failed contact attempts\n- A critical patient goes unresponsive >48h\n- Budget variance exceeds 15%\n\nNote: this is a synthetic demo — actual activation, thresholds, and alert routing need sign-off from your quality/clinical team. Want me to pull a full campaign summary too?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcare-gap-closure",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/care-gap-closure/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Care%20Gap%20Closure%20Agent%22"
+  }
+}

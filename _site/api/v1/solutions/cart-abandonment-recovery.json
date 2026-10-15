@@ -1,0 +1,122 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/cart-abandonment-recovery",
+  "slug": "cart-abandonment-recovery",
+  "name": "Cart Abandonment Recovery Agent",
+  "headline": "Turn cart friction into consent-aware recovery planning without touching a shopper or cart.",
+  "pitch": "Analyzes anonymous synthetic cart patterns, drafts neutral channel sequences, compares margin-aware incentive concepts, and reviews aggregate conversion scenarios.",
+  "category": "b2c_sales",
+  "industries": [
+    "Cross-Industry",
+    "Software Tech"
+  ],
+  "personas": [
+    "Marketing Manager",
+    "Digital Marketing Lead",
+    "Growth Manager"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams",
+    "Outlook"
+  ],
+  "journey_stage": "Recover and learn",
+  "why_try": "It helps growth and digital teams pressure-test recovery ideas while preserving consent, margin governance, and activation controls.",
+  "customer_challenge": "Recovery programs can become slow, generic, over-discounted, and difficult to evaluate when journey friction and margin tradeoffs are unclear.",
+  "microsoft_ai_story": "A portable planning agent converts anonymous commerce-style records into review briefs that marketing teams can refine before approved systems handle any contact or offer.",
+  "business_value": [
+    "Clearer diagnosis of cart friction",
+    "More disciplined review of channel and incentive options",
+    "Stronger consent and activation governance"
+  ],
+  "business_flow": [
+    "Marketing Manager, Digital Marketing Lead, and Growth Manager",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Cart Abandonment Recovery Agent",
+    "Approved aggregate commerce analytics",
+    "Consent and campaign review workflow",
+    "Authorized activation systems"
+  ],
+  "capabilities": [
+    {
+      "operation": "abandonment_analysis",
+      "name": "Anonymous abandonment analysis",
+      "purpose": "Finds aggregate exit and value patterns without identifying or contacting a shopper."
+    },
+    {
+      "operation": "recovery_campaign",
+      "name": "Consent-aware campaign draft",
+      "purpose": "Outlines review-only channel timing and neutral content concepts."
+    },
+    {
+      "operation": "incentive_optimization",
+      "name": "Margin-aware incentive scenarios",
+      "purpose": "Compares optional value concepts without issuing an offer."
+    },
+    {
+      "operation": "conversion_tracking",
+      "name": "Synthetic conversion review",
+      "purpose": "Summarizes fixed recovery metrics and planning assumptions."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Diagnose anonymous cart friction",
+      "prompt": "Show where the anonymous synthetic cart journey is breaking down and what needs review.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-abandonment-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Marketing Manager",
+        "prompt": "As Marketing Manager, show where the anonymous synthetic cart journey is breaking down and what needs review.",
+        "answer": "Here's where the funnel is breaking down (synthetic, 847 carts / $127K today):\n\n**By segment:**\n- VIP (34 carts, $18K) — best recovery at 45%, but still leaving money on the table\n- Repeat buyers (89 carts, $24K) — 38% recovery\n- New visitors (412 carts, $53K) — biggest volume and value, but worst recovery at 22% — this is the main leak\n- Other shoppers (312 carts, $32K) — 28%\n\n**Why shoppers are dropping off:**\n- 42% — shipping cost sticker shock\n- 28% — comparison shopping elsewhere\n- 18% — payment friction\n\n**Needs review:**\n1. New visitor segment — high value, lowest conversion, likely needs a shipping/price transparency fix upstream rather than just recovery offers\n2. Top abandoned high-value carts for priority outreach: Sarah M ($892), James K ($647), Emily R ($534)\n3. Payment friction (18%) suggests a checkout UX issue worth a dev review, not just marketing\n\nWant me to pull personalized recovery strategies for these segments/shoppers next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Draft a consent-aware sequence",
+      "prompt": "Outline a consent-aware draft sequence without sending or scheduling anything.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-recovery-campaign",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Digital Marketing Lead",
+        "prompt": "As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.",
+        "answer": "Here's the draft recovery sequence — consent-aware and unsent, staged across 3 segments:\n\n**1. High-Value Win-Back (8,400 carts, $500+)**\n- Personal note (no auto-send) → SMS draft (+1hr) → express shipping offer draft (+4hr) → call script flag (+24hr)\n- Requires: active SMS + email opt-in on file; skip channels without consent\n\n**2. Point Expiry Alert (12,000 carts)**\n- Points reminder email draft → push notification draft (+2hr) → soft shipping-discount hint draft (+12hr)\n- Requires: loyalty program opt-in\n\n**3. Lapsed Browser / New Shoppers (13,600 carts)**\n- Welcome 10% offer draft → retargeting ad draft → social proof email draft (+24hr)\n- Requires: marketing cookie/email consent only; no SMS touch (lower confidence of consent)\n\n**Guardrails baked in:**\n- Every touch pulls consent status before being marked \"ready\" — no send/schedule occurs\n- Suppresses any channel lacking a valid opt-in record\n- All content stays in draft state pending your approval\n\nWant me to pull the forecasted lift/ROI for this sequence before you review it further?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Compare incentive concepts",
+      "prompt": "Compare margin-aware value scenarios and keep every concept behind approval.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-incentive-optimization",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Growth Manager",
+        "prompt": "As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.",
+        "answer": "Here's the margin-aware incentive comparison (Growth Manager view) — all still in draft, nothing sent:\n\n**Incentive menu & economics:**\n| Incentive | Cost | Lift |\n|---|---|---|\n| 10% Off | 10% of cart | +35% |\n| 15% Off | 15% of cart | +48% |\n| Free Shipping | $12 flat | +28% |\n| $20 Off ($150+) | $20 flat | +22% |\n| Gift w/ Purchase | 6% of cart | +18% |\n\n**Top-cart recommendations (best net recovery value):**\n- **CART-20001 (Sarah M, VIP, $892):** Free Shipping → +28% lift, **$880 net value** (low cost, strong margin preservation for a high-cart VIP)\n- **CART-20002 (James K, $647):** 10% Off → +35% lift, **$582.30 net value**\n- **CART-20003 (Emily R, $534):** 10% Off → +35% lift, **$480.60 net value**\n\nTakeaway: flat-cost incentives (free shipping) win on margin for high-ticket VIP carts, while percentage discounts outperform on mid-size carts needing bigger lift.\n\nEvery scenario here is a draft comparison only — no offer goes out until you approve a specific one. Want me to pull the recovery_forecast next to see projected 48-hour impact if approved?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review recovery scenarios",
+      "prompt": "Summarize the fixed recovery metrics and separate benchmarks from planning estimates.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-conversion-tracking",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Growth Manager",
+        "prompt": "As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.",
+        "answer": "Here's the breakdown, split clearly by type:\n\n**Fixed/Measured Benchmarks (actuals from last 30 days):**\n- Abandonment rate: 71.4%\n- Recovery rate: 12.8%\n- Avg recovered order value: $187.50\n- 4,250 carts abandoned → 544 recovered → $102,000 recovered revenue\n- Industry benchmark recovery rate: **18%**\n\n**Planning Estimates (modeled/forward-looking, not yet real):**\n- 48-hr forecast: 30% blended recovery rate → $37,940 projected revenue\n  - VIP 45%, Repeat 38%, New visitors 22%, Other 28%\n- Target recovery rate: 27% (vs. 18% industry benchmark)\n- Monthly impact projection: $172K current run-rate → $228K optimized (+$56K/month)\n\n**Key distinction:** The 12.8%/$102K figures are historical synthetic tracking data; everything in the forecast table (30%, $37,940, +$56K/month) is a projected scenario, not a result. No campaigns have been sent — these are drafts for your review.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcart-abandonment-recovery",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/cart-abandonment-recovery/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/b2c_sales_stacks/cart_abandonment_recovery_stack/cart_abandonment_recovery_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Cart%20Abandonment%20Recovery%20Agent%22"
+  }
+}

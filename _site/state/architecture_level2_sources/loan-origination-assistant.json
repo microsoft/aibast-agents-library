@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "loan-origination-assistant",
+  "agent": "@aibast-agents-library/loan-origination-assistant",
+  "display_name": "Loan Origination Assistant",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic mortgage application snapshot",
+        "detail": "Bundled fictional applications, product criteria, rates, documents, conditions, statuses, amounts, and ratios support deterministic demos."
+      },
+      {
+        "name": "Lending controls and review contract",
+        "detail": "Packaged rules define evidence grounding, fair-lending boundaries, missing-evidence handling, and mandatory officer and underwriter review."
+      },
+      {
+        "name": "Operation skills and locked evidence anchors",
+        "detail": "Five skills map persona language to source-backed procedures, synthetic case anchors, prohibited actions, and explicit reviewer checkpoints."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Application pipeline and intake review",
+        "detail": "Summarizes fictional applications by identifier, borrower, product, amount, LTV, status, owner, pipeline volume, and packaged rate sheet."
+      },
+      {
+        "name": "Credit and collateral ratio analysis",
+        "detail": "Calculates DTI and LTV, presents credit and DSCR evidence, and compares fixed product criteria without deciding creditworthiness."
+      },
+      {
+        "name": "Product-specific document readiness",
+        "detail": "Builds income, asset, property, identity, FHA, VA, or commercial checklists for processor and underwriter verification."
+      },
+      {
+        "name": "Nonbinding eligibility findings",
+        "detail": "Surfaces stated-criteria results and exceptions for underwriting review while making no approval, denial, pricing, or lock decision."
+      },
+      {
+        "name": "Condition and timeline review",
+        "detail": "Lists open conditions by application and preserves owner, due-date, condition-clearance, and closing-date boundaries for human follow-up."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational workspace",
+        "detail": "Provides natural-language access through a validated Draft agent with five skills, two synthetic knowledge files, and web search removed."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs LoanOriginationAssistantAgent through local Brainstem chat and UI endpoints with deterministic synthetic-only operation routing."
+      },
+      {
+        "name": "Role-based lending review experience",
+        "detail": "Loan officers, processors, underwriters, and closing coordinators receive evidence-first outputs with explicit human review gates."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Mortgage pipeline status report",
+        "detail": "Reports fictional application counts, total pipeline value, product, amount, LTV, workflow status, and assigned loan officer."
+      },
+      {
+        "name": "Credit and eligibility exception review",
+        "detail": "Shows source inputs, calculated DTI and LTV, credit or DSCR evidence, fixed criteria, exceptions, and nonbinding review findings."
+      },
+      {
+        "name": "Document readiness checklist",
+        "detail": "Presents product-specific evidence for processor, loan officer, and underwriter review without claiming verification or completeness."
+      },
+      {
+        "name": "Conditions and closing-readiness report",
+        "detail": "Lists open conditions and missing ownership or due dates while confirming that no condition was cleared and no closing date was promised."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable LoanOriginationAssistantAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements five read-only operations over bundled synthetic mortgage evidence and fixed calculations."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the Draft conversational package, two synthetic knowledge files, and five skills; publication requires explicit confirmation."
+    },
+    {
+      "name": "Approved loan-origination system",
+      "detail": "Production connection seam for application, condition, owner, and due-date context; it is not connected to the synthetic package."
+    },
+    {
+      "name": "Dynamics 365 borrower or relationship data",
+      "detail": "Approved future seam for governed borrower and relationship context; current demonstrations use only bundled fictional records."
+    },
+    {
+      "name": "Approved lending verification services",
+      "detail": "Future least-privilege seam for credit, income, asset, and property evidence; no live verification or eligibility decision is configured."
+    },
+    {
+      "name": "Controlled document repository",
+      "detail": "Approved future seam for governed lending documents; the current package uses uploaded synthetic knowledge and checklists instead."
+    },
+    {
+      "name": "Microsoft Teams underwriting approvals",
+      "detail": "Approved collaboration seam for human review; the package does not request approval, send messages, or execute lending actions."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence policy",
+      "detail": "Uses only bundled fictional records and forbids browsing, enrichment, substitution, or invention of missing lending facts."
+    },
+    {
+      "name": "Five deterministic operations",
+      "detail": "Routes application review, credit analysis, document verification, decision findings, and condition tracking from persona-language prompts."
+    },
+    {
+      "name": "Evidence-first and fail-closed handling",
+      "detail": "Separates facts, calculations, criteria, and missing evidence and rejects unknown application identifiers rather than substituting records."
+    },
+    {
+      "name": "Loan officer and underwriter review gates",
+      "detail": "Preserves loan officer preparation and requires authorized underwriter review before any eligibility, credit, or customer-facing action."
+    },
+    {
+      "name": "Fair-lending and compliance boundary",
+      "detail": "Requires fair-lending, compliance, disclosure, delegated-authority, closing, and funding review by authorized personnel."
+    },
+    {
+      "name": "No autonomous approval or side effects",
+      "detail": "Prevents approval, denial, pricing, quoting, locking, disclosure, condition clearance, closing, funding, outreach, and record changes."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Five persona cases pass in strict isolation and Copilot Studio artifacts remain Draft and unpublished until separately approved."
+    }
+  ]
+}

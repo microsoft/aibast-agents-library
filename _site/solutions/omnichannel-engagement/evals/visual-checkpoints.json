@@ -1,0 +1,1351 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/omnichannel-engagement",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 41,
+    "reusable": 41,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Pilot",
+        "Draft",
+        "campaign-attribution",
+        "unresolved-issues",
+        "proactive-plan",
+        "engagement-optimization",
+        "journey-analysis",
+        "aibast_omnichannel-synthetic-records.md",
+        "aibast_omnichannel-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 240,
+          "height": 24,
+          "label": "Omnichannel Engagement Pilot"
+        },
+        {
+          "x": 335,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 142,
+          "height": 22,
+          "label": "campaign-attribution"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 121,
+          "height": 19,
+          "label": "unresolved-issues"
+        },
+        {
+          "x": 1235,
+          "y": 237,
+          "width": 100,
+          "height": 22,
+          "label": "proactive-plan"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 172,
+          "height": 22,
+          "label": "engagement-optimization"
+        },
+        {
+          "x": 1056,
+          "y": 317,
+          "width": 111,
+          "height": 22,
+          "label": "journey-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 268,
+          "height": 22,
+          "label": "aibast_omnichannel-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 261,
+          "height": 22,
+          "label": "aibast_omnichannel-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-01",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/02-oce-01.jpg",
+      "caption": "OCE-01 · Customer Experience Leader: As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+      "case_id": "OCE-01",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/02-oce-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Channel Performance"
+      ],
+      "boxes": [
+        {
+          "x": 1034,
+          "y": 444,
+          "width": 74,
+          "height": 24,
+          "label": "Synthetic Channel Performance"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for:** Customer Experience Leader, no identity stitching not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-oce-02",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/03-oce-02.jpg",
+      "caption": "OCE-02 · Contact Center Supervisor: As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+      "case_id": "OCE-02",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/03-oce-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Contact Center Supervisor",
+        "Aggregate Customer Journey Analysis",
+        "Journey Optimization Opportunities"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 444,
+          "width": 302,
+          "height": 24,
+          "label": "Prepared for:** Contact Center Supervisor"
+        },
+        {
+          "x": 285,
+          "y": 499,
+          "width": 357,
+          "height": 28,
+          "label": "Aggregate Customer Journey Analysis"
+        },
+        {
+          "x": 285,
+          "y": 2840,
+          "width": 339,
+          "height": 28,
+          "label": "Journey Optimization Opportunities"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-03",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/04-oce-03.jpg",
+      "caption": "OCE-03 · Digital Engagement Manager: As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+      "case_id": "OCE-03",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/04-oce-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Digital Engagement Manager",
+        "Draft Engagement Optimization Report",
+        "frequency caps"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 444,
+          "width": 316,
+          "height": 24,
+          "label": "Prepared for:** Digital Engagement Manager"
+        },
+        {
+          "x": 287,
+          "y": 581,
+          "width": 436,
+          "height": 32,
+          "label": "Draft Engagement Optimization Report"
+        },
+        {
+          "x": 310,
+          "y": 1444,
+          "width": 86,
+          "height": 23,
+          "label": "frequency caps"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-04",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/05-oce-04.jpg",
+      "caption": "OCE-04 · Digital Engagement Manager: As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+      "case_id": "OCE-04",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/05-oce-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Campaign Attribution Report",
+        "Overall Campaign ROI",
+        "Recommendations only"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 499,
+          "width": 365,
+          "height": 28,
+          "label": "Synthetic Campaign Attribution Report"
+        },
+        {
+          "x": 298,
+          "y": 723,
+          "width": 171,
+          "height": 24,
+          "label": "Overall Campaign ROI"
+        },
+        {
+          "x": 286,
+          "y": 1673,
+          "width": 184,
+          "height": 24,
+          "label": "Recommendations only"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-05",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/06-oce-05.jpg",
+      "caption": "OCE-05 · Contact Center Supervisor: Show me the customer's journey across all channels and help me pick up where they left off.",
+      "case_id": "OCE-05",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/06-oce-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Journey: Sarah Mitchell",
+        "Payment declined"
+      ],
+      "boxes": [
+        {
+          "x": 311,
+          "y": 500,
+          "width": 100,
+          "height": 23,
+          "label": "Customer Journey: Sarah Mitchell"
+        },
+        {
+          "x": 715,
+          "y": 926,
+          "width": 139,
+          "height": 24,
+          "label": "Payment declined"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "$289 cart not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-oce-06",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/07-oce-06.jpg",
+      "caption": "OCE-06 · Contact Center Supervisor: Show me what Sarah has been asking about and where we dropped the ball.",
+      "case_id": "OCE-06",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/07-oce-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Does Alpine Parka run true to size?",
+        "runs one size small",
+        "18 minutes"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 662,
+          "width": 224,
+          "height": 24,
+          "label": "Does Alpine Parka run true to size?"
+        },
+        {
+          "x": 336,
+          "y": 810,
+          "width": 149,
+          "height": 20,
+          "label": "runs one size small"
+        },
+        {
+          "x": 400,
+          "y": 1211,
+          "width": 90,
+          "height": 20,
+          "label": "18 minutes"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-07",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/08-oce-07.jpg",
+      "caption": "OCE-07 · Digital Engagement Manager: Which channel and timing should we use to reach Sarah for this issue and in the future?",
+      "case_id": "OCE-07",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/08-oce-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "82% open",
+        "SMS confirmation",
+        "7-9 PM"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 756,
+          "width": 81,
+          "height": 23,
+          "label": "82% open"
+        },
+        {
+          "x": 354,
+          "y": 1011,
+          "width": 145,
+          "height": 21,
+          "label": "SMS confirmation"
+        },
+        {
+          "x": 485,
+          "y": 1347,
+          "width": 64,
+          "height": 20,
+          "label": "7-9 PM"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-08",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/09-oce-08.jpg",
+      "caption": "OCE-08 · Digital Engagement Manager: What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?",
+      "case_id": "OCE-08",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/09-oce-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Proactive Engagement Plan (Draft)",
+        "Win-Back",
+        "Day 5: Personal stylist call"
+      ],
+      "boxes": [
+        {
+          "x": 366,
+          "y": 444,
+          "width": 260,
+          "height": 24,
+          "label": "Proactive Engagement Plan (Draft)"
+        },
+        {
+          "x": 662,
+          "y": 1135,
+          "width": 104,
+          "height": 26,
+          "label": "Win-Back"
+        },
+        {
+          "x": 299,
+          "y": 1366,
+          "width": 381,
+          "height": 24,
+          "label": "Day 5: Personal stylist call"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-09",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/10-oce-09.jpg",
+      "caption": "OCE-09 · Customer Experience Leader: Prepare the context in case Sarah needs to be handed off to another agent.",
+      "case_id": "OCE-09",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/10-oce-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Handoff Package: Sarah Mitchell",
+        "no need to repeat anything"
+      ],
+      "boxes": [
+        {
+          "x": 436,
+          "y": 417,
+          "width": 260,
+          "height": 24,
+          "label": "Handoff Package: Sarah Mitchell"
+        },
+        {
+          "x": 851,
+          "y": 1977,
+          "width": 220,
+          "height": 24,
+          "label": "no need to repeat anything"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "$2,400 LTV not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/11-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 11 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/11-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 238,
+          "height": 24,
+          "label": "Omnichannel Engagement Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Omnichannel Engagement Manual",
+      "step": 2,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 262,
+          "height": 24,
+          "label": "Omnichannel Engagement Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Agent — Manual Global Ins"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 278,
+          "width": 698,
+          "height": 32,
+          "label": "Omnichannel Engagement Agent — Manual Global Ins"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 356,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/06-add-aibast-omnichannel-rules-and-safety.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_omnichannel-rules-and-safety.md",
+      "step": 6,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/06-add-aibast-omnichannel-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_omnichannel-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 261,
+          "height": 22,
+          "label": "aibast_omnichannel-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/07-add-aibast-omnichannel-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_omnichannel-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/07-add-aibast-omnichannel-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_omnichannel-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 268,
+          "height": 22,
+          "label": "aibast_omnichannel-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/08-add-aibast-campaign-attribution-04.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_campaign-attribution_04",
+      "step": 8,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/08-add-aibast-campaign-attribution-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "campaign-attribution"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 142,
+          "height": 22,
+          "label": "campaign-attribution"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/09-add-aibast-channel-performance-01.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_channel-performance_01",
+      "step": 9,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/09-add-aibast-channel-performance-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "channel-performance"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 144,
+          "height": 22,
+          "label": "channel-performance"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/10-add-aibast-channel-recommendation-07.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_channel-recommendation_07",
+      "step": 10,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/10-add-aibast-channel-recommendation-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "channel-recommendation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 170,
+          "height": 19,
+          "label": "channel-recommendation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/11-add-aibast-customer-journey-05.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_customer-journey_05",
+      "step": 11,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/11-add-aibast-customer-journey-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "customer-journey"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 121,
+          "height": 21,
+          "label": "customer-journey"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/12-add-aibast-engagement-optimization-03.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_engagement-optimization_03",
+      "step": 12,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/12-add-aibast-engagement-optimization-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "engagement-optimization"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 172,
+          "height": 22,
+          "label": "engagement-optimization"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/13-add-aibast-handoff-package-09.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_handoff-package_09",
+      "step": 13,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/13-add-aibast-handoff-package-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "handoff-package"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 22,
+          "label": "handoff-package"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/14-add-aibast-journey-analysis-02.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_journey-analysis_02",
+      "step": 14,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/14-add-aibast-journey-analysis-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "journey-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1056,
+          "y": 197,
+          "width": 111,
+          "height": 22,
+          "label": "journey-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/15-add-aibast-proactive-plan-08.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_proactive-plan_08",
+      "step": 15,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/15-add-aibast-proactive-plan-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "proactive-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 100,
+          "height": 22,
+          "label": "proactive-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/16-add-aibast-unresolved-issues-06.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_unresolved-issues_06",
+      "step": 16,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/16-add-aibast-unresolved-issues-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "unresolved-issues"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 121,
+          "height": 19,
+          "label": "unresolved-issues"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/17-review-inventory.jpg",
+      "caption": "Manual step 17 · Review model, skills, knowledge, and safety boundaries",
+      "step": 17,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/17-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "unresolved-issues",
+        "proactive-plan",
+        "journey-analysis",
+        "handoff-package",
+        "engagement-optimization",
+        "aibast_omnichannel-synthetic-records.md",
+        "aibast_omnichannel-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 121,
+          "height": 19,
+          "label": "unresolved-issues"
+        },
+        {
+          "x": 1235,
+          "y": 197,
+          "width": 100,
+          "height": 22,
+          "label": "proactive-plan"
+        },
+        {
+          "x": 1056,
+          "y": 237,
+          "width": 111,
+          "height": 22,
+          "label": "journey-analysis"
+        },
+        {
+          "x": 1225,
+          "y": 237,
+          "width": 116,
+          "height": 22,
+          "label": "handoff-package"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 172,
+          "height": 22,
+          "label": "engagement-optimization"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 268,
+          "height": 22,
+          "label": "aibast_omnichannel-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 261,
+          "height": 22,
+          "label": "aibast_omnichannel-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/18-review-skills.jpg",
+      "caption": "Manual step 18 · Review the skill list (9 skills)",
+      "step": 18,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/18-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "unresolved-issues",
+        "proactive-plan",
+        "engagement-optimization",
+        "journey-analysis",
+        "handoff-package",
+        "customer-journey"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 121,
+          "height": 19,
+          "label": "unresolved-issues"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 100,
+          "height": 22,
+          "label": "proactive-plan"
+        },
+        {
+          "x": 1155,
+          "y": 299,
+          "width": 78,
+          "height": 19,
+          "label": "engagement-optimization"
+        },
+        {
+          "x": 1054,
+          "y": 393,
+          "width": 111,
+          "height": 22,
+          "label": "journey-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 491,
+          "width": 116,
+          "height": 22,
+          "label": "handoff-package"
+        },
+        {
+          "x": 1119,
+          "y": 515,
+          "width": 61,
+          "height": 16,
+          "label": "customer-journey"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/19-review-skills-more.jpg",
+      "caption": "Manual step 19 · Review the rest of the skill list",
+      "step": 19,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/19-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "engagement-optimization",
+        "customer-journey",
+        "channel-recommendation",
+        "channel-performance",
+        "campaign-attribution"
+      ],
+      "boxes": [
+        {
+          "x": 1134,
+          "y": 68,
+          "width": 77,
+          "height": 18,
+          "label": "engagement-optimization"
+        },
+        {
+          "x": 1055,
+          "y": 122,
+          "width": 121,
+          "height": 22,
+          "label": "customer-journey"
+        },
+        {
+          "x": 1055,
+          "y": 240,
+          "width": 170,
+          "height": 19,
+          "label": "channel-recommendation"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 144,
+          "height": 22,
+          "label": "channel-performance"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 142,
+          "height": 22,
+          "label": "campaign-attribution"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/20-open-preview.jpg",
+      "caption": "Manual step 20 · Open a fresh Preview conversation",
+      "step": 20,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/20-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Manual"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 20,
+          "width": 261,
+          "height": 24,
+          "label": "Omnichannel Engagement Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-01",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/21-oce-01.jpg",
+      "caption": "OCE-01 · Customer Experience Leader: As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+      "step": 21,
+      "case_id": "OCE-01",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/21-oce-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Customer Experience Leader",
+        "Synthetic Channel Performance",
+        "no identity stitching"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 489,
+          "width": 311,
+          "height": 24,
+          "label": "Prepared for:** Customer Experience Leader"
+        },
+        {
+          "x": 306,
+          "y": 537,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic Channel Performance"
+        },
+        {
+          "x": 1108,
+          "y": 536,
+          "width": 86,
+          "height": 24,
+          "label": "no identity stitching"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-02",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/22-oce-02.jpg",
+      "caption": "OCE-02 · Contact Center Supervisor: As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+      "step": 22,
+      "case_id": "OCE-02",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/22-oce-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Contact Center Supervisor",
+        "Aggregate Customer Journey Analysis",
+        "Journey Optimization Opportunities"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 444,
+          "width": 295,
+          "height": 24,
+          "label": "Prepared for:** Contact Center Supervisor"
+        },
+        {
+          "x": 285,
+          "y": 564,
+          "width": 426,
+          "height": 32,
+          "label": "Aggregate Customer Journey Analysis"
+        },
+        {
+          "x": 285,
+          "y": 1968,
+          "width": 339,
+          "height": 27,
+          "label": "Journey Optimization Opportunities"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-03",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/23-oce-03.jpg",
+      "caption": "OCE-03 · Digital Engagement Manager: As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+      "step": 23,
+      "case_id": "OCE-03",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/23-oce-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Digital Engagement Manager",
+        "Draft Engagement Optimization Report",
+        "frequency caps"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 444,
+          "width": 316,
+          "height": 24,
+          "label": "Prepared for:** Digital Engagement Manager"
+        },
+        {
+          "x": 287,
+          "y": 564,
+          "width": 437,
+          "height": 32,
+          "label": "Draft Engagement Optimization Report"
+        },
+        {
+          "x": 419,
+          "y": 1192,
+          "width": 118,
+          "height": 24,
+          "label": "frequency caps"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-04",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/24-oce-04.jpg",
+      "caption": "OCE-04 · Digital Engagement Manager: As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+      "step": 24,
+      "case_id": "OCE-04",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/24-oce-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Campaign Attribution Report",
+        "Recommendations only",
+        "Overall Campaign ROI"
+      ],
+      "boxes": [
+        {
+          "x": 306,
+          "y": 564,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic Campaign Attribution Report"
+        },
+        {
+          "x": 436,
+          "y": 564,
+          "width": 179,
+          "height": 24,
+          "label": "Recommendations only"
+        },
+        {
+          "x": 770,
+          "y": 977,
+          "width": 174,
+          "height": 24,
+          "label": "Overall Campaign ROI"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-05",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/25-oce-05.jpg",
+      "caption": "OCE-05 · Contact Center Supervisor: Show me the customer's journey across all channels and help me pick up where they left off.",
+      "step": 25,
+      "case_id": "OCE-05",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/25-oce-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Journey: Sarah Mitchell",
+        "Payment declined",
+        "$289 cart"
+      ],
+      "boxes": [
+        {
+          "x": 385,
+          "y": 445,
+          "width": 80,
+          "height": 20,
+          "label": "Customer Journey: Sarah Mitchell"
+        },
+        {
+          "x": 680,
+          "y": 705,
+          "width": 134,
+          "height": 24,
+          "label": "Payment declined"
+        },
+        {
+          "x": 349,
+          "y": 1037,
+          "width": 76,
+          "height": 22,
+          "label": "$289 cart"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-06",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/26-oce-06.jpg",
+      "caption": "OCE-06 · Contact Center Supervisor: Show me what Sarah has been asking about and where we dropped the ball.",
+      "step": 26,
+      "case_id": "OCE-06",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/26-oce-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Does Alpine Parka run true to size?",
+        "18 minutes",
+        "runs one size small"
+      ],
+      "boxes": [
+        {
+          "x": 310,
+          "y": 649,
+          "width": 283,
+          "height": 24,
+          "label": "Does Alpine Parka run true to size?"
+        },
+        {
+          "x": 434,
+          "y": 936,
+          "width": 87,
+          "height": 20,
+          "label": "18 minutes"
+        },
+        {
+          "x": 492,
+          "y": 1041,
+          "width": 146,
+          "height": 21,
+          "label": "runs one size small"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-07",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/27-oce-07.jpg",
+      "caption": "OCE-07 · Digital Engagement Manager: Which channel and timing should we use to reach Sarah for this issue and in the future?",
+      "step": 27,
+      "case_id": "OCE-07",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/27-oce-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "82% open",
+        "SMS confirmation",
+        "7-9 PM"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 679,
+          "width": 81,
+          "height": 23,
+          "label": "82% open"
+        },
+        {
+          "x": 560,
+          "y": 873,
+          "width": 140,
+          "height": 21,
+          "label": "SMS confirmation"
+        },
+        {
+          "x": 772,
+          "y": 1050,
+          "width": 61,
+          "height": 20,
+          "label": "7-9 PM"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-08",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/28-oce-08.jpg",
+      "caption": "OCE-08 · Digital Engagement Manager: What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?",
+      "step": 28,
+      "case_id": "OCE-08",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/28-oce-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Proactive Engagement Plan (Draft)",
+        "Win-Back",
+        "Day 5: Personal stylist call"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 636,
+          "width": 389,
+          "height": 32,
+          "label": "Proactive Engagement Plan (Draft)"
+        },
+        {
+          "x": 285,
+          "y": 984,
+          "width": 81,
+          "height": 20,
+          "label": "Win-Back"
+        },
+        {
+          "x": 310,
+          "y": 1116,
+          "width": 189,
+          "height": 24,
+          "label": "Day 5: Personal stylist call"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-09",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/29-oce-09.jpg",
+      "caption": "OCE-09 · Customer Experience Leader: Prepare the context in case Sarah needs to be handed off to another agent.",
+      "step": 29,
+      "case_id": "OCE-09",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/29-oce-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Handoff Package: Sarah Mitchell",
+        "$2,400 LTV"
+      ],
+      "boxes": [
+        {
+          "x": 392,
+          "y": 390,
+          "width": 132,
+          "height": 24,
+          "label": "Handoff Package: Sarah Mitchell"
+        },
+        {
+          "x": 682,
+          "y": 506,
+          "width": 91,
+          "height": 23,
+          "label": "$2,400 LTV"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "no need to repeat anything not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-step-30",
+      "mode": "hard",
+      "source": "solutions/omnichannel-engagement/screenshots/manual/30-confirm-draft.jpg",
+      "caption": "Manual step 30 · Confirm Draft and stop before publish",
+      "step": 30,
+      "draft": true,
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/30-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 258,
+          "height": 24,
+          "label": "Omnichannel Engagement Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:49:44.867282+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

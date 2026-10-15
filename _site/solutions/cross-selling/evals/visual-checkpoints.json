@@ -1,0 +1,1171 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/cross-selling",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 35,
+    "reusable": 35,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Selling Pilot",
+        "Draft",
+        "portfolio-scan",
+        "account-assignments",
+        "product-affinity",
+        "top-opportunities",
+        "opportunity-scan",
+        "aibast_cross-selling-operating-rules.md",
+        "aibast_cross-selling-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 143,
+          "height": 24,
+          "label": "Cross-Selling Pilot"
+        },
+        {
+          "x": 238,
+          "y": 22,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 97,
+          "height": 22,
+          "label": "portfolio-scan"
+        },
+        {
+          "x": 1212,
+          "y": 197,
+          "width": 142,
+          "height": 21,
+          "label": "account-assignments"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 107,
+          "height": 22,
+          "label": "product-affinity"
+        },
+        {
+          "x": 1222,
+          "y": 239,
+          "width": 121,
+          "height": 20,
+          "label": "top-opportunities"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 117,
+          "height": 21,
+          "label": "opportunity-scan"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 253,
+          "height": 22,
+          "label": "aibast_cross-selling-operating-rules.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 265,
+          "height": 22,
+          "label": "aibast_cross-selling-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-cs-01",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/02-cs-01.jpg",
+      "caption": "CS-01 · Sales Operations Manager: Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing.",
+      "case_id": "CS-01",
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/02-cs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Sell Opportunity Scan",
+        "Synthetic Usage Signals",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 455,
+          "width": 271,
+          "height": 28,
+          "label": "Cross-Sell Opportunity Scan"
+        },
+        {
+          "x": 306,
+          "y": 895,
+          "width": 183,
+          "height": 24,
+          "label": "Synthetic Usage Signals"
+        },
+        {
+          "x": 306,
+          "y": 1594,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-cs-02",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/03-cs-02.jpg",
+      "caption": "CS-02 · Enablement Manager: Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+      "case_id": "CS-02",
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/03-cs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Affinity Matrix",
+        "Response Assumption",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 499,
+          "width": 218,
+          "height": 28,
+          "label": "Product Affinity Matrix"
+        },
+        {
+          "x": 765,
+          "y": 624,
+          "width": 170,
+          "height": 24,
+          "label": "Response Assumption"
+        },
+        {
+          "x": 286,
+          "y": 1790,
+          "width": 185,
+          "height": 28,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-cs-03",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/04-cs-03.jpg",
+      "caption": "CS-03 · Enablement Manager: Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without ",
+      "case_id": "CS-03",
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/04-cs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prioritized Recommendations",
+        "Draft Engagement Plan",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 455,
+          "width": 282,
+          "height": 24,
+          "label": "Prioritized Recommendations"
+        },
+        {
+          "x": 306,
+          "y": 1502,
+          "width": 179,
+          "height": 24,
+          "label": "Draft Engagement Plan"
+        },
+        {
+          "x": 286,
+          "y": 2115,
+          "width": 150,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-cs-04",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/05-cs-04.jpg",
+      "caption": "CS-04 · Sales Leader: Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.",
+      "case_id": "CS-04",
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/05-cs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Cross-Sell Value Scenario",
+        "Portfolio Totals",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 1044,
+          "y": 444,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic Cross-Sell Value Scenario"
+        },
+        {
+          "x": 286,
+          "y": 1222,
+          "width": 121,
+          "height": 20,
+          "label": "Portfolio Totals"
+        },
+        {
+          "x": 306,
+          "y": 1769,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-cs-05",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/06-cs-05.jpg",
+      "caption": "CS-05 · Sales Leader: Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.",
+      "case_id": "CS-05",
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/06-cs-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Sell Opportunity Summary",
+        "Quick Wins",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 527,
+          "width": 311,
+          "height": 28,
+          "label": "Cross-Sell Opportunity Summary"
+        },
+        {
+          "x": 286,
+          "y": 878,
+          "width": 113,
+          "height": 26,
+          "label": "Quick Wins"
+        },
+        {
+          "x": 286,
+          "y": 1573,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-cs-06",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/07-cs-06.jpg",
+      "caption": "CS-06 · Sales Leader: Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.",
+      "case_id": "CS-06",
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/07-cs-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Top Cross-Sell Opportunities",
+        "Deep Dive",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 310,
+          "y": 499,
+          "width": 272,
+          "height": 28,
+          "label": "Top Cross-Sell Opportunities"
+        },
+        {
+          "x": 312,
+          "y": 895,
+          "width": 103,
+          "height": 27,
+          "label": "Deep Dive"
+        },
+        {
+          "x": 306,
+          "y": 1784,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-cs-07",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/08-cs-07.jpg",
+      "caption": "CS-07 · Sales Operations Manager: Assign the opportunity accounts to reps by expertise and draft this week's action plan.",
+      "case_id": "CS-07",
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/08-cs-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Account Assignments",
+        "This Week's Actions",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 436,
+          "y": 417,
+          "width": 190,
+          "height": 24,
+          "label": "Draft Account Assignments"
+        },
+        {
+          "x": 285,
+          "y": 1252,
+          "width": 190,
+          "height": 23,
+          "label": "This Week's Actions"
+        },
+        {
+          "x": 286,
+          "y": 1756,
+          "width": 184,
+          "height": 28,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/cross-selling/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Selling Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 144,
+          "height": 24,
+          "label": "Cross-Selling Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Cross-Selling Manual",
+      "step": 2,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Selling Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 163,
+          "height": 24,
+          "label": "Cross-Selling Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Selling Opportunities Agent — Manual Globa"
+      ],
+      "boxes": [
+        {
+          "x": 203,
+          "y": 131,
+          "width": 208,
+          "height": 39,
+          "label": "Cross-Selling Opportunities Agent — Manual Globa"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 259,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/06-add-aibast-cross-selling-operating-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_cross-selling-operating-rules.md",
+      "step": 6,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/06-add-aibast-cross-selling-operating-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_cross-selling-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 253,
+          "height": 22,
+          "label": "aibast_cross-selling-operating-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/07-add-aibast-cross-selling-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_cross-selling-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/07-add-aibast-cross-selling-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_cross-selling-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 265,
+          "height": 22,
+          "label": "aibast_cross-selling-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/08-add-aibast-account-assignments-07.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_account-assignments_07",
+      "step": 8,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/08-add-aibast-account-assignments-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-assignments"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 142,
+          "height": 22,
+          "label": "account-assignments"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/09-add-aibast-opportunity-scan-01.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_opportunity-scan_01",
+      "step": 9,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/09-add-aibast-opportunity-scan-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "opportunity-scan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 117,
+          "height": 21,
+          "label": "opportunity-scan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/10-add-aibast-portfolio-scan-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_portfolio-scan_05",
+      "step": 10,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/10-add-aibast-portfolio-scan-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "portfolio-scan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 97,
+          "height": 22,
+          "label": "portfolio-scan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/11-add-aibast-product-affinity-02.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_product-affinity_02",
+      "step": 11,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/11-add-aibast-product-affinity-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "product-affinity"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 107,
+          "height": 22,
+          "label": "product-affinity"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/12-add-aibast-recommendation-engine-03.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_recommendation-engine_03",
+      "step": 12,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/12-add-aibast-recommendation-engine-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "recommendation-engine"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 164,
+          "height": 22,
+          "label": "recommendation-engine"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/13-add-aibast-revenue-impact-04.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_revenue-impact_04",
+      "step": 13,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/13-add-aibast-revenue-impact-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "revenue-impact"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 108,
+          "height": 22,
+          "label": "revenue-impact"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/14-add-aibast-top-opportunities-06.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_top-opportunities_06",
+      "step": 14,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/14-add-aibast-top-opportunities-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "top-opportunities"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 199,
+          "width": 121,
+          "height": 20,
+          "label": "top-opportunities"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "revenue-impact",
+        "top-opportunities",
+        "recommendation-engine",
+        "product-affinity",
+        "portfolio-scan",
+        "aibast_cross-selling-synthetic-records.md",
+        "aibast_cross-selling-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1235,
+          "y": 197,
+          "width": 108,
+          "height": 22,
+          "label": "revenue-impact"
+        },
+        {
+          "x": 1057,
+          "y": 199,
+          "width": 121,
+          "height": 20,
+          "label": "top-opportunities"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 164,
+          "height": 22,
+          "label": "recommendation-engine"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 107,
+          "height": 22,
+          "label": "product-affinity"
+        },
+        {
+          "x": 1222,
+          "y": 277,
+          "width": 97,
+          "height": 22,
+          "label": "portfolio-scan"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 265,
+          "height": 22,
+          "label": "aibast_cross-selling-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 253,
+          "height": 22,
+          "label": "aibast_cross-selling-operating-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "top-opportunities",
+        "revenue-impact",
+        "recommendation-engine",
+        "product-affinity"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 179,
+          "width": 121,
+          "height": 20,
+          "label": "top-opportunities"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 108,
+          "height": 22,
+          "label": "revenue-impact"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 164,
+          "height": 22,
+          "label": "recommendation-engine"
+        },
+        {
+          "x": 1055,
+          "y": 450,
+          "width": 108,
+          "height": 23,
+          "label": "product-affinity"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "product-affinity",
+        "portfolio-scan",
+        "top-opportunities",
+        "opportunity-scan",
+        "account-assignments"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 162,
+          "width": 108,
+          "height": 22,
+          "label": "product-affinity"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 97,
+          "height": 22,
+          "label": "portfolio-scan"
+        },
+        {
+          "x": 1167,
+          "y": 304,
+          "width": 82,
+          "height": 19,
+          "label": "top-opportunities"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 117,
+          "height": 22,
+          "label": "opportunity-scan"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 142,
+          "height": 22,
+          "label": "account-assignments"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Selling Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 163,
+          "height": 24,
+          "label": "Cross-Selling Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-cs-01",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/19-cs-01.jpg",
+      "caption": "CS-01 · Sales Operations Manager: Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing.",
+      "step": 19,
+      "case_id": "CS-01",
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/19-cs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Sell Opportunity Scan",
+        "Synthetic Usage Signals",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 489,
+          "width": 218,
+          "height": 24,
+          "label": "Cross-Sell Opportunity Scan"
+        },
+        {
+          "x": 286,
+          "y": 878,
+          "width": 186,
+          "height": 24,
+          "label": "Synthetic Usage Signals"
+        },
+        {
+          "x": 753,
+          "y": 1446,
+          "width": 74,
+          "height": 21,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-cs-02",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/20-cs-02.jpg",
+      "caption": "CS-02 · Enablement Manager: Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+      "step": 20,
+      "case_id": "CS-02",
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/20-cs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Affinity Matrix",
+        "Response Assumption",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 605,
+          "y": 489,
+          "width": 193,
+          "height": 24,
+          "label": "Product Affinity Matrix"
+        },
+        {
+          "x": 765,
+          "y": 587,
+          "width": 170,
+          "height": 24,
+          "label": "Response Assumption"
+        },
+        {
+          "x": 286,
+          "y": 1675,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-cs-03",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/21-cs-03.jpg",
+      "caption": "CS-03 · Enablement Manager: Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without ",
+      "step": 21,
+      "case_id": "CS-03",
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/21-cs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prioritized Recommendations",
+        "Draft Engagement Plan",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 489,
+          "width": 228,
+          "height": 21,
+          "label": "Prioritized Recommendations"
+        },
+        {
+          "x": 286,
+          "y": 1057,
+          "width": 179,
+          "height": 24,
+          "label": "Draft Engagement Plan"
+        },
+        {
+          "x": 758,
+          "y": 1260,
+          "width": 73,
+          "height": 21,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-cs-04",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/22-cs-04.jpg",
+      "caption": "CS-04 · Sales Leader: Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.",
+      "step": 22,
+      "case_id": "CS-04",
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/22-cs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Cross-Sell Value Scenario",
+        "Portfolio Totals",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 594,
+          "width": 264,
+          "height": 24,
+          "label": "Synthetic Cross-Sell Value Scenario"
+        },
+        {
+          "x": 852,
+          "y": 594,
+          "width": 110,
+          "height": 24,
+          "label": "Portfolio Totals"
+        },
+        {
+          "x": 387,
+          "y": 1468,
+          "width": 76,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-cs-05",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/23-cs-05.jpg",
+      "caption": "CS-05 · Sales Leader: Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.",
+      "step": 23,
+      "case_id": "CS-05",
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/23-cs-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Sell Opportunity Summary",
+        "Quick Wins",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 556,
+          "width": 250,
+          "height": 24,
+          "label": "Cross-Sell Opportunity Summary"
+        },
+        {
+          "x": 286,
+          "y": 815,
+          "width": 92,
+          "height": 22,
+          "label": "Quick Wins"
+        },
+        {
+          "x": 286,
+          "y": 1070,
+          "width": 153,
+          "height": 24,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-cs-06",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/24-cs-06.jpg",
+      "caption": "CS-06 · Sales Leader: Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.",
+      "step": 24,
+      "case_id": "CS-06",
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/24-cs-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Top Cross-Sell Opportunities",
+        "Deep Dive",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 483,
+          "width": 220,
+          "height": 24,
+          "label": "Top Cross-Sell Opportunities"
+        },
+        {
+          "x": 286,
+          "y": 869,
+          "width": 85,
+          "height": 23,
+          "label": "Deep Dive"
+        },
+        {
+          "x": 761,
+          "y": 1435,
+          "width": 73,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-cs-07",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/25-cs-07.jpg",
+      "caption": "CS-07 · Sales Operations Manager: Assign the opportunity accounts to reps by expertise and draft this week's action plan.",
+      "step": 25,
+      "case_id": "CS-07",
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/25-cs-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Account Assignments",
+        "This Week's Actions",
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 462,
+          "width": 209,
+          "height": 24,
+          "label": "Draft Account Assignments"
+        },
+        {
+          "x": 285,
+          "y": 1113,
+          "width": 155,
+          "height": 20,
+          "label": "This Week's Actions"
+        },
+        {
+          "x": 650,
+          "y": 1693,
+          "width": 74,
+          "height": 20,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/cross-selling/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Selling Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 164,
+          "height": 24,
+          "label": "Cross-Selling Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:46:59.324100+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

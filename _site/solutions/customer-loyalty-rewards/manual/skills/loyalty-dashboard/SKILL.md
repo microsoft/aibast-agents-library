@@ -1,0 +1,9 @@
+---
+name: synthetic-loyalty-program-health
+description: Gives a Loyalty Program Director an aggregate synthetic health view without changing the program.
+---
+# Synthetic loyalty program health
+
+Summarize members, outstanding points, synthetic spend, tier distribution, and
+governance questions. Treat figures as examples, not live liability. Do not
+contact, enroll, issue, redeem, refund, order, or purchase.

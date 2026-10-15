@@ -1,0 +1,1057 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/ma-target-sourcing",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "M&A Target Sourcing Pilot",
+        "ic-memo-draft",
+        "challenge-ranking",
+        "screen-targets",
+        "build-thesis",
+        "evidence-gaps",
+        "aibast_ma-target-sourcing-synthetic-records.md",
+        "aibast_ma-target-sourcing-rules-and-guardrails.m"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 412,
+          "height": 39,
+          "label": "M&A Target Sourcing Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 101,
+          "height": 19,
+          "label": "ic-memo-draft"
+        },
+        {
+          "x": 1215,
+          "y": 197,
+          "width": 122,
+          "height": 22,
+          "label": "challenge-ranking"
+        },
+        {
+          "x": 1057,
+          "y": 238,
+          "width": 99,
+          "height": 20,
+          "label": "screen-targets"
+        },
+        {
+          "x": 1214,
+          "y": 237,
+          "width": 82,
+          "height": 19,
+          "label": "build-thesis"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 101,
+          "height": 22,
+          "label": "evidence-gaps"
+        },
+        {
+          "x": 1058,
+          "y": 445,
+          "width": 309,
+          "height": 22,
+          "label": "aibast_ma-target-sourcing-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_ma-target-sourcing-rules-and-guardrails.m"
+        }
+      ]
+    },
+    {
+      "id": "easy-mats-01",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/02-mats-01.jpg",
+      "caption": "MATS-01 · Corporate Development Associate: We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn th",
+      "case_id": "MATS-01",
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/02-mats-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TH-2026-014",
+        "5 of 8 pass",
+        "Cindral Risk Labs"
+      ],
+      "boxes": [
+        {
+          "x": 747,
+          "y": 445,
+          "width": 105,
+          "height": 20,
+          "label": "TH-2026-014"
+        },
+        {
+          "x": 521,
+          "y": 1218,
+          "width": 88,
+          "height": 24,
+          "label": "5 of 8 pass"
+        },
+        {
+          "x": 418,
+          "y": 1412,
+          "width": 133,
+          "height": 20,
+          "label": "Cindral Risk Labs"
+        }
+      ]
+    },
+    {
+      "id": "easy-mats-02",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/03-mats-02.jpg",
+      "caption": "MATS-02 · Corporate Development Associate: Run the screen and rank the companies that pass.",
+      "case_id": "MATS-02",
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/03-mats-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Lumenrock Compliance Systems",
+        "85.7",
+        "79.8"
+      ],
+      "boxes": [
+        {
+          "x": 538,
+          "y": 596,
+          "width": 244,
+          "height": 24,
+          "label": "Lumenrock Compliance Systems"
+        },
+        {
+          "x": 1152,
+          "y": 596,
+          "width": 41,
+          "height": 20,
+          "label": "85.7"
+        },
+        {
+          "x": 1152,
+          "y": 640,
+          "width": 41,
+          "height": 20,
+          "label": "79.8"
+        }
+      ]
+    },
+    {
+      "id": "easy-mats-03",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/04-mats-03.jpg",
+      "caption": "MATS-03 · Corporate Development Associate: Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+      "case_id": "MATS-03",
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/04-mats-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "22.0% margin",
+        "T-01-S1",
+        "Diligence questions"
+      ],
+      "boxes": [
+        {
+          "x": 503,
+          "y": 1001,
+          "width": 119,
+          "height": 24,
+          "label": "22.0% margin"
+        },
+        {
+          "x": 298,
+          "y": 1769,
+          "width": 61,
+          "height": 20,
+          "label": "T-01-S1"
+        },
+        {
+          "x": 286,
+          "y": 1976,
+          "width": 191,
+          "height": 28,
+          "label": "Diligence questions"
+        }
+      ]
+    },
+    {
+      "id": "easy-mats-04",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/05-mats-04.jpg",
+      "caption": "MATS-04 · Head of Corporate Development: Does the ranking hold if we weight financial quality more heavily?",
+      "case_id": "MATS-04",
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/05-mats-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "top 3 holds under all 3 weightings",
+        "Financial-first",
+        "84.5"
+      ],
+      "boxes": [
+        {
+          "x": 344,
+          "y": 461,
+          "width": 262,
+          "height": 24,
+          "label": "top 3 holds under all 3 weightings"
+        },
+        {
+          "x": 557,
+          "y": 557,
+          "width": 109,
+          "height": 21,
+          "label": "Financial-first"
+        },
+        {
+          "x": 820,
+          "y": 908,
+          "width": 41,
+          "height": 20,
+          "label": "84.5"
+        }
+      ]
+    },
+    {
+      "id": "easy-mats-05",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/06-mats-05.jpg",
+      "caption": "MATS-05 · Research Analyst: Where is our evidence thin or out of date?",
+      "case_id": "MATS-05",
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/06-mats-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RR-01",
+        "6 evidence gaps across 4 targets"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 613,
+          "width": 50,
+          "height": 20,
+          "label": "RR-01"
+        },
+        {
+          "x": 310,
+          "y": 982,
+          "width": 88,
+          "height": 21,
+          "label": "6 evidence gaps across 4 targets"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "none has been sent not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-mats-06",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/07-mats-06.jpg",
+      "caption": "MATS-06 · Head of Corporate Development: Draft the screening memo for the investment committee.",
+      "case_id": "MATS-06",
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/07-mats-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ICM-2026-07-01",
+        "$149M",
+        "Not sent; no target contacted"
+      ],
+      "boxes": [
+        {
+          "x": 843,
+          "y": 472,
+          "width": 184,
+          "height": 26,
+          "label": "ICM-2026-07-01"
+        },
+        {
+          "x": 572,
+          "y": 722,
+          "width": 57,
+          "height": 22,
+          "label": "$149M"
+        },
+        {
+          "x": 885,
+          "y": 2030,
+          "width": 100,
+          "height": 22,
+          "label": "Not sent; no target contacted"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/ma-target-sourcing/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/ma-target-sourcing/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "M&A Target Sourcing Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 201,
+          "height": 24,
+          "label": "M&A Target Sourcing Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name M&A Target Sourcing Manual",
+      "step": 2,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "M&A Target Sourcing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 453,
+          "height": 39,
+          "label": "M&A Target Sourcing Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "M&A Target Sourcing Agent — Manual Global Instru"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 132,
+          "width": 334,
+          "height": 38,
+          "label": "M&A Target Sourcing Agent — Manual Global Instru"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 320,
+          "y": 66,
+          "width": 38,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/06-add-aibast-ma-target-sourcing-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_ma-target-sourcing-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/06-add-aibast-ma-target-sourcing-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_ma-target-sourcing-rules-and-guardrails.m"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 304,
+          "height": 33,
+          "label": "aibast_ma-target-sourcing-rules-and-guardrails.m"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/07-add-aibast-ma-target-sourcing-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_ma-target-sourcing-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/07-add-aibast-ma-target-sourcing-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_ma-target-sourcing-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 309,
+          "height": 22,
+          "label": "aibast_ma-target-sourcing-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/08-add-aibast-build-thesis-01.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_build-thesis_01",
+      "step": 8,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/08-add-aibast-build-thesis-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "build-thesis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 83,
+          "height": 19,
+          "label": "build-thesis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/09-add-aibast-challenge-ranking-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_challenge-ranking_04",
+      "step": 9,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/09-add-aibast-challenge-ranking-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "challenge-ranking"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 122,
+          "height": 22,
+          "label": "challenge-ranking"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/10-add-aibast-evidence-gaps-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_evidence-gaps_05",
+      "step": 10,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/10-add-aibast-evidence-gaps-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "evidence-gaps"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 101,
+          "height": 22,
+          "label": "evidence-gaps"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/11-add-aibast-ic-memo-draft-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_ic-memo-draft_06",
+      "step": 11,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/11-add-aibast-ic-memo-draft-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ic-memo-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 101,
+          "height": 19,
+          "label": "ic-memo-draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/12-add-aibast-screen-targets-02.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_screen-targets_02",
+      "step": 12,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/12-add-aibast-screen-targets-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "screen-targets"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 198,
+          "width": 99,
+          "height": 20,
+          "label": "screen-targets"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/13-add-aibast-target-dossier-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_target-dossier_03",
+      "step": 13,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/13-add-aibast-target-dossier-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "target-dossier"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 98,
+          "height": 22,
+          "label": "target-dossier"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "target-dossier",
+        "screen-targets",
+        "ic-memo-draft",
+        "evidence-gaps",
+        "challenge-ranking",
+        "aibast_ma-target-sourcing-synthetic-records.md",
+        "aibast_ma-target-sourcing-rules-and-guardrails.m"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 98,
+          "height": 22,
+          "label": "target-dossier"
+        },
+        {
+          "x": 1212,
+          "y": 199,
+          "width": 100,
+          "height": 20,
+          "label": "screen-targets"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 101,
+          "height": 19,
+          "label": "ic-memo-draft"
+        },
+        {
+          "x": 1215,
+          "y": 237,
+          "width": 101,
+          "height": 22,
+          "label": "evidence-gaps"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 122,
+          "height": 22,
+          "label": "challenge-ranking"
+        },
+        {
+          "x": 1058,
+          "y": 445,
+          "width": 309,
+          "height": 22,
+          "label": "aibast_ma-target-sourcing-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_ma-target-sourcing-rules-and-guardrails.m"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "target-dossier",
+        "screen-targets",
+        "ic-memo-draft",
+        "evidence-gaps"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 99,
+          "height": 22,
+          "label": "target-dossier"
+        },
+        {
+          "x": 1055,
+          "y": 276,
+          "width": 100,
+          "height": 20,
+          "label": "screen-targets"
+        },
+        {
+          "x": 1055,
+          "y": 373,
+          "width": 101,
+          "height": 19,
+          "label": "ic-memo-draft"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 101,
+          "height": 22,
+          "label": "evidence-gaps"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "screen-targets",
+        "ic-memo-draft",
+        "evidence-gaps",
+        "challenge-ranking",
+        "build-thesis"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 85,
+          "width": 100,
+          "height": 20,
+          "label": "screen-targets"
+        },
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 101,
+          "height": 19,
+          "label": "ic-memo-draft"
+        },
+        {
+          "x": 1055,
+          "y": 260,
+          "width": 101,
+          "height": 22,
+          "label": "evidence-gaps"
+        },
+        {
+          "x": 1055,
+          "y": 338,
+          "width": 122,
+          "height": 22,
+          "label": "challenge-ranking"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 83,
+          "height": 19,
+          "label": "build-thesis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "M&A Target Sourcing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 251,
+          "y": 101,
+          "width": 197,
+          "height": 22,
+          "label": "M&A Target Sourcing Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-mats-01",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/18-mats-01.jpg",
+      "caption": "MATS-01 · Corporate Development Associate: We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn th",
+      "step": 18,
+      "case_id": "MATS-01",
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/18-mats-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TH-2026-014",
+        "5 of 8 pass",
+        "Cindral Risk Labs"
+      ],
+      "boxes": [
+        {
+          "x": 516,
+          "y": 500,
+          "width": 151,
+          "height": 26,
+          "label": "TH-2026-014"
+        },
+        {
+          "x": 521,
+          "y": 879,
+          "width": 88,
+          "height": 24,
+          "label": "5 of 8 pass"
+        },
+        {
+          "x": 418,
+          "y": 1073,
+          "width": 129,
+          "height": 20,
+          "label": "Cindral Risk Labs"
+        }
+      ]
+    },
+    {
+      "id": "hard-mats-02",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/19-mats-02.jpg",
+      "caption": "MATS-02 · Corporate Development Associate: Run the screen and rank the companies that pass.",
+      "step": 19,
+      "case_id": "MATS-02",
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/19-mats-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Lumenrock Compliance Systems",
+        "85.7",
+        "79.8"
+      ],
+      "boxes": [
+        {
+          "x": 538,
+          "y": 641,
+          "width": 238,
+          "height": 24,
+          "label": "Lumenrock Compliance Systems"
+        },
+        {
+          "x": 1146,
+          "y": 642,
+          "width": 40,
+          "height": 20,
+          "label": "85.7"
+        },
+        {
+          "x": 1146,
+          "y": 685,
+          "width": 40,
+          "height": 20,
+          "label": "79.8"
+        }
+      ]
+    },
+    {
+      "id": "hard-mats-03",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/20-mats-03.jpg",
+      "caption": "MATS-03 · Corporate Development Associate: Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+      "step": 20,
+      "case_id": "MATS-03",
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/20-mats-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "22.0% margin",
+        "T-01-S1",
+        "Diligence questions"
+      ],
+      "boxes": [
+        {
+          "x": 511,
+          "y": 658,
+          "width": 116,
+          "height": 23,
+          "label": "22.0% margin"
+        },
+        {
+          "x": 310,
+          "y": 888,
+          "width": 70,
+          "height": 22,
+          "label": "T-01-S1"
+        },
+        {
+          "x": 286,
+          "y": 985,
+          "width": 156,
+          "height": 24,
+          "label": "Diligence questions"
+        }
+      ]
+    },
+    {
+      "id": "hard-mats-04",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/21-mats-04.jpg",
+      "caption": "MATS-04 · Head of Corporate Development: Does the ranking hold if we weight financial quality more heavily?",
+      "step": 21,
+      "case_id": "MATS-04",
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/21-mats-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "top 3 holds under all 3 weightings",
+        "Financial-first",
+        "84.5"
+      ],
+      "boxes": [
+        {
+          "x": 360,
+          "y": 506,
+          "width": 254,
+          "height": 24,
+          "label": "top 3 holds under all 3 weightings"
+        },
+        {
+          "x": 701,
+          "y": 571,
+          "width": 109,
+          "height": 20,
+          "label": "Financial-first"
+        },
+        {
+          "x": 701,
+          "y": 614,
+          "width": 40,
+          "height": 20,
+          "label": "84.5"
+        }
+      ]
+    },
+    {
+      "id": "hard-mats-05",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/22-mats-05.jpg",
+      "caption": "MATS-05 · Research Analyst: Where is our evidence thin or out of date?",
+      "step": 22,
+      "case_id": "MATS-05",
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/22-mats-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "6 evidence gaps across 4 targets",
+        "RR-01"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 506,
+          "width": 249,
+          "height": 24,
+          "label": "6 evidence gaps across 4 targets"
+        },
+        {
+          "x": 299,
+          "y": 642,
+          "width": 50,
+          "height": 20,
+          "label": "RR-01"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "none has been sent not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-mats-06",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/23-mats-06.jpg",
+      "caption": "MATS-06 · Head of Corporate Development: Draft the screening memo for the investment committee.",
+      "step": 23,
+      "case_id": "MATS-06",
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/23-mats-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ICM-2026-07-01",
+        "$149M",
+        "Not sent; no target contacted"
+      ],
+      "boxes": [
+        {
+          "x": 843,
+          "y": 578,
+          "width": 184,
+          "height": 26,
+          "label": "ICM-2026-07-01"
+        },
+        {
+          "x": 495,
+          "y": 870,
+          "width": 60,
+          "height": 22,
+          "label": "$149M"
+        },
+        {
+          "x": 638,
+          "y": 1016,
+          "width": 148,
+          "height": 23,
+          "label": "Not sent; no target contacted"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/ma-target-sourcing/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/ma-target-sourcing/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "M&A Target Sourcing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 221,
+          "height": 24,
+          "label": "M&A Target Sourcing Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:49:37.774136+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

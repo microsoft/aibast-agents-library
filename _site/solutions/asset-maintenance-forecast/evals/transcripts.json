@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-07T01:23:35.060886+00:00",
+  "solution": "@aibast-agents-library/asset-maintenance-forecast",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "AssetMaintenanceForecastAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
+      "sha256": "08edd95089a4da0c81b3ec203a72424b30aeb3b80ff5110611f4102343787c09"
+    }
+  ],
+  "case_file": "tests/demo_cases/asset-maintenance-forecast.json",
+  "case_file_sha256": "7108dd74335db510810c4d60dca170506029c0327a3c3ff0754e45e926544965",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-01",
+      "persona": "Plant Manager",
+      "onepager_promise": null,
+      "prompt": "I need immediate analysis on our wind farm turbines",
+      "assistant_response": "Here's the snapshot:\n\n**\ud83d\udea8 Critical \u2014 Unit 12:** Risk 8.7/10, main bearing wear, 18\u201330 days to failure. Emergency cost $227K vs. $65K if handled proactively.\n\n**Other risks:**\n- Unit 23 (6.2/10) \u2013 gearbox oil contamination, ~45 days\n- Unit 37 (3.8/10) \u2013 generator slip ring wear, ~90 days\n\n**Recommendation:** Bundle all three repairs during the March 18\u201322 low-wind window \u2014 saves $19K on mobilization and avoids the $227K catastrophic failure cost. Total bundled investment: $70K.\n\nWant me to pull up the detailed bundled maintenance plan (cost/ROI/fleet availability)? Note: this is synthetic planning data \u2014 confirm with live telemetry before any field action.",
+      "agent_logs": "[AssetMaintenanceForecastAgent] # Maintenance Forecast\n\nAnalyzing your 45 GE 2.5MW turbines through Azure IoT Hub (synthetic telemetry snapshot).\n\n## Critical Alert - Unit 12\n- **Risk Score:** 8.7/10 (Failure Imminent)\n- **Issue:** Main bearing end-of-life wear\n- **Timeline:** 18-30 days to failure\n- **Impact:** $227K emergency cost vs $65K planned repair\n\n## Additional Risks\n- Unit 23 (6.2/10) - Gearbox oil contamination, 45 days\n- Unit 37 (3.8/10) - Generator slip ring wear, 90 days\n\n**Recommendation:** Bundle all 3 units during the March 18-22 low-wind window\n- Save $19K on mobilization\n- Avoid $227K catastrophic failure\n- Total investment: $70K\n\n**Next step:** See the detailed bundled maintenance plan?\n\n> Synthetic planning evidence only. Confirm against live telemetry and engineering review before maintenance or field action.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "Unit 12",
+        "8.7/10",
+        "March 18-22"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-02",
+      "persona": "Reliability Engineer",
+      "onepager_promise": null,
+      "prompt": "Show me the weakest turbine condition and whether this is an operating authorization.",
+      "assistant_response": "Weakest is **Unit 12** \u2014 risk score 8.7/10, CRITICAL, main bearing end-of-life wear, estimated 18\u201330 days to failure.\n\nTo your second question: no. This is explicitly an advisory condition-screening result, not a safety determination or operating authorization. Any decision to run, derate, or pull the turbine needs sign-off from a qualified asset owner/engineer \u2014 I can't make that call.",
+      "agent_logs": "[AssetMaintenanceForecastAgent] # Asset Health Dashboard\n\n**Fleet:** 45 GE 2.5MW turbines; 3 flagged by the synthetic risk model.\n\n| Turbine | Risk Score | Status | Failure Mode | Days to Failure |\n|---------|-----------|--------|--------------|-----------------|\n| Unit 12 | 8.7/10 | CRITICAL | Main bearing end-of-life wear | 18-30 |\n| Unit 23 | 6.2/10 | WARNING | Gearbox oil contamination | 45 |\n| Unit 37 | 3.8/10 | WATCH | Generator slip ring wear | 90 |\n\nStatus rule: CRITICAL at 8.0 or above, WARNING from 5.0, WATCH below 5.0.\n\n> Advisory condition screening only; it is not a safety determination or authorization to operate.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "Unit 12",
+        "CRITICAL",
+        "not a safety determination"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-03",
+      "persona": "Finance Business Partner",
+      "onepager_promise": null,
+      "prompt": "What maintenance funding should I reserve for the at-risk turbines?",
+      "assistant_response": "Here's the budget breakdown via the forecast agent:\n\n**Planned repair costs (stand-alone):**\n- Unit 12: $65,100 (highest risk \u2014 avoids $227,000 if it fails emergency)\n- Unit 23: $13,350\n- Unit 37: $10,850\n\n**Recommendation:** Reserve **$70,200** by bundling these three jobs together in one maintenance window, versus $89,300 if done separately \u2014 a ~$19K savings. Unit 12 is the priority since deferring it risks a $161,900 emergency-repair swing.\n\nWant me to pull up the full bundled work-order plan with scheduling and ROI details? (Note: this is a draft estimate \u2014 your finance/asset team needs to approve before committing funds.)",
+      "agent_logs": "[AssetMaintenanceForecastAgent] # Maintenance Budget Projection\n\n| Turbine | Planned Repair (stand-alone) | Emergency Cost if It Fails |\n|---------|------------------------------|----------------------------|\n| Unit 12 | $65,100 | $227,000 |\n| Unit 23 | $13,350 | $98,000 |\n| Unit 37 | $10,850 | $41,000 |\n\n**Reserve (bundled plan):** $70,200 versus $89,300 as separate jobs.\n**Emergency exposure avoided on Unit 12:** $161,900.\n\n> Synthetic planning estimate; finance and asset owners must validate and approve any commitment.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "$70,200",
+        "$227,000",
+        "Synthetic planning estimate"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-04",
+      "persona": "Maintenance Planner",
+      "onepager_promise": null,
+      "prompt": "Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.",
+      "assistant_response": "Here's the draft bundled plan for the low-wind window (March 18-22):\n\n**Bundle:** Unit 12 bearing repair (3d) + Unit 23 oil contamination (2d) + Unit 37 slip ring (1d), split across Crew A and Crew B.\n\n**Cost:** $70,200 bundled vs. $89,300 separate \u2192 **$19,100 saved** (shared crane, travel, and bulk parts discount).\n\n**ROI:** 258% \u2014 $70,200 invested avoids $161,900 in failure costs, total value ~$181,000.\n\n**Fleet impact:** Availability rises from 93.3% to 97.8%.\n\nThis is a **draft only** \u2014 no work order, crew assignment, or schedule has actually been created. It's sitting in the approval queue waiting for a qualified asset owner to sign off before anything gets dispatched.",
+      "agent_logs": "[AssetMaintenanceForecastAgent] Bundling saves $19K and maximizes efficiency.\n\n# Bundled Maintenance Plan\n\n**Window:** March 18-22 (5 days, low-wind forecast)\n**Work:** Unit 12 bearing (3d) + Unit 23 oil (2d) + Unit 37 slip ring (1d)\n\n| Turbine | Work | Crew | Dates |\n|---------|------|------|-------|\n| Unit 12 | Main bearing end-of-life wear repair (3d) | Crew A | March 18-20 |\n| Unit 23 | Gearbox oil contamination repair (2d) | Crew A | March 21-22 |\n| Unit 37 | Generator slip ring wear repair (1d) | Crew B | March 22 |\n\n## Cost Comparison\n\n| Approach | Total Cost | Savings |\n|----------|-----------|---------|\n| Separate Jobs | $89,300 | - |\n| Bundled Job | $70,200 | -$19,100 |\n\n## Savings Sources\n- Single crane rental vs 3 separate: -$12K\n- Shared crew travel: -$1.7K\n- Bulk parts discount (15%): -$5.4K\n\n## ROI Summary\n- Investment: $70,200\n- Avoided failure: $161,900\n- Bundling savings: $19,100\n- Total value: $181,000\n- ROI: 258%\n\n**Outcome:** Fleet availability 93.3% -> 97.8%\n\nReady for the asset owner to approve and schedule in Dynamics.\n\n> Synthetic planning evidence only. Draft approval queue only: no work order, schedule, crew assignment, or field instruction has been created in Dynamics or any other system.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "Bundled Maintenance Plan",
+        "258%",
+        "No work order"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

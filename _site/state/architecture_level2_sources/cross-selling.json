@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "cross-selling",
+  "agent": "@aibast-agents-library/cross-selling",
+  "display_name": "Cross-Selling Opportunities Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic sales records",
+        "detail": "Fixed product, ownership, usage, buying-signal, pricing, margin, and budget records support deterministic review cases."
+      },
+      {
+        "name": "Affinity and benchmark assumptions",
+        "detail": "Eight product-affinity rules and three segment benchmarks provide labeled response, cycle, and expansion assumptions."
+      },
+      {
+        "name": "Operating rules and locked cases",
+        "detail": "Rules define four operations, evidence anchors, fail-closed routing, synthetic labels, and seller approval boundaries."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Product-gap opportunity scanning",
+        "detail": "Compares owned products with affinity rules and presents usage, buying, and budget signals from the fixed snapshot."
+      },
+      {
+        "name": "Affinity assumption explanation",
+        "detail": "Explains product relationships and segment benchmarks without treating modeled response or cycle values as observed performance."
+      },
+      {
+        "name": "Prioritized recommendation drafting",
+        "detail": "Ranks reviewable product options by affinity and calculates illustrative weighted value without selecting or approving an offer."
+      },
+      {
+        "name": "Portfolio value scenario modeling",
+        "detail": "Aggregates potential ARR, weighted value, and margin scenarios while avoiding conversion, forecast, or realized-revenue claims."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio seller experience",
+        "detail": "Provides natural-language review for sales operations, enablement, and sales leaders through an unpublished Draft agent."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file CrossSellingAgent locally with allow-listed customer IDs and a synthetic-only data source."
+      },
+      {
+        "name": "Evidence-first seller review",
+        "detail": "Shows source-backed gaps, assumptions, calculations, and a draft engagement plan for authorized seller review only."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Cross-Sell Opportunity Scan",
+        "detail": "Reports customer context, current products, usage and buying signals, budget timing, and synthetic product gaps."
+      },
+      {
+        "name": "Product Affinity Matrix",
+        "detail": "Reports packaged product relationships, response assumptions, cycle assumptions, and segment expansion benchmarks."
+      },
+      {
+        "name": "Prioritized Recommendations",
+        "detail": "Reports ranked options, synthetic assumptions, illustrative weighted values, and a draft engagement plan not sent."
+      },
+      {
+        "name": "Synthetic Cross-Sell Value Scenario",
+        "detail": "Reports portfolio opportunity counts and modeled ARR, weighted, and margin totals without outcome or forecast claims."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable CrossSellingAgent RAPP tool",
+      "detail": "Single-file Python agent exposes four deterministic read-only operations with bundled synthetic evidence and no credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the conversational package, uploaded knowledge, and four operation behaviors; validated artifacts remain Draft."
+    },
+    {
+      "name": "Dynamics 365 Sales",
+      "detail": "Approved production seam for account context; it is not connected and no CRM record is read or changed in the package."
+    },
+    {
+      "name": "Product entitlement and usage source",
+      "detail": "Approved production seam for ownership and usage evidence; current operation routing uses only fixed synthetic records."
+    },
+    {
+      "name": "Approved recommendation rules",
+      "detail": "Governed production seam for affinity logic; current affinity and benchmark values are bundled scenario assumptions."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Supports seller and enablement review after deployment; the agent never sends, schedules, or automates outreach."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model interprets requests and presents bounded results while deterministic calculations remain authoritative."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Four explicit operations",
+      "detail": "Routes opportunity scan, product affinity, recommendation drafting, and revenue scenario requests through a fixed enum."
+    },
+    {
+      "name": "Synthetic-only fail-closed routing",
+      "detail": "Rejects unsupported sources, operations, and customer identifiers rather than browsing, enriching, or inventing evidence."
+    },
+    {
+      "name": "Scenario and evidence labeling",
+      "detail": "Labels exact names, prices, ARR, scores, rates, timing, margins, and weighted values as synthetic planning evidence."
+    },
+    {
+      "name": "Seller review and approval gate",
+      "detail": "Authorized account, sales, pricing, and compliance reviewers validate evidence, consent, fit, messaging, and action."
+    },
+    {
+      "name": "No autonomous outreach boundary",
+      "detail": "Never sends or schedules outreach, creates leads or opportunities, changes CRM, applies pricing, quotes, or transacts."
+    },
+    {
+      "name": "Locked four-case validation",
+      "detail": "One persona-language case per operation verifies deterministic anchors and prohibits outreach or CRM-update claims."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Copilot Studio artifacts remain unpublished Drafts; publish and all external actions require separate user approval."
+    }
+  ]
+}

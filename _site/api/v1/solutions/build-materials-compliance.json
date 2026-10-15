@@ -1,0 +1,158 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/build-materials-compliance",
+  "slug": "build-materials-compliance",
+  "name": "Build Materials Compliance Agent",
+  "headline": "Catch materials compliance problems the week they appear",
+  "pitch": "Give a contractor's procurement team one assistant that scans the approved bills of materials every week, flags items that newly fall out of the program's materials sourcing rule with cited evidence, finds same-spec compliant alternates, and keeps the audit evidence package ready.",
+  "category": "manufacturing",
+  "industries": [
+    "Manufacturing",
+    "Construction",
+    "Public Infrastructure"
+  ],
+  "personas": [
+    "Procurement Compliance Leads",
+    "Buyers",
+    "Supplier Quality Managers",
+    "Program Compliance Reviewers"
+  ],
+  "microsoft_products": [
+    "Microsoft Teams",
+    "SharePoint",
+    "Microsoft Word"
+  ],
+  "journey_stage": "Optimize",
+  "why_try": "The demo runs a full weekly compliance cycle in six plain questions, from what changed to approved drafts, and every finding names the record behind it.",
+  "customer_challenge": "Grant-funded projects must prove that covered materials meet a sourcing rule, but certificates lapse, vendor answers change and bills of materials move every week, so problems surface at audit time instead of before the order.",
+  "microsoft_ai_story": "Microsoft Copilot Studio hosts the conversation in Microsoft Teams; approved connections to SharePoint document libraries for certificates and evidence, product master data and Word drafts can be bound later with least-privilege access and human approval.",
+  "business_value": [
+    "Finds newly non-compliant materials in the week they change, before they are ordered.",
+    "Turns a lapse into a ready same-spec alternative with its cost impact sized.",
+    "Keeps the audit evidence package current instead of rebuilding it at audit time."
+  ],
+  "business_flow": [
+    "Approved bills of materials",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Build Materials Compliance Agent",
+    "Vendor certificates and questionnaires",
+    "Recommendations and drafts for approval",
+    "Procurement and program reviewers"
+  ],
+  "capabilities": [
+    {
+      "operation": "weekly_changes",
+      "name": "Weekly BOM change scan",
+      "purpose": "Use when someone asks what is new or changed on the approved bills of materials this week."
+    },
+    {
+      "operation": "compliance_check",
+      "name": "Materials compliance check",
+      "purpose": "Use when someone asks which items are out of compliance or newly non-compliant and why."
+    },
+    {
+      "operation": "compliant_alternates",
+      "name": "Compliant alternates",
+      "purpose": "Use when someone asks for a compliant replacement or alternate part with the same specification."
+    },
+    {
+      "operation": "vendor_watch",
+      "name": "Vendor certificate watch",
+      "purpose": "Use when someone asks which vendor certificates have expired or expire soon."
+    },
+    {
+      "operation": "audit_evidence",
+      "name": "Audit evidence readiness",
+      "purpose": "Use when someone asks whether the audit evidence package is ready for each project."
+    },
+    {
+      "operation": "action_drafts",
+      "name": "Approved next-step drafts",
+      "purpose": "Use when a person has approved next steps and wants the hold notice, renewal, substitution and document request drafts."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-10-08T01:53:29-04:00",
+  "prompts": [
+    {
+      "label": "Procurement Compliance Lead: Weekly BOM change scan",
+      "prompt": "What changed on our approved bills of materials this week?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-weekly-changes",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Compliance Lead",
+        "prompt": "What changed on our approved bills of materials this week?",
+        "answer": "Here's what changed this week on your approved BOMs:\n\n**New items added:**\n- **GV-08** — 8\" resilient wedge gate valve (12 ea) — Fabrikam Castings — project P-101\n- **MB-12** — Polymer meter box (150 ea) — Wingtip Supply — project P-103\n\n**Quantity changes:**\n- **DI-08** — 8\" ductile iron pipe: 2,000 → 2,400 ft (P-101)\n- **CF-06** — 6\" restraint coupling: 12 → 20 ea (P-103)\n\nOverall: 3 projects, 8 BOM lines scanned, 4 changes total. Since new/changed items can introduce compliance risk, want me to run a compliance check on these four?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Procurement Compliance Lead: Materials compliance check",
+      "prompt": "Is anything newly out of compliance, and why?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-compliance-check",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Compliance Lead",
+        "prompt": "Is anything newly out of compliance, and why?",
+        "answer": "Two items newly fell out of compliance this week:\n\n- **GV-08** (8\" gate valve) — Fabrikam's certificate expired 9/30; affects 18 units across P-101/P-102.\n- **CP-02** (1\" copper tubing) — Litware moved final assembly to a non-qualifying plant per their Oct 2 questionnaire; affects 3,000 ft on P-103.\n\nPlus two other issues worth flagging: **CF-06** has a certificate/master-data mismatch on part revision, and **RB-04** has a missing data sheet (evidence gap, not confirmed non-compliance). Total non-compliant material on approved BOMs: $30,000.\n\nWant me to pull compliant alternates for GV-08 and CP-02?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Buyer: Compliant alternates",
+      "prompt": "Find me a compliant replacement for the gate valve with the same spec.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-compliant-alternates",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Buyer",
+        "prompt": "Find me a compliant replacement for the gate valve with the same spec.",
+        "answer": "Found your compliant alternate for **GV-08**:\n\nCurrent GV-08 (Fabrikam Castings) is non-compliant — vendor cert expired 9/30/2026 — used on P-101 (12) and P-102 (6).\n\n**Recommended: GV-08B — Contoso Pipe & Valve**\n- Same spec (GV-8-RW)\n- Cert valid through 2027-03-31\n- $1,210/ea (+$1,080 total vs current)\n- 14-day lead time\n- Evidence ready\n\nAlternative: GV-08C (Wingtip Supply) is cheaper (+$630) but missing data sheet evidence.\n\nWant me to prep the substitution request draft for GV-08B? Just say the word and I'll queue it up for your approval — it won't execute anything on its own.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Supplier Quality Manager: Vendor certificate watch",
+      "prompt": "Which vendor certificates have lapsed or are about to?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-vendor-watch",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Supplier Quality Manager",
+        "prompt": "Which vendor certificates have lapsed or are about to?",
+        "answer": "**3 vendors on the watch list:**\n\n- **Fabrikam Castings** — expired 9/30/26 (covers GV-08) — needs immediate renewal\n- **Adatum Steel** — expires 11/15/26 (covers RB-04)\n- **Litware Fittings** — expires 12/1/26 (covers CP-02, CF-06)\n\nGV-08 is already held up since its certificate lapsed. Want me to draft a renewal request for any of these? Just say the word and approve — I won't send anything without your go-ahead.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Program Compliance Reviewer: Audit evidence readiness",
+      "prompt": "Are we ready if the program auditor asks for our evidence package?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-audit-evidence",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Program Compliance Reviewer",
+        "prompt": "Are we ready if the program auditor asks for our evidence package?",
+        "answer": "Not ready yet. Only 1 of 7 BOM lines across your three projects has a complete evidence package — most are held up by non-compliant items (GV-08, CP-02), a conflict on CF-06, and an evidence gap on RB-04.\n\n**Blocking open items:**\n- P-101: GV-08 non-compliant, RB-04 missing evidence\n- P-102: GV-08 non-compliant, CF-06 conflict\n- P-103: CP-02 non-compliant, CF-06 conflict\n\nWant me to pull compliant alternates for GV-08/CP-02 or draft hold notices for these items so you can start closing gaps before the auditor asks?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Procurement Compliance Lead: Approved next-step drafts",
+      "prompt": "I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-action-drafts",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Procurement Compliance Lead",
+        "prompt": "I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+        "answer": "All 5 drafts are staged and ready for your review — hold notice, Fabrikam renewal request, GV-08B substitution request, Litware follow-up, and the Adatum data sheet request. Nothing has been sent yet; these are waiting for you to actually dispatch them once you confirm they look right.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fbuild-materials-compliance",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/build-materials-compliance/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/manufacturing_stacks/build_materials_compliance_stack/build_materials_compliance_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Build%20Materials%20Compliance%20Agent%22"
+  }
+}

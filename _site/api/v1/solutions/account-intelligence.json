@@ -1,0 +1,154 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/account-intelligence",
+  "slug": "account-intelligence",
+  "name": "Account Intelligence Agent",
+  "headline": "Prepare for the account conversation from one evidence view",
+  "pitch": "Bring account context, stakeholder coverage, competitor signals, risks, and draft talking points into a single reviewable briefing for sellers and customer-success teams.",
+  "category": "b2b_sales",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Account Executive",
+    "Sales Director",
+    "Customer Success Manager"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Understand",
+  "why_try": "A seller can ask what matters before a meeting and receive both the evidence and the gaps that need human follow-up.",
+  "customer_challenge": "Account preparation is spread across records, relationship history, news, competitor notes, and seller memory, making coverage inconsistent.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides a natural-language account briefing. Dynamics 365 Sales contributes account and relationship context, SharePoint supplies account plans and approved references, and Microsoft Teams supports seller collaboration and meeting preparation.",
+  "business_value": [
+    "Creates a more consistent account-research and meeting-preparation workflow.",
+    "Makes stakeholder and relationship gaps easier to review.",
+    "Improves positioning and risk discussions without automating engagement."
+  ],
+  "business_flow": [
+    "Account executive, sales director, or customer success manager",
+    "Copilot experience",
+    "Account Intelligence Agent",
+    "Synthetic account evidence",
+    "Human meeting and account planning"
+  ],
+  "capabilities": [
+    {
+      "operation": "account_overview",
+      "name": "Account Overview",
+      "purpose": "Combines firmographic, adoption, engagement, support, and activity evidence."
+    },
+    {
+      "operation": "stakeholder_map",
+      "name": "Stakeholder Map",
+      "purpose": "Surfaces buying roles, influence, sentiment, engagement, and relationship gaps."
+    },
+    {
+      "operation": "competitive_intel",
+      "name": "Competitive Intel",
+      "purpose": "Compares synthetic competitor activity and positioning considerations."
+    },
+    {
+      "operation": "value_messaging",
+      "name": "Value Messaging",
+      "purpose": "Drafts persona-aligned talking points for human review."
+    },
+    {
+      "operation": "risk_assessment",
+      "name": "Risk Assessment",
+      "purpose": "Explains deal risks and candidate mitigations without changing a forecast."
+    },
+    {
+      "operation": "executive_briefing",
+      "name": "Executive Briefing",
+      "purpose": "Compiles a concise pre-meeting view and checklist."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Review the account",
+      "prompt": "Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Executive",
+        "prompt": "Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.",
+        "answer": "Here's the Acme Corporation overview, with the signals that deserve your attention front and center:\n\n**Headline numbers**\n- Revenue $2.8B | Current spend $1.2M/yr | Expansion opportunity $2.4M\n- Health score: 78/100 (solid, not flashing red — but watch the signals below)\n- Adoption 67%, CSAT 4.2/5\n\n**Evidence worth acting on:**\n1. **New CTO Sarah Chen (6 weeks in)** — new execs reset vendor evaluations; a prime window to get in early before she forms opinions.\n2. **CEO flagged \"digital transformation\" on the Q3 earnings call (12 days ago)** — public commitment creates budget air cover; tie your pitch to that language.\n3. **Competitor RFP issued for an operations platform (30 days ago)** — most urgent signal. Someone is already shopping around; this is a competitive-displacement risk and a timing trigger.\n\nStacked together: new buyer + public mandate + active competitor RFP = a narrow, high-value window to engage now rather than later.\n\nWant me to pull the **stakeholder map** next (to see who's involved, including Sarah Chen's influence) or jump to **competitive intel** on that RFP?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Map the buying committee",
+      "prompt": "Map the synthetic Acme buying committee and show the relationship gaps without creating outreach tasks.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-stakeholder-map",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Executive",
+        "prompt": "Map the synthetic Acme buying committee and show the relationship gaps without creating outreach tasks.",
+        "answer": "Here's the Acme buying committee map — read-only, nothing sent or logged anywhere:\n\n**8 stakeholders identified:**\n\n| Name | Role | Influence | Score | Status |\n|---|---|---|---|---|\n| Sarah Chen | CTO (New) | Decision Maker | 95 | **No intro yet** |\n| James Miller | VP Operations | Champion | 85 | Champion |\n| Lisa Park | CFO | Economic Buyer | 90 | Needs ROI |\n| David Wong | IT Director | Influencer | 70 | Positive |\n| Rachel Torres | Procurement | Gatekeeper | 50 | Neutral |\n| Kevin Park | VP Engineering | Influencer | 60 | Positive |\n| Maria Lopez | Director of Strategy | Influencer | 40 | **No contact** |\n| Tom Bradley | CEO | Executive Sponsor | 80 | Aware only |\n\n**Key relationship gaps:**\n- **Sarah Chen (CTO)** — controls the tech budget, highest influence score (95), but no existing relationship. Biggest blind spot.\n- **Lisa Park (CFO)** — economic buyer, still waiting on a solid business case/ROI.\n- **Maria Lopez** — no contact at all, lower influence but unmapped.\n\nYou have one strong asset: James Miller (VP Ops) is already a champion and could bridge an intro to Sarah Chen.\n\nNo outreach tasks, emails, or CRM changes were created — this is just the map. Want me to pull competitive intel next, or go straight to value messaging/objection handling for these personas?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Compare competitor signals",
+      "prompt": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-competitive-intel",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Sales Director",
+        "prompt": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+        "answer": "Here's the competitive snapshot for Acme Corporation:\n\n**Positioning**\n- You lead on product fit (94% vs. 78%/82%) and speed (8-week implementation vs. 14/10 weeks)\n- Your edge: ERP integration head start, an existing champion relationship, and manufacturing references\n\n**Competitor signals**\n- **CompetitorA**: Most aggressive — ran an on-site demo last week and is offering a 15% discount. Main risk: this could tempt the CFO on price.\n- **CompetitorB**: Priced 10% above market, still in early conversations with no formal proposal yet — lower near-term threat.\n\n**Takeaway:** Win on value/speed, not price. CompetitorA is the real contest — be ready to justify your pricing against their discount, likely by quantifying faster time-to-value and lower implementation risk.\n\nWant me to pull persona-specific talking points and objection handling to counter CompetitorA's discount angle?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Draft meeting talking points",
+      "prompt": "Draft persona-specific talking points for the synthetic Acme meeting; do not send messages.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-value-messaging",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Executive",
+        "prompt": "Draft persona-specific talking points for the synthetic Acme meeting; do not send messages.",
+        "answer": "Here's the draft (not sent — for your review only):\n\n**Talking points by persona**\n- **CTO Sarah:** Lead with API-first ERP integration; 3 CTO references available\n- **CFO Lisa:** $4.2M savings over 3 years, 8-week vs 14-week implementation, 90-day risk-free pilot\n- **Champion James:** Frame the ops team as transformation leaders — gives him an internal win\n\n**Objection handling**\n- *Price pushback:* TCO is 23% lower when factoring implementation/support\n- *Risk concerns:* 47 similar deployments, 94% success rate (synthetic — validate real references before quoting)\n\nThis is all synthetic planning data for prep purposes — nothing was sent or logged anywhere. Want me to pull the risk assessment next, or head to the executive briefing?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Assess deal risks",
+      "prompt": "Assess the synthetic Acme deal risks and mitigation options without changing a forecast or CRM record.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-risk-assessment",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Sales Director",
+        "prompt": "Assess the synthetic Acme deal risks and mitigation options without changing a forecast or CRM record.",
+        "answer": "Here's the read-only risk snapshot for Acme Corporation ($2.4M opp, 68% win probability, 21-day close target):\n\n**4 risks flagged, 2 urgent:**\n\n| Risk | Severity | Mitigation |\n|---|---|---|\n| No CTO relationship | High | Champion intro today |\n| Competitor pricing pressure | High | TCO analysis ready |\n| Budget timing | Medium | Q1 confirmed |\n| CFO business case gap | Medium | ROI calculator drafted |\n\n**Before your next meeting:**\n1. Ask champion James for a CTO intro\n2. Send the CFO the ROI calculator\n\nNothing here touched the CRM or forecast — this is purely synthetic planning evidence for your prep. Want me to pull the stakeholder map (to see who else influences the CTO relationship) or move straight to the executive briefing/pre-meeting checklist?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Prepare the executive briefing",
+      "prompt": "Prepare a concise synthetic Acme pre-meeting briefing and review checklist.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-executive-briefing",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Success Manager",
+        "prompt": "Prepare a concise synthetic Acme pre-meeting briefing and review checklist.",
+        "answer": "Here's your Acme Corporation pre-meeting briefing:\n\n**Deal Snapshot**\n- Deal value: $2.4M\n- Win probability: 68%\n- Stakeholders mapped: 8\n- Risks: 4 flagged (2 critical)\n\n**Pre-Meeting Checklist**\n- [ ] Call James for a CTO intro\n- [ ] Send the CFO the ROI calculator\n- [ ] Review competitor counter-strategy before the meeting\n\nThis is a synthetic planning draft (names, figures, and signals are simulated for prep) — nothing was written to a CRM or sent to a customer. Want me to pull the full stakeholder map or risk details behind the \"2 critical\" flags?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Faccount-intelligence",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/account-intelligence/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Account%20Intelligence%20Agent%22"
+  }
+}

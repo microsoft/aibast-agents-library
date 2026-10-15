@@ -1,0 +1,32 @@
+mcs.metadata:
+  componentName: root-cause-analysis
+  description: "\"Use when a Regional Retail Manager asks I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: root-cause-analysis
+  description: "Use when a Regional Retail Manager asks I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?"
+  ---
+  # Supply Chain Disruption Alert Agent: Root Cause Analysis
+
+  ## Route
+
+  Use the `root_cause_analysis` operation. The canonical persona prompt is:
+
+  > I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?
+
+  ## Procedure
+
+  1. Read the synthetic knowledge records and controls.
+  2. Call or reproduce only the `root_cause_analysis` operation behavior.
+  3. Lead with source-backed identifiers and evidence.
+  4. State uncertainty and the required authorized review.
+  5. End with the operation's no-write boundary.
+
+  ## Required evidence
+
+  - Portland DC
+  - 143 products
+  - $84,300/week
+
+  Never imply that a live system, transfer, notification, report distribution, supplier, shipment, or inventory position was changed; approvals return a draft ready for the owner to release.

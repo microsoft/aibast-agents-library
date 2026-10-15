@@ -1,0 +1,987 @@
+{
+  "schema": "aibast-public-solutions/1.0",
+  "count": 65,
+  "agents": [
+    {
+      "id": "@aibast-agents-library/account-intelligence",
+      "slug": "account-intelligence",
+      "name": "Account Intelligence Agent",
+      "pitch": "Bring account context, stakeholder coverage, competitor signals, risks, and draft talking points into a single reviewable briefing for sellers and customer-success teams.",
+      "category": "b2b_sales",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Understand",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/account-intelligence.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Faccount-intelligence"
+    },
+    {
+      "id": "@aibast-agents-library/ai-customer-assistant",
+      "slug": "ai-customer-assistant",
+      "name": "Customer Escalations Agent",
+      "pitch": "Bring fictional case history, knowledge guidance, routing rules, and quality signals into one reviewable brief so service teams can respond consistently without letting the agent touch a customer record.",
+      "category": "general",
+      "industries": [
+        "Cross-Industry",
+        "Contact Center"
+      ],
+      "journey_stage": "Serve",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/ai-customer-assistant.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fai-customer-assistant"
+    },
+    {
+      "id": "@aibast-agents-library/ask-hr",
+      "slug": "ask-hr",
+      "name": "Ask HR Agent",
+      "pitch": "Give employees a privacy-conscious self-service front door for fictional balances and published policy examples, while keeping eligibility, sensitive circumstances, submissions, and HR decisions with authorized people and systems.",
+      "category": "human_resources",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Empower",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/ask-hr.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fask-hr"
+    },
+    {
+      "id": "@aibast-agents-library/asset-maintenance-forecast",
+      "slug": "asset-maintenance-forecast",
+      "name": "Asset Maintenance Forecast Agent",
+      "pitch": "Bring synthetic condition, failure-window, maintenance-budget, and work-planning evidence into one reliability brief while keeping every work order, schedule, and field instruction behind authorized systems.",
+      "category": "energy",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/asset-maintenance-forecast.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fasset-maintenance-forecast"
+    },
+    {
+      "id": "@aibast-agents-library/benefits-enrollment-assistant",
+      "slug": "benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent",
+      "pitch": "Give employees a conversational guide to the enrollment window, life-event rules, plan costs for their tier, provider networks, missing documents, and a draft election, while eligibility, plan choice, and submission stay with the employee and benefits staff.",
+      "category": "human_resources",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Empower",
+      "recorded_prompts": 7,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/benefits-enrollment-assistant.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fbenefits-enrollment-assistant"
+    },
+    {
+      "id": "@aibast-agents-library/briefing-pack-builder",
+      "slug": "briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent",
+      "pitch": "Give government briefing teams cited, template-ready drafts from one governed document set, with conflicting figures listed for a person to settle and missing sections named, while review and sign-off stay with officers.",
+      "category": "slg_government",
+      "industries": [
+        "State and Local Government"
+      ],
+      "journey_stage": "Create",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/briefing-pack-builder.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fbriefing-pack-builder"
+    },
+    {
+      "id": "@aibast-agents-library/build-materials-compliance",
+      "slug": "build-materials-compliance",
+      "name": "Build Materials Compliance Agent",
+      "pitch": "Give a contractor's procurement team one assistant that scans the approved bills of materials every week, flags items that newly fall out of the program's materials sourcing rule with cited evidence, finds same-spec compliant alternates, and keeps the audit evidence package ready.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing",
+        "Construction",
+        "Public Infrastructure"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/build-materials-compliance.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fbuild-materials-compliance"
+    },
+    {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "slug": "building-permit-processing",
+      "name": "Building Permit Processing Agent",
+      "pitch": "Give development services teams one place to spot late reviews, reject bad intake, route new applications, prepare applicant updates, and coordinate inspections before delays turn into complaints.",
+      "category": "slg_government",
+      "industries": [
+        "State and Local Government"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/building-permit-processing.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fbuilding-permit-processing"
+    },
+    {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "slug": "care-gap-closure",
+      "name": "Care Gap Closure Agent",
+      "pitch": "Help quality and care-coordination teams inspect synthetic measure evidence, organize operational review cohorts, and draft unsent outreach while preserving clinical eligibility and privacy review.",
+      "category": "healthcare",
+      "industries": [
+        "Healthcare"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 10,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/care-gap-closure.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcare-gap-closure"
+    },
+    {
+      "id": "@aibast-agents-library/cart-abandonment-recovery",
+      "slug": "cart-abandonment-recovery",
+      "name": "Cart Abandonment Recovery Agent",
+      "pitch": "Analyzes anonymous synthetic cart patterns, drafts neutral channel sequences, compares margin-aware incentive concepts, and reviews aggregate conversion scenarios.",
+      "category": "b2c_sales",
+      "industries": [
+        "Cross-Industry",
+        "Software Tech"
+      ],
+      "journey_stage": "Recover and learn",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/cart-abandonment-recovery.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcart-abandonment-recovery"
+    },
+    {
+      "id": "@aibast-agents-library/claims-processing",
+      "slug": "claims-processing",
+      "name": "Claims Processing Agent",
+      "pitch": "Bring intake, policy terms, documents, fraud indicators, and nonbinding settlement estimates into one adjuster workspace without claiming approval, denial, payment, or coverage action.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Decide",
+      "recorded_prompts": 7,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/claims-processing.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fclaims-processing"
+    },
+    {
+      "id": "@aibast-agents-library/client-health-score",
+      "slug": "client-health-score",
+      "name": "Client Health Score Agent",
+      "pitch": "Help client success leaders and account managers segment relationship health, spot weakening engagement, prioritize turnaround accounts, and prepare stakeholder-led recovery plans without presenting scenario indicators as certain outcomes.",
+      "category": "professional_services",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/client-health-score.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fclient-health-score"
+    },
+    {
+      "id": "@aibast-agents-library/clinical-notes-summarizer",
+      "slug": "clinical-notes-summarizer",
+      "name": "Clinical Notes Summarizer Agent",
+      "pitch": "Give clinical teams consistent synthetic encounter, medication, problem-list, and referral-context drafts while keeping diagnosis, treatment, clearance, urgency, scheduling, and record changes with qualified humans.",
+      "category": "healthcare",
+      "industries": [
+        "Healthcare"
+      ],
+      "journey_stage": "Activate",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/clinical-notes-summarizer.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fclinical-notes-summarizer"
+    },
+    {
+      "id": "@aibast-agents-library/contract-risk-review",
+      "slug": "contract-risk-review",
+      "name": "Contract Risk Review Agent",
+      "pitch": "Give legal operations and commercial counsel a shared view of agreement priority, clause risk, policy gaps, and negotiation positions without turning an AI review into a legal conclusion.",
+      "category": "professional_services",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/contract-risk-review.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcontract-risk-review"
+    },
+    {
+      "id": "@aibast-agents-library/cross-selling",
+      "slug": "cross-selling",
+      "name": "Cross-Selling Opportunities Agent",
+      "pitch": "Help sales leaders and enablement teams inspect product ownership, affinity assumptions, buying signals, and prioritized expansion options before any customer engagement.",
+      "category": "general",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Expand",
+      "recorded_prompts": 7,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/cross-selling.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcross-selling"
+    },
+    {
+      "id": "@aibast-agents-library/customer-loyalty-rewards",
+      "slug": "customer-loyalty-rewards",
+      "name": "Customer Loyalty and Rewards Agent",
+      "pitch": "Provides synthetic program health, informational points views, review-only reward options, and tier-structure analysis.",
+      "category": "b2c_sales",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Retain and optimize",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/customer-loyalty-rewards.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcustomer-loyalty-rewards"
+    },
+    {
+      "id": "@aibast-agents-library/customer-sentiment-churn",
+      "slug": "customer-sentiment-churn",
+      "name": "Customer Sentiment and Churn Prediction Agent",
+      "pitch": "Unify sentiment, complaints, engagement, and product context into a transparent review queue with human-controlled retention options and no automated customer action.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Engage",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/customer-sentiment-churn.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcustomer-sentiment-churn"
+    },
+    {
+      "id": "@aibast-agents-library/deal-progression",
+      "slug": "deal-progression",
+      "name": "Deal Progression Agent",
+      "pitch": "Give account executives and sales directors a shared view of pipeline health, stalled-deal evidence, blockers, and reviewable next steps without automating CRM actions.",
+      "category": "b2b_sales",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/deal-progression.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fdeal-progression"
+    },
+    {
+      "id": "@aibast-agents-library/emission-tracking",
+      "slug": "emission-tracking",
+      "name": "Emissions Tracking Agent",
+      "pitch": "Combine synthetic scope totals, threshold screening, reduction scenarios, and carbon-credit due diligence in one sustainability review while keeping attestations, disclosures, and transactions with qualified owners.",
+      "category": "energy",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/emission-tracking.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Femission-tracking"
+    },
+    {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "slug": "energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent",
+      "pitch": "Bring synthetic report status, source-quality exceptions, filing-state evidence, and audit findings into one regulatory brief while leaving certification, signature, and transmission to authorized owners.",
+      "category": "energy",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/energy-regulatory-reporting.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fenergy-regulatory-reporting"
+    },
+    {
+      "id": "@aibast-agents-library/engineering-standards-advisor",
+      "slug": "engineering-standards-advisor",
+      "name": "Engineering Standards Agent",
+      "pitch": "Give designers and field crews vetted values with exact citations, clearly labeled interpretations when no vetted value exists, and a review loop that lets standards engineers turn good interpretations into vetted guidance.",
+      "category": "energy",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "journey_stage": "Understand",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/engineering-standards-advisor.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fengineering-standards-advisor"
+    },
+    {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "slug": "field-permit-to-work",
+      "name": "Field Permit to Work Agent",
+      "pitch": "Give permit coordinators and authorized persons a drafted risk assessment, an isolation check against the live switching state, visible sign-off timing, crew acknowledgements and close-out reconciliation, while every safety decision stays with authorized people.",
+      "category": "energy",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "journey_stage": "Protect",
+      "recorded_prompts": 7,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/field-permit-to-work.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffield-permit-to-work"
+    },
+    {
+      "id": "@aibast-agents-library/field-service-dispatch",
+      "slug": "field-service-dispatch",
+      "name": "Field Service Dispatch Agent",
+      "pitch": "Turn synthetic service requests, zone capacity, certification evidence, and emergency context into dispatcher-reviewed options while keeping every job, route, message, inventory record, and field action unchanged.",
+      "category": "energy",
+      "industries": [],
+      "journey_stage": "Serve",
+      "recorded_prompts": 7,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/field-service-dispatch.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffield-service-dispatch"
+    },
+    {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "slug": "financial-advisor-copilot",
+      "name": "Financial Advisor Agent",
+      "pitch": "Connect service intake, portfolio context, advisor discussion candidates, compliance checkpoints, and structured handoffs without claiming identity verification, advice, account action, or trade execution.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Engage",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/financial-advisor-copilot.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffinancial-advisor-copilot"
+    },
+    {
+      "id": "@aibast-agents-library/fraud-detection-alert",
+      "slug": "fraud-detection-alert",
+      "name": "Fraud Detection and Alert Agent",
+      "pitch": "Connect alert severity, transaction evidence, pattern hypotheses, and case routing in one fraud-operations view that never treats a score as proof or claims a protective action occurred.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Protect",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/fraud-detection-alert.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffraud-detection-alert"
+    },
+    {
+      "id": "@aibast-agents-library/fs-customer-onboarding",
+      "slug": "fs-customer-onboarding",
+      "name": "Customer Onboarding Agent",
+      "pitch": "Give onboarding, relationship, and compliance teams one governed view of KYC evidence, missing documents, service-setup preparation, and application ownership without claiming an identity check or account activation occurred.",
+      "category": "financial_services",
+      "industries": [
+        "Cross-Industry",
+        "Financial Services"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/fs-customer-onboarding.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffs-customer-onboarding"
+    },
+    {
+      "id": "@aibast-agents-library/fs-regulatory-compliance",
+      "slug": "fs-regulatory-compliance",
+      "name": "Regulatory Compliance Agent",
+      "pitch": "Give compliance and trading leaders one governed view of reporting exceptions, execution-quality signals, algorithm documentation, remediation readiness, and trader certifications.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/fs-regulatory-compliance.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ffs-regulatory-compliance"
+    },
+    {
+      "id": "@aibast-agents-library/inventory-rebalancing",
+      "slug": "inventory-rebalancing",
+      "name": "Inventory Rebalancing Agent",
+      "pitch": "Turn warehouse capacity, SKU position, demand, lifecycle, and cost evidence into review-ready balancing options without moving stock or changing inventory policy.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/inventory-rebalancing.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Finventory-rebalancing"
+    },
+    {
+      "id": "@aibast-agents-library/inventory-visibility",
+      "slug": "inventory-visibility",
+      "name": "Inventory Visibility Agent",
+      "pitch": "Provides synthetic location and SKU visibility, exception review, replenishment scenarios, and channel planning while keeping every quantity read-only.",
+      "category": "retail_cpg",
+      "industries": [
+        "Retail"
+      ],
+      "journey_stage": "Plan and fulfill",
+      "recorded_prompts": 3,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/inventory-visibility.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Finventory-visibility"
+    },
+    {
+      "id": "@aibast-agents-library/license-renewal-expansion",
+      "slug": "license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent",
+      "pitch": "Help account, customer-success, and sales leaders review renewal timing, account health, demand signals, churn evidence, and clearly labeled commercial scenarios before negotiation begins.",
+      "category": "software_digital_products",
+      "industries": [
+        "Software Tech"
+      ],
+      "journey_stage": "Retain",
+      "recorded_prompts": 10,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/license-renewal-expansion.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Flicense-renewal-expansion"
+    },
+    {
+      "id": "@aibast-agents-library/loan-origination-assistant",
+      "slug": "loan-origination-assistant",
+      "name": "Loan Origination Assistant",
+      "pitch": "Unify application intake, ratio analysis, document readiness, underwriting exceptions, and open conditions in one controlled workspace that never approves, prices, locks, closes, or funds a loan.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Decide",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/loan-origination-assistant.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Floan-origination-assistant"
+    },
+    {
+      "id": "@aibast-agents-library/ma-target-sourcing",
+      "slug": "ma-target-sourcing",
+      "name": "M&A Target Sourcing Agent",
+      "pitch": "Give corporate development teams a transparent screening partner: criteria from the thesis, a weighted ranking anyone can audit, cited dossiers and a committee memo draft, while outreach and investment decisions stay with people.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "journey_stage": "Discover",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/ma-target-sourcing.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fma-target-sourcing"
+    },
+    {
+      "id": "@aibast-agents-library/maintenance-scheduling",
+      "slug": "maintenance-scheduling",
+      "name": "Maintenance Scheduling Agent",
+      "pitch": "Turn equipment condition, failure-risk, technician capacity, parts readiness, backup capacity, and downtime evidence into review-ready maintenance options without controlling equipment or dispatching work.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 1,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/maintenance-scheduling.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fmaintenance-scheduling"
+    },
+    {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "slug": "omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent",
+      "pitch": "Compares aggregate channels, maps journey archetypes, drafts consent-aware engagement experiments, and reviews synthetic attribution evidence.",
+      "category": "b2c_sales",
+      "industries": [
+        "Cross-Industry",
+        "Retail"
+      ],
+      "journey_stage": "Understand and optimize",
+      "recorded_prompts": 9,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/omnichannel-engagement.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fomnichannel-engagement"
+    },
+    {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "slug": "order-entry-validation",
+      "name": "Order Entry Validation Agent",
+      "pitch": "Give a sales operations team one assistant that reads each customer purchase order, checks prices and terms against the accepted quote, catches invalid product configurations, classifies the order, and hands the specialist a draft sales order with every exception called out.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 7,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/order-entry-validation.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Forder-entry-validation"
+    },
+    {
+      "id": "@aibast-agents-library/order-status-communication",
+      "slug": "order-status-communication",
+      "name": "Order Status Communications Agent",
+      "pitch": "Bring order, production, shipment, delay, recovery, owner, and channel context into one governed review and prepare consistent customer-message drafts without changing operations or sending updates.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing"
+      ],
+      "journey_stage": "Serve",
+      "recorded_prompts": 3,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/order-status-communication.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Forder-status-communication"
+    },
+    {
+      "id": "@aibast-agents-library/patient-intake",
+      "slug": "patient-intake",
+      "name": "Patient Intake and Scheduling Agent",
+      "pitch": "Give patient-access teams a safe, read-only view of synthetic intake completeness, recorded coverage evidence, candidate availability, and pre-visit follow-up—without booking care or changing a record.",
+      "category": "healthcare",
+      "industries": [
+        "Healthcare"
+      ],
+      "journey_stage": "Activate",
+      "recorded_prompts": 8,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/patient-intake.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpatient-intake"
+    },
+    {
+      "id": "@aibast-agents-library/payments-operations",
+      "slug": "payments-operations",
+      "name": "Payments Operations Agent",
+      "pitch": "Give payments operations one conversational view of the release queue, failed scheme rules, repair plans, pre-release risk, settlement breaks, and status answers, while every release, repair, and posting stays with an authorized analyst.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services",
+        "Banking"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 7,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/payments-operations.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpayments-operations"
+    },
+    {
+      "id": "@aibast-agents-library/permit-license-management",
+      "slug": "permit-license-management",
+      "name": "Permit Management Agent",
+      "pitch": "Turn a synthetic permit register, renewal calendar, compliance-gap view, and submitted-application tracker into a reviewable operating brief without renewing, amending, or filing anything.",
+      "category": "energy",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/permit-license-management.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpermit-license-management"
+    },
+    {
+      "id": "@aibast-agents-library/personalized-marketing",
+      "slug": "personalized-marketing",
+      "name": "Personalized Marketing Agent",
+      "pitch": "Helps retail marketing teams understand aggregate commercial segments, compare campaign concepts, draft relevant content, and review synthetic performance evidence without sensitive profiling or activation.",
+      "category": "retail_cpg",
+      "industries": [
+        "Retail"
+      ],
+      "journey_stage": "Plan and evaluate",
+      "recorded_prompts": 2,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/personalized-marketing.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpersonalized-marketing"
+    },
+    {
+      "id": "@aibast-agents-library/personalized-shopping-assistant",
+      "slug": "personalized-shopping-assistant",
+      "name": "Personalized Shopping Agent",
+      "pitch": "Uses synthetic stated preferences to draft explainable product and outfit options, summarize style context, and show read-only availability.",
+      "category": "b2c_sales",
+      "industries": [
+        "Retail"
+      ],
+      "journey_stage": "Discover and advise",
+      "recorded_prompts": 2,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/personalized-shopping-assistant.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpersonalized-shopping-assistant"
+    },
+    {
+      "id": "@aibast-agents-library/portfolio-rebalancing",
+      "slug": "portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent",
+      "pitch": "Connect allocation drift, tax assumptions, loss candidates, retirement scenarios, and implementation controls in one advisor workspace that never presents a trade as advice or execution.",
+      "category": "financial_services",
+      "industries": [
+        "Capital Markets"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/portfolio-rebalancing.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fportfolio-rebalancing"
+    },
+    {
+      "id": "@aibast-agents-library/prior-authorization",
+      "slug": "prior-authorization",
+      "name": "Prior Authorization Agent",
+      "pitch": "Give utilization teams a read-only synthetic inventory of request evidence, policy checklist context, recorded workflow state, and reconsideration material—without predicting, submitting, granting, or denying authorization.",
+      "category": "healthcare",
+      "industries": [
+        "Healthcare",
+        "Financial Services"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/prior-authorization.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fprior-authorization"
+    },
+    {
+      "id": "@aibast-agents-library/procurement-agent",
+      "slug": "procurement-agent",
+      "name": "Procurement Agent",
+      "pitch": "Give procurement and finance a shared synthetic view of requests, vendor evidence, approval thresholds, and budget pressure while keeping supplier selection, PO creation, and spend commitments behind human authorization.",
+      "category": "general",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/procurement-agent.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fprocurement-agent"
+    },
+    {
+      "id": "@aibast-agents-library/procurement-support",
+      "slug": "procurement-support",
+      "name": "Discount Finder Agent",
+      "pitch": "Surface contract tiers, dated pricing notices, fragmented demand, and timing tradeoffs in a sourcing-review brief that helps category teams investigate savings without contacting a supplier or placing an order.",
+      "category": "general",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/procurement-support.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fprocurement-support"
+    },
+    {
+      "id": "@aibast-agents-library/product-feedback-synthesizer",
+      "slug": "product-feedback-synthesizer",
+      "name": "Product Feedback Synthesizer Agent",
+      "pitch": "Unify fictional feedback, sentiment, feature requests, and impact signals into transparent review candidates without turning one score or account comment into a roadmap promise.",
+      "category": "software_digital_products",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Innovate",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/product-feedback-synthesizer.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fproduct-feedback-synthesizer"
+    },
+    {
+      "id": "@aibast-agents-library/production-line-optimization",
+      "slug": "production-line-optimization",
+      "name": "Product Line Optimization Agent",
+      "pitch": "Turn line efficiency, station cycle time, quality, and shift data into an operating view that exposes bottlenecks, compares improvement paths, and gives plant leaders a practical plan for protecting throughput and quality.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/production-line-optimization.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fproduction-line-optimization"
+    },
+    {
+      "id": "@aibast-agents-library/proposal-generation",
+      "slug": "proposal-generation",
+      "name": "Proposal Generation Agent",
+      "pitch": "Help bid teams extract requirements, tailor positioning, compare pricing assumptions, and prepare a proposal package outline while preserving legal, pricing, reference, and delivery approvals.",
+      "category": "b2b_sales",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "journey_stage": "Create",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/proposal-generation.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fproposal-generation"
+    },
+    {
+      "id": "@aibast-agents-library/public-correspondence-response",
+      "slug": "public-correspondence-response",
+      "name": "Public Correspondence Agent",
+      "pitch": "Give correspondence officers one queue for letters, emails, web forms and phone notes, a breakdown of every separate question, cited approved answers, and a clear referral for anything new, while officers stay in control of every reply.",
+      "category": "slg_government",
+      "industries": [
+        "State and Local Government"
+      ],
+      "journey_stage": "Serve",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/public-correspondence-response.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpublic-correspondence-response"
+    },
+    {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "slug": "reporting-package-validation",
+      "name": "Reporting Package Validation Agent",
+      "pitch": "Give finance teams a validation partner for month-end reporting: lineage, integrity checks, variance and bridge reconciliation, an owner-routed exception queue and a draft summary, while postings, release and sign-off stay with people.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "journey_stage": "Govern",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/reporting-package-validation.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Freporting-package-validation"
+    },
+    {
+      "id": "@aibast-agents-library/resource-utilization",
+      "slug": "resource-utilization",
+      "name": "Resource Utilization Agent",
+      "pitch": "Give operations, resource, and finance leaders a shared view of utilization, capacity, bench skills, pipeline matches, and capability-building options while keeping assignments and financial commitments under human control.",
+      "category": "professional_services",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/resource-utilization.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fresource-utilization"
+    },
+    {
+      "id": "@aibast-agents-library/returns-complaints-resolution",
+      "slug": "returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent",
+      "pitch": "Summarizes anonymous synthetic return evidence, classifies complaint themes, drafts policy-grounded options, and surfaces aggregate quality trends.",
+      "category": "retail_cpg",
+      "industries": [
+        "Retail",
+        "Consumable Products Industry"
+      ],
+      "journey_stage": "Resolve and learn",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/returns-complaints-resolution.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Freturns-complaints-resolution"
+    },
+    {
+      "id": "@aibast-agents-library/sales-qualification",
+      "slug": "sales-qualification",
+      "name": "Sales Qualification Agent",
+      "pitch": "Help sales managers and business-development teams review enrichment, ICP fit, BANT evidence, draft outreach, routing recommendations, and SLA plans from one governed workflow.",
+      "category": "b2b_sales",
+      "industries": [],
+      "journey_stage": "Prioritize",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/sales-qualification.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsales-qualification"
+    },
+    {
+      "id": "@aibast-agents-library/solution-design-review",
+      "slug": "solution-design-review",
+      "name": "Solution Design Review Agent",
+      "pitch": "Give architects a drafting and self-check partner for solution designs: vision, baseline, requirements matrix, target design and a readiness score, while the architect owns every section and the board owns approval.",
+      "category": "professional_services",
+      "industries": [
+        "Professional Services",
+        "Cross-Industry"
+      ],
+      "journey_stage": "Empower",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/solution-design-review.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsolution-design-review"
+    },
+    {
+      "id": "@aibast-agents-library/staffing-territory-planning",
+      "slug": "staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent",
+      "pitch": "Give staffing sales leaders a territory snapshot, market sizing, coverage gaps, competitor position, labor trends and a draft quarterly plan from one consistent dataset, while headcount, quota and account decisions stay with leadership.",
+      "category": "professional_services",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "journey_stage": "Plan and evaluate",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/staffing-territory-planning.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fstaffing-territory-planning"
+    },
+    {
+      "id": "@aibast-agents-library/store-associate-copilot",
+      "slug": "store-associate-copilot",
+      "name": "Retail Store Associate Copilot",
+      "pitch": "Provides synthetic product facts, respectful customer-language drafts, shift planning, and role-cohort coaching signals while leaving availability, pricing, returns, and transactions to authorized systems and people.",
+      "category": "retail_cpg",
+      "industries": [
+        "Retail"
+      ],
+      "journey_stage": "Serve and coordinate",
+      "recorded_prompts": 3,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/store-associate-copilot.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fstore-associate-copilot"
+    },
+    {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "slug": "supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent",
+      "pitch": "Give supplier claims teams one conversational view to triage claims, assemble evidence, draft supplier notices, track response deadlines, and weigh supplier offers, while every send, credit decision, and escalation stays with an authorized coordinator.",
+      "category": "retail_cpg",
+      "industries": [
+        "Retail",
+        "Consumer Goods"
+      ],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 7,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/supplier-claim-engagement.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsupplier-claim-engagement"
+    },
+    {
+      "id": "@aibast-agents-library/supplier-risk-monitoring",
+      "slug": "supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent",
+      "pitch": "Unify supplier quality, delivery, financial, geopolitical, incident, and backup-option evidence so procurement leaders can prioritize review without contacting, qualifying, selecting, or ordering from suppliers.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing"
+      ],
+      "journey_stage": "Protect",
+      "recorded_prompts": 4,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/supplier-risk-monitoring.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsupplier-risk-monitoring"
+    },
+    {
+      "id": "@aibast-agents-library/supply-chain-disruption-alert",
+      "slug": "supply-chain-disruption-alert",
+      "name": "Supply Chain Disruption Alert Agent",
+      "pitch": "Turn synthetic disruption events, route risk, mitigation costs, and supplier candidates into a shared continuity brief while keeping sourcing, ordering, routing, communication, and inventory movement under human control.",
+      "category": "retail_cpg",
+      "industries": [],
+      "journey_stage": "Optimize",
+      "recorded_prompts": 10,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/supply-chain-disruption-alert.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fsupply-chain-disruption-alert"
+    },
+    {
+      "id": "@aibast-agents-library/time-entry-billing",
+      "slug": "time-entry-billing",
+      "name": "Time Entry and Billing Agent",
+      "pitch": "Help finance and billing teams find blocked work, enforce time-entry rules, prepare support for eligible invoices, and resolve disputed-hour evidence without posting revenue or contacting a client.",
+      "category": "professional_services",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "journey_stage": "Operate",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/time-entry-billing.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Ftime-entry-billing"
+    },
+    {
+      "id": "@aibast-agents-library/underwriting-support",
+      "slug": "underwriting-support",
+      "name": "Underwriting Support Agent",
+      "pitch": "Give underwriters a single review surface for submission risk, rating factors, guideline checks, and exceptions while keeping quoting, binding, approval, and decline authority with humans.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Decide",
+      "recorded_prompts": 9,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/underwriting-support.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Funderwriting-support"
+    },
+    {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "slug": "utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent",
+      "pitch": "Bring synthetic balances, smart-meter history, leak-policy screening, payment options, and assistance criteria into one resident-service brief without changing a bill, plan, repair, enrollment, or account.",
+      "category": "slg_government",
+      "industries": [
+        "Energy and Utilities",
+        "State and Local Government"
+      ],
+      "journey_stage": "Serve",
+      "recorded_prompts": 9,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/utility-billing-assistance.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Futility-billing-assistance"
+    },
+    {
+      "id": "@aibast-agents-library/warranty-registration",
+      "slug": "warranty-registration",
+      "name": "Warranty and Registration Agent",
+      "pitch": "Give equipment dealers one conversation for warranty coverage, claim pre-checks, serial checks, registration drafts and extended-coverage offers, while claims, registrations and sales stay with the people authorized to submit them.",
+      "category": "manufacturing",
+      "industries": [
+        "Manufacturing"
+      ],
+      "journey_stage": "Serve",
+      "recorded_prompts": 6,
+      "added_at": "2026-10-08T01:53:29-04:00",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/warranty-registration.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fwarranty-registration"
+    },
+    {
+      "id": "@aibast-agents-library/wealth-insights-generator",
+      "slug": "wealth-insights-generator",
+      "name": "Wealth Insights Generator Agent",
+      "pitch": "Connect managed and held-away assets, planning gaps, life events, performance context, and meeting preparation in one governed workspace that never presents synthetic data as current advice.",
+      "category": "financial_services",
+      "industries": [
+        "Financial Services"
+      ],
+      "journey_stage": "Engage",
+      "recorded_prompts": 5,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/wealth-insights-generator.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fwealth-insights-generator"
+    },
+    {
+      "id": "@aibast-agents-library/win-loss-analysis",
+      "slug": "win-loss-analysis",
+      "name": "Win/Loss Analysis Agent",
+      "pitch": "Help sales operations, enablement, and leadership compare win and loss patterns, isolate addressable drivers, draft counter-strategies, and evaluate clearly labeled scenarios.",
+      "category": "b2b_sales",
+      "industries": [],
+      "journey_stage": "Learn",
+      "recorded_prompts": 6,
+      "added_at": "2026-08-15T22:26:47Z",
+      "url": "https://kody-w.github.io/aibast-agents-library/api/v1/solutions/win-loss-analysis.json",
+      "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fwin-loss-analysis"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: list-templates
+  description: "\"Use when a briefing coordinator asks something like \\\"What briefing formats can you build for us\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: list-templates
+  description: "Use when a briefing coordinator asks something like \"What briefing formats can you build for us\""
+  ---
+  <!-- bic:source=blank -->
+  # Briefing formats
+
+  Use when someone asks which briefing formats or templates are available.
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `Budget Hearing Brief`
+  - `Council Question Brief`
+  - `8 documents indexed`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

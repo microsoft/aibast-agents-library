@@ -1,0 +1,24 @@
+---
+name: prior-authorization-portfolio-status
+description: Reproduce the deterministic Prior Authorization Agent portfolio status workflow, which lists the five demo authorizations and portfolio metrics as source-recorded statuses.
+---
+<!-- bic:source=blank -->
+# Prior Authorization Agent — portfolio status
+
+## Locked persona prompt
+
+`Show me all pending prior auths and their status.`
+
+Route semantically equivalent requests here without requiring an operation name or an identifier; the demo patient is Robert Chen (PA-2024-892741) and the denied Medicare case is Michael Johnson (PA-2024-891977).
+
+## Source
+
+Use both packaged knowledge files and the exact reference response for this workflow.
+
+## Required output contract
+
+`# Active Prior Authorizations`; preserve `Martinez, Ana`, `Pending: 3 authorizations`, `91% this month` and every identifier, value and status from the reference response.
+
+## Review boundary
+
+This is read-only synthetic evidence. Do not predict, grant, deny, submit, or change an authorization; never send a notification, post to Teams, or schedule anything. Packets, notifications and tracking plans are drafts for the coordinator.

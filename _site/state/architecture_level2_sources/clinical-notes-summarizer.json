@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "clinical-notes-summarizer",
+  "agent": "@aibast-agents-library/clinical-notes-summarizer",
+  "display_name": "Clinical Notes Summarizer Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Packaged synthetic encounter records",
+        "detail": "Two fictional encounters contain source notes, observations, coded problems, medications, referral context, identifiers, and dates."
+      },
+      {
+        "name": "Clinical review and privacy rules",
+        "detail": "Rules require minimum-necessary synthetic data, authorized-record comparison, clinician validation, and no live patient information."
+      },
+      {
+        "name": "Operation skills and locked evidence anchors",
+        "detail": "Four skills define source-backed output contracts, safe routing, exact synthetic evidence, fallback behavior, and human review gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Source-grounded encounter extraction",
+        "detail": "Extracts requested notes and observations without clinical inference, urgency determination, diagnosis, treatment, or clearance."
+      },
+      {
+        "name": "Medication source inventory",
+        "detail": "Lists source-recorded medications in order for clinician or pharmacist reconciliation without interaction analysis or change advice."
+      },
+      {
+        "name": "Problem-list source extraction",
+        "detail": "Returns exact source-coded problems while stating that no diagnosis was added, confirmed, removed, or changed."
+      },
+      {
+        "name": "Referral context extraction",
+        "detail": "Summarizes recorded referral context while confirming that no referral or clinical order was placed, transmitted, scheduled, or changed."
+      },
+      {
+        "name": "Evidence-first request routing",
+        "detail": "Maps clinician language to one of four bounded operations and returns only the matching synthetic record evidence."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational workspace",
+        "detail": "Hosts the validated Draft pilot with four skills, two synthetic knowledge files, integrated authentication, and no publication approval."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP tool through local chat and API routes with deterministic, read-only synthetic operation routing."
+      },
+      {
+        "name": "Clinician and pharmacist review experience",
+        "detail": "Primary care, surgery, anesthesia, and pharmacy reviewers receive compact drafts that require comparison with the authorized record."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Encounter summary draft",
+        "detail": "Presents encounter date, source note, observations, identifier, and states that clinical interpretation was not performed."
+      },
+      {
+        "name": "Medication reconciliation inventory",
+        "detail": "Reports source-recorded medication names, doses, and frequency while reserving reconciliation, interactions, and changes for reviewers."
+      },
+      {
+        "name": "Problem-list evidence extract",
+        "detail": "Lists source-coded problems in source order and documents that the agent did not add, confirm, remove, or change a diagnosis."
+      },
+      {
+        "name": "Referral context review",
+        "detail": "Shows the recorded referral draft and status while confirming no referral placement, scheduling, transmission, or record change occurred."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "ClinicalNotesSummarizerAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements four deterministic read-only operations over bundled fictional encounter records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the cli-copilot Draft package, four operation skills, two synthetic knowledge files, and integrated authentication."
+    },
+    {
+      "name": "Host-selected foundation model",
+      "detail": "Routes natural-language intent and composes user-facing drafts from deterministic tool or packaged skill evidence."
+    },
+    {
+      "name": "Power Platform CLI",
+      "detail": "Initializes, pulls, and pushes the Copilot Studio source package; publication remains a separate human-approved step."
+    },
+    {
+      "name": "Governed healthcare record interface",
+      "detail": "Future read-only Dynamics 365 or approved healthcare data seam; the current package has no live connection or write permission."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only privacy boundary",
+      "detail": "Never requests, retains, infers, or exposes live patient information and keeps all packaged identities and clinical facts fictional."
+    },
+    {
+      "name": "Minimum-necessary data handling",
+      "detail": "Selects only the requested synthetic identifier and matching fields instead of exposing unrelated encounter evidence."
+    },
+    {
+      "name": "Mandatory clinician validation gate",
+      "detail": "Every substantive draft must be compared with the authorized record and verified by a qualified clinical or operational reviewer."
+    },
+    {
+      "name": "No diagnosis or treatment boundary",
+      "detail": "Prohibits diagnosis confirmation, treatment advice, prognosis, urgency decisions, medical necessity, and clinical clearance."
+    },
+    {
+      "name": "No order entry or workflow writes",
+      "detail": "Prevents placing or changing orders, referrals, appointments, medications, messages, authorizations, tasks, or records."
+    },
+    {
+      "name": "Fail-closed identifier handling",
+      "detail": "Unknown encounter identifiers return no match and never trigger record substitution, browsing, or invented clinical evidence."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four isolated Brainstem cases and four Copilot Studio previews passed; the pilot remains Draft and unpublished."
+    }
+  ]
+}

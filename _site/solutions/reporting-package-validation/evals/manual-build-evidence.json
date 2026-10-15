@@ -1,0 +1,142 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-08T03:52:12.561063Z",
+  "solution": "@aibast-agents-library/reporting-package-validation",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Reporting Package Manual",
+    "bot_id": "7fd9654a-bae1-44e6-92e1-1cfee6dd5f23",
+    "created": true
+  },
+  "target_model": "Claude Opus 5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 6,
+      "confirmed": 6
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "RPV-01",
+      "prompt": "The June reporting package just landed. What did we receive and where did each file come from?",
+      "must_include": [
+        "PKG-2026-06",
+        "6 files received",
+        "11 of 12"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "18-rpv-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-02",
+      "prompt": "Run the integrity checks before anyone looks at the numbers.",
+      "must_include": [
+        "2 blocking",
+        "Outdoor Forecast",
+        "A missing cell is not a zero"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "19-rpv-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-03",
+      "prompt": "How did each division do against budget, and which variances need an explanation?",
+      "must_include": [
+        "+$320K",
+        "-7.6%",
+        "offset each other"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "20-rpv-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-04",
+      "prompt": "Does the driver bridge reconcile from budget to actual?",
+      "must_include": [
+        "$10,760K",
+        "Unexplained residual",
+        "Does not reconcile"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "21-rpv-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-05",
+      "prompt": "Route the exceptions to the right owners.",
+      "must_include": [
+        "EX-01",
+        "Consolidation lead",
+        "none has been sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "22-rpv-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-06",
+      "prompt": "Draft the executive summary for the leadership pack.",
+      "must_include": [
+        "on budget overall",
+        "Industrial +$320K",
+        "not released"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "23-rpv-06.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/reporting-package-validation/screenshots/manual/browserfilm.json",
+    "gif": "solutions/reporting-package-validation/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/reporting-package-validation/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "24-confirm-draft.jpg"
+  }
+}

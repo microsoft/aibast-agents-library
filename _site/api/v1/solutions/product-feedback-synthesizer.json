@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/product-feedback-synthesizer",
+  "slug": "product-feedback-synthesizer",
+  "name": "Product Feedback Synthesizer Agent",
+  "headline": "Turn feedback noise into evidence the product trio can debate",
+  "pitch": "Unify fictional feedback, sentiment, feature requests, and impact signals into transparent review candidates without turning one score or account comment into a roadmap promise.",
+  "category": "software_digital_products",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Product Manager",
+    "Engineering Lead",
+    "Director of Product"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Innovate",
+  "why_try": "The demo lets a product manager ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "customer_challenge": "Product teams spend too long reconciling channels, while subjective prioritization and isolated anecdotes can obscure broader patterns and tradeoffs.",
+  "microsoft_ai_story": "Copilot Studio can synthesize governed signals from Dynamics 365, support, survey, and collaboration sources, with Teams bringing product, engineering, design, and commercial owners into review.",
+  "business_value": [
+    "Reduces manual effort in cross-channel synthesis.",
+    "Makes prioritization inputs and assumptions easier to inspect.",
+    "Supports earlier, cross-functional review of product signals."
+  ],
+  "business_flow": [
+    "Product, engineering, design, and customer teams",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Product Feedback Synthesizer Agent",
+    "CRM, support, survey, and product feedback sources",
+    "Microsoft Teams product review",
+    "Human roadmap governance"
+  ],
+  "capabilities": [
+    {
+      "operation": "feedback_summary",
+      "name": "Cross-channel feedback summary",
+      "purpose": "Use when a product manager asks for a compact view of volume, channels, categories, and synthetic commercial context."
+    },
+    {
+      "operation": "feature_requests",
+      "name": "Feature-request evidence ranking",
+      "purpose": "Use when an engineering lead wants review candidates sorted by the supplied synthetic ARR weight."
+    },
+    {
+      "operation": "sentiment_analysis",
+      "name": "Sentiment and NPS evidence",
+      "purpose": "Use when a director of product asks for the fictional sentiment split and recent excerpts."
+    },
+    {
+      "operation": "roadmap_impact",
+      "name": "Roadmap review candidates",
+      "purpose": "Use when a product trio wants a non-binding impact view with explicit validation gates."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Product Manager: Cross-channel feedback summary",
+      "prompt": "Give me the cross-channel feedback picture before the weekly product review.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-feedback-summary",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Product Manager",
+        "prompt": "Give me the cross-channel feedback picture before the weekly product review.",
+        "answer": "Here's the cross-channel snapshot from the ProductFeedbackSynthesizerAgent (feedback_summary):\n\n**10,150 items analyzed, last quarter:**\n- Zendesk tickets: 8,500 (83.7%)\n- Jira feature requests: 1,200 (11.8%)\n- App Store reviews: 280 (2.8%)\n- G2 reviews: 170 (1.7%)\n\n**Sentiment: 7.2/10** (up from 6.8 in Q2)\n- Positive: 62% (+5.9 pts)\n- Neutral: 23% (stable)\n- Negative: 15% (-5.9 pts)\n\nOverall trend is improving, but support tickets still dominate volume — worth digging into. Want me to pull **top pain points** and **most-requested features** next so you walk into the review with the full picture (and optionally the Q1 priority matrix and sentiment trend chart)? All synthetic insight — nothing gets committed or ticketed without your sign-off.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Engineering Lead: Feature-request evidence ranking",
+      "prompt": "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-feature-requests",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Engineering Lead",
+        "prompt": "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
+        "answer": "Here's the ranked feature-request evidence (review-only, not a committed roadmap):\n\n1. **Advanced Reporting & Analytics** — 31% (~372 requests): custom dashboards, Excel/CSV export, scheduled reports. Strong enterprise pull.\n2. **Expanded Integrations** — 24% (~288 requests): Slack, Teams, HubSpot, webhooks. Reduces manual handoffs.\n3. **Offline Mode** — 18% (~216 requests): offline view/edit + auto-sync. Driven by field/mobile teams.\n4. **RBAC** — 14% (~168 requests): granular permissions + audit logs. Key for regulated industries.\n5. **In-App Training/Help** — 9% (~108 requests): guided tours, contextual tips. Lowers onboarding friction.\n\nTrend: demand clusters around data visibility, collaboration, and mobile reliability.\n\nThis is evidence for your team to validate — I haven't generated a priority matrix, Jira tickets, or any roadmap commitment. Want me to pull pain-point data alongside this, or stop here?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Director of Product: Sentiment and NPS evidence",
+      "prompt": "What are the strongest sentiment signals in the fictional customer snapshot?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-sentiment-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Director of Product",
+        "prompt": "What are the strongest sentiment signals in the fictional customer snapshot?",
+        "answer": "Here's the Q2→Q3 sentiment snapshot (fictional pilot data):\n\n**Strongest signals:**\n- **Positive feedback up +5.9 pts** (56.1% → 62%) — biggest mover\n- **Negative feedback down -5.9 pts** (20.9% → 15%) — clear improvement, same magnitude\n- **Neutral held flat** at 23% — not what's driving the shift\n- **Overall score climbed 6.8 → 7.2**\n\n**Why it moved:** mostly attributed to product stability patches and faster support resolution times, with enterprise customers showing the strongest gains.\n\nNet read: the quarter's story is a genuine improvement, not noise — positive and negative swung in lockstep by the same amount, which is a clean signal rather than a sampling fluke.\n\nWant me to run **pain_points** next to see what's still dragging that 15% negative bucket?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Product Manager: Roadmap review candidates",
+      "prompt": "Frame the impact tradeoffs the product trio should validate before sequencing work.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-roadmap-impact",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Product Manager",
+        "prompt": "Frame the impact tradeoffs the product trio should validate before sequencing work.",
+        "answer": "Here's what the trio should pressure-test before locking the sequence (ranked by impact, pending validation):\n\n**P0 — highest confidence**\n- **Performance/load time** (27% of complaints): Medium effort, affects everyone. Tradeoff to validate: does fixing this unblock downstream features, or is it a standalone fire?\n- **Integration reliability** (22% sync failures + 24% new-integration asks): Medium-High effort but very high impact — enterprise accounts and data trust are on the line. Validate whether fixing reliability is a prereq for the requested connectors (Slack/Teams/HubSpot), which could justify doing both together.\n\n**P1**\n- **Advanced reporting/analytics** (31% of requests): Medium effort, strong upsell/competitive angle. Tradeoff: confirm with enterprise customers that scope matches what they'd actually pay for before committing engineering time.\n\n**P2 — bundle or defer**\n- **Mobile stability + offline mode** (18%/18%): High effort, but bundling a bug fix with a big feature ask could be efficient — validate if offline sync complexity is worth combining vs. splitting into two releases.\n- **RBAC/audit logs** (14%): Medium-High effort, mainly valuable for regulated industries — sequence after mobile unless a near-term finance/healthcare deal depends on it.\n\n**Key tradeoff for the trio to resolve:** integration work has the highest leverage but competes directly with reporting for engineering bandwidth — worth deciding which one unlocks more revenue first before Q1 planning locks in.\n\nWant me to layer in revenue impact estimates next?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fproduct-feedback-synthesizer",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/product-feedback-synthesizer/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Product%20Feedback%20Synthesizer%20Agent%22"
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/ask-hr",
+  "slug": "ask-hr",
+  "name": "Ask HR Agent",
+  "headline": "Answer routine HR questions without turning guidance into a decision",
+  "pitch": "Give employees a privacy-conscious self-service front door for fictional balances and published policy examples, while keeping eligibility, sensitive circumstances, submissions, and HR decisions with authorized people and systems.",
+  "category": "human_resources",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Employees",
+    "Managers",
+    "HR Operations Staff"
+  ],
+  "microsoft_products": [
+    "Outlook",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Empower",
+  "why_try": "The demo lets a employee ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "customer_challenge": "Employees wait for routine policy answers and HR teams repeat low-complexity guidance, yet personalization can expose sensitive data or overstep into eligibility decisions.",
+  "microsoft_ai_story": "Copilot Studio and Microsoft Teams provide the employee experience; approved HRIS, benefits, and policy sources can be bound with identity, row-level security, data minimization, and audit controls.",
+  "business_value": [
+    "Improves access to consistent policy guidance.",
+    "Reduces repetitive explanation work for HR operations.",
+    "Preserves privacy and human authority for individualized decisions."
+  ],
+  "business_flow": [
+    "Employees, managers, and HR operations",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Ask HR Agent",
+    "Approved HRIS and benefits systems",
+    "Policy knowledge source",
+    "Authorized HR reviewer and workflow"
+  ],
+  "capabilities": [
+    {
+      "operation": "leave_balance",
+      "name": "Leave-balance explanation",
+      "purpose": "Use when an employee asks for the fictional balance snapshot and published time-off rules."
+    },
+    {
+      "operation": "submit_time_off",
+      "name": "Time-off draft preview",
+      "purpose": "Use when an employee wants to preview dates and projected balance before using the approved submission workflow."
+    },
+    {
+      "operation": "parental_leave",
+      "name": "Parental-leave policy guidance",
+      "purpose": "Use for published leave-policy questions without inferring a family or medical circumstance or deciding eligibility."
+    },
+    {
+      "operation": "health_insurance",
+      "name": "Health-plan policy explanation",
+      "purpose": "Use when an employee asks what the fictional plan snapshot says and what must be verified with benefits staff."
+    },
+    {
+      "operation": "remote_work",
+      "name": "Remote-work policy guidance",
+      "purpose": "Use when an employee or manager asks for published remote-work rules without inferring a sensitive circumstance."
+    },
+    {
+      "operation": "benefits_summary",
+      "name": "Benefits snapshot explanation",
+      "purpose": "Use when HR operations needs a concise fictional profile summary without estimating compensation or deciding eligibility."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Employee: Leave-balance explanation",
+      "prompt": "What does my fictional leave snapshot show, and what notice rules should I review?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-leave-balance",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Employee",
+        "prompt": "What does my fictional leave snapshot show, and what notice rules should I review?",
+        "answer": "Here's Sarah Chen's snapshot (fictional data):\n\n**Balances:** 14 vacation days, 8 sick days, 2 personal days (accruing 1.25 days/month)\n\n**Notice rules to review:**\n- Requests of **5+ days** need **2 weeks' notice**\n- No blackout dates, but **year-end requests** still go through standard manager approval\n- **Rollover cap:** only 5 unused days carry into next year — worth planning around if you're sitting on a chunk of your 14\n\nWant me to check specific dates or preview a time-off request?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Employee: Time-off draft preview",
+      "prompt": "Preview five vacation days for September 14 through September 18; do not submit anything.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-submit-time-off",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Employee",
+        "prompt": "Preview five vacation days for September 14 through September 18; do not submit anything.",
+        "answer": "Here's your preview — nothing was submitted (and no manager notification was sent):\n\n| Detail | Info |\n|---|---|\n| Dates | Sep 14 – Sep 18, 2024 (3 business days) |\n| Return to work | Thu Sep 19 |\n| Status | Draft — not submitted |\n| Balance impact | 14 → 11 days if submitted |\n| Approver | David Kim |\n\nNote: it counted 3 business days (weekend falls inside the range), not 5. Let me know if you'd like to adjust the dates or actually submit it later.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Employee: Parental-leave policy guidance",
+      "prompt": "Explain the published parental-leave example without deciding whether I qualify or asking for family details.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-parental-leave",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Employee",
+        "prompt": "Explain the published parental-leave example without deciding whether I qualify or asking for family details.",
+        "answer": "Here's the published example (Sarah Chen synthetic profile):\n\n| Benefit | Details |\n|---|---|\n| Paternity Leave | 8 weeks fully paid |\n| Maternity Leave | 16 weeks fully paid |\n| Family Care Stipend | $2,000 one-time |\n| Backup Childcare | 6 months included |\n| Flexible return-to-work | Available |\n| Support | Parent ERG, lactation room access |\n\nEligibility depends on tenure, location, leave type, and qualifying event — that confirmation has to come from an authorized HR reviewer, not me. This is illustrative policy data only, not a determination for your situation.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Employee: Health-plan policy explanation",
+      "prompt": "Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-health-insurance",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Employee",
+        "prompt": "Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.",
+        "answer": "Here's the snapshot (fictional, Sarah Chen):\n\n**Plan:** PPO Gold — $485/mo premium\n- Deductible: $500 individual / $1,000 family\n- Out-of-pocket max: $3,000 / $6,000\n- Primary care copay: $25\n- Current dependents: Spouse, Child\n\n**Dependent eligibility:**\n- Spouse/partner & kids under 26: eligible\n- Parents: generally *not* eligible unless they're your legal tax dependents (>50% support)\n\n**What the benefits administrator must verify:**\n1. Actual eligibility for any dependent being added (especially parents/tax-dependent status)\n2. Enrollment window compliance (30 days from a qualifying event)\n3. Correct premium adjustment (+$125/mo if adding a dependent)\n4. Coverage effective date matches the qualifying event\n\nCalled **AskHRAgent** (health_insurance). This is published policy example data only — no real eligibility decisions made.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Manager: Remote-work policy guidance",
+      "prompt": "What does the sample remote-work policy say, without inferring why an employee asked?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-remote-work",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Manager",
+        "prompt": "What does the sample remote-work policy say, without inferring why an employee asked?",
+        "answer": "Here's the sample remote-work policy (synthetic example, Sarah Chen profile):\n\n- **Standard allowance:** 3 days/week remote\n- **Eligibility:** Based on role, location, and manager/HR review\n- **Core hours:** 10 AM – 3 PM local time\n- **Home office support:** $1,000 one-time equipment stipend, $50/month internet reimbursement, virtual ergonomic assessment, same-day IT support\n\nNote: exceptions go through authorized HR review — no eligibility decisions are made here.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "HR Operations Specialist: Benefits snapshot explanation",
+      "prompt": "Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-benefits-summary",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "HR Operations Specialist",
+        "prompt": "Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.",
+        "answer": "Pulled via the **AskHRAgent** — here's Sarah Chen's fictional benefits snapshot:\n\n- **Medical:** PPO Gold ($485/mo), **Dental:** $42/mo, **Vision:** $12/mo\n- **401(k):** 8% contribution, 4% company match\n- **PTO:** 14 days · **Sick:** 8 days · **Personal:** 2 days\n- Tier: Employee + Family\n\nNo compensation estimate or eligibility call is included — just the published synthetic snapshot. Want me to check time-off dates against policy next?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fask-hr",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/ask-hr/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Ask%20HR%20Agent%22"
+  }
+}

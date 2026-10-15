@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "store-associate-copilot",
+  "agent": "@aibast-agents-library/store-associate-copilot",
+  "display_name": "Retail Store Associate Copilot",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic retail records",
+        "detail": "Fixed products, complements, service scripts, shift tasks, and role-cohort performance records ground deterministic demonstrations."
+      },
+      {
+        "name": "Store associate rules and safety contract",
+        "detail": "Packaged guidance defines personas, routes, evidence anchors, identifier checks, availability caveats, and prohibited side effects."
+      },
+      {
+        "name": "Approved read-only production seams",
+        "detail": "The recipe cites a commerce catalog, store inventory source, and manager review workflow; none is connected in the package."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Verified product lookup drafting",
+        "detail": "Returns synthetic product facts, floor location, availability, and optional complements with a verify-before-advising caveat."
+      },
+      {
+        "name": "Respectful customer-assistance drafting",
+        "detail": "Creates scenario-specific draft language while retaining pricing, offer, return, refund, and complaint decisions with reviewers."
+      },
+      {
+        "name": "Shift planning checklist generation",
+        "detail": "Prioritizes fixed shift work and estimates time without claiming store, POS, signage, inventory, or security task execution."
+      },
+      {
+        "name": "Aggregate coaching signal analysis",
+        "detail": "Summarizes cohort revenue, basket, attach-rate, service, and task patterns without ranking people or making personnel decisions."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access through a validated Draft agent with four skills, two knowledge files, and no action tools."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file StoreAssociateCopilotAgent through local Brainstem chat and UI with synthetic-only routing."
+      },
+      {
+        "name": "Associate and manager review surfaces",
+        "detail": "Serves Store Associates, Floor Specialists, and Sales Managers; cited Teams and Outlook seams remain review-only."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Product Lookup Snapshot",
+        "detail": "Reports synthetic product facts, floor location, availability, and complementary ideas with a verification caveat."
+      },
+      {
+        "name": "Draft Customer Assistance Guide",
+        "detail": "Presents suggested language, follow-up guidance, and service tips as a draft for authorized associate review."
+      },
+      {
+        "name": "Daily Task Planning Checklist",
+        "detail": "Reports shift task priority, estimated duration, and completion context as planning evidence, not an execution record."
+      },
+      {
+        "name": "Synthetic Role-Cohort Performance Dashboard",
+        "detail": "Reports aggregate revenue, transactions, basket, attach rate, CSAT, and task completion for operational coaching only."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable RAPP Store Associate Copilot Agent",
+      "detail": "Single-file StoreAssociateCopilotAgent implements four read-only operations over synthetic records with no credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts four skills and two knowledge files; validated agents remain unpublished Drafts pending explicit approval."
+    },
+    {
+      "name": "Dynamics 365 CRM",
+      "detail": "Cited by the approved L1 catalog as a governed context seam; no live CRM connection or customer-record write path exists."
+    },
+    {
+      "name": "Dynamics 365 ERP",
+      "detail": "Cited by L1 and compatible with read-only commerce seams; the package changes no inventory, price, order, or transaction."
+    },
+    {
+      "name": "Microsoft Teams and Outlook",
+      "detail": "Cited by the approved L1 catalog as collaboration surfaces; the agent sends no message or customer contact."
+    },
+    {
+      "name": "Approved manager review workflow",
+      "detail": "Cited human-review seam for assistance drafts, store plans, and coaching outputs before separately authorized action."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Four deterministic retail operations",
+      "detail": "Routes product lookup, customer assistance, task checklist, and performance dashboard requests from persona language."
+    },
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Accepts bundled synthetic records, rejects other data sources, and stops on unknown identifiers rather than inventing facts."
+    },
+    {
+      "name": "Associate review and verification gates",
+      "detail": "Treats stock as unverified, scripts and checklists as drafts, and recommendations as evidence for authorized review."
+    },
+    {
+      "name": "No inventory or transaction mutation",
+      "detail": "Never reserves or changes stock, applies pricing, prepares a transaction, processes a return or refund, or purchases."
+    },
+    {
+      "name": "No communication side effects",
+      "detail": "Never sends or schedules messages, issues offers, creates tasks, or claims that an external action occurred."
+    },
+    {
+      "name": "Aggregate workforce safeguard",
+      "detail": "Uses fictional role cohorts for workflow coaching and prohibits employee ranking, individual judgments, or personnel decisions."
+    },
+    {
+      "name": "Validation and publication controls",
+      "detail": "Four locked cases pass; Dataverse and exported artifacts remain unpublished Drafts requiring explicit approval."
+    }
+  ]
+}

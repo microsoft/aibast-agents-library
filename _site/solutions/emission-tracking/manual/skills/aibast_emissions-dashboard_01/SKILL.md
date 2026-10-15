@@ -1,0 +1,27 @@
+---
+name: emission-tracking-emissions-dashboard
+description: Use when a Emissions Data Analyst asks to aggregate the synthetic scope inventory.
+---
+# Emissions Tracking Agent: Emissions Dashboard
+
+## Route
+
+Use the `emissions_dashboard` operation. The canonical persona prompt is:
+
+> I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `emissions_dashboard` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- 47,340
+- Boston Hub
+- not verified emissions evidence
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "build-materials-compliance",
+  "agent": "@aibast-agents-library/build-materials-compliance",
+  "display_name": "Build Materials Compliance Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic BOM and master data",
+        "detail": "Three fictional projects, eight BOM lines and six items with specs, prices, attestations and data sheets."
+      },
+      {
+        "name": "Synthetic vendor certificates and answers",
+        "detail": "Five fictional vendors with certificate dates, questionnaire answers and certificate letters ground each finding."
+      },
+      {
+        "name": "Alternates catalog and drafting rules",
+        "detail": "Same-spec alternates, cost-impact rule and the approved-step drafts the agent may prepare."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Weekly BOM change scan",
+        "detail": "Scans every approved bill of materials each week and reports what is new or changed."
+      },
+      {
+        "name": "Materials compliance check",
+        "detail": "Flags items that newly fall out of the materials sourcing rule, with the reason and cited evidence."
+      },
+      {
+        "name": "Compliant alternates",
+        "detail": "Finds compliant alternates with the same specification and sizes the cost of switching."
+      },
+      {
+        "name": "Vendor certificate watch",
+        "detail": "Watches vendor certificates and questionnaire answers so lapses are caught before the next order."
+      },
+      {
+        "name": "Audit evidence readiness",
+        "detail": "Keeps the audit evidence package ready by project, with every open item tied to its record."
+      },
+      {
+        "name": "Approved next-step drafts",
+        "detail": "Prepares hold notices, renewal, substitution and document requests for a person to send after approval."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the Draft agent with six skills and two synthetic knowledge files; publish stays a separate approved step."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Gives procurement and compliance staff a conversational entry point once approved controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file MaterialsComplianceAgent locally with deterministic, synthetic-only routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Weekly change and compliance view",
+        "detail": "Shows new and changed BOM lines and each non-compliant, conflicting or incomplete item with its evidence."
+      },
+      {
+        "name": "Vendor certificate watch list",
+        "detail": "Lists expired and expiring vendor certificates with the covered items they affect."
+      },
+      {
+        "name": "Audit evidence readiness by project",
+        "detail": "Counts complete covered lines per project and names every open item before review."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable MaterialsComplianceAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only operations over bundled synthetic data."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the agent and exposes chat, health and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; explicit authorized approval is required before publication."
+    },
+    {
+      "name": "SharePoint",
+      "detail": "Cited production seam for certificates, attestations and evidence; the package uses fixed synthetic files instead."
+    },
+    {
+      "name": "Microsoft Word",
+      "detail": "Cited production seam for hold notices and vendor requests; the package returns draft text only."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only bundled fictional BOM, master data and vendor records; never browses or invents a certificate."
+    },
+    {
+      "name": "Cited-evidence findings",
+      "detail": "Every non-compliant, conflict or gap finding names the record it depends on."
+    },
+    {
+      "name": "Recommend-first approval gate",
+      "detail": "Drafts are prepared only for next steps a person approved and are never sent by the agent."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never orders, changes master data, sends a request or certifies compliance."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Six persona cases verify one bounded operation each with exact evidence anchors."
+    }
+  ]
+}

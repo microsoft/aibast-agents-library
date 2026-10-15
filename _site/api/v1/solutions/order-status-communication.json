@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/order-status-communication",
+  "slug": "order-status-communication",
+  "name": "Order Status Communications Agent",
+  "headline": "Align on the order story before the customer receives it",
+  "pitch": "Bring order, production, shipment, delay, recovery, owner, and channel context into one governed review and prepare consistent customer-message drafts without changing operations or sending updates.",
+  "category": "manufacturing",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Customer Service Rep",
+    "Account Manager",
+    "Operations Leader"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Serve",
+  "why_try": "It makes service communication AI concrete: customer service and account teams can identify at-risk orders, validate shipment evidence, review recovery context, and prepare tailored drafts with an authorized sender still in control.",
+  "customer_challenge": "A manufacturer assembles order status, production progress, shipment evidence, delay causes, recovery options, customer preferences, and account ownership from disconnected systems. Manual coordination slows communication and can create inconsistent or unapproved commitments.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the governed conversational experience. Dynamics 365 Supply Chain Management and approved MES sources contribute order and production context; carrier integrations contribute shipment evidence; Dynamics 365 Customer Service contributes account and preference context; Power Automate and Microsoft Teams support reviewed communications and approvals.",
+  "business_value": [
+    "Improves shared visibility into order, shipment, delay, recovery, ownership, and customer-preference context.",
+    "Accelerates preparation of consistent customer updates while keeping commitments grounded in approved evidence.",
+    "Protects customer trust by separating draft generation from order changes, schedule changes, logistics action, and outbound communication."
+  ],
+  "business_flow": [
+    "Customer service representatives, account managers, and operations leaders",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Order Status Communications Agent",
+    "Dynamics 365 Supply Chain Management and approved MES data",
+    "Carrier and logistics tracking",
+    "Dynamics 365 Customer Service",
+    "Authorized communication reviewers and senders"
+  ],
+  "capabilities": [
+    {
+      "operation": "order_lookup",
+      "name": "Order status and risk overview",
+      "purpose": "Summarizes fixed order progress, promise, value, and delay evidence for internal review."
+    },
+    {
+      "operation": "shipment_tracking",
+      "name": "Shipment evidence review",
+      "purpose": "Reports the recorded carrier and route evidence while requiring validation in the approved tracking system."
+    },
+    {
+      "operation": "delay_notification",
+      "name": "Internal delay and recovery review",
+      "purpose": "Brings delay reason, recovery options, account ownership, response expectations, and preferred channel together without changing an order or schedule."
+    },
+    {
+      "operation": "customer_update",
+      "name": "Customer communication drafting",
+      "purpose": "Prepares customer-specific message drafts for approval without sending email, EDI, portal, Teams, or other updates."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Review orders needing attention",
+      "prompt": "Which orders are on track or delayed, and where should customer service focus its review?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=order-status-review",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Service Representative",
+        "prompt": "Which orders are on track or delayed, and where should customer service focus its review?",
+        "answer": "Here's the snapshot:\n\n**On track:**\n- ORD-7812 (Voltline Motors) – shipped, 100% complete. No action needed.\n- ORD-7811 (Ironridge Equipment Co.) – in production, 45% complete, 24 days of runway. Healthy for now.\n\n**Delayed — need focus:**\n- **ORD-7810 (E-Cars Corp)** – 74% complete, but only 6 days left and already 3 days delayed (supplier casting equipment failure). Highest urgency since the buffer is thin.\n- **ORD-7813 (Greenfield Agri Machines)** – only 30% complete, delayed, 22 days left. Lower immediate urgency than E-Cars but the completion percentage is the lowest in the book — worth checking root cause before it becomes critical.\n\n**Where to focus:** E-Cars Corp (ORD-7810) first — tightest timeline. Then dig into Greenfield (ORD-7813) to understand why it's lagging at 30% before its buffer shrinks. Combined at-risk value: $651,000.\n\nWant me to pull the recovery plan or draft customer communications for either one?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Validate recorded shipment evidence",
+      "prompt": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=order-shipment-tracking",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Manager",
+        "prompt": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+        "answer": "Here's what's on record for the shipped order (ORD-7812, Voltline Motors):\n\n**Recorded shipment evidence:**\n- Carrier: XPO Logistics, tracking # XPO-884291047\n- Ship date: 2026-03-12 → Est. delivery 2026-03-15\n- Route: Detroit, MI → Fremont, CA\n- Weight: 4,200 kg\n- Cargo: EV Rocker Panel Stamping, 8,000 units, $340,000.00\n- Status: in_transit\n\n**Still needs validation:**\n- This is a synthetic/demo record — actual in-transit status, tracking confirmation, and ETA need to be verified directly in the approved carrier system (XPO's live tracking), not taken from this snapshot.\n\nLet me know if you want me to pull the engagement plan or quality validation for this order too.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Prepare an internal delay review",
+      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=order-delay-review",
+      "recorded": false,
+      "recorded_answer": null
+    },
+    {
+      "label": "Draft customer updates for approval",
+      "prompt": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=order-customer-update",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Account Manager",
+        "prompt": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+        "answer": "This is a draft only — it has not been sent via email, EDI, portal, or Teams. It's ready for your review and manual approval before any channel transmits it.\n\n**Summary (PO #F2024-3847 / ORD-7810):**\n- 74% complete (1,850/2,500 units), 99.8% quality yield\n- Delay: 3 days (new ETA 2026-03-23)\n- Recovery actions: alt. supplier material, weekend shifts (+150 units), air freight for first 500 units, daily output boosted to 325 units/day\n\nWant me to pull up the full recovery plan, engagement touchpoints, or performance dashboard next?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Forder-status-communication",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/order-status-communication/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack/order_status_communication_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Order%20Status%20Communications%20Agent%22"
+  }
+}

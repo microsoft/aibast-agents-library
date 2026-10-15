@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "engagement-strategy"
+  description: "\"Use when a relationship manager asks something like \\\"How should I approach the Morrison relationship expansion\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: engagement-strategy
+  description: "Use when a relationship manager asks something like \"How should I approach the Morrison relationship expansion\""
+  ---
+  <!-- bic:source=blank -->
+  # Engagement strategy
+  
+  Use when a relationship manager asks something like "How should I approach the Morrison relationship expansion"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `Phase 1`
+  - `Retirement readiness review`
+  - `Legacy goals`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

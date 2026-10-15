@@ -1,0 +1,206 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/omnichannel-engagement",
+  "slug": "omnichannel-engagement",
+  "name": "Omnichannel Engagement Agent",
+  "headline": "See cross-channel friction clearly without building a person-level surveillance layer.",
+  "pitch": "Compares aggregate channels, maps journey archetypes, drafts consent-aware engagement experiments, and reviews synthetic attribution evidence.",
+  "category": "b2c_sales",
+  "industries": [
+    "Cross-Industry",
+    "Retail"
+  ],
+  "personas": [
+    "Customer Experience Leader",
+    "Digital Engagement Manager",
+    "Contact Center Supervisor"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Outlook"
+  ],
+  "journey_stage": "Understand and optimize",
+  "why_try": "It gives experience, digital, and contact-center leaders a shared picture of continuity and friction while avoiding identity stitching and outreach.",
+  "customer_challenge": "Channel teams can optimize locally while customers experience broken handoffs, repeated context, and inconsistent engagement.",
+  "microsoft_ai_story": "The agent turns aggregate CRM, commerce, and contact-center style measures into a common review narrative for Microsoft collaboration surfaces.",
+  "business_value": [
+    "A more coherent view of journey friction",
+    "Better-governed channel experiments",
+    "Clearer attribution assumptions and limitations"
+  ],
+  "business_flow": [
+    "Customer Experience Leader, Digital Engagement Manager, and Contact Center Supervisor",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Omnichannel Engagement Agent",
+    "Approved aggregate CRM, commerce, and contact-center analytics",
+    "Governed review workflow",
+    "Authorized engagement systems"
+  ],
+  "capabilities": [
+    {
+      "operation": "channel_performance",
+      "name": "Aggregate channel performance",
+      "purpose": "Compares channel measures without identity stitching."
+    },
+    {
+      "operation": "journey_analysis",
+      "name": "Privacy-safe journey analysis",
+      "purpose": "Uses aggregate archetypes to identify handoff friction."
+    },
+    {
+      "operation": "engagement_optimization",
+      "name": "Consent-aware optimization",
+      "purpose": "Drafts controlled experiments with consent and frequency caps."
+    },
+    {
+      "operation": "campaign_attribution",
+      "name": "Synthetic attribution review",
+      "purpose": "Explains fixed attribution evidence without claiming causality."
+    },
+    {
+      "operation": "customer_journey",
+      "name": "Customer Journey",
+      "purpose": "Customer Journey"
+    },
+    {
+      "operation": "unresolved_issues",
+      "name": "Unresolved Issues",
+      "purpose": "Unresolved Issues"
+    },
+    {
+      "operation": "channel_recommendation",
+      "name": "Channel Recommendation",
+      "purpose": "Channel Recommendation"
+    },
+    {
+      "operation": "proactive_plan",
+      "name": "Proactive Plan",
+      "purpose": "Proactive Plan"
+    },
+    {
+      "operation": "handoff_package",
+      "name": "Handoff Package",
+      "purpose": "Handoff Package"
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Compare aggregate channels",
+      "prompt": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-performance",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Experience Leader",
+        "prompt": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+        "answer": "Here's the aggregate picture, with the continuity risks that matter most:\n\n**Where revenue actually comes from**\n- In-store dominates (44% of revenue, 30% CVR) — but low ROAS (31.7x) vs digital channels means it's expensive conversion, not efficient.\n- Mobile App (19.1% revenue, 112.7x ROAS) and Web Organic (14.8%, 106.7x) are the most efficient engines.\n- Social Media is the weak link: highest sessions (230K) but lowest CVR (1.2%) and worst ROAS (12.3x) — heavy spend, poor return.\n\n**Continuity risks to flag**\n1. **Discovery journey is fragile** — 5 touchpoints across Social→Web→Email→Email→Web over 14 days with only 3.2% conversion. Any drop-off between channels (e.g., email never opened) stalls the whole funnel with no safety net.\n2. **In-store is a black box** — it drives almost half of revenue but isn't shown as digitally connected in the journey sequences. If in-store interactions aren't being logged back to the customer profile, service reps have no visibility into a huge chunk of customer history — a major handoff blind spot.\n3. **Win-back is slow and costly** — 21 days, 4 touchpoints, only 8.4% conversion. That's a long silent gap where a customer can feel forgotten.\n4. **Social Media is a leaky top-of-funnel** — most traffic, worst conversion — meaning many first touches don't translate into a trackable journey at all, breaking continuity before it starts.\n\n**Bottom line:** digital (app/web) is efficient but low-volume relative to in-store; in-store is high-volume but siloed. The real continuity risk is the in-store/digital data gap, not the channels themselves.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Find journey friction",
+      "prompt": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-journey-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Contact Center Supervisor",
+        "prompt": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+        "answer": "Here's the handoff friction picture across the four archetypes (as Contact Center Supervisor lens):\n\n**Highest friction: Win-Back journey**\n- Longest cycle (21 days, 4 touchpoints) spanning email → SMS → web — each channel swap is a context-loss risk if the customer calls in mid-sequence\n- Lowest conversion relative to effort (8.4%) suggests reps are likely picking up confused or lapsed customers without visibility into the prior outreach steps\n- **Fix:** standardize a \"re-engagement context\" handoff note so any agent can see where the customer dropped off before a transfer\n\n**Discovery journey** — 5 touchpoints over 14 days with social → web → email loops is the most fragmented path. Reps handling escalations here often lack visibility into earlier ad/browse behavior, causing repeat questions.\n\n**Repeat Purchase** — tightest, lowest-friction journey (3 days, 18.5% conversion) — good benchmark for what \"low friction\" looks like; email→app is a clean handoff model worth replicating elsewhere.\n\n**Impulse Purchase** — only 2 touchpoints, minimal handoff risk, but near-zero service visibility if something goes wrong post-purchase (no intermediate checkpoint).\n\n**Bottom line:** the win-back and discovery archetypes are where agents most likely inherit customers without full context — worth prioritizing a consistent handoff brief (last channel touched + unresolved intent) for those two paths first.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Draft consent-aware experiments",
+      "prompt": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-engagement-optimization",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Digital Engagement Manager",
+        "prompt": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+        "answer": "Here are consent-aware experiments you could run, built strictly on aggregate/opt-in data — no individual outreach triggered:\n\n**1. Mobile App Push Timing Test** (top performer: 112.7x ROAS, 4% CVR)\n- Test two notification windows (e.g., morning vs. evening) only for users who've opted into app notifications\n- Frequency cap: max 2/week per user\n- Measure: CVR lift, opt-out rate (kill switch if opt-outs exceed 1.5%)\n\n**2. Web Organic Bounce Reduction** (35% bounce rate despite strong ROAS)\n- A/B test landing page variants for organic traffic — no personalization, pure content/UX test\n- No frequency cap needed (passive, session-based)\n\n**3. Email Cadence Experiment** (69.6x ROAS, 18.5% bounce)\n- Test reducing frequency from current baseline to 1x/week for the segment currently receiving more, only among double-opt-in subscribers\n- Cap: 1 email/week ceiling, auto-suppress if 2 consecutive opens = 0\n\n**4. Social Media Spend Taper** (weakest: 12.27x ROAS, 42% bounce)\n- Reduce spend 20% and reallocate to app/web organic; measure if aggregate ROAS improves\n- No individual targeting — campaign-level test only\n\n**Guardrails across all tests:**\n- Consent status checked before cohort inclusion\n- Global frequency cap: no customer touched more than 3x/week across channels combined\n- No message drafting or sending — these are structural/budget experiments, not customer-facing campaigns\n\nWant me to pull campaign attribution data to size the social-media reallocation?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Review attribution evidence",
+      "prompt": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-campaign-attribution",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Digital Engagement Manager",
+        "prompt": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+        "answer": "Here's the synthetic attribution snapshot (correlational, not causal — conversions are *associated with* each channel, not proven to be *caused* by it):\n\n**Totals:** $2.63M revenue / $90K cost across 5 campaigns, ~2,828% blended ROI (synthetic figures).\n\n| Campaign | Channel | Conversions | Revenue | ROI |\n|---|---|---|---|---|\n| Spring Collection Launch | Email | 2,250 | $450K | 8,900% |\n| Flash Sale 48hr | SMS | 3,600 | $540K | 8,900% |\n| Influencer Partnership | Social | 1,700 | $340K | 871% |\n| Google Shopping Ads | Web Paid | 2,700 | $540K | 1,186% |\n| App Push — Loyalty | Mobile App | 5,100 | $765K | 38,150% |\n\n**Notable patterns (associative, not causal):**\n- App Push shows the highest conversion volume and click-to-conversion rate (30%) alongside the lowest cost — likely reflects targeting an already-engaged loyalty segment, not proof the channel itself drives behavior.\n- SMS has unusually high open rates (96%) paired with strong conversion — consistent with urgency-based campaigns, but other factors (timing, audience selection) could explain it.\n- Influencer has the lowest click-to-conversion rate and highest cost-per-conversion of the set.\n\nThis is a snapshot for planning discussion, not a channel-performance verdict — no outreach or budget shifts were made.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Contact Center Supervisor: Customer Journey",
+      "prompt": "Show me the customer's journey across all channels and help me pick up where they left off.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-customer-journey",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Contact Center Supervisor",
+        "prompt": "Show me the customer's journey across all channels and help me pick up where they left off.",
+        "answer": "Here's Sarah's journey — she's been stuck for 3 days trying to buy an Alpine Parka ($289 cart):\n\n**Timeline:**\n- **3 days ago** – Mobile app checkout → payment declined\n- **2 days ago** – Chat re: sizing question → disconnected before resolved\n- **Yesterday** – Email cart reminder → no response\n- **Today** – Called support → currently on hold\n\n**Where she stands:** Two open loops (payment issue + sizing question), both unresolved, and she's now escalated to a live call — likely frustrated. Mobile app is her primary channel (12 touches/30 days).\n\n**To pick up where she left off:** whoever takes that call should lead with the sizing answer and payment fix together, not make her re-explain. Want me to pull the unresolved issues detail (exact questions + a suggested opening line) or prep a handoff package for the agent taking the call?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Contact Center Supervisor: Unresolved Issues",
+      "prompt": "Show me what Sarah has been asking about and where we dropped the ball.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-unresolved-issues",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Contact Center Supervisor",
+        "prompt": "Show me what Sarah has been asking about and where we dropped the ball.",
+        "answer": "Here's the picture on Sarah:\n\n**What she's been asking:**\n- \"Does the Alpine Parka run true to size?\"\n- \"Do you have it in navy?\"\n\n**Where we dropped the ball:**\n- Chat session disconnected mid-conversation 2 days ago — neither question got answered\n- Her card was also declined during checkout, adding friction\n- She's spent 18 minutes total trying to complete this purchase — likely frustrated\n\n**Good news:** both answers are ready to go — it runs a size small, and navy is in stock (S–XL).\n\nSuggested opening line if someone follows up: *\"Hi Sarah, I see you've been trying to order the Alpine Parka. Sorry about the chat disconnect — let me answer your questions and get this order done.\"*\n\nWant me to pull the optimal channel/timing to reach her, or draft a proactive outreach plan?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Digital Engagement Manager: Channel Recommendation",
+      "prompt": "Which channel and timing should we use to reach Sarah for this issue and in the future?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-recommendation",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Digital Engagement Manager",
+        "prompt": "Which channel and timing should we use to reach Sarah for this issue and in the future?",
+        "answer": "For Sarah Mitchell:\n\n**Right now:** Phone call to resolve this issue, then an SMS confirmation. Skip chat (she's been frustrated there) and email (low engagement, bad for urgency).\n\n**Going forward:**\n- **Order/shipping updates:** SMS — real-time, 76% response rate\n- **Promotions/offers:** Mobile push around 10 AM\n- **Service issues:** Phone callback rather than chat\n- **Best engagement window:** 7–9 PM\n- **Avoid:** Email (only 34% open) and chat for anything time-sensitive\n\nWant me to pull up proactive engagement opportunities or draft a handoff package next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Digital Engagement Manager: Proactive Plan",
+      "prompt": "What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-proactive-plan",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Digital Engagement Manager",
+        "prompt": "What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?",
+        "answer": "Here's the proactive plan for Sarah — all drafts pending your approval:\n\n**If she converts:**\n- Order complete → size guide via SMS\n- Delivery day → styling tips via push (82% engagement — her best channel)\n- 7 days later → in-app review request\n- Follow-up touches: winter accessories bundle (day 3), birthday loyalty bonus (week 6), spring preview early access (week 8)\n\n**If she doesn't convert (win-back sequence):**\n- Hour 1: SMS — \"Your coat is waiting\"\n- Hour 4: Push — \"Low stock\" nudge\n- Day 2: SMS with 10% off code\n- Day 5: Personal stylist call (escalate to human touch)\n\n**Avoid:** email (only 34% open rate) and chat-based offers — she's had a negative chat experience before.\n\nBottom line: push and SMS are her high-engagement channels; email and chat offers are dead weight for her specifically.\n\nWant me to prep a handoff package so whoever executes this has full context?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Customer Experience Leader: Handoff Package",
+      "prompt": "Prepare the context in case Sarah needs to be handed off to another agent.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-handoff-package",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Experience Leader",
+        "prompt": "Prepare the context in case Sarah needs to be handed off to another agent.",
+        "answer": "Here's Sarah's handoff package, ready to pass to another agent:\n\n**Quick context**\n- Gold tier, $2,400 lifetime value, trying to buy an Alpine Parka (3 days now)\n- Blockers: sizing issue (resolved), payment (still in progress)\n- Mood: was frustrated, now re-engaged\n\n**What the next agent needs**\n- Payment: card decline history + alternative options she's tried\n- Styling: size preferences and past purchase history\n- Store pickup: nearest location + live inventory\n- Loyalty: current points balance and tier perks\n\n**Suggested transfer line:** \"I'm connecting you with [Name] — I've shared your complete history, no need to repeat anything.\"\n\n**Attach when you transfer:** CRM note, cart link, and conversation summary.\n\nThis is all drafted context only — nothing has actually been transferred or sent. Want me to pull the unresolved issues or best channel/timing too, in case the next agent needs to reach out first?",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fomnichannel-engagement",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/omnichannel-engagement/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack/omnichannel_engagement_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Omnichannel%20Engagement%20Agent%22"
+  }
+}

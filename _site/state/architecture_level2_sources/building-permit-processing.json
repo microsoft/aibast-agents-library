@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "building-permit-processing",
+  "agent": "@aibast-agents-library/building-permit-processing",
+  "display_name": "Building Permit Processing Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic permit application snapshot",
+        "detail": "Six fictional permits capture applicant, parcel, project, valuation, zoning, status, reviewer, review cycle, and submitted documents."
+      },
+      {
+        "name": "Permit rules and statutory schedules",
+        "detail": "Packaged targets, ordered review desks, intake-document rules, duplicate criteria, and zoning references drive fixed decisions."
+      },
+      {
+        "name": "Review checklist and fee references",
+        "detail": "Synthetic checklist templates and valuation-based fee schedules support review scope and estimates, never compliance or billing actions."
+      },
+      {
+        "name": "Inspector board and coverage records",
+        "detail": "Fixed inspections, specialties, zones, dates, statuses, and available slots support coverage review without changing assignments."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Backlog and complaint-risk ranking",
+        "detail": "Compares open permits with statutory clocks and correction cycles to rank overdue work and recommend reviewer intervention."
+      },
+      {
+        "name": "Intake completeness and duplicate triage",
+        "detail": "Checks required documents and matching applicant-parcel records, then recommends accept, reject, or redirect without mutating a case."
+      },
+      {
+        "name": "Review routing and due-date preparation",
+        "detail": "Classifies permit type, returns ordered review desks, and calculates the synthetic target date for technician and reviewer approval."
+      },
+      {
+        "name": "Applicant update drafting",
+        "detail": "Turns current permit evidence into prioritized draft status updates; staff review and send them through separately approved channels."
+      },
+      {
+        "name": "Permit review decision support",
+        "detail": "Returns status, reviewer, zoning references, checklist scope, and fee estimates without approval, compliance, invoice, or payment claims."
+      },
+      {
+        "name": "Inspection coverage coordination",
+        "detail": "Surfaces the inspection board and specialty-matched coverage for inspector review without booking, reassigning, or notifying anyone."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "The single-file RAPP agent exposes seven natural-language permit workflows through local chat, streaming, and tool routing."
+      },
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Seven skills and two synthetic knowledge files reproduce five validated cases while the downloadable agent remains unpublished."
+      },
+      {
+        "name": "Evidence-first staff responses",
+        "detail": "Permit technicians, reviewers, customer-service staff, managers, and inspectors receive concise facts, drafts, and next steps."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Backlog escalation brief",
+        "detail": "Ranks overdue permits, complaint risk, review cycles, and assigned reviewers so managers can authorize intervention priorities."
+      },
+      {
+        "name": "Front-counter intake queue",
+        "detail": "Shows duplicate and incomplete submissions, required documents, review desks, and target dates for technician approval."
+      },
+      {
+        "name": "Applicant communication queue",
+        "detail": "Prioritizes permit-specific draft updates for customer-service review; the agent never sends a message or changes a permit case."
+      },
+      {
+        "name": "Inspection coverage board",
+        "detail": "Lists scheduled and pending inspections with inspector specialties and coverage for human assignment and field approval."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "BuildingPermitProcessingAgent portable tool",
+      "detail": "Single-file Python BasicAgent implements seven deterministic workflows over packaged synthetic permit and inspection records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable agent and exposes conversational chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated skills-and-knowledge experience; the downloadable manual build is Draft and requires explicit publication approval."
+    },
+    {
+      "name": "Dynamics 365 Customer Service",
+      "detail": "Cited future read-only seam for permit cases; no live connector exists and the agent never creates, updates, closes, or approves a case."
+    },
+    {
+      "name": "SharePoint",
+      "detail": "Cited future read-only seam for plans and policy documents; the package currently uses two synthetic knowledge files."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Cited future seam for reviewer and inspector coordination; the package sends no messages, assignments, or approval requests."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from deterministic agent or packaged skill evidence."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Every permit, applicant, address, reviewer, inspector, date, standard, fee, status, and recommendation is fictional pilot evidence."
+    },
+    {
+      "name": "Seven preserved permit workflows",
+      "detail": "Backlog, intake, applicant updates, status, checklist, inspector assignment, and fee estimation remain independently routable."
+    },
+    {
+      "name": "Reviewer and inspector approval gates",
+      "detail": "Human reviewers approve permit decisions and handoffs; inspectors approve coverage and field action before any operational change."
+    },
+    {
+      "name": "No permit-case mutation",
+      "detail": "The agent never approves, denies, issues, reopens, edits, closes, routes, or otherwise changes a permit or service case."
+    },
+    {
+      "name": "No autonomous communications or assignments",
+      "detail": "Applicant updates stay drafts; reviewer and inspector assignment, booking, cancellation, and notification remain human-controlled."
+    },
+    {
+      "name": "Fail-closed and non-legal handling",
+      "detail": "Unknown records are not substituted; zoning and checklist outputs are references, not legal advice or code-compliance findings."
+    },
+    {
+      "name": "Draft publication and future-write controls",
+      "detail": "The release build is unpublished; production starts read-only and any future write needs governance review and explicit human approval."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/building-permit-processing",
+  "slug": "building-permit-processing",
+  "name": "Building Permit Processing Agent",
+  "headline": "Turn permit backlogs into a predictable citizen service",
+  "pitch": "Give development services teams one place to spot late reviews, reject bad intake, route new applications, prepare applicant updates, and coordinate inspections before delays turn into complaints.",
+  "category": "slg_government",
+  "industries": [
+    "State and Local Government"
+  ],
+  "personas": [
+    "Permit Technicians",
+    "Plan Reviewers",
+    "Inspectors"
+  ],
+  "microsoft_products": [
+    "Dynamics 365 Customer Service",
+    "Microsoft Teams",
+    "SharePoint"
+  ],
+  "journey_stage": "Govern",
+  "why_try": "This demo makes public-sector AI immediately tangible: ask one plain-language question and expose the application, owner, review desk, or inspector that needs action next.",
+  "customer_challenge": "A city development services department is balancing long review cycles, duplicate or incomplete submissions, repeated status calls, and inspectors who need current assignments without chasing disconnected systems.",
+  "microsoft_ai_story": "Microsoft Copilot Studio is the conversational front door. Dynamics 365 Customer Service manages the permit case, SharePoint supplies plans and supporting documents, and Microsoft Teams brings assignments and updates to reviewers and inspectors.",
+  "business_value": [
+    "Improves intake consistency and reduces avoidable rework before review begins.",
+    "Accelerates routing and gives staff a clearer view of overdue and at-risk applications.",
+    "Strengthens applicant communication and coordination across planning, zoning, code review, and inspections."
+  ],
+  "business_flow": [
+    "Permit applicants and city staff",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Building Permit Processing Agent",
+    "Dynamics 365 Customer Service",
+    "SharePoint",
+    "Microsoft Teams",
+    "Reviewers and inspectors"
+  ],
+  "capabilities": [
+    {
+      "operation": "permit_backlog",
+      "name": "Backlog and complaint-risk view",
+      "purpose": "Ranks open applications against review clocks and correction cycles so managers know where intervention matters."
+    },
+    {
+      "operation": "intake_triage",
+      "name": "Intake validation and routing",
+      "purpose": "Detects duplicates and missing documents, classifies the permit, and identifies the review desks and due date."
+    },
+    {
+      "operation": "applicant_updates",
+      "name": "Proactive applicant communication",
+      "purpose": "Drafts clear status updates from the current permit state so front-desk teams can reduce avoidable status calls."
+    },
+    {
+      "operation": "inspector_assignment",
+      "name": "Inspection coordination",
+      "purpose": "Surfaces scheduled inspections, inspector specialties, availability, and the job context needed for assignment."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Find the permit most likely to trigger a complaint",
+      "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Development Services Director",
+        "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+        "answer": "Here's the backlog picture (pulled from the permit system):\n\n| Priority | Permit | Applicant | Status |\n|---:|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days overdue, cycle 3 corrections, 63 days total — **highest complaint risk (100/100)** |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |\n\n**Who complains first:** Metro School District on BP-2025-0104 — it's the oldest, most overdue, and already on its third correction round with reviewer Tom Delgado.\n\n**Suggested next step:** have a reviewer draft the cycle-3 correction list and set a firm re-review date for that permit before it escalates further.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Triage today’s front-counter submissions",
+      "prompt": "Anything at the front counter I should not be accepting today?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=permit-intake",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Permit Technician",
+        "prompt": "Anything at the front counter I should not be accepting today?",
+        "answer": "Two to hold off on today:\n\n- **BP-2025-0105 (Greenfield Development, $4.2M mixed-use)** — reject as a **duplicate** of BP-2025-0101, same parcel/applicant already in review. Also missing MEP drawings and title report, so point them to the existing case instead.\n- **BP-2024-3847 (Johnson Residence)** — **hold**, missing HOA approval letter; clock doesn't start until it's in.\n\nGood to accept:\n- **BP-2025-0106 (Ridgeline Restaurants, $540K alteration)** — complete, routes to Zoning → Building → Fire/Life Safety, 21-day clock due 2026-08-28.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Route the Harbor Way restaurant fit-out",
+      "prompt": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=permit-routing",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Permit Technician",
+        "prompt": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+        "answer": "Found it — **BP-2025-0106, Ridgeline Restaurants Inc.** (commercial alteration, MU-2, $540,000 valuation):\n\n- **Routed to:** Zoning → Building → Fire/Life Safety (in that order)\n- **Clock:** started today, 21-day statutory target\n- **Due back:** 2026-08-28\n\nIt was accepted at intake with no missing documents, so the clock is already running.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Stop avoidable applicant status calls",
+      "prompt": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=permit-updates",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Customer Service Lead",
+        "prompt": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+        "answer": "Here are 6 ready-to-send applicant updates that should cut most of today's status calls:\n\n- **Metro School District (BP-2025-0104)** — in correction cycle 3 with Tom Delgado; 18 days over target.\n- **Greenfield Development (BP-2025-0101)** — in plan review; 18 days over target.\n- **Sunrise Solar (BP-2025-0103)** — Electrical Rough-In inspection scheduled 8/17 with Dave Martinez; 5 days over.\n- **Greenfield Development (BP-2025-0105)** — needs MEP drawings + title report before clock starts; on track.\n- **Ridgeline Restaurants (BP-2025-0106)** — complete, entering review today; on track.\n- **Johnson Residence (BP-2024-3847)** — needs HOA approval before clock starts; on track.\n\nFor the overdue ones, I'd lead with an honest status + apology for delay; for the ones waiting on documents, a clear checklist of what's missing stops the \"any update?\" calls fastest. Want me to draft the actual email/letter text for any of these?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "See the solar inspection board",
+      "prompt": "What inspections are on the board for the solar job, and who is covering them?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=permit-inspections",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Chief Building Inspector",
+        "prompt": "What inspections are on the board for the solar job, and who is covering them?",
+        "answer": "Here's the board for the solar job (BP-2025-0103, 1100 Industrial Pkwy):\n\n| Inspection | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-25 | Pending |\n\nDave Martinez (electrical) covers both rough-in and final, Lisa Park (structural) covers the panel mounting inspection.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fbuilding-permit-processing",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/building-permit-processing/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Building%20Permit%20Processing%20Agent%22"
+  }
+}

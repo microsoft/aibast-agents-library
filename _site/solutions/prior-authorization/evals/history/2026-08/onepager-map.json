@@ -1,0 +1,64 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "onepager": "47. Prior Authorization Agent one-pager.pptx",
+  "source_slide_sha256": "a5119199eb95e7a35be3b51b0bfcb72c64b2b79393e733fe38bf444e7adc5827",
+  "promises": [
+    {
+      "advertised_promise": "Pull payer-specific requirements and match them with EHR data",
+      "operations": [
+        "request_evidence"
+      ],
+      "demo_cases": [
+        "PA-01"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Inventories synthetic request evidence without submitting or deciding the request.",
+        "Crosswalks fictional policy checklist items to synthetic evidence; authoritative policy and EHR review remain human tasks."
+      ]
+    },
+    {
+      "advertised_promise": "Compile the full clinical evidence packet needed for medical review",
+      "operations": [
+        "criteria_evidence"
+      ],
+      "demo_cases": [
+        "PA-02"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Presents synthetic checklist items for qualified utilization review.",
+        "Drafts an inventory; completeness and minimum necessity require utilization review."
+      ]
+    },
+    {
+      "advertised_promise": "Submit requests directly to payer portals and send real-time updates",
+      "operations": [
+        "status_summary"
+      ],
+      "demo_cases": [
+        "PA-03"
+      ],
+      "disposition": "excluded",
+      "synthetic_evidence": [
+        "Transcribes a synthetic workflow state without making an authorization outcome.",
+        "No submission, portal action, notification, scheduling, or record mutation occurs."
+      ]
+    },
+    {
+      "advertised_promise": "Flag cases requiring additional documentation and prepare appeal materials proactively",
+      "operations": [
+        "appeal_evidence_packet"
+      ],
+      "demo_cases": [
+        "PA-04"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Prepares a minimum-necessary outline without filing or recommending an appeal.",
+        "Surfaces missing source fields and drafts a reconsideration outline without filing or recommending an appeal."
+      ]
+    }
+  ]
+}

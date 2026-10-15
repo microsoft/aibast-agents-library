@@ -1,0 +1,188 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/patient-intake",
+  "slug": "patient-intake",
+  "name": "Patient Intake and Scheduling Agent",
+  "headline": "Make every visit-readiness handoff clear before staff take action",
+  "pitch": "Give patient-access teams a safe, read-only view of synthetic intake completeness, recorded coverage evidence, candidate availability, and pre-visit follow-up—without booking care or changing a record.",
+  "category": "healthcare",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Front Desk Staff",
+    "Scheduling Coordinators",
+    "Patient Access Reps"
+  ],
+  "microsoft_products": [
+    "Dynamics 36",
+    "SharePoint"
+  ],
+  "journey_stage": "Activate",
+  "why_try": "This demo turns a fragmented access workflow into four concise, reviewable handoffs while making the human and privacy boundaries visible in every answer.",
+  "customer_challenge": "A regional outpatient clinic is managing incomplete intake packets, late coverage follow-up, disconnected availability data, and inconsistent pre-visit handoffs without a single safe review surface.",
+  "microsoft_ai_story": "Microsoft Copilot Studio provides the conversational front door. Dynamics 365 contributes approved patient-access workflow context, and SharePoint supplies governed intake documents; human staff retain eligibility, scheduling, communication, and record-change authority.",
+  "business_value": [
+    "Improves consistency when staff review intake completeness and unresolved evidence.",
+    "Clarifies coverage and availability follow-up without implying eligibility or booking.",
+    "Reduces avoidable handoff ambiguity while preserving human approval and minimum-necessary privacy controls."
+  ],
+  "business_flow": [
+    "Patient-access staff and clinical operations reviewers",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Patient Intake and Scheduling Agent",
+    "Dynamics 365 patient-access workflow",
+    "SharePoint governed intake documents",
+    "Authorized patient-access reviewers"
+  ],
+  "capabilities": [
+    {
+      "operation": "intake_readiness",
+      "name": "Intake readiness review",
+      "purpose": "Summarizes present and missing synthetic intake evidence for staff confirmation."
+    },
+    {
+      "operation": "coverage_evidence",
+      "name": "Coverage evidence review",
+      "purpose": "Transcribes source-recorded synthetic coverage evidence without determining eligibility."
+    },
+    {
+      "operation": "appointment_availability",
+      "name": "Appointment availability review",
+      "purpose": "Shows candidate synthetic source slots without holding, booking, or changing an appointment."
+    },
+    {
+      "operation": "pre_visit_summary",
+      "name": "Pre-visit readiness summary",
+      "purpose": "Drafts a minimum-necessary readiness handoff for authorized review."
+    },
+    {
+      "operation": "new_patient_intake",
+      "name": "New Patient Intake",
+      "purpose": "New Patient Intake"
+    },
+    {
+      "operation": "appointment_hold_draft",
+      "name": "Appointment Hold Draft",
+      "purpose": "Appointment Hold Draft"
+    },
+    {
+      "operation": "intake_packet",
+      "name": "Intake Packet",
+      "purpose": "Intake Packet"
+    },
+    {
+      "operation": "reminder_plan",
+      "name": "Reminder Plan",
+      "purpose": "Reminder Plan"
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Front Desk Staff: Intake Readiness",
+      "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-intake-readiness",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Front Desk Staff",
+        "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
+        "answer": "Per the synthetic intake readiness check for Patient Alpha (SYN-PT-001):\n\n- **On file:** contact details, consent acknowledgement, medication list, preferred language (English)\n- **Still needed:** emergency contact confirmation\n\nThat's the one open item flagged for staff to confirm. (Reminder: this is synthetic demo data — a human still needs to verify against the real record.)",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Patient Access Representative: Coverage Evidence",
+      "prompt": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-coverage-evidence",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Patient Access Representative",
+        "prompt": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+        "answer": "Here's what's on file for Synthetic Patient Alpha (SYN-PT-001) — this is synthetic demo data, not a real eligibility determination:\n\n**Recorded:**\n- Payer: Synthetic Health Plan\n- Status: source record received (evidence dated 2026-07-30)\n\n**Staff must still confirm:**\n- Active coverage and network status directly in the payer portal\n- No copay, deductible, or prior-auth details were returned — those would need separate verification too\n\nThis is a read-only draft; nothing here counts as a determination of eligibility or benefits until a human verifies it in the actual payer system.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Scheduling Coordinator: Appointment Availability",
+      "prompt": "Show the candidate source slots for Clinician A without booking anything.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-appointment-availability",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Scheduling Coordinator",
+        "prompt": "Show the candidate source slots for Clinician A without booking anything.",
+        "answer": "Here are the candidate slots for **Clinician A** — nothing has been booked:\n\n- **2026-08-20, 10:30 AM** — new patient consultation\n- **2026-08-22, 2:00 PM** — follow-up consultation\n\nCoverage check for Sarah Martinez also looks clean: active BCBS, $35 specialist copay, no prior auth needed, in-network. Let me know if you want me to draft a hold on one of these — that still requires your confirmation to actually book.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Front Desk Staff: Pre Visit Summary",
+      "prompt": "Prepare a pre-visit readiness summary for Synthetic Patient Alpha.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-pre-visit-summary",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Front Desk Staff",
+        "prompt": "Prepare a pre-visit readiness summary for Synthetic Patient Alpha.",
+        "answer": "Here's the readiness summary for Synthetic Patient Alpha (SYN-PT-001) — draft only, needs human review:\n\n- **Visit:** New patient consultation with Clinician A on 2026-08-15\n- **Outstanding intake item:** Emergency contact confirmation needed\n- **Coverage:** Needs verification in payer portal — active status and network not yet confirmed\n\nNothing else is flagged as missing, but confirm the emergency contact and coverage before the visit. Want me to check intake readiness in more detail or pull coverage evidence specifically?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Front Desk Staff: New Patient Intake",
+      "prompt": "New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-new-patient-intake",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Front Desk Staff",
+        "prompt": "New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.",
+        "answer": "Registration drafted for Sarah Martinez (SYN-PT-003) — new patient, chronic migraines, requesting Dr. James Anderson in Neurology, Blue Cross Blue Shield, within 14 days. This is a staff-review draft only, not yet submitted to the record system.\n\nNext logical steps: check Dr. Anderson's availability in that window and verify her BCBS coverage/prior-auth requirements. Want me to pull both now?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Scheduling Coordinator: Appointment Hold Draft",
+      "prompt": "Book Sarah Martinez for Tuesday at 2:30 and tell me which intake forms she needs.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-appointment-hold-draft",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Scheduling Coordinator",
+        "prompt": "Book Sarah Martinez for Tuesday at 2:30 and tell me which intake forms she needs.",
+        "answer": "I drafted the booking (not yet reserved — needs staff confirmation in the scheduling system):\n\n**Booking draft**\n- Sarah Martinez with Dr. James Anderson, Neurology — Suite 405\n- Tuesday 2:30 PM, 60 min (new patient consult)\n\n**Intake packet forms she needs:**\n1. Demographics Form\n2. Insurance Verification (photo of card)\n3. Medical History (meds, allergies, surgeries)\n4. Migraine Questionnaire (HIT-6)\n5. HIPAA Authorization\n6. Financial Policy acknowledgment\n\nThis is a draft only — staff still need to confirm and actually book it in the live system.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Patient Access Representative: Intake Packet",
+      "prompt": "Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-intake-packet",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Patient Access Representative",
+        "prompt": "Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?",
+        "answer": "Yes — her intake packet (pulled via the intake_packet draft) includes both:\n\n- **HIPAA Authorization** (digital signature required)\n- **Medical History**, which captures medication history, allergies, and prior surgeries\n\nFull packet list:\n1. Demographics Form\n2. Insurance Verification (card photo upload)\n3. Medical History (meds, allergies, surgeries)\n4. Migraine Questionnaire (HIT-6 headache impact)\n5. HIPAA Authorization\n6. Financial Policy acknowledgment\n7. Portal link to send via SMS\n\nIt's a draft — staff still need to send it and review completed forms.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Scheduling Coordinator: Reminder Plan",
+      "prompt": "Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-reminder-plan",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Scheduling Coordinator",
+        "prompt": "Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.",
+        "answer": "Here's the recommended reminder sequence for Sarah's visit (Tuesday 2:30 PM):\n\n- **72 hrs before** (Sat 2:30 PM): SMS + email reminder\n- **24 hrs before** (Mon 2:30 PM): SMS + optional voice call\n- **2 hrs before** (Tue 12:30 PM): Final SMS\n- **Forms nudge**: Alert if intake forms aren't done by Monday\n- **Easy reschedule**: Reply \"RESCHEDULE\" to any SMS\n- **Waitlist auto-fill**: Slot fills automatically if she cancels >24hrs out\n\nThis protocol brings new-patient no-show rates down to ~8%. This is a draft plan from the intake agent — staff still need to activate it in your actual messaging system.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fpatient-intake",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/patient-intake/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Patient%20Intake%20and%20Scheduling%20Agent%22"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-08T05:07:16.109588Z",
+  "solution": "@aibast-agents-library/warranty-registration",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Warranty and Manual",
+    "bot_id": "3f68ad6f-ce65-4d5f-be94-940c9d6b0647",
+    "created": true
+  },
+  "target_model": "Claude Opus 5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 6,
+      "confirmed": 6
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "WAR-01",
+      "prompt": "How does our dealership's warranty coverage look right now?",
+      "must_include": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "18-war-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-02",
+      "prompt": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+      "must_include": [
+        "Eligible for claim review",
+        "Labor covered",
+        "No claim was filed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "19-war-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-03",
+      "prompt": "Pull the full warranty record for tire changer TC-90-3307.",
+      "must_include": [
+        "Expired (ended 16 days ago)",
+        "CLM-25-0044",
+        "Claim history"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "20-war-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-04",
+      "prompt": "We just sold welding station WS-25-4520. Check the serial before we register it.",
+      "must_include": [
+        "Ready to register",
+        "Already registered",
+        "2026-03-22"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "21-war-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-05",
+      "prompt": "Prepare the registration for WS-25-4520, but don't submit anything.",
+      "must_include": [
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "22-war-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "WAR-06",
+      "prompt": "Which units should we offer extended coverage to this month?",
+      "must_include": [
+        "$191.25",
+        "BG-08-2290",
+        "No offer was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "23-war-06.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/warranty-registration/screenshots/manual/browserfilm.json",
+    "gif": "solutions/warranty-registration/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/warranty-registration/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "24-confirm-draft.jpg"
+  }
+}

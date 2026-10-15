@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "order-entry-validation",
+  "agent": "@aibast-agents-library/order-entry-validation",
+  "display_name": "Order Entry Validation Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic PO queue",
+        "detail": "Five fictional purchase orders with customers, contacts, ship-to, terms and line items for safe demos."
+      },
+      {
+        "name": "Synthetic accepted quotes",
+        "detail": "Matching fictional quotes with prices, terms, ship-to, contact and buying group ground every validation."
+      },
+      {
+        "name": "Configuration rule book",
+        "detail": "Compatible pairings, mandatory kits, region release rules and order type mapping drive each check."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Purchase order extraction",
+        "detail": "Reads header and line fields from the PO exactly as written; nothing is inferred."
+      },
+      {
+        "name": "Quote validation",
+        "detail": "Compares customer, contact, ship-to, terms and every line price with a 1% per-line tolerance."
+      },
+      {
+        "name": "Configuration checking",
+        "detail": "Applies pairing, mandatory kit and region release rules to every sensor head on the order."
+      },
+      {
+        "name": "Order classification",
+        "detail": "Derives region, order type, order class and sales channel from the PO and the quote."
+      },
+      {
+        "name": "Draft sales order assembly",
+        "detail": "Builds header and lines at quote prices and lists every exception before entry."
+      },
+      {
+        "name": "Queue readiness review",
+        "detail": "Separates ready orders from those needing a fix, each with the field or rule behind it."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the Draft agent with seven skills and two synthetic knowledge files; publish stays a separate approved step."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Gives sales operations a conversational entry point once approved production controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file OrderEntryValidationAgent locally with deterministic, synthetic-only routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Pending queue view",
+        "detail": "Shows every PO with value, matched quote and what to watch for."
+      },
+      {
+        "name": "Exception list per order",
+        "detail": "Names each price, terms, buying group or configuration exception with its source field or rule."
+      },
+      {
+        "name": "Queue readiness summary",
+        "detail": "Counts ready versus needs-fix orders so specialists work the ready ones first."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable OrderEntryValidationAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent with seven deterministic, read-only operations over bundled synthetic data."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the agent and exposes chat, health and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the seven-skill package in Draft; explicit authorized approval is required before publication."
+    },
+    {
+      "name": "Microsoft Outlook",
+      "detail": "Cited production seam for the shared PO mailbox; the package reads a fixed synthetic queue instead."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Cited production seam for accepted quotes; the package uses fixed synthetic quotes instead."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only bundled fictional POs, quotes and rules; never browses or invents a field or price."
+    },
+    {
+      "name": "Extract, never infer",
+      "detail": "Every PO field is read as written; missing values stay missing and become exceptions."
+    },
+    {
+      "name": "Wrong-configuration guardrail",
+      "detail": "An order with a failed configuration rule is never presented as ready to enter."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never submits, books or changes an order and never contacts a customer."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Seven persona cases verify one bounded operation each with exact evidence anchors."
+    }
+  ]
+}

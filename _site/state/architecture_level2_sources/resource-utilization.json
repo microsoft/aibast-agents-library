@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "resource-utilization",
+  "agent": "@aibast-agents-library/resource-utilization",
+  "display_name": "Resource Utilization Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Frozen synthetic workforce roster",
+        "detail": "Ten fictional consultants provide IDs, levels, skills, rates, utilization, status, projects, end dates, targets, and bench costs."
+      },
+      {
+        "name": "Synthetic pipeline and workforce rules",
+        "detail": "Fixed project endings, weighted opportunities, role needs, matching rules, pathway costs, and scenario values ground every result."
+      },
+      {
+        "name": "L1 blueprint and locked evidence",
+        "detail": "The solution architecture, five operation skills, two knowledge files, and five validated cases define the supported planning scope."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Utilization and target analysis",
+        "detail": "Calculates firm and level utilization, target gaps, billable headcount, bench headcount, availability, and monthly bench cost."
+      },
+      {
+        "name": "Capacity and demand forecasting",
+        "detail": "Compares ninety-day project endings with weighted pipeline starts, probabilities, durations, and exact role requirements."
+      },
+      {
+        "name": "Bench skill and cost analysis",
+        "detail": "Inventories available consultants and skills while calculating monthly, annualized, and illustrative revenue scenarios."
+      },
+      {
+        "name": "Qualified staffing matching",
+        "detail": "Matches bench consultants only when both skill and level meet a pipeline need and counts each consultant once."
+      },
+      {
+        "name": "Workforce pathway modeling",
+        "detail": "Models upskilling, internal innovation, cost, target demand, and synthetic payback options for unmatched resources."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio planning conversation",
+        "detail": "Operations, resource, and finance leaders invoke five bounded workflows through a validated Draft conversational agent."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "The single-file RAPP agent runs locally through Brainstem chat and API surfaces with bundled synthetic evidence."
+      },
+      {
+        "name": "Manager-led review workspace",
+        "detail": "Resource managers inspect matches, unmatched people, capacity, costs, and pathways before any staffing or development decision."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Resource Utilization Dashboard",
+        "detail": "Reports firm and level utilization, targets, gaps, headcount, bench status, availability, and monthly carrying cost."
+      },
+      {
+        "name": "Capacity Forecast",
+        "detail": "Reports upcoming project endings alongside weighted pipeline demand, start dates, durations, probabilities, and role totals."
+      },
+      {
+        "name": "Bench Analysis",
+        "detail": "Reports named bench resources, skill inventory, carrying-cost exposure, and explicitly synthetic revenue opportunity."
+      },
+      {
+        "name": "Staffing and Workforce Plan",
+        "detail": "Reports candidate matches and capability-building options for manager review; no staffing assignment or approval occurs."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "ResourceUtilizationAgent RAPP tool",
+      "detail": "A portable Python BasicAgent exposes five deterministic planning operations over bundled synthetic evidence."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "The local-first RAPP server discovers the tool and provides chat, streaming, health, and isolated validation surfaces."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the conversational agent, two uploaded knowledge files, and five operation skills; validated artifacts remain Draft."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Approved production seam for project and resource context; current solution evidence uses frozen synthetic data."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Supports governed staffing and development review; the agent does not contact people, assign work, or send messages."
+    },
+    {
+      "name": "Foundation model selected by deployment environment",
+      "detail": "The deployment environment supplies the model used to route requests and present grounded planning results."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Explicit five-operation routing",
+      "detail": "A fixed enum routes utilization, capacity, bench, staffing-match, or workforce-plan requests."
+    },
+    {
+      "name": "Synthetic-only grounding",
+      "detail": "The package forbids web search, live HR or PSA queries, enrichment, and invention beyond the frozen evidence snapshot."
+    },
+    {
+      "name": "Deterministic matching controls",
+      "detail": "Matches require exact level and skill fit, respect requested role counts, and prevent consultant double-counting."
+    },
+    {
+      "name": "Manager review and human approval",
+      "detail": "Resource managers and authorized leaders retain every staffing, training, internal-work, revenue, and investment decision."
+    },
+    {
+      "name": "No staffing assignment boundary",
+      "detail": "The agent never assigns, reserves, deploys, reallocates, hires, terminates, evaluates, contacts, or changes records."
+    },
+    {
+      "name": "Scenario and commitment labeling",
+      "detail": "Pipeline, utilization, revenue, cost, and payback values remain synthetic planning scenarios rather than commitments."
+    },
+    {
+      "name": "Locked five-case Draft validation",
+      "detail": "All five workflows passed Copilot Studio preview and strict Brainstem evidence checks while publication remained disabled."
+    }
+  ]
+}

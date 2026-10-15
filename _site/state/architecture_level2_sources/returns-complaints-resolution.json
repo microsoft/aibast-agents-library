@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "returns-complaints-resolution",
+  "agent": "@aibast-agents-library/returns-complaints-resolution",
+  "display_name": "Returns and Complaints Resolution Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic return and complaint records",
+        "detail": "Bundled fictional cases provide orders, products, reasons, conditions, dates, statuses, complaint categories, and aggregate trends."
+      },
+      {
+        "name": "Resolution playbooks and service benchmarks",
+        "detail": "Packaged playbooks define review windows, reasons, conditions, cost and CSAT impacts, category weights, volumes, and escalation rates."
+      },
+      {
+        "name": "Routing, safety, and locked evidence rules",
+        "detail": "Instructions define persona routing, evidence anchors, valid identifiers, privacy-safe language, human gates, and prohibited side effects."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Anonymous return queue review",
+        "detail": "Summarizes synthetic return evidence, policy-match status, dates, condition, channel, value, and the approval boundary for service review."
+      },
+      {
+        "name": "Privacy-safe complaint classification",
+        "detail": "Maps synthetic concern language to a fixed complaint category and benchmark without echoing personal or sensitive free text."
+      },
+      {
+        "name": "Policy-grounded resolution option drafting",
+        "detail": "Matches case reason, condition, and elapsed days to reviewable playbooks without approving a return, refund, credit, or replacement."
+      },
+      {
+        "name": "Aggregate quality and return trend analysis",
+        "detail": "Compares monthly return rates, reasons, resolution time, CSAT, and refund totals to surface product and service patterns without accusation."
+      },
+      {
+        "name": "Persona-aligned intent routing",
+        "detail": "Routes service, quality, and loss-prevention language to four deterministic operations and returns only matching synthetic evidence."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational workspace",
+        "detail": "Provides a validated Draft agent with four skills, two synthetic knowledge files, explicit approval gates, and publication kept separate."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP tool through local chat, streaming, health, and UI endpoints with deterministic synthetic-only routing."
+      },
+      {
+        "name": "Service and quality review views",
+        "detail": "Customer Service, Quality, and Loss Prevention reviewers receive role-focused evidence, draft options, and clear authorization boundaries."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Draft Return Review Queue",
+        "detail": "Reports synthetic case, product, reason, condition, elapsed days, status, order context, pending count, and queue value for human review."
+      },
+      {
+        "name": "Draft Complaint Classification",
+        "detail": "Reports the selected category, severity weight, average resolution time, escalation rate, and fixed category reference table."
+      },
+      {
+        "name": "Draft Resolution Options",
+        "detail": "Reports policy-grounded options, cost and CSAT impacts, and authorization steps while confirming that no external action occurred."
+      },
+      {
+        "name": "Synthetic Returns and Complaints Trend Analysis",
+        "detail": "Reports return metrics, reason volumes, refunded-value aggregates, direction, and quality insights without blaming individuals."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable ReturnsComplaintsResolutionAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent exposes four deterministic read-only operations over bundled synthetic cases, playbooks, and trends."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes conversational chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the Draft conversational package, two knowledge files, and four skills; publishing requires separate explicit confirmation."
+    },
+    {
+      "name": "Dynamics 365 CRM and ERP",
+      "detail": "Approved read-only production seam for case, order, and policy evidence; the current package uses fixed synthetic records only."
+    },
+    {
+      "name": "SharePoint governed policy knowledge",
+      "detail": "Approved production seam for controlled policy evidence; demonstrations use the packaged synthetic knowledge files instead."
+    },
+    {
+      "name": "Microsoft Outlook",
+      "detail": "Named collaboration surface for authorized service workflows; the agent never drafts for delivery, sends, or schedules customer contact."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Named review surface for service, quality, and loss-prevention teams; no messages, approvals, tasks, or record actions are configured."
+    },
+    {
+      "name": "Authorized service resolution workflow",
+      "detail": "Production write seam requires authentication, authorization, human approval, and audit logging; local demonstrations perform no writes."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence enforcement",
+      "detail": "Rejects non-synthetic data sources, validates return identifiers, and forbids browsing, enrichment, substitution, or invented case facts."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes return review, complaint classification, resolution option, and aggregate trend requests from natural-language intent."
+    },
+    {
+      "name": "Service, quality, and loss-prevention framing",
+      "detail": "Keeps outputs aligned to approved reviewer roles, including empathetic service summaries and non-accusatory aggregate quality evidence."
+    },
+    {
+      "name": "Human authorization and review gates",
+      "detail": "Every output is decision support or draft language for an authorized reviewer; operational actions require separate approval and tooling."
+    },
+    {
+      "name": "No returns, refunds, or fulfillment actions",
+      "detail": "Prohibits return approval, refunds, credits, replacements, shipments, reservations, and any claim that those actions occurred."
+    },
+    {
+      "name": "No record changes or customer contact",
+      "detail": "Prohibits account or case changes, messages, notifications, outreach, or other external side effects in every operation and demo."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four persona-language cases verify required evidence and boundaries; validated Copilot Studio artifacts remain Draft and unpublished."
+    }
+  ]
+}

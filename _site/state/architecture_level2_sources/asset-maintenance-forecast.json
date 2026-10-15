@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "asset-maintenance-forecast",
+  "agent": "@aibast-agents-library/asset-maintenance-forecast",
+  "display_name": "Asset Maintenance Forecast Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic energy asset inventory",
+        "detail": "Fixed turbine, transformer, pipeline, and generator records provide condition, age, hours, service history, risk, and cost evidence."
+      },
+      {
+        "name": "Maintenance rate and planning rules",
+        "detail": "Bundled rates and deterministic rules calculate service budgets, condition bands, priority queues, and modeled failure ordering."
+      },
+      {
+        "name": "Locked persona evidence",
+        "detail": "Four demo cases preserve exact asset, date, condition, budget, and draft-queue anchors for repeatable validation."
+      },
+      {
+        "name": "Approved production source seams",
+        "detail": "IoT or historian, enterprise asset management, and finance planning connections are documented future seams, not enabled sources."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Modeled failure-window ranking",
+        "detail": "Sorts selected assets by predicted failure date and presents condition, annual failure rate, and last major service evidence."
+      },
+      {
+        "name": "Asset condition triage",
+        "detail": "Classifies condition scores as critical, warning, or good and calculates the selected portfolio average without safety authorization."
+      },
+      {
+        "name": "Maintenance budget projection",
+        "detail": "Combines major, minor, and inspection rates, applying the documented critical-condition multiplier for non-binding estimates."
+      },
+      {
+        "name": "Draft work-order prioritization",
+        "detail": "Orders major service, inspection, and preventive maintenance candidates by condition without creating or dispatching work."
+      },
+      {
+        "name": "Fail-closed asset filtering",
+        "detail": "Scopes analysis to an exact synthetic asset ID and returns no invented or substituted record when the identifier is unknown."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable RAPP Brainstem chat",
+        "detail": "The single-file BasicAgent exposes four deterministic read-only operations through local Brainstem chat and API routes."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Four skills and two synthetic knowledge files support persona-led previews while the validated agent remains unpublished."
+      },
+      {
+        "name": "Persona-guided evidence responses",
+        "detail": "Plant, reliability, finance, and planning users receive source-backed results, uncertainty, reviewer needs, and no-write limits."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Maintenance Forecast",
+        "detail": "Reports modeled failure order, condition, annual failure rate, predicted date, last service, and engineering review candidates."
+      },
+      {
+        "name": "Asset Health Dashboard",
+        "detail": "Reports condition status, age, operating hours, replacement cost, and average score as advisory screening only."
+      },
+      {
+        "name": "Maintenance Budget Projection",
+        "detail": "Reports annual maintenance estimates and replacement context for finance and asset-owner validation before commitment."
+      },
+      {
+        "name": "Work Order Plan",
+        "detail": "Reports a prioritized draft approval queue with work type, estimate, and target period while creating no work order."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "AssetMaintenanceForecastAgent RAPP tool",
+      "detail": "Portable single-file Python BasicAgent provides four deterministic, read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the agent and exposes chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft pilot with four skills and two knowledge files; publication requires explicit confirmation."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from deterministic agent or skill evidence."
+    },
+    {
+      "name": "Approved IoT platform or historian",
+      "detail": "Future least-privilege source for live telemetry and condition evidence; the packaged pilot has no live connection."
+    },
+    {
+      "name": "Enterprise asset management or CMMS",
+      "detail": "Future governed source for asset and maintenance records; the current agent cannot create, schedule, or update work."
+    },
+    {
+      "name": "Finance planning system",
+      "detail": "Future approved source for budget context and review; synthetic estimates do not authorize a financial commitment."
+    },
+    {
+      "name": "Microsoft Teams authorized collaboration",
+      "detail": "Documented future review seam for authorized collaboration; the current package sends no messages or approvals."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every asset, measurement, date, status, cost, forecast, and recommendation is fictional pilot evidence, not a production fact."
+    },
+    {
+      "name": "Four independently routable operations",
+      "detail": "Failure forecasting, health triage, budget projection, and draft work planning remain separately callable and reviewable."
+    },
+    {
+      "name": "Explicit safety boundary",
+      "detail": "Condition screening is not a safety determination or operating authorization, and the agent never directs field work."
+    },
+    {
+      "name": "Human authorization and approval gates",
+      "detail": "Engineering, asset-owner, finance, and dispatcher reviewers retain decisions; future writes require explicit authorized approval."
+    },
+    {
+      "name": "Read-only work-control boundary",
+      "detail": "No work order, schedule, crew assignment, dispatch, procurement, financial commitment, or external-system write occurs."
+    },
+    {
+      "name": "Future-write governance",
+      "detail": "Any later write tool must authenticate, check role and current state, obtain confirmation, handle errors, and append an audit event."
+    },
+    {
+      "name": "Locked validation and draft control",
+      "detail": "Four persona cases passed deterministic and Copilot Studio previews while validated builds remained Draft and unpublished."
+    }
+  ]
+}

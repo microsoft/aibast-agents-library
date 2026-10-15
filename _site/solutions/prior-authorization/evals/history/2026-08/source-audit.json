@@ -1,0 +1,69 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "audited_source": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
+  "case_file": "tests/demo_cases/prior-authorization.json",
+  "onepager": "47. Prior Authorization Agent one-pager.pptx",
+  "operations": {
+    "request_evidence": [
+      "PA-01"
+    ],
+    "criteria_evidence": [
+      "PA-02"
+    ],
+    "status_summary": [
+      "PA-03"
+    ],
+    "appeal_evidence_packet": [
+      "PA-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "routing and schema",
+      "before": "Operation filters were not consistently routed and the schema allowed behavior whose names implied side effects.",
+      "after": "A strict no-additional-properties schema exposes four read-only operations, routes optional synthetic identifiers, and preserves safe legacy aliases."
+    },
+    {
+      "area": "healthcare safety boundary",
+      "before": "The agent could imply eligibility, authorization, clinical interpretation, outreach, scheduling, or record mutation beyond evidence.",
+      "after": "Every route uses synthetic-only evidence, explicit uncertainty, no side effects, and a qualified human review gate."
+    }
+  ],
+  "claim_audit": [
+    {
+      "claim": "Pull payer-specific requirements and match them with EHR data",
+      "disposition": "bounded",
+      "implementation": "Crosswalks fictional policy checklist items to synthetic evidence; authoritative policy and EHR review remain human tasks."
+    },
+    {
+      "claim": "Compile the full clinical evidence packet needed for medical review",
+      "disposition": "bounded",
+      "implementation": "Drafts an inventory; completeness and minimum necessity require utilization review."
+    },
+    {
+      "claim": "Submit requests directly to payer portals and send real-time updates",
+      "disposition": "excluded",
+      "implementation": "No submission, portal action, notification, scheduling, or record mutation occurs."
+    },
+    {
+      "claim": "Flag cases requiring additional documentation and prepare appeal materials proactively",
+      "disposition": "bounded",
+      "implementation": "Surfaces missing source fields and drafts a reconsideration outline without filing or recommending an appeal."
+    },
+    {
+      "claim": "Predicts approval likelihood",
+      "disposition": "excluded",
+      "implementation": "Approval prediction is intentionally prohibited."
+    }
+  ],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "PriorAuthorizationAgent",
+    "artifact": "solutions/prior-authorization/evals/transcripts.json"
+  },
+  "claim_policy": "Catalog value claims are qualitative. Exact fields and identifiers are retained only as clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

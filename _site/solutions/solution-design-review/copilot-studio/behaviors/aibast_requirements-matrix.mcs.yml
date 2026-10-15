@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: requirements-matrix
+  description: "\"Use when someone asks which non-functional requirements apply, who owns each one, and where the gaps and variances are.\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: requirements-matrix
+  description: "Use when someone asks which non-functional requirements apply, who owns each one, and where the gaps and variances are."
+  ---
+  <!-- bic:source=blank -->
+  # Non-functional requirements matrix
+
+  Use when someone asks which non-functional requirements apply, who owns each one, and where the gaps and variances are.
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `NFR-04`
+  - `MISSING OWNER`
+  - `1 variance candidate`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

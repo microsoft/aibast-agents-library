@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "contract-risk-review",
+  "agent": "@aibast-agents-library/contract-risk-review",
+  "display_name": "Contract Risk Review Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic contract portfolio",
+        "detail": "Four fictional agreements provide client, type, value, term, governing law, renewal, status, pages, and risk-score evidence."
+      },
+      {
+        "name": "Clause-level agreement evidence",
+        "detail": "Packaged liability, IP, payment, termination, SLA, change-order, indemnity, data, and non-compete findings ground review."
+      },
+      {
+        "name": "Internal contract policy baseline",
+        "detail": "Fixed thresholds cover liability caps, payment days, IP protection, mutual indemnity, cure periods, data, changes, and SLA caps."
+      },
+      {
+        "name": "Governed knowledge and skill package",
+        "detail": "Two synthetic knowledge files, four operation skills, global instructions, and locked cases preserve the review boundaries."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Agreement portfolio risk triage",
+        "detail": "Ranks agreements by recorded risk, value, high-risk clauses, and renewal timing to focus authorized counsel attention."
+      },
+      {
+        "name": "Clause-level issue analysis",
+        "detail": "Explains source-backed clause issues and draft recommendations across liability, IP, payment, and operational terms."
+      },
+      {
+        "name": "Internal-policy evidence screening",
+        "detail": "Compares packaged clause evidence with policy and returns REVIEW REQUIRED rather than pass when evidence is absent."
+      },
+      {
+        "name": "Negotiation brief preparation",
+        "detail": "Separates priority amendments, preferred positions, fallbacks, and escalation points as drafts for authorized counsel review."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversation",
+        "detail": "Legal operations, attorneys, and executives invoke four bounded review operations through a validated Draft agent."
+      },
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "The single-file RAPP agent runs locally through chat and streaming endpoints using bundled synthetic evidence."
+      },
+      {
+        "name": "SharePoint agreement evidence seam",
+        "detail": "Approved production connections may supply governed agreements; the current package has no customer contracts or live binding."
+      },
+      {
+        "name": "Microsoft Word counsel workflow",
+        "detail": "Word is the intended counsel-controlled review and redline surface; the agent does not edit, send, or accept contract language."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Contract Risk Scan",
+        "detail": "Reports portfolio value, elevated-risk exposure, ranked agreements, high-risk issue counts, renewals, and review actions."
+      },
+      {
+        "name": "Clause-Level Risk Analysis",
+        "detail": "Reports sections, clause names, severity, documented issues, and draft recommendations with synthetic-evidence labeling."
+      },
+      {
+        "name": "Compliance Check Results",
+        "detail": "Reports policy standards, evidence-backed gaps, required actions, and REVIEW REQUIRED states without a legal determination."
+      },
+      {
+        "name": "Renegotiation Brief",
+        "detail": "Reports non-negotiable and preferred draft positions, fallbacks, value exposure, and General Counsel escalation points."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "ContractRiskReviewAgent RAPP tool",
+      "detail": "Portable Python BasicAgent exposes four deterministic review operations over the fixed synthetic contract snapshot."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the tool and exposes conversational chat, streaming, and health endpoints."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The deployment model routes plain-language requests and presents grounded tool results within the legal-review boundary."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts four skills and two knowledge files in a validated Draft agent; publication requires separate confirmation."
+    },
+    {
+      "name": "SharePoint",
+      "detail": "Approved production seam for governed agreement evidence; no live customer repository is connected in the package."
+    },
+    {
+      "name": "Microsoft Word",
+      "detail": "Supports counsel-controlled review and redlining after approval; the agent performs no contract amendment or delivery."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Only the bundled portfolio, clauses, policy, renewal calendar, and skills are authoritative; missing facts are not invented."
+    },
+    {
+      "name": "Explicit four-operation routing",
+      "detail": "Natural-language intent maps only to risk scan, clause analysis, policy screening, or negotiation brief preparation."
+    },
+    {
+      "name": "Missing-evidence fail-closed control",
+      "detail": "Agreements without packaged clause evidence receive REVIEW REQUIRED, preventing an unsupported pass or compliance conclusion."
+    },
+    {
+      "name": "Legal review and no-advice boundary",
+      "detail": "Outputs provide review support only, preserve authorized legal review, and never claim legal or regulatory advice."
+    },
+    {
+      "name": "No contract amendment side effects",
+      "detail": "The agent does not edit, approve, send, accept, or execute contract language, negotiation positions, or external communications."
+    },
+    {
+      "name": "Locked four-case validation",
+      "detail": "One persona-language case per operation passed Brainstem isolation and Copilot Studio Preview with required evidence anchors."
+    },
+    {
+      "name": "Draft and publication separation",
+      "detail": "Validated Copilot Studio agents remain unpublished Drafts; connections, legal review, and publishing require authorization."
+    }
+  ]
+}

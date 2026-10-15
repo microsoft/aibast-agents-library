@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:26:07.583Z",
+  "solution": "@aibast-agents-library/procurement-agent",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Procurement Pilot",
+  "schema_name": "aibast_ProcurementPilot",
+  "bot_id": "25961b55-08a9-4a19-9c1c-3f015842a79e",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PROC-01",
+      "must_include": [
+        "PR-5001",
+        "$125,000",
+        "CFO"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PROC-02",
+      "must_include": [
+        "AWS",
+        "Azure",
+        "not a supplier award"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PROC-03",
+      "must_include": [
+        "CFO",
+        "48 hours",
+        "does not record an approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PROC-04",
+      "must_include": [
+        "Software",
+        "$60,000",
+        "No purchase order is created"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

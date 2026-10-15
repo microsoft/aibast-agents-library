@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "schedule-followup"
+  description: "\"Use when a branch customer asks something like \\\"I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: schedule-followup
+  description: "Use when a branch customer asks something like \"I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call\""
+  ---
+  <!-- bic:source=blank -->
+  # Schedule followup
+  
+  Use when a branch customer asks something like "I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `Tuesday, September 10, 2024`
+  - `Sarah King`
+  - `no invite was sent`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

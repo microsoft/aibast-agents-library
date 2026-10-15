@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T03:53:47.776354Z",
+  "solution": "@aibast-agents-library/ma-target-sourcing",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "M&A Target Sourcing Pilot",
+  "schema_name": "aibast_MATargetSourcingPilot",
+  "bot_id": "54105f97-4cfb-4138-9b23-1895152ab7b3",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 9 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "MATS-01",
+      "must_include": [
+        "TH-2026-014",
+        "5 of 8 pass",
+        "Cindral Risk Labs"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MATS-02",
+      "must_include": [
+        "Lumenrock Compliance Systems",
+        "85.7",
+        "79.8"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MATS-03",
+      "must_include": [
+        "T-01-S1",
+        "22.0% margin",
+        "Diligence questions"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MATS-04",
+      "must_include": [
+        "Financial-first",
+        "84.5",
+        "top 3 holds under all 3 weightings"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MATS-05",
+      "must_include": [
+        "RR-01",
+        "6 evidence gaps across 4 targets",
+        "none has been sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MATS-06",
+      "must_include": [
+        "ICM-2026-07-01",
+        "$149M",
+        "Not sent; no target contacted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

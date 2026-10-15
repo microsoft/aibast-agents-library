@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "win-loss-analysis",
+  "agent": "@aibast-agents-library/win-loss-analysis",
+  "display_name": "Win/Loss Analysis Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled Q2 and Q3 Deal Snapshot",
+        "detail": "Fixed synthetic opportunities include outcomes, segments, values, competitors, and loss reasons for deterministic comparison."
+      },
+      {
+        "name": "Synthetic Buyer Feedback",
+        "detail": "Bundled feedback statements and competitive signals support loss-theme analysis without browsing or live-system retrieval."
+      },
+      {
+        "name": "Operating Rules and Evidence Anchors",
+        "detail": "Rules define six supported operations, exact calculations, required response anchors, and fail-closed behavior."
+      },
+      {
+        "name": "Intervention Assumptions",
+        "detail": "Fixed synthetic actions, costs, timelines, and recovery rates support clearly labeled planning scenarios."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Intent-to-Operation Routing",
+        "detail": "An environment-selected model routes natural-language requests to one of six bounded deterministic operations."
+      },
+      {
+        "name": "Quarter and Segment Trend Analysis",
+        "detail": "Computes Q3 versus Q2 opportunity, win-rate, enterprise, segment, and average won-value changes."
+      },
+      {
+        "name": "Competitor Loss Breakdown",
+        "detail": "Groups synthetic losses by competitor, value, reason, share of losses, and quarter-over-quarter trend."
+      },
+      {
+        "name": "Root-Cause Scoring",
+        "detail": "Ranks loss reasons by frequency, pipeline value, impact threshold, and fixed addressability classification."
+      },
+      {
+        "name": "Intervention Scenario Modeling",
+        "detail": "Maps loss reasons to interventions and calculates synthetic recoverable value, cost, timeline, and value-to-cost ratio."
+      },
+      {
+        "name": "Strategy and Narrative Synthesis",
+        "detail": "Produces draft counter-strategies, talk tracks, leadership narratives, and next-step options from bounded evidence."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Local Brainstem Chat",
+        "detail": "The portable RAPP agent is available through the local Brainstem chat UI and /chat endpoint."
+      },
+      {
+        "name": "Copilot Studio Draft Experience",
+        "detail": "A draft Copilot Studio agent exposes six behaviors backed by two uploaded synthetic knowledge files."
+      },
+      {
+        "name": "Guided Demo and Evidence Pages",
+        "detail": "Field guide, quest, tutorial, screenshots, and browser walkthroughs demonstrate the six locked scenarios."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Win/Loss Overview",
+        "detail": "Reports quarter, segment, deal-size, and competitor patterns with a common synthetic evidence boundary."
+      },
+      {
+        "name": "Root-Cause Review",
+        "detail": "Presents ranked loss drivers, buyer-feedback themes, addressability, and evidence-backed deep dives."
+      },
+      {
+        "name": "Counter-Strategy Review",
+        "detail": "Drafts immediate and longer-term enablement options plus a review-only competitive talk track."
+      },
+      {
+        "name": "Synthetic Revenue Scenario",
+        "detail": "Shows illustrative intervention value, win-rate paths, costs, and ratios without making forecast or revenue commitments."
+      },
+      {
+        "name": "Board and Action Summaries",
+        "detail": "Creates a board narrative and candidate next steps while reserving decisions and activation for authorized leaders."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Environment-Selected Language Model",
+      "detail": "Interprets user intent and presents grounded results; the deployment environment selects the available model."
+    },
+    {
+      "name": "Portable WinLossAnalysisAgent",
+      "detail": "Single Python RAPP agent implements six read-only operations and declares no environment-variable requirements."
+    },
+    {
+      "name": "Deterministic Analytics Functions",
+      "detail": "Python functions calculate quarter statistics, competitor breakdowns, root causes, and recovery scenarios."
+    },
+    {
+      "name": "Synthetic Knowledge Package",
+      "detail": "Two knowledge files provide fixed source records and operating rules for portable, credential-free demonstrations."
+    },
+    {
+      "name": "Copilot Studio Skills and Behaviors",
+      "detail": "Six operation-specific skills and behaviors mirror the portable agent's supported analysis and reporting paths."
+    },
+    {
+      "name": "Brainstem RAPP Runtime",
+      "detail": "Loads the BasicAgent-compatible portable source as WinLossAnalysisAgent and serves local chat interactions."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-Only Fail-Closed Routing",
+      "detail": "Only data_source synthetic, quarter Q3, and six allow-listed operations are accepted; unsupported inputs return errors."
+    },
+    {
+      "name": "Read-Only Execution Boundary",
+      "detail": "The agent does not write CRM, change forecasts, approve spend, publish content, launch programs, or contact buyers."
+    },
+    {
+      "name": "Human Review and Approval Gates",
+      "detail": "Sales, finance, enablement, product, security, legal, and executive reviewers retain decisions within their authority."
+    },
+    {
+      "name": "Scenario and Evidence Labeling",
+      "detail": "Exact values, quotes, rates, costs, projections, and ROI remain explicitly synthetic and are not outcome claims."
+    },
+    {
+      "name": "Draft-Only Publication Boundary",
+      "detail": "Validated Copilot Studio builds remain unpublished drafts; publishing requires separate explicit confirmation."
+    },
+    {
+      "name": "Portable RAPP Packaging",
+      "detail": "The BasicAgent-compatible source runs locally without customer connectors or credentials and can be installed independently."
+    }
+  ]
+}

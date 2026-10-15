@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "client-health-score",
+  "agent": "@aibast-agents-library/client-health-score",
+  "display_name": "Client Health Score Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Frozen synthetic client portfolio",
+        "detail": "Bundled records cover eight fictional clients, values, NPS, margins, utilization, billing, escalations, and health labels."
+      },
+      {
+        "name": "Retention rules and stakeholder evidence",
+        "detail": "Packaged rules define churn indicators, recovery actions, account owners, executive sponsors, delivery leads, and engagement plans."
+      },
+      {
+        "name": "Governed operating instructions",
+        "detail": "Instructions require synthetic-only grounding, uncertainty labels, account-team review, approval gates, and no external side effects."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Portfolio health segmentation",
+        "detail": "Ranks fixed client records as critical, at risk, or healthy and summarizes portfolio value, exposure, and average health."
+      },
+      {
+        "name": "Engagement signal analysis",
+        "detail": "Connects executive-contact cadence, escalations, billing direction, and utilization to highlight weakening relationships."
+      },
+      {
+        "name": "Satisfaction trend review",
+        "detail": "Compares four quarterly satisfaction scores and NPS to identify improving, stable, or declining synthetic relationships."
+      },
+      {
+        "name": "At-risk intervention prioritization",
+        "detail": "Explains risk drivers and deterministic first recovery actions while treating churn probabilities as scenario indicators only."
+      },
+      {
+        "name": "Stakeholder-led retention planning",
+        "detail": "Builds account-specific stakeholder maps, preparation steps, engagement proposals, and account-owner approval gates."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Client-success, account-management, and experience personas invoke five validated behaviors through a Draft conversational agent."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file RAPP agent runs through local Brainstem chat and API endpoints with bundled synthetic evidence only."
+      },
+      {
+        "name": "Account-team review experience",
+        "detail": "Responses separate evidence, indicators, and proposed actions so the internal account team can review before any outreach."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Client Health Dashboard",
+        "detail": "Reports portfolio value, at-risk value, average health, health distribution, churn indicators, NPS, margin, and utilization."
+      },
+      {
+        "name": "Engagement and satisfaction review",
+        "detail": "Shows executive meetings, escalations, billing trends, utilization, quarterly satisfaction movement, and NPS evidence."
+      },
+      {
+        "name": "At-Risk Client Report",
+        "detail": "Summarizes affected accounts, value at risk, health, indicators, satisfaction, escalation history, and proposed recovery actions."
+      },
+      {
+        "name": "Account Retention Playbooks",
+        "detail": "Presents sponsors, account owners, delivery leads, preparation steps, next engagements, and explicit approval gates."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable ClientHealthScoreAgent RAPP tool",
+      "detail": "Single-file BasicAgent exposes five deterministic read-only operations over bundled synthetic data with no credentials."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first runtime discovers the portable agent and provides chat, streaming, health, and browser-based review surfaces."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the five-behavior conversational package; validated pilot and manual agents remain Draft and unpublished."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Approved production seam for governed account context; no live CRM connection, record creation, or mutation is enabled."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Approved internal collaboration seam for account-team review; the package sends no messages, tasks, or client outreach."
+    },
+    {
+      "name": "Outlook",
+      "detail": "Approved seam for reviewed executive engagement; no email, calendar event, invitation, or customer contact is created."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The deployment environment supplies the model used for natural-language routing and evidence-grounded response composition."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Forbids browsing, live retrieval, enrichment, substitution, or invention beyond the two packaged knowledge sources."
+    },
+    {
+      "name": "Five deterministic operations",
+      "detail": "Routes dashboard, engagement, satisfaction, at-risk prioritization, and retention-playbook requests from persona language."
+    },
+    {
+      "name": "Transparent indicator labeling",
+      "detail": "Treats health scores and churn probabilities as deterministic scenario indicators, not validated predictions or certainty."
+    },
+    {
+      "name": "Account-team review and approval gates",
+      "detail": "Requires account-owner review and relevant executive-sponsor, delivery, client-success, legal, and commercial approval."
+    },
+    {
+      "name": "No customer contact or CRM mutation",
+      "detail": "Prohibits meetings, messages, concessions, renewal changes, outreach, CRM writes, tasks, ownership changes, and commitments."
+    },
+    {
+      "name": "Locked five-case validation",
+      "detail": "All five persona-language cases passed strict Brainstem isolation, manual Preview, and Copilot Studio Draft validation."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Keeps validated Copilot Studio agents unpublished and makes publication a distinct, explicitly confirmed administrator action."
+    }
+  ]
+}

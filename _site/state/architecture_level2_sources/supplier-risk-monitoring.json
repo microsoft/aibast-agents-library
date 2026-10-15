@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "supplier-risk-monitoring",
+  "agent": "@aibast-agents-library/supplier-risk-monitoring",
+  "display_name": "Supply Risk Monitoring Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic supplier portfolio",
+        "detail": "Five fictional suppliers provide spend, tier, region, quality, delivery, financial, geopolitical, and overall-risk evidence."
+      },
+      {
+        "name": "Incident and backup-option records",
+        "detail": "Four recorded incidents and five synthetic backup options provide severity, exposure, lead-time, qualification, and premium evidence."
+      },
+      {
+        "name": "Review rules and locked case anchors",
+        "detail": "Bundled rules define score weighting, risk tiers, dimension status, exact outputs, and four persona-language acceptance cases."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Supplier exposure ranking",
+        "detail": "Ranks the fixed portfolio by overall risk and calculates total spend, elevated-risk spend, composite health, and incident counts."
+      },
+      {
+        "name": "Risk-dimension explanation",
+        "detail": "Explains each supplier's quality, delivery, financial, geopolitical, spend, tier, health, and recorded incident evidence."
+      },
+      {
+        "name": "Continuity disruption assessment",
+        "detail": "Orders recorded incidents by severity and summarizes exposed spend, category, and whether synthetic backup options exist."
+      },
+      {
+        "name": "Alternative sourcing comparison",
+        "detail": "Compares backup names, lead times, synthetic qualification states, premiums, and modeled cost for procurement review only."
+      },
+      {
+        "name": "Fail-closed evidence handling",
+        "detail": "Uses only the fixed records, labels derived analysis, and reports absent evidence instead of browsing, inventing, or substituting facts."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable RAPP Brainstem chat",
+        "detail": "The single-file BasicAgent exposes four deterministic review operations through local chat, streaming, health, and tool routing."
+      },
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Four skills and two synthetic knowledge files support governed previews while validated manual and pilot agents remain unpublished."
+      },
+      {
+        "name": "Persona-led procurement review",
+        "detail": "Procurement managers and supply chain directors receive evidence-first results, review options, approval gates, and no-action disclosures."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Supplier Risk Dashboard",
+        "detail": "Reports portfolio spend, elevated-risk concentration, ranked supplier risk, composite health, and active incident counts."
+      },
+      {
+        "name": "Supplier Evidence Scorecard",
+        "detail": "Reports supplier identity, spend, tier, risk, health, dimension scores, statuses, and linked incidents for review."
+      },
+      {
+        "name": "Active Disruption Alerts",
+        "detail": "Reports severity, date, supplier, incident description, exposed spend, category, and backup availability for validation."
+      },
+      {
+        "name": "Alternative Sourcing Review",
+        "detail": "Reports synthetic backup options, lead times, statuses, premiums, and modeled diversification cost without changing sourcing."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "SupplierRiskMonitoringAgent RAPP tool",
+      "detail": "Portable Python BasicAgent implements dashboard, scorecard, disruption-alert, and alternative-sourcing review operations."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the single-file agent and exposes conversational chat, streaming, health, and routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the governed Draft experience with four skills and two knowledge files; publishing requires explicit confirmation."
+    },
+    {
+      "name": "Dynamics 365 Supply Chain Management",
+      "detail": "Approved production seam for supplier, order, quality, inventory, and commercial context; the pilot has no live connection."
+    },
+    {
+      "name": "Approved external risk feeds",
+      "detail": "Future least-privilege seams for financial, quality, logistics, and geopolitical evidence; packaged data remains synthetic."
+    },
+    {
+      "name": "Power BI",
+      "detail": "Curated reporting surface for production portfolio exposure; the deterministic package does not publish a live dashboard."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Authorized collaboration seam for procurement review and escalation; the package sends no messages or supplier outreach."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic-only grounding",
+      "detail": "Every supplier, identifier, date, score, incident, duration, status, premium, and cost is fictional pilot evidence."
+    },
+    {
+      "name": "Four deterministic review operations",
+      "detail": "Persona language routes independently to risk dashboard, supplier scorecard, disruption alerts, or alternative sourcing."
+    },
+    {
+      "name": "Explainable scoring rules",
+      "detail": "Documents weighted composite health, risk-tier thresholds, and dimension-status bands for reproducible interpretation."
+    },
+    {
+      "name": "Procurement authorization gate",
+      "detail": "Authorized procurement owners retain qualification, selection, allocation, contracting, ordering, and sourcing approval."
+    },
+    {
+      "name": "No supplier contact or substitution",
+      "detail": "Backup options are review evidence only; the agent cannot contact, qualify, select, substitute, allocate, contract with, or order."
+    },
+    {
+      "name": "No invention or live-data implication",
+      "detail": "The agent does not browse or imply live access and states when requested evidence is absent from the fixed snapshot."
+    },
+    {
+      "name": "Locked case and Draft validation",
+      "detail": "Four persona cases passed strict isolation and Copilot Studio previews while both validated agents remained unpublished Drafts."
+    }
+  ]
+}

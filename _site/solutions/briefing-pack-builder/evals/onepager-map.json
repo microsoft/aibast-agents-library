@@ -1,0 +1,167 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/briefing-pack-builder",
+  "onepager": "66. Briefing Pack Builder Agent one-pager.pptx",
+  "source_slide_sha256": "65ce2146d609480d4a2150600096a72d25143ac515ef154f1fb53c83da46116d",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/slg_government_stacks/briefing_pack_builder_stack/briefing_pack_builder_agent.py",
+    "implemented_operations": [
+      "list_templates",
+      "content_scan",
+      "figure_check",
+      "draft_brief",
+      "gap_report",
+      "approval_route"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Drafts any briefing format from one governed content set",
+      "operations": [
+        "list_templates",
+        "content_scan",
+        "draft_brief"
+      ],
+      "demo_cases": [
+        "BPB-01",
+        "BPB-02",
+        "BPB-04"
+      ],
+      "synthetic_evidence": [
+        "Budget Hearing Brief",
+        "Council Question Brief",
+        "8 documents indexed",
+        "8 passages on topic",
+        "Quarterly Capital Status Report",
+        "Measures with conflicting values",
+        "DRAFT - not approved",
+        "Figures needing confirmation",
+        "Talking points"
+      ]
+    },
+    {
+      "advertised_promise": "Cites every section and flags conflicting figures before they reach a brief",
+      "operations": [
+        "figure_check",
+        "draft_brief"
+      ],
+      "demo_cases": [
+        "BPB-03",
+        "BPB-04"
+      ],
+      "synthetic_evidence": [
+        "$51.3 million",
+        "Conflict - confirm before use",
+        "does not choose between them",
+        "DRAFT - not approved",
+        "Figures needing confirmation",
+        "Talking points"
+      ]
+    },
+    {
+      "advertised_promise": "Names missing content and the sign-off route so review starts sooner",
+      "operations": [
+        "gap_report",
+        "approval_route"
+      ],
+      "demo_cases": [
+        "BPB-05",
+        "BPB-06"
+      ],
+      "synthetic_evidence": [
+        "1 of 8 sections need input",
+        "Gap - needs input",
+        "Communications and the project director",
+        "Deputy City Manager",
+        "8 working days",
+        "No brief was sent for approval"
+      ]
+    },
+    {
+      "advertised_promise": "Lists every briefing format with its audience and sections so the right template is chosen first",
+      "operations": [
+        "list_templates"
+      ],
+      "demo_cases": [
+        "BPB-01"
+      ],
+      "synthetic_evidence": [
+        "Budget Hearing Brief",
+        "Council Question Brief",
+        "8 documents indexed"
+      ]
+    },
+    {
+      "advertised_promise": "Shows what the governed content set holds on a topic, document by document",
+      "operations": [
+        "content_scan"
+      ],
+      "demo_cases": [
+        "BPB-02"
+      ],
+      "synthetic_evidence": [
+        "8 passages on topic",
+        "Quarterly Capital Status Report",
+        "Measures with conflicting values"
+      ]
+    },
+    {
+      "advertised_promise": "Flags measures that carry different values in different documents before they reach a brief",
+      "operations": [
+        "figure_check"
+      ],
+      "demo_cases": [
+        "BPB-03"
+      ],
+      "synthetic_evidence": [
+        "$51.3 million",
+        "Conflict - confirm before use",
+        "does not choose between them"
+      ]
+    },
+    {
+      "advertised_promise": "Drafts the brief in the chosen template with a cited source behind every section",
+      "operations": [
+        "draft_brief"
+      ],
+      "demo_cases": [
+        "BPB-04"
+      ],
+      "synthetic_evidence": [
+        "DRAFT - not approved",
+        "Figures needing confirmation",
+        "Talking points"
+      ]
+    },
+    {
+      "advertised_promise": "Names the sections with no supporting content so input is requested early",
+      "operations": [
+        "gap_report"
+      ],
+      "demo_cases": [
+        "BPB-05"
+      ],
+      "synthetic_evidence": [
+        "1 of 8 sections need input",
+        "Gap - needs input",
+        "Communications and the project director"
+      ]
+    },
+    {
+      "advertised_promise": "Shows who reviews and approves each format and how long sign-off takes",
+      "operations": [
+        "approval_route"
+      ],
+      "demo_cases": [
+        "BPB-06"
+      ],
+      "synthetic_evidence": [
+        "Deputy City Manager",
+        "8 working days",
+        "No brief was sent for approval"
+      ]
+    }
+  ]
+}

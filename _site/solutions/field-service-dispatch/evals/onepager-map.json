@@ -1,0 +1,108 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/field-service-dispatch",
+  "onepager": "23. Field Service Dispatch Agent one-pager.pptx",
+  "source_slide_sha256": "9610dfddc2c9fb1b1f7e4900d56a6657eb38fa49ff768861a05d71d6beed2237",
+  "suite": null,
+  "preserves_distinct_module": false,
+  "promises": [
+    {
+      "advertised_promise": "Deliver proactive customer communication and operational  dashboards to boost customer confidence",
+      "operations": [
+        "dispatch_dashboard"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-01"
+      ],
+      "synthetic_evidence": [
+        "J-101",
+        "Marcus Chen"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Perform intelligent route optimization and skill-based matching to reduce travel time and increase first-time fix rates",
+      "operations": [
+        "route_optimization"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-02"
+      ],
+      "synthetic_evidence": [
+        "34%",
+        "187 miles"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Perform intelligent route optimization and skill-based matching to reduce travel time and increase first-time fix rates",
+      "operations": [
+        "technician_assignment"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-03"
+      ],
+      "synthetic_evidence": [
+        "Marcus Chen",
+        "Truck"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+      "operations": [
+        "emergency_response"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-04"
+      ],
+      "synthetic_evidence": [
+        "1,247",
+        "$26,140/hour"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+      "operations": [
+        "incident_status"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-05"
+      ],
+      "synthetic_evidence": [
+        "Phase B insulator",
+        "$12,400"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+      "operations": [
+        "post_incident_review"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-06"
+      ],
+      "synthetic_evidence": [
+        "87 Minutes",
+        "785% ROI"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Deliver proactive customer communication and operational  dashboards to boost customer confidence",
+      "operations": [
+        "work_orders_report"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-07"
+      ],
+      "synthetic_evidence": [
+        "WO-2847",
+        "$29,260/month"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

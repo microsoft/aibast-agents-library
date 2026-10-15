@@ -1,0 +1,121 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/ai-customer-assistant",
+  "slug": "ai-customer-assistant",
+  "name": "Customer Escalations Agent",
+  "headline": "Resolve escalations with context, not guesswork",
+  "pitch": "Bring fictional case history, knowledge guidance, routing rules, and quality signals into one reviewable brief so service teams can respond consistently without letting the agent touch a customer record.",
+  "category": "general",
+  "industries": [
+    "Cross-Industry",
+    "Contact Center"
+  ],
+  "personas": [
+    "Back-Office Agent",
+    "Escalation Manager",
+    "Quality Analyst"
+  ],
+  "microsoft_products": [
+    "Dynamics 365 for CRM, SharePoint, Microsoft Teams, Outlook"
+  ],
+  "journey_stage": "Serve",
+  "why_try": "The demo lets a back-office agent ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "customer_challenge": "Back-office teams lose time reconciling CRM, knowledge, policy, and SLA context while high-risk cases wait and avoidable handoff errors compound.",
+  "microsoft_ai_story": "Copilot Studio provides the conversation layer; Dynamics 365 Customer Service, SharePoint knowledge, Teams, and Outlook can supply governed production context after connection review.",
+  "business_value": [
+    "Speeds evidence gathering for complex escalations.",
+    "Improves consistency of knowledge and routing review.",
+    "Gives quality teams a shared view of recurring service signals."
+  ],
+  "business_flow": [
+    "Back-office agents and escalation managers",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Customer Escalations Agent",
+    "Dynamics 365 Customer Service",
+    "SharePoint knowledge",
+    "Microsoft Teams and Outlook",
+    "Authorized service reviewer"
+  ],
+  "capabilities": [
+    {
+      "operation": "handle_inquiry",
+      "name": "Inquiry triage brief",
+      "purpose": "Use when a back-office agent asks what is happening on a specific case and what should be reviewed next."
+    },
+    {
+      "operation": "knowledge_search",
+      "name": "Knowledge evidence search",
+      "purpose": "Use when a support agent needs the most relevant approved article and resolution steps for an inquiry."
+    },
+    {
+      "operation": "escalation_routing",
+      "name": "Escalation routing review",
+      "purpose": "Use when an escalation manager asks which team and SLA rule apply, without executing the route."
+    },
+    {
+      "operation": "satisfaction_survey",
+      "name": "Quality and satisfaction review",
+      "purpose": "Use when a quality analyst asks for the fictional CSAT distribution and recurring service themes."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Back-Office Agent: Inquiry triage brief",
+      "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Back-Office Agent",
+        "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+        "answer": "Called the escalation agent (AICustomerAssistantAgent) — here's the full brief for **INQ-4001**:\n\n**Customer:** Lisa Park, Acme Corp (Enterprise) — Live Chat, High priority, **Frustrated** sentiment\n\n**Issue:** Export button throws a 500 error for date ranges over 30 days — a known bug, not user error.\n\n**What to do:**\n- Reference **KB-104**: \"Known Issue: Report Export Timeout for Large Date Ranges\" (97% match) — this is a documented bug, so lead with acknowledgment, not troubleshooting\n- Route to **Tier 1 Technical Support**, SLA target **4 hours**\n- No escalation rule triggered yet — but given frustration + enterprise tier, consider flagging if not resolved same-day\n\n**Before you respond:** want me to pull the recommended resolution steps and draft the reply/follow-up plan? Nothing sends automatically — everything comes back as an approval-pending draft for you to review.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Back-Office Agent: Knowledge evidence search",
+      "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-knowledge-search",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Back-Office Agent",
+        "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+        "answer": "For the long-range export failure case (INQ-4001), review **KB-104: Known Issue — Report Export Timeout for Large Date Ranges** (97% match, 398/456 helpful votes).\n\nKey points:\n- **Cause:** Exports fail with a 500 error when the date range exceeds 30 days\n- **Workaround:** Split the export into 30-day segments\n- **Fix:** Engineering patch targeted for v3.8.2 (Dec 2025)\n- **Escalation path:** If customer needs a one-time bulk export now, support can arrange it manually\n\nKB-101 (\"How to Export Analytics Reports\") is a secondary reference for general export steps, but KB-104 is the direct match. Want me to pull the recommended resolution or draft a response based on this?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Escalation Manager: Escalation routing review",
+      "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-escalation-routing",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Escalation Manager",
+        "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+        "answer": "For INQ-4003 (SSO migration, Critical/Technical): route to **Tier 2 Engineering** with a **2-hour SLA**. That's the rulebook match for critical technical issues — nothing's been routed yet, just the recommendation.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Quality Analyst: Quality and satisfaction review",
+      "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-satisfaction-survey",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Quality Analyst",
+        "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
+        "answer": "Here's the snapshot from the satisfaction survey agent:\n\n**Overall health:** CSAT 4.3/5, NPS 42, 78% first-contact resolution, 12-min avg response — trending up slightly (WoW +0.2, MoM +0.1). Generally solid.\n\n**Signals needing human review:**\n- **INQ-3979 (2/5)** — \"Still waiting for follow-up on my SSO issue.\" This is the clearest red flag: unresolved, customer explicitly frustrated about being left hanging. Needs immediate follow-up.\n- **INQ-3985 (3/5)** — \"Had to explain problem multiple times.\" Points to a handoff/context-loss issue worth checking for a process fix, even though it got resolved.\n- Softer pattern: a couple of 4-star comments mention slow initial connection/response time — not urgent individually, but worth watching if it recurs.\n\nBottom line: one open case (INQ-3979) needs an actual human to step in now; the repeat-explanation complaint is more of a process-quality item to flag to a team lead.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fai-customer-assistant",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/ai-customer-assistant/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Customer%20Escalations%20Agent%22"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "schema": "aibast-public-agent/1.0",
+  "id": "@aibast-agents-library/customer-loyalty-rewards",
+  "slug": "customer-loyalty-rewards",
+  "name": "Customer Loyalty and Rewards Agent",
+  "headline": "Understand loyalty health and reward design without changing a member account.",
+  "pitch": "Provides synthetic program health, informational points views, review-only reward options, and tier-structure analysis.",
+  "category": "b2c_sales",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Loyalty Program Director",
+    "CRM Manager",
+    "Marketing Leader"
+  ],
+  "microsoft_products": [
+    "Dynamics 365",
+    "Outlook",
+    "Microsoft Teams"
+  ],
+  "journey_stage": "Retain and optimize",
+  "why_try": "It helps loyalty, CRM, and marketing leaders examine program tradeoffs while keeping contact, eligibility, balances, benefits, and redemptions in authorized systems.",
+  "customer_challenge": "Program teams need a shared view of engagement, point liability, reward relevance, and tier design without turning analysis into an account action.",
+  "microsoft_ai_story": "The portable agent turns CRM- and ERP-style synthetic loyalty records into governed planning briefs for Microsoft collaboration surfaces.",
+  "business_value": [
+    "Clearer program-health discussions",
+    "More transparent reward and tier tradeoffs",
+    "Stronger separation between insight and benefit issuance"
+  ],
+  "business_flow": [
+    "Loyalty Program Director, CRM Manager, and Marketing Leader",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Customer Loyalty and Rewards Agent",
+    "Approved read-only loyalty and CRM data",
+    "Microsoft Teams program review",
+    "Authorized rewards workflow"
+  ],
+  "capabilities": [
+    {
+      "operation": "loyalty_dashboard",
+      "name": "Synthetic program health",
+      "purpose": "Summarizes aggregate loyalty evidence without changing the program."
+    },
+    {
+      "operation": "points_summary",
+      "name": "Informational points summary",
+      "purpose": "Explains a synthetic balance without changing a ledger."
+    },
+    {
+      "operation": "reward_recommendations",
+      "name": "Review-only reward options",
+      "purpose": "Compares preference-matched concepts without creating an offer or issuing a benefit."
+    },
+    {
+      "operation": "tier_analysis",
+      "name": "Tier structure analysis",
+      "purpose": "Reviews thresholds and progress without changing member status."
+    }
+  ],
+  "has_onepager": true,
+  "has_demo_video": true,
+  "synthetic_data": true,
+  "added_at": "2026-08-15T22:26:47Z",
+  "prompts": [
+    {
+      "label": "Review loyalty program health",
+      "prompt": "Summarize the synthetic program health and governance boundary.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-dashboard",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Loyalty Program Director",
+        "prompt": "As Loyalty Program Director, summarize the synthetic program health and governance boundary.",
+        "answer": "Here's the synthetic program health snapshot:\n\n**Scale:** 450K members, segmented into Engaged (124K, 5% churn risk), Active (198K, 12%), At-risk (34K, 68%), and Dormant (94K, 89%).\n\n**Liability exposure:** 34K at-risk members hold $2.1M in unredeemed points; $840K in points value is set to expire in the next 30 days.\n\n**Sample tier snapshot:** Platinum → Bronze records show the expected gradient — engagement scores and spend drop sharply as tier decreases (92→32 engagement, $6,200→$450 spend).\n\n**Governance boundary:** All of this is synthetic planning data. No member is contacted, enrolled, or changed — no points, tiers, offers, rewards, redemptions, refunds, or orders are issued. It's strictly informational for your decision-making, not an execution layer.\n\nWant me to pull `program_improvements` for concrete levers to reduce that dormant/at-risk exposure?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Explain an informational balance",
+      "prompt": "Explain the synthetic Gold member balance without changing the ledger.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-points-summary",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "CRM Manager",
+        "prompt": "As CRM Manager, explain the synthetic Gold member balance without changing the ledger.",
+        "answer": "Here's the synthetic Gold member (LM-10002) snapshot — no ledger changes made, just a read-only summary:\n\n- **Tier:** Gold (1.5x points multiplier)\n- **Current Balance:** 22,100 points (≈$442.00)\n- **Earned YTD:** 6,800 points\n- **Redeemed YTD:** 2,500 points\n\n**Active earning opportunities available to them:** 2 pts/$1 spent, +100 for reviews, +500 for referrals, double points in their birthday month, +50 for social shares, +250 for app download (one-time).\n\nThis is purely informational — nothing was issued, redeemed, or adjusted.",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Compare reward options",
+      "prompt": "Show review-only reward options without creating offers or issuing benefits.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-reward-recommendations",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Marketing Leader",
+        "prompt": "As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
+        "answer": "Here's the review-only reward catalog for Marketing Leader review — no offers created or benefits issued, just options:\n\n**Top member-tier picks:**\n- Platinum (48,250 pts): $500 Travel Voucher (25K) or $100 Dining Card (5K)\n- Gold (22,100 pts): Premium Headphones (15K) or $50 Gift Card (2.5K)\n- Silver (8,450 pts): 20% Off Next Purchase (3K)\n- Bronze (2,100 pts): Free Shipping 3mo (1.5K)\n\n**Full catalog (6 options)** spans Travel, Dining, Merchandise, Gift Cards, Discounts, and Free Shipping — ranging from 1,500 to 25,000 points.\n\nThis is purely informational — nothing has been issued or redeemed. Want me to turn any of these into a win-back offer draft or campaign plan next?",
+        "model": "claude-sonnet-5"
+      }
+    },
+    {
+      "label": "Analyze tier structure",
+      "prompt": "Review the synthetic tier structure without changing member status.",
+      "demo_url": "https://kody-w.github.io/aibast-agents-library/solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-tier-analysis",
+      "recorded": true,
+      "recorded_answer": {
+        "persona": "Loyalty Program Director",
+        "prompt": "As Loyalty Program Director, review the synthetic tier structure without changing member status.",
+        "answer": "Here's the synthetic tier structure review — no member status changed.\n\n**Tier Ladder**\n| Tier | Threshold | Multiplier | Added Perk |\n|---|---|---|---|\n| Bronze | $0 | 1.0x | Birthday bonus, member sales |\n| Silver | $1,000 | 1.25x | + free standard shipping |\n| Gold | $3,000 | 1.5x | + free express shipping |\n| Platinum | $6,000 | 2.0x | + personal shopping advisor |\n\n**Sample member progress:**\n- Platinum member: $6,200 spend, engagement 92 — top tier achieved\n- Gold member: $3,400 spend, engagement 75 — 56.7% to Platinum ($2,600 to go)\n- Silver member: $1,600 spend, engagement 58 — 53.3% to Gold ($1,400 to go)\n- Bronze member: $450 spend, engagement 32 — 45% to Silver ($550 to go)\n\nSpend gaps roughly double at each tier, which is a healthy progression curve. If you want, I can pull `program_improvements` for ideas on tightening engagement-to-spend correlation or flag where members are stalling.",
+        "model": "claude-sonnet-5"
+      }
+    }
+  ],
+  "links": {
+    "page": "https://kody-w.github.io/aibast-agents-library/index.html#agent/%40aibast-agents-library%2Fcustomer-loyalty-rewards",
+    "workshop": "https://kody-w.github.io/aibast-agents-library/solutions/customer-loyalty-rewards/quest.html",
+    "source": "https://github.com/kody-w/aibast-agents-library/blob/main/agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
+    "request_onepager_and_video": "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&r2c6c3672a0d9465d8f24e5caf6f21619=%22Customer%20Loyalty%20and%20Rewards%20Agent%22"
+  }
+}

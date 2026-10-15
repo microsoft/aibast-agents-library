@@ -1,0 +1,73 @@
+# Inventory Rebalancing solution package
+
+| Surface | Location |
+| --- | --- |
+| Portable agent | `agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py` |
+| Deployment recipe | `solutions/inventory-rebalancing/deployment.json` |
+| Customer field guide | `solutions/inventory-rebalancing/FIELD-GUIDE.md` |
+| Guided field quest | `solutions/inventory-rebalancing/quest.html` |
+| Literal browser tutorial | `solutions/inventory-rebalancing/manual-tutorial.html` |
+| Raw export manifest | `solutions/inventory-rebalancing/export-manifest.json` |
+| Current source bundle | `solutions/inventory-rebalancing/exports/inventory-rebalancing-source.zip` |
+| Copilot Studio source | `solutions/inventory-rebalancing/copilot-studio/` |
+| Uploadable manual assets | `solutions/inventory-rebalancing/manual/` |
+| Source transcripts | `solutions/inventory-rebalancing/evals/transcripts.json` |
+| Easy Preview evidence | `solutions/inventory-rebalancing/evals/copilot-studio-preview-evidence.json` |
+| Manual evidence | `solutions/inventory-rebalancing/evals/manual-build-evidence.json` |
+| Manual browserfilm | `solutions/inventory-rebalancing/screenshots/manual/manual-build-walkthrough.gif` |
+| Assisted browserfilm | `solutions/inventory-rebalancing/screenshots/assisted/copilot-assisted-walkthrough.gif` |
+
+## Proven now
+
+- Portable source: IR-01 through IR-10 passed in strict Brainstem isolation.
+- Easy agent: `Inventory Rebalancing Pilot`.
+- Schema: `aibast_InventoryRebalancingPilot`.
+- Bot ID: `236a0c04-ea66-46e8-b461-1e2b68291c92`.
+- Environment: kodyv8 (`ee67a404-325c-e726-a18a-886fe708ca0b`).
+- Model: Claude Sonnet 4.6 (`Sonnet46`).
+- Easy inventory: ten skills and two knowledge files.
+- Easy Preview: IR-01 through IR-10 passed (10/10).
+- Easy status: **Draft; not published**.
+- Manual agent: `Inventory Manual Build`, bot
+  `22d96642-33fd-4e0c-978f-bafca57400f2`, model Claude Opus 5.
+- Manual inventory: web search removed, ten skills, and two complete reviewed
+  knowledge files.
+- Manual source parity: both knowledge downloads are byte-identical to the
+  reviewed Easy knowledge, and each `SKILL.md` is the exact full `content: |`
+  body from its reviewed Easy behavior YAML, including frontmatter.
+- Manual Preview: IR-01 through IR-10 passed (10/10).
+- Manual status: **Draft; not published**.
+
+## Evidence boundary
+
+Every warehouse, SKU, quantity, classification, utilization, cost, and proposed
+move is synthetic pilot evidence. The journey proves routing and review
+behavior; it does not prove a customer KPI, live-system access, or an inventory
+side effect.
+
+<!-- scaffold-solution-journey:start -->
+## Customer journey package map
+
+| Surface | Location |
+| --- | --- |
+| Customer field guide | `solutions/inventory-rebalancing/field-guide.html` |
+| Evidence report | `solutions/inventory-rebalancing/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/inventory-rebalancing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/inventory-rebalancing/EASY-MODE-COPILOT-CHAT.md` |
+| Guided Easy/Manual quest | `solutions/inventory-rebalancing/quest.html` |
+| Literal browser tutorial | `solutions/inventory-rebalancing/manual-tutorial.html` |
+| Raw export manifest | `solutions/inventory-rebalancing/export-manifest.json` |
+| Source bundle | `solutions/inventory-rebalancing/exports/inventory-rebalancing-source.zip` |
+| Manual evidence | `solutions/inventory-rebalancing/evals/manual-build-evidence.json` |
+| Manual browserfilm | `solutions/inventory-rebalancing/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/inventory-rebalancing/exports/inventory-rebalancing-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/inventory-rebalancing/exports/inventory-rebalancing-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/inventory-rebalancing/exports/inventory-rebalancing-solution-export.json` |
+
+**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+
+The journey uses synthetic inputs and qualitative proof. It is not a customer
+KPI, live-system result, production-readiness claim, or publication approval.
+<!-- scaffold-solution-journey:end -->

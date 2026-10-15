@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:45:00.173168+00:00",
+  "solution": "@aibast-agents-library/benefits-enrollment-assistant",
+  "onepager": "63. Benefits Enrollment Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "BenefitsEnrollmentAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/human_resources_stacks/benefits_enrollment_assistant_stack/benefits_enrollment_assistant_agent.py",
+      "sha256": "61bfddee0e6d9127da21b9fea2888fe15777a6364e3d9e5fc919eaf9a2ad653b"
+    }
+  ],
+  "case_file": "tests/demo_cases/benefits-enrollment-assistant.json",
+  "case_file_sha256": "bab8fbf63058af4fcd6f434e0748282f30d834977f65294dc78f8fee9ffa0640",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "BE-01",
+      "persona": "Employee",
+      "onepager_promise": "Explains the enrollment window and life-event change rules in plain language",
+      "prompt": "When does open enrollment close, and what can I change?",
+      "assistant_response": "Open enrollment closes **Nov 20, 2026** (10 days left), with elections effective Jan 1, 2027.\n\nDuring this window you can:\n- Switch medical plans (Core HMO, Choice PPO, Saver HDHP)\n- Add/remove dependents or change coverage tier\n- Elect health/dependent care spending accounts for 2027\n- Update life insurance beneficiaries\n\nHeads up: if you do nothing, your current medical/dental/vision carry over automatically \u2014 but spending account elections do **not** roll over, so you'd need to re-elect those if you want them in 2027.\n\nWant me to compare the three medical plans or check if any documents are missing?",
+      "agent_logs": "[BenefitsEnrollmentAgent] **Open Enrollment 2027: Tailwind Traders**\n\n| Detail | Value |\n|---|---|\n| Window | Nov 2, 2026 to Nov 20, 2026 |\n| Days left (from Nov 10, 2026) | 10 |\n| New elections effective | Jan 1, 2027 |\n| Jamie Patel's current medical | Core HMO, Employee + spouse |\n\n**During open enrollment you can:**\n- Switch between Core HMO, Choice PPO, and Saver HDHP\n- Add or remove dependents and change your coverage tier\n- Elect health care or dependent care spending accounts for 2027\n- Update life insurance beneficiaries\n\nIf you make no changes, your current medical, dental, and vision elections continue; spending account elections do not carry over.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent",
+      "expected_agent": "BenefitsEnrollmentAgent",
+      "must_include": [
+        "Nov 20, 2026",
+        "Days left",
+        "Jan 1, 2027"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BE-02",
+      "persona": "Employee",
+      "onepager_promise": "Explains the enrollment window and life-event change rules in plain language",
+      "prompt": "We just had a baby. What benefit changes can I make, and by when?",
+      "assistant_response": "Congrats! \ud83c\udf89 Here's what you can do:\n\n**Window:** You have until **Nov 27, 2026** (30 days from the birth date) to submit changes.\n\n**What you can change:**\n- Add your child to medical, dental, and vision\n- Move to a higher coverage tier\n- Start or adjust a dependent care spending account\n- Update life insurance beneficiaries\n\n**Documents needed:**\n- Birth certificate (or adoption decree)\n- Child's name and date of birth\n\n**Form:** Life Event Change Request (LE-1)\n\nCoverage would start retroactive to the birth date (Oct 28, 2026) once processed.\n\nOne more thing: open enrollment for the general 2027 plan choice closes **Nov 20, 2026** \u2014 separate from this, but worth handling together if you're already reviewing plans. Want me to pull up a plan cost comparison or check if your pediatrician is in-network?",
+      "agent_logs": "[BenefitsEnrollmentAgent] **Life Event Change: Birth or adoption of a child (Jamie Patel)**\n\n| Detail | Value |\n|---|---|\n| Change window | 30 days from the event |\n| Event date (employee-reported) | Oct 28, 2026 |\n| Change request due | Nov 27, 2026 (17 days from today) |\n| Coverage for the change starts | Oct 28, 2026 (event date) |\n| Form | Life Event Change Request (form LE-1, fictional) |\n\n**Changes this event allows:**\n- Add the child to medical, dental, and vision\n- Move to a higher coverage tier\n- Start or change a dependent care spending account\n- Update life insurance beneficiaries\n\n**Documents to provide:**\n- Birth certificate or adoption decree\n- Dependent details (name, date of birth)\n\nThis uses only the event the employee stated. Benefits staff confirm eligibility when they review the request.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent\n[BenefitsEnrollmentAgent] **Benefits Deadlines: Jamie Patel (as of Nov 10, 2026)**\n\n| Date | Days Left | Deadline |\n|---|---|---|\n| Nov 20, 2026 | 10 | Open enrollment closes: 2027 medical plan choice |\n| Nov 20, 2026 | 10 | Spending account elections for 2027 |\n| Nov 27, 2026 | 17 | Life event change request and documents (birth or adoption of a child) |\n| Jan 1, 2027 | - | New elections take effect |\n\n**First up:** Nov 20, 2026 - Open enrollment closes: 2027 medical plan choice.\n\nAdd these to your own calendar; no reminder or invitation was sent.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent",
+      "expected_agent": "BenefitsEnrollmentAgent",
+      "must_include": [
+        "Nov 27, 2026",
+        "Birth or adoption",
+        "LE-1"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BE-03",
+      "persona": "Employee",
+      "onepager_promise": "Compares plan costs for the employee's coverage tier and checks provider networks",
+      "prompt": "Compare the three medical plans for family coverage.",
+      "assistant_response": "Here's the family coverage comparison for 2027:\n\n| Plan | Per Paycheck | Annual Premium | Deductible | OOP Max | Network |\n|---|---|---|---|---|---|\n| **Core HMO** | $142 | $3,692 | $1,000 | $7,000 | Core network |\n| **Choice PPO** | $218 | $5,668 | $1,500 | $8,000 | Broad network |\n| **Saver HDHP** | $89 | $2,314 | $3,400 | $10,000 | Broad network (+$1,500 employer HSA seed) |\n\n**Quick take:**\n- **Cheapest premium:** Saver HDHP, but highest deductible/OOP max before the HSA seed offsets it\n- **Broadest network with lowest deductible:** Choice PPO, but costs the most per paycheck\n- **Middle ground:** Core HMO \u2014 lower premium than PPO, smaller network than PPO/HDHP\n\nThis is cost info only \u2014 I'm not recommending which one fits your situation. Want me to check if your doctors are in-network for any of these?",
+      "agent_logs": "[BenefitsEnrollmentAgent] **Medical Plan Comparison 2027: Family (Jamie Patel)**\n\n| Plan | Per Paycheck | Annual Premium | Deductible | Out-of-Pocket Max | Employer HSA Seed | Premium + Deductible - Seed | Network |\n|---|---|---|---|---|---|---|---|\n| Core HMO | $142.00 | $3,692.00 | $1,000.00 | $7,000.00 | - | $4,692.00 | Core network |\n| Choice PPO | $218.00 | $5,668.00 | $1,500.00 | $8,000.00 | - | $7,168.00 | Broad network |\n| Saver HDHP | $89.00 | $2,314.00 | $3,400.00 | $10,000.00 | $1,500.00 | $4,214.00 | Broad network |\n\nAnnual premium = per-paycheck cost x 26 paychecks. Lowest annual premium: Saver HDHP ($2,314.00). Lower premiums can mean higher costs when care is used, so compare the deductible and network too.\n\nThis is a cost comparison, not a plan recommendation.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent",
+      "expected_agent": "BenefitsEnrollmentAgent",
+      "must_include": [
+        "3,692.00",
+        "Saver HDHP",
+        "not a plan recommendation"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BE-04",
+      "persona": "Employee",
+      "onepager_promise": "Compares plan costs for the employee's coverage tier and checks provider networks",
+      "prompt": "Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+      "assistant_response": "Here's the network status for both:\n\n| Provider | Core HMO | Choice PPO | Saver HDHP |\n|---|---|---|---|\n| **Lakeside Family Clinic** | \u2705 In network | \u2705 In network | \u2705 In network |\n| **Riverbend Pediatrics** | \u274c Out of network | \u2705 In network | \u2705 In network |\n\n**Key takeaway:** If you need Riverbend Pediatrics, the Core HMO won't cover it in-network \u2014 Choice PPO or Saver HDHP would. Worth double-checking with the carrier directly since networks can shift for the 2027 plan year.",
+      "agent_logs": "[BenefitsEnrollmentAgent] **Provider Network Check: Jamie Patel**\n\n| Provider | Type | Core HMO | Choice PPO | Saver HDHP |\n|---|---|---|---|---|\n| Lakeside Family Clinic | Primary care | In network | In network | In network |\n| Riverbend Pediatrics | Pediatrics | Out of network | In network | In network |\n\n**Network gaps:**\n- Riverbend Pediatrics is out of network on Core HMO\n\nConfirm with the carrier's directory before choosing; networks can change for 2027.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent",
+      "expected_agent": "BenefitsEnrollmentAgent",
+      "must_include": [
+        "Riverbend Pediatrics",
+        "Out of network",
+        "Network gaps"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BE-05",
+      "persona": "Employee",
+      "onepager_promise": "Tracks required documents and personal deadlines so changes are not missed",
+      "prompt": "What documents do I still need to send?",
+      "assistant_response": "You still need to submit one document:\n\n- **Birth certificate or adoption decree** \u2014 not yet received\n\nDue by **Nov 27, 2026**, along with your Life Event Change Request (form LE-1, already drafted and ready for your review). Upload it through the official benefits portal \u2014 not here.",
+      "agent_logs": "[BenefitsEnrollmentAgent] **Document Checklist: Jamie Patel (Birth or adoption of a child)**\n\n| Document | Status |\n|---|---|\n| Birth certificate or adoption decree | Not received |\n| Dependent details (name, date of birth) | Received Nov 3, 2026 |\n| Life Event Change Request (form LE-1, fictional) | Draft ready for employee review |\n\n**Still missing (1):** Birth certificate or adoption decree\n**Due with the change request by:** Nov 27, 2026\n\nUpload documents only through the approved benefits portal; do not paste them into chat.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent",
+      "expected_agent": "BenefitsEnrollmentAgent",
+      "must_include": [
+        "Still missing",
+        "Birth certificate",
+        "Due with the change request"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BE-06",
+      "persona": "Employee",
+      "onepager_promise": "Prepares a draft election for the employee to review and submit",
+      "prompt": "Draft my election changes, but don't submit anything.",
+      "assistant_response": "Here's the draft (nothing submitted):\n\n- **Medical plan change**: Core HMO, Employee+Spouse \u2192 **Family**, effective Oct 28, 2026\n- **Cost impact**: $96.00 \u2192 $142.00 per paycheck (+$46.00)\n- **Request deadline**: Nov 27, 2026\n- **2027 medical plan**: still needs your choice during open enrollment\n- **Spending accounts (2027)**: currently not enrolled\n- **Beneficiaries**: worth reviewing given the life event\n\nThis is just a preview \u2014 you'd need to log into the benefits portal to actually submit it. Want me to pull up the plan comparison to help decide on 2027 coverage, or check the open enrollment deadline?",
+      "agent_logs": "[BenefitsEnrollmentAgent] **Election Draft: Jamie Patel - Not Submitted**\n\n| Item | Draft |\n|---|---|\n| Life event change | Core HMO: Employee + spouse -> Family, effective Oct 28, 2026 |\n| Per-paycheck cost | $96.00 -> $142.00 ($46.00 more) |\n| Request due | Nov 27, 2026 |\n| 2027 medical plan | Employee to choose during open enrollment (see plan comparison) |\n| Spending accounts 2027 | Not enrolled for 2027 |\n| Beneficiaries | Review recommended after any life event |\n\nStatus: Draft for employee review. No election was submitted and no record was changed. Submit through the benefits portal; benefits staff confirm eligibility.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent",
+      "expected_agent": "BenefitsEnrollmentAgent",
+      "must_include": [
+        "Not Submitted",
+        "46.00",
+        "No election was submitted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BE-07",
+      "persona": "Employee",
+      "onepager_promise": "Tracks required documents and personal deadlines so changes are not missed",
+      "prompt": "What benefits deadlines should I put on my calendar?",
+      "assistant_response": "Here's what to mark on your calendar:\n\n- **Nov 20, 2026** \u2014 Open enrollment closes (2027 medical plan choice + spending account elections)\n- **Nov 27, 2026** \u2014 Deadline for life event change requests/documents (e.g., birth/adoption)\n- **Jan 1, 2027** \u2014 New elections take effect\n\nThe big one is **Nov 20** \u2014 only 10 days out. If you've got a life event (new baby, marriage, etc.) in play, let me know and I can walk you through what's needed.",
+      "agent_logs": "[BenefitsEnrollmentAgent] **Benefits Deadlines: Jamie Patel (as of Nov 10, 2026)**\n\n| Date | Days Left | Deadline |\n|---|---|---|\n| Nov 20, 2026 | 10 | Open enrollment closes: 2027 medical plan choice |\n| Nov 20, 2026 | 10 | Spending account elections for 2027 |\n| Nov 27, 2026 | 17 | Life event change request and documents (birth or adoption of a child) |\n| Jan 1, 2027 | - | New elections take effect |\n\n**First up:** Nov 20, 2026 - Open enrollment closes: 2027 medical plan choice.\n\nAdd these to your own calendar; no reminder or invitation was sent.\n\nSynthetic benefits guidance only. This agent does not decide eligibility, recommend a plan, infer a personal circumstance, or submit an election; the employee and authorized benefits staff make every decision.\n\nSource: [Synthetic Tailwind Traders Benefits Snapshot]\nAgents: BenefitsEnrollmentAgent",
+      "expected_agent": "BenefitsEnrollmentAgent",
+      "must_include": [
+        "Days Left",
+        "Nov 20, 2026",
+        "no reminder or invitation was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

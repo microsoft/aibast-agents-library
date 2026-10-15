@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "ai-customer-assistant",
+  "agent": "@aibast-agents-library/ai-customer-assistant",
+  "display_name": "Customer Escalations Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic case snapshot",
+        "detail": "Fictional inquiries, customer context, priorities, sentiment, open issues, and interaction history support safe demonstrations."
+      },
+      {
+        "name": "Approved knowledge guidance",
+        "detail": "Packaged articles, policies, playbooks, workarounds, and resolution steps provide source-backed support evidence."
+      },
+      {
+        "name": "Routing and quality rules",
+        "detail": "Synthetic queue, SLA, CSAT, NPS, and survey evidence supports routing and service-quality review."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Inquiry triage brief",
+        "detail": "Joins case, knowledge, routing, and SLA context into a concise brief for an authorized back-office reviewer."
+      },
+      {
+        "name": "Knowledge evidence matching",
+        "detail": "Ranks approved articles and resolution steps against the inquiry without inventing policy or live-system facts."
+      },
+      {
+        "name": "Escalation recommendation",
+        "detail": "Recommends the applicable team and response target but never executes a route or changes a customer record."
+      },
+      {
+        "name": "Service quality signal review",
+        "detail": "Summarizes fictional satisfaction metrics and recurring themes for human investigation without protected-trait inference."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversation",
+        "detail": "Natural-language support experience for back-office agents, escalation managers, and quality analysts."
+      },
+      {
+        "name": "Microsoft 365 Copilot access",
+        "detail": "Provides a governed conversational entry point when approved organizational connections are configured."
+      },
+      {
+        "name": "Draft preview validation",
+        "detail": "Locked persona cases let reviewers verify evidence and safety boundaries before any publication decision."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Satisfaction snapshot",
+        "detail": "Presents fictional CSAT, NPS, response-time, resolution, distribution, and survey-comment evidence."
+      },
+      {
+        "name": "Escalation review evidence",
+        "detail": "Shows recommended queue, SLA, rule trigger, and source labels while retaining human approval authority."
+      },
+      {
+        "name": "Acceptance audit trail",
+        "detail": "Records locked-case results, package integrity, Draft status, and unpublished state for reviewer assurance."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Customer Escalations Agent",
+      "detail": "Runs four read-only operations for inquiry, knowledge, routing, and satisfaction decision support."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the conversational agent in Draft and requires explicit authorized approval before publication."
+    },
+    {
+      "name": "Dynamics 365 Customer Service",
+      "detail": "Potential governed source of CRM context after connection review; the package performs no customer-record mutation."
+    },
+    {
+      "name": "SharePoint knowledge",
+      "detail": "Potential approved source for articles, policies, case studies, and playbooks under least-privilege access."
+    },
+    {
+      "name": "Microsoft Teams and Outlook",
+      "detail": "Potential reviewer collaboration surfaces; the agent does not send messages, contact people, or create follow-ups."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Authorized human review gate",
+      "detail": "Every response, route, escalation, and external action remains a recommendation for an authorized service reviewer."
+    },
+    {
+      "name": "No customer-record mutation",
+      "detail": "The agent never updates a case, changes priority, assigns a queue, issues a refund, or alters customer data."
+    },
+    {
+      "name": "Synthetic data isolation",
+      "detail": "Demonstrations use fixed fictional records and do not claim access to live customer or service systems."
+    },
+    {
+      "name": "Least-privilege connections",
+      "detail": "Production sources may be bound only after security, privacy, and business-owner approval."
+    },
+    {
+      "name": "Draft publication control",
+      "detail": "The validated package stays unpublished until locked cases and guardrails pass explicit reviewer approval."
+    },
+    {
+      "name": "Evidence-backed validation",
+      "detail": "Four persona-language cases verify source anchors, operation behavior, review gates, and non-execution wording."
+    }
+  ]
+}

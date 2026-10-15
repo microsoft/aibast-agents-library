@@ -1,0 +1,148 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "proposal-generation",
+  "agent": "@aibast-agents-library/proposal-generation",
+  "display_name": "Proposal Generation Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic RFP and opportunity snapshot",
+        "detail": "Fixed records hold three allow-listed RFPs, stakeholders, budgets, requirements, timelines, and existing proposal assets."
+      },
+      {
+        "name": "Product and pricing catalog",
+        "detail": "Bundled products, industry solution configurations, discount rules, costs, and margin floors drive deterministic pricing."
+      },
+      {
+        "name": "Reference and competitive evidence",
+        "detail": "Synthetic references, availability flags, competitor capabilities, and differentiators support governed positioning drafts."
+      },
+      {
+        "name": "Approved response content seam",
+        "detail": "SharePoint is the approved production content seam; current evidence remains the uploaded synthetic snapshot only."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "RFP requirement analysis",
+        "detail": "Extracts requirements and maps each one to available capability evidence in a traceable checklist."
+      },
+      {
+        "name": "Weighted capability fit scoring",
+        "detail": "Applies deterministic fit scores and requirement weights to calculate an illustrative overall match."
+      },
+      {
+        "name": "Buyer-aligned executive drafting",
+        "detail": "Builds a reviewable executive summary from stated priorities, capability matches, pricing, and references."
+      },
+      {
+        "name": "Pricing and margin analysis",
+        "detail": "Calculates line-item discounts, proposed totals, budget headroom, savings, and margins without approval."
+      },
+      {
+        "name": "Reference and competitor positioning",
+        "detail": "Ranks references by industry relevance and creates a comparison matrix and synthetic win theme."
+      },
+      {
+        "name": "Proposal compilation and readiness",
+        "detail": "Produces a package outline, required review checklist, delivery summary, and synthetic win-probability indicator."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversation",
+        "detail": "Account executives, bid managers, and sales leaders invoke six proposal operations through a guided chat experience."
+      },
+      {
+        "name": "Portable Brainstem chat and API",
+        "detail": "The same RAPP agent runs locally through Brainstem chat endpoints without customer credentials or live connectors."
+      },
+      {
+        "name": "Word and PowerPoint draft surfaces",
+        "detail": "Approved document workflows can receive reviewed structures; the agent does not create or deliver a final proposal."
+      },
+      {
+        "name": "Microsoft Teams review",
+        "detail": "Teams is the intended bid-team collaboration surface for human review before any external use."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Traceable compliance checklist",
+        "detail": "Reports requirement IDs, categories, weights, fit scores, evidence, existing assets, and unresolved gaps."
+      },
+      {
+        "name": "Budget and margin review",
+        "detail": "Shows list and proposed prices, discounts, savings, budget status, headroom, and margin assumptions for approvers."
+      },
+      {
+        "name": "Proposal review checklist",
+        "detail": "Lists package sections and open legal, pricing, branding, editorial, security, and reference reviews."
+      },
+      {
+        "name": "Draft readiness summary",
+        "detail": "Summarizes capability fit, implementation, pricing, references, competition, and human-governed next decisions."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "ProposalGenerationAgent RAPP tool",
+      "detail": "Portable Python BasicAgent exposing six read-only operations over bundled synthetic evidence."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes chat, streaming, and health endpoints."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "A deployment-selected model interprets requests and composes grounded responses from agent results."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the draft conversational agent, uploaded knowledge, and six skills; publication requires confirmation."
+    },
+    {
+      "name": "Dynamics 365 Sales",
+      "detail": "Approved production seam for opportunity context; no live CRM connection or write is enabled in current evidence."
+    },
+    {
+      "name": "SharePoint",
+      "detail": "Approved production seam for governed response content; current package uses fixed synthetic knowledge files."
+    },
+    {
+      "name": "Microsoft Word and PowerPoint",
+      "detail": "Potential reviewed document surfaces for proposal structures; final file generation and delivery stay human-controlled."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Supports bid-team review and coordination; the agent does not send messages or customer communications."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only fail-closed routing",
+      "detail": "Only bundled evidence and allow-listed RFP names are accepted; unknown sources, identifiers, and operations fail closed."
+    },
+    {
+      "name": "Deterministic calculations",
+      "detail": "Fixed formulas govern fit, pricing, references, comparisons, and the illustrative win-probability indicator."
+    },
+    {
+      "name": "Evidence boundary labeling",
+      "detail": "Exact names, values, scores, pricing, margins, timelines, and projections are identified as synthetic evidence."
+    },
+    {
+      "name": "Human approval gates",
+      "detail": "Legal, finance, pricing, security, brand, editorial, reference, sponsor, and account-owner reviews remain mandatory."
+    },
+    {
+      "name": "Draft and no-write lifecycle",
+      "detail": "No CRM write, approval, outreach, reference contact, document delivery, submission, or publication occurs automatically."
+    },
+    {
+      "name": "Locked six-case validation",
+      "detail": "All six persona cases passed strict Brainstem isolation and Copilot Studio preview while the agent remained unpublished."
+    }
+  ]
+}
