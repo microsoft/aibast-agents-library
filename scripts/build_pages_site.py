@@ -1120,13 +1120,10 @@ def _copy_artifact(
         destination.chmod(0o644)
 
 
-OVERLAY_SUFFIXES = frozenset({".json", ".txt", ".xml"})
-
-
 def _copy_overlay(overlay: Path, output: Path) -> None:
-    """Add build-time generated files (the GitHub data snapshot, the public API) before the manifest is written.
+    """Add build-time generated JSON (e.g. the GitHub data snapshot) before the manifest is written.
 
-    Only regular .json, .txt and .xml files are taken, and none may replace a file copied from the repository.
+    Only regular .json files are taken, and none may replace a file copied from the repository.
     A missing overlay directory is allowed: the snapshot step skips itself when GitHub is unreachable.
     """
     if not overlay.exists():
@@ -1137,8 +1134,8 @@ def _copy_overlay(overlay: Path, output: Path) -> None:
         if source.is_dir() and not source.is_symlink():
             continue
         relative = source.relative_to(overlay)
-        if source.is_symlink() or not source.is_file() or source.suffix not in OVERLAY_SUFFIXES:
-            raise BuildError(f"Overlay may only contain regular .json, .txt or .xml files: {relative}")
+        if source.is_symlink() or not source.is_file() or source.suffix != ".json":
+            raise BuildError(f"Overlay may only contain regular .json files: {relative}")
         destination = output.joinpath(*relative.parts)
         if destination.exists():
             raise BuildError(f"Overlay would replace a repository file: {relative}")
@@ -1415,7 +1412,7 @@ def parse_args(arguments: Iterable[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--overlay",
         default=None,
-        help="Directory of build-time generated .json/.txt/.xml files to add to the artifact",
+        help="Directory of build-time generated .json files to add to the artifact",
     )
     parser.add_argument(
         "--check-links",

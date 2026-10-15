@@ -168,40 +168,482 @@ html[data-theme="dark"] {
 </style>
 <!-- aibast-design:end -->
 <style>
-:root { --demo-bar: 40px; }
-html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; }
-.demo-bar {
-  position: fixed; top: 0; left: 0; right: 0; height: var(--demo-bar); z-index: 10;
-  display: flex; align-items: center; gap: 12px; padding: 0 12px; box-sizing: border-box;
-  background: #f5f5f5; border-bottom: 1px solid #e0e0e0; color: #424242;
-  font: 13px/1.3 "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+:root {
+  color-scheme: light;
+  --cp-bg: #f4f4f5;
+  --cp-bg-elevated: #fafafa;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #eeeeef;
+  --cp-border: #dcdcde;
+  --cp-border-strong: #8e8e93;
+  --cp-text: #18181b;
+  --cp-text-muted: #52525b;
+  --cp-text-soft: #6b6b74;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #15803d;
+  --cp-danger: #c81e1e;
+  --cp-warning: #b45309;
+  --cp-link: #0f6cbd;
+  --cp-shadow: 0 16px 40px rgba(24, 24, 27, 0.10);
+  --cp-overlay: rgba(24, 24, 27, 0.55);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(24, 24, 27, 0.04);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
 }
-.demo-bar a { color: #0f6cbd; text-decoration: none; white-space: nowrap; }
-.demo-bar a:hover { text-decoration: underline; }
-.demo-note { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #616161; }
-.demo-play {
-  flex: none; border: 0; border-radius: 4px; padding: 6px 12px; cursor: pointer; white-space: nowrap;
-  max-width: 46vw; overflow: hidden; text-overflow: ellipsis;
-  background: #0f6cbd; color: #fff; font: 600 13px/1.2 "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #18181b;
+  --cp-bg-elevated: #232327;
+  --cp-surface: #1f1f23;
+  --cp-surface-soft: #27272b;
+  --cp-border: #34343a;
+  --cp-border-strong: #54545c;
+  --cp-text: #f4f4f5;
+  --cp-text-muted: #a9a9b2;
+  --cp-text-soft: #c4c4cc;
+  --cp-accent: #ff7a9c;
+  --cp-accent-hover: #ff96b0;
+  --cp-accent-soft: rgba(255, 122, 156, 0.14);
+  --cp-accent-fg: #18181b;
+  --cp-success: #4ade80;
+  --cp-danger: #fb8a8a;
+  --cp-warning: #fbbf24;
+  --cp-link: #66b3ff;
+  --cp-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --cp-overlay: rgba(9, 9, 11, 0.7);
+  --cp-panel: rgba(31, 31, 35, 0.78);
+  --cp-panel-strong: rgba(31, 31, 35, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.05);
+  --cp-highlight: rgba(255, 122, 156, 0.12);
 }
-.demo-play:hover { background: #115ea3; }
-.demo-play[hidden] { display: none; }
-.demo-message {
-  position: fixed; inset: var(--demo-bar) 0 0 0; display: grid; place-items: center; padding: 24px; text-align: center;
-  color: #424242; font: 15px/1.5 "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
 }
-.demo-message[hidden] { display: none; }
-.demo-message strong { display: block; font-size: 18px; margin-bottom: 6px; color: #242424; }
-#stage .m365 { top: var(--demo-bar); height: calc(100vh - var(--demo-bar)); }
-/* Tables keep whole words and scroll sideways when wide, as in Microsoft 365 Copilot. */
-#stage .m365-md table { display: block; overflow-x: auto; }
-#stage .m365-md th, #stage .m365-md td { overflow-wrap: normal; word-break: normal; }
-#stage .m365-md th { white-space: nowrap; }
-/* The composer draws its own focus state; the site-wide ring would sit inside it. */
-#stage .m365-input:focus-visible { outline: none; box-shadow: none; }
-@media (max-width: 640px) { .demo-note { display: none; } .demo-play { max-width: 62vw; } }
+button, input { font: inherit; }
+a { color: var(--cp-link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  display: flex;
+  height: 48px;
+  flex: 0 0 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 0 4px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.top-button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cp-text-muted);
+  cursor: pointer;
+}
+.top-button:hover { background: var(--cp-surface-soft); }
+.waffle {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  gap: 3px;
+}
+.waffle i {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--cp-text-muted);
+}
+.copilot-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 650;
+}
+.copilot-mark {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border-radius: 5px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+.top-search {
+  position: relative;
+  max-width: 560px;
+  min-width: 0;
+  flex: 1;
+  margin: 0 auto;
+}
+.top-search input {
+  width: 100%;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 4px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  padding: 6px 10px 6px 31px;
+  font-size: 0.78rem;
+}
+.top-search span {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  color: var(--cp-text-muted);
+  transform: translateY(-50%);
+}
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+.avatar {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+  font-size: 0.65rem;
+  font-weight: 750;
+}
+
+.shell {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+}
+.rail {
+  display: flex;
+  width: 54px;
+  flex: 0 0 54px;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 0;
+  border-right: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.rail-item {
+  position: relative;
+  display: flex;
+  width: 46px;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cp-text-muted);
+  padding: 7px 0 5px;
+  font-size: 1rem;
+}
+.rail-item small { font-size: 0.58rem; }
+.rail-item.active { color: var(--cp-link); }
+.rail-item.active::before {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: -4px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--cp-link);
+  content: "";
+}
+
+.stage {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+.pane-head {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 16px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.back {
+  color: var(--cp-text-muted);
+  font-size: 0.75rem;
+}
+.pane-title { font-size: 0.82rem; font-weight: 650; }
+.agent-chip {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-link);
+  padding: 3px 9px 3px 4px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.agent-chip .dot {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border-radius: 5px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+}
+.pane-actions {
+  display: flex;
+  gap: 7px;
+  margin-left: auto;
+}
+.action[hidden] { display: none; }
+.action {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+.action.secondary {
+  border-color: var(--cp-border-strong);
+  background: var(--cp-surface);
+  color: var(--cp-text);
+}
+
+.chat {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px 8px;
+}
+.chat-inner {
+  display: flex;
+  max-width: 780px;
+  margin: 0 auto;
+  flex-direction: column;
+  gap: 19px;
+}
+.stage-note {
+  padding: 22px 0 4px;
+  color: var(--cp-text-muted);
+  text-align: center;
+  font-size: 0.76rem;
+}
+.message {
+  animation: rise 220ms ease both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.message.user {
+  display: flex;
+  justify-content: flex-end;
+}
+.user-bubble {
+  max-width: 78%;
+  border-radius: 8px 8px 2px 8px;
+  background: var(--cp-highlight);
+  color: var(--cp-text);
+  padding: 10px 14px;
+  font-size: 0.84rem;
+}
+.agent-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.agent-avatar {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+}
+.agent-name { font-size: 0.84rem; font-weight: 650; }
+.agent-tag {
+  border-radius: 4px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  padding: 2px 7px;
+  font-size: 0.66rem;
+}
+.agent-body {
+  margin-left: 36px;
+  color: var(--cp-text);
+  font-size: 0.82rem;
+}
+.agent-body p { margin: 0 0 8px; }
+.agent-body ul { margin: 0 0 8px 19px; padding: 0; }
+.agent-body li { margin: 3px 0; }
+.typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px 0;
+}
+.typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--cp-text-muted);
+  animation: blink 1s infinite;
+}
+.typing i:nth-child(2) { animation-delay: 160ms; }
+.typing i:nth-child(3) { animation-delay: 320ms; }
+@keyframes blink {
+  0%, 70%, 100% { opacity: 0.25; }
+  30% { opacity: 1; }
+}
+.result-card {
+  overflow: hidden;
+  max-width: 600px;
+  margin-top: 10px;
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  background: var(--cp-surface);
+  box-shadow: 0 0 2px var(--cp-border);
+}
+.result-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  border-bottom: 1px solid var(--cp-border);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+.result-head span:last-child {
+  margin-left: auto;
+  color: var(--cp-success);
+  font-size: 0.67rem;
+}
+.result-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+}
+.result-card th, .result-card td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--cp-border);
+  text-align: left;
+}
+.result-card th {
+  background: var(--cp-surface-soft);
+  font-weight: 650;
+}
+.result-note {
+  padding: 9px 11px;
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+}
+.source {
+  margin-top: 8px;
+  color: var(--cp-text-muted);
+  font-size: 0.66rem;
+}
+
+.prompt-row {
+  flex: 0 0 auto;
+  padding: 7px 16px 0;
+}
+.prompt-inner {
+  display: flex;
+  max-width: 780px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.prompt-pill {
+  overflow: hidden;
+  max-width: 100%;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 999px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.prompt-pill:hover { border-color: var(--cp-link); }
+.input-area {
+  flex: 0 0 auto;
+  padding: 9px 16px 11px;
+}
+.input-inner {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.input-wrap { position: relative; }
+.input-wrap input {
+  width: 100%;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 8px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  padding: 10px 42px 10px 13px;
+  font-size: 0.82rem;
+}
+.send {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--cp-link);
+  transform: translateY(-50%);
+}
+.disclaimer {
+  margin-top: 5px;
+  color: var(--cp-text-muted);
+  text-align: center;
+  font-size: 0.63rem;
+}
+
+@media (max-width: 760px) {
+  .top-search, .rail { display: none; }
+  .pane-head { padding-right: 8px; padding-left: 8px; }
+  .back { display: none; }
+  .chat { padding-right: 10px; padding-left: 10px; }
+  .agent-body { margin-left: 0; }
+  .user-bubble { max-width: 92%; }
+  .action { padding: 6px 9px; }
+}
 </style>
-<link rel="stylesheet" href="m365/m365-mirror.css">
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
 (function (w, d, id) {
@@ -244,20 +686,60 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; }
 <!-- clarity:end -->
 </head>
 <body>
-<div class="demo-bar" role="banner">
-  <a id="back-link" href="../../library.html">&lsaquo; Agent library</a>
-  <span class="demo-note" id="demo-note">Recorded demo &middot; synthetic data &middot; not a live customer environment</span>
-  <button class="demo-play" id="play" type="button" hidden>&#9654; Play demo</button>
+<div class="topbar">
+  <button class="top-button" aria-label="App launcher"><span class="waffle"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
+  <div class="copilot-title"><span class="copilot-mark">C</span><span>Microsoft 365 Copilot</span></div>
+  <div class="top-search"><span>⌕</span><input type="text" placeholder="Search" disabled></div>
+  <div class="top-right">
+    <button class="top-button" id="theme-toggle" aria-label="Toggle theme">◐</button>
+    <div class="avatar">AI</div>
+  </div>
 </div>
-<div class="demo-message" id="demo-message" hidden></div>
-<div id="stage"></div>
-<script src="m365/m365-mirror.js"></script>
+
+<div class="shell">
+  <nav class="rail" aria-label="App rail">
+    <button class="rail-item"><span>⌂</span><small>Home</small></button>
+    <button class="rail-item active"><span>□</span><small>Chat</small></button>
+    <button class="rail-item"><span>▦</span><small>Apps</small></button>
+    <button class="rail-item"><span>◫</span><small>Calendar</small></button>
+  </nav>
+
+  <main class="stage">
+    <div class="pane-head">
+      <a class="back" id="back-link" href="../../library.html">‹ Agent library</a>
+      <span class="pane-title">Copilot</span>
+      <span class="agent-chip"><span class="dot">✦</span><span id="agent-name"></span></span>
+      <div class="pane-actions">
+        <button class="action" id="play">▶ Play demo</button>
+        <button class="action secondary" id="reset" aria-label="Reset demo">↻</button>
+      </div>
+    </div>
+
+    <div class="chat" id="chat">
+      <div class="chat-inner" id="chat-body">
+        <div class="stage-note" id="stage-note"></div>
+      </div>
+    </div>
+
+    <div class="prompt-row"><div class="prompt-inner" id="prompt-pills"></div></div>
+    <div class="input-area">
+      <div class="input-inner">
+        <div class="input-wrap"><input type="text" disabled placeholder="Message Copilot (scripted demo — use Play or a suggested prompt)"><button class="send" disabled>➤</button></div>
+        <div class="disclaimer">Simulated Microsoft 365 Copilot-style interface over synthetic data. This is a canned product demonstration, not a live customer environment or performance claim.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
 <script>
 // demo-scenarios.json is generated by tools/build_demo_scenarios.py from the catalog and the recorded
-// transcripts. Both files are served from this site, so a visit makes no GitHub API call. The chat is drawn
-// as Microsoft 365 Copilot shows an agent (m365/m365-mirror.js) and replays the recorded answers.
+// transcripts. Both files are served from this site, so a visit makes no GitHub API call.
 const params = new URLSearchParams(location.search);
-const scenarioId = params.get("scenario") || "";
+let scenarioId = params.get("scenario") || "";
+let scenario = null;
+let index = null;
+let timers = [];
+
 const $ = id => document.getElementById(id);
 
 async function getJSON(path) {
@@ -266,67 +748,215 @@ async function getJSON(path) {
   return response.json();
 }
 
-function question(text) {
-  return String(text || "").replace(/\u2019/g, "'").replace(/\s+/g, " ").trim().toLowerCase();
+async function setScenario(nextId, autoplay = false) {
+  if (!index.scenarios[nextId]) return;
+  scenarioId = nextId;
+  history.replaceState(null, "", `${location.pathname}?scenario=${encodeURIComponent(nextId)}`);
+  await loadScenario(nextId);
+  if (autoplay && scenario) play();
 }
 
-function showMessage(heading, detail) {
-  $("demo-message").hidden = false;
-  $("demo-message").innerHTML = "";
-  const box = document.createElement("div");
-  const strong = document.createElement("strong");
-  strong.textContent = heading;
-  box.append(strong, document.createTextNode(detail));
-  $("demo-message").append(box);
+function configure() {
+  if (!scenario) return;
+  document.title = `${scenario.title} — M365 Copilot Demo`;
+  $("agent-name").textContent = `@${scenario.agent}`;
+  $("back-link").href = `../../library.html#agent/${encodeURIComponent(scenario.agentId)}`;
+  showPrompts(scenario.agentId);
 }
 
-const NOT_A_RECORDED_PROMPT = "This is a recorded demo with synthetic data, so it can only replay its example prompts. "
-  + "Choose one of the suggested prompts to see the agent's recorded answer.";
+function showPrompts(agentId) {
+  const ids = agentId && index.agents[agentId] ? index.agents[agentId].scenarios : [];
+  $("prompt-pills").innerHTML = ids
+    .filter(id => index.scenarios[id] && index.scenarios[id].recorded)
+    .map(id => `<button class="prompt-pill" type="button" data-scenario="${escapeHtml(id)}">${escapeHtml(index.scenarios[id].title)}</button>`)
+    .join("");
+  document.querySelectorAll("[data-scenario]").forEach(button => {
+    button.addEventListener("click", () => setScenario(button.dataset.scenario, true));
+  });
+}
 
-async function start() {
-  const index = await getJSON("demo-scenarios.json");
-  const entry = index.scenarios[scenarioId];
+function unavailable(heading, detail, agentId) {
+  scenario = null;
+  clearTimers();
+  document.title = "Demo not available — M365 Copilot Demo";
+  $("play").hidden = true;
+  $("reset").hidden = true;
+  $("agent-name").textContent = agentId && index && index.agents[agentId] ? `@${index.agents[agentId].name}` : "";
+  $("back-link").href = agentId ? `../../library.html#agent/${encodeURIComponent(agentId)}` : "../../library.html";
+  showPrompts(agentId);
+  $("chat-body").innerHTML = `<div class="stage-note" id="stage-note"><strong>${escapeHtml(heading)}</strong><br>${escapeHtml(detail)}</div>`;
+}
+
+async function loadScenario(id) {
+  index = index || await getJSON("demo-scenarios.json");
+  const entry = index.scenarios[id];
   if (!entry) {
-    showMessage("Choose a demo from the Agent library", "This link does not name a recorded demo. Go back to the library and pick an example prompt.");
+    unavailable("Choose a demo from the Agent library", "This link does not name a recorded demo. Go back to the library and pick an example prompt.");
     return;
   }
-  const agent = index.agents[entry.agent_id];
-  $("back-link").href = `../../library.html#agent/${encodeURIComponent(entry.agent_id)}`;
-  const artifact = await getJSON(`../${entry.folder}/evals/transcripts.json`);
-  const byCase = new Map(artifact.transcripts.map(item => [item.case_id, item]));
-  const recorded = agent.scenarios
-    .map(id => index.scenarios[id])
-    .filter(item => item && item.recorded && byCase.has(item.case_id));
-  const ordered = entry.recorded ? [entry, ...recorded.filter(item => item !== entry)] : recorded;
-  const answers = new Map(recorded.map(item => {
-    const transcript = byCase.get(item.case_id);
-    return [question(transcript.prompt), transcript.assistant_response];
-  }));
-  document.title = `${entry.title} — ${agent.name}`;
-  $("demo-note").textContent = `Recorded demo · synthetic data · Exact Brainstem transcript · captured ${String(artifact.captured_at || "").slice(0, 10)}`;
-  const chat = window.RappM365.mount($("stage"), {
-    name: agent.name,
-    createdBy: "Microsoft AI BAST",
-    initials: "",
-    starters: ordered.slice(0, 3).map(item => ({ title: item.title, text: byCase.get(item.case_id).prompt })),
-    ask: async (text) => {
-      await new Promise(resolve => setTimeout(resolve, 1400));
-      return answers.get(question(text)) || NOT_A_RECORDED_PROMPT;
-    }
-  });
-  window.__demo = chat;
-  if (entry.recorded) {
-    const prompt = byCase.get(entry.case_id).prompt;
-    $("play").hidden = false;
-    $("play").textContent = `▶ Play: ${entry.title}`;
-    $("play").addEventListener("click", () => { $("play").hidden = true; chat.send(prompt); });
-  } else {
-    $("demo-note").textContent = `This demo isn't recorded yet: "${entry.title}". Choose one of this agent's recorded prompts below.`;
+  if (!entry.recorded) {
+    unavailable("This demo isn't recorded yet", `"${entry.title}" has no recorded answer yet. Choose one of this agent's recorded prompts below.`, entry.agent_id);
+    return;
   }
+  const artifact = await getJSON(`../${entry.folder}/evals/transcripts.json`);
+  const transcript = artifact.transcripts.find(item => item.case_id === entry.case_id);
+  if (!transcript) throw new Error(`Missing transcript ${entry.case_id}`);
+  scenario = {
+    title: entry.title,
+    agent: index.agents[entry.agent_id].name,
+    agentId: entry.agent_id,
+    prompts: index.agents[entry.agent_id].scenarios,
+    persona: transcript.persona,
+    capturedAt: artifact.captured_at,
+    agentSha: artifact.agent_sources[0].sha256,
+    turns: [{
+      user: escapeHtml(transcript.prompt),
+      reply: markdownToHtml(transcript.assistant_response),
+      model: transcript.model
+    }]
+  };
+  reset();
 }
 
-start().catch(error => {
-  showMessage("Demo unavailable", error.message);
+function clearTimers() {
+  timers.forEach(timer => clearTimeout(timer));
+  timers = [];
+}
+
+function reset() {
+  clearTimers();
+  if (!scenario) return;
+  $("chat-body").innerHTML = `<div class="stage-note" id="stage-note"><strong>${escapeHtml(scenario.title)}</strong> — ${escapeHtml(scenario.persona)}<br>Press Play, or choose a suggested prompt below.</div>`;
+  $("play").hidden = false;
+  $("reset").hidden = false;
+  $("play").disabled = false;
+  $("play").textContent = "▶ Play demo";
+  configure();
+}
+
+function userMessage(text) {
+  return `<div class="message user"><div class="user-bubble">${text}</div></div>`;
+}
+
+function resultCard(card) {
+  if (!card) return "";
+  return `<div class="result-card">
+    <div class="result-head"><span>▦</span><strong>${card.title}</strong><span>${card.status}</span></div>
+    <div style="overflow-x:auto"><table><thead><tr>${card.headers.map(header => `<th>${header}</th>`).join("")}</tr></thead>
+    <tbody>${card.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <div class="result-note">Source: synthetic domain data generated for this AI BAST demonstration.</div>
+  </div>`;
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+  })[char]);
+}
+
+function inlineMarkdown(value) {
+  return escapeHtml(value)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+}
+
+function markdownToHtml(markdown) {
+  const lines = String(markdown || "").split(/\r?\n/);
+  const output = [];
+  let index = 0;
+  while (index < lines.length) {
+    const line = lines[index];
+    if (!line.trim()) { index += 1; continue; }
+    if (line.trim().startsWith("|") && index + 1 < lines.length
+        && /^\s*\|?[\s:-]+\|/.test(lines[index + 1])) {
+      const tableLines = [];
+      while (index < lines.length && lines[index].trim().startsWith("|")) {
+        tableLines.push(lines[index].trim());
+        index += 1;
+      }
+      const rows = tableLines
+        .filter((_, rowIndex) => rowIndex !== 1)
+        .map(row => row.replace(/^\||\|$/g, "").split("|").map(cell => cell.trim()));
+      output.push(`<div class="result-card"><table><thead><tr>${rows[0].map(cell => `<th>${inlineMarkdown(cell)}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(row => `<tr>${row.map(cell => `<td>${inlineMarkdown(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table><div class="result-note">Exact table captured from the isolated Brainstem response.</div></div>`);
+      continue;
+    }
+    if (/^#{1,3}\s+/.test(line)) {
+      const level = Math.min(3, line.match(/^#+/)[0].length + 2);
+      output.push(`<h${level}>${inlineMarkdown(line.replace(/^#{1,3}\s+/, ""))}</h${level}>`);
+      index += 1;
+      continue;
+    }
+    if (/^\s*[-*]\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^\s*[-*]\s+/.test(lines[index])) {
+        items.push(lines[index].replace(/^\s*[-*]\s+/, ""));
+        index += 1;
+      }
+      output.push(`<ul>${items.map(item => `<li>${inlineMarkdown(item)}</li>`).join("")}</ul>`);
+      continue;
+    }
+    if (/^\s*\d+\.\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^\s*\d+\.\s+/.test(lines[index])) {
+        items.push(lines[index].replace(/^\s*\d+\.\s+/, ""));
+        index += 1;
+      }
+      output.push(`<ol>${items.map(item => `<li>${inlineMarkdown(item)}</li>`).join("")}</ol>`);
+      continue;
+    }
+    output.push(`<p>${inlineMarkdown(line)}</p>`);
+    index += 1;
+  }
+  return output.join("");
+}
+
+function typingMessage() {
+  return `<div class="message" id="typing"><div class="agent-head"><div class="agent-avatar">✦</div><span class="agent-name">${scenario.agent}</span><span class="agent-tag">Copilot Studio agent</span></div><div class="agent-body"><span class="typing"><i></i><i></i><i></i></span></div></div>`;
+}
+
+function agentMessage(turn) {
+  return `<div class="message"><div class="agent-head"><div class="agent-avatar">✦</div><span class="agent-name">${scenario.agent}</span><span class="agent-tag">Copilot Studio agent</span></div>
+    <div class="agent-body">${turn.reply}<div class="source">Exact Brainstem transcript · ${escapeHtml(turn.model || "model unavailable")} · agent SHA ${escapeHtml(scenario.agentSha.slice(0, 12))}… · captured ${escapeHtml(scenario.capturedAt.slice(0, 10))}</div></div></div>`;
+}
+
+function append(html) {
+  $("chat-body").insertAdjacentHTML("beforeend", html);
+  $("chat").scrollTo({ top: $("chat").scrollHeight, behavior: "smooth" });
+}
+
+function play() {
+  clearTimers();
+  reset();
+  $("play").disabled = true;
+  $("play").textContent = "Playing…";
+  let delay = 300;
+  scenario.turns.forEach(turn => {
+    timers.push(setTimeout(() => append(userMessage(turn.user)), delay));
+    delay += 900;
+    timers.push(setTimeout(() => append(typingMessage()), delay));
+    delay += 900;
+    timers.push(setTimeout(() => {
+      const typing = $("typing");
+      if (typing) typing.remove();
+      append(agentMessage(turn));
+    }, delay));
+    delay += 1750;
+  });
+  timers.push(setTimeout(() => {
+    $("play").disabled = false;
+    $("play").textContent = "▶ Play again";
+  }, delay));
+}
+
+$("play").addEventListener("click", play);
+$("reset").addEventListener("click", reset);
+$("theme-toggle").addEventListener("click", () => {
+  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+});
+
+loadScenario(scenarioId).catch(error => {
+  $("stage-note").innerHTML = `<strong>Demo unavailable</strong><br>${escapeHtml(error.message)}`;
   console.error(error);
 });
 </script>

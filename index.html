@@ -785,10 +785,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: 0.6rem;
   font-weight: 750;
 }
-.tour-link { display: inline-block; margin-top: 10px; color: var(--cp-accent); font-weight: 600; text-decoration: none; }
-.tour-link:hover { text-decoration: underline; }
-.asset-request-action { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 12px; }
-.asset-request-action span { color: var(--cp-text-muted); font-size: 13px; }
 .badge-request {
   color: var(--cp-link);
   text-decoration: none;
@@ -1569,7 +1565,6 @@ footer {
       <div class="eyebrow">AI BAST Agent Library</div>
       <h1>Choose an industry. Build the AI journey.</h1>
       <p>Start from proven solution patterns, run them safely with synthetic domain data, then connect customer systems and publish through Copilot Studio—or any downstream surface that can host the portable agent.</p>
-      <a class="tour-link" href="tour.html">New here? Take the 12-minute tour &rarr;</a>
     </div>
     <div class="stats" id="stats"></div>
   </section>
@@ -3014,19 +3009,6 @@ function onepagerRequestBadge(agent) {
     aria-label="Request the one-pager for ${esc(shown(agent))}">Request one-pager ↗</a>`;
 }
 
-// The one action Microsoft, customer and partner sellers ask for most: the one-pager and the demo video,
-// sent after a short request (the only part of the library kept behind a form, for tracking).
-function assetRequestAction(agent, solution) {
-  if (!solution.has_onepager && !solution.has_demo_video) return "";
-  const wanted = [solution.has_onepager ? "one-pager" : "", solution.has_demo_video ? "demo video" : ""]
-    .filter(Boolean).join(" and ");
-  return `<div class="asset-request-action">
-    <a class="button small" href="${esc(requestFormUrl(agent))}" target="_blank" rel="noopener"
-      data-action="stop">Request the ${esc(wanted)} ↗</a>
-    <span>Microsoft sellers, customers and partners can request it.</span>
-  </div>`;
-}
-
 function fieldAssetRow(label, filename, available, formUrl) {
   const value = filename || "Not listed";
   const content = `<strong>${esc(label)}</strong><span title="${esc(filename || "")}">${esc(value)}</span>`;
@@ -3076,9 +3058,9 @@ function openAgent(name) {
           <div class="badges">
             ${agent._demo && agent._demo.case_count ? `<span class="badge proven">Demo proven</span>` : ""}
             ${solution.has_demo_video ? `<span class="badge demo">Recorded demo</span>` : ""}
+            ${solution.has_onepager ? onepagerRequestBadge(agent) : ""}
           </div>
           ${agentUpvoteControl(agent)}
-          ${assetRequestAction(agent, solution)}
         </div>
       </header>
       ${architecture ? `<div class="detail-tabs">

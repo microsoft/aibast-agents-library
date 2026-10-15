@@ -81,7 +81,6 @@ jobs:
             /rapp_brainstem/VERSION
             /scripts/build_pages_site.py
             /scripts/snapshot_github_data.py
-            /scripts/build_public_api.py
             /tests/test_pages_site.py
             /.github/workflows/pages.yml
             !/browser-audit/
@@ -99,13 +98,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/snapshot_github_data.py --out "${{ runner.temp }}/snapshot" --repository "${{ github.repository }}"
-
-      - name: Build the public API for the artifact
-        run: >-
-          python scripts/build_public_api.py
-          --out "${{ runner.temp }}/snapshot"
-          --site "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
-          --repository "${{ github.repository }}"
 
       - name: Build slim Pages artifact
         env:

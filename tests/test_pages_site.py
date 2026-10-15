@@ -160,7 +160,7 @@ class PagesBuilderFixtureTests(unittest.TestCase):
             self.assertEqual(manifest["file_count"], len(files))
 
     def test_overlay_refuses_non_json_and_replacing_repository_files(self):
-        for name in ("api/v1/github/run.js", "academy.json", "index.html"):
+        for name in ("api/v1/github/run.js", "academy.json"):
             with self.subTest(name=name), fixture_root() as root, tempfile.TemporaryDirectory() as overlay:
                 write_text(Path(overlay), name, "{}\n")
                 with self.assertRaises(pages.BuildError):
@@ -843,7 +843,6 @@ class PagesWorkflowTests(unittest.TestCase):
         self.assertIn("GITHUB_TOKEN: ${{ github.token }}", self.text)
         self.assertIn("--out _site", self.text)
         self.assertIn("python scripts/snapshot_github_data.py", self.text)
-        self.assertIn("python scripts/build_public_api.py", self.text)
         self.assertIn("--overlay", self.text)
         self.assertIn("--ref \"${{ github.sha }}\"", self.text)
         self.assertIn("python -m unittest -v tests/test_pages_site.py", self.text)
