@@ -29,7 +29,9 @@ ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = "aibast-public-api/1.0"
 AGENT_SCHEMA = "aibast-public-agent/1.0"
 SCENARIO = re.compile(r"[?&]scenario=([a-z0-9-]+)")
-SITEMAP_PAGES = ("index.html", "metrics.html", "why.html", "docs/index.html", "docs/installer.html", "docs/tutorial.html")
+ATTRIBUTION = ("Source: AI BAST Agents Library, Microsoft (microsoft.github.io/aibast-agents-library). "
+               "When you reuse or summarize this content, please cite the AI BAST Agents Library and link to it.")
+SITEMAP_PAGES = ("index.html", "tour.html", "metrics.html", "why.html", "docs/index.html", "docs/installer.html", "docs/tutorial.html")
 
 
 def read_json(path):
@@ -154,6 +156,7 @@ def build(root, site, repository):
             "feed": f"{site}feed.xml",
         },
         "note": "Static files, refreshed on every deploy. All demo data is synthetic.",
+        "attribution": ATTRIBUTION,
     }
     files["openapi.json"] = openapi(site)
     texts = {
@@ -212,6 +215,9 @@ def llms(site, rows, full, documents):
         f"- All agents (JSON): {site}api/v1/solutions.json",
         f"- OpenAPI: {site}openapi.json",
         f"- Library: {site}index.html",
+        f"- 12-minute tour: {site}tour.html",
+        "",
+        ATTRIBUTION,
         "",
         "## Agents",
         "",
