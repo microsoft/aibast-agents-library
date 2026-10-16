@@ -492,6 +492,13 @@ jobs:
             reports/impact-report-email.md
             reports/impact-report.json
 
+      - name: Snapshot GitHub data for the branch-served site
+        # Production Pages serves this branch, so the release and repo snapshot the download center and metrics page
+        # read (instead of calling api.github.com from every visitor's browser) is committed here.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/snapshot_github_data.py --out . --repository "${{ github.repository }}"
+
       - name: Commit snapshot
         run: |
           git config user.name "github-actions[bot]"
@@ -510,6 +517,7 @@ jobs:
             reports/impact-report-email.txt \
             reports/impact-report-email.md \
             reports/impact-report.json
+          if [ -d api/v1/github ]; then git add api/v1/github; fi
           if git diff --staged --quiet; then
             echo "No metrics change"
           else
