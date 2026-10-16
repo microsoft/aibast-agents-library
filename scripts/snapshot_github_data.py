@@ -72,6 +72,12 @@ def snapshot(repository, token, fetch=get):
 def write(out, repository, files, now=None):
     folder = Path(out) / "api" / "v1" / "github"
     folder.mkdir(parents=True, exist_ok=True)
+    previous = {}
+    if (folder / "index.json").exists():
+        try:
+            previous = json.loads((folder / "index.json").read_text(encoding="utf-8"))
+        except ValueError:
+            previous = {}
     index = {
         "schema": SCHEMA,
         "generated_at": (now or datetime.now(timezone.utc)).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -83,6 +89,9 @@ def write(out, repository, files, now=None):
         data = (json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
         (folder / name).write_bytes(data)
         index["files"][name] = {"sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
+    # Stable write: when no file changed, keep the previous timestamp so a committed snapshot only changes with the data.
+    if previous.get("files") == index["files"] and previous.get("repository") == repository:
+        index["generated_at"] = previous.get("generated_at", index["generated_at"])
     (folder / "index.json").write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return index
 
