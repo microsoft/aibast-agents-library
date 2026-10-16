@@ -1,17 +1,17 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-10-15T05:34:53Z",
+ "generated_at": "2026-10-16T00:34:09Z",
  "repo": {
   "stars": 8,
   "forks": 7,
   "watchers": 0,
   "open_issues": 15,
-  "size_kb": 5415433,
+  "size_kb": 5415490,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-10-15T05:29:02Z",
+  "pushed_at": "2026-10-16T00:32:17Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,11 +19,11 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 17507,
+  "downloads": 17510,
   "clones": 16576,
   "cdn_hits": 517,
-  "release_downloads": 414,
-  "agent_file_downloads": 248,
+  "release_downloads": 417,
+  "agent_file_downloads": 251,
   "installer_downloads": 179,
   "skill_downloads": 99,
   "agent_upvotes": null,
@@ -37,7 +37,7 @@
   "view_uniques_daily_sum": 239,
   "days_tracked": 71,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 248,
+  "global_agent_distribution_fetch_events": 251,
   "agents": 86,
   "stacks": 66,
   "verticals": 12,
@@ -638,7 +638,7 @@
   "clones_14d": 5403,
   "views_14d": 137,
   "live": true,
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -646,7 +646,7 @@
   "total_hits": 129,
   "bandwidth": 377363,
   "rank": null,
-  "agent_hits": 248,
+  "agent_hits": 251,
   "installer_hits": 179,
   "files": [
    {
@@ -923,12 +923,12 @@
     "kind": "skill"
    }
   ],
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 414,
+  "total_downloads": 417,
   "count": 5,
   "releases": [
    {
@@ -972,7 +972,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 248,
+    "downloads": 251,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -1046,7 +1046,7 @@
      },
      {
       "name": "briefing_pack_builder__66db05eb81c8_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 20909
      },
      {
@@ -1161,7 +1161,7 @@
      },
      {
       "name": "customer_sentiment_churn__f1313fa0dbbe_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 32727
      },
      {
@@ -1231,7 +1231,7 @@
      },
      {
       "name": "field_service_dispatch__49452ef7f2a1_agent.py",
-      "downloads": 1,
+      "downloads": 2,
       "size": 25954
      },
      {
@@ -1684,7 +1684,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1750,6 +1750,26 @@
     "catalog_kind": "solution"
    },
    {
+    "name": "@aibast-agents-library/field-service-dispatch",
+    "display_name": "Field Service Dispatch Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "energy",
+    "tier": "verified",
+    "downloads": 6,
+    "upvotes": 0,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/75",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/76",
+    "lines": 488,
+    "size_kb": 25.3,
+    "added_at": "2026-08-15T22:26:47Z",
+    "file": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
+    "description": "Provide read-only field-service decision support from a synthetic metro-utility snapshot: tomorrow's job dashboard, schedule optimization with travel savings, skill-matched crew routes, an emergency outage response draft, live outage status with customer impact, the post-incident review, and prevention work orders with the monthly operations report. The agent never dispatches or reroutes a crew, changes a job, contacts a customer, stages inventory, creates a work order, or authorizes field action; a human dispatcher must approve work through future authenticated tools.",
+    "stack": "field_service_dispatch",
+    "vertical": "energy",
+    "catalog_kind": "solution"
+   },
+   {
     "name": "@aibast-agents-library/care-gap-closure",
     "display_name": "Care Gap Closure Agent",
     "publisher": "@aibast-agents-library",
@@ -1767,26 +1787,6 @@
     "description": "Prioritizes synthetic Medicare Advantage care gaps before the HEDIS deadline: panel status, top gaps by revenue and reachability, diabetes risk tiers and barriers, a barrier-specific outreach strategy, campaign projection, and monitoring alerts, plus source-evidence views (gap_analysis, cohort_review, outreach_draft, quality_dashboard). Human clinical and quality review is required; it never determines eligibility, launches campaigns, or contacts patients.",
     "stack": "care_gap_closure",
     "vertical": "healthcare",
-    "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/field-service-dispatch",
-    "display_name": "Field Service Dispatch Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "energy",
-    "tier": "verified",
-    "downloads": 5,
-    "upvotes": 0,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/75",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/76",
-    "lines": 488,
-    "size_kb": 25.3,
-    "added_at": "2026-08-15T22:26:47Z",
-    "file": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
-    "description": "Provide read-only field-service decision support from a synthetic metro-utility snapshot: tomorrow's job dashboard, schedule optimization with travel savings, skill-matched crew routes, an emergency outage response draft, live outage status with customer impact, the post-incident review, and prevention work orders with the monthly operations report. The agent never dispatches or reroutes a crew, changes a job, contacts a customer, stages inventory, creates a work order, or authorizes field action; a human dispatcher must approve work through future authenticated tools.",
-    "stack": "field_service_dispatch",
-    "vertical": "energy",
     "catalog_kind": "solution"
    },
    {
@@ -2622,7 +2622,7 @@
     "publisher": "@aibast-agents-library",
     "category": "slg_government",
     "tier": "verified",
-    "downloads": 0,
+    "downloads": 1,
     "upvotes": null,
     "acquisitions": null,
     "upvote_discussion_url": null,
@@ -2715,21 +2715,21 @@
     "downloads": 6
    },
    {
-    "name": "care_gap_closure",
-    "display_name": "Care Gap Closure",
-    "vertical": "healthcare",
-    "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack",
-    "agents": 1,
-    "lines": 477,
-    "downloads": 5
-   },
-   {
     "name": "field_service_dispatch",
     "display_name": "Field Service Dispatch",
     "vertical": "energy",
     "path": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack",
     "agents": 1,
     "lines": 488,
+    "downloads": 6
+   },
+   {
+    "name": "care_gap_closure",
+    "display_name": "Care Gap Closure",
+    "vertical": "healthcare",
+    "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack",
+    "agents": 1,
+    "lines": 477,
     "downloads": 5
    },
    {
@@ -2796,6 +2796,15 @@
     "downloads": 4
    },
    {
+    "name": "customer_sentiment_churn",
+    "display_name": "Customer Sentiment Churn",
+    "vertical": "financial_services",
+    "path": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack",
+    "agents": 1,
+    "lines": 688,
+    "downloads": 4
+   },
+   {
     "name": "permit_license_management",
     "display_name": "Permit License Management",
     "vertical": "energy",
@@ -2848,15 +2857,6 @@
     "agents": 1,
     "lines": 741,
     "downloads": 3
-   },
-   {
-    "name": "cross_selling_opportunities",
-    "display_name": "Cross Selling Opportunities",
-    "vertical": "general",
-    "path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack",
-    "agents": 1,
-    "lines": 540,
-    "downloads": 3
    }
   ],
   "categories": [
@@ -2869,7 +2869,7 @@
    {
     "name": "financial_services",
     "agents": 13,
-    "downloads": 35,
+    "downloads": 36,
     "lines": 8144
    },
    {
@@ -2881,7 +2881,7 @@
    {
     "name": "energy",
     "agents": 7,
-    "downloads": 19,
+    "downloads": 20,
     "lines": 3052
    },
    {
@@ -2917,7 +2917,7 @@
    {
     "name": "slg_government",
     "agents": 4,
-    "downloads": 9,
+    "downloads": 10,
     "lines": 2545
    },
    {
@@ -2943,7 +2943,7 @@
    {
     "name": "financial_services",
     "agents": 13,
-    "downloads": 35,
+    "downloads": 36,
     "stacks": 13
    },
    {
@@ -2955,7 +2955,7 @@
    {
     "name": "energy",
     "agents": 7,
-    "downloads": 19,
+    "downloads": 20,
     "stacks": 7
    },
    {
@@ -2991,7 +2991,7 @@
    {
     "name": "slg_government",
     "agents": 4,
-    "downloads": 9,
+    "downloads": 10,
     "stacks": 4
    },
    {
@@ -3146,7 +3146,7 @@
   {
    "name": "@aibast-agents-library/briefing-pack-builder",
    "display_name": "Briefing Pack Builder Agent",
-   "downloads": 0,
+   "downloads": 1,
    "upvotes": null,
    "acquisitions": null,
    "upvote_discussion_url": null,
@@ -3302,7 +3302,7 @@
   {
    "name": "@aibast-agents-library/customer-sentiment-churn",
    "display_name": "Customer Sentiment and Churn Prediction Agent",
-   "downloads": 3,
+   "downloads": 4,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/57",
@@ -3445,7 +3445,7 @@
   {
    "name": "@aibast-agents-library/field-service-dispatch",
    "display_name": "Field Service Dispatch Agent",
-   "downloads": 5,
+   "downloads": 6,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/75",
@@ -4134,7 +4134,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "partial",
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -4161,7 +4161,7 @@
  },
  "agent_upvote_coverage": {
   "status": "partial",
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -4178,7 +4178,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "partial",
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -4196,11 +4196,11 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "carried_forward": false,
   "totals": {
-   "files": 9365,
-   "observed_files": 9365,
+   "files": 9370,
+   "observed_files": 9370,
    "downloads": 115,
    "by_kind": {
     "agent": {
@@ -4214,8 +4214,8 @@
      "downloads": 99
     },
     "workshop": {
-     "files": 7969,
-     "observed_files": 7969,
+     "files": 7970,
+     "observed_files": 7970,
      "downloads": 0
     },
     "source_bundle": {
@@ -4239,8 +4239,8 @@
      "downloads": 3
     },
     "code": {
-     "files": 295,
-     "observed_files": 295,
+     "files": 299,
+     "observed_files": 299,
      "downloads": 0
     },
     "asset": {
@@ -8676,6 +8676,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "scripts/snapshot_github_data.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "scripts/sync_agent_discussions.py",
     "kind": "code",
     "agent_name": null,
@@ -8749,6 +8757,14 @@
    },
    {
     "path": "solutions/_shared/AIBAST-Facilitator-Cohort-Registration.docx",
+    "kind": "workshop",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "solutions/_shared/demo-scenarios.json",
     "kind": "workshop",
     "agent_name": null,
     "workshop_slug": null,
@@ -78220,6 +78236,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_demo_scenarios.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_design_tokens.py",
     "kind": "code",
     "agent_name": null,
@@ -78501,6 +78525,14 @@
    },
    {
     "path": "tests/test_onepager_content.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_pages_read_same_origin.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -78861,6 +78893,14 @@
    },
    {
     "path": "tools/audit_workshop_first_release.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tools/build_demo_scenarios.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -80313,7 +80353,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-10-15T05:34:53Z",
+    "as_of": "2026-10-16T00:34:09Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -80327,7 +80367,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-10-15T05:34:53Z",
+    "as_of": "2026-10-16T00:34:09Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -80340,7 +80380,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-10-15T05:34:53Z",
+    "as_of": "2026-10-16T00:34:09Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -80352,7 +80392,7 @@
    },
    "agent_upvotes": {
     "status": "partial",
-    "as_of": "2026-10-15T05:34:53Z",
+    "as_of": "2026-10-16T00:34:09Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -80383,13 +80423,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -81930,7 +81970,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -82615,7 +82655,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-10-15T05:34:53Z",
+  "as_of": "2026-10-16T00:34:09Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -82627,8 +82667,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 248,
-   "combined_agent_distribution_fetch_events": 248,
+   "aibast_direct_agent_fetches": 251,
+   "combined_agent_distribution_fetch_events": 251,
    "distribution_entries": 86,
    "logical_agents": 86,
    "overlap_agents": 0
@@ -82665,18 +82705,18 @@
     "combined_distribution_fetch_events": 6
    },
    {
-    "logical_name": "@aibast-agents-library/care-gap-closure",
-    "display_name": "Care Gap Closure Agent",
+    "logical_name": "@aibast-agents-library/field-service-dispatch",
+    "display_name": "Field Service Dispatch Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
     ],
-    "aibast_direct_agent_fetches": 5,
-    "combined_distribution_fetch_events": 5
+    "aibast_direct_agent_fetches": 6,
+    "combined_distribution_fetch_events": 6
    },
    {
-    "logical_name": "@aibast-agents-library/field-service-dispatch",
-    "display_name": "Field Service Dispatch Agent",
+    "logical_name": "@aibast-agents-library/care-gap-closure",
+    "display_name": "Care Gap Closure Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -82785,6 +82825,16 @@
     "combined_distribution_fetch_events": 4
    },
    {
+    "logical_name": "@aibast-agents-library/customer-sentiment-churn",
+    "display_name": "Customer Sentiment and Churn Prediction Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 4,
+    "combined_distribution_fetch_events": 4
+   },
+   {
     "logical_name": "@aibast-agents-library/fs-customer-onboarding",
     "display_name": "Customer Onboarding Agent",
     "publisher": "@aibast-agents-library",
@@ -82877,16 +82927,6 @@
    {
     "logical_name": "@aibast-agents-library/cross-selling",
     "display_name": "Cross Selling Opportunities Agent",
-    "publisher": "@aibast-agents-library",
-    "channels": [
-     "aibast"
-    ],
-    "aibast_direct_agent_fetches": 3,
-    "combined_distribution_fetch_events": 3
-   },
-   {
-    "logical_name": "@aibast-agents-library/customer-sentiment-churn",
-    "display_name": "Customer Sentiment and Churn Prediction Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -83355,18 +83395,18 @@
     "combined_distribution_fetch_events": 3
    },
    {
-    "logical_name": "@aibast-agents-library/benefits-enrollment-assistant",
-    "display_name": "Benefits Enrollment Agent",
+    "logical_name": "@aibast-agents-library/briefing-pack-builder",
+    "display_name": "Briefing Pack Builder Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
     ],
-    "aibast_direct_agent_fetches": 0,
-    "combined_distribution_fetch_events": 0
+    "aibast_direct_agent_fetches": 1,
+    "combined_distribution_fetch_events": 1
    },
    {
-    "logical_name": "@aibast-agents-library/briefing-pack-builder",
-    "display_name": "Briefing Pack Builder Agent",
+    "logical_name": "@aibast-agents-library/benefits-enrollment-assistant",
+    "display_name": "Benefits Enrollment Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
