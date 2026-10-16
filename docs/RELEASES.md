@@ -10,6 +10,30 @@ failures also carry `incident`.
 
 ---
 
+## 2026-10-16 — every demo plays its own agent; build-time GitHub snapshot
+
+**Shipped:** [#243](https://github.com/microsoft/aibast-agents-library/pull/243)
+demo links resolve to each agent's own recorded scenario through the generated
+`solutions/_shared/demo-scenarios.json` (349 of 359 catalog links recorded; the
+rest say "This demo isn't recorded yet"); a build-time snapshot of the GitHub
+data the pages read (`scripts/snapshot_github_data.py`, `--overlay` on
+`build_pages_site.py`); same-origin reads in the download center and metrics
+page. Merge commit `90588550`.
+
+**Gates:** staging preflight, Deploy Academy Pages and Ring one-liner smoke;
+full suite; browser pass on staging (two `solution.html` regressions found and
+fixed before promotion). On production after merge: 360 of 360 demo links play
+the right agent; 13 of 13 critical paths load.
+
+**Post-release:**
+- `api/v1/github/*` returned 404 on production: production Pages serves the
+  `main` branch, not the Actions artifact, so the overlay never reached it and
+  the download center kept falling back to `api.github.com`. Disposition: the
+  metrics workflow commits the snapshot to the branch;
+  [#244](https://github.com/microsoft/aibast-agents-library/pull/244).
+
+---
+
 ## 2026-09-02 — installer download counting
 
 **Shipped:** [#194](https://github.com/microsoft/aibast-agents-library/pull/194)
