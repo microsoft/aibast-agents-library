@@ -6,6 +6,9 @@ on:
       - staging
       - main
   workflow_dispatch:
+  # Refresh the GitHub data snapshot (releases, repo stats) the pages read instead of api.github.com.
+  schedule:
+    - cron: '23 */3 * * *'
 
 permissions:
   contents: read
@@ -77,6 +80,7 @@ jobs:
             /rapp_brainstem/README.md
             /rapp_brainstem/VERSION
             /scripts/build_pages_site.py
+            /scripts/snapshot_github_data.py
             /tests/test_pages_site.py
             /.github/workflows/pages.yml
             !/browser-audit/
@@ -90,6 +94,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Snapshot GitHub data for the artifact
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/snapshot_github_data.py --out "${{ runner.temp }}/snapshot" --repository "${{ github.repository }}"
+
       - name: Build slim Pages artifact
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -101,6 +110,7 @@ jobs:
           --repo "${{ github.event.repository.name }}"
           --ref "${{ github.sha }}"
           --ring-branch "${{ github.ref_name }}"
+          --overlay "${{ runner.temp }}/snapshot"
           --check-links
 
       - name: Run Pages artifact tests

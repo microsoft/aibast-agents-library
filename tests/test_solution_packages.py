@@ -284,11 +284,12 @@ def test_shared_demo_reads_canonical_transcript_artifacts():
     demo = (
         ROOT / "solutions" / "_shared" / "m365-copilot-demo.html"
     ).read_text(encoding="utf-8")
-    assert 'fetch(`../${definition.solution}/evals/transcripts.json`' in demo
+    assert 'getJSON(`../${entry.folder}/evals/transcripts.json`)' in demo
     assert "Exact Brainstem transcript" in demo
+    scenarios = read_json(ROOT / "solutions" / "_shared" / "demo-scenarios.json")["scenarios"]
     for package in PACKAGES.values():
-        for scenario in package["scenario_cases"]:
-            assert f'"{scenario}": {{' in demo
+        for scenario, case_id in package["scenario_cases"].items():
+            assert scenarios[scenario]["case_id"] == case_id
 
 
 def test_deployment_evidence_records_runtime_proof_and_remaining_gates():

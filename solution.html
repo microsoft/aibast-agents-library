@@ -324,6 +324,7 @@ footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border
 <script>
 const OWNER = 'microsoft', REPO = 'aibast-agents-library';
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
+const SITE = `https://${OWNER}.github.io/${REPO}/`;
 const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
 const AGENT_DIR = '~/.brainstem/src/rapp_brainstem/agents';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
@@ -331,7 +332,7 @@ const num = n => (n == null || isNaN(n)) ? '—' : Number(n).toLocaleString();
 
 async function getJSON(paths) {
   for (const p of paths) {
-    try { const r = await fetch(p, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch (e) {}
+    try { const r = await fetch(p); if (r.ok) return await r.json(); } catch (e) {}
   }
   return null;
 }
@@ -371,10 +372,9 @@ let SAMPLE = null, activeOp = null;
 
 async function init() {
   const id = new URLSearchParams(location.search).get('id');
-  const t = '?t=' + Date.now();
   const [solDoc, reg] = await Promise.all([
-    getJSON(['solutions.json' + t, RAW + '/solutions.json' + t]),
-    getJSON(['registry.json' + t, RAW + '/registry.json' + t]),
+    getJSON(['solutions.json', SITE + 'solutions.json']),
+    getJSON(['registry.json', SITE + 'registry.json']),
   ]);
   if (!solDoc) { document.getElementById('root').innerHTML = '<div class="empty">Could not load <code>solutions.json</code>.</div>'; return; }
 
@@ -384,7 +384,8 @@ async function init() {
               sols.find(s => s.sample_output) || sols[0];
   const agent = (reg?.agents || []).find(a => a.name === sol.repo_agent);
 
-  if (sol.sample_output) SAMPLE = await getJSON([sol.sample_output + t, RAW + '/' + sol.sample_output + t]);
+  // samples/ is not part of the Pages artifact; the raw file is the only copy, so it stays the source here.
+  if (sol.sample_output) SAMPLE = await getJSON([RAW + '/' + sol.sample_output]);
   render(sol, agent, sols);
 }
 

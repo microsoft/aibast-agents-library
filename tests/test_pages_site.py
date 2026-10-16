@@ -147,6 +147,29 @@ def build_fixture(root: Path) -> tuple[Path, dict[str, object]]:
 
 
 class PagesBuilderFixtureTests(unittest.TestCase):
+    def test_overlay_json_is_served_and_counted_in_the_manifest(self):
+        with fixture_root() as root, tempfile.TemporaryDirectory() as overlay:
+            write_text(Path(overlay), "api/v1/github/repo.json", '{"stargazers_count": 8}\n')
+            output = root / "_site"
+            manifest = pages.build_site(root, output, OWNER, REPO, REF, overlay_value=overlay)
+            self.assertEqual(
+                (output / "api/v1/github/repo.json").read_text(encoding="utf-8"),
+                '{"stargazers_count": 8}\n',
+            )
+            files = [path for path in output.rglob("*") if path.is_file()]
+            self.assertEqual(manifest["file_count"], len(files))
+
+    def test_overlay_refuses_non_json_and_replacing_repository_files(self):
+        for name in ("api/v1/github/run.js", "academy.json"):
+            with self.subTest(name=name), fixture_root() as root, tempfile.TemporaryDirectory() as overlay:
+                write_text(Path(overlay), name, "{}\n")
+                with self.assertRaises(pages.BuildError):
+                    pages.build_site(root, root / "_site", OWNER, REPO, REF, overlay_value=overlay)
+
+    def test_missing_overlay_is_allowed(self):
+        with fixture_root() as root:
+            pages.build_site(root, root / "_site", OWNER, REPO, REF, overlay_value=root / "no-such-dir")
+
     def test_download_center_module_is_served_with_its_page(self):
         with fixture_root() as root:
             module = "export const DEFAULT_REPOSITORY = 'microsoft/aibast-agents-library';\n"
@@ -819,6 +842,8 @@ class PagesWorkflowTests(unittest.TestCase):
         self.assertIn("python scripts/build_pages_site.py", self.text)
         self.assertIn("GITHUB_TOKEN: ${{ github.token }}", self.text)
         self.assertIn("--out _site", self.text)
+        self.assertIn("python scripts/snapshot_github_data.py", self.text)
+        self.assertIn("--overlay", self.text)
         self.assertIn("--ref \"${{ github.sha }}\"", self.text)
         self.assertIn("python -m unittest -v tests/test_pages_site.py", self.text)
         self.assertRegex(

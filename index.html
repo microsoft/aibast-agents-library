@@ -1653,7 +1653,6 @@ footer {
 <script>
 const OWNER = "microsoft";
 const REPO = "aibast-agents-library";
-const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
 const SITE = `https://${OWNER}.github.io/${REPO}/`;
 const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
 const REQUEST_FORM = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u";
@@ -1809,7 +1808,7 @@ async function getJSON(paths, { required = false } = {}) {
   const failures = [];
   for (const path of paths) {
     try {
-      const response = await fetch(path, { cache: "no-store" });
+      const response = await fetch(path);
       if (response.ok) return await response.json();
       failures.push(`${path}: HTTP ${response.status}`);
     } catch (error) {
@@ -1892,18 +1891,15 @@ async function exportRappWorkspace() {
 }
 
 async function init() {
-  const stamp = `?t=${Date.now()}`;
-  const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all([
-    getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
-    getJSON([`state/metrics.json${stamp}`, `${SITE}state/metrics.json${stamp}`]),
-    getJSON([`solutions/catalog.json${stamp}`, `${RAW}/solutions/catalog.json${stamp}`]),
+  // Same-origin first; the Pages copy only serves file:// previews. No cache-busting: the CDN's
+  // 10-minute cache is what lets any number of visitors read these files without a rate limit.
+  const [registry, metrics, catalog, exportInventory] = await Promise.all([
+    getJSON(["registry.json", `${SITE}registry.json`]),
+    getJSON(["state/metrics.json", `${SITE}state/metrics.json`]),
+    getJSON(["solutions/catalog.json", `${SITE}solutions/catalog.json`]),
     getJSON([
-      `state/copilot_studio_solution_exports.json${stamp}`,
-      `${RAW}/state/copilot_studio_solution_exports.json${stamp}`
-    ]),
-    getJSON([
-      `state/architecture_level2.json${stamp}`,
-      `${RAW}/state/architecture_level2.json${stamp}`
+      "state/copilot_studio_solution_exports.json",
+      `${SITE}state/copilot_studio_solution_exports.json`
     ])
   ]);
   if (!registry || !catalog) {
@@ -1926,9 +1922,6 @@ async function init() {
       ))
       .map(row => row.slug)
   );
-  state.architectureLevel2 = new Map(
-    Object.entries(architectureLevel2?.solutions || {})
-  );
   state.agentSignals = buildAgentSignalMap(metrics, state.agents);
   restoreState();
   renderStats();
@@ -1941,6 +1934,7 @@ async function init() {
   if (location.hash.startsWith("#stack/")) openStack(dec(location.hash.slice(7)));
   if (location.hash.startsWith("#first-party/")) openFirstParty(dec(location.hash.slice(13)));
   if (location.hash.startsWith("#partner/")) openPartnerAgent(dec(location.hash.slice(9)));
+  loadArchitectureLevel2();
 }
 
 function restoreState() {
@@ -2874,9 +2868,19 @@ function copilotSolutionDownloads(agent) {
   };
 }
 
+// The detailed architecture (85 KB) loads after the library is on screen, so most visits skip waiting for it.
+async function loadArchitectureLevel2() {
+  const doc = await getJSON(["state/architecture_level2.json", `${SITE}state/architecture_level2.json`]);
+  state.architectureLevel2 = new Map(Object.entries(doc?.solutions || {}));
+  const slot = document.getElementById("architecture-level2-slot");
+  if (slot && slot.dataset.agent && state.architectureLevel2.has(slot.dataset.agent)) {
+    slot.outerHTML = architectureLevel2HTML(slot.dataset.agent);
+  }
+}
+
 function architectureLevel2HTML(agentName) {
   const architecture = state.architectureLevel2.get(agentName);
-  if (!architecture) return "";
+  if (!architecture) return `<div id="architecture-level2-slot" data-agent="${esc(agentName)}"></div>`;
   const domains = [
     ["knowledge", "Knowledge"],
     ["intelligence_processing", "Intelligence layer / processing"],

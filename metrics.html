@@ -1570,7 +1570,7 @@ let M = null;
 async function getJSON(paths) {
   for (const p of paths) {
     try {
-      const response = await fetch(p, { cache: 'no-store' });
+      const response = await fetch(p);
       if (response.ok) return await response.json();
     } catch (error) {
       /* Try the next public source, including the hosted fallback for file://. */
@@ -1626,7 +1626,7 @@ async function load() {
 async function liveTopUp() {
   $('stamp-mode').innerHTML = '<span class="spin" aria-hidden="true"></span> Checking live sources…';
   const [repo, cdn] = await Promise.all([
-    getJSON([`https://api.github.com/repos/${OWNER}/${REPO}`]),
+    getJSON(['api/v1/github/repo.json']),
     getJSON([`https://data.jsdelivr.com/v1/stats/packages/gh/${OWNER}/${REPO}?period=year`])
   ]);
   const live = [];
