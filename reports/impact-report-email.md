@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-17T05:14:01Z`
+**Snapshot:** `2026-10-17T05:25:09Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 17,678 | +719 observed - partial | +9,783 observed - partial |
+| AIBAST observed repository downloads | 17,682 | +719 observed - partial | +9,783 observed - partial |
 | Git clones | 16,735 | +620 observed | +9,684 observed |
 | Clones excluding CI estimate | 16,735 | +991 (+6.3%) | +9,684 (+137.3%) |
 | AIBAST repository and Pages views | 1,085 | +26 observed | +158 observed |
 | jsDelivr file hits | 517 | +99 observed | +99 observed |
-| Release asset downloads | 426 | +114 (+36.5%) | +220 (+106.8%) |
-| AIBAST direct agent file downloads | 257 | +89 (+53.0%) | +114 (+79.7%) |
+| Release asset downloads | 430 | +118 (+37.8%) | +224 (+108.7%) |
+| AIBAST direct agent file downloads | 258 | +90 (+53.6%) | +115 (+80.4%) |
 | AIBAST skill file downloads | 99 | +99 | +99 |
-| AIBAST installer file downloads | 182 | +25 (+15.9%) | +106 (+139.5%) |
+| AIBAST installer file downloads | 185 | +28 (+17.8%) | +109 (+143.4%) |
 | Unique cloners (14-day window) | 389 | +106 (+37.5%) snapshot change | +36 (+10.2%) snapshot change |
 | Unique visitors (14-day window) | 30 | -2 (-6.2%) snapshot change | -14 (-31.8%) snapshot change |
 
@@ -76,8 +76,8 @@
 - Building Permit Processing Agent: +5 (current 8)
 - Field Service Dispatch Agent: +3 (current 6)
 - Account Intelligence Agent: +2 (current 9)
+- Ask HR Agent: +2 (current 8)
 - Care Gap Closure Agent: +2 (current 5)
-- Cart Abandonment Recovery Agent: +2 (current 4)
 
 ## Top monthly movers
 
@@ -89,8 +89,8 @@
 - Procurement Agent: +11 (current 11)
 
 **Agent downloads**
+- Ask HR Agent: +5 (current 8)
 - Building Permit Processing Agent: +5 (current 8)
-- Ask HR Agent: +4 (current 7)
 - Field Service Dispatch Agent: +4 (current 6)
 - Care Gap Closure Agent: +3 (current 5)
 - Customer Onboarding Agent: +3 (current 4)

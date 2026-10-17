@@ -1,6 +1,6 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-10-17T05:14:01Z",
+ "generated_at": "2026-10-17T05:25:09Z",
  "repo": {
   "stars": 8,
   "forks": 7,
@@ -8,10 +8,10 @@
   "open_issues": 16,
   "size_kb": 5416037,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-10-16T05:34:39Z",
+  "pushed_at": "2026-10-17T05:14:17Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,12 +19,12 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 17678,
+  "downloads": 17682,
   "clones": 16735,
   "cdn_hits": 517,
-  "release_downloads": 426,
-  "agent_file_downloads": 257,
-  "installer_downloads": 182,
+  "release_downloads": 430,
+  "agent_file_downloads": 258,
+  "installer_downloads": 185,
   "skill_downloads": 99,
   "agent_upvotes": null,
   "agent_acquisitions": null,
@@ -37,7 +37,7 @@
   "view_uniques_daily_sum": 242,
   "days_tracked": 72,
   "tracking_since": "2026-07-26",
-  "global_agent_distribution_fetch_events": 257,
+  "global_agent_distribution_fetch_events": 258,
   "agents": 86,
   "stacks": 66,
   "verticals": 12,
@@ -645,7 +645,7 @@
   "clones_14d": 1900,
   "views_14d": 144,
   "live": true,
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -653,8 +653,8 @@
   "total_hits": 129,
   "bandwidth": 377363,
   "rank": null,
-  "agent_hits": 257,
-  "installer_hits": 182,
+  "agent_hits": 258,
+  "installer_hits": 185,
   "files": [
    {
     "file": "/install.sh",
@@ -930,33 +930,33 @@
     "kind": "skill"
    }
   ],
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 426,
+  "total_downloads": 430,
   "count": 5,
   "releases": [
    {
     "tag": "installers",
     "name": "AIBAST Installers",
     "published_at": "2026-09-02T01:31:52Z",
-    "downloads": 169,
+    "downloads": 172,
     "assets": [
      {
       "name": "community_rapp-install.ps1",
-      "downloads": 55,
+      "downloads": 56,
       "size": 10289
      },
      {
       "name": "community_rapp-install.sh",
-      "downloads": 53,
+      "downloads": 54,
       "size": 8627
      },
      {
       "name": "install.ps1",
-      "downloads": 61,
+      "downloads": 62,
       "size": 59817
      }
     ]
@@ -979,7 +979,7 @@
     "tag": "agent-downloads",
     "name": "AIBAST Agent Downloads",
     "published_at": "2026-08-12T19:44:15Z",
-    "downloads": 257,
+    "downloads": 258,
     "assets": [
      {
       "name": "account_intelligence_orchestrator__a21f50d0b417_agent.py",
@@ -1028,7 +1028,7 @@
      },
      {
       "name": "ask_hr__11b66d0eb4bb_agent.py",
-      "downloads": 0,
+      "downloads": 1,
       "size": 28288
      },
      {
@@ -1691,7 +1691,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1717,6 +1717,26 @@
     "catalog_kind": "solution"
    },
    {
+    "name": "@aibast-agents-library/ask-hr",
+    "display_name": "Ask HR Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "human_resources",
+    "tier": "verified",
+    "downloads": 8,
+    "upvotes": 0,
+    "acquisitions": 0,
+    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/33",
+    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/34",
+    "lines": 578,
+    "size_kb": 27.6,
+    "added_at": "2026-08-15T22:26:47Z",
+    "file": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+    "description": "Provide self-service HR inquiry handling that transforms the process from a manual ticket-based system to intelligent, automated resolutions.",
+    "stack": "ask_hr",
+    "vertical": "human_resources",
+    "catalog_kind": "solution"
+   },
+   {
     "name": "@aibast-agents-library/building-permit-processing",
     "display_name": "Building Permit Processing Agent",
     "publisher": "@aibast-agents-library",
@@ -1734,26 +1754,6 @@
     "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
     "stack": "building_permit_processing",
     "vertical": "slg_government",
-    "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/ask-hr",
-    "display_name": "Ask HR Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "human_resources",
-    "tier": "verified",
-    "downloads": 7,
-    "upvotes": 0,
-    "acquisitions": 0,
-    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/33",
-    "acquisition_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/34",
-    "lines": 578,
-    "size_kb": 27.6,
-    "added_at": "2026-08-15T22:26:47Z",
-    "file": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
-    "description": "Provide self-service HR inquiry handling that transforms the process from a manual ticket-based system to intelligent, automated resolutions.",
-    "stack": "ask_hr",
-    "vertical": "human_resources",
     "catalog_kind": "solution"
    },
    {
@@ -2704,6 +2704,15 @@
     "downloads": 34
    },
    {
+    "name": "ask_hr",
+    "display_name": "Ask Hr",
+    "vertical": "human_resources",
+    "path": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack",
+    "agents": 1,
+    "lines": 578,
+    "downloads": 8
+   },
+   {
     "name": "building_permit_processing",
     "display_name": "Building Permit Processing",
     "vertical": "slg_government",
@@ -2711,15 +2720,6 @@
     "agents": 1,
     "lines": 945,
     "downloads": 8
-   },
-   {
-    "name": "ask_hr",
-    "display_name": "Ask Hr",
-    "vertical": "human_resources",
-    "path": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack",
-    "agents": 1,
-    "lines": 578,
-    "downloads": 7
    },
    {
     "name": "field_service_dispatch",
@@ -2930,7 +2930,7 @@
    {
     "name": "human_resources",
     "agents": 2,
-    "downloads": 7,
+    "downloads": 8,
     "lines": 1010
    },
    {
@@ -3004,7 +3004,7 @@
    {
     "name": "human_resources",
     "agents": 2,
-    "downloads": 7,
+    "downloads": 8,
     "stacks": 2
    },
    {
@@ -3114,7 +3114,7 @@
   {
    "name": "@aibast-agents-library/ask-hr",
    "display_name": "Ask HR Agent",
-   "downloads": 7,
+   "downloads": 8,
    "upvotes": 0,
    "acquisitions": 0,
    "upvote_discussion_url": "https://github.com/microsoft/aibast-agents-library/discussions/33",
@@ -4141,7 +4141,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "partial",
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -4168,7 +4168,7 @@
  },
  "agent_upvote_coverage": {
   "status": "partial",
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -4185,7 +4185,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "partial",
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -4203,7 +4203,7 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "carried_forward": false,
   "totals": {
    "files": 9370,
@@ -80360,7 +80360,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-10-17T05:14:01Z",
+    "as_of": "2026-10-17T05:25:09Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -80374,7 +80374,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-10-17T05:14:01Z",
+    "as_of": "2026-10-17T05:25:09Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -80387,7 +80387,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-10-17T05:14:01Z",
+    "as_of": "2026-10-17T05:25:09Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -80399,7 +80399,7 @@
    },
    "agent_upvotes": {
     "status": "partial",
-    "as_of": "2026-10-17T05:14:01Z",
+    "as_of": "2026-10-17T05:25:09Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -80430,13 +80430,13 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "carried_forward": false
  },
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -81977,7 +81977,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -82662,7 +82662,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-10-17T05:14:01Z",
+  "as_of": "2026-10-17T05:25:09Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -82674,8 +82674,8 @@
    }
   },
   "totals": {
-   "aibast_direct_agent_fetches": 257,
-   "combined_agent_distribution_fetch_events": 257,
+   "aibast_direct_agent_fetches": 258,
+   "combined_agent_distribution_fetch_events": 258,
    "distribution_entries": 86,
    "logical_agents": 86,
    "overlap_agents": 0
@@ -82692,8 +82692,8 @@
     "combined_distribution_fetch_events": 9
    },
    {
-    "logical_name": "@aibast-agents-library/building-permit-processing",
-    "display_name": "Building Permit Processing Agent",
+    "logical_name": "@aibast-agents-library/ask-hr",
+    "display_name": "Ask HR Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
@@ -82702,14 +82702,14 @@
     "combined_distribution_fetch_events": 8
    },
    {
-    "logical_name": "@aibast-agents-library/ask-hr",
-    "display_name": "Ask HR Agent",
+    "logical_name": "@aibast-agents-library/building-permit-processing",
+    "display_name": "Building Permit Processing Agent",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
     ],
-    "aibast_direct_agent_fetches": 7,
-    "combined_distribution_fetch_events": 7
+    "aibast_direct_agent_fetches": 8,
+    "combined_distribution_fetch_events": 8
    },
    {
     "logical_name": "@aibast-agents-library/field-service-dispatch",
