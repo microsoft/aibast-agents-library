@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - October 17, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 18, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-17T05:30:44Z`
+**Snapshot:** `2026-10-18T05:15:33Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 17,682 | +719 observed - partial | +9,783 observed - partial |
-| Git clones | 16,735 | +620 observed | +9,684 observed |
-| Clones excluding CI estimate | 16,735 | +991 (+6.3%) | +9,684 (+137.3%) |
-| AIBAST repository and Pages views | 1,085 | +26 observed | +158 observed |
+| AIBAST observed repository downloads | 18,082 | +865 observed - partial | +10,039 observed - partial |
+| Git clones | 16,991 | +766 observed | +9,940 observed |
+| Clones excluding CI estimate | 16,991 | +1,247 (+7.9%) | +9,940 (+141.0%) |
+| AIBAST repository and Pages views | 1,118 | +53 observed | +191 observed |
 | jsDelivr file hits | 517 | +99 observed | +99 observed |
-| Release asset downloads | 430 | +118 (+37.8%) | +224 (+108.7%) |
-| AIBAST direct agent file downloads | 258 | +90 (+53.6%) | +115 (+80.4%) |
+| Release asset downloads | 574 | +258 (+81.6%) | +368 (+178.6%) |
+| AIBAST direct agent file downloads | 398 | +230 (+136.9%) | +255 (+178.3%) |
 | AIBAST skill file downloads | 99 | +99 | +99 |
-| AIBAST installer file downloads | 185 | +28 (+17.8%) | +109 (+143.4%) |
-| Unique cloners (14-day window) | 389 | +106 (+37.5%) snapshot change | +36 (+10.2%) snapshot change |
-| Unique visitors (14-day window) | 30 | -2 (-6.2%) snapshot change | -14 (-31.8%) snapshot change |
+| AIBAST installer file downloads | 188 | +27 (+16.8%) | +112 (+147.4%) |
+| Unique cloners (14-day window) | 413 | +130 (+45.9%) snapshot change | +60 (+17.0%) snapshot change |
+| Unique visitors (14-day window) | 29 | -3 (-9.4%) snapshot change | -15 (-34.1%) snapshot change |
 
 ## Community engagement
 
@@ -73,11 +73,11 @@
 - Procurement Agent: +11 (current 11)
 
 **Agent downloads**
-- Building Permit Processing Agent: +5 (current 8)
-- Field Service Dispatch Agent: +3 (current 6)
-- Account Intelligence Agent: +2 (current 9)
-- Ask HR Agent: +2 (current 8)
-- Care Gap Closure Agent: +2 (current 5)
+- Building Permit Processing Agent: +8 (current 11)
+- Field Service Dispatch Agent: +5 (current 8)
+- Account Intelligence Agent: +4 (current 11)
+- Ask HR Agent: +4 (current 10)
+- Care Gap Closure Agent: +4 (current 7)
 
 ## Top monthly movers
 
@@ -89,11 +89,11 @@
 - Procurement Agent: +11 (current 11)
 
 **Agent downloads**
-- Ask HR Agent: +5 (current 8)
-- Building Permit Processing Agent: +5 (current 8)
-- Field Service Dispatch Agent: +4 (current 6)
-- Care Gap Closure Agent: +3 (current 5)
-- Customer Onboarding Agent: +3 (current 4)
+- Building Permit Processing Agent: +8 (current 11)
+- Ask HR Agent: +7 (current 10)
+- Field Service Dispatch Agent: +6 (current 8)
+- Care Gap Closure Agent: +5 (current 7)
+- Customer Onboarding Agent: +5 (current 6)
 
 ## Measurement notes
 
