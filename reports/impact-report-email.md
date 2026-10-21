@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - October 20, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 21, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-20T05:33:57Z`
+**Snapshot:** `2026-10-21T05:15:00Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 18,684 | +1,151 observed - partial | +10,618 observed - partial |
-| Git clones | 17,570 | +1,151 observed | +10,519 observed |
-| Clones excluding CI estimate | 17,570 | +1,455 (+9.0%) | +10,519 (+149.2%) |
-| AIBAST repository and Pages views | 1,141 | +69 observed | +214 observed |
+| AIBAST observed repository downloads | 18,986 | +1,291 observed - partial | +10,915 observed - partial |
+| Git clones | 17,867 | +1,291 observed | +10,816 observed |
+| Clones excluding CI estimate | 17,867 | +1,642 (+10.1%) | +10,816 (+153.4%) |
+| AIBAST repository and Pages views | 1,146 | +68 observed | +219 observed |
 | jsDelivr file hits | 517 | +0 observed | +99 observed |
-| Release asset downloads | 597 | +198 (+49.6%) | +391 (+189.8%) |
-| AIBAST direct agent file downloads | 406 | +164 (+67.8%) | +263 (+183.9%) |
+| Release asset downloads | 602 | +199 (+49.4%) | +396 (+192.2%) |
+| AIBAST direct agent file downloads | 411 | +168 (+69.1%) | +268 (+187.4%) |
 | AIBAST skill file downloads | 99 | +99 | +99 |
-| AIBAST installer file downloads | 203 | +33 (+19.4%) | +127 (+167.1%) |
-| Unique cloners (14-day window) | 471 | +124 (+35.7%) snapshot change | +118 (+33.4%) snapshot change |
-| Unique visitors (14-day window) | 27 | -3 (-10.0%) snapshot change | -17 (-38.6%) snapshot change |
+| AIBAST installer file downloads | 203 | +30 (+17.3%) | +127 (+167.1%) |
+| Unique cloners (14-day window) | 535 | +179 (+50.3%) snapshot change | +182 (+51.6%) snapshot change |
+| Unique visitors (14-day window) | 31 | +0 (+0.0%) snapshot change | -13 (-29.5%) snapshot change |
 
 ## Community engagement
 
@@ -77,7 +77,7 @@
 - Field Service Dispatch Agent: +4 (current 8)
 - Account Intelligence Agent: +3 (current 11)
 - Ask HR Agent: +3 (current 10)
-- Care Gap Closure Agent: +3 (current 7)
+- Asset Maintenance Forecast Agent: +3 (current 7)
 
 ## Top monthly movers
 
