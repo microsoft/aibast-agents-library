@@ -316,6 +316,69 @@ def test_cors_allows_localhost_blocks_other_origins(client):
     assert bad.headers.get("Access-Control-Allow-Origin") is None
 
 
+@pytest.mark.parametrize("origin", ["null", "file://"])
+def test_scout_preview_origin_requires_install_secret(client, monkeypatch, origin):
+    monkeypatch.setattr(bs, "BRAINSTEM_SECRET", "unit-test-secret")
+
+    denied = client.get(
+        "/version",
+        headers={"Origin": origin},
+        environ_overrides={"REMOTE_ADDR": "127.0.0.1"},
+    )
+    assert denied.status_code == 403
+
+    allowed = client.get(
+        "/version",
+        headers={
+            "Origin": origin,
+            "X-Brainstem-Secret": "unit-test-secret",
+        },
+        environ_overrides={"REMOTE_ADDR": "127.0.0.1"},
+    )
+    assert allowed.status_code == 200
+    assert allowed.headers.get("Access-Control-Allow-Origin") == origin
+
+
+@pytest.mark.parametrize("origin", ["null", "file://"])
+def test_scout_preview_origin_preflight_requires_secret_header(client, origin):
+    allowed = client.options(
+        "/chat",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "Content-Type, X-Brainstem-Secret",
+        },
+        environ_overrides={"REMOTE_ADDR": "127.0.0.1"},
+    )
+    assert allowed.status_code == 200
+    assert allowed.headers.get("Access-Control-Allow-Origin") == origin
+
+    denied = client.options(
+        "/chat",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "Content-Type",
+        },
+        environ_overrides={"REMOTE_ADDR": "127.0.0.1"},
+    )
+    assert denied.status_code == 403
+
+
+@pytest.mark.parametrize("origin", ["null", "file://"])
+def test_scout_preview_origin_is_loopback_only(client, monkeypatch, origin):
+    monkeypatch.setattr(bs, "BRAINSTEM_SECRET", "unit-test-secret")
+    response = client.get(
+        "/version",
+        headers={
+            "Origin": origin,
+            "X-Brainstem-Secret": "unit-test-secret",
+        },
+        environ_overrides={"REMOTE_ADDR": "192.168.1.50"},
+    )
+    assert response.status_code == 403
+
+
 @pytest.mark.parametrize("origin", [
     "https://microsoft.github.io",
     "https://kody-w.github.io",
