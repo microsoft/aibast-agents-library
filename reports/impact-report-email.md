@@ -2,24 +2,24 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-23T05:34:36Z`
+**Snapshot:** `2026-10-23T14:01:59Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 19,800 | +1,679 observed - partial | +11,718 observed - partial |
-| Git clones | 18,668 | +1,677 observed | +11,617 observed |
-| Clones excluding CI estimate | 18,668 | +2,092 (+12.6%) | +11,617 (+164.8%) |
+| AIBAST observed repository downloads | 20,228 | +2,107 observed - partial | +12,146 observed - partial |
+| Git clones | 19,096 | +2,105 observed | +12,045 observed |
+| Clones excluding CI estimate | 19,096 | +2,520 (+15.2%) | +12,045 (+170.8%) |
 | AIBAST repository and Pages views | 1,148 | +30 observed | +221 observed |
 | jsDelivr file hits | 519 | +2 observed | +101 observed |
 | Release asset downloads | 613 | +192 (+45.6%) | +407 (+197.6%) |
 | AIBAST direct agent file downloads | 413 | +161 (+63.9%) | +270 (+188.8%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
 | AIBAST installer file downloads | 212 | +30 (+16.5%) | +136 (+178.9%) |
-| Unique cloners (14-day window) | 595 | +224 (+60.4%) snapshot change | +242 (+68.6%) snapshot change |
-| Unique visitors (14-day window) | 21 | -7 (-25.0%) snapshot change | -23 (-52.3%) snapshot change |
+| Unique cloners (14-day window) | 607 | +236 (+63.6%) snapshot change | +254 (+72.0%) snapshot change |
+| Unique visitors (14-day window) | 20 | -8 (-28.6%) snapshot change | -24 (-54.5%) snapshot change |
 
 ## Community engagement
 
@@ -28,7 +28,7 @@
 | GitHub stars | 8 | +0 (+0.0%) | +1 (+14.3%) |
 | GitHub forks | 7 | +0 (+0.0%) | +0 (+0.0%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 15 | -1 (-6.2%) | -26 (-63.4%) |
+| Open GitHub issues | 16 | +0 (+0.0%) | -25 (-61.0%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
 | Workshop usage events | 91 | -9 (-9.0%) - partial | +91 - partial |
@@ -55,13 +55,13 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 9,370 | +0 (+0.0%) | +3,856 (+69.9%) |
-| Files covered by download observations | 9,370 | +0 (+0.0%) | +3,856 (+69.9%) |
-| Catalog agents | 86 | +0 (+0.0%) | +14 (+19.4%) |
-| Tracked SKILL.md files | 491 | +0 (+0.0%) | +257 (+109.8%) |
-| Canonical workshops | 65 | +0 (+0.0%) | +14 (+27.5%) |
-| Deployable stacks | 66 | +0 (+0.0%) | +14 (+26.9%) |
-| Industry verticals | 12 | +0 (+0.0%) | +0 (+0.0%) |
+| Tracked repository files | 9,750 | +380 (+4.1%) | +4,236 (+76.8%) |
+| Files covered by download observations | 9,750 | +380 (+4.1%) | +4,236 (+76.8%) |
+| Catalog agents | 90 | +4 (+4.7%) | +18 (+25.0%) |
+| Tracked SKILL.md files | 505 | +14 (+2.9%) | +271 (+115.8%) |
+| Canonical workshops | 69 | +4 (+6.2%) | +18 (+35.3%) |
+| Deployable stacks | 70 | +4 (+6.1%) | +18 (+34.6%) |
+| Industry verticals | 13 | +1 (+8.3%) | +1 (+8.3%) |
 
 ## Top weekly movers
 
