@@ -1877,20 +1877,23 @@
   }
 
   // ── RAR Registry Browser ──
-  // Search a public catalog of agents and hot-load any of them into this
-  // brainstem by fetching the raw .py and POSTing it to /agents/import.
-  const RAR_REVISION = '241c6191736a856b6837ef2398447a25710b8d72';
-  const RAR_BASE = `https://raw.githubusercontent.com/kody-w/RAR/${RAR_REVISION}`;
-  // Same static files via the jsdelivr CDN mirror — used only when raw
-  // rate-limits (HTTP 429) or hiccups. Plain file hosting, no API.
-  const RAR_MIRROR = `https://cdn.jsdelivr.net/gh/kody-w/RAR@${RAR_REVISION}`;
+  // Search the AIBAST agent catalog and hot-load any of them into this
+  // brainstem by fetching the .py and POSTing it to /agents/import.
+  const RAR_REVISION = '20d8ec372f1b30d2b3a29061a1d38f74232c59cb';
+  // The jsDelivr CDN is tried first: it serves the pinned commit to the browser
+  // and records per-file hits, which the library's metrics count as agent
+  // downloads. Raw GitHub is the fallback when the CDN rate-limits or hiccups.
+  const RAR_MIRROR = `https://cdn.jsdelivr.net/gh/microsoft/aibast-agents-library@${RAR_REVISION}`;
+  const RAR_BASE = `https://raw.githubusercontent.com/microsoft/aibast-agents-library/${RAR_REVISION}`;
   async function rarFetch(path) {
     try {
-      const r = await fetch(encodeURI(`${RAR_BASE}/${path}`));
+      // jsDelivr reads '@' as a version marker, so each path segment is encoded.
+      const cdnPath = path.split('/').map(encodeURIComponent).join('/');
+      const r = await fetch(`${RAR_MIRROR}/${cdnPath}`);
       if (r.ok) return r;
       throw new Error('HTTP ' + r.status);
     } catch (e) {
-      const r = await fetch(encodeURI(`${RAR_MIRROR}/${path}`));
+      const r = await fetch(encodeURI(`${RAR_BASE}/${path}`));
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r;
     }
@@ -4114,16 +4117,16 @@
         {
           id: 'registry',
           html: `<h3>There's a whole library.</h3>
-            <p>You traded one agent by hand. There's also a community registry — hundreds of agents, one click each. Grab the one that changes everything: <strong>an agent that creates agents</strong>.</p>`,
-          hint: `Click the <strong>book button</strong> (top right), search <em>learn new</em>, and click <strong>Add</strong> on <strong>@rapp/learn_new</strong>.`,
+            <p>You traded one agent by hand. There's also the AIBAST agent library — dozens of proven agents, one click each. Grab one you can use today: <strong>an agent that preps you for meetings</strong>.</p>`,
+          hint: `Click the <strong>book button</strong> (top right), search <em>meeting prep</em>, and click <strong>Add</strong> on <strong>Meeting Prep</strong>.`,
           target: () => { const p = $('#registry-panel'); return (p && p.classList.contains('open')) ? p : $('#registry-btn'); },
           cursorTarget: () => [...document.querySelectorAll('.rar-item')]
-            .find(i => /learn.?new/i.test(i.textContent))?.querySelector('.rar-add-btn')
+            .find(i => /meeting.?prep/i.test(i.textContent))?.querySelector('.rar-add-btn')
             || (!$('#registry-panel')?.classList.contains('open') ? $('#registry-btn') : $('#rar-search-input')),
           rpanel: true, wait: 'installed', skippable: true, skipTo: 'end',
           onEnter: async function () { this._baseline = await agentFiles(); },
           reactHtml: `<h3>Installed. Live.</h3>
-            <p>That agent's whole job is to <strong>build other agents</strong> from plain language. Which means…</p>`
+            <p>Ask it to prep you for your next customer meeting. And this brainstem also ships with an agent whose whole job is to <strong>build other agents</strong> from plain language. Which means…</p>`
         },
         {
           id: 'create',

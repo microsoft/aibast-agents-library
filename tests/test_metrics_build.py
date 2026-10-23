@@ -2205,3 +2205,32 @@ def test_metrics_page_binds_workshop_adoption_schema():
         "M.repo.stars +",
     ):
         assert forbidden not in achievement_renderer
+
+
+def test_brainstem_chat_installs_count_at_every_pinned_commit(monkeypatch):
+    pins = build_metrics.brainstem_catalog_pins()
+    assert pins, "the Brainstem chat catalog pin must be readable"
+    assert len(pins[0]) == 40
+
+    agent_file = "/agents/@aibast-agents-library/demo_agent.py"
+    pages = {
+        None: [{"name": agent_file, "hits": {"total": 2, "dates": {"2026-10-23": 2}}}],
+        "pin-a": [{"name": agent_file, "hits": {"total": 3, "dates": {"2026-10-23": 1, "2026-10-24": 2}}}],
+    }
+
+    def fake_pages(page_size=100, max_pages=100, ref=None):
+        if ref == "pin-old":
+            return {"files": [], "available": False, "complete": False, "pages": 0, "pagination": "request failed"}
+        return {"files": pages[ref], "available": True, "complete": True, "pages": 1, "pagination": "complete"}
+
+    monkeypatch.setattr(build_metrics, "fetch_jsdelivr_file_pages", fake_pages)
+    monkeypatch.setattr(build_metrics, "fetch_json", lambda url, token=None: {"hits": {"total": 5, "dates": {}}})
+    agents = {"@aibast-agents-library/demo": {"name": "@aibast-agents-library/demo", "downloads": 0}}
+    out = build_metrics.fetch_jsdelivr({agent_file: "@aibast-agents-library/demo"}, agents, pins=["pin-a", "pin-old"])
+
+    assert out["brainstem_chat_hits"] == 3
+    assert out["total_hits"] == 8
+    assert out["files_complete"] is True
+    assert agents["@aibast-agents-library/demo"]["downloads"] == 5
+    merged = build_metrics.merge_jsdelivr_file_rows(pages[None], pages["pin-a"])
+    assert merged == [{"name": agent_file, "hits": {"total": 5, "dates": {"2026-10-23": 3, "2026-10-24": 2}}}]
