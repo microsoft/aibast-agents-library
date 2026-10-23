@@ -1,15 +1,15 @@
 {
   "schema": "aibast-academy/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-10-08T14:45:39.255365+00:00",
+  "generated_at": "2026-10-23T04:46:56.667967+00:00",
   "title": "Microsoft AI Academy",
   "description": "A hands-on catalog for exploring experimental AIBAST agents through scenario quests, guided builds, evidence reviews, and portable Microsoft implementation patterns.",
   "disclaimer": "Microsoft AI Academy is an experimental AIBAST learning experience. It is not an official Microsoft credential, certification, training program, or replacement for Microsoft Learn. Activities use synthetic data and self-reported milestones unless a course states otherwise.",
   "summary": {
-    "courses": 65,
-    "skills": 485,
+    "courses": 69,
+    "skills": 499,
     "paths": 6,
-    "industries": 12,
+    "industries": 13,
     "points_per_course": 150
   },
   "milestones": [
@@ -108,14 +108,19 @@
       "categories": [
         "b2b_sales",
         "b2c_sales",
-        "retail_cpg"
+        "retail_cpg",
+        "telecom_media_gaming"
       ],
       "course_slugs": [
         "account-intelligence",
+        "campaign-delivery-optimizer",
         "cart-abandonment-recovery",
+        "content-launch-clearance",
         "customer-loyalty-rewards",
         "deal-progression",
+        "first-time-fix",
         "inventory-visibility",
+        "live-event-launch-planner",
         "omnichannel-engagement",
         "personalized-marketing",
         "personalized-shopping-assistant",
@@ -127,7 +132,7 @@
         "supply-chain-disruption-alert",
         "win-loss-analysis"
       ],
-      "course_count": 15
+      "course_count": 19
     },
     {
       "id": "operations-supply-chain",
@@ -976,6 +981,73 @@
       ]
     },
     {
+      "slug": "campaign-delivery-optimizer",
+      "agent": "@aibast-agents-library/campaign-delivery-optimizer",
+      "title": "Campaign Delivery Optimizer Agent",
+      "description": "Give ad sales and ad operations teams one conversational view of each campaign's delivery against plan, the placements with extra reach, and the drafted recommendation, while every recommendation stays with the sales lead to approve.",
+      "category": "telecom_media_gaming",
+      "industry": "Telecom, Media & Gaming",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Ad Operations Manager",
+        "Ad Sales Lead",
+        "Campaign Manager"
+      ],
+      "platforms": [
+        "Dynamics 365 Sales",
+        "Microsoft Copilot Studio",
+        "Microsoft Excel",
+        "Microsoft Outlook"
+      ],
+      "tags": [
+        "ad-operations",
+        "ad-sales",
+        "advertising",
+        "campaign-delivery",
+        "media"
+      ],
+      "outcomes": [
+        "Caught under-delivering campaigns within the week",
+        "Helped every campaign hit its goals",
+        "Kept advertisers coming back",
+        "Recovered reach with the right placements"
+      ],
+      "quest_url": "solutions/campaign-delivery-optimizer/quest.html",
+      "field_guide_url": "solutions/campaign-delivery-optimizer/field-guide.html",
+      "manual_url": "solutions/campaign-delivery-optimizer/manual-tutorial.html",
+      "evidence_url": "solutions/campaign-delivery-optimizer/evidence-report.html",
+      "added_at": "2026-10-23T00:42:34-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 3,
+      "manual_steps": 16,
+      "skills": [
+        {
+          "name": "approval-recommendation",
+          "title": "Recommendation draft for approval",
+          "description": "Use when someone asks for the recommendation or make-good for a campaign, its approval status, or who approves it; returns a draft that is never shared.",
+          "path": "solutions/campaign-delivery-optimizer/manual/skills/aibast_approval-recommendation_03/SKILL.md"
+        },
+        {
+          "name": "available-reach",
+          "title": "Available reach",
+          "description": "Use when someone asks which placements have extra reach this week to close a campaign's delivery gap.",
+          "path": "solutions/campaign-delivery-optimizer/manual/skills/aibast_available-reach_02/SKILL.md"
+        },
+        {
+          "name": "campaign-risk",
+          "title": "Campaign risk check",
+          "description": "Use when someone asks whether a campaign is behind plan this week, how big the delivery gap is, or why it is at risk.",
+          "path": "solutions/campaign-delivery-optimizer/manual/skills/aibast_campaign-risk_01/SKILL.md"
+        }
+      ],
+      "skill_count": 3,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
       "slug": "care-gap-closure",
       "agent": "@aibast-agents-library/care-gap-closure",
       "title": "Care Gap Closure Agent",
@@ -1473,6 +1545,73 @@
       "primary_path": "regulated-public-services",
       "path_ids": [
         "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "content-launch-clearance",
+      "agent": "@aibast-agents-library/content-launch-clearance",
+      "title": "Content Launch Clearance Agent",
+      "description": "Give programming, distribution, and rights teams one conversational view of each title's launch clearance, contract clause, distribution window, holdbacks, and approval readiness, while every approval stays with the rights team.",
+      "category": "telecom_media_gaming",
+      "industry": "Telecom, Media & Gaming",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Distribution Lead",
+        "Programming Manager",
+        "Rights & Clearances Lead"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Teams",
+        "Power Automate",
+        "SharePoint"
+      ],
+      "tags": [
+        "content-distribution",
+        "launch-planning",
+        "media",
+        "rights-and-clearances",
+        "streaming"
+      ],
+      "outcomes": [
+        "Brought titles to audiences faster",
+        "Caught holdbacks before they became launch problems",
+        "Confirmed launch dates with the contract terms cited",
+        "Freed rights teams to focus on deals, not lookups"
+      ],
+      "quest_url": "solutions/content-launch-clearance/quest.html",
+      "field_guide_url": "solutions/content-launch-clearance/field-guide.html",
+      "manual_url": "solutions/content-launch-clearance/manual-tutorial.html",
+      "evidence_url": "solutions/content-launch-clearance/evidence-report.html",
+      "added_at": "2026-10-23T00:42:34-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 3,
+      "manual_steps": 16,
+      "skills": [
+        {
+          "name": "approval-readiness",
+          "title": "Approval readiness draft",
+          "description": "Use when someone asks whether a launch request is ready for rights-team approval or what is still missing; returns an approval request draft that is never submitted.",
+          "path": "solutions/content-launch-clearance/manual/skills/aibast_approval-readiness_03/SKILL.md"
+        },
+        {
+          "name": "distribution-window",
+          "title": "Distribution window and holdback",
+          "description": "Use when someone asks when a title's rights window opens, which holdback applies, or whether a requested launch date is open.",
+          "path": "solutions/content-launch-clearance/manual/skills/aibast_distribution-window_02/SKILL.md"
+        },
+        {
+          "name": "launch-clearance",
+          "title": "Launch clearance",
+          "description": "Use when someone asks whether a title can launch in a territory on the owned streaming service, or which contract clause supports the answer.",
+          "path": "solutions/content-launch-clearance/manual/skills/aibast_launch-clearance_01/SKILL.md"
+        }
+      ],
+      "skill_count": 3,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
       ]
     },
     {
@@ -2509,6 +2648,78 @@
       ]
     },
     {
+      "slug": "first-time-fix",
+      "agent": "@aibast-agents-library/first-time-fix",
+      "title": "First-Time Fix Agent",
+      "description": "Give contact center and field service teams one conversational view of the customer's service, the guided fix, local network work, past visits, and the right technician's job, while every booking stays with a person to confirm.",
+      "category": "telecom_media_gaming",
+      "industry": "Telecom, Media & Gaming",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Contact Center Agent",
+        "Field Service Dispatcher"
+      ],
+      "platforms": [
+        "Dynamics 365 Customer Service",
+        "Dynamics 365 Field Service",
+        "Microsoft Copilot Studio",
+        "SharePoint"
+      ],
+      "tags": [
+        "broadband",
+        "contact-center",
+        "field-service",
+        "first-call-resolution",
+        "telecommunications"
+      ],
+      "outcomes": [
+        "Avoided unneeded truck rolls during area outages",
+        "Put technicians where they add the most value",
+        "Sent technicians who arrived prepared for the fault",
+        "Solved more connection issues on the first call"
+      ],
+      "quest_url": "solutions/first-time-fix/quest.html",
+      "field_guide_url": "solutions/first-time-fix/field-guide.html",
+      "manual_url": "solutions/first-time-fix/manual-tutorial.html",
+      "evidence_url": "solutions/first-time-fix/evidence-report.html",
+      "added_at": "2026-10-22T21:33:51-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "guided-fix",
+          "title": "Guided connection fix",
+          "description": "Use when a contact center agent asks which fix to walk the customer through during the call, or what the service status is.",
+          "path": "solutions/first-time-fix/manual/skills/aibast_guided-fix_01/SKILL.md"
+        },
+        {
+          "name": "local-work-check",
+          "title": "Local work check",
+          "description": "Use when the agent asks whether planned or emergency network work near the service could explain the issue.",
+          "path": "solutions/first-time-fix/manual/skills/aibast_local-work-check_02/SKILL.md"
+        },
+        {
+          "name": "technician-booking",
+          "title": "Technician booking draft",
+          "description": "Use when someone asks which technician to send and what job preparation is needed; returns a booking draft that is never booked.",
+          "path": "solutions/first-time-fix/manual/skills/aibast_technician-booking_04/SKILL.md"
+        },
+        {
+          "name": "visit-history",
+          "title": "Previous visit review",
+          "description": "Use when someone asks what earlier technician visits found or what the technician notes say.",
+          "path": "solutions/first-time-fix/manual/skills/aibast_visit-history_03/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
+      ]
+    },
+    {
       "slug": "fraud-detection-alert",
       "agent": "@aibast-agents-library/fraud-detection-alert",
       "title": "Fraud Detection and Alert Agent",
@@ -3097,6 +3308,79 @@
       "primary_path": "workforce-professional-productivity",
       "path_ids": [
         "workforce-professional-productivity"
+      ]
+    },
+    {
+      "slug": "live-event-launch-planner",
+      "agent": "@aibast-agents-library/live-event-launch-planner",
+      "title": "Live Event Launch Planner Agent",
+      "description": "Give live operations, community, and marketing teams one conversational view of each seasonal event's timeline, cross-team readiness, player announcement, and open work, while every announcement and reminder stays with a person to approve.",
+      "category": "telecom_media_gaming",
+      "industry": "Telecom, Media & Gaming",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Community Manager",
+        "Live Operations Manager",
+        "Marketing Lead"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Planner",
+        "Microsoft Teams",
+        "SharePoint, Outlook"
+      ],
+      "tags": [
+        "community",
+        "event-launch",
+        "gaming",
+        "live-operations",
+        "readiness"
+      ],
+      "outcomes": [
+        "Delivered smoother seasonal event launches",
+        "Drew bigger player turnout on launch day",
+        "Kept teams aligned without extra status meetings",
+        "Published announcements only once approved"
+      ],
+      "quest_url": "solutions/live-event-launch-planner/quest.html",
+      "field_guide_url": "solutions/live-event-launch-planner/field-guide.html",
+      "manual_url": "solutions/live-event-launch-planner/manual-tutorial.html",
+      "evidence_url": "solutions/live-event-launch-planner/evidence-report.html",
+      "added_at": "2026-10-23T00:42:34-04:00",
+      "has_demo_video": true,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "announcement-check",
+          "title": "Player announcement check",
+          "description": "Use when someone asks whether the player announcement is approved and may be published, or wants to see the copy; returns a draft that is never published.",
+          "path": "solutions/live-event-launch-planner/manual/skills/aibast_announcement-check_03/SKILL.md"
+        },
+        {
+          "name": "launch-summary",
+          "title": "Launch status summary",
+          "description": "Use when someone asks what is late, missing, or blocked and who needs a reminder; returns reminder drafts that are never sent.",
+          "path": "solutions/live-event-launch-planner/manual/skills/aibast_launch-summary_04/SKILL.md"
+        },
+        {
+          "name": "launch-timeline",
+          "title": "Launch timeline",
+          "description": "Use when someone asks for an event's milestones from communications approval to launch day, or what comes first.",
+          "path": "solutions/live-event-launch-planner/manual/skills/aibast_launch-timeline_01/SKILL.md"
+        },
+        {
+          "name": "readiness-checklist",
+          "title": "Cross-team readiness checklist",
+          "description": "Use when someone asks which launch tasks each team owns, who owns them, and where each one stands.",
+          "path": "solutions/live-event-launch-planner/manual/skills/aibast_readiness-checklist_02/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "sales-customer-growth",
+      "path_ids": [
+        "sales-customer-growth"
       ]
     },
     {
@@ -4417,6 +4701,7 @@
       "personas": [
         "Category Buyer",
         "Finance Director",
+        "IT Asset Manager",
         "Procurement Manager"
       ],
       "platforms": [
@@ -4432,17 +4717,17 @@
         "purchase-orders"
       ],
       "outcomes": [
-        "Captured volume discounts and flagged duplicate spending",
-        "Delivered equipment on time while maintaining budget compliance",
-        "Freed team capacity for strategic vendor negotiations",
-        "Reduced procurement cycle time from hours to minutes"
+        "Captured savings with timely renewals and vendor discounts",
+        "Improved budgeting accuracy through early visibility into savings",
+        "Reduced manual contract review, freeing staff for high-value work",
+        "Streamlined decision-making with clear, ROI‑driven recommendations"
       ],
       "quest_url": "solutions/procurement-support/quest.html",
       "field_guide_url": "solutions/procurement-support/field-guide.html",
       "manual_url": "solutions/procurement-support/manual-tutorial.html",
       "evidence_url": "solutions/procurement-support/evidence-report.html",
       "added_at": "2026-08-15T22:26:47Z",
-      "has_demo_video": true,
+      "has_demo_video": false,
       "has_onepager": true,
       "demo_cases": 6,
       "manual_steps": 24,

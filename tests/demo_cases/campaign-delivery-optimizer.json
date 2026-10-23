@@ -1,0 +1,74 @@
+{
+ "solution": "Campaign Delivery Optimizer Agent",
+ "agent": "@aibast-agents-library/campaign-delivery-optimizer",
+ "onepager": "69. Campaign Delivery Optimizer Agent one-pager.pptx",
+ "agent_files": [
+  "campaign_delivery_optimizer_agent"
+ ],
+ "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve the sales-lead approval boundary.",
+ "cases": [
+  {
+   "id": "CDO-01",
+   "persona": "Ad Operations Manager",
+   "operation": "campaign_risk",
+   "onepager_bullet": "Assesses campaign risk against plan each week to spot under-delivery before the advertiser does",
+   "prompt": "Is the Harborlight Streaming campaign falling behind this week, and by how much?",
+   "arguments": {
+    "operation": "campaign_risk",
+    "campaign": "Harborlight Streaming Campaign"
+   },
+   "must_include": [
+    "Campaign Risk",
+    "18% below plan",
+    "235,000"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "CampaignDeliveryOptimizerAgent"
+  },
+  {
+   "id": "CDO-02",
+   "persona": "Campaign Manager",
+   "operation": "available_reach",
+   "onepager_bullet": "Finds available reach across placements, such as a home-screen takeover, to close the gap",
+   "prompt": "Where can we find extra reach this week to close the Harborlight gap?",
+   "arguments": {
+    "operation": "available_reach",
+    "campaign": "Harborlight Streaming Campaign"
+   },
+   "must_include": [
+    "Available Reach",
+    "Streaming Home Screen Takeover",
+    "42,000"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "CampaignDeliveryOptimizerAgent"
+  },
+  {
+   "id": "CDO-03",
+   "persona": "Ad Sales Lead",
+   "operation": "approval_recommendation",
+   "onepager_bullet": "Drafts the recommendation for approval so the sales lead can review it and share it with the advertiser",
+   "prompt": "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet.",
+   "arguments": {
+    "operation": "approval_recommendation",
+    "campaign": "Harborlight Streaming Campaign"
+   },
+   "must_include": [
+    "Approval Recommendation",
+    "Pending sales lead approval",
+    "Draft only"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "CampaignDeliveryOptimizerAgent"
+  }
+ ]
+}

@@ -1,0 +1,66 @@
+{
+ "schema": "aibast-onepager-map/1.0",
+ "solution": "@aibast-agents-library/first-time-fix",
+ "onepager": "67. First-Time Fix Agent one-pager.pptx",
+ "source_slide_sha256": "0454bd940efe5a7019ff5b237eaf5c869575e0a9c8d2fb93b7a397ca2c07af68",
+ "source_audit": {
+  "status": "audited",
+  "source_path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+  "implemented_operations": [
+   "guided_fix",
+   "local_work_check",
+   "visit_history",
+   "technician_booking"
+  ],
+  "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+ },
+ "promises": [
+  {
+   "advertised_promise": "Guides the agent through the right connection fix while the customer is still on the call",
+   "operations": [
+    "guided_fix"
+   ],
+   "demo_cases": [
+    "FTF-01"
+   ],
+   "synthetic_evidence": [
+    "Guided Connection Fix",
+    "optical network terminal",
+    "solid green"
+   ]
+  },
+  {
+   "advertised_promise": "Checks local work and past visits before any visit to avoid unneeded truck rolls",
+   "operations": [
+    "local_work_check",
+    "visit_history"
+   ],
+   "demo_cases": [
+    "FTF-02",
+    "FTF-03"
+   ],
+   "synthetic_evidence": [
+    "Local Work Check",
+    "NW-3307",
+    "Emergency cable repair",
+    "FV-7710",
+    "Connection restored",
+    "fibre connector"
+   ]
+  },
+  {
+   "advertised_promise": "Prepares the right technician's job with the fault history, ready for a person to confirm",
+   "operations": [
+    "technician_booking"
+   ],
+   "demo_cases": [
+    "FTF-04"
+   ],
+   "synthetic_evidence": [
+    "Technician Booking",
+    "Priya Nair",
+    "Draft only"
+   ]
+  }
+ ]
+}

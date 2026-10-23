@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-23T03:18:36.101331Z",
+  "solution": "@aibast-agents-library/campaign-delivery-optimizer",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Campaign Delivery Pilot",
+  "schema_name": "aibast_CampaignDeliveryPilot",
+  "bot_id": "238329ed-d9b2-431a-b70e-531a55fe1297",
+  "model": "Claude Opus 5.5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 1 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "CDO-01",
+      "must_include": [
+        "Campaign Risk",
+        "18% below plan",
+        "235,000"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CDO-02",
+      "must_include": [
+        "Available Reach",
+        "Streaming Home Screen Takeover",
+        "42,000"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CDO-03",
+      "must_include": [
+        "Approval Recommendation",
+        "Pending sales lead approval",
+        "Draft only"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}
