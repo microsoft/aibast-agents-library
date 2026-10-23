@@ -76,10 +76,6 @@ Benefits Enrollment Agent
 Warranty and Registration Agent
 Staffing Territory Planning Agent
 Briefing Pack Builder Agent
-First-Time Fix Agent
-Content Launch Clearance Agent
-Campaign Delivery Optimizer Agent
-Live Event Launch Planner Agent
 """.strip().splitlines()
 )
 
@@ -538,7 +534,38 @@ def test_every_library_solution_maps_to_an_exact_microsoft_forms_choice():
 
     assert len(result) == 70
     assert len(set(result)) == len(result)
+    # Solutions the live form does not list yet fall back to "My use case is not listed" (next test).
+    assert FORM_SOLUTION_CHOICES <= set(result)
+
+
+def test_library_form_choices_match_the_live_form_list():
+    result = run_library_node("console.log(JSON.stringify([...REQUEST_FORM_SOLUTION_CHOICES]));")
+    assert len(result) == len(set(result))
     assert set(result) == FORM_SOLUTION_CHOICES
+
+
+def test_solution_missing_from_the_form_still_gets_a_working_request_link():
+    result = run_library_node(
+        """
+const listed = {name: "@aibast-agents-library/care-gap-closure", display_name: "Care Gap Closure Agent", _solution: {}};
+const unlisted = {name: "@aibast-agents-library/brand-new", display_name: "Brand New Agent", _solution: {}};
+console.log(JSON.stringify({listed: requestFormUrl(listed), unlisted: requestFormUrl(unlisted)}));
+"""
+    )
+    prefix = (
+        "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
+        "?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-"
+        "hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u"
+        "&r2c6c3672a0d9465d8f24e5caf6f21619="
+    )
+    assert result["listed"] == prefix + "%22Care%20Gap%20Closure%20Agent%22"
+    assert result["unlisted"] == (
+        prefix
+        + "%22My%20use%20case%20is%20not%20listed%22"
+        + "&r26600cd251ab4f4dafd8a474cf4f1ee4="
+        + "%22Requesting%20the%20one-pager%20and%20demo%20video%20for%20Brand%20New%20Agent"
+        + "%20(listed%20on%20the%20AIBAST%20Agents%20Library%20site).%22"
+    )
 
 
 def test_library_supports_top_downloaded_sort():
