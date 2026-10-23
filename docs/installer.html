@@ -292,6 +292,13 @@ html[data-theme="dark"] {
   .cmd.copied::after { content: "✓"; color: var(--cp-success); opacity: 1; }
 
   /* ── Install widget ── */
+  .office-hours {
+    max-width: 620px; width: 100%; margin: -24px 0 48px; padding: 16px 18px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 12px;
+  }
+  .office-hours h2 { font-size: 16px; font-weight: 600; color: var(--cp-text); margin: 0 0 4px; }
+  .office-hours p { font-size: 13px; color: var(--cp-text-muted); margin: 0; line-height: 1.5; }
   .install-widget {
     max-width: 620px; width: 100%; margin-bottom: 48px;
     background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
@@ -479,6 +486,14 @@ html[data-theme="dark"] {
   </div>
   <div class="install-hint" id="install-hint">Works on macOS &amp; Linux. Auto-installs Python 3.11 if missing.</div>
 </div>
+
+<section class="office-hours" id="office-hours" aria-labelledby="office-hours-title">
+  <div>
+    <h2 id="office-hours-title">RAPP Brainstem office hours</h2>
+    <p>Thursdays, 12:30 to 1:30 PM ET, on Teams. Bring a question, a use case, or a build you're stuck on. Sign-up uses your Microsoft account.</p>
+  </div>
+  <a class="hero-action primary" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUQVBKS0NWREVQWFZKVVk4VFRWV05KNlZaWS4u" target="_blank" rel="noopener">Sign up</a>
+</section>
 
 <div class="tiers">
 
