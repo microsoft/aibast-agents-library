@@ -76,6 +76,10 @@ Benefits Enrollment Agent
 Warranty and Registration Agent
 Staffing Territory Planning Agent
 Briefing Pack Builder Agent
+First-Time Fix Agent
+Content Launch Clearance Agent
+Campaign Delivery Optimizer Agent
+Live Event Launch Planner Agent
 """.strip().splitlines()
 )
 
@@ -532,7 +536,7 @@ def test_every_library_solution_maps_to_an_exact_microsoft_forms_choice():
         + ";\nconsole.log(JSON.stringify(agents.map(requestFormSolutionName)));"
     )
 
-    assert len(result) == 66
+    assert len(result) == 70
     assert len(set(result)) == len(result)
     assert set(result) == FORM_SOLUTION_CHOICES
 

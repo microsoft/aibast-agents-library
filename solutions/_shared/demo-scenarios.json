@@ -6,8 +6,8 @@
     "solutions/*/evals/transcripts.json"
   ],
   "summary": {
-    "scenarios": 360,
-    "recorded": 350,
+    "scenarios": 374,
+    "recorded": 364,
     "not_recorded": 10
   },
   "agents": {
@@ -95,6 +95,14 @@
         "permit-inspections"
       ]
     },
+    "@aibast-agents-library/campaign-delivery-optimizer": {
+      "name": "Campaign Delivery Optimizer Agent",
+      "scenarios": [
+        "campaign-delivery-optimizer-campaign-risk",
+        "campaign-delivery-optimizer-available-reach",
+        "campaign-delivery-optimizer-approval-recommendation"
+      ]
+    },
     "@aibast-agents-library/care-gap-closure": {
       "name": "Care Gap Closure Agent",
       "scenarios": [
@@ -145,6 +153,14 @@
         "clinical-notes-medications",
         "clinical-notes-problems",
         "clinical-notes-referral"
+      ]
+    },
+    "@aibast-agents-library/content-launch-clearance": {
+      "name": "Content Launch Clearance Agent",
+      "scenarios": [
+        "content-launch-clearance-launch-clearance",
+        "content-launch-clearance-distribution-window",
+        "content-launch-clearance-approval-readiness"
       ]
     },
     "@aibast-agents-library/contract-risk-review": {
@@ -264,6 +280,15 @@
         "financial-advisor-copilot-advisor-handoff"
       ]
     },
+    "@aibast-agents-library/first-time-fix": {
+      "name": "First-Time Fix Agent",
+      "scenarios": [
+        "first-time-fix-guided-fix",
+        "first-time-fix-local-work-check",
+        "first-time-fix-visit-history",
+        "first-time-fix-technician-booking"
+      ]
+    },
     "@aibast-agents-library/fraud-detection-alert": {
       "name": "Fraud Detection and Alert Agent",
       "scenarios": [
@@ -323,6 +348,15 @@
         "license-renewal-expansion-executive-brief",
         "license-renewal-expansion-negotiation-plan",
         "license-renewal-expansion-deal-summary"
+      ]
+    },
+    "@aibast-agents-library/live-event-launch-planner": {
+      "name": "Live Event Launch Planner Agent",
+      "scenarios": [
+        "live-event-launch-planner-launch-timeline",
+        "live-event-launch-planner-readiness-checklist",
+        "live-event-launch-planner-announcement-check",
+        "live-event-launch-planner-launch-summary"
       ]
     },
     "@aibast-agents-library/loan-origination-assistant": {
@@ -1041,6 +1075,30 @@
       "case_id": "BM-01",
       "recorded": true
     },
+    "campaign-delivery-optimizer-approval-recommendation": {
+      "agent_id": "@aibast-agents-library/campaign-delivery-optimizer",
+      "title": "Ad Sales Lead: Recommendation draft for approval",
+      "prompt": "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet.",
+      "folder": "campaign-delivery-optimizer",
+      "case_id": "CDO-03",
+      "recorded": true
+    },
+    "campaign-delivery-optimizer-available-reach": {
+      "agent_id": "@aibast-agents-library/campaign-delivery-optimizer",
+      "title": "Campaign Manager: Available reach",
+      "prompt": "Where can we find extra reach this week to close the Harborlight gap?",
+      "folder": "campaign-delivery-optimizer",
+      "case_id": "CDO-02",
+      "recorded": true
+    },
+    "campaign-delivery-optimizer-campaign-risk": {
+      "agent_id": "@aibast-agents-library/campaign-delivery-optimizer",
+      "title": "Ad Operations Manager: Campaign risk check",
+      "prompt": "Is the Harborlight Streaming campaign falling behind this week, and by how much?",
+      "folder": "campaign-delivery-optimizer",
+      "case_id": "CDO-01",
+      "recorded": true
+    },
     "care-gap-closure-campaign-projection": {
       "agent_id": "@aibast-agents-library/care-gap-closure",
       "title": "Clinical Operations Lead: Campaign Projection",
@@ -1255,6 +1313,30 @@
       "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
       "folder": "clinical-notes-summarizer",
       "case_id": "CN-04",
+      "recorded": true
+    },
+    "content-launch-clearance-approval-readiness": {
+      "agent_id": "@aibast-agents-library/content-launch-clearance",
+      "title": "Rights & Clearances Lead: Approval readiness draft",
+      "prompt": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+      "folder": "content-launch-clearance",
+      "case_id": "CLC-03",
+      "recorded": true
+    },
+    "content-launch-clearance-distribution-window": {
+      "agent_id": "@aibast-agents-library/content-launch-clearance",
+      "title": "Distribution Lead: Distribution window and holdback",
+      "prompt": "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+      "folder": "content-launch-clearance",
+      "case_id": "CLC-02",
+      "recorded": true
+    },
+    "content-launch-clearance-launch-clearance": {
+      "agent_id": "@aibast-agents-library/content-launch-clearance",
+      "title": "Programming Manager: Launch clearance",
+      "prompt": "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+      "folder": "content-launch-clearance",
+      "case_id": "CLC-01",
       "recorded": true
     },
     "contract-clauses": {
@@ -1753,6 +1835,38 @@
       "case_id": "FAC-01",
       "recorded": true
     },
+    "first-time-fix-guided-fix": {
+      "agent_id": "@aibast-agents-library/first-time-fix",
+      "title": "Contact Center Agent: Guided connection fix",
+      "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+      "folder": "first-time-fix",
+      "case_id": "FTF-01",
+      "recorded": true
+    },
+    "first-time-fix-local-work-check": {
+      "agent_id": "@aibast-agents-library/first-time-fix",
+      "title": "Contact Center Agent: Local work check",
+      "prompt": "Is there any network work near Meadow Lane that could explain the outage?",
+      "folder": "first-time-fix",
+      "case_id": "FTF-02",
+      "recorded": true
+    },
+    "first-time-fix-technician-booking": {
+      "agent_id": "@aibast-agents-library/first-time-fix",
+      "title": "Field Service Dispatcher: Technician booking draft",
+      "prompt": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+      "folder": "first-time-fix",
+      "case_id": "FTF-04",
+      "recorded": true
+    },
+    "first-time-fix-visit-history": {
+      "agent_id": "@aibast-agents-library/first-time-fix",
+      "title": "Field Service Dispatcher: Previous visit review",
+      "prompt": "What did the last technician find at Alder Grove Service?",
+      "folder": "first-time-fix",
+      "case_id": "FTF-03",
+      "recorded": true
+    },
     "fraud-detection-alert-alert-triage": {
       "agent_id": "@aibast-agents-library/fraud-detection-alert",
       "title": "Prevention performance and trends",
@@ -1967,6 +2081,38 @@
       "prompt": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
       "folder": "license-renewal-expansion",
       "case_id": "LRE-04",
+      "recorded": true
+    },
+    "live-event-launch-planner-announcement-check": {
+      "agent_id": "@aibast-agents-library/live-event-launch-planner",
+      "title": "Community Manager: Player announcement check",
+      "prompt": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+      "folder": "live-event-launch-planner",
+      "case_id": "LEL-03",
+      "recorded": true
+    },
+    "live-event-launch-planner-launch-summary": {
+      "agent_id": "@aibast-agents-library/live-event-launch-planner",
+      "title": "Marketing Lead: Launch status summary",
+      "prompt": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+      "folder": "live-event-launch-planner",
+      "case_id": "LEL-04",
+      "recorded": true
+    },
+    "live-event-launch-planner-launch-timeline": {
+      "agent_id": "@aibast-agents-library/live-event-launch-planner",
+      "title": "Live Operations Manager: Launch timeline",
+      "prompt": "Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+      "folder": "live-event-launch-planner",
+      "case_id": "LEL-01",
+      "recorded": true
+    },
+    "live-event-launch-planner-readiness-checklist": {
+      "agent_id": "@aibast-agents-library/live-event-launch-planner",
+      "title": "Live Operations Manager: Cross-team readiness checklist",
+      "prompt": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+      "folder": "live-event-launch-planner",
+      "case_id": "LEL-02",
       "recorded": true
     },
     "loan-origination-assistant-application-review": {

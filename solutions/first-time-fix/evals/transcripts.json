@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-23T02:50:33.997589+00:00",
+  "solution": "@aibast-agents-library/first-time-fix",
+  "onepager": "67. First-Time Fix Agent one-pager.pptx",
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "FirstTimeFixAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+      "sha256": "35c333da8a89eb74aaaebedee0d92840329b02cb0b7e6d31cd29832f26ee86c4"
+    }
+  ],
+  "case_file": "tests/demo_cases/first-time-fix.json",
+  "case_file_sha256": "76349d606b40239a0b337d5d5854f9cc9edbdc2fde7b1326f0ad1d3698941007",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "FTF-01",
+      "persona": "Contact Center Agent",
+      "onepager_promise": "Guides the agent through the right connection fix while the customer is still on the call",
+      "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+      "assistant_response": "Walk the customer through these steps now:\n\n1. **Restart the optical network terminal (ONT).**\n2. **Wait 2 minutes** for it to reconnect.\n3. **Confirm the broadband light is solid green.**\n\nIf the broadband light stays red after the restart, book a technician.\n\nThe account shows 6 drops in the last 7 days, and the system flagged repeated drops after restart. If the line drops again after a clean restart, don't keep repeating the restart. Escalate toward a visit. There is no confirmed local network work affecting this service. Open case CS-48211 is on the account.\n\nI can check previous visit outcomes or the recommended technician if you need them.",
+      "agent_logs": "[FirstTimeFixAgent] # Guided Connection Fix - Alder Grove Service\n\n**Plan:** Fibre 500 | **Status:** Active - intermittent connection | **Drops in 7 days:** 6 | **Open case:** CS-48211\n\n## Steps to use now\n1. Restart the optical network terminal (ONT).\n2. Wait 2 minutes for it to reconnect.\n3. Confirm the broadband light is solid green.\n\n**When to book a visit:** Book a technician if the broadband light stays red after the restart.\n**Local work:** No confirmed local work\n**Flag:** Repeated drops after restart\n\n> Read-only synthetic snapshot. No visit, service, customer contact, case or technician schedule was changed; every booking is a draft for the agent to confirm.",
+      "expected_agent": "FirstTimeFixAgent",
+      "must_include": [
+        "Guided Connection Fix",
+        "optical network terminal",
+        "solid green"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "FTF-02",
+      "persona": "Contact Center Agent",
+      "onepager_promise": "Checks local network work so the agent never books a visit an outage would make pointless",
+      "prompt": "Is there any network work near Meadow Lane that could explain the outage?",
+      "assistant_response": "Yes. There's an emergency cable repair in progress on the Meadow Lane service:\n\n- **Work ID:** NW-3307\n- **Type:** Emergency cable repair\n- **Area:** North service area, Cabinet N-09\n- **Started:** 07:40 today\n- **Expected completion:** 15:30 today\n- **Status:** In progress\n\nThis is a likely explanation for the outage. The repair is expected to finish today, so the customer's connection should recover once it's complete. If it's still down after 15:30, or the customer reports service issues after that time, it's worth checking the service status again and looking at previous visit history before booking a technician.",
+      "agent_logs": "[FirstTimeFixAgent] # Local Work Check - Meadow Lane Service\n\n**Area:** North service area | **Cabinet:** Cabinet N-09\n\n| Work | Type | Window | Status |\n|------|------|--------|--------|\n| NW-3307 | Emergency cable repair | Started 07:40, expected complete 15:30 today | In progress |\n\n**Flag for the agent:** Local repair expected to complete today\n\n> Read-only synthetic snapshot. No visit, service, customer contact, case or technician schedule was changed; every booking is a draft for the agent to confirm.",
+      "expected_agent": "FirstTimeFixAgent",
+      "must_include": [
+        "Local Work Check",
+        "NW-3307",
+        "Emergency cable repair"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "FTF-03",
+      "persona": "Field Service Dispatcher",
+      "onepager_promise": "Brings previous visit outcomes and technician notes into the call",
+      "prompt": "What did the last technician find at Alder Grove Service?",
+      "assistant_response": "The last technician visit at Alder Grove Service was FV-7710, 22 days ago, by Priya Nair.\n\n- **Outcome:** Connection restored\n- **Finding:** She reseated the fibre connector.\n- **Follow-up note:** Investigate intermittent drops if they recur.\n\nIf the customer is reporting drops again, that follow-up note is the first thing to check.",
+      "agent_logs": "[FirstTimeFixAgent] # Previous Visits - Alder Grove Service\n\n| Visit | When | Outcome | Technician | Note |\n|-------|------|---------|------------|------|\n| FV-7710 | 22 days ago | Connection restored | Priya Nair | Reseated fibre connector; investigate intermittent drops if they recur. |\n\n> Read-only synthetic snapshot. No visit, service, customer contact, case or technician schedule was changed; every booking is a draft for the agent to confirm.",
+      "expected_agent": "FirstTimeFixAgent",
+      "must_include": [
+        "FV-7710",
+        "Connection restored",
+        "fibre connector"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "FTF-04",
+      "persona": "Field Service Dispatcher",
+      "onepager_promise": "Recommends the right technician and prepares the job so the first visit fixes it",
+      "prompt": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+      "assistant_response": "If the light stays red, the recommended technician is **Priya Nair** (fibre connectors and ONT replacement, North service area).\n\n**Next slot:** Tomorrow, 09:00\u201311:00. Status is \"ready to book,\" but nothing has been booked.\n\n**Job preparation:**\n- Add the repeated-drop history: 6 drops in 7 days.\n- Include the previous fibre-connector visit note (FV-7710).\n- Test the optical network terminal (ONT) and fibre connector on arrival.\n\nA human agent needs to confirm the booking.",
+      "agent_logs": "[FirstTimeFixAgent] # Technician Booking - Alder Grove Service\n\n**Recommended technician:** Priya Nair (Fibre connectors, ONT replacement; North service area)\n**Next slot:** Tomorrow 09:00-11:00 | **Booking status:** Ready to book\n\n## Job preparation\n- Add the repeated-drop history (6 drops in 7 days).\n- Include the previous fibre-connector visit note (FV-7710).\n- Test the optical network terminal and fibre connector on arrival.\n\n> Draft only: no visit was booked. Read-only synthetic snapshot. No visit, service, customer contact, case or technician schedule was changed; every booking is a draft for the agent to confirm.",
+      "expected_agent": "FirstTimeFixAgent",
+      "must_include": [
+        "Technician Booking",
+        "Priya Nair",
+        "Draft only"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "campaign-delivery-optimizer",
+  "agent": "@aibast-agents-library/campaign-delivery-optimizer",
+  "display_name": "Campaign Delivery Optimizer Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic weekly campaign snapshot",
+        "detail": "Four fictional advertiser campaigns with planned and delivered reach, variance, sales lead, and status."
+      },
+      {
+        "name": "Placement inventory records",
+        "detail": "Five fictional placements with extra reach this week and an available, sold-out, or pending status."
+      },
+      {
+        "name": "Recommendation drafts",
+        "detail": "Four per-campaign drafts with approval status and any missing delivery data."
+      },
+      {
+        "name": "Delivery rules and guardrails",
+        "detail": "Routing, evidence, and no-booking rules bundled as a synthetic knowledge file."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Delivery risk assessment",
+        "detail": "Compares delivered reach with the weekly plan, explains the gap, and counts at-risk campaigns."
+      },
+      {
+        "name": "Extra reach matching",
+        "detail": "Lists a campaign's placements with extra reach this week and their inventory status."
+      },
+      {
+        "name": "Make-good recommendation drafting",
+        "detail": "Returns the drafted recommendation, its basis, approval status, and sales lead."
+      },
+      {
+        "name": "Missing delivery data detection",
+        "detail": "Flags incomplete current-week delivery and blocks the recommendation instead of guessing."
+      },
+      {
+        "name": "Fail-closed campaign resolution",
+        "detail": "Resolves a campaign by key, ID, or name, defaults to the demo campaign, and never substitutes one."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio ad sales experience",
+        "detail": "Hosts the pilot with three skills and two synthetic knowledge files; the package stays Draft until review."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file CampaignDeliveryOptimizerAgent locally with deterministic campaign routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Weekly campaign risk view",
+        "detail": "Planned reach, delivered reach, variance, delivery status, and the reason a campaign is at risk."
+      },
+      {
+        "name": "Available reach table",
+        "detail": "Inventory ID, placement, extra reach this week, and inventory status for one campaign."
+      },
+      {
+        "name": "Recommendation for approval",
+        "detail": "Draft recommendation, basis, approval status, and anything missing; nothing is shared."
+      },
+      {
+        "name": "Ad sales acceptance evidence",
+        "detail": "Three locked ad operations, campaign manager, and sales lead cases, one per operation."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable CampaignDeliveryOptimizerAgent",
+      "detail": "Single-file Python BasicAgent with three deterministic read-only operations over synthetic delivery."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the three-skill package; publishing needs an authorized reviewer."
+    },
+    {
+      "name": "Dynamics 365 Sales",
+      "detail": "Cited read-only seam for campaigns and sales leads; no live connection in the package."
+    },
+    {
+      "name": "Weekly delivery reports in Microsoft Excel",
+      "detail": "Cited read-only seam for delivered reach; synthetic records stand in."
+    },
+    {
+      "name": "Inventory and placement records",
+      "detail": "Cited read-only seam for available placements; the agent never books or releases inventory."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic delivery evidence boundary",
+      "detail": "Every campaign, reach figure, placement, and sales lead is invented; no browsing or live-system claims."
+    },
+    {
+      "name": "No booking or advertiser sharing",
+      "detail": "Never books or releases inventory, changes a campaign or placement, or shares anything with an advertiser."
+    },
+    {
+      "name": "Sales lead approval gate",
+      "detail": "Ad sales leads and ad operations managers approve every recommendation before any action."
+    },
+    {
+      "name": "Figures kept as returned",
+      "detail": "Reach, variance, and extra reach are quoted exactly; answers never round or recompute them."
+    },
+    {
+      "name": "Controlled future writes",
+      "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
+    }
+  ]
+}

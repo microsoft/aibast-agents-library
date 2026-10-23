@@ -1,6 +1,6 @@
 {
  "schema": "aibast-solutions/1.0",
- "count": 68,
+ "count": 72,
  "note": "Approved industry-solution catalog as advertised on the AIBAST SharePoint Agents Library. The repo aligns to this; it is not derived from the repo.",
  "solutions": [
   {
@@ -2994,6 +2994,189 @@
    "source": "AIBAST Agents Library \u2014 wave 2 (field-pattern template)",
    "advertised_display": "Briefing Pack Builder Agent",
    "sharepoint_list_name": "Briefing Pack Builder Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 67,
+   "advertised_name": "First-Time Fix Agent",
+   "canonical_name": "First-Time Fix Agent",
+   "repo_agent": "@aibast-agents-library/first-time-fix",
+   "executive_summary": "Help contact center and field service teams resolve connection issues on the first call by guiding the right fix for each customer's service, checking local network work and past visits before a technician is sent, and preparing the technician's job when a visit is needed, while every booking stays with a person to confirm.",
+   "industries": [
+    "Telecommunications",
+    "Broadband & Cable"
+   ],
+   "personas": [
+    "Contact Center Agent",
+    "Field Service Dispatcher"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Dynamics 365 Customer Service",
+    "Dynamics 365 Field Service",
+    "Microsoft SharePoint"
+   ],
+   "customer_scenario": [
+    "Agents lacked one view of the customer's service, local network work, and visit history during the call.",
+    "Technicians were sent for issues a guided fix or a local outage already explained.",
+    "Technicians arrived without knowing what had already been tried.",
+    "Repeat visits raised costs and frustrated customers."
+   ],
+   "outcomes": [
+    "More connection issues solved on the first call with a guided fix for each service.",
+    "Fewer unneeded truck rolls: local work and past visits are checked before a technician is sent.",
+    "Technicians arrive prepared with the fault history and the parts to bring."
+   ],
+   "capabilities": [
+    "Guided connection fix",
+    "Local work check",
+    "Previous visit review",
+    "Technician booking draft"
+   ],
+   "onepager": "67. First-Time Fix Agent one-pager.pptx",
+   "demo_video": "67-First-Time Fix Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 3 (field-pattern template)",
+   "advertised_display": "First-Time Fix Agent",
+   "sharepoint_list_name": "First-Time Fix Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 68,
+   "advertised_name": "Content Launch Clearance Agent",
+   "canonical_name": "Content Launch Clearance Agent",
+   "repo_agent": "@aibast-agents-library/content-launch-clearance",
+   "executive_summary": "Help programming, distribution, and rights teams confirm where, when, and on which platform a title can launch by citing the exact contract clause behind each clearance answer, showing the distribution window and any holdback that blocks an earlier date, and checking what is still missing before rights approval, while every approval stays with the rights team.",
+   "industries": [
+    "Media & Entertainment",
+    "Streaming",
+    "Broadcasting"
+   ],
+   "personas": [
+    "Programming Manager",
+    "Distribution Lead",
+    "Rights & Clearances Lead"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft SharePoint",
+    "Power Automate",
+    "Microsoft Teams"
+   ],
+   "customer_scenario": [
+    "Rights questions meant hours of searching through long contracts.",
+    "Holdbacks and territory limits were easy to miss under deadline.",
+    "Launch plans stalled while teams waited on rights answers.",
+    "Approval status lived in email threads, not one shared view."
+   ],
+   "outcomes": [
+    "Titles reach audiences faster with launch dates confirmed against the cited contract terms.",
+    "Holdbacks are caught before they become launch problems.",
+    "Rights teams spend their time on deals, not lookups."
+   ],
+   "capabilities": [
+    "Launch clearance",
+    "Distribution window and holdback",
+    "Approval readiness draft"
+   ],
+   "onepager": "68. Content Launch Clearance Agent one-pager.pptx",
+   "demo_video": "68-Content Launch Clearance Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 3 (field-pattern template)",
+   "advertised_display": "Content Launch Clearance Agent",
+   "sharepoint_list_name": "Content Launch Clearance Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 69,
+   "advertised_name": "Campaign Delivery Optimizer Agent",
+   "canonical_name": "Campaign Delivery Optimizer Agent",
+   "repo_agent": "@aibast-agents-library/campaign-delivery-optimizer",
+   "executive_summary": "Help ad sales and ad operations teams keep every advertiser campaign on plan by tracking weekly delivered reach against plan, finding placements with extra reach to close a delivery gap, and drafting the recommendation for the sales lead to approve, while nothing is booked or shared with an advertiser without a person's approval.",
+   "industries": [
+    "Media & Entertainment",
+    "Advertising"
+   ],
+   "personas": [
+    "Ad Operations Manager",
+    "Campaign Manager",
+    "Ad Sales Lead"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Dynamics 365 Sales",
+    "Microsoft Excel",
+    "Microsoft Outlook"
+   ],
+   "customer_scenario": [
+    "Under-delivery surfaced late, after advertisers had noticed.",
+    "Teams pieced together delivery data from spreadsheets by hand.",
+    "Inventory that could recover reach was hard to find quickly.",
+    "Make-good proposals took days to draft and agree."
+   ],
+   "outcomes": [
+    "Under-delivering campaigns are caught within the week, before the advertiser notices.",
+    "Reach is recovered with the right placements, such as a home-screen takeover.",
+    "Sales leads approve a drafted recommendation instead of building one by hand."
+   ],
+   "capabilities": [
+    "Campaign risk check",
+    "Available reach",
+    "Recommendation draft for approval"
+   ],
+   "onepager": "69. Campaign Delivery Optimizer Agent one-pager.pptx",
+   "demo_video": "69-Campaign Delivery Optimizer Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 3 (field-pattern template)",
+   "advertised_display": "Campaign Delivery Optimizer Agent",
+   "sharepoint_list_name": "Campaign Delivery Optimizer Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 70,
+   "advertised_name": "Live Event Launch Planner Agent",
+   "canonical_name": "Live Event Launch Planner Agent",
+   "repo_agent": "@aibast-agents-library/live-event-launch-planner",
+   "executive_summary": "Help live operations, community, and marketing teams launch seasonal in-game events from one plan by building the timeline from communications approval to launch day, compiling readiness across teams with owners and status, and checking player announcements before publishing, while nothing is published or sent without a person's approval.",
+   "industries": [
+    "Gaming",
+    "Interactive Media"
+   ],
+   "personas": [
+    "Live Operations Manager",
+    "Community Manager",
+    "Marketing Lead"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Planner",
+    "Microsoft Teams",
+    "Microsoft SharePoint",
+    "Microsoft Outlook"
+   ],
+   "customer_scenario": [
+    "Launch plans lived in scattered documents and chat threads.",
+    "Teams relied on status meetings to see what was ready.",
+    "Late approvals put announcement dates at risk.",
+    "Players heard about events late or in mixed messages."
+   ],
+   "outcomes": [
+    "Smoother seasonal event launches from one shared timeline.",
+    "Teams stay aligned on late, missing, and blocked work without extra status meetings.",
+    "Player announcements are published only once approved."
+   ],
+   "capabilities": [
+    "Launch timeline",
+    "Cross-team readiness checklist",
+    "Player announcement check",
+    "Launch status summary"
+   ],
+   "onepager": "70. Live Event Launch Planner Agent one-pager.pptx",
+   "demo_video": "70-Live Event Launch Planner Agent.mp4",
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 wave 3 (field-pattern template)",
+   "advertised_display": "Live Event Launch Planner Agent",
+   "sharepoint_list_name": "Live Event Launch Planner Agent",
    "is_primary": true
   }
  ]

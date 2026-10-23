@@ -1,0 +1,70 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-10-23T03:49:11.883511+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "botid",
+      "componentstate",
+      "modifiedon",
+      "name",
+      "odata_etag",
+      "publishedon",
+      "statecode",
+      "statuscode",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "first-time-fix",
+    "solution": "@aibast-agents-library/first-time-fix",
+    "display_name": "First-Time Fix Pilot",
+    "schema_name": "aibast_FirstTimeFixPilot",
+    "bot_id": "d4f06d6d-4d87-43a9-b441-cfbdc3d679d3"
+  },
+  "record": {
+    "modifiedon": "2026-10-23T03:16:00Z",
+    "botid": "d4f06d6d-4d87-43a9-b441-cfbdc3d679d3",
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": {
+        "$kind": "PublishResultDetails",
+        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
+        "operationStart": "2026-10-23T01:48:28.1534186Z",
+        "operationEnd": "2026-10-23T01:49:04.2139879Z",
+        "status": "Succeeded"
+      },
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "botRegistration": {
+          "$kind": "BotRegistrationDetails",
+          "botRegistrationIdConsumptionTime": "2026-10-23T01:49:01.2794729Z",
+          "applicationId": "0dd995ad-e58d-458a-8b92-0b024e25f834",
+          "isAppAvailableInTenant": true
+        },
+        "provisioningStatus": "Provisioned",
+        "state": "Synchronizing"
+      }
+    },
+    "componentstate": 0,
+    "statecode": 0,
+    "name": "First-Time Fix Pilot",
+    "versionnumber": 22139318,
+    "publishedon": "2026-10-23T01:49:01Z",
+    "statuscode": 1,
+    "odata_etag": "W/\"22139318\""
+  },
+  "record_sha256": "455faa36b469ae9a2d0b3977f171f9e82a9a7c08c9b85903d6f29460d6d9ce39",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": false,
+    "last_finished_publish_operation_is_null": false
+  }
+}

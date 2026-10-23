@@ -1,0 +1,66 @@
+{
+ "schema": "aibast-onepager-map/1.0",
+ "solution": "@aibast-agents-library/live-event-launch-planner",
+ "onepager": "70. Live Event Launch Planner Agent one-pager.pptx",
+ "source_slide_sha256": "0ce415fcef1bf2c2d1764f99cff7e3edfacea7be352bef26731df98d6ba41572",
+ "source_audit": {
+  "status": "audited",
+  "source_path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/live_event_launch_planner_stack/live_event_launch_planner_agent.py",
+  "implemented_operations": [
+   "launch_timeline",
+   "readiness_checklist",
+   "announcement_check",
+   "launch_summary"
+  ],
+  "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+ },
+ "promises": [
+  {
+   "advertised_promise": "Builds the launch timeline with every milestone, from communications approval to launch day",
+   "operations": [
+    "launch_timeline"
+   ],
+   "demo_cases": [
+    "LEL-01"
+   ],
+   "synthetic_evidence": [
+    "Launch Timeline",
+    "Launch communications approval",
+    "In 12 days"
+   ]
+  },
+  {
+   "advertised_promise": "Compiles readiness across live ops, community, and marketing and summarizes the late, missing, and blocked work with its owners",
+   "operations": [
+    "readiness_checklist",
+    "launch_summary"
+   ],
+   "demo_cases": [
+    "LEL-02",
+    "LEL-04"
+   ],
+   "synthetic_evidence": [
+    "Readiness Checklist",
+    "Mateo Silva",
+    "1 of 4",
+    "Launch Summary",
+    "Submit final store assets",
+    "no reminder was sent"
+   ]
+  },
+  {
+   "advertised_promise": "Checks and drafts the player announcement and holds it until publishing is approved",
+   "operations": [
+    "announcement_check"
+   ],
+   "demo_cases": [
+    "LEL-03"
+   ],
+   "synthetic_evidence": [
+    "Announcement Check",
+    "Not granted",
+    "marketing lead sign-off required"
+   ]
+  }
+ ]
+}

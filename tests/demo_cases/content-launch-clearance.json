@@ -1,0 +1,74 @@
+{
+ "solution": "Content Launch Clearance Agent",
+ "agent": "@aibast-agents-library/content-launch-clearance",
+ "onepager": "68. Content Launch Clearance Agent one-pager.pptx",
+ "agent_files": [
+  "content_launch_clearance_agent"
+ ],
+ "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve the rights-team approval boundary.",
+ "cases": [
+  {
+   "id": "CLC-01",
+   "persona": "Programming Manager",
+   "operation": "launch_clearance",
+   "onepager_bullet": "Assesses launch clearance by territory and platform, with the exact contract clause cited for every answer",
+   "prompt": "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+   "arguments": {
+    "operation": "launch_clearance",
+    "title": "Silver Harbor"
+   },
+   "must_include": [
+    "Launch Clearance",
+    "UK Rights Agreement SH-UK-2026",
+    "theatrical holdback"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ContentLaunchClearanceAgent"
+  },
+  {
+   "id": "CLC-02",
+   "persona": "Distribution Lead",
+   "operation": "distribution_window",
+   "onepager_bullet": "Retrieves distribution windows and holdbacks so teams see which launch dates are open and why",
+   "prompt": "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+   "arguments": {
+    "operation": "distribution_window",
+    "title": "Paper Lantern"
+   },
+   "must_include": [
+    "Distribution Window",
+    "In 40 days",
+    "Canada Rights Agreement PL-CA-2026"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ContentLaunchClearanceAgent"
+  },
+  {
+   "id": "CLC-03",
+   "persona": "Rights & Clearances Lead",
+   "operation": "approval_readiness",
+   "onepager_bullet": "Checks approval readiness before launch so no title goes live without its sign-off",
+   "prompt": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+   "arguments": {
+    "operation": "approval_readiness",
+    "title": "Northern Signal"
+   },
+   "must_include": [
+    "Approval Readiness",
+    "Approved contract amendment",
+    "Draft only"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ContentLaunchClearanceAgent"
+  }
+ ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-23T04:38:25.586937Z",
+  "solution": "@aibast-agents-library/live-event-launch-planner",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Live Event Launch Pilot",
+  "schema_name": "aibast_LiveEventLaunchPilot",
+  "bot_id": "d7a78ae5-3cd2-49cb-bfb4-b284bde4a392",
+  "model": "Claude Opus 5.5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 1 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "LEL-01",
+      "must_include": [
+        "Launch Timeline",
+        "Launch communications approval",
+        "In 12 days"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LEL-02",
+      "must_include": [
+        "Readiness Checklist",
+        "Mateo Silva",
+        "1 of 4"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LEL-03",
+      "must_include": [
+        "Announcement Check",
+        "Not granted",
+        "marketing lead sign-off required"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LEL-04",
+      "must_include": [
+        "Launch Summary",
+        "Submit final store assets",
+        "no reminder was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

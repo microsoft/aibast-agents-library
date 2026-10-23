@@ -34,11 +34,11 @@ def test_historical_native_archives_and_declared_source_bundles_are_intact():
     inventory = read_json(STATE_PATH)
     rows = inventory["solutions"]
     assert inventory["summary"] == {
-        "total": 65,
-        "exported": 65,
+        "total": 69,
+        "exported": 69,
         "missing": 0,
-        "with_deployment_settings": 65,
-        "unpublished": 65,
+        "with_deployment_settings": 69,
+        "unpublished": 69,
     }
     assert {row["slug"] for row in rows} == advertised_slugs()
 
