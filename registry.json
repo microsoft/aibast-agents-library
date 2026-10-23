@@ -15,7 +15,7 @@
     "source_verified_solutions": 69,
     "curated_copy_solutions": 69,
     "solution_onepagers": 69,
-    "solution_demo_videos": 64,
+    "solution_demo_videos": 65,
     "total_lines": 48735,
     "total_kb": 2451.9,
     "total_first_party": 22,
@@ -9794,7 +9794,9 @@
         "has_demo_video": true,
         "promise_coverage": 50,
         "is_primary": true,
-        "aliases": [],
+        "aliases": [
+          "Discount Finder Agent"
+        ],
         "package": {
           "slug": "procurement-agent",
           "quest_url": "solutions/procurement-agent/quest.html",
@@ -9857,11 +9859,17 @@
       "_added_at": "2026-08-15T22:26:47Z",
       "_solution": {
         "advertised_name": "Discount Finder Agent",
-        "sharepoint_list_name": "Discount Finder Agent",
-        "slot": 29,
-        "executive_summary": "Identifies and optimizes savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
-        "industries": [],
-        "personas": [],
+        "sharepoint_list_name": "Procurement Savings Agent",
+        "slot": 26,
+        "executive_summary": "Identify and optimize savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
+        "industries": [
+          "Cross-Industry"
+        ],
+        "personas": [
+          "Procurement Manager",
+          "Finance Director",
+          "Category Buyer"
+        ],
         "featured_tools": [
           "Dynamics 365",
           "Microsoft Teams"
@@ -9870,33 +9878,32 @@
           "Microsoft Copilot Studio"
         ],
         "capabilities": [
-          "Scan upcoming purchases and surface saving opportunities",
-          "Flag time\u2011sensitive promotions from medical supply and device vendors",
-          "Identify categories suitable for consolidated, bulk purchasing",
-          "Recommend optimal timing for major purchases and renewals"
+          "Analyze approved vendors and contract terms in seconds",
+          "Identify best-value supplier and apply volume discounts",
+          "Automatically create and route purchase orders while flagging duplicate software licenses",
+          "Track budget and ensure compliance"
         ],
         "outcomes": [
-          "Captured savings with timely renewals and vendor discounts",
-          "Streamlined decision-making with clear, ROI\u2011driven recommendations",
-          "Reduced manual contract review, freeing staff for high-value work",
-          "Improved budgeting accuracy through early visibility into savings"
+          "Reduced procurement cycle time from hours to minutes",
+          "Captured volume discounts and flagged duplicate spending",
+          "Delivered equipment on time while maintaining budget compliance",
+          "Freed team capacity for strategic vendor negotiations"
         ],
         "customer_scenario": [
-          "Discounts were buried across vendor contracts and emails",
-          "Expiring offers and pricing changes were easy to miss",
-          "Distributed purchasing prevented access to volume-tier savings",
-          "Manual contract and promotion reviews drained hours of staff time"
+          "Manual vendor selection and PO creation took hours per transaction, while approval bottlenecks delayed equipment delivery",
+          "Duplicate software licenses resulted in annual overspend",
+          "Volume discounts were often missed due to fragmented purchasing"
         ],
-        "slide_title": "Discount Finder Agent",
-        "slide_summary": "Identifies and optimizes savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
-        "scenario_name": "A regional healthcare network",
-        "challenge_intro": "A multi\u2011facility healthcare network struggled to control rising supply and equipment costs:",
-        "actions_intro": "The network used the Discount Finder Agent to:",
-        "outcomes_intro": "With the Agent, the network:",
+        "slide_title": "Procurement Agent",
+        "slide_summary": "Automate purchase order management and vendor selection to enable faster and more cost-effective purchasing.",
+        "scenario_name": "A technology company",
+        "challenge_intro": "A technology company had to equip an engineering team within 5 business days, while maintaining budget.",
+        "actions_intro": "The technology company used the Procurement Agent to:",
+        "outcomes_intro": "With the Agent, the firm:",
         "opportunity_statements": [
-          "Track discounts across vendors and promotions to reveal savings opportunities",
-          "Flag time\u2011sensitive deals and price increases to help teams capture savings",
-          "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms"
+          "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
+          "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+          "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending"
         ],
         "module_name": null,
         "module_description": null,
@@ -10034,15 +10041,13 @@
           ]
         },
         "curated_copy": true,
-        "onepager": "29. Discount Finder Agent one-pager.pptx",
-        "demo_video": null,
+        "onepager": "Procurement Agent one-pager.pptx",
+        "demo_video": "#6-Procurement Agent.mp4",
         "has_onepager": true,
-        "has_demo_video": false,
-        "promise_coverage": 70,
+        "has_demo_video": true,
+        "promise_coverage": 55,
         "is_primary": true,
-        "aliases": [
-          "Procurement Agent"
-        ],
+        "aliases": [],
         "package": {
           "slug": "procurement-support",
           "quest_url": "solutions/procurement-support/quest.html",
