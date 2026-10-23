@@ -33,6 +33,11 @@ FIRST_PARTY_FILE = Path("first_party.json")
 ONEPAGER_CONTENT_FILE = Path("state/onepager_content.json")
 SOLUTION_COPY_FILE = Path("solutions/catalog.json")
 DEMO_CASES_DIR = Path("tests/demo_cases")
+# The published procurement entries reconcile legacy SharePoint rows.
+PRESERVED_SOLUTION_METADATA = {
+    "@aibast-agents-library/procurement-agent",
+    "@aibast-agents-library/procurement-support",
+}
 REQUIRED_MANIFEST_FIELDS = [
     "schema", "name", "version", "display_name",
     "description", "author", "tags", "category"
@@ -665,6 +670,10 @@ def build_registry():
                 "is_primary": bool(sol.get("is_primary")),
                 "aliases": sol.get("_aliases", []),
             }
+            if name in PRESERVED_SOLUTION_METADATA:
+                published_solution = previous.get(name, {}).get("_solution")
+                if published_solution:
+                    manifest["_solution"] = published_solution
 
         demo = demo_cases.get(name)
         if demo:
