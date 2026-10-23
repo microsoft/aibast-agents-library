@@ -176,6 +176,8 @@ def test_installer_page_offers_office_hours_sign_up_without_publishing_the_meeti
     soup = BeautifulSoup(text, "html.parser")
     section = soup.select_one("#office-hours")
     assert section is not None
+    # The sessions cover AIBAST agents and prototyping, not only the Brainstem (the sign-up form carries the same name).
+    assert section.select_one("#office-hours-title").get_text(strip=True) == "AIBAST agents and prototyping office hours"
     link = section.select_one("a")
     assert link["href"] == (
         "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
