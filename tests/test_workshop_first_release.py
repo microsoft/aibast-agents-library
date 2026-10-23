@@ -934,6 +934,6 @@ def test_repository_requires_exactly_65_advertised_slugs(monkeypatch, tmp_path):
     assert report["totals"]["workshops"] == 50
     assert report["totals"]["failed"] == 50
     assert report["global_failures"] == [
-        "advertised workshop count 50 != 65",
-        "base course audit did not resolve exactly 65 workshops",
+        "advertised workshop count 50 != 69",
+        "base course audit did not resolve exactly 69 workshops",
     ]

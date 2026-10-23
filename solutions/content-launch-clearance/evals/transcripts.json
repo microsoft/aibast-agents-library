@@ -1,0 +1,72 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-23T01:49:58.575325+00:00",
+  "solution": "@aibast-agents-library/content-launch-clearance",
+  "onepager": "68. Content Launch Clearance Agent one-pager.pptx",
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "ContentLaunchClearanceAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/content_launch_clearance_stack/content_launch_clearance_agent.py",
+      "sha256": "04793d0bb0e7c6e8f6244bacfd81ae972391e34db6dba5d060ae027da1f36f37"
+    }
+  ],
+  "case_file": "tests/demo_cases/content-launch-clearance.json",
+  "case_file_sha256": "32daf7bb8952a590f5c8f206213ec87d65ec9cf885379094925fc3b72b2d672f",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CLC-01",
+      "persona": "Programming Manager",
+      "onepager_promise": "Assesses launch clearance by territory and platform, with the exact contract clause cited for every answer",
+      "prompt": "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+      "assistant_response": "**Yes, but not yet.** Silver Harbor is cleared for the UK on your owned streaming service, starting when the theatrical holdback ends in **24 days**. Launching before then is blocked.\n\n**Contract clause:** Clause 3.1 of the UK Rights Agreement (SH-UK-2026, status: Approved):\n> \"Exclusive UK subscription streaming rights are granted for 24 months from the end of the theatrical holdback.\"\n\nNo launch date has been set yet. I can check whether the request is ready for rights-team approval, or confirm the full distribution window.",
+      "agent_logs": "[ContentLaunchClearanceAgent] # Launch Clearance - Silver Harbor\n\n**Territory:** UK | **Platform:** Owned streaming service | **Requested launch:** Not yet confirmed\n\n**Clearance:** Cleared from the end of the theatrical holdback (in 24 days)\n\n## Contract term cited\n- **Document:** UK Rights Agreement SH-UK-2026 (contract status: Approved)\n- **Clause 3.1:** \"Exclusive UK subscription streaming rights are granted for 24 months from the end of the theatrical holdback.\"\n\n**Restriction:** UK launch must not occur before the theatrical holdback ends in 24 days.\n\n> Read-only synthetic snapshot. No title was scheduled or published, no contract was changed and no approval was submitted; every approval request is a draft for the rights team to review.",
+      "expected_agent": "ContentLaunchClearanceAgent",
+      "must_include": [
+        "Launch Clearance",
+        "UK Rights Agreement SH-UK-2026",
+        "theatrical holdback"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "CLC-02",
+      "persona": "Distribution Lead",
+      "onepager_promise": "Retrieves distribution windows and holdbacks so teams see which launch dates are open and why",
+      "prompt": "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+      "assistant_response": "**No holdback blocks the launch, but the date is too early.** Paper Lantern's Canadian subscription streaming window opens in 40 days, and clause 2.4 of the Canada Rights Agreement (PL-CA-2026) bars a Canadian launch before then. \"About a month\" is roughly 30 days, so it falls about 10 days short.\n\nThe earliest date Programming can target on the owned streaming service is in 40 days. The contract doesn't state how long the window runs.\n\nI can also check whether the request is ready for rights-team approval if you want to send it in.",
+      "agent_logs": "[ContentLaunchClearanceAgent] # Distribution Window - Paper Lantern\n\n**Territory:** Canada | **Platform:** Owned streaming service\n\n| Window | Opens | Runs | Holdback | Earliest launch |\n|--------|-------|------|----------|-----------------|\n| Subscription streaming | In 40 days | Not stated in the clause | No earlier digital launch | In 40 days |\n\n**Restriction:** Canadian launch must not occur before the window opens in 40 days.\n**Source:** Canada Rights Agreement PL-CA-2026, clause 2.4\n\n> Read-only synthetic snapshot. No title was scheduled or published, no contract was changed and no approval was submitted; every approval request is a draft for the rights team to review.",
+      "expected_agent": "ContentLaunchClearanceAgent",
+      "must_include": [
+        "Distribution Window",
+        "In 40 days",
+        "Canada Rights Agreement PL-CA-2026"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "CLC-03",
+      "persona": "Rights & Clearances Lead",
+      "onepager_promise": "Checks approval readiness before launch so no title goes live without its sign-off",
+      "prompt": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+      "assistant_response": "**No, Northern Signal isn't ready for rights-team sign-off.** The request is on hold with Helena Brooks (Rights & Clearances Lead).\n\n**Still missing:**\n- **Approved contract amendment.** The rights team needs the signed amendment before a launch date can be set.\n- **Requested launch date.**\n\n**Current status:** Clearance is unavailable for the UK on the owned streaming service under UK Rights Agreement NS-UK-2026, clause 3.1.\n\n**Next step:** The rights team obtains the signed amendment, then a launch date can be requested. I've only prepared a draft. Nothing was submitted, scheduled, or changed.",
+      "agent_logs": "[ContentLaunchClearanceAgent] # Approval Readiness - Northern Signal\n\n**Rights approval status:** On hold | **Rights reviewer:** Helena Brooks (Rights & Clearances Lead)\n**Ready for rights-team approval:** No\n\n## Still missing\n- Approved contract amendment\n- Requested launch date\n\n## Draft approval request\n- Title: Northern Signal | Territory: UK | Platform: Owned streaming service\n- Clearance: Clearance unavailable (UK Rights Agreement NS-UK-2026, clause 3.1)\n- Next step: Rights team obtains the signed amendment before any launch date is set.\n\n> Draft only: no approval was submitted. Read-only synthetic snapshot. No title was scheduled or published, no contract was changed and no approval was submitted; every approval request is a draft for the rights team to review.",
+      "expected_agent": "ContentLaunchClearanceAgent",
+      "must_include": [
+        "Approval Readiness",
+        "Approved contract amendment",
+        "Draft only"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

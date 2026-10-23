@@ -1,23 +1,23 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-10-08T14:45:39.255365+00:00",
+  "generated_at": "2026-10-23T13:09:08.690443+00:00",
   "stats": {
-    "total_agents": 86,
+    "total_agents": 90,
     "publishers": 1,
-    "categories": 12,
-    "total_stacks": 66,
+    "categories": 13,
+    "total_stacks": 70,
     "total_multi_agent_stacks": 2,
-    "total_solution_containers": 64,
-    "total_verticals": 12,
-    "advertised_solutions": 66,
-    "demo_proven_agents": 66,
-    "source_verified_solutions": 65,
-    "curated_copy_solutions": 65,
-    "solution_onepagers": 65,
-    "solution_demo_videos": 61,
-    "total_lines": 47656,
-    "total_kb": 2397.6,
+    "total_solution_containers": 68,
+    "total_verticals": 13,
+    "advertised_solutions": 70,
+    "demo_proven_agents": 70,
+    "source_verified_solutions": 69,
+    "curated_copy_solutions": 69,
+    "solution_onepagers": 69,
+    "solution_demo_videos": 64,
+    "total_lines": 48735,
+    "total_kb": 2451.9,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -59,10 +59,11 @@
       "professional_services",
       "retail_cpg",
       "slg_government",
-      "software_digital_products"
+      "software_digital_products",
+      "telecom_media_gaming"
     ],
     "tier_counts": {
-      "verified": 85,
+      "verified": 89,
       "pilot": 1
     }
   },
@@ -807,6 +808,50 @@
       "path": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack",
       "agents": [
         "@aibast-agents-library/product-feedback-synthesizer"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "campaign_delivery_optimizer",
+      "vertical": "telecom_media_gaming",
+      "display_name": "Campaign Delivery Optimizer",
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/campaign_delivery_optimizer_stack",
+      "agents": [
+        "@aibast-agents-library/campaign-delivery-optimizer"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "content_launch_clearance",
+      "vertical": "telecom_media_gaming",
+      "display_name": "Content Launch Clearance",
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/content_launch_clearance_stack",
+      "agents": [
+        "@aibast-agents-library/content-launch-clearance"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "first_time_fix",
+      "vertical": "telecom_media_gaming",
+      "display_name": "First Time Fix",
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack",
+      "agents": [
+        "@aibast-agents-library/first-time-fix"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "live_event_launch_planner",
+      "vertical": "telecom_media_gaming",
+      "display_name": "Live Event Launch Planner",
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/live_event_launch_planner_stack",
+      "agents": [
+        "@aibast-agents-library/live-event-launch-planner"
       ],
       "agent_count": 1,
       "stack_type": "solution_container"
@@ -9749,9 +9794,7 @@
         "has_demo_video": true,
         "promise_coverage": 50,
         "is_primary": true,
-        "aliases": [
-          "Discount Finder Agent"
-        ],
+        "aliases": [],
         "package": {
           "slug": "procurement-agent",
           "quest_url": "solutions/procurement-agent/quest.html",
@@ -9814,17 +9857,11 @@
       "_added_at": "2026-08-15T22:26:47Z",
       "_solution": {
         "advertised_name": "Discount Finder Agent",
-        "sharepoint_list_name": "Procurement Savings Agent",
-        "slot": 26,
-        "executive_summary": "Identify and optimize savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
-        "industries": [
-          "Cross-Industry"
-        ],
-        "personas": [
-          "Procurement Manager",
-          "Finance Director",
-          "Category Buyer"
-        ],
+        "sharepoint_list_name": "Discount Finder Agent",
+        "slot": 29,
+        "executive_summary": "Identifies and optimizes savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
+        "industries": [],
+        "personas": [],
         "featured_tools": [
           "Dynamics 365",
           "Microsoft Teams"
@@ -9833,32 +9870,33 @@
           "Microsoft Copilot Studio"
         ],
         "capabilities": [
-          "Analyze approved vendors and contract terms in seconds",
-          "Identify best-value supplier and apply volume discounts",
-          "Automatically create and route purchase orders while flagging duplicate software licenses",
-          "Track budget and ensure compliance"
+          "Scan upcoming purchases and surface saving opportunities",
+          "Flag time\u2011sensitive promotions from medical supply and device vendors",
+          "Identify categories suitable for consolidated, bulk purchasing",
+          "Recommend optimal timing for major purchases and renewals"
         ],
         "outcomes": [
-          "Reduced procurement cycle time from hours to minutes",
-          "Captured volume discounts and flagged duplicate spending",
-          "Delivered equipment on time while maintaining budget compliance",
-          "Freed team capacity for strategic vendor negotiations"
+          "Captured savings with timely renewals and vendor discounts",
+          "Streamlined decision-making with clear, ROI\u2011driven recommendations",
+          "Reduced manual contract review, freeing staff for high-value work",
+          "Improved budgeting accuracy through early visibility into savings"
         ],
         "customer_scenario": [
-          "Manual vendor selection and PO creation took hours per transaction, while approval bottlenecks delayed equipment delivery",
-          "Duplicate software licenses resulted in annual overspend",
-          "Volume discounts were often missed due to fragmented purchasing"
+          "Discounts were buried across vendor contracts and emails",
+          "Expiring offers and pricing changes were easy to miss",
+          "Distributed purchasing prevented access to volume-tier savings",
+          "Manual contract and promotion reviews drained hours of staff time"
         ],
-        "slide_title": "Procurement Agent",
-        "slide_summary": "Automate purchase order management and vendor selection to enable faster and more cost-effective purchasing.",
-        "scenario_name": "A technology company",
-        "challenge_intro": "A technology company had to equip an engineering team within 5 business days, while maintaining budget.",
-        "actions_intro": "The technology company used the Procurement Agent to:",
-        "outcomes_intro": "With the Agent, the firm:",
+        "slide_title": "Discount Finder Agent",
+        "slide_summary": "Identifies and optimizes savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
+        "scenario_name": "A regional healthcare network",
+        "challenge_intro": "A multi\u2011facility healthcare network struggled to control rising supply and equipment costs:",
+        "actions_intro": "The network used the Discount Finder Agent to:",
+        "outcomes_intro": "With the Agent, the network:",
         "opportunity_statements": [
-          "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
-          "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
-          "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending"
+          "Track discounts across vendors and promotions to reveal savings opportunities",
+          "Flag time\u2011sensitive deals and price increases to help teams capture savings",
+          "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms"
         ],
         "module_name": null,
         "module_description": null,
@@ -9996,13 +10034,15 @@
           ]
         },
         "curated_copy": true,
-        "onepager": "Procurement Agent one-pager.pptx",
-        "demo_video": "#6-Procurement Agent.mp4",
+        "onepager": "29. Discount Finder Agent one-pager.pptx",
+        "demo_video": null,
         "has_onepager": true,
-        "has_demo_video": true,
-        "promise_coverage": 55,
+        "has_demo_video": false,
+        "promise_coverage": 70,
         "is_primary": true,
-        "aliases": [],
+        "aliases": [
+          "Procurement Agent"
+        ],
         "package": {
           "slug": "procurement-support",
           "quest_url": "solutions/procurement-support/quest.html",
@@ -18141,6 +18181,959 @@
           "Give me the cross-channel feedback picture before the weekly product review.",
           "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
           "What are the strongest sentiment signals in the fictional customer snapshot?"
+        ]
+      },
+      "_catalog_kind": "solution",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data",
+        "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/campaign-delivery-optimizer",
+      "version": "1.0.0",
+      "display_name": "Campaign Delivery Optimizer Agent",
+      "description": "Help ad sales and ad operations teams keep advertiser campaigns on plan from a synthetic weekly delivery snapshot: each campaign's delivered reach against plan with the gap explained, the placements with extra reach available this week, and the drafted recommendation for the sales lead to approve. The agent never books inventory, changes a campaign or placement, or shares anything with an advertiser; the sales lead approves every recommendation through future authenticated tools.",
+      "author": "AIBAST",
+      "tags": [
+        "media",
+        "advertising",
+        "ad-sales",
+        "ad-operations",
+        "campaign-delivery"
+      ],
+      "category": "telecom_media_gaming",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/campaign_delivery_optimizer_stack/campaign_delivery_optimizer_agent.py",
+      "_size_kb": 11.4,
+      "_lines": 232,
+      "_sha256": "817dea94625d6a15dda95fc418d3041f058c3ae12de0d406af7fa50878956c67",
+      "_install_prefix": "campaign_delivery_optimizer__",
+      "_install_filename": "campaign_delivery_optimizer__817dea94625d_agent.py",
+      "_stack": "campaign_delivery_optimizer",
+      "_stack_vertical": "telecom_media_gaming",
+      "_synthetic_data": true,
+      "_added_at": "2026-10-23T00:42:34-04:00",
+      "_solution": {
+        "advertised_name": "Campaign Delivery Optimizer Agent",
+        "sharepoint_list_name": "Campaign Delivery Optimizer Agent",
+        "slot": 69,
+        "executive_summary": "Help ad sales and ad operations teams keep every advertiser campaign on plan by tracking weekly delivered reach against plan, finding placements with extra reach to close a delivery gap, and drafting the recommendation for the sales lead to approve, while nothing is booked or shared with an advertiser without a person's approval.",
+        "industries": [
+          "Media & Entertainment",
+          "Advertising"
+        ],
+        "personas": [
+          "Ad Operations Manager",
+          "Campaign Manager",
+          "Ad Sales Lead"
+        ],
+        "featured_tools": [
+          "Dynamics 365 Sales",
+          "Microsoft Excel",
+          "Microsoft Outlook"
+        ],
+        "agent_requirements": [
+          "Microsoft Copilot Studio"
+        ],
+        "capabilities": [
+          "Track each campaign's weekly reach against its plan",
+          "Flag at-risk campaigns as soon as delivery falls behind",
+          "Find placements with extra reach to close the gap",
+          "Draft recommendations for the sales lead to approve and share"
+        ],
+        "outcomes": [
+          "Caught under-delivering campaigns within the week",
+          "Recovered reach with the right placements",
+          "Helped every campaign hit its goals",
+          "Kept advertisers coming back"
+        ],
+        "customer_scenario": [
+          "Under-delivery surfaced late, after advertisers had noticed",
+          "Teams pieced together delivery data from spreadsheets by hand",
+          "Inventory that could recover reach was hard to find quickly",
+          "Make-good proposals took days to draft and agree"
+        ],
+        "slide_title": "Campaign Delivery Optimizer Agent",
+        "slide_summary": "Tracks every advertiser campaign against plan, finds extra reach where delivery falls short, and drafts the recommendation to share.",
+        "scenario_name": "A national media company",
+        "challenge_intro": "A national media company struggled to keep campaigns on plan:",
+        "actions_intro": "The media company leveraged the Campaign Delivery Optimizer Agent to:",
+        "outcomes_intro": "With the agent\u2019s help, the media company:",
+        "opportunity_statements": [
+          "Assess campaign risk against plan each week to spot under-delivery before the advertiser does",
+          "Find available reach across placements, such as a home-screen takeover, to close the gap",
+          "Draft the recommendation for approval so the sales lead can review it and share it with the advertiser"
+        ],
+        "module_name": null,
+        "module_description": null,
+        "source_verified": true,
+        "sales_headline": "Catch under-delivery within the week without handing advertiser commitments to a machine",
+        "card_pitch": "Give ad sales and ad operations teams one conversational view of each campaign's delivery against plan, the placements with extra reach, and the drafted recommendation, while every recommendation stays with the sales lead to approve.",
+        "why_try": "The demo lets an ad operations manager ask a natural question about a campaign and receive its delivery gap, the placements that can close it, and a draft recommendation, with the approval boundary visible in the response.",
+        "customer_challenge_copy": "Media ad sales teams find under-delivery late, piece delivery data together by hand, and take days to draft make-good proposals.",
+        "microsoft_ai_story": "Copilot Studio and Microsoft Teams give ad sales and ad operations a conversational assistant; Dynamics 365 Sales campaigns, Excel delivery reports, and Outlook drafts can be bound through least-privilege Power Platform connections with audit controls.",
+        "business_value": [
+          "Flags at-risk campaigns as soon as weekly delivery falls behind plan.",
+          "Recovers reach from available placements before the week closes.",
+          "Cuts make-good drafting from days to a reviewable draft."
+        ],
+        "search_terms": [
+          "Ad Operations Manager",
+          "Ad Sales Lead",
+          "Campaign Delivery Optimizer Agent",
+          "Campaign Manager",
+          "Dynamics 365 Sales",
+          "Microsoft Copilot Studio",
+          "Microsoft Excel",
+          "Microsoft Outlook",
+          "ad inventory",
+          "ad sales",
+          "approval_recommendation",
+          "available_reach",
+          "campaign delivery",
+          "campaign_risk",
+          "make-good",
+          "reach gap",
+          "under-delivery"
+        ],
+        "journey_stage": "Optimize",
+        "blueprint_role": "Separates delivery analysis and recommendation drafting from protected inventory booking, campaign changes, and advertiser communication.",
+        "sample_prompts": [
+          {
+            "label": "Ad Operations Manager: Campaign risk check",
+            "prompt": "Is the Harborlight Streaming campaign falling behind this week, and by how much?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-campaign-risk"
+          },
+          {
+            "label": "Campaign Manager: Available reach",
+            "prompt": "Where can we find extra reach this week to close the Harborlight gap?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-available-reach"
+          },
+          {
+            "label": "Ad Sales Lead: Recommendation draft for approval",
+            "prompt": "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet.",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-approval-recommendation"
+          }
+        ],
+        "architecture": {
+          "business_flow": [
+            "Ad sales leads, ad operations managers, and campaign managers",
+            "Microsoft Teams or Microsoft 365 Copilot",
+            "Campaign Delivery Optimizer Agent",
+            "Dynamics 365 Sales campaigns and Excel delivery reports",
+            "Available inventory placements",
+            "Authorized sales-lead approval workflow"
+          ],
+          "capabilities": [
+            {
+              "operation": "campaign_risk",
+              "name": "Campaign risk check",
+              "purpose": "Use when someone asks whether a campaign is behind plan this week, how big the delivery gap is, or why it is at risk."
+            },
+            {
+              "operation": "available_reach",
+              "name": "Available reach",
+              "purpose": "Use when someone asks which placements have extra reach this week to close a campaign's delivery gap."
+            },
+            {
+              "operation": "approval_recommendation",
+              "name": "Recommendation draft for approval",
+              "purpose": "Use when someone asks for the recommendation or make-good for a campaign, its approval status, or who approves it; returns a draft that is never shared."
+            }
+          ],
+          "easy_mode": [
+            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
+            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
+            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
+            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
+            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
+          ],
+          "local_install_prompt": "Install Campaign Delivery Optimizer Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/campaign-delivery-optimizer/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect customer systems or execute external actions.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Campaign Delivery Optimizer Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/campaign-delivery-optimizer/deployment.json. Upload the two synthetic knowledge files and 3 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "required_connections": [
+            "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
+            "Dynamics 365 Sales campaigns and sales leads (read-only)",
+            "Weekly delivery reports in Microsoft Excel (read-only)",
+            "Available inventory and placement records (read-only)"
+          ],
+          "manual_commands": [
+            "pac auth create",
+            "pac copilot init --name \"Campaign Delivery Optimizer Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
+            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
+            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
+          ],
+          "acceptance_checks": [
+            "Every exposed operation has one persona-language case and one SKILL.md.",
+            "Exactly two synthetic knowledge files are present.",
+            "Responses state the relevant human approval or review boundary.",
+            "No operation claims an external write, communication, commitment, or protected decision.",
+            "Publishing remains a separate user-approved step."
+          ],
+          "hard_mode": [
+            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
+            "Author global instructions that preserve the packaged synthetic-only and human-approval boundaries.",
+            "Add the two knowledge files and one skill for every exposed operation.",
+            "Create dedicated connection references only for approved systems and verify least-privilege access.",
+            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
+          ]
+        },
+        "curated_copy": true,
+        "onepager": "69. Campaign Delivery Optimizer Agent one-pager.pptx",
+        "demo_video": "69-Campaign Delivery Optimizer Agent.mp4",
+        "has_onepager": true,
+        "has_demo_video": true,
+        "promise_coverage": 100,
+        "is_primary": true,
+        "aliases": [],
+        "package": {
+          "slug": "campaign-delivery-optimizer",
+          "quest_url": "solutions/campaign-delivery-optimizer/quest.html",
+          "manual_tutorial_url": "solutions/campaign-delivery-optimizer/manual-tutorial.html",
+          "export_manifest_url": "solutions/campaign-delivery-optimizer/export-manifest.json"
+        }
+      },
+      "_demo": {
+        "slug": "campaign-delivery-optimizer",
+        "case_count": 3,
+        "personas": [
+          "Ad Operations Manager",
+          "Ad Sales Lead",
+          "Campaign Manager"
+        ],
+        "prompts": [
+          "Is the Harborlight Streaming campaign falling behind this week, and by how much?",
+          "Where can we find extra reach this week to close the Harborlight gap?",
+          "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet."
+        ]
+      },
+      "_catalog_kind": "solution",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data",
+        "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/content-launch-clearance",
+      "version": "1.0.0",
+      "display_name": "Content Launch Clearance Agent",
+      "description": "Help programming, distribution and rights teams confirm where, when and on which platform a title can launch from a synthetic rights snapshot: the launch clearance by territory and platform with the exact contract clause cited, the distribution window and any holdback that blocks an earlier date, and whether the request is ready for rights-team approval. The agent never schedules or publishes a title, changes a contract or submits an approval; the rights team approves every launch through future authenticated tools.",
+      "author": "AIBAST",
+      "tags": [
+        "media",
+        "streaming",
+        "rights-and-clearances",
+        "content-distribution",
+        "launch-planning"
+      ],
+      "category": "telecom_media_gaming",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/content_launch_clearance_stack/content_launch_clearance_agent.py",
+      "_size_kb": 13.6,
+      "_lines": 267,
+      "_sha256": "04793d0bb0e7c6e8f6244bacfd81ae972391e34db6dba5d060ae027da1f36f37",
+      "_install_prefix": "content_launch_clearance__",
+      "_install_filename": "content_launch_clearance__04793d0bb0e7_agent.py",
+      "_stack": "content_launch_clearance",
+      "_stack_vertical": "telecom_media_gaming",
+      "_synthetic_data": true,
+      "_added_at": "2026-10-23T00:42:34-04:00",
+      "_solution": {
+        "advertised_name": "Content Launch Clearance Agent",
+        "sharepoint_list_name": "Content Launch Clearance Agent",
+        "slot": 68,
+        "executive_summary": "Help programming, distribution, and rights teams confirm where, when, and on which platform a title can launch by citing the exact contract clause behind each clearance answer, showing the distribution window and any holdback that blocks an earlier date, and checking what is still missing before rights approval, while every approval stays with the rights team.",
+        "industries": [
+          "Media & Entertainment",
+          "Streaming",
+          "Broadcasting"
+        ],
+        "personas": [
+          "Programming Manager",
+          "Distribution Lead",
+          "Rights & Clearances Lead"
+        ],
+        "featured_tools": [
+          "SharePoint",
+          "Power Automate",
+          "Microsoft Teams"
+        ],
+        "agent_requirements": [
+          "Microsoft Copilot Studio"
+        ],
+        "capabilities": [
+          "Confirm where, when, and on which platforms each title can launch",
+          "Cite the exact contract clause behind every clearance answer",
+          "Flag holdbacks that block earlier launch dates",
+          "Show which approvals are still needed before launch"
+        ],
+        "outcomes": [
+          "Brought titles to audiences faster",
+          "Confirmed launch dates with the contract terms cited",
+          "Caught holdbacks before they became launch problems",
+          "Freed rights teams to focus on deals, not lookups"
+        ],
+        "customer_scenario": [
+          "Rights questions meant hours of searching through long contracts",
+          "Holdbacks and territory limits were easy to miss under deadline",
+          "Launch plans stalled while teams waited on rights answers",
+          "Approval status lived in email threads, not one shared view"
+        ],
+        "slide_title": "Content Launch Clearance Agent",
+        "slide_summary": "Confirms in seconds where, when, and on which platforms a title can launch, citing the exact contract terms behind each answer.",
+        "scenario_name": "A global media company",
+        "challenge_intro": "A global media company struggled to confirm launch rights quickly:",
+        "actions_intro": "The media company leveraged the Content Launch Clearance Agent to:",
+        "outcomes_intro": "With the agent\u2019s help, the media company:",
+        "opportunity_statements": [
+          "Assess launch clearance by territory and platform, with the exact contract clause cited for every answer",
+          "Retrieve distribution windows and holdbacks so teams see which launch dates are open and why",
+          "Check approval readiness before launch so no title goes live without its sign-off"
+        ],
+        "module_name": null,
+        "module_description": null,
+        "source_verified": true,
+        "sales_headline": "Confirm where and when every title can launch without handing rights approval to a machine",
+        "card_pitch": "Give programming, distribution, and rights teams one conversational view of each title's launch clearance, contract clause, distribution window, holdbacks, and approval readiness, while every approval stays with the rights team.",
+        "why_try": "The demo lets a programming manager ask a natural question about a title and receive a clearance answer with the contract clause cited, with the rights-approval boundary visible in the response.",
+        "customer_challenge_copy": "Media companies lose launch time searching long contracts for territory and platform rights, and holdbacks surface late while approval status sits in email threads.",
+        "microsoft_ai_story": "Copilot Studio and Microsoft Teams give programming and rights teams a conversational assistant; approved contract files in SharePoint and approval routing in Power Automate can be bound through least-privilege Power Platform connections with audit controls.",
+        "business_value": [
+          "Shortens the time to confirm a title's launch rights with the clause cited.",
+          "Prevents launches that breach a holdback or territory limit.",
+          "Gives one shared view of what each launch still needs before approval."
+        ],
+        "search_terms": [
+          "Content Launch Clearance Agent",
+          "Distribution Lead",
+          "Microsoft Copilot Studio",
+          "Microsoft SharePoint",
+          "Microsoft Teams",
+          "Power Automate",
+          "Programming Manager",
+          "Rights & Clearances Lead",
+          "approval_readiness",
+          "content rights",
+          "distribution window",
+          "distribution_window",
+          "holdback",
+          "launch clearance",
+          "launch_clearance",
+          "streaming launch",
+          "territory rights"
+        ],
+        "journey_stage": "Optimize",
+        "blueprint_role": "Separates clearance research and approval-request drafting from protected scheduling, publishing, contract, and rights-approval decisions.",
+        "sample_prompts": [
+          {
+            "label": "Programming Manager: Launch clearance",
+            "prompt": "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=content-launch-clearance-launch-clearance"
+          },
+          {
+            "label": "Distribution Lead: Distribution window and holdback",
+            "prompt": "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=content-launch-clearance-distribution-window"
+          },
+          {
+            "label": "Rights & Clearances Lead: Approval readiness draft",
+            "prompt": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=content-launch-clearance-approval-readiness"
+          }
+        ],
+        "architecture": {
+          "business_flow": [
+            "Programming managers, distribution leads, and rights teams",
+            "Microsoft Teams or Microsoft 365 Copilot",
+            "Content Launch Clearance Agent",
+            "Approved contract files in Microsoft SharePoint",
+            "Distribution windows and rights approval status",
+            "Authorized rights-team approval workflow"
+          ],
+          "capabilities": [
+            {
+              "operation": "launch_clearance",
+              "name": "Launch clearance",
+              "purpose": "Use when someone asks whether a title can launch in a territory on the owned streaming service, or which contract clause supports the answer."
+            },
+            {
+              "operation": "distribution_window",
+              "name": "Distribution window and holdback",
+              "purpose": "Use when someone asks when a title's rights window opens, which holdback applies, or whether a requested launch date is open."
+            },
+            {
+              "operation": "approval_readiness",
+              "name": "Approval readiness draft",
+              "purpose": "Use when someone asks whether a launch request is ready for rights-team approval or what is still missing; returns an approval request draft that is never submitted."
+            }
+          ],
+          "easy_mode": [
+            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
+            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
+            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
+            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
+            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
+          ],
+          "local_install_prompt": "Install Content Launch Clearance Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/content-launch-clearance/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect customer systems or execute external actions.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Content Launch Clearance Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/content-launch-clearance/deployment.json. Upload the two synthetic knowledge files and 3 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "required_connections": [
+            "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
+            "Approved rights contracts in Microsoft SharePoint (read-only)",
+            "Distribution windows and holdback records (read-only)",
+            "Rights approval status in Power Automate approvals (read-only)"
+          ],
+          "manual_commands": [
+            "pac auth create",
+            "pac copilot init --name \"Content Launch Clearance Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
+            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
+            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
+          ],
+          "acceptance_checks": [
+            "Every exposed operation has one persona-language case and one SKILL.md.",
+            "Exactly two synthetic knowledge files are present.",
+            "Responses state the relevant human approval or review boundary.",
+            "No operation claims an external write, communication, commitment, or protected decision.",
+            "Publishing remains a separate user-approved step."
+          ],
+          "hard_mode": [
+            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
+            "Author global instructions that preserve the packaged synthetic-only and human-approval boundaries.",
+            "Add the two knowledge files and one skill for every exposed operation.",
+            "Create dedicated connection references only for approved systems and verify least-privilege access.",
+            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
+          ]
+        },
+        "curated_copy": true,
+        "onepager": "68. Content Launch Clearance Agent one-pager.pptx",
+        "demo_video": "68-Content Launch Clearance Agent.mp4",
+        "has_onepager": true,
+        "has_demo_video": true,
+        "promise_coverage": 100,
+        "is_primary": true,
+        "aliases": [],
+        "package": {
+          "slug": "content-launch-clearance",
+          "quest_url": "solutions/content-launch-clearance/quest.html",
+          "manual_tutorial_url": "solutions/content-launch-clearance/manual-tutorial.html",
+          "export_manifest_url": "solutions/content-launch-clearance/export-manifest.json"
+        }
+      },
+      "_demo": {
+        "slug": "content-launch-clearance",
+        "case_count": 3,
+        "personas": [
+          "Distribution Lead",
+          "Programming Manager",
+          "Rights & Clearances Lead"
+        ],
+        "prompts": [
+          "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+          "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+          "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?"
+        ]
+      },
+      "_catalog_kind": "solution",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data",
+        "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/first-time-fix",
+      "version": "1.0.0",
+      "display_name": "First-Time Fix Agent",
+      "description": "Help contact center and field service agents resolve a customer's connection issue on the first call from a synthetic broadband snapshot: the service status with the guided connection fix, local network work that could be affecting the service, previous visit outcomes with technician notes, and the recommended technician with the job preparation when a visit is needed. The agent never books, changes or cancels a visit, changes a service, contacts a customer or dispatches a technician; a human agent confirms every booking through future authenticated tools.",
+      "author": "AIBAST",
+      "tags": [
+        "telecommunications",
+        "broadband",
+        "contact-center",
+        "field-service",
+        "first-call-resolution"
+      ],
+      "category": "telecom_media_gaming",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+      "_size_kb": 14.9,
+      "_lines": 303,
+      "_sha256": "35c333da8a89eb74aaaebedee0d92840329b02cb0b7e6d31cd29832f26ee86c4",
+      "_install_prefix": "first_time_fix__",
+      "_install_filename": "first_time_fix__35c333da8a89_agent.py",
+      "_stack": "first_time_fix",
+      "_stack_vertical": "telecom_media_gaming",
+      "_synthetic_data": true,
+      "_added_at": "2026-10-22T21:33:51-04:00",
+      "_solution": {
+        "advertised_name": "First-Time Fix Agent",
+        "sharepoint_list_name": "First-Time Fix Agent",
+        "slot": 67,
+        "executive_summary": "Help contact center and field service teams resolve connection issues on the first call by guiding the right fix for each customer's service, checking local network work and past visits before a technician is sent, and preparing the technician's job when a visit is needed, while every booking stays with a person to confirm.",
+        "industries": [
+          "Telecommunications",
+          "Broadband & Cable"
+        ],
+        "personas": [
+          "Contact Center Agent",
+          "Field Service Dispatcher"
+        ],
+        "featured_tools": [
+          "Dynamics 365 Customer Service",
+          "Dynamics 365 Field Service",
+          "SharePoint"
+        ],
+        "agent_requirements": [
+          "Microsoft Copilot Studio"
+        ],
+        "capabilities": [
+          "Guide agents through the right fix for each customer's service",
+          "Check local work and past visits before sending a technician",
+          "Prepare each job with the fault history and the parts to bring",
+          "Keep a person in control of every technician booking"
+        ],
+        "outcomes": [
+          "Solved more connection issues on the first call",
+          "Avoided unneeded truck rolls during area outages",
+          "Sent technicians who arrived prepared for the fault",
+          "Put technicians where they add the most value"
+        ],
+        "customer_scenario": [
+          "Agents lacked one view of service, local work, and visit history",
+          "Technicians were sent for issues a guided fix or an outage explained",
+          "Technicians arrived without knowing what had already been tried",
+          "Repeat visits raised costs and frustrated customers"
+        ],
+        "slide_title": "First-Time Fix Agent",
+        "slide_summary": "Guides connection fixes on the first call and prepares the right technician's job, for a person to confirm, when a visit is needed.",
+        "scenario_name": "A regional broadband provider",
+        "challenge_intro": "A regional broadband provider struggled to resolve connection issues:",
+        "actions_intro": "The broadband provider leveraged the First-Time Fix Agent to:",
+        "outcomes_intro": "With the agent\u2019s help, the broadband provider:",
+        "opportunity_statements": [
+          "Guide the connection fix from the customer's service, local work, and past visits to solve more on the first call",
+          "Check local work and past visits before any visit to avoid truck rolls for area outages and repeat faults",
+          "Prepare the right technician's job with the fault history and parts to bring, ready for a person to confirm"
+        ],
+        "module_name": null,
+        "module_description": null,
+        "source_verified": true,
+        "sales_headline": "Solve more connection issues on the first call without handing bookings to a machine",
+        "card_pitch": "Give contact center and field service teams one conversational view of the customer's service, the guided fix, local network work, past visits, and the right technician's job, while every booking stays with a person to confirm.",
+        "why_try": "The demo lets a contact center agent ask a natural question mid-call and receive a source-backed guided fix, with the booking boundary visible in the response.",
+        "customer_challenge_copy": "Contact centers send technicians for issues a guided fix or a local outage already explains, and technicians arrive without the history of what was tried.",
+        "microsoft_ai_story": "Copilot Studio and Microsoft Teams give agents a conversational assistant during the call; Dynamics 365 Customer Service, Dynamics 365 Field Service, and SharePoint can be bound through least-privilege Power Platform connections with audit controls.",
+        "business_value": [
+          "Raises first-call resolution with a guided fix for each service.",
+          "Avoids truck rolls that local network work or a known fault explains.",
+          "Sends technicians prepared with the fault history and parts."
+        ],
+        "search_terms": [
+          "Contact Center Agent",
+          "Dynamics 365 Customer Service",
+          "Dynamics 365 Field Service",
+          "Field Service Dispatcher",
+          "First-Time Fix Agent",
+          "Microsoft Copilot Studio",
+          "Microsoft SharePoint",
+          "broadband",
+          "connection issue",
+          "first-call resolution",
+          "guided_fix",
+          "local_work_check",
+          "network outage",
+          "technician booking",
+          "technician_booking",
+          "truck roll",
+          "visit_history"
+        ],
+        "journey_stage": "Optimize",
+        "blueprint_role": "Separates evidence gathering and job preparation from protected booking, dispatch, and customer-contact decisions.",
+        "sample_prompts": [
+          {
+            "label": "Contact Center Agent: Guided connection fix",
+            "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-guided-fix"
+          },
+          {
+            "label": "Contact Center Agent: Local work check",
+            "prompt": "Is there any network work near Meadow Lane that could explain the outage?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-local-work-check"
+          },
+          {
+            "label": "Field Service Dispatcher: Previous visit review",
+            "prompt": "What did the last technician find at Alder Grove Service?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-visit-history"
+          },
+          {
+            "label": "Field Service Dispatcher: Technician booking draft",
+            "prompt": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-technician-booking"
+          }
+        ],
+        "architecture": {
+          "business_flow": [
+            "Contact center agents and field service dispatchers",
+            "Microsoft Teams or Microsoft 365 Copilot",
+            "First-Time Fix Agent",
+            "Dynamics 365 Customer Service and service status",
+            "Network work and Dynamics 365 Field Service visit history",
+            "Authorized agent booking workflow"
+          ],
+          "capabilities": [
+            {
+              "operation": "guided_fix",
+              "name": "Guided connection fix",
+              "purpose": "Use when a contact center agent asks which fix to walk the customer through during the call, or what the service status is."
+            },
+            {
+              "operation": "local_work_check",
+              "name": "Local work check",
+              "purpose": "Use when the agent asks whether planned or emergency network work near the service could explain the issue."
+            },
+            {
+              "operation": "visit_history",
+              "name": "Previous visit review",
+              "purpose": "Use when someone asks what earlier technician visits found or what the technician notes say."
+            },
+            {
+              "operation": "technician_booking",
+              "name": "Technician booking draft",
+              "purpose": "Use when someone asks which technician to send and what job preparation is needed; returns a booking draft that is never booked."
+            }
+          ],
+          "easy_mode": [
+            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
+            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
+            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
+            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
+            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
+          ],
+          "local_install_prompt": "Install First-Time Fix Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/first-time-fix/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect customer systems or execute external actions.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for First-Time Fix Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/first-time-fix/deployment.json. Upload the two synthetic knowledge files and 4 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "required_connections": [
+            "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
+            "Dynamics 365 Customer Service cases and service status (read-only)",
+            "Network maintenance and outage records (read-only)",
+            "Dynamics 365 Field Service visits and technician schedules (read-only)"
+          ],
+          "manual_commands": [
+            "pac auth create",
+            "pac copilot init --name \"First-Time Fix Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
+            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
+            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
+          ],
+          "acceptance_checks": [
+            "Every exposed operation has one persona-language case and one SKILL.md.",
+            "Exactly two synthetic knowledge files are present.",
+            "Responses state the relevant human approval or review boundary.",
+            "No operation claims an external write, communication, commitment, or protected decision.",
+            "Publishing remains a separate user-approved step."
+          ],
+          "hard_mode": [
+            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
+            "Author global instructions that preserve the packaged synthetic-only and human-approval boundaries.",
+            "Add the two knowledge files and one skill for every exposed operation.",
+            "Create dedicated connection references only for approved systems and verify least-privilege access.",
+            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
+          ]
+        },
+        "curated_copy": true,
+        "onepager": "67. First-Time Fix Agent one-pager.pptx",
+        "demo_video": "67-First-Time Fix Agent.mp4",
+        "has_onepager": true,
+        "has_demo_video": true,
+        "promise_coverage": 100,
+        "is_primary": true,
+        "aliases": [],
+        "package": {
+          "slug": "first-time-fix",
+          "quest_url": "solutions/first-time-fix/quest.html",
+          "manual_tutorial_url": "solutions/first-time-fix/manual-tutorial.html",
+          "export_manifest_url": "solutions/first-time-fix/export-manifest.json"
+        }
+      },
+      "_demo": {
+        "slug": "first-time-fix",
+        "case_count": 4,
+        "personas": [
+          "Contact Center Agent",
+          "Field Service Dispatcher"
+        ],
+        "prompts": [
+          "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+          "Is there any network work near Meadow Lane that could explain the outage?",
+          "What did the last technician find at Alder Grove Service?"
+        ]
+      },
+      "_catalog_kind": "solution",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data",
+        "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/live-event-launch-planner",
+      "version": "1.0.0",
+      "display_name": "Live Event Launch Planner Agent",
+      "description": "Help live operations, community and marketing teams launch a seasonal in-game event from one plan built on a synthetic snapshot: the launch timeline with every milestone to launch day, the readiness checklist across teams with owners and status, the player announcement with its approval and publishing permission, and a summary of late, missing and blocked work. The agent never publishes an announcement, changes a task, sends a reminder or changes the event; the event owners approve every step through future authenticated tools.",
+      "author": "AIBAST",
+      "tags": [
+        "gaming",
+        "live-operations",
+        "community",
+        "event-launch",
+        "readiness"
+      ],
+      "category": "telecom_media_gaming",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/live_event_launch_planner_stack/live_event_launch_planner_agent.py",
+      "_size_kb": 14.4,
+      "_lines": 277,
+      "_sha256": "9503f99b9605e77a3b07af943712d434c67b085b0e48d858c2ff7b5424c2a50b",
+      "_install_prefix": "live_event_launch_planner__",
+      "_install_filename": "live_event_launch_planner__9503f99b9605_agent.py",
+      "_stack": "live_event_launch_planner",
+      "_stack_vertical": "telecom_media_gaming",
+      "_synthetic_data": true,
+      "_added_at": "2026-10-23T00:42:34-04:00",
+      "_solution": {
+        "advertised_name": "Live Event Launch Planner Agent",
+        "sharepoint_list_name": "Live Event Launch Planner Agent",
+        "slot": 70,
+        "executive_summary": "Help live operations, community, and marketing teams launch seasonal in-game events from one plan by building the timeline from communications approval to launch day, compiling readiness across teams with owners and status, and checking player announcements before publishing, while nothing is published or sent without a person's approval.",
+        "industries": [
+          "Gaming",
+          "Interactive Media"
+        ],
+        "personas": [
+          "Live Operations Manager",
+          "Community Manager",
+          "Marketing Lead"
+        ],
+        "featured_tools": [
+          "Microsoft Planner",
+          "Microsoft Teams",
+          "SharePoint, Outlook"
+        ],
+        "agent_requirements": [
+          "Microsoft Copilot Studio"
+        ],
+        "capabilities": [
+          "Build each event's timeline, from approvals to launch day",
+          "Compile one readiness checklist across live ops and marketing",
+          "Draft player announcements and check publishing permission",
+          "Summarize launch status for every team in one place"
+        ],
+        "outcomes": [
+          "Delivered smoother seasonal event launches",
+          "Drew bigger player turnout on launch day",
+          "Kept teams aligned without extra status meetings",
+          "Published announcements only once approved"
+        ],
+        "customer_scenario": [
+          "Launch plans lived in scattered documents and chat threads",
+          "Teams relied on status meetings to see what was ready",
+          "Late approvals put announcement dates at risk",
+          "Players heard about events late or in mixed messages"
+        ],
+        "slide_title": "Live Event Launch Planner Agent",
+        "slide_summary": "Builds the launch plan for a seasonal in-game event: a timeline, readiness checks across teams, and draft player announcements.",
+        "scenario_name": "A global game studio",
+        "challenge_intro": "A global game studio struggled to coordinate seasonal event launches:",
+        "actions_intro": "The game studio leveraged the Live Event Launch Planner Agent to:",
+        "outcomes_intro": "With the agent\u2019s help, the game studio:",
+        "opportunity_statements": [
+          "Build the launch timeline with every milestone, from communications approval to launch day",
+          "Compile readiness across teams so live ops, community, and marketing see what is still open",
+          "Check and draft player announcements and hold them until publishing is approved"
+        ],
+        "module_name": null,
+        "module_description": null,
+        "source_verified": true,
+        "sales_headline": "Launch every seasonal event from one plan without handing publishing to a machine",
+        "card_pitch": "Give live operations, community, and marketing teams one conversational view of each seasonal event's timeline, cross-team readiness, player announcement, and open work, while every announcement and reminder stays with a person to approve.",
+        "why_try": "The demo lets a live operations manager ask a natural question about an upcoming event and receive its timeline, open tasks with owners, and the held player announcement, with the publishing boundary visible in the response.",
+        "customer_challenge_copy": "Game studios coordinate seasonal event launches across scattered documents and status meetings, and late approvals put player announcements at risk.",
+        "microsoft_ai_story": "Copilot Studio and Microsoft Teams give live operations, community, and marketing teams a conversational assistant; launch tasks, Teams updates, approved SharePoint launch materials, and Outlook drafts can be bound through least-privilege Power Platform connections with audit controls.",
+        "business_value": [
+          "Builds each event's timeline from approvals to launch day in one place.",
+          "Surfaces late, missing, and blocked work with its owner before launch day.",
+          "Holds player announcements until publishing is approved."
+        ],
+        "search_terms": [
+          "Community Manager",
+          "Live Event Launch Planner Agent",
+          "Live Operations Manager",
+          "Marketing Lead",
+          "Microsoft Copilot Studio",
+          "Microsoft Outlook",
+          "Microsoft Planner",
+          "Microsoft SharePoint",
+          "Microsoft Teams",
+          "announcement_check",
+          "game launch",
+          "launch readiness",
+          "launch_summary",
+          "launch_timeline",
+          "live operations",
+          "live service",
+          "player announcement",
+          "readiness_checklist",
+          "seasonal event"
+        ],
+        "journey_stage": "Optimize",
+        "blueprint_role": "Separates launch planning, readiness tracking, and announcement drafting from protected publishing, reminder, and event-configuration decisions.",
+        "sample_prompts": [
+          {
+            "label": "Live Operations Manager: Launch timeline",
+            "prompt": "Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-timeline"
+          },
+          {
+            "label": "Live Operations Manager: Cross-team readiness checklist",
+            "prompt": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-readiness-checklist"
+          },
+          {
+            "label": "Community Manager: Player announcement check",
+            "prompt": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-announcement-check"
+          },
+          {
+            "label": "Marketing Lead: Launch status summary",
+            "prompt": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-summary"
+          }
+        ],
+        "architecture": {
+          "business_flow": [
+            "Live operations managers, community managers, and marketing leads",
+            "Microsoft Teams or Microsoft 365 Copilot",
+            "Live Event Launch Planner Agent",
+            "Launch tasks and Microsoft Teams updates",
+            "Approved launch materials in Microsoft SharePoint",
+            "Authorized publishing approval workflow"
+          ],
+          "capabilities": [
+            {
+              "operation": "launch_timeline",
+              "name": "Launch timeline",
+              "purpose": "Use when someone asks for an event's milestones from communications approval to launch day, or what comes first."
+            },
+            {
+              "operation": "readiness_checklist",
+              "name": "Cross-team readiness checklist",
+              "purpose": "Use when someone asks which launch tasks each team owns, who owns them, and where each one stands."
+            },
+            {
+              "operation": "announcement_check",
+              "name": "Player announcement check",
+              "purpose": "Use when someone asks whether the player announcement is approved and may be published, or wants to see the copy; returns a draft that is never published."
+            },
+            {
+              "operation": "launch_summary",
+              "name": "Launch status summary",
+              "purpose": "Use when someone asks what is late, missing, or blocked and who needs a reminder; returns reminder drafts that are never sent."
+            }
+          ],
+          "easy_mode": [
+            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
+            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
+            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
+            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
+            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
+          ],
+          "local_install_prompt": "Install Live Event Launch Planner Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/live-event-launch-planner/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect customer systems or execute external actions.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Live Event Launch Planner Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/live-event-launch-planner/deployment.json. Upload the two synthetic knowledge files and 4 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "required_connections": [
+            "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
+            "Launch plan tasks and owners (read-only)",
+            "Microsoft Teams launch channel updates (read-only)",
+            "Approved launch materials and announcement briefs in Microsoft SharePoint (read-only)"
+          ],
+          "manual_commands": [
+            "pac auth create",
+            "pac copilot init --name \"Live Event Launch Planner Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
+            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
+            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
+          ],
+          "acceptance_checks": [
+            "Every exposed operation has one persona-language case and one SKILL.md.",
+            "Exactly two synthetic knowledge files are present.",
+            "Responses state the relevant human approval or review boundary.",
+            "No operation claims an external write, communication, commitment, or protected decision.",
+            "Publishing remains a separate user-approved step."
+          ],
+          "hard_mode": [
+            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
+            "Author global instructions that preserve the packaged synthetic-only and human-approval boundaries.",
+            "Add the two knowledge files and one skill for every exposed operation.",
+            "Create dedicated connection references only for approved systems and verify least-privilege access.",
+            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
+          ]
+        },
+        "curated_copy": true,
+        "onepager": "70. Live Event Launch Planner Agent one-pager.pptx",
+        "demo_video": "70-Live Event Launch Planner Agent.mp4",
+        "has_onepager": true,
+        "has_demo_video": true,
+        "promise_coverage": 100,
+        "is_primary": true,
+        "aliases": [],
+        "package": {
+          "slug": "live-event-launch-planner",
+          "quest_url": "solutions/live-event-launch-planner/quest.html",
+          "manual_tutorial_url": "solutions/live-event-launch-planner/manual-tutorial.html",
+          "export_manifest_url": "solutions/live-event-launch-planner/export-manifest.json"
+        }
+      },
+      "_demo": {
+        "slug": "live-event-launch-planner",
+        "case_count": 4,
+        "personas": [
+          "Community Manager",
+          "Live Operations Manager",
+          "Marketing Lead"
+        ],
+        "prompts": [
+          "Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+          "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+          "Can we post the Frostveil player announcement yet? Show me the copy but hold it."
         ]
       },
       "_catalog_kind": "solution",

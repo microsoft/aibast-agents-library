@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-solution-exports/1.0",
-  "generated_at": "2026-10-08T13:17:10.449819+00:00",
+  "generated_at": "2026-10-23T04:39:39.741758+00:00",
   "environment": {
     "name": "kodyv8",
     "url": "https://org7dfbd855.crm.dynamics.com/"
@@ -8,11 +8,11 @@
   "managed": false,
   "published": false,
   "summary": {
-    "total": 65,
-    "exported": 65,
+    "total": 69,
+    "exported": 69,
     "missing": 0,
-    "with_deployment_settings": 65,
-    "unpublished": 65
+    "with_deployment_settings": 69,
+    "unpublished": 69
   },
   "solutions": [
     {
@@ -208,6 +208,30 @@
       "settings_error": null
     },
     {
+      "slug": "campaign-delivery-optimizer",
+      "solution_unique_name": "aibast_CampaignDeliveryManualBuild",
+      "status": "exported",
+      "zip": "solutions/campaign-delivery-optimizer/exports/campaign-delivery-optimizer-copilot-studio-solution.zip",
+      "deployment_settings": "solutions/campaign-delivery-optimizer/exports/campaign-delivery-optimizer-deployment-settings.json",
+      "metadata": "solutions/campaign-delivery-optimizer/exports/campaign-delivery-optimizer-solution-export.json",
+      "published": false,
+      "managed": false,
+      "error": null,
+      "sha256": "0d26c56c3f0d15211e7c471bbc09acb76d6c4885b3570179dcb827b747efd66f",
+      "bytes": 39168,
+      "agent_display_name": "Campaign Delivery Manual",
+      "agent_id": null,
+      "bot_schema_name": "cr2bf_campaigndeliverymanual_pRUdMb",
+      "source_environment": "kodyv8",
+      "exported_at": "2026-10-23T03:18:52.355543+00:00",
+      "import_caveats": [
+        "Import as an unmanaged solution for manual review.",
+        "Map connection references and environment variables before enabling integrations.",
+        "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+      ],
+      "settings_error": null
+    },
+    {
       "slug": "care-gap-closure",
       "solution_unique_name": "aibast_CareGapClosurePilot",
       "status": "exported",
@@ -320,6 +344,30 @@
       "bot_schema_name": "aibast_ClinicalNotesSummarizerPilo",
       "source_environment": "kodyv8",
       "exported_at": "2026-10-08T08:03:44.586032+00:00",
+      "import_caveats": [
+        "Import as an unmanaged solution for manual review.",
+        "Map connection references and environment variables before enabling integrations.",
+        "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+      ],
+      "settings_error": null
+    },
+    {
+      "slug": "content-launch-clearance",
+      "solution_unique_name": "aibast_ContentLaunchManualBuild",
+      "status": "exported",
+      "zip": "solutions/content-launch-clearance/exports/content-launch-clearance-copilot-studio-solution.zip",
+      "deployment_settings": "solutions/content-launch-clearance/exports/content-launch-clearance-deployment-settings.json",
+      "metadata": "solutions/content-launch-clearance/exports/content-launch-clearance-solution-export.json",
+      "published": false,
+      "managed": false,
+      "error": null,
+      "sha256": "a20dc141515cd7e96904235ede93d623f1381d3c5ff9c3f8e3f8336606f8ac98",
+      "bytes": 39617,
+      "agent_display_name": "Content Launch Manual",
+      "agent_id": null,
+      "bot_schema_name": "cr2bf_contentlaunchmanual_oA9kOZ",
+      "source_environment": "kodyv8",
+      "exported_at": "2026-10-23T02:51:23.182473+00:00",
       "import_caveats": [
         "Import as an unmanaged solution for manual review.",
         "Map connection references and environment variables before enabling integrations.",
@@ -592,6 +640,30 @@
       "settings_error": null
     },
     {
+      "slug": "first-time-fix",
+      "solution_unique_name": "aibast_FirstTimeFixManualBuild",
+      "status": "exported",
+      "zip": "solutions/first-time-fix/exports/first-time-fix-copilot-studio-solution.zip",
+      "deployment_settings": "solutions/first-time-fix/exports/first-time-fix-deployment-settings.json",
+      "metadata": "solutions/first-time-fix/exports/first-time-fix-solution-export.json",
+      "published": false,
+      "managed": false,
+      "error": null,
+      "sha256": "312e7ad93b943401ecc5f2059fd4854392563d5a42224dfb0fc275cfcc7863c2",
+      "bytes": 41304,
+      "agent_display_name": "First-Time Fix Manual",
+      "agent_id": null,
+      "bot_schema_name": "cr2bf_firsttimefixmanual_rxJZ3w",
+      "source_environment": "kodyv8",
+      "exported_at": "2026-10-23T03:38:03.293586+00:00",
+      "import_caveats": [
+        "Import as an unmanaged solution for manual review.",
+        "Map connection references and environment variables before enabling integrations.",
+        "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+      ],
+      "settings_error": null
+    },
+    {
       "slug": "fraud-detection-alert",
       "solution_unique_name": "aibast_FraudDetectionandAlertPilo",
       "status": "exported",
@@ -728,6 +800,30 @@
       "bot_schema_name": "aibast_LicenseRenewalandExpansion",
       "source_environment": "kodyv8",
       "exported_at": "2026-10-08T08:04:53.828282+00:00",
+      "import_caveats": [
+        "Import as an unmanaged solution for manual review.",
+        "Map connection references and environment variables before enabling integrations.",
+        "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+      ],
+      "settings_error": null
+    },
+    {
+      "slug": "live-event-launch-planner",
+      "solution_unique_name": "aibast_LiveEventLaunchManualBuild",
+      "status": "exported",
+      "zip": "solutions/live-event-launch-planner/exports/live-event-launch-planner-copilot-studio-solution.zip",
+      "deployment_settings": "solutions/live-event-launch-planner/exports/live-event-launch-planner-deployment-settings.json",
+      "metadata": "solutions/live-event-launch-planner/exports/live-event-launch-planner-solution-export.json",
+      "published": false,
+      "managed": false,
+      "error": null,
+      "sha256": "a6570ca79ba113a68f27e6570d19c40102d10636737e1c3c0942be8569adbff8",
+      "bytes": 40937,
+      "agent_display_name": "Live Event Launch Manual",
+      "agent_id": null,
+      "bot_schema_name": "cr2bf_liveeventlaunchmanual_OJhHed",
+      "source_environment": "kodyv8",
+      "exported_at": "2026-10-23T04:39:39.741758+00:00",
       "import_caveats": [
         "Import as an unmanaged solution for manual review.",
         "Map connection references and environment variables before enabling integrations.",

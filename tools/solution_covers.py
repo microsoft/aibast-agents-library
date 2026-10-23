@@ -31,6 +31,7 @@ VERTICAL_GLYPH = {
     "retail_cpg": "▦",
     "slg_government": "⌂",
     "software_digital_products": "⌘",
+    "telecom_media_gaming": "▷",
     "customer_service": "☎",
 }
 
