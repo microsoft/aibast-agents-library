@@ -9,28 +9,28 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-10-23T14:04:04Z",
+      "as_of": "2026-10-23T15:41:38Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-10-23T14:04:04Z",
+      "as_of": "2026-10-23T15:41:38Z",
       "status": "partial"
     },
     "agent_upvotes": {
-      "as_of": "2026-10-23T14:04:04Z",
+      "as_of": "2026-10-23T15:41:38Z",
       "status": "partial"
     },
     "file_downloads": {
-      "as_of": "2026-10-23T14:04:04Z",
+      "as_of": "2026-10-23T15:41:38Z",
       "status": "complete"
     },
     "traffic": {
-      "as_of": "2026-10-23T14:04:04Z",
+      "as_of": "2026-10-23T15:41:38Z",
       "reason": null,
       "status": "live"
     },
     "workshops": {
-      "as_of": "2026-10-23T14:04:04Z",
+      "as_of": "2026-10-23T15:41:38Z",
       "status": "partial"
     }
   },
@@ -39,7 +39,7 @@
       "@aibast-agents-library/account-intelligence": {
         "acquisitions": 0,
         "display_name": "Account Intelligence Agent",
-        "downloads": 11,
+        "downloads": 12,
         "upvotes": 1
       },
       "@aibast-agents-library/account-intelligence-orchestrator": {
@@ -303,7 +303,7 @@
       "@aibast-agents-library/inventory-visibility": {
         "acquisitions": 0,
         "display_name": "Inventory Visibility Agent",
-        "downloads": 5,
+        "downloads": 6,
         "upvotes": 0
       },
       "@aibast-agents-library/license-renewal-expansion": {
@@ -594,7 +594,7 @@
         "source": "downloads",
         "status": "available",
         "unit": "count",
-        "value": 20228
+        "value": 20230
       },
       {
         "daily_fields": [
@@ -673,7 +673,7 @@
         "source": "releases",
         "status": "available",
         "unit": "count",
-        "value": 613
+        "value": 615
       },
       {
         "id": "agent_file_downloads",
@@ -687,7 +687,7 @@
         "source": "file_metrics",
         "status": "available",
         "unit": "count",
-        "value": 413
+        "value": 415
       },
       {
         "id": "skill_downloads",
@@ -2044,7 +2044,7 @@
       }
     }
   },
-  "generated_at": "2026-10-23T14:04:04Z",
+  "generated_at": "2026-10-23T15:41:38Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -2133,10 +2133,10 @@
         "agent_file_downloads": {
           "baseline": 143,
           "calculation": "snapshot_change",
-          "change": 270,
-          "change_percent": 188.8,
+          "change": 272,
+          "change_percent": 190.2,
           "status": "available",
-          "value": 413
+          "value": 415
         },
         "agent_upvotes": {
           "baseline": null,
@@ -2229,10 +2229,10 @@
         "release_downloads": {
           "baseline": 206,
           "calculation": "snapshot_change",
-          "change": 407,
-          "change_percent": 197.6,
+          "change": 409,
+          "change_percent": 198.5,
           "status": "available",
-          "value": 613
+          "value": 615
         },
         "skill_downloads": {
           "baseline": 0,
@@ -2386,15 +2386,15 @@
           },
           {
             "change": 5,
-            "current": 7,
-            "id": "@aibast-agents-library/care-gap-closure",
-            "label": "Care Gap Closure Agent"
+            "current": 12,
+            "id": "@aibast-agents-library/account-intelligence",
+            "label": "Account Intelligence Agent"
           },
           {
             "change": 5,
-            "current": 6,
-            "id": "@aibast-agents-library/fs-customer-onboarding",
-            "label": "Customer Onboarding Agent"
+            "current": 7,
+            "id": "@aibast-agents-library/care-gap-closure",
+            "label": "Care Gap Closure Agent"
           }
         ],
         "agent_upvotes": [],
@@ -2515,10 +2515,10 @@
         "agent_file_downloads": {
           "baseline": 252,
           "calculation": "snapshot_change",
-          "change": 161,
-          "change_percent": 63.9,
+          "change": 163,
+          "change_percent": 64.7,
           "status": "available",
-          "value": 413
+          "value": 415
         },
         "agent_upvotes": {
           "baseline": null,
@@ -2611,10 +2611,10 @@
         "release_downloads": {
           "baseline": 421,
           "calculation": "snapshot_change",
-          "change": 192,
-          "change_percent": 45.6,
+          "change": 194,
+          "change_percent": 46.1,
           "status": "available",
-          "value": 613
+          "value": 615
         },
         "skill_downloads": {
           "baseline": 99,
@@ -2756,6 +2756,12 @@
           },
           {
             "change": 3,
+            "current": 12,
+            "id": "@aibast-agents-library/account-intelligence",
+            "label": "Account Intelligence Agent"
+          },
+          {
+            "change": 3,
             "current": 10,
             "id": "@aibast-agents-library/ask-hr",
             "label": "Ask HR Agent"
@@ -2771,12 +2777,6 @@
             "current": 3,
             "id": "@aibast-agents-library/benefits-enrollment-assistant",
             "label": "Benefits Enrollment Agent"
-          },
-          {
-            "change": 3,
-            "current": 6,
-            "id": "@aibast-agents-library/cart-abandonment-recovery",
-            "label": "Cart Abandonment Recovery Agent"
           }
         ],
         "agent_upvotes": [],
@@ -2796,7 +2796,7 @@
     }
   },
   "repo": {
-    "as_of": "2026-10-23T14:04:04Z",
+    "as_of": "2026-10-23T15:41:38Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
@@ -2805,9 +2805,9 @@
     "name": "aibast-agents-library",
     "open_issues": 16,
     "owner": "microsoft",
-    "pushed_at": "2026-10-23T14:02:18Z",
+    "pushed_at": "2026-10-23T15:39:59Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
-    "size_kb": 5416294,
+    "size_kb": 5453344,
     "stars": 8,
     "url": "https://github.com/microsoft/aibast-agents-library",
     "watchers": 0
