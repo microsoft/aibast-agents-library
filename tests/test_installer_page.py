@@ -169,3 +169,18 @@ console.log(JSON.stringify(buildInstallerDownloads(commands)));
     assert "irm https://example-fork.github.io/aibast-agents-library/install.ps1 | iex" in downloads["Windows"]["href"]
     for platform in ("macOS/Linux", "Windows"):
         assert "BRAINSTEM_" not in downloads[platform]["href"]
+
+
+def test_installer_page_offers_office_hours_sign_up_without_publishing_the_meeting_link():
+    text = (ROOT / "docs" / "installer.html").read_text(encoding="utf-8")
+    soup = BeautifulSoup(text, "html.parser")
+    section = soup.select_one("#office-hours")
+    assert section is not None
+    link = section.select_one("a")
+    assert link["href"] == (
+        "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
+        "?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUQVBKS0NWREVQWFZKVVk4VFRWV05KNlZaWS4u"
+    )
+    assert link["target"] == "_blank" and link["rel"] == ["noopener"]
+    # The Teams join link stays behind the internal sign-up form, never on the public page.
+    assert "teams.microsoft.com/meet" not in text
