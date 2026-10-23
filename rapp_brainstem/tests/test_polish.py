@@ -672,3 +672,15 @@ def test_soul_reloads_when_file_changes(tmp_path, monkeypatch):
 
     soul.write_text("second soul with a different size", encoding="utf-8")
     assert bs.load_soul() == "second soul with a different size"
+
+
+def test_chat_catalog_is_the_pinned_aibast_registry_served_by_jsdelivr_first():
+    index = open(os.path.join(bs._BASE_DIR, "index.html"), encoding="utf-8").read()
+    browser = index[index.index("const RAR_REVISION"):index.index("let rarRegistry")]
+    assert f"const RAR_REVISION = '{bs.RAR_REVISION}';" in browser
+    assert "cdn.jsdelivr.net/gh/microsoft/aibast-agents-library@${RAR_REVISION}" in browser
+    assert "raw.githubusercontent.com/microsoft/aibast-agents-library/${RAR_REVISION}" in browser
+    assert "kody-w/RAR" not in browser
+    # jsDelivr is tried first (it counts downloads) and '@' scope folders are encoded for it.
+    assert browser.index("RAR_MIRROR}/${cdnPath}") < browser.index("RAR_BASE}/${path}")
+    assert "map(encodeURIComponent)" in browser

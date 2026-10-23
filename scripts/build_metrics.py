@@ -3245,7 +3245,7 @@ def classify(name, is_agent):
     return "asset"
 
 
-def fetch_jsdelivr_file_pages(page_size=100, max_pages=100):
+def fetch_jsdelivr_file_pages(page_size=100, max_pages=100, ref=None):
     """Fetch numbered jsDelivr file pages and detect ignored pagination."""
     rows = []
     pages = 0
@@ -3253,7 +3253,7 @@ def fetch_jsdelivr_file_pages(page_size=100, max_pages=100):
     previous_signature = None
     for page in range(1, max_pages + 1):
         url = (
-            f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@{REF}/files"
+            f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@{ref or REF}/files"
             f"?period=year&limit={page_size}&page={page}"
         )
         batch = fetch_json(url)
@@ -3295,7 +3295,61 @@ def fetch_jsdelivr_file_pages(page_size=100, max_pages=100):
     }
 
 
-def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
+BRAINSTEM_SERVER = ROOT / "rapp_brainstem" / "brainstem.py"
+_RAR_PIN = re.compile(r'^\+?RAR_REVISION = "([0-9a-f]{40})"$', re.M)
+
+
+def brainstem_catalog_pins(root=ROOT):
+    """Every AIBAST commit the Brainstem chat catalog has been pinned to.
+
+    The chat downloads agents from jsDelivr at its pinned commit, and jsDelivr
+    keeps per-version stats, so each pin ever shipped is read, not only the
+    current one. Older pins pointed at the public RAR and simply return no
+    AIBAST hits.
+    """
+    pins = []
+    try:
+        current = _RAR_PIN.search(BRAINSTEM_SERVER.read_text(encoding="utf-8"))
+        if current:
+            pins.append(current.group(1))
+    except OSError:
+        pass
+    try:
+        result = subprocess.run(
+            ["git", "log", "-p", "--format=", "-G", "^RAR_REVISION = ",
+             "--", "rapp_brainstem/brainstem.py"],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            pins.extend(_RAR_PIN.findall(result.stdout))
+    except OSError:
+        pass
+    return [pin for pin in dict.fromkeys(pins) if pin != REF]
+
+
+def merge_jsdelivr_file_rows(*row_sets):
+    """Sum per-file hits (total and per day) across jsDelivr versions."""
+    merged = {}
+    for rows in row_sets:
+        for row in rows:
+            name = row.get("name")
+            if not name:
+                continue
+            hits = row.get("hits") or {}
+            target = merged.setdefault(
+                name, {"name": name, "hits": {"total": 0, "dates": {}}}
+            )
+            target["hits"]["total"] += hits.get("total") or 0
+            for day, count in (hits.get("dates") or {}).items():
+                dates = target["hits"]["dates"]
+                dates[day] = dates.get(day, 0) + (count or 0)
+    return list(merged.values())
+
+
+def fetch_jsdelivr(by_file, agents, workshop_slugs=(), pins=None):
     """CDN hits: totals, daily series, and per-file download counts."""
     out = {
         "total_hits": 0,
@@ -3324,6 +3378,22 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
         out["daily"] = [{"date": d, "count": c} for d, c in sorted(dates.items()) if c]
 
     fetched = fetch_jsdelivr_file_pages()
+    # Brainstem chat installs: the same files fetched at the chat's pinned commits.
+    pin_rows = []
+    out["brainstem_chat_hits"] = 0
+    for pin in (brainstem_catalog_pins() if pins is None else pins):
+        pinned = fetch_jsdelivr_file_pages(ref=pin)
+        if not pinned["available"]:
+            # Pins from before the switch name commits jsDelivr never served.
+            continue
+        fetched["complete"] = fetched["complete"] and pinned["complete"]
+        pin_rows.append(pinned["files"])
+        out["brainstem_chat_hits"] += sum(
+            (row.get("hits") or {}).get("total") or 0 for row in pinned["files"]
+        )
+    if pin_rows:
+        fetched["files"] = merge_jsdelivr_file_rows(fetched["files"], *pin_rows)
+        out["total_hits"] += out["brainstem_chat_hits"]
     grouped = group_workshop_downloads(
         fetched["files"],
         workshop_slugs,
