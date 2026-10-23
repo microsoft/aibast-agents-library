@@ -1663,6 +1663,78 @@ const REQUEST_FORM_SOLUTION_NAMES = {
   "@aibast-agents-library/time-entry-billing": "Time and Entry Billing Agent",
   "@aibast-agents-library/win-loss-analysis": "Win Loss Analysis Agent"
 };
+// The solution choices on the live form today. A library solution that is not one of them (the form was not updated
+// yet) still gets a working link: "My use case is not listed" with the solution named in "Your use case".
+const REQUEST_FORM_SOLUTION_CHOICES = new Set([
+  "Account Intelligence Agent",
+  "Deal Progression Agent",
+  "Proposal Generation Agent",
+  "Sales Qualification Agent",
+  "Win Loss Analysis Agent",
+  "Cart Abandonment Recovery Agent",
+  "Customer Loyalty and Rewards Agent",
+  "Omnichannel Engagement Agent",
+  "Personalized Shopping Agent",
+  "Cross Selling Opportunities Agent",
+  "Customer Escalations Agent",
+  "Discount Finder Agent",
+  "Procurement Agent",
+  "Asset Maintenance Forecast Agent",
+  "Emissions Tracking Agent",
+  "Field Service Dispatch Agent",
+  "Grid Outage Response Agent",
+  "Permit Management Agent",
+  "Regulatory Reporting Agent",
+  "Claims Processing Agent",
+  "Customer Onboarding Agent",
+  "Customer Sentiment and Churn Prediction Agent",
+  "Financial Advisor Agent",
+  "Fraud Detection and Alert Agent",
+  "Loan Origination Assistant",
+  "Portfolio Rebalancing Agent",
+  "Regulatory Compliance Agent",
+  "Underwriting Support Agent",
+  "Wealth Insights Generator Agent",
+  "Care Gap Closure Agent",
+  "Clinical Notes Summarizer Agent",
+  "Patient Intake and Scheduling Agent",
+  "Prior Authorization Agent",
+  "Ask HR Agent",
+  "Inventory Rebalancing Agent",
+  "Maintenance Scheduling Agent",
+  "Order Status Communications Agent",
+  "Product Line Optimization Agent",
+  "Supply Risk Monitoring Agent",
+  "Client Health Score Agent",
+  "Contract Risk Review Agent",
+  "Resource Utilization Agent",
+  "Time and Entry Billing Agent",
+  "Inventory Visibility Agent",
+  "Personalized Marketing Agent",
+  "Retail Store Associate Copilot",
+  "Returns and Complaints Resolution Agent",
+  "Supply Chain Disruption Alert Agent",
+  "Building Permit Processing Agent",
+  "Utility Billing and Assistance Agent",
+  "License Renewal and Expansion Agent",
+  "Product Feedback Synthesizer Agent",
+  "Build Materials Compliance Agent",
+  "Order Entry Validation Agent",
+  "M&A Target Sourcing Agent",
+  "Solution Design Review Agent",
+  "Reporting Package Validation Agent",
+  "Public Correspondence Agent",
+  "Engineering Standards Agent",
+  "Field Permit to Work Agent",
+  "Payments Operations Agent",
+  "Supplier Claim Engagement Agent",
+  "Benefits Enrollment Agent",
+  "Warranty and Registration Agent",
+  "Staffing Territory Planning Agent",
+  "Briefing Pack Builder Agent"
+]);
+const REQUEST_FORM_NOT_LISTED = "My use case is not listed";
+const REQUEST_FORM_USE_CASE_FIELD = "r26600cd251ab4f4dafd8a474cf4f1ee4";
 const DISTRIBUTION_OWNER = location.hostname.endsWith(".github.io")
   ? location.hostname.split(".")[0]
   : OWNER;
@@ -3000,7 +3072,12 @@ function requestFormSolutionName(agent) {
 
 function requestFormUrl(agent) {
   const solutionName = requestFormSolutionName(agent);
-  return `${REQUEST_FORM}&${REQUEST_FORM_SOLUTION_FIELD}=${enc(JSON.stringify(solutionName))}`;
+  if (REQUEST_FORM_SOLUTION_CHOICES.has(solutionName)) {
+    return `${REQUEST_FORM}&${REQUEST_FORM_SOLUTION_FIELD}=${enc(JSON.stringify(solutionName))}`;
+  }
+  const useCase = `Requesting the one-pager and demo video for ${solutionName} (listed on the AIBAST Agents Library site).`;
+  return `${REQUEST_FORM}&${REQUEST_FORM_SOLUTION_FIELD}=${enc(JSON.stringify(REQUEST_FORM_NOT_LISTED))}`
+    + `&${REQUEST_FORM_USE_CASE_FIELD}=${enc(JSON.stringify(useCase))}`;
 }
 
 // One-pagers and demo videos are gated by the request form, so the badge goes straight there.
