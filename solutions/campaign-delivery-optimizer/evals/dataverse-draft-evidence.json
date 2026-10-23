@@ -1,6 +1,6 @@
 {
   "schema": "aibast-dataverse-draft-evidence/1.0",
-  "captured_at": "2026-10-23T03:19:03.127588+00:00",
+  "captured_at": "2026-10-23T04:46:44.774803+00:00",
   "source": {
     "kind": "Dataverse Web API",
     "environment_name": "kodyv8",
@@ -8,14 +8,13 @@
     "environment_url": "https://org7dfbd855.crm.dynamics.com",
     "api_version": "v9.2",
     "select": [
+      "name",
       "botid",
       "componentstate",
-      "modifiedon",
-      "name",
-      "odata_etag",
-      "publishedon",
       "statecode",
       "statuscode",
+      "modifiedon",
+      "publishedon",
       "synchronizationstatus",
       "versionnumber"
     ]
@@ -23,48 +22,34 @@
   "identity": {
     "slug": "campaign-delivery-optimizer",
     "solution": "@aibast-agents-library/campaign-delivery-optimizer",
-    "display_name": "Campaign Delivery Pilot",
-    "schema_name": "aibast_CampaignDeliveryPilot",
-    "bot_id": "238329ed-d9b2-431a-b70e-531a55fe1297"
+    "display_name": "Campaign Delivery Manual",
+    "schema_name": "cr2bf_campaigndeliverymanual_pRUdMb",
+    "bot_id": "25bc08ba-bfc4-49e7-ba11-5eb15e50275c"
   },
   "record": {
-    "modifiedon": "2026-10-23T03:02:13Z",
-    "botid": "238329ed-d9b2-431a-b70e-531a55fe1297",
-    "synchronizationstatus": {
-      "lastFinishedPublishOperation": {
-        "$kind": "PublishResultDetails",
-        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
-        "operationStart": "2026-10-23T01:54:06.8308016Z",
-        "operationEnd": "2026-10-23T01:54:17.303493Z",
-        "status": "Succeeded"
-      },
-      "contentVersion": 2,
-      "$kind": "BotSynchronizationDetails",
-      "currentSynchronizationState": {
-        "$kind": "SynchronizationState",
-        "botRegistration": {
-          "$kind": "BotRegistrationDetails",
-          "botRegistrationIdConsumptionTime": "2026-10-23T01:54:14.4521095Z",
-          "applicationId": "58bef947-9152-40e8-879c-6f5ca6382e54",
-          "isAppAvailableInTenant": true
-        },
-        "provisioningStatus": "Provisioned",
-        "state": "Synchronizing"
-      }
-    },
+    "name": "Campaign Delivery Manual",
+    "botid": "25bc08ba-bfc4-49e7-ba11-5eb15e50275c",
     "componentstate": 0,
     "statecode": 0,
-    "name": "Campaign Delivery Pilot",
-    "versionnumber": 22139255,
-    "publishedon": "2026-10-23T01:54:14Z",
     "statuscode": 1,
-    "odata_etag": "W/\"22139255\""
+    "modifiedon": "2026-10-23T02:45:39Z",
+    "publishedon": null,
+    "versionnumber": 22139028,
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"22139028\""
   },
-  "record_sha256": "7edeeeaad7079a778bef4e8d02ddf40003d71e50cf91aa9bd7feb0e18c5e4959",
+  "record_sha256": "2985bafbd8267e0b7960f3d7aa7768c3eedd87b77752a45104273c08fe5f7e55",
   "assertions": {
     "bot_id_matches": true,
     "display_name_matches": true,
-    "publishedon_is_null": false,
-    "last_finished_publish_operation_is_null": false
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
   }
 }

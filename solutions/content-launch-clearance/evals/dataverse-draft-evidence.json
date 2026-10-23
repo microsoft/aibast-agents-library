@@ -1,6 +1,6 @@
 {
   "schema": "aibast-dataverse-draft-evidence/1.0",
-  "captured_at": "2026-10-23T02:44:05.317881+00:00",
+  "captured_at": "2026-10-23T04:46:44.774803+00:00",
   "source": {
     "kind": "Dataverse Web API",
     "environment_name": "kodyv8",
@@ -8,14 +8,13 @@
     "environment_url": "https://org7dfbd855.crm.dynamics.com",
     "api_version": "v9.2",
     "select": [
+      "name",
       "botid",
       "componentstate",
-      "modifiedon",
-      "name",
-      "odata_etag",
-      "publishedon",
       "statecode",
       "statuscode",
+      "modifiedon",
+      "publishedon",
       "synchronizationstatus",
       "versionnumber"
     ]
@@ -23,48 +22,34 @@
   "identity": {
     "slug": "content-launch-clearance",
     "solution": "@aibast-agents-library/content-launch-clearance",
-    "display_name": "Content Launch Clearance Pilot",
-    "schema_name": "aibast_ContentLaunchClearancePilot",
-    "bot_id": "05c242de-f3e6-4a9b-a63f-62b071ac45d6"
+    "display_name": "Content Launch Manual",
+    "schema_name": "cr2bf_contentlaunchmanual_oA9kOZ",
+    "bot_id": "57ec04e3-a772-4f28-b3dd-9427bae22d1b"
   },
   "record": {
-    "modifiedon": "2026-10-23T02:27:06Z",
-    "botid": "05c242de-f3e6-4a9b-a63f-62b071ac45d6",
-    "synchronizationstatus": {
-      "lastFinishedPublishOperation": {
-        "$kind": "PublishResultDetails",
-        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
-        "operationStart": "2026-10-23T01:53:04.4946067Z",
-        "operationEnd": "2026-10-23T01:53:26.2766436Z",
-        "status": "Succeeded"
-      },
-      "contentVersion": 2,
-      "$kind": "BotSynchronizationDetails",
-      "currentSynchronizationState": {
-        "$kind": "SynchronizationState",
-        "botRegistration": {
-          "$kind": "BotRegistrationDetails",
-          "botRegistrationIdConsumptionTime": "2026-10-23T01:53:25.3521062Z",
-          "applicationId": "61d84c0c-531e-4a94-8d00-78b92e40ae43",
-          "isAppAvailableInTenant": true
-        },
-        "provisioningStatus": "Provisioned",
-        "state": "Synchronizing"
-      }
-    },
+    "name": "Content Launch Manual",
+    "botid": "57ec04e3-a772-4f28-b3dd-9427bae22d1b",
     "componentstate": 0,
     "statecode": 0,
-    "name": "Content Launch Clearance Pilot",
-    "versionnumber": 22138898,
-    "publishedon": "2026-10-23T01:53:25Z",
     "statuscode": 1,
-    "odata_etag": "W/\"22138898\""
+    "modifiedon": "2026-10-23T02:10:31Z",
+    "publishedon": null,
+    "versionnumber": 22138739,
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"22138739\""
   },
-  "record_sha256": "bed8691267c9b9f5f141967eb42460592270066d36f75cae6060b1cdd306bbb4",
+  "record_sha256": "c92efe73e5ddac7280116fe18a27f5539fea84885f50b9a81b9375d73fc4f978",
   "assertions": {
     "bot_id_matches": true,
     "display_name_matches": true,
-    "publishedon_is_null": false,
-    "last_finished_publish_operation_is_null": false
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
   }
 }

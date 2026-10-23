@@ -1,6 +1,6 @@
 {
   "schema": "aibast-dataverse-draft-evidence/1.0",
-  "captured_at": "2026-10-23T03:49:11.883511+00:00",
+  "captured_at": "2026-10-23T04:46:44.774803+00:00",
   "source": {
     "kind": "Dataverse Web API",
     "environment_name": "kodyv8",
@@ -8,14 +8,13 @@
     "environment_url": "https://org7dfbd855.crm.dynamics.com",
     "api_version": "v9.2",
     "select": [
+      "name",
       "botid",
       "componentstate",
-      "modifiedon",
-      "name",
-      "odata_etag",
-      "publishedon",
       "statecode",
       "statuscode",
+      "modifiedon",
+      "publishedon",
       "synchronizationstatus",
       "versionnumber"
     ]
@@ -23,48 +22,34 @@
   "identity": {
     "slug": "first-time-fix",
     "solution": "@aibast-agents-library/first-time-fix",
-    "display_name": "First-Time Fix Pilot",
-    "schema_name": "aibast_FirstTimeFixPilot",
-    "bot_id": "d4f06d6d-4d87-43a9-b441-cfbdc3d679d3"
+    "display_name": "First-Time Fix Manual",
+    "schema_name": "cr2bf_firsttimefixmanual_rxJZ3w",
+    "bot_id": "678b320a-2390-44df-af1e-c9b575488547"
   },
   "record": {
-    "modifiedon": "2026-10-23T03:16:00Z",
-    "botid": "d4f06d6d-4d87-43a9-b441-cfbdc3d679d3",
-    "synchronizationstatus": {
-      "lastFinishedPublishOperation": {
-        "$kind": "PublishResultDetails",
-        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
-        "operationStart": "2026-10-23T01:48:28.1534186Z",
-        "operationEnd": "2026-10-23T01:49:04.2139879Z",
-        "status": "Succeeded"
-      },
-      "contentVersion": 2,
-      "$kind": "BotSynchronizationDetails",
-      "currentSynchronizationState": {
-        "$kind": "SynchronizationState",
-        "botRegistration": {
-          "$kind": "BotRegistrationDetails",
-          "botRegistrationIdConsumptionTime": "2026-10-23T01:49:01.2794729Z",
-          "applicationId": "0dd995ad-e58d-458a-8b92-0b024e25f834",
-          "isAppAvailableInTenant": true
-        },
-        "provisioningStatus": "Provisioned",
-        "state": "Synchronizing"
-      }
-    },
+    "name": "First-Time Fix Manual",
+    "botid": "678b320a-2390-44df-af1e-c9b575488547",
     "componentstate": 0,
     "statecode": 0,
-    "name": "First-Time Fix Pilot",
-    "versionnumber": 22139318,
-    "publishedon": "2026-10-23T01:49:01Z",
     "statuscode": 1,
-    "odata_etag": "W/\"22139318\""
+    "modifiedon": "2026-10-23T02:53:05Z",
+    "publishedon": null,
+    "versionnumber": 22139165,
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"22139165\""
   },
-  "record_sha256": "455faa36b469ae9a2d0b3977f171f9e82a9a7c08c9b85903d6f29460d6d9ce39",
+  "record_sha256": "0ed88e369306bcaaacb44a3d802fe6341bb3691e07ca35f9f66dd12159c772f0",
   "assertions": {
     "bot_id_matches": true,
     "display_name_matches": true,
-    "publishedon_is_null": false,
-    "last_finished_publish_operation_is_null": false
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
   }
 }

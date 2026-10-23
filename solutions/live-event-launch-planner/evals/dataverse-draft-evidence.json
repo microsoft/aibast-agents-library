@@ -1,6 +1,6 @@
 {
   "schema": "aibast-dataverse-draft-evidence/1.0",
-  "captured_at": "2026-10-23T04:40:14.761533+00:00",
+  "captured_at": "2026-10-23T04:46:44.774803+00:00",
   "source": {
     "kind": "Dataverse Web API",
     "environment_name": "kodyv8",
@@ -8,14 +8,13 @@
     "environment_url": "https://org7dfbd855.crm.dynamics.com",
     "api_version": "v9.2",
     "select": [
+      "name",
       "botid",
       "componentstate",
-      "modifiedon",
-      "name",
-      "odata_etag",
-      "publishedon",
       "statecode",
       "statuscode",
+      "modifiedon",
+      "publishedon",
       "synchronizationstatus",
       "versionnumber"
     ]
@@ -23,48 +22,34 @@
   "identity": {
     "slug": "live-event-launch-planner",
     "solution": "@aibast-agents-library/live-event-launch-planner",
-    "display_name": "Live Event Launch Pilot",
-    "schema_name": "aibast_LiveEventLaunchPilot",
-    "bot_id": "d7a78ae5-3cd2-49cb-bfb4-b284bde4a392"
+    "display_name": "Live Event Launch Manual",
+    "schema_name": "cr2bf_liveeventlaunchmanual_OJhHed",
+    "bot_id": "7f96443b-68ac-43d7-9156-b14424fae201"
   },
   "record": {
-    "modifiedon": "2026-10-23T04:16:46Z",
-    "botid": "d7a78ae5-3cd2-49cb-bfb4-b284bde4a392",
-    "synchronizationstatus": {
-      "lastFinishedPublishOperation": {
-        "$kind": "PublishResultDetails",
-        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
-        "operationStart": "2026-10-23T01:54:26.3296852Z",
-        "operationEnd": "2026-10-23T01:54:50.1034077Z",
-        "status": "Succeeded"
-      },
-      "contentVersion": 2,
-      "$kind": "BotSynchronizationDetails",
-      "currentSynchronizationState": {
-        "$kind": "SynchronizationState",
-        "botRegistration": {
-          "$kind": "BotRegistrationDetails",
-          "botRegistrationIdConsumptionTime": "2026-10-23T01:54:48.1516752Z",
-          "applicationId": "07ada0f8-1921-4526-86c7-5dadc0415bf3",
-          "isAppAvailableInTenant": true
-        },
-        "provisioningStatus": "Provisioned",
-        "state": "Synchronizing"
-      }
-    },
+    "name": "Live Event Launch Manual",
+    "botid": "7f96443b-68ac-43d7-9156-b14424fae201",
     "componentstate": 0,
     "statecode": 0,
-    "name": "Live Event Launch Pilot",
-    "versionnumber": 22140124,
-    "publishedon": "2026-10-23T01:54:48Z",
     "statuscode": 1,
-    "odata_etag": "W/\"22140124\""
+    "modifiedon": "2026-10-23T04:17:42Z",
+    "publishedon": null,
+    "versionnumber": 22140186,
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"22140186\""
   },
-  "record_sha256": "7daf32e6ee4dedcd85d03a57f3d110ebc76267241a2ca7374868e1722c1ba58e",
+  "record_sha256": "80cb7b458c2c52253194014eeb4e579a64cc0d80579035f47060937d748da385",
   "assertions": {
     "bot_id_matches": true,
     "display_name_matches": true,
-    "publishedon_is_null": false,
-    "last_finished_publish_operation_is_null": false
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
   }
 }
