@@ -1,0 +1,118 @@
+name: Solution Bundle Assets
+
+# Publishes every solution source bundle (solutions/<slug>/exports/<slug>-source.zip)
+# as an asset on the rolling "solution-bundles" release of the repository the
+# workflow runs in. The bundles are built from files already in the tree by
+# the deterministic bundler, so they do not need to be committed, and GitHub
+# records each asset download. The bytes stay on GitHub; nothing third-party.
+#
+# Each ring publishes only to itself: the Microsoft repository from main, and a
+# staging fork from its staging branch. A fork can never write to the
+# production release.
+
+on:
+  push:
+    branches: [main, staging]
+    paths:
+      - 'solutions/**'
+      - 'tools/build_solution_export.py'
+      - 'tools/solution_bundle_assets.py'
+      - '.github/workflows/solution-bundle-assets.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '40 4 * * 1'  # weekly: republish + verify (self-heals drift)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: solution-bundle-assets
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: >-
+      (github.event.repository.fork == true &&
+       github.ref == 'refs/heads/staging') ||
+      (github.repository == 'microsoft/aibast-agents-library' &&
+       github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+
+      - name: Build every solution source bundle
+        run: python tools/solution_bundle_assets.py build --out dist/solution-bundles
+
+      - name: Publish changed bundles to the rolling release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="solution-bundles"
+          if ! gh release view "$tag" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$tag" -R "$GITHUB_REPOSITORY" \
+              --target "$(git rev-parse HEAD)" \
+              --latest=false \
+              --title "AIBAST Solution Source Bundles" \
+              --notes "Rolling solution source bundles, one <slug>-source.zip per solution, built from the repository by tools/build_solution_export.py. GitHub records each asset download. An asset is replaced only when its bundle content changes."
+          fi
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$tag" \
+            --jq '.assets[] | [.name, (.digest // "")] | @tsv' \
+            > "$RUNNER_TEMP/published.tsv"
+          # Upload only what changed. Replacing an asset gives it a fresh
+          # download counter, so an unconditional --clobber would zero the
+          # counts on every run.
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/$tag"
+          uploaded=0
+          for path in dist/solution-bundles/*-source.zip; do
+            name="$(basename "$path")"
+            sha="$(sha256sum "$path" | cut -d' ' -f1)"
+            digest="$(awk -F'\t' -v n="$name" '$1 == n { print $2 }' "$RUNNER_TEMP/published.tsv")"
+            if [ "$digest" = "sha256:$sha" ]; then
+              echo "unchanged $name"
+              continue
+            fi
+            present="$(awk -F'\t' -v n="$name" '$1 == n { print "yes" }' "$RUNNER_TEMP/published.tsv")"
+            if [ "$present" = "yes" ] \
+               && curl -fsSL --retry 3 "$base/$name" -o "$RUNNER_TEMP/current-$name" \
+               && result="$(python tools/solution_bundle_assets.py same "$RUNNER_TEMP/current-$name" "$path")"; then
+              echo "unchanged $name ($result)"
+              rm -f "$RUNNER_TEMP/current-$name"
+              continue
+            fi
+            rm -f "$RUNNER_TEMP/current-$name"
+            gh release upload "$tag" "$path" -R "$GITHUB_REPOSITORY" --clobber
+            echo "uploaded  $name"
+            uploaded=$((uploaded + 1))
+          done
+          echo "Published $uploaded changed solution bundle asset(s) to $tag"
+
+      - name: Verify every published bundle matches the tree
+        run: |
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/solution-bundles"
+          fail=0
+          checked=0
+          while read -r expected name; do
+            curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/published-$name"
+            actual="$(sha256sum "$RUNNER_TEMP/published-$name" | cut -d' ' -f1)"
+            if [ "$actual" = "$expected" ]; then
+              echo "OK    $name sha256:$actual"
+            elif python tools/solution_bundle_assets.py same "$RUNNER_TEMP/published-$name" "dist/solution-bundles/$name" >/dev/null; then
+              echo "OK    $name content-identical (sha256:$actual, fresh build sha256:$expected)"
+            else
+              echo "DRIFT $name published sha256:$actual, fresh build sha256:$expected" >&2
+              fail=1
+            fi
+            rm -f "$RUNNER_TEMP/published-$name"
+            checked=$((checked + 1))
+          done < dist/solution-bundles/SHA256SUMS
+          echo "Verified $checked solution bundle asset(s)"
+          test "$checked" -gt 0
+          test "$fail" = 0
