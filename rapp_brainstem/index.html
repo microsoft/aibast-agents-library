@@ -1880,10 +1880,13 @@
   // Search the AIBAST agent catalog and hot-load any of them into this
   // brainstem by fetching the .py and POSTing it to /agents/import.
   const RAR_REVISION = '20d8ec372f1b30d2b3a29061a1d38f74232c59cb';
-  // The jsDelivr CDN is tried first: it serves the pinned commit to the browser
-  // and records per-file hits, which the library's metrics count as agent
-  // downloads. Raw GitHub is the fallback when the CDN rate-limits or hiccups.
-  const RAR_MIRROR = `https://cdn.jsdelivr.net/gh/microsoft/aibast-agents-library@${RAR_REVISION}`;
+  // The jsDelivr CDN is tried first: it records per-file hits, which the
+  // library's metrics count as agent downloads. jsDelivr refuses repositories
+  // over 50 MB, so it serves RAR_CDN_COMMIT, the slim snapshot of RAR_REVISION
+  // (LICENSE, registry.json and agents/ only) built by tools/agents_cdn.py.
+  // Raw GitHub is the fallback when the CDN rate-limits or hiccups.
+  const RAR_CDN_COMMIT = 'bec11a113371359f6152c024f013c06d8a5538db';
+  const RAR_MIRROR = `https://cdn.jsdelivr.net/gh/microsoft/aibast-agents-library@${RAR_CDN_COMMIT}`;
   const RAR_BASE = `https://raw.githubusercontent.com/microsoft/aibast-agents-library/${RAR_REVISION}`;
   async function rarFetch(path) {
     try {
