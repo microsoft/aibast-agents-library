@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - October 23, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 24, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-23T15:41:38Z`
+**Snapshot:** `2026-10-24T05:31:46Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 20,230 | +2,107 observed - partial | +12,146 observed - partial |
-| Git clones | 19,096 | +2,105 observed | +12,045 observed |
-| Clones excluding CI estimate | 19,096 | +2,520 (+15.2%) | +12,045 (+170.8%) |
-| AIBAST repository and Pages views | 1,148 | +30 observed | +221 observed |
+| AIBAST observed repository downloads | 20,233 | +1,886 observed - partial | +12,066 observed - partial |
+| Git clones | 19,096 | +1,884 observed | +11,965 observed |
+| Clones excluding CI estimate | 19,096 | +2,361 (+14.1%) | +12,045 (+170.8%) |
+| AIBAST repository and Pages views | 1,148 | +17 observed | +219 observed |
 | jsDelivr file hits | 519 | +2 observed | +101 observed |
-| Release asset downloads | 615 | +194 (+46.1%) | +409 (+198.5%) |
-| AIBAST direct agent file downloads | 415 | +163 (+64.7%) | +272 (+190.2%) |
+| Release asset downloads | 618 | +188 (+43.7%) | +412 (+200.0%) |
+| AIBAST direct agent file downloads | 415 | +157 (+60.9%) | +272 (+190.2%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
-| AIBAST installer file downloads | 212 | +30 (+16.5%) | +136 (+178.9%) |
-| Unique cloners (14-day window) | 607 | +236 (+63.6%) snapshot change | +254 (+72.0%) snapshot change |
-| Unique visitors (14-day window) | 20 | -8 (-28.6%) snapshot change | -24 (-54.5%) snapshot change |
+| AIBAST installer file downloads | 215 | +30 (+16.2%) | +139 (+182.9%) |
+| Unique cloners (14-day window) | 607 | +218 (+56.0%) snapshot change | +254 (+72.0%) snapshot change |
+| Unique visitors (14-day window) | 20 | -10 (-33.3%) snapshot change | -24 (-54.5%) snapshot change |
 
 ## Community engagement
 
@@ -69,11 +69,11 @@
 - Product Line Optimization Agent: -9 (current 0)
 
 **Agent downloads**
-- Building Permit Processing Agent: +6 (current 12)
+- Building Permit Processing Agent: +4 (current 12)
 - Account Intelligence Agent: +3 (current 12)
-- Ask HR Agent: +3 (current 10)
 - Asset Maintenance Forecast Agent: +3 (current 7)
 - Benefits Enrollment Agent: +3 (current 3)
+- Claims Processing Agent: +3 (current 6)
 
 ## Top monthly movers
 
