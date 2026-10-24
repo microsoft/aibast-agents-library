@@ -1,18 +1,18 @@
-**Subject:** AIBAST weekly and monthly impact report - October 23, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 24, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-23T15:41:38Z`
+**Snapshot:** `2026-10-24T05:16:49Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 20,230 | +2,107 observed - partial | +12,146 observed - partial |
-| Git clones | 19,096 | +2,105 observed | +12,045 observed |
+| AIBAST observed repository downloads | 20,230 | +1,886 observed - partial | +12,066 observed - partial |
+| Git clones | 19,096 | +1,884 observed | +11,965 observed |
 | Clones excluding CI estimate | 19,096 | +2,520 (+15.2%) | +12,045 (+170.8%) |
-| AIBAST repository and Pages views | 1,148 | +30 observed | +221 observed |
+| AIBAST repository and Pages views | 1,148 | +17 observed | +219 observed |
 | jsDelivr file hits | 519 | +2 observed | +101 observed |
 | Release asset downloads | 615 | +194 (+46.1%) | +409 (+198.5%) |
 | AIBAST direct agent file downloads | 415 | +163 (+64.7%) | +272 (+190.2%) |
