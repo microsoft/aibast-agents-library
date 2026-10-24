@@ -3296,7 +3296,10 @@ def fetch_jsdelivr_file_pages(page_size=100, max_pages=100, ref=None):
 
 
 BRAINSTEM_SERVER = ROOT / "rapp_brainstem" / "brainstem.py"
+BRAINSTEM_CHAT = ROOT / "rapp_brainstem" / "index.html"
 _RAR_PIN = re.compile(r'^\+?RAR_REVISION = "([0-9a-f]{40})"$', re.M)
+# The slim snapshot the chat's jsDelivr mirror serves (tools/agents_cdn.py).
+_RAR_CDN_PIN = re.compile(r"^\+?\s*const RAR_CDN_COMMIT = '([0-9a-f]{40})';$", re.M)
 
 
 def brainstem_catalog_pins(root=ROOT):
@@ -3325,6 +3328,27 @@ def brainstem_catalog_pins(root=ROOT):
         )
         if result.returncode == 0:
             pins.extend(_RAR_PIN.findall(result.stdout))
+    except OSError:
+        pass
+    # Since the repository outgrew jsDelivr's 50 MB limit, the chat's mirror
+    # serves a slim snapshot commit; its hits are counted the same way.
+    try:
+        current = _RAR_CDN_PIN.search(BRAINSTEM_CHAT.read_text(encoding="utf-8"))
+        if current:
+            pins.append(current.group(1))
+    except OSError:
+        pass
+    try:
+        result = subprocess.run(
+            ["git", "log", "-p", "--format=", "-G", "const RAR_CDN_COMMIT = ",
+             "--", "rapp_brainstem/index.html"],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            pins.extend(_RAR_CDN_PIN.findall(result.stdout))
     except OSError:
         pass
     return [pin for pin in dict.fromkeys(pins) if pin != REF]
