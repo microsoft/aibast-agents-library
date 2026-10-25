@@ -678,7 +678,8 @@ def test_chat_catalog_is_the_pinned_aibast_registry_served_by_jsdelivr_first():
     index = open(os.path.join(bs._BASE_DIR, "index.html"), encoding="utf-8").read()
     browser = index[index.index("const RAR_REVISION"):index.index("let rarRegistry")]
     assert f"const RAR_REVISION = '{bs.RAR_REVISION}';" in browser
-    assert "cdn.jsdelivr.net/gh/microsoft/aibast-agents-library@${RAR_REVISION}" in browser
+    assert "cdn.jsdelivr.net/gh/microsoft/aibast-agents-library@${RAR_CDN_COMMIT}" in browser
+    assert re.search(r"const RAR_CDN_COMMIT = '[0-9a-f]{40}';", browser)
     assert "raw.githubusercontent.com/microsoft/aibast-agents-library/${RAR_REVISION}" in browser
     assert "kody-w/RAR" not in browser
     # jsDelivr is tried first (it counts downloads) and '@' scope folders are encoded for it.

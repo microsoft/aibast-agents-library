@@ -1,0 +1,46 @@
+name: Agents CDN Snapshot
+
+# jsDelivr refuses repositories over 50 MB, so the Brainstem chat's mirror
+# serves a slim, deterministic snapshot commit (LICENSE, registry.json and
+# agents/ only) built by tools/agents_cdn.py. This workflow publishes the
+# snapshot of the chat's pinned registry commit and of each new catalog
+# commit on main, then confirms jsDelivr serves the pinned one byte for byte.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'registry.json'
+      - 'agents/**'
+      - 'rapp_brainstem/index.html'
+      - 'tools/agents_cdn.py'
+      - '.github/workflows/agents-cdn.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: agents-cdn-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - name: Check the chat pin matches its snapshot
+        run: python tools/agents_cdn.py check
+      - name: Publish snapshots
+        run: |
+          pinned=$(sed -n "s/^ *const RAR_REVISION = '\([0-9a-f]\{40\}\)';$/\1/p" rapp_brainstem/index.html)
+          python tools/agents_cdn.py publish "$pinned" "$GITHUB_SHA" --remote origin
+      - name: Confirm jsDelivr serves the pinned snapshot
+        run: |
+          pinned=$(sed -n "s/^ *const RAR_REVISION = '\([0-9a-f]\{40\}\)';$/\1/p" rapp_brainstem/index.html)
+          python tools/agents_cdn.py verify "$pinned" --owner "${GITHUB_REPOSITORY%%/*}" --repo "${GITHUB_REPOSITORY##*/}"

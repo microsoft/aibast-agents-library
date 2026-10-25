@@ -10,6 +10,46 @@ failures also carry `incident`.
 
 ---
 
+## 2026-10-23 — Telecom, Media & Gaming solutions, registry installs from chat, office hours rename
+
+**Shipped:** [#248](https://github.com/microsoft/aibast-agents-library/pull/248)
+four Telecom, Media & Gaming solutions (slots 67-70) and the Telecom, Media &
+Gaming industry, with registry and academy rebuilt from source;
+[#250](https://github.com/microsoft/aibast-agents-library/pull/250) Brainstem
+chat installs agents from the AIBAST registry and counts each install, the
+request form falls back to "My use case" for solutions not yet on it, and the
+installer page gains the office hours sign-up;
+[#251](https://github.com/microsoft/aibast-agents-library/pull/251) office hours
+renamed to "AIBAST agents and prototyping office hours". Merge commits
+`62e45abd`, `3516b50a`, `c4261844`. All three promoted from `kody-w:staging`.
+
+**Gates:** preflight on each pull request. For #251, 14 of 14 pull request
+checks passed and `tools/promotion_check.sh` reported GREEN on the staging head
+`0e06cd7d`: [preflight](https://github.com/kody-w/aibast-agents-library/actions/runs/40009456951),
+[Pages deploy](https://github.com/kody-w/aibast-agents-library/actions/runs/40009456963),
+[one-liner smoke](https://github.com/kody-w/aibast-agents-library/actions/runs/40009731531).
+After the merge, the production installer page served the new heading.
+
+**Post-release:**
+- [#252](https://github.com/microsoft/aibast-agents-library/issues/252) incident
+  filed two minutes after #251 merged. The smoke job in
+  [the run](https://github.com/microsoft/aibast-agents-library/actions/runs/40022609752)
+  was skipped, not failed, but the incident job still filed the issue.
+  [Recovered](https://github.com/microsoft/aibast-agents-library/actions/runs/40027418822)
+  on `c4261844`: the published one-liner installed and answered on all runners.
+  Closed. Disposition: the incident job should not file when the smoke job is skipped.
+- Agent installs fetched through jsDelivr are partly refused because the
+  package at the pinned commit exceeds the CDN's 50 MB limit (3 of 39 sampled
+  agent files). Installs fall back to raw GitHub and succeed, but those are not
+  counted. Open.
+
+**Lessons:** treat a skipped smoke as "no result", never as a failure, or a
+merge right after a deploy files a false incident. A CDN mirror has size
+limits that only appear on a cold cache; measure a sample of files before
+relying on it for counts.
+
+---
+
 ## 2026-09-02 — installer download counting
 
 **Shipped:** [#194](https://github.com/microsoft/aibast-agents-library/pull/194)
