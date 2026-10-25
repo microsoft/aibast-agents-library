@@ -2,19 +2,19 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-25T00:19:50Z`
+**Snapshot:** `2026-10-25T05:15:01Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 20,604 | +1,898 observed - partial | +12,370 observed - partial |
+| AIBAST observed repository downloads | 20,677 | +1,898 observed - partial | +12,370 observed - partial |
 | Git clones | 19,466 | +1,896 observed | +12,269 observed |
 | Clones excluding CI estimate | 19,466 | +2,731 (+16.3%) | +12,415 (+176.1%) |
 | AIBAST repository and Pages views | 1,157 | +16 observed | +226 observed |
 | jsDelivr file hits | 519 | +2 observed | +101 observed |
-| Release asset downloads | 619 | +189 (+44.0%) | +413 (+200.5%) |
+| Release asset downloads | 692 | +262 (+60.9%) | +486 (+235.9%) |
 | AIBAST direct agent file downloads | 535 | +277 (+107.4%) | +392 (+274.1%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
 | AIBAST installer file downloads | 215 | +30 (+16.2%) | +139 (+182.9%) |
@@ -28,7 +28,7 @@
 | GitHub stars | 8 | +0 (+0.0%) | +1 (+14.3%) |
 | GitHub forks | 7 | +0 (+0.0%) | +0 (+0.0%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 16 | +0 (+0.0%) | -25 (-61.0%) |
+| Open GitHub issues | 17 | +1 (+6.2%) | -24 (-58.5%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
 | Workshop usage events | 207 | +107 (+107.0%) - partial | +207 - partial |
