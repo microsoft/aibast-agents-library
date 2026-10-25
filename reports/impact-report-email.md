@@ -2,7 +2,7 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-25T05:24:35Z`
+**Snapshot:** `2026-10-25T05:31:35Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -11,15 +11,15 @@
 |---|---:|---:|---:|
 | AIBAST observed repository downloads | 20,680 | +1,898 observed - partial | +12,370 observed - partial |
 | Git clones | 19,466 | +1,896 observed | +12,269 observed |
-| Clones excluding CI estimate | 19,466 | +2,731 (+16.3%) | +12,415 (+176.1%) |
+| Clones excluding CI estimate | 19,466 | +2,475 (+14.6%) | +12,415 (+176.1%) |
 | AIBAST repository and Pages views | 1,157 | +16 observed | +226 observed |
 | jsDelivr file hits | 519 | +2 observed | +101 observed |
-| Release asset downloads | 695 | +265 (+61.6%) | +489 (+237.4%) |
-| AIBAST direct agent file downloads | 535 | +277 (+107.4%) | +392 (+274.1%) |
+| Release asset downloads | 695 | +118 (+20.5%) | +489 (+237.4%) |
+| AIBAST direct agent file downloads | 535 | +137 (+34.4%) | +392 (+274.1%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
-| AIBAST installer file downloads | 218 | +33 (+17.8%) | +142 (+186.8%) |
-| Unique cloners (14-day window) | 605 | +216 (+55.5%) snapshot change | +252 (+71.4%) snapshot change |
-| Unique visitors (14-day window) | 23 | -7 (-23.3%) snapshot change | -21 (-47.7%) snapshot change |
+| AIBAST installer file downloads | 218 | +27 (+14.1%) | +142 (+186.8%) |
+| Unique cloners (14-day window) | 605 | +192 (+46.5%) snapshot change | +252 (+71.4%) snapshot change |
+| Unique visitors (14-day window) | 23 | -6 (-20.7%) snapshot change | -21 (-47.7%) snapshot change |
 
 ## Community engagement
 
@@ -73,11 +73,11 @@
 - Customer Loyalty and Rewards Agent: +3 (current 3)
 
 **Agent downloads**
-- Account Intelligence Agent: +7 (current 16)
-- Asset Maintenance Forecast Agent: +6 (current 10)
-- Deal Progression Agent: +6 (current 9)
-- Emissions Tracking Agent: +6 (current 9)
-- Fraud Detection and Alert Agent: +6 (current 9)
+- Account Intelligence Agent: +5 (current 16)
+- Asset Maintenance Forecast Agent: +4 (current 10)
+- Deal Progression Agent: +4 (current 9)
+- Emissions Tracking Agent: +4 (current 9)
+- Field Permit to Work Agent: +4 (current 5)
 
 ## Top monthly movers
 

@@ -9,28 +9,28 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-10-25T05:24:35Z",
+      "as_of": "2026-10-25T05:31:35Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-10-25T05:24:35Z",
+      "as_of": "2026-10-25T05:31:35Z",
       "status": "partial"
     },
     "agent_upvotes": {
-      "as_of": "2026-10-25T05:24:35Z",
+      "as_of": "2026-10-25T05:31:35Z",
       "status": "partial"
     },
     "file_downloads": {
-      "as_of": "2026-10-25T05:24:35Z",
+      "as_of": "2026-10-25T05:31:35Z",
       "status": "complete"
     },
     "traffic": {
-      "as_of": "2026-10-25T05:24:35Z",
+      "as_of": "2026-10-25T05:31:35Z",
       "reason": null,
       "status": "live"
     },
     "workshops": {
-      "as_of": "2026-10-25T05:24:35Z",
+      "as_of": "2026-10-25T05:31:35Z",
       "status": "partial"
     }
   },
@@ -2044,7 +2044,7 @@
       }
     }
   },
-  "generated_at": "2026-10-25T05:24:35Z",
+  "generated_at": "2026-10-25T05:31:35Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -2437,7 +2437,7 @@
       "status": "complete"
     },
     "week": {
-      "baseline_at": "2026-10-17T05:30:44Z",
+      "baseline_at": "2026-10-18T05:30:34Z",
       "days": 7,
       "metrics": {
         "achievement_achievement_rate": {
@@ -2513,10 +2513,10 @@
           "value": null
         },
         "agent_file_downloads": {
-          "baseline": 258,
+          "baseline": 398,
           "calculation": "snapshot_change",
-          "change": 277,
-          "change_percent": 107.4,
+          "change": 137,
+          "change_percent": 34.4,
           "status": "available",
           "value": 535
         },
@@ -2545,18 +2545,18 @@
           "value": 2
         },
         "clone_uniques_14d": {
-          "baseline": 389,
+          "baseline": 413,
           "calculation": "snapshot_change",
-          "change": 216,
-          "change_percent": 55.5,
+          "change": 192,
+          "change_percent": 46.5,
           "status": "available",
           "value": 605
         },
         "clones_excluding_ci": {
-          "baseline": 16735,
+          "baseline": 16991,
           "calculation": "snapshot_change",
-          "change": 2731,
-          "change_percent": 16.3,
+          "change": 2475,
+          "change_percent": 14.6,
           "status": "available",
           "value": 19466
         },
@@ -2577,10 +2577,10 @@
           "value": 1896
         },
         "installer_downloads": {
-          "baseline": 185,
+          "baseline": 191,
           "calculation": "snapshot_change",
-          "change": 33,
-          "change_percent": 17.8,
+          "change": 27,
+          "change_percent": 14.1,
           "status": "available",
           "value": 218
         },
@@ -2609,10 +2609,10 @@
           "value": 16
         },
         "release_downloads": {
-          "baseline": 430,
+          "baseline": 577,
           "calculation": "snapshot_change",
-          "change": 265,
-          "change_percent": 61.6,
+          "change": 118,
+          "change_percent": 20.5,
           "status": "available",
           "value": 695
         },
@@ -2681,10 +2681,10 @@
           "value": 13
         },
         "view_uniques_14d": {
-          "baseline": 30,
+          "baseline": 29,
           "calculation": "snapshot_change",
-          "change": -7,
-          "change_percent": -23.3,
+          "change": -6,
+          "change_percent": -20.7,
           "status": "available",
           "value": 23
         },
@@ -2749,34 +2749,34 @@
         "agent_acquisitions": [],
         "agent_downloads": [
           {
-            "change": 7,
+            "change": 5,
             "current": 16,
             "id": "@aibast-agents-library/account-intelligence",
             "label": "Account Intelligence Agent"
           },
           {
-            "change": 6,
+            "change": 4,
             "current": 10,
             "id": "@aibast-agents-library/asset-maintenance-forecast",
             "label": "Asset Maintenance Forecast Agent"
           },
           {
-            "change": 6,
+            "change": 4,
             "current": 9,
             "id": "@aibast-agents-library/deal-progression",
             "label": "Deal Progression Agent"
           },
           {
-            "change": 6,
+            "change": 4,
             "current": 9,
             "id": "@aibast-agents-library/emission-tracking",
             "label": "Emissions Tracking Agent"
           },
           {
-            "change": 6,
-            "current": 9,
-            "id": "@aibast-agents-library/fraud-detection-alert",
-            "label": "Fraud Detection and Alert Agent"
+            "change": 4,
+            "current": 5,
+            "id": "@aibast-agents-library/field-permit-to-work",
+            "label": "Field Permit to Work Agent"
           }
         ],
         "agent_upvotes": [],
@@ -2815,12 +2815,12 @@
         ]
       },
       "name": "Weekly",
-      "observed_days": 8.0,
+      "observed_days": 7.0,
       "status": "complete"
     }
   },
   "repo": {
-    "as_of": "2026-10-25T05:24:35Z",
+    "as_of": "2026-10-25T05:31:35Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
@@ -2829,7 +2829,7 @@
     "name": "aibast-agents-library",
     "open_issues": 17,
     "owner": "microsoft",
-    "pushed_at": "2026-10-25T05:15:19Z",
+    "pushed_at": "2026-10-25T05:24:55Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
     "size_kb": 5453245,
     "stars": 8,
