@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - October 24, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 25, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-24T05:31:46Z`
+**Snapshot:** `2026-10-25T00:19:50Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 20,233 | +1,886 observed - partial | +12,066 observed - partial |
-| Git clones | 19,096 | +1,884 observed | +11,965 observed |
-| Clones excluding CI estimate | 19,096 | +2,361 (+14.1%) | +12,045 (+170.8%) |
-| AIBAST repository and Pages views | 1,148 | +17 observed | +219 observed |
+| AIBAST observed repository downloads | 20,604 | +1,898 observed - partial | +12,370 observed - partial |
+| Git clones | 19,466 | +1,896 observed | +12,269 observed |
+| Clones excluding CI estimate | 19,466 | +2,731 (+16.3%) | +12,415 (+176.1%) |
+| AIBAST repository and Pages views | 1,157 | +16 observed | +226 observed |
 | jsDelivr file hits | 519 | +2 observed | +101 observed |
-| Release asset downloads | 618 | +188 (+43.7%) | +412 (+200.0%) |
-| AIBAST direct agent file downloads | 415 | +157 (+60.9%) | +272 (+190.2%) |
+| Release asset downloads | 619 | +189 (+44.0%) | +413 (+200.5%) |
+| AIBAST direct agent file downloads | 535 | +277 (+107.4%) | +392 (+274.1%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
 | AIBAST installer file downloads | 215 | +30 (+16.2%) | +139 (+182.9%) |
-| Unique cloners (14-day window) | 607 | +218 (+56.0%) snapshot change | +254 (+72.0%) snapshot change |
-| Unique visitors (14-day window) | 20 | -10 (-33.3%) snapshot change | -24 (-54.5%) snapshot change |
+| Unique cloners (14-day window) | 605 | +216 (+55.5%) snapshot change | +252 (+71.4%) snapshot change |
+| Unique visitors (14-day window) | 23 | -7 (-23.3%) snapshot change | -21 (-47.7%) snapshot change |
 
 ## Community engagement
 
@@ -31,9 +31,9 @@
 | Open GitHub issues | 16 | +0 (+0.0%) | -25 (-61.0%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 91 | -9 (-9.0%) - partial | +91 - partial |
+| Workshop usage events | 207 | +107 (+107.0%) - partial | +207 - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
-| Workshop file downloads | 91 | +0 (+0.0%) | +91 |
+| Workshop file downloads | 207 | +116 (+127.5%) | +207 |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 9,750 | +380 (+4.1%) | +4,236 (+76.8%) |
-| Files covered by download observations | 9,750 | +380 (+4.1%) | +4,236 (+76.8%) |
+| Tracked repository files | 9,756 | +386 (+4.1%) | +4,242 (+76.9%) |
+| Files covered by download observations | 9,756 | +386 (+4.1%) | +4,242 (+76.9%) |
 | Catalog agents | 90 | +4 (+4.7%) | +18 (+25.0%) |
 | Tracked SKILL.md files | 505 | +14 (+2.9%) | +271 (+115.8%) |
 | Canonical workshops | 69 | +4 (+6.2%) | +18 (+35.3%) |
@@ -66,30 +66,34 @@
 ## Top weekly movers
 
 **Workshop usage**
-- Product Line Optimization Agent: -9 (current 0)
+- Deal Progression Agent: +30 (current 30)
+- Account Intelligence Agent: +26 (current 43)
+- Asset Maintenance Forecast Agent: +3 (current 3)
+- Cart Abandonment Recovery Agent: +3 (current 3)
+- Customer Loyalty and Rewards Agent: +3 (current 3)
 
 **Agent downloads**
-- Building Permit Processing Agent: +4 (current 12)
-- Account Intelligence Agent: +3 (current 12)
-- Asset Maintenance Forecast Agent: +3 (current 7)
-- Benefits Enrollment Agent: +3 (current 3)
-- Claims Processing Agent: +3 (current 6)
+- Account Intelligence Agent: +7 (current 16)
+- Asset Maintenance Forecast Agent: +6 (current 10)
+- Deal Progression Agent: +6 (current 9)
+- Emissions Tracking Agent: +6 (current 9)
+- Fraud Detection and Alert Agent: +6 (current 9)
 
 ## Top monthly movers
 
 **Workshop usage**
+- Account Intelligence Agent: +43 (current 43)
+- Deal Progression Agent: +30 (current 30)
 - Ask HR Agent: +18 (current 18)
-- Account Intelligence Agent: +17 (current 17)
 - Portfolio Rebalancing Agent: +15 (current 15)
 - Customer Escalations Agent: +12 (current 12)
-- Procurement Agent: +11 (current 11)
 
 **Agent downloads**
+- Account Intelligence Agent: +9 (current 16)
 - Building Permit Processing Agent: +9 (current 12)
-- Ask HR Agent: +7 (current 10)
-- Field Service Dispatch Agent: +6 (current 8)
-- Account Intelligence Agent: +5 (current 12)
-- Care Gap Closure Agent: +5 (current 7)
+- Field Service Dispatch Agent: +9 (current 11)
+- Customer Onboarding Agent: +8 (current 9)
+- Customer Sentiment and Churn Prediction Agent: +8 (current 9)
 
 ## Measurement notes
 
