@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-28T05:21:33Z`
+**Snapshot:** `2026-10-28T05:27:20Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 22,294 | +2,194 observed - partial | +11,642 observed - partial |
+| AIBAST observed repository downloads | 22,297 | +2,194 observed - partial | +11,642 observed - partial |
 | Git clones | 20,862 | +2,194 observed | +11,541 observed |
 | Clones excluding CI estimate | 20,862 | +3,292 (+18.7%) | +13,811 (+195.9%) |
 | AIBAST repository and Pages views | 1,194 | +46 observed | +255 observed |
 | jsDelivr file hits | 519 | +0 observed | +101 observed |
-| Release asset downloads | 913 | +316 (+52.9%) | +707 (+343.2%) |
+| Release asset downloads | 916 | +319 (+53.4%) | +710 (+344.7%) |
 | AIBAST direct agent file downloads | 689 | +283 (+69.7%) | +546 (+381.8%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
-| AIBAST installer file downloads | 227 | +24 (+11.8%) | +151 (+198.7%) |
+| AIBAST installer file downloads | 230 | +27 (+13.3%) | +154 (+202.6%) |
 | Unique cloners (14-day window) | 699 | +228 (+48.4%) snapshot change | +346 (+98.0%) snapshot change |
 | Unique visitors (14-day window) | 34 | +7 (+25.9%) snapshot change | -10 (-22.7%) snapshot change |
 
