@@ -1,32 +1,32 @@
-**Subject:** AIBAST weekly and monthly impact report - October 28, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 29, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-28T05:27:20Z`
+**Snapshot:** `2026-10-29T05:14:48Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 22,297 | +2,194 observed - partial | +11,642 observed - partial |
-| Git clones | 20,862 | +2,194 observed | +11,541 observed |
-| Clones excluding CI estimate | 20,862 | +3,292 (+18.7%) | +13,811 (+195.9%) |
-| AIBAST repository and Pages views | 1,194 | +46 observed | +255 observed |
+| AIBAST observed repository downloads | 22,574 | +2,042 observed - partial | +11,423 observed - partial |
+| Git clones | 21,138 | +2,042 observed | +11,322 observed |
+| Clones excluding CI estimate | 21,138 | +3,271 (+18.3%) | +14,087 (+199.8%) |
+| AIBAST repository and Pages views | 1,197 | +49 observed | +256 observed |
 | jsDelivr file hits | 519 | +0 observed | +101 observed |
-| Release asset downloads | 916 | +319 (+53.4%) | +710 (+344.7%) |
-| AIBAST direct agent file downloads | 689 | +283 (+69.7%) | +546 (+381.8%) |
+| Release asset downloads | 917 | +312 (+51.6%) | +711 (+345.1%) |
+| AIBAST direct agent file downloads | 689 | +278 (+67.6%) | +546 (+381.8%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
-| AIBAST installer file downloads | 230 | +27 (+13.3%) | +154 (+202.6%) |
-| Unique cloners (14-day window) | 699 | +228 (+48.4%) snapshot change | +346 (+98.0%) snapshot change |
-| Unique visitors (14-day window) | 34 | +7 (+25.9%) snapshot change | -10 (-22.7%) snapshot change |
+| AIBAST installer file downloads | 231 | +25 (+12.1%) | +155 (+203.9%) |
+| Unique cloners (14-day window) | 706 | +171 (+32.0%) snapshot change | +353 (+100.0%) snapshot change |
+| Unique visitors (14-day window) | 35 | +4 (+12.9%) snapshot change | -9 (-20.5%) snapshot change |
 
 ## Community engagement
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
 | GitHub stars | 8 | +0 (+0.0%) | +1 (+14.3%) |
-| GitHub forks | 8 | +1 (+14.3%) | +1 (+14.3%) |
+| GitHub forks | 9 | +2 (+28.6%) | +2 (+28.6%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Open GitHub issues | 17 | +1 (+6.2%) | -24 (-58.5%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
@@ -76,8 +76,8 @@
 - Win Loss Analysis Agent: +8 (current 13)
 - Account Intelligence Agent: +7 (current 18)
 - Competitive Intelligence: +7 (current 11)
-- Asset Maintenance Forecast Agent: +6 (current 12)
-- Fraud Detection and Alert Agent: +6 (current 11)
+- Asset Maintenance Forecast Agent: +5 (current 12)
+- Cart Abandonment Recovery Agent: +5 (current 11)
 
 ## Top monthly movers
 
