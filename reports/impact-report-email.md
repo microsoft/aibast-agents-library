@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - October 30, 2026
+**Subject:** AIBAST weekly and monthly impact report - October 31, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-10-30T05:27:36Z`
+**Snapshot:** `2026-10-31T05:10:09Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 22,795 | +1,887 observed - partial | +10,281 observed - partial |
-| Git clones | 21,353 | +1,887 observed | +10,180 observed |
-| Clones excluding CI estimate | 21,353 | +3,026 (+16.5%) | +14,302 (+202.8%) |
-| AIBAST repository and Pages views | 1,208 | +51 observed | +267 observed |
+| AIBAST observed repository downloads | 23,051 | +1,890 observed - partial | +6,875 observed - partial |
+| Git clones | 21,609 | +1,890 observed | +6,774 observed |
+| Clones excluding CI estimate | 21,609 | +2,513 (+13.2%) | +14,558 (+206.5%) |
+| AIBAST repository and Pages views | 1,219 | +47 observed | +278 observed |
 | jsDelivr file hits | 519 | +0 observed | +101 observed |
-| Release asset downloads | 923 | +313 (+51.3%) | +717 (+348.1%) |
-| AIBAST direct agent file downloads | 689 | +276 (+66.8%) | +546 (+381.8%) |
+| Release asset downloads | 923 | +308 (+50.1%) | +717 (+348.1%) |
+| AIBAST direct agent file downloads | 689 | +274 (+66.0%) | +546 (+381.8%) |
 | AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
-| AIBAST installer file downloads | 237 | +28 (+13.4%) | +161 (+211.8%) |
-| Unique cloners (14-day window) | 736 | +172 (+30.5%) snapshot change | +383 (+108.5%) snapshot change |
-| Unique visitors (14-day window) | 43 | +19 (+79.2%) snapshot change | -1 (-2.3%) snapshot change |
+| AIBAST installer file downloads | 237 | +25 (+11.8%) | +161 (+211.8%) |
+| Unique cloners (14-day window) | 744 | +137 (+22.6%) snapshot change | +391 (+110.8%) snapshot change |
+| Unique visitors (14-day window) | 47 | +27 (+135.0%) snapshot change | +3 (+6.8%) snapshot change |
 
 ## Community engagement
 
@@ -31,8 +31,8 @@
 | Open GitHub issues | 17 | +1 (+6.2%) | -24 (-58.5%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 226 | +133 (+143.0%) - partial | +226 - partial |
-| Workshop views (14-day top paths) | 4 | +2 (+100.0%) snapshot change | Baseline unavailable |
+| Workshop usage events | 226 | +135 (+148.4%) - partial | +226 - partial |
+| Workshop views (14-day top paths) | 4 | Baseline unavailable | Baseline unavailable |
 | Workshop file downloads | 222 | +131 (+144.0%) | +222 |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | +0 (+0.0%) |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
@@ -55,27 +55,27 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 9,756 | +386 (+4.1%) | +4,242 (+76.9%) |
-| Files covered by download observations | 9,756 | +386 (+4.1%) | +4,242 (+76.9%) |
-| Catalog agents | 90 | +4 (+4.7%) | +18 (+25.0%) |
-| Tracked SKILL.md files | 505 | +14 (+2.9%) | +271 (+115.8%) |
-| Canonical workshops | 69 | +4 (+6.2%) | +18 (+35.3%) |
-| Deployable stacks | 70 | +4 (+6.1%) | +18 (+34.6%) |
-| Industry verticals | 13 | +1 (+8.3%) | +1 (+8.3%) |
+| Tracked repository files | 9,756 | +6 (+0.1%) | +4,242 (+76.9%) |
+| Files covered by download observations | 9,756 | +6 (+0.1%) | +4,242 (+76.9%) |
+| Catalog agents | 90 | +0 (+0.0%) | +18 (+25.0%) |
+| Tracked SKILL.md files | 505 | +0 (+0.0%) | +271 (+115.8%) |
+| Canonical workshops | 69 | +0 (+0.0%) | +18 (+35.3%) |
+| Deployable stacks | 70 | +0 (+0.0%) | +18 (+34.6%) |
+| Industry verticals | 13 | +0 (+0.0%) | +1 (+8.3%) |
 
 ## Top weekly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +31 (current 50)
+- Account Intelligence Agent: +33 (current 50)
 - Deal Progression Agent: +30 (current 30)
 - Win/Loss Analysis Agent: +6 (current 6)
 - Asset Maintenance Forecast Agent: +3 (current 3)
-- Cart Abandonment Recovery Agent: +3 (current 3)
+- Campaign Delivery Optimizer Agent: +3 (current 3)
 
 **Agent downloads**
 - Win Loss Analysis Agent: +8 (current 13)
-- Account Intelligence Agent: +7 (current 18)
 - Competitive Intelligence: +7 (current 11)
+- Account Intelligence Agent: +6 (current 18)
 - Asset Maintenance Forecast Agent: +5 (current 12)
 - Cart Abandonment Recovery Agent: +5 (current 11)
 
