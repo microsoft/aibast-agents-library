@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAPP Hatchery Flow</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00d4ff, #ffd700, #00ff88, #e94560);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #8b949e;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .mermaid {
+            background: #161b22;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #30363d;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #8b949e;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+        .principle {
+            margin-top: 2rem;
+            padding: 1rem 1.5rem;
+            background: #161b22;
+            border-left: 3px solid #ffd700;
+            border-radius: 0 8px 8px 0;
+            color: #c9d1d9;
+            font-style: italic;
+            max-width: 600px;
+        }
+        footer {
+            margin-top: 2rem;
+            color: #484f58;
+            font-size: 0.8rem;
+        }
+        footer a { color: #58a6ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>RAPP Hatchery Flow</h1>
+    <p class="subtitle">From local brainstem to customer cloud deployment</p>
+
+    <div class="mermaid">
+flowchart TD
+    subgraph T1["Tier 1 — Brainstem (local)"]
+        A["User runs brainstem locally
+        localhost:7071"] --> B{"User says:
+        'I want to deploy
+        to Azure'"}
+    end
+
+    B -->|"soul.md guidance"| C["Run one-liner fetch script"]
+
+    subgraph HATCH["Hatchery Bridge"]
+        C --> D["hatch.sh / hatch.ps1
+        downloads rapp_hatchery_agent.py
+        into brainstem agents/"]
+        D --> E["Restart brainstem"]
+        E --> F["'Hatch a project
+        called contoso-bot'"]
+    end
+
+    F --> G["git clone CommunityRAPP
+    ~/rapp-projects/contoso-bot/"]
+    G --> H["Create venv + install deps
+    Copy settings template"]
+    H --> I["'Set my OpenAI endpoint to ...'"]
+    I --> J["Configure local.settings.json"]
+
+    subgraph T2["Tier 2 — Hippocampus (cloud)"]
+        J --> K["'What's next?'"]
+        K --> L["Test locally on port 7072"]
+        L --> M["Deploy to Azure Functions
+        func publish --build remote"]
+    end
+
+    subgraph T3["Tier 3 — Nervous System (enterprise)"]
+        M --> N["Generate Copilot Studio
+        solution ZIP"]
+        N --> O["Import to Power Platform"]
+        O --> P["Live in Teams / M365 Copilot"]
+    end
+
+    style T1 fill:#1a1a2e,stroke:#00d4ff,color:#fff
+    style HATCH fill:#16213e,stroke:#ffd700,color:#fff
+    style T2 fill:#0f3460,stroke:#00ff88,color:#fff
+    style T3 fill:#533483,stroke:#e94560,color:#fff
+    </div>
+
+    <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#00d4ff"></div> T1 — Brainstem (local)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ffd700"></div> Hatchery Bridge</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#00ff88"></div> T2 — Hippocampus (Azure)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#e94560"></div> T3 — Nervous System (M365)</div>
+    </div>
+
+    <div class="principle">
+        "Start small, layer up when ready." — Each tier is offered only when the user asks. The brainstem stays clean.
+    </div>
+
+    <footer>
+        RAPP — Rapid Agent Prototype Platform &middot;
+        <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
+    </footer>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1a1a2e',
+                primaryTextColor: '#e6edf3',
+                lineColor: '#58a6ff',
+                fontSize: '14px'
+            },
+            flowchart: {
+                curve: 'basis',
+                padding: 20
+            }
+        });
+    </script>
+</body>
+</html>
