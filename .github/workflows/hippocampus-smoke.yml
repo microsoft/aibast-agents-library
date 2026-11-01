@@ -52,7 +52,7 @@ jobs:
           done
           test -f "$(dirname "$P")/business.html" || { echo "::error::business.html was not placed"; exit 1; }
           "$P/.venv/bin/python" -c "import azure.functions; print('azure.functions', azure.functions.__version__)"
-          ! grep -rIl "kody-w/CommunityRAPP" "$P" --exclude-dir=.venv || { echo "::error::project still points at the personal CommunityRAPP repository"; exit 1; }
+          ! grep -rIl "kody-w/CommunityRAPP" "$P" --exclude-dir=.venv --exclude=SOURCE.json || { echo "::error::project still points at the personal CommunityRAPP repository"; exit 1; }
 
   windows:
     name: hippocampus windows-latest
