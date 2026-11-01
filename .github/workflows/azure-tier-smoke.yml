@@ -42,11 +42,12 @@ jobs:
         run: npm install -g azure-functions-core-tools@4 --unsafe-perm true
       - name: Install (prompts answered through a terminal)
         run: |
-          # The installer reads prompts from a terminal; `script` gives it one. "3" skips Azure OpenAI setup.
+          # The installer reads prompts from a terminal; `script` gives it one. Earlier steps can drain a short
+          # answer stream, so an endless stream of empty lines takes every default ("3" skips Azure OpenAI setup).
           if [ "$(uname)" = Darwin ]; then
-            printf '3\n\n\n' | script -q /dev/null bash rapp_ai/install.sh
+            yes '' | script -q /dev/null bash rapp_ai/install.sh
           else
-            printf '3\n\n\n' | script -qec "bash rapp_ai/install.sh" /dev/null
+            yes '' | script -qec "bash rapp_ai/install.sh" /dev/null
           fi
       - name: Check the install
         run: |
