@@ -37,6 +37,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Preinstall Azure Functions Core Tools (macOS)
+        if: runner.os == 'macOS'
+        run: npm install -g azure-functions-core-tools@4 --unsafe-perm true
       - name: Install (prompts answered through a terminal)
         run: |
           # The installer reads prompts from a terminal; `script` gives it one. "3" skips Azure OpenAI setup.
