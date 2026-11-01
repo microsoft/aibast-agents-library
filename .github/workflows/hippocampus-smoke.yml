@@ -38,6 +38,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Preinstall Azure Functions Core Tools (macOS)
+        # The installer's Homebrew route is flaky on hosted runners; this job tests the template fetch, not Homebrew.
+        if: runner.os == 'macOS'
+        run: npm install -g azure-functions-core-tools@4 --unsafe-perm true
       - name: Install a project
         env:
           RAPP_PROJECTS_DIR: ${{ runner.temp }}/rapp-projects
