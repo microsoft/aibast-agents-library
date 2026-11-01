@@ -36,7 +36,7 @@ SITE = "https://microsoft.github.io/aibast-agents-library/docs/vault/"
 # live in NOTICE.md; notes cite it by section and this commit.
 UPSTREAM_COMMIT = "0b24e7d60786d39d97265338add9ca784bf5a7ab"
 
-SECTIONS = ("Start Here", "Production Guide", "Protocol", "Operations", "Building", "Reference")
+SECTIONS = ("Start Here", "Production Guide", "Protocol", "Operations", "Building", "ms-rapp-1", "Reference")
 # Notes in these sections restate the upstream specification, so each must name the pin.
 PINNED_SECTIONS = ("Protocol", "Operations")
 TOP_LEVEL = ("README.md", "_index.md", "NOTICE.md")

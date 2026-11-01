@@ -116,6 +116,15 @@ Every note in the RAPP/1 reference vault, grouped by section. Start with [[Welco
 - [[The Agent Contract]] - What exactly must a Brainstem agent file look like, and how does it reach the user through POST /chat?
 - [[The Brainstem Kernel]] - What is the Brainstem kernel this library ships, and what does it guarantee to every agent and host?
 
+## ms-rapp-1
+
+- [[Microsoft Foundry]] - How is ms-rapp/1 used in Microsoft Foundry, and what does a Foundry agent see?
+- [[ms-rapp-1 Overview]] - What is ms-rapp/1, and how does it stay backward compatible with rapp/1 and the Brainstem?
+- [[One Concept Across the Stack]] - How does one Step file show up in Copilot Studio, Microsoft 365 Copilot, Foundry, the Agent Framework and the Agents SDK?
+- [[RAPP Runtime]] - What is RAPP Runtime, and how does each of its pieces map to the Brainstem?
+- [[Run Receipts and Change Control]] - How does ms-rapp/1 keep an AI step auditable, and how does a new Step get into production?
+- [[Steps]] - What does a Step file look like, and why does it load unchanged in a Brainstem?
+
 ## Reference
 
 - [[Failure Atlas]] - When a frame is refused, which check failed and what usually caused it?
@@ -4282,6 +4291,336 @@ cd rapp_brainstem && python -m pytest tests -v
 - [[Conformance and Drift]]
 - [[Step 07 Deploy Prototype]]
 - [[Sources and Provenance]]
+
+========================================================================
+FILE: ms-rapp-1/Microsoft Foundry.md
+========================================================================
+
+---
+title: Microsoft Foundry
+section: ms-rapp-1
+status: published
+hook: How is ms-rapp/1 used in Microsoft Foundry, and what does a Foundry agent see?
+source: "docs/ms-rapp1/openapi.json; tools/build_ms_rapp1.py; Microsoft Learn: Foundry Agent Service tool catalog, function calling, and agent tracing (checked 2026-11-01)"
+---
+
+# Microsoft Foundry
+
+ms-rapp/1 meets Microsoft Foundry at one point: the **Step Catalog becomes an OpenAPI tool**.
+A Foundry agent then calls Steps the same way a Brainstem calls agents, with no custom code.
+
+## The answer in brief
+
+- `tools/build_ms_rapp1.py --write` renders `docs/ms-rapp1/openapi.json`: one operation per Step.
+- Add that file to a Foundry agent as an **OpenAPI tool**, pointed at your RAPP Runtime host.
+- Put it in a **toolbox** to share the same Steps across many agents.
+- Read each run in Foundry **tracing**, which records every tool call.
+
+This page describes a pattern. It is separate from the library's solution templates, which use Copilot Studio, Microsoft 365 and Power Platform.
+
+## Mapping
+
+| ms-rapp/1 | Microsoft Foundry | Note |
+|---|---|---|
+| Step | an operation in an OpenAPI tool | the operation's request body is the Step's `metadata.parameters` |
+| Step Catalog | one OpenAPI tool, optionally in a toolbox | OpenAPI tools can be shared through toolboxes |
+| Step (in-process) | a function tool | the Step's `metadata` is already a function schema; your app runs `perform` |
+| Step API host | the server URL in the OpenAPI file | your RAPP Runtime deployment |
+| Run Receipt | agent tracing | built on OpenTelemetry and Application Insights; content recording is off by default |
+| Step Policy | agent instructions and content filters | the Step's own checks still run in RAPP Runtime |
+| Change Control | a new OpenAPI file version | rebuild the file when the catalog changes; `--check` fails if it is stale |
+
+## Two ways to connect
+
+**OpenAPI tool (recommended).** The Step runs in RAPP Runtime. Foundry calls the Step API over HTTPS. One file describes the whole catalog, and toolboxes can share it.
+
+**Function tool.** Your application registers the Step's `metadata` as a function and runs `perform` itself when the model calls it. Use this when the Step must run inside your own process. Function tools run on the client side, so they cannot go in a toolbox.
+
+## What stays the same
+
+The Step file does not change between hosts. The same `action_items_agent.py` loads in a Brainstem, runs in RAPP Runtime, and is described to Foundry by the generated OpenAPI file.
+
+## Not yet verified
+
+The generated file has not been loaded into a live Foundry project. Foundry features named here were read from Microsoft Learn on 2026-11-01; some, such as toolboxes, may be in preview. Check the current documentation before relying on them.
+
+See also [[ms-rapp-1 Overview]], [[Steps]] and [[RAPP Runtime]].
+
+========================================================================
+FILE: ms-rapp-1/ms-rapp-1 Overview.md
+========================================================================
+
+---
+title: ms-rapp-1 Overview
+section: ms-rapp-1
+status: published
+hook: What is ms-rapp/1, and how does it stay backward compatible with rapp/1 and the Brainstem?
+source: "This vault's rapp/1 notes at the pinned commit; docs/ms-rapp1/; tools/build_ms_rapp1.py; tests/test_ms_rapp1.py"
+upstream_commit: 0b24e7d60786d39d97265338add9ca784bf5a7ab
+---
+
+# ms-rapp-1 Overview
+
+**ms-rapp/1** is the enterprise profile of rapp/1.
+It keeps every rapp/1 rule unchanged and adds one extension, **RAPP Runtime**, for running AI steps inside an enterprise review boundary.
+If you know the Brainstem, you already know the pattern: one fixed engine, one endpoint, a folder of single-file capabilities.
+
+## The answer in brief
+
+- **rapp/1 is the base, unchanged.** This vault's Protocol and Building notes, pinned to one upstream commit, are the rules ms-rapp/1 inherits.
+- **Anything that runs on the Brainstem runs here.** A Step is a rapp/1 agent: same base class, same metadata, same `perform`.
+- **The extension is additive.** Steps carry two extra fields that a rapp/1 host ignores.
+- **Compatibility is tested, not promised.** `tests/test_ms_rapp1.py` loads each example Step as a plain agent and fails if the profile drifts.
+
+## Three levels
+
+| Level | What conforms | What it adds |
+|---|---|---|
+| 1. rapp/1 | Any agent that follows [[The Agent Contract]] | Nothing. This is the Brainstem's own contract. |
+| 2. RAPP Runtime | A Step: a rapp/1 agent with `ROUTE` and `RESULT_SCHEMA` | The Step API, the Step Catalog, Run Receipts. See [[RAPP Runtime]] and [[Steps]]. |
+| 3. Microsoft Foundry | A Step Catalog published as an OpenAPI tool | Foundry agents call Steps with no custom code. See [[Microsoft Foundry]]. |
+
+Each level includes the one before it. A file that conforms at level 3 still loads in a Brainstem at level 1.
+
+## Rules that never change
+
+1. **Never break the agent contract.** `BasicAgent`, `metadata`, `perform(**kwargs)` and the `*_agent.py` file name stay exactly as rapp/1 defines them.
+2. **Never break the wire.** A host that offers `/chat` keeps the request and response described in [[The Wire]].
+3. **Additions are named, never silent.** Everything ms-rapp/1 adds is listed in these notes and marked as an extension.
+4. **Rename with an alias.** When an enterprise name differs from a rapp/1 name, both work. See [[RAPP Runtime]] for the name map.
+
+## How it was built
+
+ms-rapp/1 follows the distribution pattern in [[Distros and Pinning]]: the upstream rules come in at a pinned commit, and enterprise additions are layered on top and labeled.
+Drift is caught the same way as in [[Conformance and Drift]]: a build check and a test, run on every change.
+
+========================================================================
+FILE: ms-rapp-1/One Concept Across the Stack.md
+========================================================================
+
+---
+title: One Concept Across the Stack
+section: ms-rapp-1
+status: published
+hook: How does one Step file show up in Copilot Studio, Microsoft 365 Copilot, Foundry, the Agent Framework and the Agents SDK?
+source: "docs/ms-rapp1/; tools/build_ms_rapp1.py; Microsoft Learn: Copilot Studio REST API tools and MCP, Microsoft 365 Copilot API and MCP plugins, Foundry tool catalog, Agent Framework tools (checked 2026-11-01)"
+---
+
+# One Concept Across the Stack
+
+The Microsoft agent stack has many surfaces, and each has its own word for "a thing the model can call": action, tool, plugin, connector, function, skill.
+ms-rapp/1 reduces them to one concept: **a Step is a function with a schema**. Every surface below already accepts that shape, so one Step file reaches all of them.
+
+## The answer in brief
+
+- A Step's `metadata` is a function schema: a name, a description, a parameters object.
+- That one schema can be written out three ways: a **function tool**, an **OpenAPI operation**, or an **MCP tool**.
+- Every Microsoft agent surface accepts at least one of the three. None needs the Step to change.
+
+## The three projections
+
+| Projection | Made from | Who accepts it |
+|---|---|---|
+| Function tool | `metadata` as is (`BasicAgent.to_tool()`) | Brainstem, Foundry function calling, Agent Framework function tools, Agents SDK code |
+| OpenAPI operation | `docs/ms-rapp1/openapi.json`, one operation per Step | Copilot Studio REST API tools, Power Platform custom connectors, Foundry OpenAPI tools, Microsoft 365 Copilot API plugins |
+| MCP tool | `name`, `description`, and `parameters` as the input schema | Copilot Studio MCP, Microsoft 365 Copilot MCP plugins, Foundry MCP, Agent Framework MCP |
+
+The function tool and the OpenAPI file are built and tested in this repository. The MCP projection is the same three fields under MCP's names; it is described here and not yet built.
+
+## Surface by surface
+
+| Surface | Its word | How a Step arrives |
+|---|---|---|
+| Brainstem | agent | the file itself, in `agents/` |
+| RAPP Runtime | Step | the file itself, in the Step Catalog |
+| Copilot Studio | tool (REST API or MCP) | the OpenAPI file; Copilot Studio converts version 3 files to version 2 |
+| Power Platform | custom connector | the OpenAPI file |
+| Microsoft 365 Copilot | plugin (API or MCP) | the OpenAPI file, or MCP |
+| Microsoft Foundry | tool (OpenAPI, function, MCP) | see [[Microsoft Foundry]] |
+| Microsoft Agent Framework | function tool, MCP tool | `metadata` as a function, or MCP |
+| Microsoft 365 Agents SDK | your agent's code | the agent calls the Step API, or runs `perform` in process |
+
+## Why one concept is enough
+
+Each surface adds hosting, channels, sign-in and governance around the same core: the model reads a schema and calls a function.
+Keep the function in one file with one schema and the surfaces become delivery choices, not rewrites.
+Change the Step once and every projection is rebuilt from it; `tools/build_ms_rapp1.py --check` fails if the OpenAPI file falls behind.
+
+## Not yet verified
+
+These mappings follow the published shape of each surface, read from Microsoft Learn on 2026-11-01. The generated OpenAPI file has not yet been imported into Copilot Studio, Power Platform, Microsoft 365 Copilot or Foundry, and the MCP projection is not built. Several of these features are in preview.
+
+See also [[Steps]], [[RAPP Runtime]] and [[ms-rapp-1 Overview]].
+
+========================================================================
+FILE: ms-rapp-1/RAPP Runtime.md
+========================================================================
+
+---
+title: RAPP Runtime
+section: ms-rapp-1
+status: published
+hook: What is RAPP Runtime, and how does each of its pieces map to the Brainstem?
+source: "docs/ms-rapp1/; the Brainstem kernel in rapp_brainstem/; tools/build_ms_rapp1.py"
+---
+
+# RAPP Runtime
+
+**RAPP Runtime** is the ms-rapp/1 engine that runs AI steps.
+It has the Brainstem's shape, named in terms enterprise engineers and reviewers already use.
+
+## The answer in brief
+
+- One fixed engine runs every Step. It does not change per use case.
+- One signed-in endpoint, the **Step API**, serves every Step. A new capability never adds an endpoint.
+- The **Step Catalog** is a folder of reviewed Step files, loaded when they are called.
+- Every run leaves a **Run Receipt** for audit.
+
+## Name map
+
+| RAPP Runtime | Brainstem | What it is |
+|---|---|---|
+| RAPP Runtime | Brainstem kernel | The fixed engine. See [[The Brainstem Kernel]]. |
+| Step API | `POST /chat` | `POST /api/lens/<route>`: one endpoint for every Step. |
+| Step | `agent.py` | One file, one business task, one checked result. See [[Steps]]. |
+| Step Catalog | `agents/` | The approved set of Steps: only reviewed, deployed files. |
+| Live catalog | agents reload every request | A merged and deployed Step is used on the next call. |
+| Step Policy | `soul.md` | Fixed instructions. The model passes values; the Step checks them. |
+| Result | `response` | The checked output, returned as `frame`. |
+| Run Receipt | agent logs | Which Step, which model, how many attempts, what usage. |
+| Change Control | a pull request into `agents/` | A Step arrives only by reviewed pull request and deploy, never from a browser. |
+
+The code names (`lens`, `/api/lens/<route>`) stay as they are. The enterprise names are documentation names, so no published caller breaks.
+
+## Where the shape differs, on purpose
+
+| | Brainstem `/chat` | Step API |
+|---|---|---|
+| Input | `{user_input, conversation_history, session_id}` | the Step's own `metadata.parameters` |
+| Output | `{response, session_id, ...}` | `{frame}`, matching the Step's `RESULT_SCHEMA` |
+| Who picks the agent | the model | the caller, by route |
+
+A Step is a fixed task with structured input. That keeps each Step reviewable on its own, which is what an enterprise release review assesses.
+A free-text `/chat` on RAPP Runtime is allowed by the profile, but it accepts open text, so it should go through its own review before release.
+
+See also [[ms-rapp-1 Overview]] and [[Run Receipts and Change Control]].
+
+========================================================================
+FILE: ms-rapp-1/Run Receipts and Change Control.md
+========================================================================
+
+---
+title: Run Receipts and Change Control
+section: ms-rapp-1
+status: published
+hook: How does ms-rapp/1 keep an AI step auditable, and how does a new Step get into production?
+source: "docs/ms-rapp1/; this vault's Security Considerations and Conformance and Drift notes"
+---
+
+# Run Receipts and Change Control
+
+Two rules make RAPP Runtime fit an enterprise review: every run leaves a record, and the set of Steps changes only through review.
+
+## The answer in brief
+
+- A **Run Receipt** records each run: the Step, the model, the number of attempts and the usage.
+- The **Step Catalog** holds only files that were reviewed and deployed. The runtime never writes or downloads a Step.
+- A new Step is a pull request, not a new endpoint and not a new release of the engine.
+
+## Run Receipts
+
+A receipt answers the questions an auditor asks about one AI step:
+
+| Question | Receipt field |
+|---|---|
+| Which capability ran? | the Step's route and the hash of its file |
+| Which model answered? | the model name |
+| Did the model's answer pass the Step's checks? | the number of attempts, and the last refusal if any |
+| What did it cost? | the token usage |
+
+Receipts record what ran, not the customer's content. Keep payloads out of logs unless the review approves them.
+
+## Change Control
+
+1. A Step is written as a file and opened as a pull request.
+2. Review reads one file: its parameters, its result schema, its checks.
+3. Merge and deploy put it in the Step Catalog. The next call uses it.
+
+The engine never loads code from a browser, an upload or a model response. This is the same rule app stores apply to apps after review: new behavior arrives as reviewed code.
+
+## When a Step goes back to review
+
+A Step stays inside an existing review when it uses only what the service already uses: the same sign-in, the same model, no new outside system.
+A Step that sends email, writes to a new data store or calls a new service is a new data flow and needs its own review.
+
+See also [[RAPP Runtime]], [[Security Considerations]] and [[Conformance and Drift]].
+
+========================================================================
+FILE: ms-rapp-1/Steps.md
+========================================================================
+
+---
+title: Steps
+section: ms-rapp-1
+status: published
+hook: What does a Step file look like, and why does it load unchanged in a Brainstem?
+source: "docs/ms-rapp1/steps/action_items_agent.py; tools/build_ms_rapp1.py; rapp_brainstem/agents/basic_agent.py"
+---
+
+# Steps
+
+A **Step** is a rapp/1 agent with two extra fields.
+Drop it into a Brainstem's `agents/` folder and it loads like any other agent. RAPP Runtime serves the same file through the Step API.
+
+## The answer in brief
+
+- A Step extends `BasicAgent`, sets `name` and `metadata`, and implements `perform(**kwargs)`, exactly as in [[The Agent Contract]].
+- It adds `ROUTE` (its Step API path) and `RESULT_SCHEMA` (the shape of its result).
+- A rapp/1 host ignores the two extra fields. That is the whole compatibility story.
+
+## The contract
+
+| Field | rapp/1 | ms-rapp/1 adds | Rule |
+|---|---|---|---|
+| file name | `*_agent.py` | | so a Brainstem discovers it |
+| class | one `BasicAgent` subclass | | |
+| `metadata` | name, description, parameters | | `parameters` is an object schema; it is the Step API request body |
+| `perform(**kwargs)` | returns a string | | for a Step, a JSON string matching `RESULT_SCHEMA` |
+| `ROUTE` | | yes | 1 to 40 lowercase letters, digits or hyphens |
+| `RESULT_SCHEMA` | | yes | a JSON schema object |
+
+`tools/build_ms_rapp1.py --check` enforces these rules on every Step in `docs/ms-rapp1/steps/`.
+
+## The example
+
+`docs/ms-rapp1/steps/action_items_agent.py` lists the action items in meeting notes. It is deterministic, so the tests run it without a model.
+
+```python
+ROUTE = "action-items"
+RESULT_SCHEMA = {"type": "object", "properties": {"items": {...}}, "required": ["items"]}
+
+class ActionItemsAgent(BasicAgent):
+    def __init__(self):
+        self.name = "ActionItems"
+        self.metadata = {"name": self.name, "description": "...",
+                         "parameters": {"type": "object", "properties": {"notes": {"type": "string"}},
+                                        "required": ["notes"]}}
+        super().__init__(name=self.name, metadata=self.metadata)
+
+    def perform(self, **kwargs):
+        ...
+        return json.dumps({"items": items})
+```
+
+Given the notes `Action: Dana: send the pricing sheet` and `TODO: book the follow-up`, it returns one item owned by Dana and one marked Unassigned.
+
+## Writing a good Step
+
+- **One fixed task.** A Step that does two things is two Steps.
+- **Structured in, structured out.** The parameters and the result schema are the review surface.
+- **No new systems.** A Step that reaches a new outside service or data store is a new data flow and goes back to review. See [[Run Receipts and Change Control]].
+
+See also [[RAPP Runtime]] and [[Microsoft Foundry]].
 
 ========================================================================
 FILE: Reference/Failure Atlas.md
