@@ -1,0 +1,400 @@
+{
+  "description": "A curated copy of public RAPP Store entries, hosted in this repository for the beta app. Built by tools/mirror_rapp_store.py; every file is checked against its pinned sha256.",
+  "name": "AIBAST beta store",
+  "rapplications": [
+    {
+      "based_on": "billwhalenmsft/agent-team-starter-kit",
+      "category": "productivity",
+      "egg_note": "Stateless per call. Plans are returned in the response envelope; no shipped state.",
+      "example_call": {
+        "args": {
+          "action": "route",
+          "domain": "power-platform",
+          "goal": "Build a Dataverse-backed intake form that routes customer feedback through Power Automate into a Copilot Studio bot, with a Power BI dashboard for the support lead."
+        }
+      },
+      "hashes_recorded_at_mirror": [
+        "ui"
+      ],
+      "id": "agent_team",
+      "license": "MIT",
+      "manifest_name": "@kody-w/agent-team-singleton",
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "agent_team",
+        "version": "0.1.0"
+      },
+      "name": "AgentTeam",
+      "produced_by": {
+        "based_on": "billwhalenmsft/agent-team-starter-kit",
+        "bundled_at": "2026-05-05T00:00:00Z",
+        "method": "hand-built-from-kit-pattern",
+        "source_files_collapsed": 1
+      },
+      "publisher": "@kody-w",
+      "quality_tier": "community",
+      "singleton_bytes": 16267,
+      "singleton_filename": "agent_team_agent.py",
+      "singleton_lines": 393,
+      "singleton_sha256": "c950b295557f7d25471aeff87b5caac9b51cf49633d9f71108c6e80d24db947f",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/agent_team/agent_team_agent.py",
+      "summary": "The persona-routing brain of Bill Whalen's Agent Team Starter Kit, ported to a single rapplication. Given a project goal, returns the outcome frame, persona route, paste-ready GitHub issue body, and the needs-you questions the team would surface.",
+      "tagline": "Plan a project the way the kit would.",
+      "tags": [
+        "rapplication",
+        "agent-team",
+        "persona-routing",
+        "outcome-first",
+        "github-issues",
+        "azure",
+        "planning",
+        "has-ui"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "1bbaa926eb9f52754713add69c1fd5f79db7baa3fc89baa34f2b5380e990252b",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/agent_team/index.html",
+      "version": "0.1.0"
+    },
+    {
+      "based_on": "billwhalen-agent-team",
+      "category": "productivity",
+      "egg_note": "Bootstraps the team on run (fetch + sha256-pin into your agents/ dir); no shipped state.",
+      "example_call": {
+        "args": {
+          "dry_run": true
+        }
+      },
+      "hashes_recorded_at_mirror": [
+        "ui"
+      ],
+      "id": "coe_starter_kit",
+      "license": "MIT",
+      "manifest_name": "@bill/coe-starter-kit-singleton",
+      "metrics": {
+        "singleton_bytes": 11253,
+        "singleton_lines": 305
+      },
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "coe_starter_kit",
+        "version": "1.0.0"
+      },
+      "name": "CoE Starter Kit",
+      "produced_by": {
+        "based_on": "billwhalen-agent-team",
+        "bundled_at": "2026-05-26T00:00:00Z",
+        "method": "single-file-starter-port"
+      },
+      "publisher": "@bill",
+      "quality_tier": "community",
+      "shipped_in_commit": null,
+      "singleton_bytes": 11253,
+      "singleton_filename": "coe_starter_kit_agent.py",
+      "singleton_lines": 305,
+      "singleton_sha256": "50a04db67238b2bedd3817fa3ab4225032fb050531671b5dde126881efac4fbe",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/coe_starter_kit/coe_starter_kit_agent.py",
+      "summary": "Bill Whalen's Agent Team (BWAT) starter kit as one rapplication. Run it and it bootstraps an outcome-first delivery team into your brainstem \u2014 Outcome Framer, Intake, Outcome Validator, PM, and Bill's twin \u2014 each pulled over HTTPS and sha256-pinned. Self-contained, stdlib-only.",
+      "tagline": "Stand up an outcome-first agent team in one drop.",
+      "tags": [
+        "rapplication",
+        "agent-team",
+        "coe",
+        "starter-kit",
+        "outcome-first",
+        "bootstrap",
+        "copilot-studio",
+        "power-platform",
+        "has-ui"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "effe046131abc5bb97ae38446226f69c9deba50c34580f430c025203212fe596",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/coe_starter_kit/index.html",
+      "version": "1.0.0"
+    },
+    {
+      "category": "data",
+      "egg_filename": "csv_surgeon.egg",
+      "egg_note": "Full rapplication (singleton + UI) as an installable egg.",
+      "egg_sha256": "69d612b3fc5288792e1dfcbbf0be0f65613173051df25929ac3b13a3246094dc",
+      "egg_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/csv_surgeon/csv_surgeon.egg",
+      "hashes_recorded_at_mirror": [
+        "ui",
+        "egg"
+      ],
+      "id": "csv_surgeon",
+      "license": "Apache-2.0",
+      "manifest_name": "@rapp/csv-surgeon",
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "csv_surgeon",
+        "version": "1.0.0"
+      },
+      "name": "CSV Surgeon",
+      "produced_by": "rapp-membrane",
+      "publisher": "@rapp",
+      "quality_tier": "community",
+      "singleton_bytes": 11501,
+      "singleton_filename": "csv_surgeon_agent.py",
+      "singleton_lines": 270,
+      "singleton_sha256": "4d500fd77ebdc677d2860167748f06d1280bfd10de365f759e3b0e9a682b4076",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/csv_surgeon/csv_surgeon_agent.py",
+      "skill_bytes": 19946,
+      "skill_filename": "SKILL.md",
+      "skill_sha256": "ac1399027168aa813fdc78427f23b411465ec0918fe3e394b2baf90f811c7b79",
+      "skill_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/csv_surgeon/SKILL.md",
+      "summary": "Profile a CSV \u2014 per-column types, null rate, cardinality, min/max \u2014 or find ragged rows, duplicate and whitespace-padded headers, duplicate records, or slice rows. Stdlib only, no network.",
+      "tagline": "Find the rows that will break something.",
+      "tags": [
+        "csv",
+        "data",
+        "profiling",
+        "quality",
+        "local-first",
+        "rapplication",
+        "singleton"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "f9d499be79aec8982996a2ddf96fd94c7b0b049e222a57dffea41c348ab14eea",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/csv_surgeon/index.html",
+      "version": "1.0.0"
+    },
+    {
+      "category": "data",
+      "egg_filename": "json_doctor.egg",
+      "egg_note": "Full rapplication (singleton + UI) as an installable egg.",
+      "egg_sha256": "61e4a055eac7bdce361c8fa4a42d6336d0336c5051b6fa80c4f20447c9fbbe14",
+      "egg_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/json_doctor/json_doctor.egg",
+      "hashes_recorded_at_mirror": [
+        "ui",
+        "egg"
+      ],
+      "id": "json_doctor",
+      "license": "Apache-2.0",
+      "manifest_name": "@rapp/json-doctor",
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "json_doctor",
+        "version": "1.0.0"
+      },
+      "name": "JSON Doctor",
+      "produced_by": "rapp-membrane",
+      "publisher": "@rapp",
+      "quality_tier": "community",
+      "singleton_bytes": 10970,
+      "singleton_filename": "json_doctor_agent.py",
+      "singleton_lines": 265,
+      "singleton_sha256": "e532be574326b108ede0dbbd7d3c012cf275c9f2aee51793864c45546938f20e",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/json_doctor/json_doctor_agent.py",
+      "skill_bytes": 17168,
+      "skill_filename": "SKILL.md",
+      "skill_sha256": "dddd66d97e16ecc168b251f74c3fbfdf30ed19e208494326746fbbd8e680eb05",
+      "skill_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/json_doctor/SKILL.md",
+      "summary": "Inspect, validate, diff or query JSON and JSONL without opening it. Infers shape with per-field coverage, points at the exact line and column of a syntax error, and compares two files structurally.",
+      "tagline": "Understand a JSON file without opening it.",
+      "tags": [
+        "json",
+        "data",
+        "schema",
+        "diff",
+        "local-first",
+        "rapplication",
+        "singleton"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "275e275308765b24a72aaedc47b475cf214b4e7839d932fb8448ab914f404eb7",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/json_doctor/index.html",
+      "version": "1.0.0"
+    },
+    {
+      "category": "operations",
+      "egg_filename": "log_detective.egg",
+      "egg_note": "Full rapplication (singleton + UI) as an installable egg.",
+      "egg_sha256": "69d2a9f5622949672571d748dcd1b299ca0da2438c8c93c7f7c63e9412ff7778",
+      "egg_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/log_detective/log_detective.egg",
+      "hashes_recorded_at_mirror": [
+        "ui",
+        "egg"
+      ],
+      "id": "log_detective",
+      "license": "Apache-2.0",
+      "manifest_name": "@rapp/log-detective",
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "log_detective",
+        "version": "1.0.0"
+      },
+      "name": "Log Detective",
+      "produced_by": "rapp-membrane",
+      "publisher": "@rapp",
+      "quality_tier": "community",
+      "singleton_bytes": 12425,
+      "singleton_filename": "log_detective_agent.py",
+      "singleton_lines": 291,
+      "singleton_sha256": "5d3b06228dddc510fb3a84a30b1e3517387d52388cdf66e6879e4be9e5c7a81f",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/log_detective/log_detective_agent.py",
+      "skill_bytes": 21017,
+      "skill_filename": "SKILL.md",
+      "skill_sha256": "163d659d4873d33aff7f5241b5f97a9dce17069a67453ad984a119507373d8b7",
+      "skill_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/log_detective/SKILL.md",
+      "summary": "Summarise a log file, cluster near-identical errors into signatures by shape rather than text, build a timeline so a spike has a timestamp, or grep with context. Reads plain text and JSON-lines. Never uploads anything.",
+      "tagline": "Ten thousand errors are usually four errors.",
+      "tags": [
+        "logs",
+        "debugging",
+        "observability",
+        "incident",
+        "local-first",
+        "rapplication",
+        "singleton"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "5489becfff009190dad5282b5bd927c93bd3464848f0359bbd43d6bd3ceecef9",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/log_detective/index.html",
+      "version": "1.0.0"
+    },
+    {
+      "category": "docs",
+      "egg_filename": "markdown_medic.egg",
+      "egg_note": "Full rapplication (singleton + UI) as an installable egg.",
+      "egg_sha256": "ff1c3296717369225afdd3a997dbafcf33a62c49ae02533cc25d5a6bea3e5f6f",
+      "egg_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/markdown_medic/markdown_medic.egg",
+      "hashes_recorded_at_mirror": [
+        "ui",
+        "egg"
+      ],
+      "id": "markdown_medic",
+      "license": "Apache-2.0",
+      "manifest_name": "@rapp/markdown-medic",
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "markdown_medic",
+        "version": "1.0.0"
+      },
+      "name": "Markdown Medic",
+      "produced_by": "rapp-membrane",
+      "publisher": "@rapp",
+      "quality_tier": "community",
+      "singleton_bytes": 10311,
+      "singleton_filename": "markdown_medic_agent.py",
+      "singleton_lines": 237,
+      "singleton_sha256": "68c349d82161b59278bb31dbbafad199f23d1cabba2487c9d0d79f0dfc68882f",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/markdown_medic/markdown_medic_agent.py",
+      "skill_bytes": 17783,
+      "skill_filename": "SKILL.md",
+      "skill_sha256": "960887aa2b6f912766bc9b69e317ada95eb8509e8763900c264dc9c9c1715036",
+      "skill_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/markdown_medic/SKILL.md",
+      "summary": "Check a markdown file or docs folder for broken relative links and images, skipped heading levels and duplicate anchors, or generate a table of contents. Never makes network calls.",
+      "tagline": "Find what's broken in your docs before a reader does.",
+      "tags": [
+        "docs",
+        "markdown",
+        "lint",
+        "links",
+        "local-first",
+        "rapplication",
+        "singleton"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "f4d8a37712699889f2c1f972aaaf55249acaa986c5efa29fa004b55e06521f80",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/markdown_medic/index.html",
+      "version": "1.0.0"
+    },
+    {
+      "category": "operations",
+      "egg_filename": "pii_scout.egg",
+      "egg_note": "Full rapplication (singleton + UI + manifest) as a portable egg.",
+      "egg_sha256": "fbac6be62c09958477c7d1c7f15c331e2aee3ecbac3c2e27bfc2414a733e26df",
+      "egg_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/pii_scout/pii_scout.egg",
+      "example_call": {
+        "args": {
+          "path": ".",
+          "terms": "acme,globex"
+        }
+      },
+      "hashes_recorded_at_mirror": [
+        "ui",
+        "egg"
+      ],
+      "id": "pii_scout",
+      "license": "Apache-2.0",
+      "manifest_name": "@rapp/pii-scout",
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "pii_scout",
+        "version": "1.0.0"
+      },
+      "name": "PII Scout",
+      "produced_by": "rapp-membrane",
+      "publisher": "@rapp",
+      "quality_tier": "community",
+      "singleton_bytes": 8850,
+      "singleton_filename": "pii_scout_agent.py",
+      "singleton_lines": 204,
+      "singleton_sha256": "fcdbbcc12a04f5f7aebc69d619895c2edf7872354ac03821c0665b7818683513",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/pii_scout/pii_scout_agent.py",
+      "skill_bytes": 16901,
+      "skill_filename": "SKILL.md",
+      "skill_sha256": "e8b528fee8c3f53d8be9f73d25067d5f1e4ee89cab401787154b98613bfa3aba",
+      "skill_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/pii_scout/SKILL.md",
+      "summary": "Scan a folder for what must not be published \u2014 secrets, credential files, captured sessions, emails, home paths and any names you supply. Reports file and count, never the value.",
+      "tagline": "Find what must not ship, before it ships.",
+      "tags": [
+        "security",
+        "publishing",
+        "gate",
+        "local-first",
+        "singleton",
+        "rapplication"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "0a6bbed88e0b7fa5246b3b568bce476be1abed2ad18f4c70b27d47cedd53a5cc",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/pii_scout/index.html",
+      "version": "1.0.0"
+    },
+    {
+      "category": "productivity",
+      "hashes_recorded_at_mirror": [
+        "ui"
+      ],
+      "id": "project_tracker",
+      "license": "MIT",
+      "manifest_name": "@kody-w/project-tracker-singleton",
+      "mirrored_from": {
+        "catalog": "RAPP Store",
+        "id": "project_tracker",
+        "version": "1.0.0"
+      },
+      "name": "Project Tracker",
+      "produced_by": {
+        "based_on": "aibast-agents-library project-tracker tool",
+        "bundled_at": "2026-07-24T00:00:00Z",
+        "method": "single-file-agent + ui-clone",
+        "source_files_collapsed": 1
+      },
+      "publisher": "@kody-w",
+      "quality_tier": "community",
+      "singleton_bytes": 27588,
+      "singleton_filename": "project_tracker_agent.py",
+      "singleton_lines": 534,
+      "singleton_sha256": "b6270faf10379411b7a0065a91b571299bbb3f9a8c6072d041f24580c70d7e7c",
+      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/project_tracker/project_tracker_agent.py",
+      "summary": "A local-first tracker for a portfolio of AI-agent projects and their MVP statements. The web UI is a 1:1 clone of the aibast-agents-library project-tracker tool; the bundled ProjectTracker agent manages the same portfolio headlessly over /chat. Both speak the tool's native projectTrackerData JSON, so exports and imports round-trip with it. Self-contained and stdlib-only: the UI works offline via localStorage, and unifies with the agent's on-device store when the rapplication's local server is running.",
+      "tagline": "Track AI-agent projects and their MVPs, local-first \u2014 a web UI plus a headless agent over one JSON.",
+      "tags": [
+        "rapplication",
+        "project-tracker",
+        "portfolio",
+        "mvp",
+        "project-management",
+        "local-first",
+        "copilot-studio",
+        "has-ui"
+      ],
+      "ui_filename": "index.html",
+      "ui_sha256": "5ccb0e5f3d1794f0358aeae5175381be9c99f3639c44d82e09435b225002c75d",
+      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/project_tracker/index.html",
+      "version": "1.0.0"
+    }
+  ],
+  "schema": "rapp-store/1.0"
+}
