@@ -1,0 +1,80 @@
+# Runs the Hippocampus installers on clean runners against the change under test.
+#
+# The installers fetch the CommunityRAPP project template from this repository
+# (community_rapp/project). Here they are pointed at the pull request's own
+# repository and branch, so a change is proven before it can reach main.
+
+name: Hippocampus installer smoke
+
+on:
+  pull_request:
+    paths:
+      - 'community_rapp/**'
+      - '.github/workflows/hippocampus-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hippocampus-smoke-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  COMMUNITY_RAPP_REPO_URL: https://github.com/${{ github.event.pull_request.head.repo.full_name || github.repository }}.git
+  COMMUNITY_RAPP_REPO_REF: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  unix:
+    name: hippocampus ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install a project
+        env:
+          RAPP_PROJECTS_DIR: ${{ runner.temp }}/rapp-projects
+        run: bash community_rapp/install.sh smoke-project
+      - name: Check the project
+        env:
+          P: ${{ runner.temp }}/rapp-projects/smoke-project
+        run: |
+          set -e
+          for f in function_app.py host.json requirements.txt index.html start.sh local.settings.json; do
+            test -f "$P/$f" || { echo "::error::missing $f"; exit 1; }
+          done
+          test -f "$(dirname "$P")/business.html" || { echo "::error::business.html was not placed"; exit 1; }
+          "$P/.venv/bin/python" -c "import azure.functions; print('azure.functions', azure.functions.__version__)"
+          ! grep -rIl "kody-w/CommunityRAPP" "$P" --exclude-dir=.venv || { echo "::error::project still points at the personal CommunityRAPP repository"; exit 1; }
+
+  windows:
+    name: hippocampus windows-latest
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install a project
+        shell: pwsh
+        env:
+          RAPP_PROJECTS_DIR: ${{ runner.temp }}\rapp-projects
+        run: ./community_rapp/install.ps1 smoke-project
+      - name: Check the project
+        shell: pwsh
+        run: |
+          $P = Join-Path $env:RUNNER_TEMP "rapp-projects\smoke-project"
+          foreach ($f in "function_app.py","host.json","requirements.txt","index.html","start.ps1") {
+            if (-not (Test-Path (Join-Path $P $f))) { throw "missing $f" }
+          }
+          if (-not (Test-Path (Join-Path $env:RUNNER_TEMP "rapp-projects\business.html"))) { throw "business.html was not placed" }
+          & (Join-Path $P ".venv\Scripts\python.exe") -c "import azure.functions; print('azure.functions', azure.functions.__version__)"
+          if ($LASTEXITCODE -ne 0) { throw "azure.functions did not import" }
