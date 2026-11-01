@@ -1,0 +1,55 @@
+# Runs the Azure tier installer (rapp_ai/install.sh) on clean runners against the change under test.
+#
+# The installer fetches rapp_ai/ from this repository. Here it is pointed at the pull request's own repository
+# and branch, answers "skip for now" to the Azure OpenAI question, and must leave a server answering /api/health.
+
+name: Azure tier installer smoke
+
+on:
+  pull_request:
+    paths:
+      - 'rapp_ai/**'
+      - '.github/workflows/azure-tier-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: azure-tier-smoke-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  RAPP_AI_REPO_URL: https://github.com/${{ github.event.pull_request.head.repo.full_name || github.repository }}.git
+  RAPP_AI_REPO_REF: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  unix:
+    name: azure tier ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install (prompts answered through a terminal)
+        run: |
+          # The installer reads prompts from a terminal; `script` gives it one. "3" skips Azure OpenAI setup.
+          if [ "$(uname)" = Darwin ]; then
+            printf '3\n\n\n' | script -q /dev/null bash rapp_ai/install.sh
+          else
+            printf '3\n\n\n' | script -qec "bash rapp_ai/install.sh" /dev/null
+          fi
+      - name: Check the install
+        run: |
+          set -e
+          S="$HOME/.communityrapp/src"
+          test -f "$S/rapp_ai/function_app.py" || { echo "::error::rapp_ai was not installed"; exit 1; }
+          test "$(git -C "$S" remote get-url origin)" = "$RAPP_AI_REPO_URL" || { echo "::error::wrong source repository"; exit 1; }
+          for i in $(seq 1 30); do curl -sf http://localhost:7071/api/health && break; sleep 5; done
+          curl -sf http://localhost:7071/api/health || { echo "::error::server did not answer /api/health"; exit 1; }
