@@ -62,6 +62,15 @@ Every note in the RAPP/1 reference vault, grouped by section. Start with [[Welco
 - [[The Agent Contract]] - What exactly must a Brainstem agent file look like, and how does it reach the user through POST /chat?
 - [[The Brainstem Kernel]] - What is the Brainstem kernel this library ships, and what does it guarantee to every agent and host?
 
+## ms-rapp-1
+
+- [[Microsoft Foundry]] - How is ms-rapp/1 used in Microsoft Foundry, and what does a Foundry agent see?
+- [[ms-rapp-1 Overview]] - What is ms-rapp/1, and how does it stay backward compatible with rapp/1 and the Brainstem?
+- [[One Concept Across the Stack]] - How does one Step file show up in Copilot Studio, Microsoft 365 Copilot, Foundry, the Agent Framework and the Agents SDK?
+- [[RAPP Runtime]] - What is RAPP Runtime, and how does each of its pieces map to the Brainstem?
+- [[Run Receipts and Change Control]] - How does ms-rapp/1 keep an AI step auditable, and how does a new Step get into production?
+- [[Steps]] - What does a Step file look like, and why does it load unchanged in a Brainstem?
+
 ## Reference
 
 - [[Failure Atlas]] - When a frame is refused, which check failed and what usually caused it?
