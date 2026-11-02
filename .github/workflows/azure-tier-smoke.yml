@@ -42,17 +42,30 @@ jobs:
         run: npm install -g azure-functions-core-tools@4 --unsafe-perm true
       - name: Install (prompts answered through a terminal)
         run: |
-          # The installer reads prompts from a terminal; `script` gives it one. Earlier steps can drain a short
-          # answer stream, so an endless stream of empty lines takes every default ("3" skips Azure OpenAI setup).
-          set +e
-          if [ "$(uname)" = Darwin ]; then
-            yes '' | script -q /dev/null bash rapp_ai/install.sh; codes="${PIPESTATUS[*]}"
-          else
-            yes '' | script -qec "bash rapp_ai/install.sh" /dev/null; codes="${PIPESTATUS[*]}"
-          fi
-          echo "exit codes (answers, installer): $codes"
-          # The answer stream always ends on a broken pipe; only the installer's own exit code counts.
-          test "${codes##* }" = 0
+          # The installer reads prompts from a terminal. A small pty driver gives it one, presses Enter at each
+          # prompt (every default; "3" skips Azure OpenAI setup) and returns the installer's own exit code.
+          python3 - <<'PY'
+          import os, pty, sys
+          pid, fd = pty.fork()
+          if pid == 0:
+              os.execvp("bash", ["bash", "rapp_ai/install.sh"])
+          buf = b""
+          while True:
+              try:
+                  data = os.read(fd, 4096)
+              except OSError:
+                  break
+              if not data:
+                  break
+              sys.stdout.buffer.write(data); sys.stdout.flush()
+              buf = (buf + data)[-200:]
+              if b"? " in buf and buf.rstrip().endswith(b":"):
+                  os.write(fd, b"\n"); buf = b""
+          _, status = os.waitpid(pid, 0)
+          code = os.waitstatus_to_exitcode(status)
+          print(f"installer exit code: {code}")
+          sys.exit(code)
+          PY
       - name: Check the install
         run: |
           set -e
