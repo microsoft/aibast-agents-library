@@ -45,9 +45,9 @@ jobs:
           # The installer reads prompts from a terminal; `script` gives it one. Earlier steps can drain a short
           # answer stream, so an endless stream of empty lines takes every default ("3" skips Azure OpenAI setup).
           if [ "$(uname)" = Darwin ]; then
-            yes '' | script -q /dev/null bash rapp_ai/install.sh
+            { yes '' || true; } | script -q /dev/null bash rapp_ai/install.sh
           else
-            yes '' | script -qec "bash rapp_ai/install.sh" /dev/null
+            { yes '' || true; } | script -qec "bash rapp_ai/install.sh" /dev/null
           fi
       - name: Check the install
         run: |
@@ -55,5 +55,7 @@ jobs:
           S="$HOME/.communityrapp/src"
           test -f "$S/rapp_ai/function_app.py" || { echo "::error::rapp_ai was not installed"; exit 1; }
           test "$(git -C "$S" remote get-url origin)" = "$RAPP_AI_REPO_URL" || { echo "::error::wrong source repository"; exit 1; }
+          # The installer's own launch ends with its terminal, so start the server the way a user would.
+          curl -sf http://localhost:7071/api/health || { nohup "$HOME/.local/bin/communityrapp" start > "$RUNNER_TEMP/func.log" 2>&1 & }
           for i in $(seq 1 30); do curl -sf http://localhost:7071/api/health && break; sleep 5; done
-          curl -sf http://localhost:7071/api/health || { echo "::error::server did not answer /api/health"; exit 1; }
+          curl -sf http://localhost:7071/api/health || { tail -40 "$RUNNER_TEMP/func.log"; echo "::error::server did not answer /api/health"; exit 1; }
