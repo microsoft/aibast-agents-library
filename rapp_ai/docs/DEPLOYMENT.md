@@ -717,4 +717,4 @@ stages:
 
 ---
 
-**Need help?** [Open an issue](https://github.com/kody-w/CommunityRAPP/issues)
+**Need help?** [Open an issue](https://github.com/microsoft/aibast-agents-library/issues)

@@ -1,16 +1,15 @@
 # CommunityRAPP — Public Skill Interface
 
 > **CommunityRAPP (RAPP Hippocampus) is open source.**
-> Repo: [github.com/kody-w/CommunityRAPP](https://github.com/kody-w/CommunityRAPP)
-> Onboarding: [kody-w.github.io/CommunityRAPP/onboard.html](https://kody-w.github.io/CommunityRAPP/onboard.html)
+> Source: [community_rapp/project](https://github.com/microsoft/aibast-agents-library/tree/main/community_rapp/project) in this repository
+> Onboarding: [microsoft.github.io/aibast-agents-library/community_rapp/project/onboard.html](https://microsoft.github.io/aibast-agents-library/community_rapp/project/onboard.html)
 
 ---
 
 ## Identity
 
 ```
-repo: kody-w/CommunityRAPP (public)
-public_gateway: microsoft/aibast-agents-library (this repo)
+repo: microsoft/aibast-agents-library (folder community_rapp/project)
 type: azure-functions-backend
 purpose: Local-first AI agent platform with persistent memory
 tier: Hippocampus (Tier 2) — between Brainstem (T1) and Nervous System (T3)

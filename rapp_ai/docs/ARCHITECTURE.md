@@ -999,4 +999,4 @@ az functionapp config access-restriction add \
 
 ---
 
-**Questions?** Open an issue or join the [discussion](https://github.com/kody-w/CommunityRAPP/discussions).
+**Questions?** Open an issue or join the [discussion](https://github.com/microsoft/aibast-agents-library/discussions).
