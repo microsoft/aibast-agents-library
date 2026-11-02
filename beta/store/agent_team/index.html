@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AgentTeam — plan a project the way the kit would</title>
+<style>
+  :root {
+    --bg:#0d1117; --surface:#161b22; --surface2:#21262d; --border:#30363d;
+    --text:#e6edf3; --dim:#8b949e; --mute:#6e7681; --accent:#58a6ff;
+    --green:#3fb950; --red:#f85149; --orange:#d29922; --pink:#f778ba; --purple:#bc8cff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; min-height: 100vh; }
+
+  header { padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 5; }
+  header .glyph { font-size: 20px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { color: var(--dim); font-size: 11px; font-family: ui-monospace, monospace; }
+  header .ctx { margin-left: auto; font-size: 11px; color: var(--dim); }
+  header .ctx code { color: var(--accent); }
+
+  main { display: grid; grid-template-columns: 380px 1fr; gap: 16px; padding: 18px 20px; max-width: 1500px; margin: 0 auto; }
+  @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) {
+    header { padding: 12px 14px; gap: 10px; flex-wrap: wrap; }
+    header .ctx { margin-left: 0; flex-basis: 100%; }
+    main { padding: 12px 14px; gap: 12px; }
+    section { padding: 14px 14px; }
+    .actions { flex-wrap: wrap; }
+    .actions-row { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+  }
+
+  section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  section h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 12px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
+  section h2 .help { font-weight: 400; font-size: 10px; color: var(--mute); text-transform: none; letter-spacing: 0; }
+
+  /* Composer */
+  label.fld { display: block; font-size: 11px; color: var(--dim); margin: 10px 0 4px; }
+  textarea, input, select {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    padding: 10px 11px; border-radius: 7px; font: inherit; font-size: 13px; resize: vertical;
+  }
+  textarea { min-height: 110px; line-height: 1.55; font-family: ui-monospace, monospace; font-size: 12.5px; }
+  textarea#goal { min-height: 140px; }
+  textarea#constraints { min-height: 70px; }
+  textarea:focus, input:focus, select:focus { outline: 0; border-color: var(--accent); }
+
+  .actions-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 6px; margin-bottom: 12px; }
+  .act {
+    background: var(--surface2); border: 1px solid var(--border); color: var(--dim);
+    padding: 9px 8px; border-radius: 8px; cursor: pointer; font: inherit; font-size: 11.5px; font-weight: 600;
+    text-align: center; transition: all .15s;
+  }
+  .act:hover { color: var(--text); border-color: var(--accent); }
+  .act.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .actions { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
+  button { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 9px 18px; border-radius: 8px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 500; }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button.primary { background: var(--green); border-color: var(--green); color: #fff; font-weight: 600; }
+  button.primary:hover { filter: brightness(1.1); color: #fff; }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  .hint { color: var(--mute); font-size: 11px; }
+
+  /* Output cards */
+  .card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+  .card h3 { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px; font-weight: 700; }
+  .card.outcome { border-left: 3px solid var(--green); }
+  .card.route { border-left: 3px solid var(--accent); }
+  .card.issue { border-left: 3px solid var(--purple); }
+  .card.needs { border-left: 3px solid var(--orange); }
+
+  .metric { font-size: 14px; color: var(--text); font-weight: 600; line-height: 1.5; }
+  .kv { font-size: 12px; color: var(--dim); margin-top: 8px; }
+  .kv .k { color: var(--mute); margin-right: 6px; }
+
+  ul.bare { list-style: none; padding: 0; }
+  ul.bare li { font-size: 13px; color: var(--text); padding: 4px 0; line-height: 1.5; }
+  ul.bare li::before { content: "→"; color: var(--mute); margin-right: 8px; }
+
+  .persona-list { display: flex; flex-direction: column; gap: 8px; }
+  .persona { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; padding: 8px 0; border-bottom: 1px dashed var(--border); }
+  .persona:last-child { border-bottom: 0; }
+  .persona .ord { font-family: ui-monospace, monospace; font-size: 11px; color: var(--mute); padding-top: 1px; }
+  .persona .name { font-weight: 600; color: var(--text); font-size: 13px; }
+  .persona .why { font-size: 12px; color: var(--dim); margin-top: 2px; line-height: 1.5; }
+
+  pre.issue {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
+    padding: 12px 14px; font-family: ui-monospace, monospace; font-size: 12px;
+    line-height: 1.6; color: var(--text); white-space: pre-wrap; word-break: break-word;
+    max-height: 420px; overflow-y: auto;
+  }
+
+  .needs li { color: var(--orange); }
+  .needs li::before { content: "?"; color: var(--orange); font-weight: 700; }
+
+  .output-empty { color: var(--mute); font-style: italic; padding: 30px 4px; text-align: center; font-size: 13px; }
+  .running { font-family: ui-monospace, monospace; color: var(--orange); display: inline-flex; align-items: center; gap: 6px; }
+  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 1.2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+
+  .out-actions { display: flex; gap: 8px; margin-bottom: 14px; }
+  .out-actions button { font-size: 12px; padding: 6px 12px; }
+
+  .err { background: rgba(248,81,73,.1); border: 1px solid var(--red); color: var(--red); padding: 10px 12px; border-radius: 8px; font-size: 13px; }
+
+  .toast { position: fixed; bottom: 22px; right: 22px; background: var(--surface); border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px; font-size: 12px; color: var(--text); opacity: 0; transform: translateY(8px); transition: all .2s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.ok { border-color: var(--green); }
+  .toast.err { border-color: var(--red); color: var(--red); }
+
+  .credit { padding: 14px 20px; color: var(--mute); font-size: 11px; border-top: 1px solid var(--border); text-align: center; line-height: 1.6; }
+  .credit a { color: var(--accent); text-decoration: none; }
+  .credit a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="glyph">🛠️</span>
+  <div>
+    <h1>AgentTeam</h1>
+    <div class="sub">@kody-w/agent_team · v0.1.0</div>
+  </div>
+  <div class="ctx" id="ctxBanner">cloud</div>
+</header>
+
+<main>
+  <section>
+    <h2>Compose <span class="help">⌘+Enter to run</span></h2>
+
+    <div class="actions-row" id="actionRow">
+      <button class="act active" data-action="route">Full plan</button>
+      <button class="act" data-action="frame_outcome">Frame outcome</button>
+      <button class="act" data-action="route_personas">Route personas</button>
+      <button class="act" data-action="draft_issue">Draft issue</button>
+    </div>
+
+    <label class="fld" for="goal">Goal — what does the team need to deliver?</label>
+    <textarea id="goal" placeholder="e.g. Build a Dataverse-backed intake form that routes customer feedback through Power Automate into a Copilot Studio bot, with a Power BI dashboard for the support lead."></textarea>
+
+    <label class="fld" for="domain">Domain hint (optional)</label>
+    <select id="domain">
+      <option value="">— none —</option>
+      <option value="d365">d365 (Dynamics / Dataverse lead)</option>
+      <option value="ai">ai (Azure OpenAI / Semantic Kernel)</option>
+      <option value="power-platform">power-platform (Copilot Studio / Power Automate)</option>
+      <option value="analytics">analytics (Power BI / reporting)</option>
+      <option value="generic">generic</option>
+    </select>
+
+    <label class="fld" for="constraints">Constraints (optional)</label>
+    <textarea id="constraints" placeholder="Deadlines, budget, must-use stack, compliance, must-not-use…"></textarea>
+
+    <div class="actions">
+      <button class="primary" id="runBtn">Plan it</button>
+      <span class="hint" id="hint">Outputs JSON the panel renders.</span>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="outputHeader"><span>Plan</span></h2>
+    <div class="out-actions" id="outActions" style="display:none;">
+      <button id="copyIssueBtn">Copy issue body</button>
+      <button id="copyJsonBtn">Copy JSON envelope</button>
+      <button id="downloadBtn">Download .md</button>
+    </div>
+    <div id="output">
+      <div class="output-empty">Describe the work, then hit <strong>Plan it</strong>. The plan appears here as four cards: outcome, persona route, paste-ready GitHub issue body, and the questions the team would loop back on.</div>
+    </div>
+  </section>
+</main>
+
+<div class="credit">
+  Adapted from <a href="https://github.com/billwhalenmsft/agent-team-starter-kit" target="_blank">billwhalenmsft/agent-team-starter-kit</a> — the persona roster and routing rules come from that kit's <code>PERSONAS.md</code>. Issue bodies produced here paste straight into a real deployment of the kit.
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+// ─── Cartridge ──────────────────────────────────────────────────────────
+let cartridge = null;
+window.addEventListener('message', (ev) => {
+  const d = ev.data;
+  if (d?.type === 'rapp:cartridge') { cartridge = d; onCartridge(); }
+});
+window.parent.postMessage({ type: 'rapp:get_cartridge' }, '*');
+
+function onCartridge() {
+  const t = cartridge?.context?.tether;
+  const u = cartridge?.context?.user;
+  const parts = [];
+  if (u) parts.push(`<code>@${u.login}</code>`);
+  parts.push(t?.active ? `tethered <code>${t.base}</code>` : `cloud`);
+  document.getElementById('ctxBanner').innerHTML = parts.join(' · ');
+}
+
+// ─── Action selection ───────────────────────────────────────────────────
+let activeAction = 'route';
+document.querySelectorAll('.act').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.act').forEach(x => x.classList.toggle('active', x === b));
+  activeAction = b.getAttribute('data-action');
+}));
+
+document.getElementById('goal').addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); run(); }
+});
+document.getElementById('runBtn').addEventListener('click', run);
+document.getElementById('copyIssueBtn').addEventListener('click', copyIssue);
+document.getElementById('copyJsonBtn').addEventListener('click', copyJson);
+document.getElementById('downloadBtn').addEventListener('click', downloadIssue);
+
+// ─── Cartridge invoke ───────────────────────────────────────────────────
+function invoke(args) {
+  return new Promise((resolve, reject) => {
+    const id = 'inv-' + Math.random().toString(36).slice(2);
+    const handler = (ev) => {
+      const d = ev.data;
+      if (!d || d.type !== 'rapp:invoke:result' || d.id !== id) return;
+      window.removeEventListener('message', handler);
+      d.error ? reject(new Error(d.error)) : resolve(d.result);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: 'rapp:invoke', id, args }, '*');
+  });
+}
+
+// ─── Run ────────────────────────────────────────────────────────────────
+let running = false;
+let lastEnvelope = null;
+
+async function run() {
+  if (running) return;
+  const goal = document.getElementById('goal').value.trim();
+  if (!goal) { toast('Goal is required', 'err'); return; }
+
+  const domain = document.getElementById('domain').value;
+  const constraints = document.getElementById('constraints').value.trim();
+
+  running = true;
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true; btn.textContent = 'Planning…';
+  document.getElementById('outputHeader').innerHTML =
+    `<span>Plan</span> <span class="running"><span class="pulse"></span> routing</span>`;
+  document.getElementById('output').innerHTML =
+    `<div class="output-empty">framing outcome, routing personas, drafting issue body…</div>`;
+  document.getElementById('outActions').style.display = 'none';
+
+  const args = { action: activeAction, goal };
+  if (domain) args.domain = domain;
+  if (constraints) args.constraints = constraints;
+
+  try {
+    const result = await invoke(args);
+    const env = parseEnvelope(String(result));
+    if (env.error) throw new Error(env.error);
+    lastEnvelope = env;
+    render(env);
+    document.getElementById('outputHeader').textContent = 'Plan';
+    document.getElementById('outActions').style.display = 'flex';
+  } catch (e) {
+    document.getElementById('output').innerHTML = `<div class="err">${esc(e.message || e)}</div>`;
+    document.getElementById('outputHeader').textContent = 'Plan';
+  } finally {
+    running = false;
+    btn.disabled = false; btn.textContent = 'Plan it';
+  }
+}
+
+function parseEnvelope(s) {
+  // Singleton already returns JSON; just parse.
+  try { return JSON.parse(s); }
+  catch { return { error: 'Could not parse envelope.', raw: s }; }
+}
+
+// ─── Render ─────────────────────────────────────────────────────────────
+function render(env) {
+  const outcome = env.outcome_frame || {};
+  const route = env.persona_route || [];
+  const issue = env.issue_body || '';
+  const needs = env.needs_you_questions || [];
+
+  const html = [
+    renderOutcome(outcome),
+    renderRoute(route),
+    renderIssue(issue),
+    renderNeeds(needs),
+  ].join('');
+
+  document.getElementById('output').innerHTML = html;
+}
+
+function renderOutcome(o) {
+  if (!o || !o.success_metric) return '';
+  const dod = (o.definition_of_done || []).map(b => `<li>${esc(b)}</li>`).join('');
+  const kpis = (o.kpis || []).map(k => `<li>${esc(k)}</li>`).join('');
+  return `
+    <div class="card outcome">
+      <h3>Outcome frame</h3>
+      <div class="metric">${esc(o.success_metric)}</div>
+      ${dod ? `<div class="kv"><span class="k">Definition of done:</span></div><ul class="bare">${dod}</ul>` : ''}
+      ${kpis ? `<div class="kv"><span class="k">KPIs:</span></div><ul class="bare">${kpis}</ul>` : ''}
+    </div>`;
+}
+
+function renderRoute(route) {
+  if (!route.length) return '';
+  const sorted = [...route].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+  const items = sorted.map(p => `
+    <div class="persona">
+      <div class="ord">${esc(String(p.order ?? '·'))}</div>
+      <div>
+        <div class="name">${esc(p.persona || '?')}</div>
+        <div class="why">${esc(p.why || '')}</div>
+      </div>
+    </div>`).join('');
+  return `
+    <div class="card route">
+      <h3>Persona route (${sorted.length})</h3>
+      <div class="persona-list">${items}</div>
+    </div>`;
+}
+
+function renderIssue(issue) {
+  if (!issue) return '';
+  return `
+    <div class="card issue">
+      <h3>GitHub issue body — paste-ready</h3>
+      <pre class="issue" id="issueBody">${esc(issue)}</pre>
+    </div>`;
+}
+
+function renderNeeds(needs) {
+  if (!needs.length) return '';
+  const items = needs.map(q => `<li>${esc(q)}</li>`).join('');
+  return `
+    <div class="card needs">
+      <h3>Needs-you questions</h3>
+      <ul class="bare needs">${items}</ul>
+    </div>`;
+}
+
+// ─── Copy / download ────────────────────────────────────────────────────
+function copyIssue() {
+  const body = lastEnvelope?.issue_body || '';
+  if (!body) { toast('No issue body to copy', 'err'); return; }
+  navigator.clipboard.writeText(body).then(
+    () => toast('Issue body copied', 'ok'),
+    () => toast('Copy failed', 'err'),
+  );
+}
+
+function copyJson() {
+  if (!lastEnvelope) { toast('Nothing to copy', 'err'); return; }
+  navigator.clipboard.writeText(JSON.stringify(lastEnvelope, null, 2)).then(
+    () => toast('Envelope copied', 'ok'),
+    () => toast('Copy failed', 'err'),
+  );
+}
+
+function downloadIssue() {
+  const body = lastEnvelope?.issue_body || '';
+  if (!body) { toast('Nothing to download', 'err'); return; }
+  const blob = new Blob([body], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `agent-team-issue-${Date.now()}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function toast(msg, kind) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + (kind || '');
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2400);
+}
+</script>
+
+</body>
+</html>

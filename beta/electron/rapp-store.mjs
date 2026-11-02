@@ -13,7 +13,8 @@
 // fetch impl is injectable so it is unit-testable offline.
 import { createHash } from "node:crypto";
 
-export const DEFAULT_STORE_URL = "https://kody-w.github.io/RAPP_Store/index.json";
+// A curated copy of the public RAPP Store, hosted in this repository (tools/mirror_rapp_store.py).
+export const DEFAULT_STORE_URL = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/index.json";
 export const STORE_SCHEMA = "rapp-store/1.0";
 
 function sha256Hex(bytes) {

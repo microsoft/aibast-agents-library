@@ -45,15 +45,15 @@ __manifest__ = {
 
 
 DEFAULT_RAW_BASE = (
-    "https://raw.githubusercontent.com/kody-w/"
-    "aibast-agents-library/easy-mode-copilot-chat-pilot/"
+    "https://raw.githubusercontent.com/microsoft/"
+    "aibast-agents-library/main/"
 )
 GITHUB_COMMIT_API = (
-    "https://api.github.com/repos/kody-w/aibast-agents-library/"
-    "commits/easy-mode-copilot-chat-pilot"
+    "https://api.github.com/repos/microsoft/aibast-agents-library/"
+    "commits/main"
 )
 IMMUTABLE_RAW_PREFIX = (
-    "https://raw.githubusercontent.com/kody-w/aibast-agents-library/"
+    "https://raw.githubusercontent.com/microsoft/aibast-agents-library/"
 )
 RELEASE_DOWNLOAD_PREFIX = "https://github.com/"
 REGISTRY_PATH = "registry.json"

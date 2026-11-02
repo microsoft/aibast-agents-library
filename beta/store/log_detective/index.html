@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Log Detective</title>
+<style>
+:root{--bg:#faf9f7;--fg:#1b1917;--dim:#6b625a;--line:#e5dfd7;--accent:#be123c;--card:#fff;--code:#f3f0ec;--bad:#b91c1c;--ok:#15803d}
+@media(prefers-color-scheme:dark){:root{--bg:#151311;--fg:#ece7e1;--dim:#9c9289;--line:#2b2724;--accent:#fb7185;--card:#1c1917;--code:#201d1a;--bad:#f87171;--ok:#4ade80}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 ui-sans-serif,system-ui,sans-serif}
+.wrap{max-width:50rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}h1{font-size:1.9rem;margin:0 0 .35rem;letter-spacing:-.02em}
+.lede{color:var(--dim);margin:0 0 2rem}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem;margin-bottom:1rem}
+label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:.3rem}
+input,select{width:100%;padding:.55rem .7rem;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--fg);font:14px ui-monospace,monospace;margin-bottom:.9rem}
+button{background:var(--accent);color:#fff;border:0;padding:.6rem 1.1rem;border-radius:7px;font-weight:600;cursor:pointer}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:.9rem;overflow-x:auto;font-size:.8rem;margin:.3rem 0 0}
+.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:32rem}
+th,td{text-align:left;padding:.42rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;color:var(--dim)}code{background:var(--code);padding:.1em .35em;border-radius:4px;font-size:.9em}
+.note{color:var(--dim);font-size:.85rem}.big{font-size:1.6rem;font-weight:700}.bar{font-family:ui-monospace,monospace;color:var(--accent)}
+.pill{display:inline-block;background:var(--code);border-radius:999px;padding:.1rem .6rem;margin-right:.35rem;font-size:.8rem}
+</style></head><body><div class="wrap">
+<h1>Log Detective</h1><p class="lede">Ten thousand errors are usually four errors.
+Variable parts are normalised so near-identical lines cluster by shape — and the shape is the bug.
+Nothing is ever uploaded.</p>
+<div class="card">
+<label>Action</label><select id="action">
+<option value="summarise">summarise — levels, span, busiest minute</option>
+<option value="signatures">signatures — cluster errors by shape</option>
+<option value="timeline">timeline — events per minute</option>
+<option value="grep">grep — matches with context</option></select>
+<label>Log file</label><input id="path" placeholder="app.log" spellcheck="false">
+<label>Pattern (grep only)</label><input id="pattern" placeholder="timeout|refused" spellcheck="false">
+<button id="go">Investigate</button></div><div id="out"></div>
+<script>
+const $=s=>document.querySelector(s);
+$('#go').onclick=async()=>{const b=$('#go');b.disabled=true;b.textContent='Reading…';
+ const a=$('#action').value,p=$('#pattern').value;let call=`action=${a} path="${$('#path').value}"`;
+ if(a==='grep'&&p)call+=` pattern="${p}"`;
+ try{const r=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({user_input:`Use the LogDetective tool with ${call}. Reply only DONE.`})});
+  const d=await r.json();const m=String(d.agent_logs||'').match(/\{[\s\S]*\}/);
+  $('#out').innerHTML=m?render(JSON.parse(m[0]),a):`<div class="card"><pre>${esc(d.response||'no result')}</pre></div>`;
+ }catch(e){$('#out').innerHTML=`<div class="card">Could not reach the brainstem.<pre>${esc(e.message)}</pre></div>`;}
+ finally{b.disabled=false;b.textContent='Investigate';}};
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function render(d,a){if(d.status==='error')return`<div class="card" style="color:var(--bad)">${esc(d.message)}</div>`;
+ if(a==='summarise'){let h=`<div class="card"><div>`;
+  for(const[k,v]of Object.entries(d.levels||{}))h+=`<span class="pill">${esc(k)} ${v}</span>`;
+  h+=`</div><div style="margin-top:.6rem">${d.lines} lines · ${esc(d.format)}`;
+  if(d.busiest_minute)h+=` · busiest minute <strong>${esc(d.busiest_minute.minute)}</strong> (${d.busiest_minute.events} events)`;
+  h+=`</div>`;
+  if((d.top_error_signatures||[]).length){h+=`<div class="scroll"><table><tr><th>count</th><th>signature</th></tr>`;
+   for(const s of d.top_error_signatures)h+=`<tr><td>${s.count}</td><td><code>${esc(s.signature)}</code></td></tr>`;h+=`</table></div>`;}
+  return h+`<p class="note">${esc(d.note||'')}</p></div>`;}
+ if(a==='signatures'){let h=`<div class="card"><span class="big">${d.problem_lines}</span> problem line(s)
+  → <span class="big">${d.distinct_signatures}</span> distinct signature(s)<div class="scroll"><table>
+  <tr><th>count</th><th>share</th><th>signature</th></tr>`;
+  for(const s of d.signatures||[])h+=`<tr><td>${s.count}</td><td>${esc(s.share)}</td><td><code>${esc(s.signature)}</code>
+   <pre>${esc(s.example||'')}</pre></td></tr>`;
+  return h+`</table></div><p class="note">${esc(d.note||'')}</p></div>`;}
+ if(a==='timeline'){let h=`<div class="card">peak ${d.peak_events} events<div class="scroll"><table>`;
+  for(const b of d.timeline||[])h+=`<tr><td><code>${esc(b.bucket)}</code></td><td>${b.events}</td><td class="bar">${esc(b.bar)}</td></tr>`;
+  return h+`</table></div></div>`;}
+ let h=`<div class="card"><span class="big">${d.matches}</span> match(es)`;
+ for(const x of d.hits||[])h+=`<pre>${esc((x.before||[]).join('\n'))}\n>> ${esc(x.match)}\n${esc((x.after||[]).join('\n'))}</pre>`;
+ return h+`</div>`;}
+</script></div></body></html>

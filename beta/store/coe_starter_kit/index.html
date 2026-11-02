@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoE Starter Kit</title>
+<style>
+  :root{ --bg:#0d1117; --pan:#161b22; --bd:#30363d; --tx:#e6edf3; --mut:#8b949e; --grn:#3fb950; --blu:#58a6ff; --pur:#742774; }
+  *{ box-sizing:border-box; } body{ margin:0; background:var(--bg); color:var(--tx); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  .wrap{ max-width:640px; margin:0 auto; padding:26px 20px 60px; }
+  h1{ font-size:23px; margin:4px 0 2px; letter-spacing:-.3px; } .dek{ color:var(--mut); margin:0 0 18px; }
+  .team{ border:1px solid var(--bd); border-radius:12px; overflow:hidden; margin:14px 0; background:var(--pan); }
+  .row{ display:flex; gap:12px; padding:11px 14px; border-bottom:1px solid #21262d; } .row:last-child{ border-bottom:0; }
+  .row b{ flex:0 0 150px; } .row span{ color:var(--mut); }
+  .btns{ display:flex; gap:10px; margin:16px 0; flex-wrap:wrap; }
+  button{ background:#21262d; border:1px solid var(--bd); color:var(--tx); border-radius:9px; padding:10px 16px; font-weight:600; font-size:14px; cursor:pointer; }
+  button:hover{ border-color:var(--blu); color:var(--blu); } button.primary{ background:var(--pur); border-color:var(--pur); color:#fff; } button.primary:hover{ background:#5a1d5a; color:#fff; }
+  button:disabled{ opacity:.5; cursor:not-allowed; }
+  pre{ background:#010409; border:1px solid var(--bd); border-radius:10px; padding:12px 14px; font:12px ui-monospace,Menlo,monospace; white-space:pre-wrap; word-break:break-word; max-height:340px; overflow:auto; }
+  .status{ color:var(--mut); font-size:13px; min-height:18px; }
+</style>
+</head><body><div class="wrap">
+  <h1>🧰 CoE Starter Kit</h1>
+  <p class="dek">Bill Whalen's Agent Team — an outcome‑first delivery team, in one drop.</p>
+  <div class="team">
+    <div class="row"><b>Outcome Framer</b><span>frame the outcome before any build work</span></div>
+    <div class="row"><b>Intake</b><span>log raw ideas + solutions to a local backlog</span></div>
+    <div class="row"><b>Outcome Validator</b><span>verify delivery before any close</span></div>
+    <div class="row"><b>PM</b><span>sprint planning + status reports</span></div>
+    <div class="row"><b>Bill's Twin</b><span>walks you through the flow in Bill's voice</span></div>
+  </div>
+  <div class="btns">
+    <button id="preview">👁 Preview (dry run)</button>
+    <button id="install" class="primary">⬇ Install the team</button>
+  </div>
+  <div class="status" id="status"></div>
+  <pre id="out" style="display:none"></pre>
+</div>
+<script>
+  // Cartridge protocol (RAPP Store SPEC §9): ask for the cartridge, then rapp:invoke the singleton.
+  let cartridge = null;
+  window.addEventListener('message', (ev) => { const d = ev.data; if (d && d.type === 'rapp:cartridge') cartridge = d; });
+  window.parent.postMessage({ type: 'rapp:get_cartridge' }, '*');
+
+  function invoke(args){
+    return new Promise((resolve, reject) => {
+      const id = 'c' + Date.now() + Math.random().toString(36).slice(2);
+      const handler = (ev) => { const d = ev.data;
+        if (!d || d.id !== id || (d.type !== 'rapp:invoke:result')) return;
+        window.removeEventListener('message', handler);
+        d.error ? reject(d.error) : resolve(d.result);
+      };
+      window.addEventListener('message', handler);
+      window.parent.postMessage({ type: 'rapp:invoke', id, args }, '*');
+      setTimeout(() => { window.removeEventListener('message', handler); reject('timeout — run me from a brainstem host'); }, 60000);
+    });
+  }
+  const $ = id => document.getElementById(id);
+  async function run(args, label){
+    $('status').textContent = label + '…'; $('preview').disabled = $('install').disabled = true;
+    try { const r = await invoke(args); $('out').style.display = 'block';
+      $('out').textContent = (typeof r === 'string') ? r : JSON.stringify(r, null, 2); $('status').textContent = 'done ✓'; }
+    catch (e) { $('status').textContent = 'error: ' + e; }
+    finally { $('preview').disabled = $('install').disabled = false; }
+  }
+  $('preview').addEventListener('click', () => run({ dry_run: true }, 'Previewing the team (no writes)'));
+  $('install').addEventListener('click', () => run({}, 'Installing the team'));
+</script>
+</body></html>
