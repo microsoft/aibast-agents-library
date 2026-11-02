@@ -727,4 +727,4 @@ func azure functionapp publish YOUR-FUNCTION-APP-NAME
 
 ---
 
-**Need help?** [Join the discussion](https://github.com/kody-w/CommunityRAPP/discussions)
+**Need help?** [Join the discussion](https://github.com/microsoft/aibast-agents-library/discussions)

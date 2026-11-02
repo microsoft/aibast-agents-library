@@ -27,12 +27,10 @@ The installer will:
 
 ### Step 2: Once You Have Access
 
-After being invited to the private beta:
-
 ```bash
-# Clone the private CommunityRAPP repo
-git clone https://github.com/kody-w/CommunityRAPP.git
-cd CommunityRAPP
+# Fetch only the rapp_ai folder of the library
+git clone --depth 1 --filter=blob:none --sparse https://github.com/microsoft/aibast-agents-library.git
+cd aibast-agents-library && git sparse-checkout set rapp_ai && cd rapp_ai
 
 # Install dependencies
 pip install -r requirements.txt

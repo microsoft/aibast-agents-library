@@ -7,9 +7,10 @@ from agents.basic_agent import BasicAgent
 
 logger = logging.getLogger(__name__)
 
-GITHUB_OWNER = "kody-w"
-GITHUB_REPO = "AI-Agent-Templates"
-MANIFEST_URL = f"https://raw.githubusercontent.com/{GITHUB_OWNER}/{GITHUB_REPO}/main/manifest.json"
+GITHUB_OWNER = "microsoft"
+GITHUB_REPO = "aibast-agents-library"
+RAW_BASE = f"https://raw.githubusercontent.com/{GITHUB_OWNER}/{GITHUB_REPO}/main"
+MANIFEST_URL = f"{RAW_BASE}/registry.json"
 INSTALLED_PATH = os.path.join(".local_storage", "installed_agents.json")
 CACHE_TTL = 300  # 5 minutes
 
@@ -31,6 +32,30 @@ def _github_headers():
     if token:
         headers["Authorization"] = f"token {token}"
     return headers
+
+
+def _normalize_registry(data):
+    """Map the library's registry.json entries onto the fields this agent reads."""
+    agents = []
+    for a in data.get("agents", []):
+        path = a.get("_file") or a.get("path", "")
+        filename = os.path.basename(path) if path else a.get("filename", "")
+        agents.append({
+            "id": a.get("id") or filename[:-3],
+            "name": a.get("display_name") or a.get("name", ""),
+            "filename": filename,
+            "url": a.get("url") or (f"{RAW_BASE}/{path}" if path else ""),
+            "type": a.get("type", "singular"),
+            "icon": a.get("icon", ""),
+            "description": a.get("description", ""),
+            "features": a.get("features") or a.get("tags", []),
+        })
+    stacks = [
+        {"id": s.get("stack", s.get("id", "")), "name": s.get("display_name", ""),
+         "type": s.get("vertical", s.get("type", "other")), "description": s.get("description", "")}
+        for s in data.get("stacks", [])
+    ]
+    return {"agents": agents, "stacks": stacks}
 
 
 class AgentLibraryManager(BasicAgent):
@@ -111,7 +136,7 @@ class AgentLibraryManager(BasicAgent):
 
         resp = requests.get(MANIFEST_URL, headers=_github_headers(), timeout=15)
         resp.raise_for_status()
-        data = resp.json()
+        data = _normalize_registry(resp.json())
         AgentLibraryManager._registry_cache = data
         AgentLibraryManager._cache_time = now
         return data

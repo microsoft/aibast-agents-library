@@ -88,8 +88,8 @@ docs/
 
 ## 🆘 Getting Help
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/kody-w/CommunityRAPP/issues)
-- **Discussions**: [Community support and Q&A](https://github.com/kody-w/CommunityRAPP/discussions)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/microsoft/aibast-agents-library/issues)
+- **Discussions**: [Community support and Q&A](https://github.com/microsoft/aibast-agents-library/discussions)
 - **Documentation**: You're here! Browse the guides above
 
 ## 🤝 Contributing
@@ -119,5 +119,5 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 <p align="center">
   <strong>Need help? Have questions?</strong><br>
-  Join our <a href="https://github.com/kody-w/CommunityRAPP/discussions">community discussions</a>
+  Join our <a href="https://github.com/microsoft/aibast-agents-library/discussions">community discussions</a>
 </p>

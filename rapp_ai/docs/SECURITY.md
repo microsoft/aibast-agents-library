@@ -835,4 +835,4 @@ func azure functionapp publish YOUR_FUNCTION_APP
 
 ---
 
-**Security concerns?** [Report a security issue](https://github.com/kody-w/CommunityRAPP/security)
+**Security concerns?** [Report a security issue](https://github.com/microsoft/aibast-agents-library/security)

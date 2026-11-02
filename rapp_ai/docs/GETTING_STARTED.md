@@ -316,8 +316,8 @@ For typical usage (100 conversations/day), expect **~$10-20/month total**.
 
 ## 🆘 Need Help?
 
-- **Issues**: [Report bugs](https://github.com/kody-w/CommunityRAPP/issues)
-- **Discussions**: [Ask questions](https://github.com/kody-w/CommunityRAPP/discussions)
+- **Issues**: [Report bugs](https://github.com/microsoft/aibast-agents-library/issues)
+- **Discussions**: [Ask questions](https://github.com/microsoft/aibast-agents-library/discussions)
 - **Documentation**: [Browse all docs](index.md)
 
 ---
