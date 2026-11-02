@@ -99,9 +99,20 @@ echo -e "${YELLOW}Creating project '$PROJECT_NAME'...${NC}"
 
 mkdir -p "$PROJECTS_DIR"
 
-echo -e "${YELLOW}Cloning CommunityRAPP...${NC}"
-git clone --depth 1 --quiet https://github.com/kody-w/CommunityRAPP.git "$PROJECT_DIR"
-echo -e "${GREEN}[OK] Cloned${NC}"
+# The project template lives in this repository at community_rapp/project. A sparse, blob-filtered clone
+# fetches only that folder, not the whole library.
+SOURCE_REPO_URL="${COMMUNITY_RAPP_REPO_URL:-https://github.com/microsoft/aibast-agents-library.git}"
+SOURCE_REPO_REF="${COMMUNITY_RAPP_REPO_REF:-main}"
+SOURCE_DIR="$(mktemp -d)"
+trap 'rm -rf "$SOURCE_DIR"' EXIT
+
+echo -e "${YELLOW}Fetching the CommunityRAPP project template...${NC}"
+git clone --depth 1 --filter=blob:none --sparse --branch "$SOURCE_REPO_REF" --quiet "$SOURCE_REPO_URL" "$SOURCE_DIR/src" \
+    || die "Could not fetch $SOURCE_REPO_URL ($SOURCE_REPO_REF)"
+git -C "$SOURCE_DIR/src" sparse-checkout set community_rapp/project
+[ -f "$SOURCE_DIR/src/community_rapp/project/function_app.py" ] || die "The project template is missing from $SOURCE_REPO_URL ($SOURCE_REPO_REF)"
+cp -R "$SOURCE_DIR/src/community_rapp/project" "$PROJECT_DIR"
+echo -e "${GREEN}[OK] Project created${NC}"
 
 # ── Venv + deps ─────────────────────────────────────────────
 echo -e "${YELLOW}Creating virtual environment...${NC}"
@@ -154,7 +165,7 @@ rm -rf "$PROJECT_DIR/hatchery" 2>/dev/null || true
 # ── Business Mode UI (first hatch deploys it) ──────────────
 BIZ_HTML="$PROJECTS_DIR/business.html"
 if [ ! -f "$BIZ_HTML" ]; then
-    curl -fsSL "https://raw.githubusercontent.com/kody-w/CommunityRAPP/main/business.html" -o "$BIZ_HTML" 2>/dev/null || true
+    cp "$PROJECT_DIR/business.html" "$BIZ_HTML" 2>/dev/null || true
 fi
 
 # ── Update manifest ─────────────────────────────────────────
