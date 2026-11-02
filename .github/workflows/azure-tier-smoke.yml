@@ -44,11 +44,15 @@ jobs:
         run: |
           # The installer reads prompts from a terminal; `script` gives it one. Earlier steps can drain a short
           # answer stream, so an endless stream of empty lines takes every default ("3" skips Azure OpenAI setup).
+          set +e
           if [ "$(uname)" = Darwin ]; then
-            { yes '' || true; } | script -q /dev/null bash rapp_ai/install.sh
+            yes '' | script -q /dev/null bash rapp_ai/install.sh
           else
-            { yes '' || true; } | script -qec "bash rapp_ai/install.sh" /dev/null
+            yes '' | script -qec "bash rapp_ai/install.sh" /dev/null
           fi
+          codes="${PIPESTATUS[*]}"; echo "exit codes (answers, installer): $codes"
+          # The answer stream always ends on a broken pipe; only the installer's own exit code counts.
+          test "${codes##* }" = 0
       - name: Check the install
         run: |
           set -e
