@@ -56,62 +56,6 @@
       "version": "0.1.0"
     },
     {
-      "based_on": "billwhalen-agent-team",
-      "category": "productivity",
-      "egg_note": "Bootstraps the team on run (fetch + sha256-pin into your agents/ dir); no shipped state.",
-      "example_call": {
-        "args": {
-          "dry_run": true
-        }
-      },
-      "hashes_recorded_at_mirror": [
-        "ui"
-      ],
-      "id": "coe_starter_kit",
-      "license": "MIT",
-      "manifest_name": "@bill/coe-starter-kit-singleton",
-      "metrics": {
-        "singleton_bytes": 11253,
-        "singleton_lines": 305
-      },
-      "mirrored_from": {
-        "catalog": "RAPP Store",
-        "id": "coe_starter_kit",
-        "version": "1.0.0"
-      },
-      "name": "CoE Starter Kit",
-      "produced_by": {
-        "based_on": "billwhalen-agent-team",
-        "bundled_at": "2026-05-26T00:00:00Z",
-        "method": "single-file-starter-port"
-      },
-      "publisher": "@bill",
-      "quality_tier": "community",
-      "shipped_in_commit": null,
-      "singleton_bytes": 11253,
-      "singleton_filename": "coe_starter_kit_agent.py",
-      "singleton_lines": 305,
-      "singleton_sha256": "50a04db67238b2bedd3817fa3ab4225032fb050531671b5dde126881efac4fbe",
-      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/coe_starter_kit/coe_starter_kit_agent.py",
-      "summary": "Bill Whalen's Agent Team (BWAT) starter kit as one rapplication. Run it and it bootstraps an outcome-first delivery team into your brainstem \u2014 Outcome Framer, Intake, Outcome Validator, PM, and Bill's twin \u2014 each pulled over HTTPS and sha256-pinned. Self-contained, stdlib-only.",
-      "tagline": "Stand up an outcome-first agent team in one drop.",
-      "tags": [
-        "rapplication",
-        "agent-team",
-        "coe",
-        "starter-kit",
-        "outcome-first",
-        "bootstrap",
-        "copilot-studio",
-        "power-platform",
-        "has-ui"
-      ],
-      "ui_filename": "index.html",
-      "ui_sha256": "effe046131abc5bb97ae38446226f69c9deba50c34580f430c025203212fe596",
-      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/coe_starter_kit/index.html",
-      "version": "1.0.0"
-    },
-    {
       "category": "data",
       "egg_filename": "csv_surgeon.egg",
       "egg_note": "Full rapplication (singleton + UI) as an installable egg.",

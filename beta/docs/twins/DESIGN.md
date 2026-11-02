@@ -55,7 +55,8 @@ a Surgeon chat only moves when a person prompts it.
 
 ## What a RAPPlication is (grounded in the RAPP Store)
 
-Source of truth: `https://kody-w.github.io/RAPP_Store/index.json`
+Source of truth: the public RAPP Store catalog. The beta reads the curated copy hosted in this repository,
+`beta/store/index.json`, built by `tools/mirror_rapp_store.py`
 (schema, `install_protocol`, `rapplications[]`, `senses[]`,
 `gated_rapplications_note`). Each rapplication entry carries, verbatim:
 

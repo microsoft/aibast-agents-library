@@ -3,7 +3,8 @@
 
 usage: python tools/mirror_rapp_store.py --write [--source URL] | --check
 
-Copies only the entries in ALLOWED (licensed for redistribution, business-neutral names), downloads each file the
+Copies only the entries in ALLOWED (licensed for redistribution, business-neutral names, no run-time downloads from
+personal repositories), downloads each file the
 entry pins, verifies its sha256 against the upstream catalog, stores it under beta/store/<id>/, and writes
 beta/store/index.json (schema rapp-store/1.0) with every URL pointing at this repository. --check verifies that
 every stored file still matches the hash its index entry names.
@@ -24,7 +25,7 @@ INDEX = STORE / "index.json"
 SOURCE = "https://raw.githubusercontent.com/kody-w/RAPP_Store/main/index.json"
 RAW = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/"
 ALLOWED = (
-    "agent_team", "coe_starter_kit", "project_tracker", "pii_scout", "json_doctor", "markdown_medic",
+    "agent_team", "project_tracker", "pii_scout", "json_doctor", "markdown_medic",
     "csv_surgeon", "log_detective",
 )
 LICENSES = ("MIT", "Apache-2.0")
