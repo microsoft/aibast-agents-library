@@ -64,10 +64,60 @@ UUID_PATTERN = re.compile(
     re.IGNORECASE,
 )
 NAME_STOP_WORDS = {"agent", "and", "the", "mode", "easy"}
+QUERY_STOP_WORDS = NAME_STOP_WORDS | {
+    "a", "an", "any", "anything", "are", "be", "can", "do", "for", "from",
+    "give", "have", "help", "i", "in", "is", "it", "looking", "me", "my",
+    "need", "of", "on", "one", "our", "please", "show", "solution",
+    "something", "that", "there", "this", "to", "us", "use", "want", "we",
+    "what", "with", "you", "agents", "solutions", "re", "s", "daily",
+    "chain", "company", "business", "firm", "group", "team", "our", "we",
+}
+SITE_BASE = "https://microsoft.github.io/aibast-agents-library/"
+REQUEST_FORM_URL = SITE_BASE + "request-info.html"
+OFFICE_HOURS = {
+    "name": "AIBAST agents and prototyping office hours",
+    "when": "Thursdays, 12:30 to 1:30 PM ET, on Teams",
+    "sign_up": (
+        "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id="
+        "v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUQVBKS0NWREVQWFZKVVk4VFRWV05KNlZaWS4u"
+    ),
+    "page": SITE_BASE + "docs/installer.html",
+}
+CHOICE_LIMIT = 6
+CLOSEST_LIMIT = 3
 
 
 class WorkshopError(RuntimeError):
     """The generic workshop engine cannot continue safely."""
+
+
+class SolutionChoice(Exception):
+    """Several (or no) solutions fit a request; the person picks one."""
+
+    def __init__(self, payload):
+        super().__init__(payload.get("message", "Pick a solution"))
+        self.payload = payload
+
+
+def _query_words(value):
+    words = []
+    for word in re.findall(r"[a-z0-9]+", str(value).lower()):
+        if word in QUERY_STOP_WORDS:
+            continue
+        if len(word) > 3 and word.endswith("s") and not word.endswith("ss"):
+            word = word[:-1]
+        words.append(word)
+    return words
+
+
+def _text_words(*values):
+    found = set()
+    for value in values:
+        if isinstance(value, (list, tuple)):
+            found |= _text_words(*value)
+        elif value:
+            found |= set(_query_words(value))
+    return found
 
 
 def _json_text(value):
@@ -90,7 +140,12 @@ class AIBASTWorkshopAgent(BasicAgent):
                 "Use for AIBAST Easy Mode workshops. When the user says "
                 "'give me <solution> using Easy Mode and test it', call "
                 "build_and_test. When the user says 'deploy it into Copilot "
-                "Studio', call deploy for the persisted active solution. This "
+                "Studio', call deploy for the persisted active solution. When "
+                "someone describes a need, call find; if it returns several "
+                "choices, list them and ask which one. For questions about a "
+                "solution (is it real, can I demo it, results, who to talk to, "
+                "assets) call about. If nothing fits their industry, call "
+                "adapt with the closest solution and their industry. This "
                 "single generic engine discovers solution packages from the "
                 "registry; never ask for a solution-specific workshop agent. "
                 "Never publish."
@@ -105,6 +160,9 @@ class AIBASTWorkshopAgent(BasicAgent):
                             "deploy",
                             "complete",
                             "status",
+                            "find",
+                            "about",
+                            "adapt",
                         ],
                     },
                     "solution": {
@@ -118,6 +176,21 @@ class AIBASTWorkshopAgent(BasicAgent):
                         "description": (
                             "Optional Copilot Studio environment UUID. The "
                             "active PAC environment is used when omitted."
+                        ),
+                    },
+                    "industry": {
+                        "type": "string",
+                        "description": (
+                            "For adapt, the person's industry, such as dental "
+                            "clinics."
+                        ),
+                    },
+                    "replacements": {
+                        "type": "string",
+                        "description": (
+                            "For adapt, JSON list of {from, to, why} word, role "
+                            "or system changes for the person's industry. Omit "
+                            "on the first call to get the adaptation kit."
                         ),
                     },
                     "preview_evidence": {
@@ -218,7 +291,25 @@ class AIBASTWorkshopAgent(BasicAgent):
                 )
             if operation == "status":
                 return _json_text(self._read_state())
+            if operation == "find":
+                return _json_text(
+                    self._find(str(kwargs.get("solution") or ""))
+                )
+            if operation == "about":
+                return _json_text(
+                    self._about(str(kwargs.get("solution") or ""))
+                )
+            if operation == "adapt":
+                return _json_text(
+                    self._adapt(
+                        str(kwargs.get("solution") or ""),
+                        str(kwargs.get("industry") or ""),
+                        kwargs.get("replacements"),
+                    )
+                )
             raise WorkshopError(f"Unsupported operation: {operation}")
+        except SolutionChoice as choice:
+            return _json_text(choice.payload)
         except (
             WorkshopError,
             OSError,
@@ -337,20 +428,7 @@ class AIBASTWorkshopAgent(BasicAgent):
                     "No active solution. Build and test a named solution first."
                 )
             requested = _normalize(active)
-        matches = []
-        for agent in self._registry().get("agents", []):
-            demo = agent.get("_demo") or {}
-            package = (agent.get("_solution") or {}).get("package") or {}
-            if not demo.get("slug") or not package.get("slug"):
-                continue
-            if requested in self._solution_candidates(agent):
-                matches.append(agent)
-        if len(matches) != 1:
-            raise WorkshopError(
-                f"Expected one packaged AIBAST solution for {value!r}; "
-                f"found {len(matches)}"
-            )
-        agent = matches[0]
+        agent = self._match_solution(value, requested)
         solution = agent["_solution"]
         package = solution["package"]
         slug = package["slug"]
@@ -365,6 +443,396 @@ class AIBASTWorkshopAgent(BasicAgent):
             "manifest_path": package.get("export_manifest_url")
             or f"solutions/{slug}/export-manifest.json",
             "cases_path": f"tests/demo_cases/{agent['_demo']['slug']}.json",
+        }
+
+    def _packaged_solutions(self):
+        packaged = []
+        for agent in self._registry().get("agents", []):
+            demo = agent.get("_demo") or {}
+            package = (agent.get("_solution") or {}).get("package") or {}
+            if demo.get("slug") and package.get("slug"):
+                packaged.append(agent)
+        return packaged
+
+    @staticmethod
+    def _choice_line(agent):
+        solution = agent.get("_solution") or {}
+        industries = [
+            item for item in solution.get("industries") or [] if item
+        ]
+        return {
+            "name": solution.get("advertised_name") or agent.get("display_name"),
+            "solution": (solution.get("package") or {}).get("slug"),
+            "industry": ", ".join(industries) or "Cross-Industry",
+            "summary": solution.get("sales_headline")
+            or solution.get("executive_summary")
+            or agent.get("description", ""),
+        }
+
+    def _score(self, agent, words):
+        solution = agent.get("_solution") or {}
+        name_words = _text_words(
+            agent.get("name", "").split("/")[-1],
+            agent.get("display_name"),
+            solution.get("advertised_name"),
+            solution.get("aliases"),
+        )
+        tag_words = _text_words(
+            solution.get("industries"),
+            solution.get("personas"),
+            solution.get("search_terms"),
+            agent.get("tags"),
+        )
+        text_words = _text_words(
+            agent.get("description"),
+            solution.get("executive_summary"),
+            solution.get("sales_headline"),
+            solution.get("capabilities"),
+        )
+        name_hits = sum(1 for word in words if word in name_words)
+        score = 0
+        for word in words:
+            if word in name_words:
+                score += 3
+            elif word in tag_words:
+                score += 2
+            elif word in text_words:
+                score += 1
+        return name_hits, score
+
+    def _rank(self, value):
+        words = _query_words(value)
+        ranked = []
+        for agent in self._packaged_solutions():
+            name_hits, score = self._score(agent, words)
+            if score:
+                ranked.append((name_hits, score, agent))
+        ranked.sort(key=lambda item: (-item[0], -item[1], item[2]["name"]))
+        return ranked
+
+    def _match_solution(self, value, requested=None):
+        """Exact name wins; otherwise one fitting solution or a choice list."""
+        if requested is None:
+            requested = _normalize(value)
+        exact = [
+            agent for agent in self._packaged_solutions()
+            if requested in self._solution_candidates(agent)
+        ]
+        if len(requested.split()) < 2:
+            # One bare word such as "procurement" is a topic, not a name,
+            # unless it is the whole name or slug as written.
+            raw = str(value).strip().lower()
+            exact = [
+                agent for agent in exact
+                if raw in {
+                    str(agent.get("display_name") or "").lower(),
+                    str(
+                        (agent.get("_solution") or {}).get("advertised_name")
+                        or ""
+                    ).lower(),
+                    str((agent.get("_demo") or {}).get("slug") or ""),
+                }
+            ]
+        if len(exact) == 1:
+            return exact[0]
+        if len(exact) > 1:
+            # A solution's own name beats another solution's alias.
+            own = [
+                agent for agent in exact
+                if requested in {
+                    _normalize(agent.get("display_name")),
+                    _normalize(
+                        (agent.get("_solution") or {}).get("advertised_name")
+                    ),
+                }
+            ]
+            if len(own) == 1:
+                return own[0]
+        ranked = self._rank(value)
+        if ranked:
+            best_hits = ranked[0][0]
+            if best_hits:
+                fits = [item for item in ranked if item[0] == best_hits]
+            else:
+                best_score = ranked[0][1]
+                fits = [item for item in ranked if item[1] == best_score]
+            if len(fits) == 1:
+                return fits[0][2]
+            choices = [self._choice_line(item[2]) for item in fits]
+            raise SolutionChoice({
+                "status": "choose",
+                "request": value,
+                "message": (
+                    f"{len(choices)} library solutions fit '{value}'. "
+                    "List each with its industry and one line, and ask which "
+                    "one they want."
+                ),
+                "choices": choices[:CHOICE_LIMIT],
+                "more": max(0, len(choices) - CHOICE_LIMIT),
+                "published": False,
+            })
+        raise SolutionChoice({
+            "status": "no_match",
+            "request": value,
+            "message": (
+                f"No library solution matches '{value}'. Ask for a few more "
+                "words about the work, or offer the closest ones below. If "
+                "their industry is not covered, offer to adapt the closest one."
+            ),
+            "closest": [
+                self._choice_line(agent)
+                for agent in self._closest(value)
+            ],
+            "published": False,
+        })
+
+    def _closest(self, value):
+        """Best partial matches on any word, for a 'did you mean' list."""
+        words = set(_query_words(value))
+        scored = []
+        for agent in self._packaged_solutions():
+            solution = agent.get("_solution") or {}
+            pool = _text_words(
+                agent.get("display_name"), agent.get("description"),
+                solution.get("search_terms"), solution.get("personas"),
+                solution.get("capabilities"), solution.get("industries"),
+            )
+            hits = sum(
+                1 for word in words
+                for item in pool
+                if len(word) > 3 and (word in item or item in word)
+                and len(item) > 3
+            )
+            if hits:
+                scored.append((hits, agent["name"], agent))
+        scored.sort(key=lambda item: (-item[0], item[1]))
+        return [item[2] for item in scored[:CLOSEST_LIMIT]]
+
+    def _find(self, value):
+        if not value.strip():
+            raise WorkshopError("Say what the agent should help with.")
+        agent = self._match_solution(value)
+        return {
+            "status": "match",
+            "request": value,
+            "solution": self._choice_line(agent),
+            "industries": (agent.get("_solution") or {}).get("industries")
+            or [],
+            "next": (
+                "If the person named an industry that is not in this "
+                "solution's industries, say so plainly and offer to adapt it "
+                "to their industry (operation adapt). Then ask whether they "
+                "want background on this solution or want to get it ready to "
+                "show."
+            ),
+            "published": False,
+        }
+
+    def _evidence_summary(self, slug):
+        try:
+            evidence = self._fetch_json(
+                f"solutions/{slug}/evals/copilot-studio-preview-evidence.json"
+            )
+        except (urllib.error.URLError, OSError, ValueError):
+            return None
+        cases = evidence.get("cases") or []
+        return {
+            "copilot_studio_status": evidence.get("status"),
+            "captured_at": evidence.get("captured_at"),
+            "cases_passed": sum(1 for case in cases if case.get("passed")),
+            "cases_total": len(cases),
+            "published": bool(evidence.get("published")),
+        }
+
+    def _about(self, value):
+        """Answer the questions a seller asks before showing a solution."""
+        if not value.strip():
+            value = self._read_state().get("active_agent") or ""
+            if not value:
+                return {
+                    "status": "about",
+                    "solution": None,
+                    "who_to_talk_to": {
+                        "request_form": REQUEST_FORM_URL,
+                        "office_hours": OFFICE_HOURS,
+                    },
+                    "assets": (
+                        "Ask for one-pagers and demo videos through the "
+                        "request form."
+                    ),
+                    "next": (
+                        "Give the request form and office hours, then ask "
+                        "which solution they are looking at."
+                    ),
+                    "published": False,
+                }
+        agent = self._match_solution(value)
+        solution = agent.get("_solution") or {}
+        demo = agent.get("_demo") or {}
+        package = solution.get("package") or {}
+        slug = package.get("slug")
+        source = solution.get("source")
+        if source == "field":
+            where = (
+                "Field solution: it started in a customer working session and "
+                "was rebuilt on synthetic data for the library."
+            )
+        elif source == "catalog":
+            where = "Catalog solution: part of the original library catalog."
+        else:
+            where = "Library solution; its origin is not recorded."
+        video = solution.get("demo_video")
+        onepager = solution.get("onepager")
+        name = solution.get("advertised_name") or agent.get("display_name")
+        return {
+            "status": "about",
+            "solution": self._choice_line(agent),
+            "first_ask": (
+                "Do you need background on the idea, or to get it ready to "
+                "show?"
+            ),
+            "is_it_real": {
+                "where_it_came_from": where,
+                "built_and_tested": bool(demo.get("case_count")),
+                "readiness": agent.get("_readiness") or [],
+                "test_cases": demo.get("case_count", 0),
+                "copilot_studio_preview": (
+                    self._evidence_summary(slug) if slug else None
+                ),
+                "synthetic_data_only": bool(agent.get("_synthetic_data")),
+            },
+            "how_to_demo": {
+                "workshop": (
+                    SITE_BASE + package["quest_url"]
+                    if package.get("quest_url") else None
+                ),
+                "manual_tutorial": (
+                    SITE_BASE + package["manual_tutorial_url"]
+                    if package.get("manual_tutorial_url") else None
+                ),
+                "easy_mode": f"Say: Give me {name} using Easy Mode and test it.",
+                "sample_prompts": [
+                    item.get("prompt")
+                    for item in solution.get("sample_prompts") or []
+                    if item.get("prompt")
+                ][:3],
+                "video": video or None,
+                "video_note": None if video else (
+                    "No demo video is published for this solution yet."
+                ),
+            },
+            "customer_results": (
+                "No customer results are published for this solution yet. The "
+                "outcomes on its one-pager describe the sample scenario, not "
+                "a named customer."
+            ),
+            "who_to_talk_to": {
+                "request_form": REQUEST_FORM_URL,
+                "office_hours": OFFICE_HOURS,
+            },
+            "assets": {
+                "one_pager": onepager,
+                "demo_video": video,
+                "how_to_get_them": (
+                    "Ask for the one-pager or video through the request form."
+                ),
+                "request_form": REQUEST_FORM_URL,
+            },
+            "industries": solution.get("industries") or [],
+            "adapt_note": (
+                "If the person's industry is not listed, offer to adapt this "
+                "solution to their industry with the adapt operation."
+            ),
+            "published": False,
+        }
+
+    def _adapt(self, value, industry, replacements):
+        """Make a local, industry-adapted copy; never edit the original."""
+        if not industry.strip():
+            raise WorkshopError("Say which industry to adapt the solution to.")
+        agent = self._match_solution(value)
+        if not agent.get("_synthetic_data"):
+            raise WorkshopError(
+                "Only solutions built on synthetic data can be adapted."
+            )
+        solution = agent.get("_solution") or {}
+        name = solution.get("advertised_name") or agent.get("display_name")
+        if replacements in (None, "", []):
+            return {
+                "status": "adaptation_kit",
+                "solution": self._choice_line(agent),
+                "industry": industry,
+                "original": {
+                    "industries": solution.get("industries") or [],
+                    "roles": solution.get("personas") or [],
+                    "systems": solution.get("featured_tools") or [],
+                    "terms": (solution.get("search_terms") or [])[:20],
+                    "sample_prompts": [
+                        item.get("prompt")
+                        for item in solution.get("sample_prompts") or []
+                        if item.get("prompt")
+                    ][:3],
+                },
+                "next": (
+                    "Propose word, role and sample-data changes for the "
+                    f"{industry} industry and explain each one, then call "
+                    "adapt again with replacements as a JSON list of "
+                    "{from, to, why}. Keep the Microsoft products (Copilot "
+                    "Studio, Microsoft 365, Power Platform, Dynamics 365). "
+                    "Sample data stays synthetic: no real people, patients, "
+                    "customers or companies."
+                ),
+                "original_unchanged": True,
+                "published": False,
+            }
+        if isinstance(replacements, str):
+            replacements = json.loads(replacements)
+        if not isinstance(replacements, list) or not replacements:
+            raise WorkshopError("replacements must be a non-empty JSON list")
+        changes = []
+        for item in replacements:
+            old = str((item or {}).get("from") or "").strip()
+            new = str((item or {}).get("to") or "").strip()
+            if not old or not new:
+                raise WorkshopError("each replacement needs from and to")
+            changes.append(
+                {"from": old, "to": new, "why": str(item.get("why") or "")}
+            )
+        adapted = self._fetch_bytes(agent["_file"]).decode("utf-8")
+        for change in sorted(changes, key=lambda c: -len(c["from"])):
+            pattern = re.compile(re.escape(change["from"]), re.IGNORECASE)
+            change["count"] = len(pattern.findall(adapted))
+            adapted = pattern.sub(lambda _m, to=change["to"]: to, adapted)
+        industry_slug = "-".join(_query_words(industry)) or "industry"
+        slug = (solution.get("package") or {}).get("slug") or "solution"
+        target = self.state_path.parent / "adapted" / f"{slug}--{industry_slug}"
+        agent_path = target / Path(agent["_file"]).name
+        self._atomic_write(agent_path, adapted.encode("utf-8"))
+        record = {
+            "schema": "aibast-local-adaptation/1.0",
+            "original": agent["name"],
+            "original_sha256": agent.get("_sha256"),
+            "industry": industry,
+            "changes": changes,
+            "synthetic_data_only": True,
+            "original_unchanged": True,
+            "stays_local": True,
+        }
+        self._atomic_write(
+            target / "adaptation.json",
+            (_json_text(record) + "\n").encode("utf-8"),
+        )
+        return {
+            "status": "adapted",
+            "solution": self._choice_line(agent),
+            "industry": industry,
+            "changes": changes,
+            "local_copy": str(agent_path),
+            "note": (
+                f"The original {name} and its tests are unchanged. This copy "
+                "stays on this computer and uses synthetic data only."
+            ),
+            "published": False,
         }
 
     def _load_documents(self, solution):
