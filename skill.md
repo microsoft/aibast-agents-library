@@ -20,6 +20,8 @@ The brainstem teaches you the Microsoft AI stack one layer at a time:
 
 Each tier builds on the last. Start with Tier 1. Layer up when the user is ready.
 
+**Recommended start: VS Code with GitHub Copilot.** Not required, but it's the best way to explore the AI frontier. Paste the prompt in [docs/vscode-install-prompt.md](docs/vscode-install-prompt.md) into GitHub Copilot Chat in VS Code (agent mode): Copilot runs the one-liner, waits for `http://localhost:7071/health`, opens the Brainstem in VS Code's built-in browser and gives a short guided tour. The one-liner in Tier 1 below is a fully supported alternative that needs no VS Code.
+
 ## Instructions for Copilot
 
 Execute these steps autonomously. Only pause and ask the user when marked with .

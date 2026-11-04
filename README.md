@@ -8,6 +8,10 @@ Industry agent templates, the RAPP production methodology, and the RAPP Brainste
 
 [Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Microsoft AI Academy](academy.html) | [Agent Library](https://microsoft.github.io/aibast-agents-library/) | [Library Metrics](https://microsoft.github.io/aibast-agents-library/metrics.html) | [Brainstem API and configuration](rapp_brainstem/README.md)
 
+**Recommended: VS Code with GitHub Copilot.** Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste the prompt in [docs/vscode-install-prompt.md](docs/vscode-install-prompt.md) into GitHub Copilot Chat in VS Code (agent mode), or copy it from the [installer page](https://microsoft.github.io/aibast-agents-library/docs/installer.html). Don't have VS Code? [Install it](https://code.visualstudio.com/) and [set up GitHub Copilot](https://code.visualstudio.com/docs/copilot/setup).
+
+**Advanced: run the one-liner yourself.** A fully supported alternative that needs no VS Code.
+
 ```
 curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
 ```
