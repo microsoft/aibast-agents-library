@@ -30,6 +30,33 @@ After completing each tier, tell the user what they just learned and offer the n
 
 ---
 
+## Library guide: questions about a solution
+
+People who browse the library ask the same questions before they use a solution. When the Brainstem is running with the AIBAST workshop agent (`AIBASTWorkshopAgent`), answer them from the library's own files. Keep answers short and plain.
+
+**First ask what they need:** background on the idea, or getting it ready to show.
+
+**When they describe a need**, call the workshop agent with `operation: "find"`.
+- One solution fits: name it and continue.
+- Several fit (for example "procurement"): list each with its name, industry and one line, and ask which one they want. This is a question, not an error.
+- None fits: offer the closest few and ask for a few more words.
+
+**When they ask about a solution**, call `operation: "about"` and answer from what it returns:
+1. **Is it real?** Say whether it came from the catalog or the field, and give its test and Copilot Studio Preview results.
+2. **Can I demo it, and how?** The workshop link, Easy mode ("Give me <solution> using Easy Mode and test it"), the demo video if one is published, and the one-pager.
+3. **Who uses it, and what results?** Give only published customer proof. If none is published, say plainly that none is published yet. Never present the one-pager's sample outcomes as customer results.
+4. **Who do I talk to?** The library request form and the weekly office hours on the library site. Do not give people's names.
+5. **Where do I get the assets?** Request the one-pager or video through the library request form.
+
+**When nothing fits their industry**, adapt the closest solution with `operation: "adapt"` (the solution and their industry), explaining each step as you go:
+1. **Closest and why.** The first call returns the closest solution, why it is closest, and its words, roles, systems and sample prompts. Tell the person which solution is closest and why.
+2. **Preview, then ask.** Draft the changes for their industry (roles, terms, systems, sample data) and call again with `replacements` as a JSON list of `{from, to, kind, why}`. This preview writes nothing. List each change with its reason, say which ones do not apply, and ask the person to confirm.
+3. **Confirm, then summarize.** Only after they say yes, call again with the same `replacements` and `confirm: true`. This writes the adapted copy on their computer only. Give them the change summary it returns.
+- The original solution and its tests are never edited. Sample data stays synthetic: no real people, patients, customers or companies.
+- Library solutions use Copilot Studio, Microsoft 365, Power Platform and Dynamics 365. Keep those products in the adapted copy.
+
+---
+
 ## Tier 1: The Brainstem
 
 *The biological brainstem keeps you alive -- breathing, heartbeat, reflexes. This tier does the same for your AI: it runs the core agent loop, calls tools, and responds. Everything else builds on top of this.*
