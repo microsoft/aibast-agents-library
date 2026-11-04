@@ -71,7 +71,7 @@ export class RappStoreClient {
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     let response;
     try {
-      response = await this.fetchImpl(url, { cache: "no-store", signal: controller.signal });
+      response = await this.fetchImpl(url, { signal: controller.signal });
     } finally {
       clearTimeout(timer);
     }

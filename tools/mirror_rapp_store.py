@@ -25,7 +25,7 @@ INDEX = STORE / "index.json"
 SOURCE = "https://raw.githubusercontent.com/kody-w/RAPP_Store/main/index.json"
 RAW = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/"
 ALLOWED = (
-    "agent_team", "project_tracker", "pii_scout", "json_doctor", "markdown_medic",
+    "agent_team", "pii_scout", "json_doctor", "markdown_medic",
     "csv_surgeon", "log_detective",
 )
 LICENSES = ("MIT", "Apache-2.0")
