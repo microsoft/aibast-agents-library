@@ -655,8 +655,9 @@ def test_achievements_page_theme_accessibility_and_explanations(tmp_path):
     assert "sendBeacon" not in page
     assert "XMLHttpRequest" not in page
     assert page.count("fetch(") == 1
-    assert 'fetch("state/metrics.json", {' in page
-    assert 'cache: "no-store"' in page
+    assert 'fetch("state/metrics.json")' in page
+    # rapp-static-api/1.1: the browser never bypasses the CDN or browser cache.
+    assert 'cache: "no-store"' not in page
     assert re.search(r"\bBeta\b", page) is None
     assert 'class="skip-link"' in page
     assert 'aria-live="polite"' in page

@@ -294,50 +294,6 @@
       "ui_sha256": "0a6bbed88e0b7fa5246b3b568bce476be1abed2ad18f4c70b27d47cedd53a5cc",
       "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/pii_scout/index.html",
       "version": "1.0.0"
-    },
-    {
-      "category": "productivity",
-      "hashes_recorded_at_mirror": [
-        "ui"
-      ],
-      "id": "project_tracker",
-      "license": "MIT",
-      "manifest_name": "@kody-w/project-tracker-singleton",
-      "mirrored_from": {
-        "catalog": "RAPP Store",
-        "id": "project_tracker",
-        "version": "1.0.0"
-      },
-      "name": "Project Tracker",
-      "produced_by": {
-        "based_on": "aibast-agents-library project-tracker tool",
-        "bundled_at": "2026-07-24T00:00:00Z",
-        "method": "single-file-agent + ui-clone",
-        "source_files_collapsed": 1
-      },
-      "publisher": "@kody-w",
-      "quality_tier": "community",
-      "singleton_bytes": 27588,
-      "singleton_filename": "project_tracker_agent.py",
-      "singleton_lines": 534,
-      "singleton_sha256": "b6270faf10379411b7a0065a91b571299bbb3f9a8c6072d041f24580c70d7e7c",
-      "singleton_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/project_tracker/project_tracker_agent.py",
-      "summary": "A local-first tracker for a portfolio of AI-agent projects and their MVP statements. The web UI is a 1:1 clone of the aibast-agents-library project-tracker tool; the bundled ProjectTracker agent manages the same portfolio headlessly over /chat. Both speak the tool's native projectTrackerData JSON, so exports and imports round-trip with it. Self-contained and stdlib-only: the UI works offline via localStorage, and unifies with the agent's on-device store when the rapplication's local server is running.",
-      "tagline": "Track AI-agent projects and their MVPs, local-first \u2014 a web UI plus a headless agent over one JSON.",
-      "tags": [
-        "rapplication",
-        "project-tracker",
-        "portfolio",
-        "mvp",
-        "project-management",
-        "local-first",
-        "copilot-studio",
-        "has-ui"
-      ],
-      "ui_filename": "index.html",
-      "ui_sha256": "5ccb0e5f3d1794f0358aeae5175381be9c99f3639c44d82e09435b225002c75d",
-      "ui_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/store/project_tracker/index.html",
-      "version": "1.0.0"
     }
   ],
   "schema": "rapp-store/1.0"

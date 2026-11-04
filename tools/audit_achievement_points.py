@@ -198,8 +198,7 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
     for token in (
         "Local unsynced",
         "Verified synced",
-        'fetch("state/metrics.json", {',
-        'cache: "no-store"',
+        'fetch("state/metrics.json")',
         "row.badges",
         "does not authenticate the account",
         "No local progress is sent automatically",

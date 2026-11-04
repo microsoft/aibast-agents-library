@@ -332,7 +332,7 @@ async function getJSON(paths, { required = false } = {}) {
   const failures = [];
   for (const path of paths) {
     try {
-      const response = await fetch(path, { cache: "no-store" });
+      const response = await fetch(path);
       if (response.ok) return await response.json();
       failures.push(`${path}: HTTP ${response.status}`);
     } catch (error) {

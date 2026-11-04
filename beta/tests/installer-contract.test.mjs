@@ -132,7 +132,8 @@ test("released beta installs can pin the launcher and runtime to one commit", ()
 
 test("dedicated beta page resolves fork releases without changing main install", () => {
   assert.match(installerSources, /brainstem-beta-v/);
-  assert.match(installerSources, /api\.github\.com\/repos/);
+  assert.match(installerSources, /\.\.\/api\/v1\/github\//);
+  assert.doesNotMatch(installerSources, /https?:\/\/api\.github\.com\b/);
   assert.match(installerPage, /frontier\.sh/);
   assert.match(installerPage, /frontier\.ps1/);
   assert.match(installerPage, /The production installer is unchanged/);
