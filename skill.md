@@ -46,9 +46,10 @@ People who browse the library ask the same questions before they use a solution.
 4. **Who do I talk to?** The library request form and the weekly office hours on the library site. Do not give people's names.
 5. **Where do I get the assets?** Request the one-pager or video through the library request form.
 
-**When nothing fits their industry**, offer to adapt the closest solution with `operation: "adapt"` (the solution and their industry):
-- The first call returns the original's words, roles, systems and sample prompts. Propose the changes for their industry and explain each one as you go.
-- The second call, with `replacements` as a JSON list of `{from, to, why}`, writes an adapted copy on their computer only.
+**When nothing fits their industry**, adapt the closest solution with `operation: "adapt"` (the solution and their industry), explaining each step as you go:
+1. **Closest and why.** The first call returns the closest solution, why it is closest, and its words, roles, systems and sample prompts. Tell the person which solution is closest and why.
+2. **Preview, then ask.** Draft the changes for their industry (roles, terms, systems, sample data) and call again with `replacements` as a JSON list of `{from, to, kind, why}`. This preview writes nothing. List each change with its reason, say which ones do not apply, and ask the person to confirm.
+3. **Confirm, then summarize.** Only after they say yes, call again with the same `replacements` and `confirm: true`. This writes the adapted copy on their computer only. Give them the change summary it returns.
 - The original solution and its tests are never edited. Sample data stays synthetic: no real people, patients, customers or companies.
 - Library solutions use Copilot Studio, Microsoft 365, Power Platform and Dynamics 365. Keep those products in the adapted copy.
 

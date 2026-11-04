@@ -2280,8 +2280,15 @@ one line each and asks which one you want.
 ## Adapt it to another industry
 
 If nothing fits your industry, ask the guide to adapt this solution. It
-changes the words, roles, systems and synthetic sample data to your industry,
-explains each change as it goes, and keeps the adapted copy on your computer.
+explains each step as it goes:
+
+1. It says which solution is closest to your need and why.
+2. It lists the changes it would make for your industry (roles, terms,
+   systems and synthetic sample data), each with a reason, and asks you to
+   confirm. Nothing is written yet.
+3. After you confirm, it writes the adapted copy on your computer and gives
+   you a summary of every change.
+
 The original solution and its tests are never edited, and the sample data stays
 synthetic.
 

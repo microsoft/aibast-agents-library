@@ -103,12 +103,38 @@ def test_adapt_first_returns_the_kit(tmp_path):
         industry="dental clinics",
     ))
     assert result["status"] == "adaptation_kit"
+    assert "closest" in result["closest_because"]
     assert "Nurse Manager" in result["original"]["roles"]
-    assert "synthetic" in result["next"]
-    assert result["original_unchanged"] is True
+    assert result["writes_nothing"] and result["original_unchanged"]
+    assert not (tmp_path / "adapted").exists()
 
 
-def test_adapt_writes_a_local_copy_and_keeps_the_original(tmp_path):
+DENTAL = json.dumps([
+    {"from": "Nurse Manager", "to": "Practice Manager", "kind": "role",
+     "why": "Dental clinics are run by a practice manager."},
+    {"from": "no such phrase", "to": "anything", "kind": "term",
+     "why": "Shows a change that does not apply."},
+])
+
+
+def test_adapt_preview_lists_changes_and_writes_nothing(tmp_path):
+    _m, agent, _d = build_agent(tmp_path)
+    result = json.loads(agent.perform(
+        operation="adapt",
+        solution="Tiered Huddle Board",
+        industry="dental clinics",
+        replacements=DENTAL,
+    ))
+    assert result["status"] == "adaptation_preview"
+    assert result["planned_changes"][0]["count"] > 0
+    assert result["not_found"] == ["no such phrase"]
+    assert "confirm" in result["next"]
+    assert result["writes_nothing"] is True
+    assert not (tmp_path / "adapted").exists()
+    assert not Path(result["would_write"]).exists()
+
+
+def test_adapt_confirm_writes_a_local_copy_and_keeps_the_original(tmp_path):
     _m, agent, _d = build_agent(tmp_path)
     original = (
         ROOT / "agents/@aibast-agents-library/healthcare_stacks"
@@ -119,19 +145,40 @@ def test_adapt_writes_a_local_copy_and_keeps_the_original(tmp_path):
         operation="adapt",
         solution="Tiered Huddle Board",
         industry="dental clinics",
-        replacements=json.dumps([
-            {"from": "Nurse Manager", "to": "Practice Manager",
-             "why": "Dental clinics are run by a practice manager."},
-        ]),
+        replacements=DENTAL,
+        confirm=True,
     ))
     assert result["status"] == "adapted"
-    assert result["changes"][0]["count"] > 0
+    assert result["change_summary"][0].startswith(
+        "Nurse Manager -> Practice Manager"
+    )
     copy = Path(result["local_copy"])
     assert copy.is_relative_to(tmp_path)
     assert "Practice Manager" in copy.read_text()
     record = json.loads((copy.parent / "adaptation.json").read_text())
-    assert record["synthetic_data_only"] and record["original_unchanged"]
+    assert record["made_up_sample_data_only"] and record["original_unchanged"]
     assert hashlib.sha256(original.read_bytes()).hexdigest() == before
+
+
+def test_every_packaged_solution_is_synthetic_so_adapt_may_use_any():
+    registry = json.loads((ROOT / "registry.json").read_text())
+    packaged = [
+        a for a in registry["agents"]
+        if (a.get("_demo") or {}).get("slug")
+        and ((a.get("_solution") or {}).get("package") or {}).get("slug")
+    ]
+    assert packaged
+    assert all(a["_synthetic_data"] for a in packaged)
+
+
+def test_workshop_engine_is_not_badged_as_holding_data():
+    registry = json.loads((ROOT / "registry.json").read_text())
+    engine = next(
+        a for a in registry["agents"]
+        if a["name"] == "@aibast-agents-library/workshop"
+    )
+    assert engine["_synthetic_data"] is False
+    assert "Synthetic data" not in engine["_readiness"]
 
 
 # The written guides carry the same three behaviors.

@@ -168,7 +168,11 @@ class AIBASTWorkshopAgent(BasicAgent):
                     "solution": {
                         "type": "string",
                         "description": (
-                            "AIBAST solution name, such as Time Entry and Billing."
+                            "AIBAST solution name, such as Time Entry and "
+                            "Billing. For find, pass the person's own words "
+                            "describing the need, such as 'daily huddles for "
+                            "a dental clinic chain'. Always required for "
+                            "find, about and adapt."
                         ),
                     },
                     "environment_id": {
@@ -191,6 +195,14 @@ class AIBASTWorkshopAgent(BasicAgent):
                             "For adapt, JSON list of {from, to, why} word, role "
                             "or system changes for the person's industry. Omit "
                             "on the first call to get the adaptation kit."
+                        ),
+                    },
+                    "confirm": {
+                        "type": "boolean",
+                        "description": (
+                            "For adapt, true only after the person has seen "
+                            "the preview of changes and said yes. Without it, "
+                            "adapt previews and writes nothing."
                         ),
                     },
                     "preview_evidence": {
@@ -305,6 +317,7 @@ class AIBASTWorkshopAgent(BasicAgent):
                         str(kwargs.get("solution") or ""),
                         str(kwargs.get("industry") or ""),
                         kwargs.get("replacements"),
+                        kwargs.get("confirm") in (True, "true", "yes", "True"),
                     )
                 )
             raise WorkshopError(f"Unsupported operation: {operation}")
@@ -610,7 +623,10 @@ class AIBASTWorkshopAgent(BasicAgent):
 
     def _find(self, value):
         if not value.strip():
-            raise WorkshopError("Say what the agent should help with.")
+            raise WorkshopError(
+                "find needs the solution argument: pass the person's own "
+                "words describing what they need."
+            )
         agent = self._match_solution(value)
         return {
             "status": "match",
@@ -675,7 +691,7 @@ class AIBASTWorkshopAgent(BasicAgent):
         if source == "field":
             where = (
                 "Field solution: it started in a customer working session and "
-                "was rebuilt on synthetic data for the library."
+                "was rebuilt on made-up sample data for the library."
             )
         elif source == "catalog":
             where = "Catalog solution: part of the original library catalog."
@@ -699,7 +715,6 @@ class AIBASTWorkshopAgent(BasicAgent):
                 "copilot_studio_preview": (
                     self._evidence_summary(slug) if slug else None
                 ),
-                "synthetic_data_only": bool(agent.get("_synthetic_data")),
             },
             "how_to_demo": {
                 "workshop": (
@@ -746,22 +761,66 @@ class AIBASTWorkshopAgent(BasicAgent):
             "published": False,
         }
 
-    def _adapt(self, value, industry, replacements):
-        """Make a local, industry-adapted copy; never edit the original."""
+    def _parse_changes(self, replacements):
+        if isinstance(replacements, str):
+            replacements = json.loads(replacements)
+        if not isinstance(replacements, list) or not replacements:
+            raise WorkshopError("replacements must be a non-empty JSON list")
+        changes = []
+        for item in replacements:
+            item = item if isinstance(item, dict) else {}
+            old = str(item.get("from") or "").strip()
+            new = str(item.get("to") or "").strip()
+            if not old or not new:
+                raise WorkshopError("each replacement needs from and to")
+            changes.append({
+                "from": old,
+                "to": new,
+                "kind": str(item.get("kind") or ""),
+                "why": str(item.get("why") or ""),
+            })
+        return changes
+
+    @staticmethod
+    def _apply_changes(source, changes):
+        adapted = source
+        for change in sorted(changes, key=lambda c: -len(c["from"])):
+            pattern = re.compile(re.escape(change["from"]), re.IGNORECASE)
+            change["count"] = len(pattern.findall(adapted))
+            adapted = pattern.sub(lambda _m, to=change["to"]: to, adapted)
+        return adapted
+
+    def _adapt(self, value, industry, replacements, confirm=False):
+        """Adapt the closest solution to an industry in three visible steps.
+
+        1. No replacements: the kit (closest solution, why, what can change).
+        2. Replacements, no confirm: a preview of every change; writes nothing.
+        3. Replacements and confirm: writes the local copy and summarizes it.
+        The original solution and its tests are never edited.
+        """
         if not industry.strip():
             raise WorkshopError("Say which industry to adapt the solution to.")
+        # Every packaged library solution carries made-up sample data only
+        # (enforced by the registry tests), so any packaged one may be adapted.
         agent = self._match_solution(value)
-        if not agent.get("_synthetic_data"):
-            raise WorkshopError(
-                "Only solutions built on synthetic data can be adapted."
-            )
         solution = agent.get("_solution") or {}
         name = solution.get("advertised_name") or agent.get("display_name")
+        line = self._choice_line(agent)
+        rules = (
+            "Keep the Microsoft products (Copilot Studio, Microsoft 365, "
+            "Power Platform, Dynamics 365). Sample data stays made up: no "
+            "real people, patients, customers or companies."
+        )
         if replacements in (None, "", []):
             return {
                 "status": "adaptation_kit",
-                "solution": self._choice_line(agent),
+                "solution": line,
                 "industry": industry,
+                "closest_because": (
+                    f"{name} is the closest library solution: "
+                    f"{line['summary']}. It was written for "
+                    f"{line['industry']}, not {industry}."
+                ),
                 "original": {
                     "industries": solution.get("industries") or [],
                     "roles": solution.get("personas") or [],
@@ -774,39 +833,41 @@ class AIBASTWorkshopAgent(BasicAgent):
                     ][:3],
                 },
                 "next": (
-                    "Propose word, role and sample-data changes for the "
-                    f"{industry} industry and explain each one, then call "
-                    "adapt again with replacements as a JSON list of "
-                    "{from, to, why}. Keep the Microsoft products (Copilot "
-                    "Studio, Microsoft 365, Power Platform, Dynamics 365). "
-                    "Sample data stays synthetic: no real people, patients, "
-                    "customers or companies."
+                    "Tell the person which solution is closest and why. Then "
+                    f"draft the changes for {industry} (roles, terms, systems, "
+                    "sample data) and call adapt again with replacements as "
+                    "a JSON list of {from, to, kind, why} to preview them. "
+                    "Do not confirm yet. " + rules
                 ),
+                "writes_nothing": True,
                 "original_unchanged": True,
                 "published": False,
             }
-        if isinstance(replacements, str):
-            replacements = json.loads(replacements)
-        if not isinstance(replacements, list) or not replacements:
-            raise WorkshopError("replacements must be a non-empty JSON list")
-        changes = []
-        for item in replacements:
-            old = str((item or {}).get("from") or "").strip()
-            new = str((item or {}).get("to") or "").strip()
-            if not old or not new:
-                raise WorkshopError("each replacement needs from and to")
-            changes.append(
-                {"from": old, "to": new, "why": str(item.get("why") or "")}
-            )
-        adapted = self._fetch_bytes(agent["_file"]).decode("utf-8")
-        for change in sorted(changes, key=lambda c: -len(c["from"])):
-            pattern = re.compile(re.escape(change["from"]), re.IGNORECASE)
-            change["count"] = len(pattern.findall(adapted))
-            adapted = pattern.sub(lambda _m, to=change["to"]: to, adapted)
+        changes = self._parse_changes(replacements)
+        source = self._fetch_bytes(agent["_file"]).decode("utf-8")
+        adapted = self._apply_changes(source, changes)
         industry_slug = "-".join(_query_words(industry)) or "industry"
         slug = (solution.get("package") or {}).get("slug") or "solution"
         target = self.state_path.parent / "adapted" / f"{slug}--{industry_slug}"
         agent_path = target / Path(agent["_file"]).name
+        if not confirm:
+            return {
+                "status": "adaptation_preview",
+                "solution": line,
+                "industry": industry,
+                "planned_changes": changes,
+                "not_found": [c["from"] for c in changes if not c["count"]],
+                "would_write": str(agent_path),
+                "next": (
+                    "List each planned change with why, say which ones were "
+                    "not found in the solution, and ask the person to confirm. "
+                    "Only after they say yes, call adapt again with the same "
+                    "replacements and confirm true."
+                ),
+                "writes_nothing": True,
+                "original_unchanged": True,
+                "published": False,
+            }
         self._atomic_write(agent_path, adapted.encode("utf-8"))
         record = {
             "schema": "aibast-local-adaptation/1.0",
@@ -814,7 +875,7 @@ class AIBASTWorkshopAgent(BasicAgent):
             "original_sha256": agent.get("_sha256"),
             "industry": industry,
             "changes": changes,
-            "synthetic_data_only": True,
+            "made_up_sample_data_only": True,
             "original_unchanged": True,
             "stays_local": True,
         }
@@ -822,15 +883,20 @@ class AIBASTWorkshopAgent(BasicAgent):
             target / "adaptation.json",
             (_json_text(record) + "\n").encode("utf-8"),
         )
+        applied = [c for c in changes if c["count"]]
         return {
             "status": "adapted",
-            "solution": self._choice_line(agent),
+            "solution": line,
             "industry": industry,
-            "changes": changes,
+            "change_summary": [
+                f"{c['from']} -> {c['to']} ({c['count']} places): {c['why']}"
+                for c in applied
+            ],
+            "not_found": [c["from"] for c in changes if not c["count"]],
             "local_copy": str(agent_path),
             "note": (
                 f"The original {name} and its tests are unchanged. This copy "
-                "stays on this computer and uses synthetic data only."
+                "stays on this computer and uses made-up sample data only."
             ),
             "published": False,
         }
