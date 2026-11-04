@@ -256,7 +256,8 @@ test("Download Center works without JavaScript and stays narrow under stress", {
           });
           window.fetch = async (input, init) => {
             const url = String(input);
-            if (url.includes("api.github.com") && url.includes("/releases?")) {
+            // The page reads the CI-built release snapshot from its own site.
+            if (url.includes("/api/v1/github/releases.json")) {
               window.downloadCenterFixtureRequested = true;
               await releaseGate;
               return new Response(JSON.stringify([release]), {
@@ -264,8 +265,12 @@ test("Download Center works without JavaScript and stays narrow under stress", {
                 headers: { "content-type": "application/json" },
               });
             }
-            if (url.includes("api.github.com") && url.includes("/commits/")) {
-              return new Response(JSON.stringify({ sha: "${sourceOnlyCommit}" }), {
+            if (url.includes("/api/v1/github/release-commits.json")) {
+              await releaseGate;
+              return new Response(JSON.stringify({
+                repository: "microsoft/aibast-agents-library",
+                commits: { [release.tag_name]: { sha: "${sourceOnlyCommit}" } },
+              }), {
                 status: 200,
                 headers: { "content-type": "application/json" },
               });

@@ -2057,9 +2057,8 @@ export async function initializeDownloadCenter({
       repository: context.repository,
       requestedTag: context.requestedTag,
       fetchImpl: fetchImpl || windowObject.fetch?.bind(windowObject),
-      snapshotBase: context.authority === "github-pages-origin"
-        ? new URL("../api/v1/github/", windowObject.location.href).href
-        : null,
+      // The CI-built snapshot is always read from the site that served this page (rapp-static-api/1.1).
+      snapshotBase: new URL("../api/v1/github/", windowObject.location.href).href,
     });
     applyReleaseTransaction({
       documentObject,
