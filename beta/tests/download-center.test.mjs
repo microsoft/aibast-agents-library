@@ -18,7 +18,6 @@ import {
   copyText,
   detectArchitecture,
   discoverRelease,
-  fetchGitHubJson,
   formatBytes,
   goldenPathUrl,
   handleDownloadSubmit,
@@ -359,7 +358,7 @@ test("release selection is deterministic and an explicit tag wins", () => {
   assert.equal(selectRelease([draft, unrelated]), null);
 });
 
-test("release discovery executes the real API selection and commit validation", async () => {
+test("release discovery selects the requested snapshot release and validates its commit", async () => {
   const olderTag = "brainstem-beta-v1.0.0";
   const olderAsset = asset("Frontier-1.0.0-win-x64.exe", {
     url: `https://github.com/${repository}/releases/download/${olderTag}/Frontier-1.0.0-win-x64.exe`,
@@ -380,19 +379,15 @@ test("release discovery executes the real API selection and commit validation", 
     assets: [olderAsset, manifestAsset(olderManifest)],
     body: manifestBody(olderManifest),
   });
-  const fetchImpl = async (url, options) => {
-    calls.push({ url, options });
-    if (calls.length === 1) return jsonResponse(selectedRelease);
-    if (url.includes("-binary-manifest.json")) {
-      return manifestResponse(olderManifest);
-    }
-    return jsonResponse({ sha: commit.toUpperCase() });
-  };
-
   const result = await discoverRelease({
     repository,
     requestedTag: olderTag,
-    fetchImpl,
+    snapshotBase,
+    fetchImpl: snapshotFetch(calls, {
+      releases: [release(), selectedRelease],
+      commits: { repository, commits: { [olderTag]: { sha: commit.toUpperCase() } } },
+      manifest: olderManifest,
+    }),
   });
 
   assert.equal(result.tag, olderTag);
@@ -404,22 +399,14 @@ test("release discovery executes the real API selection and commit validation", 
     result.goldenPathUrl,
     `https://github.com/${repository}/blob/${olderTag}/beta/GOLDEN_PATH.md`,
   );
-  assert.equal(
-    calls[0].url,
-    `https://api.github.com/repos/${repository}/releases/tags/${olderTag}`,
-  );
-  assert.equal(
-    calls[1].url,
-    `https://api.github.com/repos/${repository}/commits/${olderTag}`,
-  );
-  assert.equal(
-    calls[2].url,
+  assert.deepEqual(calls, [
+    `${snapshotBase}releases.json`,
+    `${snapshotBase}release-commits.json`,
     manifestAsset(olderManifest).browser_download_url,
-  );
-  assert.equal(calls[0].options.headers.Accept, "application/vnd.github+json");
+  ]);
 });
 
-test("default discovery requests 100 releases and orders by published_at", async () => {
+test("default discovery selects snapshot releases by published_at", async () => {
   const releases = Array.from({ length: 40 }, (_, index) => release({
     id: index + 1,
     tag_name: `brainstem-beta-v1.0.${index}`,
@@ -430,19 +417,18 @@ test("default discovery requests 100 releases and orders by published_at", async
   const calls = [];
   const result = await discoverRelease({
     repository,
-    fetchImpl: async (url) => {
-      calls.push(url);
-      return url.includes("/releases?")
-        ? jsonResponse(releases)
-        : jsonResponse({ sha: commit });
-    },
+    snapshotBase,
+    fetchImpl: snapshotFetch(calls, {
+      releases,
+      commits: { repository, commits: { [expected.tag_name]: { sha: commit } } },
+    }),
   });
 
   assert.equal(result.tag, expected.tag_name);
-  assert.equal(
-    calls[0],
-    `https://api.github.com/repos/${repository}/releases?per_page=100`,
-  );
+  assert.deepEqual(calls, [
+    `${snapshotBase}releases.json`,
+    `${snapshotBase}release-commits.json`,
+  ]);
 });
 
 test("resolved fork packages and pinned identity reach the DOM transaction", async () => {
@@ -460,13 +446,12 @@ test("resolved fork packages and pinned identity reach the DOM transaction", asy
   const resolved = await discoverRelease({
     repository: context.repository,
     requestedTag: context.requestedTag,
-    fetchImpl: async (url) => {
-      if (url.includes("/releases/tags/")) return jsonResponse(selectedRelease);
-      if (url.includes("-binary-manifest.json")) {
-        return manifestResponse(manifest);
-      }
-      return jsonResponse({ sha: commit.toUpperCase() });
-    },
+    snapshotBase,
+    fetchImpl: snapshotFetch([], {
+      releases: [selectedRelease],
+      commits: { repository, commits: { [tag]: { sha: commit.toUpperCase() } } },
+      manifest,
+    }),
   });
   const transaction = buildReleaseTransaction({
     context,
@@ -695,9 +680,11 @@ test("missing or invalid provenance falls back visibly to source bootstraps", as
   for (const [candidate, expectedCode] of candidates) {
     const result = await discoverRelease({
       repository,
-      fetchImpl: async (url) => url.includes("/releases?")
-        ? jsonResponse([candidate])
-        : jsonResponse({ sha: commit }),
+      snapshotBase,
+      fetchImpl: snapshotFetch([], {
+        releases: [candidate],
+        commits: { repository, commits: { [tag]: { sha: commit } } },
+      }),
     });
     assert.equal(result.packagedDownloads.length, 0);
     assert.equal(result.binaryAvailability.available, false);
@@ -822,9 +809,11 @@ test("mutable packaged releases fall back to source-only discovery", async () =>
   });
   const result = await discoverRelease({
     repository,
-    fetchImpl: async (url) => url.includes("/releases?")
-      ? jsonResponse([candidate])
-      : jsonResponse({ sha: commit }),
+    snapshotBase,
+    fetchImpl: snapshotFetch([], {
+      releases: [candidate],
+      commits: { repository, commits: { [tag]: { sha: commit } } },
+    }),
   });
   assert.equal(result.packagedDownloads.length, 0);
   assert.equal(result.binaryAvailability.available, false);
@@ -945,37 +934,15 @@ test("missing and invalid size measurements fail instead of being skipped", () =
   );
 });
 
-test("GitHub rate limits and malformed commit data surface actionable failures", async () => {
-  const reset = 1_800_000_000;
-  await assert.rejects(
-    () => fetchGitHubJson("https://api.github.com/example", {
-      operation: "checking a test release",
-      fetchImpl: async () => jsonResponse(
-        { message: "rate limited" },
-        {
-          status: 403,
-          headers: {
-            "x-ratelimit-remaining": "0",
-            "x-ratelimit-reset": String(reset),
-          },
-        },
-      ),
-    }),
-    (error) => {
-      assert.equal(error.code, "GITHUB_RATE_LIMIT");
-      assert.equal(error.status, 403);
-      assert.equal(error.retryAt.toISOString(), new Date(reset * 1000).toISOString());
-      assert.match(error.message, /rate limit reached/);
-      return true;
-    },
-  );
-
+test("malformed snapshot commit data surfaces an actionable failure", async () => {
   await assert.rejects(
     () => discoverRelease({
       repository,
-      fetchImpl: async (url) => url.includes("/releases?")
-        ? jsonResponse([release()])
-        : jsonResponse({ sha: "short" }),
+      snapshotBase,
+      fetchImpl: snapshotFetch([], {
+        releases: [release()],
+        commits: { repository, commits: { [tag]: { sha: "short" } } },
+      }),
     }),
     (error) => error instanceof DownloadCenterError
       && error.code === "INVALID_RELEASE_COMMIT",
@@ -988,15 +955,17 @@ test("an unpublished requested release never selects a different release or repo
     () => discoverRelease({
       repository,
       requestedTag: tag,
-      fetchImpl: async (url) => {
-        calls.push(url);
-        return jsonResponse({ message: "Not Found" }, { status: 404 });
-      },
+      snapshotBase,
+      fetchImpl: snapshotFetch(calls, {
+        releases: [release({ tag_name: "brainstem-beta-v9.0.0" })],
+        commits: { repository, commits: { [tag]: { sha: commit } } },
+      }),
     }),
-    (error) => error.code === "GITHUB_HTTP_ERROR" && error.status === 404,
+    assertReleaseNotFound,
   );
   assert.deepEqual(calls, [
-    `https://api.github.com/repos/${repository}/releases/tags/${tag}`,
+    `${snapshotBase}releases.json`,
+    `${snapshotBase}release-commits.json`,
   ]);
 });
 
@@ -1007,12 +976,16 @@ test("release failures are visible while source fallback remains inspectable", (
   );
   presentReleaseFailure(
     elements,
-    new DownloadCenterError("GitHub API request failed (HTTP 500)."),
+    new DownloadCenterError(
+      "Release information is not published yet. Try again after the next site build.",
+      { code: "RELEASE_NOT_FOUND" },
+    ),
   );
   assert.equal(elements.status.textContent, "Release check unavailable");
   assert.equal(elements.statusDot.className, "status-dot error");
   assert.equal(elements.error.hidden, false);
-  assert.match(elements.error.textContent, /HTTP 500/);
+  assert.match(elements.error.textContent, /Release information is not published yet/);
+  assert.match(elements.error.textContent, /Try again after the next site build/);
   assert.match(elements.error.textContent, /inspectable source bootstraps remain available/);
 
   const fallback = buildBootstrapDownloads({
@@ -1294,11 +1267,7 @@ function snapshotFetch(calls, { releases, commits, manifest }) {
     if (url.endsWith("/api/v1/github/releases.json")) return jsonResponse(releases);
     if (url.endsWith("/api/v1/github/release-commits.json")) return jsonResponse(commits);
     if (url.includes("-binary-manifest.json")) return manifestResponse(manifest);
-    if (url.startsWith("https://api.github.com/repos/") && url.includes("/commits/")) {
-      return jsonResponse({ sha: commit });
-    }
-    if (url.startsWith("https://api.github.com/repos/")) return jsonResponse(releases);
-    return jsonResponse({}, { status: 404 });
+    throw new Error(`Unexpected fetch: ${url}`);
   };
 }
 
@@ -1323,20 +1292,80 @@ test("release discovery reads the same-origin snapshot and makes no GitHub API c
   assert.deepEqual(calls.filter((url) => url.includes("api.github.com")), []);
 });
 
-test("a snapshot for another repository or without the release falls back to the live API", async () => {
+function assertReleaseNotFound(error) {
+  assert.ok(error instanceof DownloadCenterError);
+  assert.equal(error.code, "RELEASE_NOT_FOUND");
+  assert.equal(
+    error.message,
+    "Release information is not published yet. Try again after the next site build.",
+  );
+  return true;
+}
+
+test("an incomplete or mismatched snapshot fails without a live API fallback", async () => {
   const selected = snapshotRelease();
-  const manifest = manifestFor([selected.assets[0]]);
-  for (const commits of [
-    { repository: "someone/else", commits: { [tag]: { sha: commit } } },
-    { repository, commits: {} },
+  for (const [releases, commits] of [
+    [[selected], { repository: "someone/else", commits: { [tag]: { sha: commit } } }],
+    [[selected], { repository, commits: {} }],
+    [[selected], { repository, commits: { [tag]: null } }],
+    [[], { repository, commits: { [tag]: { sha: commit } } }],
+    [{}, { repository, commits: { [tag]: { sha: commit } } }],
+    [[release({ draft: true })], { repository, commits: { [tag]: { sha: commit } } }],
   ]) {
     const calls = [];
-    const result = await discoverRelease({
-      repository,
-      snapshotBase,
-      fetchImpl: snapshotFetch(calls, { releases: [selected], commits, manifest }),
-    });
-    assert.equal(result.commit, commit);
-    assert.ok(calls.some((url) => url === `https://api.github.com/repos/${repository}/releases?per_page=100`));
+    await assert.rejects(
+      () => discoverRelease({
+        repository,
+        snapshotBase,
+        fetchImpl: snapshotFetch(calls, { releases, commits }),
+      }),
+      assertReleaseNotFound,
+    );
+    assert.deepEqual(calls, [
+      `${snapshotBase}releases.json`,
+      `${snapshotBase}release-commits.json`,
+    ]);
+  }
+});
+
+test("missing or unreadable snapshots fail without a live API fallback", async () => {
+  for (const requestedTag of [null, tag]) {
+    const calls = [];
+    await assert.rejects(
+      () => discoverRelease({
+        repository,
+        requestedTag,
+        fetchImpl: async (url) => {
+          calls.push(url);
+          throw new Error(`Unexpected fetch: ${url}`);
+        },
+      }),
+      assertReleaseNotFound,
+    );
+    assert.deepEqual(calls, []);
+
+    for (const respond of [
+      () => jsonResponse({}, { status: 404 }),
+      () => { throw new Error("Network unavailable"); },
+      () => ({ ok: true, json: async () => { throw new SyntaxError("Invalid JSON"); } }),
+    ]) {
+      const calls = [];
+      await assert.rejects(
+        () => discoverRelease({
+          repository,
+          requestedTag,
+          snapshotBase,
+          fetchImpl: async (url) => {
+            calls.push(url);
+            return respond();
+          },
+        }),
+        assertReleaseNotFound,
+      );
+      assert.deepEqual(calls, [
+        `${snapshotBase}releases.json`,
+        `${snapshotBase}release-commits.json`,
+      ]);
+    }
   }
 });
